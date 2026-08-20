@@ -43,11 +43,19 @@
       background: #0c1118;
       z-index: 20;
     }
-    header h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 18px; font-weight: 600;
-      letter-spacing: 0.04em; white-space: nowrap;
+    .force-refresh {
+      margin-left: auto;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      white-space: nowrap;
     }
+    .force-refresh:hover { color: var(--cream); border-color: var(--gold); }
     .prep { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
       display: inline-flex; align-items: center; gap: 6px;
@@ -711,6 +719,7 @@
         <span class="pill no"><i></i>Hôtels</span>
         <span class="pill no"><i></i>Trajets</span>
       </div>
+      <button type="button" class="force-refresh" id="force-refresh" title="Vider le cache et recharger">Rafraîchir</button>
     </header>
     <main>
       <nav id="city-list"></nav>
@@ -2060,11 +2069,27 @@
           reg.update();
           if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
         }).catch(() => {});
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-          // Nouvelle version prête — un reload suffit au prochain démarrage
-        });
       });
     }
+
+    async function forceRefreshApp(){
+      try {
+        if ("serviceWorker" in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map((r) => r.unregister()));
+        }
+        if (window.caches) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+      } catch (_) {}
+      const url = new URL(location.href);
+      url.searchParams.set("refresh", String(Date.now()));
+      location.replace(url.toString());
+    }
+
+    const refreshBtn = document.getElementById("force-refresh");
+    if (refreshBtn) refreshBtn.addEventListener("click", forceRefreshApp);
   </script>
 </body>
 </html>
