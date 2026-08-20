@@ -655,7 +655,12 @@
         inset: 0;
         box-shadow: none;
         border-radius: 0;
+        transition: bottom .28s ease;
       }
+      /* La carte se réduit au-dessus du panneau — le sud reste visible */
+      .app.city-mode.sheet-mid .city-frame { bottom: 42%; }
+      .app.city-mode.sheet-max .city-frame { bottom: 78%; }
+      .app.city-mode.sheet-min .city-frame { bottom: 52px; }
 
       .overlay {
         top: auto !important;
@@ -1323,6 +1328,7 @@
     const hint = document.getElementById("hint");
     let currentCity = null;
     let panelContext = null;
+    let lastFocusAct = null;
 
     /* Pan/zoom — mode: cover fills viewport; contain keeps grey letterbox around map */
     function makePanZoom(viewport, world, opts){
@@ -1617,6 +1623,7 @@
 
     function highlightPin(act){
       if (!currentCity || !act || act.lat == null) return;
+      lastFocusAct = act;
       const dayEl = panel.querySelector("details.day[open]");
       const dayN = dayEl ? Number(dayEl.dataset.dayN) : null;
       const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
@@ -1855,6 +1862,10 @@
         `<button type="button" class="detail-back">← Retour aux jours</button>${html}`;
       cityEl.style.display = "none";
       detailEl.classList.add("show");
+      // Revenir en haut du panneau (titre / description, pas les photos)
+      const body = panel.querySelector(".overlay-body");
+      if (body) body.scrollTop = 0;
+      requestAnimationFrame(() => { if (body) body.scrollTop = 0; });
       // Mobile : garder la hauteur actuelle (si réduit → moyen pour lire)
       if (window.matchMedia("(max-width: 900px)").matches) {
         if (sheetState() === "min") setSheetState("mid");
@@ -1863,11 +1874,14 @@
         detailEl.classList.remove("show");
         detailEl.innerHTML = "";
         cityEl.style.display = "";
+        lastFocusAct = null;
+        if (body) body.scrollTop = 0;
         if (currentCity){
           const dayEl = panel.querySelector("details.day[open]");
           const dayN = dayEl ? Number(dayEl.dataset.dayN) : null;
           const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
           renderCityPins(currentCity, day || null, null);
+          syncSheetMapInset();
         }
       };
     }
@@ -1969,6 +1983,21 @@
       if (panel.classList.contains("expanded")) return "max";
       return "mid";
     }
+    function syncSheetMapInset(){
+      const app = document.querySelector(".app");
+      if (!app) return;
+      app.classList.remove("sheet-mid", "sheet-max", "sheet-min");
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+      if (mobile && panel.classList.contains("open") && currentCity) {
+        const s = sheetState();
+        app.classList.add(s === "max" ? "sheet-max" : s === "min" ? "sheet-min" : "sheet-mid");
+      }
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (!currentCity) return;
+        if (lastFocusAct && lastFocusAct.lat != null) highlightPin(lastFocusAct);
+        else fitCityMap();
+      }));
+    }
     function setSheetState(s){
       panel.classList.remove("expanded", "minimized");
       if (s === "max") panel.classList.add("expanded");
@@ -1979,9 +2008,7 @@
         const ch = grab.querySelector(".sheet-chevron");
         if (ch) ch.textContent = s === "max" ? "▾" : "▴";
       }
-      if (currentCity) {
-        requestAnimationFrame(() => requestAnimationFrame(() => fitCityMap()));
-      }
+      syncSheetMapInset();
     }
     function cycleSheet(){
       const s = sheetState();
@@ -1996,6 +2023,7 @@
       grab.setAttribute("aria-expanded", "false");
       const ch = grab.querySelector(".sheet-chevron");
       if (ch) ch.textContent = "▴";
+      syncSheetMapInset();
 
       let drag = null;
       const onDown = (e) => {
@@ -2067,12 +2095,16 @@
     function closePanel(reset){
       if (reset === undefined) reset = true;
       panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg");
+      document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
+      lastFocusAct = null;
       panelContext = null;
       setActiveCity(null);
       if (reset) goOverview();
     }
     function goOverview(){
       panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg");
+      document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
+      lastFocusAct = null;
       panelContext = null;
       document.querySelectorAll("#routes path.route").forEach(p => {
         p.style.stroke = "";
