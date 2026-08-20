@@ -67,6 +67,28 @@
       white-space: nowrap;
     }
     .force-refresh:hover { color: var(--cream); border-color: var(--gold); }
+    .tabs {
+      display: flex; gap: 4px;
+      margin-left: 8px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .tabs button {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .tabs button.active {
+      color: var(--cream);
+      border-color: var(--gold);
+      background: rgba(196,165,116,.12);
+    }
     .prep { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
       display: inline-flex; align-items: center; gap: 6px;
@@ -82,6 +104,180 @@
     .pill em { color: var(--cream); font-style: normal; font-weight: 600; margin-left: 2px; }
 
     main { position: relative; min-height: 0; height: 100%; }
+    #view-map {
+      position: absolute; inset: 0;
+    }
+    #view-map.hidden { display: none; }
+    .info-view {
+      position: absolute; inset: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      background: #0c1118;
+      padding: 18px 20px 40px;
+      display: none;
+      z-index: 40;
+    }
+    .info-view.active { display: block; }
+    .info-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .info-view h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 26px;
+      margin: 0 0 6px;
+    }
+    .info-view .lead {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+    .info-sec {
+      margin-bottom: 28px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .info-sec:last-child { border-bottom: 0; }
+    .info-sec h3 {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 12px;
+    }
+    .check-list { list-style: none; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255,255,255,.05);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .check-list li:first-child { border-top: 0; }
+    .check-list input {
+      margin-top: 3px;
+      width: 16px; height: 16px;
+      accent-color: var(--ok);
+      flex: 0 0 auto;
+    }
+    .check-list .meta {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    .check-list label { cursor: pointer; flex: 1 1 auto; }
+    .check-list label.done { color: var(--muted); text-decoration: line-through; }
+    .budget-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 16px;
+      font-size: 14px;
+    }
+    .budget-grid .amt { text-align: right; font-weight: 600; color: var(--cream); }
+    .budget-grid .muted { color: var(--muted); }
+    .budget-grid .total {
+      grid-column: 1 / -1;
+      display: flex; justify-content: space-between;
+      margin-top: 8px; padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-weight: 600;
+    }
+    .plan-list { list-style: none; }
+    .plan-list li {
+      position: relative;
+      padding: 8px 0 8px 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .plan-list li:first-child { border-top: 0; }
+    .plan-list li::before {
+      content: "";
+      position: absolute; left: 0; top: 15px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+    }
+    .today-card {
+      background: var(--panel-2);
+      border: 1px solid rgba(196,165,116,.35);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .today-card .kicker {
+      color: var(--gold-2);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .today-card h3 {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--cream);
+      margin: 0 0 8px;
+    }
+    .today-card p { color: var(--muted); font-size: 13px; margin: 0; }
+    .day-pick {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 14px;
+    }
+    .day-pick button {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 12px;
+      padding: 5px 9px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .day-pick button.on {
+      color: var(--cream);
+      border-color: var(--gold);
+      background: rgba(196,165,116,.12);
+    }
+    .onsite-act {
+      padding: 12px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .onsite-act:first-of-type { border-top: 0; }
+    .onsite-act .t { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+    .onsite-act .tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin: 6px 0 8px;
+    }
+    .onsite-act .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      color: var(--gold-2);
+      border-radius: 2px;
+    }
+    .onsite-act .d { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .phrase-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .phrase {
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .phrase .fr { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+    .phrase .jp { font-size: 16px; font-weight: 600; }
+    .phrase .ro { font-size: 12px; color: var(--gold-2); margin-top: 3px; }
+    .app.tab-prep .prep,
+    .app.tab-onsite .prep { display: none; }
+    .app.tab-prep #view-map,
+    .app.tab-onsite #view-map { display: none; }
+
     #stage {
       position: absolute; inset: 0;
       background: var(--map-frame);
@@ -627,24 +823,28 @@
     @media (max-width: 900px) {
       /* Mobile only — desktop layout untouched above */
       header {
-        padding: 6px 12px;
+        padding: 6px 10px;
         min-height: 40px;
-        gap: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
       }
-      header h1 { font-size: 15px; }
+      header h1 { font-size: 14px; }
+      .tabs { margin-left: 0; width: 100%; order: 3; }
+      .tabs button { flex: 1 1 0; text-align: center; padding: 7px 6px; font-size: 12px; }
       .prep { display: none; }
-      .force-refresh { font-size: 10px; padding: 4px 8px; }
+      .force-refresh { font-size: 10px; padding: 4px 8px; margin-left: auto; }
+      .info-view { padding: 14px 14px 36px; }
 
       #city-list { display: none !important; }
 
-      .app.city-mode { grid-template-rows: 1fr; }
-      .app.city-mode header { display: none !important; }
-      .app.city-mode .city-banner { display: block; }
-      .app.city-mode .home-btn {
+      .app.city-mode.tab-map { grid-template-rows: 1fr; }
+      .app.city-mode.tab-map header { display: none !important; }
+      .app.city-mode.tab-map .city-banner { display: block; }
+      .app.city-mode.tab-map .home-btn {
         left: 12px; right: auto;
         top: max(12px, env(safe-area-inset-top)); bottom: auto;
       }
-      .app.city-mode .city-banner {
+      .app.city-mode.tab-map .city-banner {
         top: max(12px, env(safe-area-inset-top));
       }
 
@@ -657,9 +857,9 @@
         border-radius: 0;
       }
       /* La carte se réduit au-dessus du panneau — le sud reste visible */
-      .app.city-mode.sheet-mid .city-frame { bottom: 42%; }
-      .app.city-mode.sheet-max .city-frame { bottom: 78%; }
-      .app.city-mode.sheet-min .city-frame { bottom: 52px; }
+      .app.city-mode.sheet-mid.tab-map .city-frame { bottom: 42%; }
+      .app.city-mode.sheet-max.tab-map .city-frame { bottom: 78%; }
+      .app.city-mode.sheet-min.tab-map .city-frame { bottom: 52px; }
 
       .overlay {
         top: auto !important;
@@ -734,14 +934,19 @@
       .pin .badge { width: 52px; height: 60px; }
       .pin .badge svg { width: 52px; height: 60px; }
       .home-btn { width: 44px; height: 44px; bottom: calc(14px + env(safe-area-inset-bottom)); }
-      .app.city-mode .home-btn { bottom: auto; }
+      .app.city-mode.tab-map .home-btn { bottom: auto; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
+  <div class="app tab-map">
     <header>
       <h1>Voyage au Japon</h1>
+      <nav class="tabs" id="app-tabs" aria-label="Sections">
+        <button type="button" data-tab="map" class="active">Carte</button>
+        <button type="button" data-tab="prep">Préparatifs</button>
+        <button type="button" data-tab="onsite">Sur place</button>
+      </nav>
       <div class="prep">
         <span class="pill ok"><i></i>Dates <em>8–29 nov 2026</em></span>
         <span class="pill ok"><i></i>Vols</span>
@@ -753,6 +958,7 @@
       <button type="button" class="force-refresh" id="force-refresh" title="Vider le cache et recharger">Rafraîchir</button>
     </header>
     <main>
+      <div id="view-map">
       <nav id="city-list"></nav>
       <div id="stage">
         <div id="country-view">
@@ -783,6 +989,48 @@
       </div>
       <button type="button" class="home-btn" id="z-home" title="Vue Japon">⌂</button>
       <aside class="overlay" id="panel"></aside>
+      </div>
+
+      <section id="view-prep" class="info-view" aria-label="Préparatifs">
+        <div class="info-wrap">
+          <h2>Préparatifs</h2>
+          <p class="lead">Checklist, plan général et budget. Les cases cochées sont mémorisées sur cet appareil.</p>
+
+          <div class="info-sec">
+            <h3>Checklist</h3>
+            <ul class="check-list" id="prep-checklist"></ul>
+          </div>
+
+          <div class="info-sec">
+            <h3>Plan général</h3>
+            <ul class="plan-list" id="prep-plan"></ul>
+          </div>
+
+          <div class="info-sec">
+            <h3>Budget</h3>
+            <div class="budget-grid" id="prep-budget"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-onsite" class="info-view" aria-label="Sur place">
+        <div class="info-wrap">
+          <h2>Sur place</h2>
+          <p class="lead">Programme du jour (selon la date de ton téléphone, fuseau Japon) et phrases utiles.</p>
+
+          <div class="info-sec">
+            <h3>Aujourd’hui</h3>
+            <div id="onsite-today"></div>
+            <div class="day-pick" id="onsite-day-pick" hidden></div>
+            <div id="onsite-day-body"></div>
+          </div>
+
+          <div class="info-sec">
+            <h3>Phrases utiles</h3>
+            <div class="phrase-grid" id="onsite-phrases"></div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
   <script>
@@ -1102,9 +1350,9 @@
       { id:"arrive", title:"Paris → Tokyo (Haneda)", subtitle:"8 nov · Jour 1", mode:"Avion",
         depart:"Soir (Paris)", arrive:"6:50–8:30", duration:"Nuit",
         operator:"—", seat:"—", ref:"—",
-        status:"paid", payment:"Payé d’avance", price:"Confirmé",
+        status:"paid", payment:"Payé d’avance", price:"≈ 2 000 € A/R",
         skipMap:true, from:{lat:35.5494,lng:139.7798}, to:CITIES.tokyo, via:[],
-        details:["Seuls les horaires de vol sont confirmés pour l’instant."], tips:"Haneda est l’arrivée la plus pratique pour Tokyo." },
+        details:["Seuls les horaires de vol sont confirmés pour l’instant.","Budget vols A/R ≈ 2 000 € au total."], tips:"Haneda est l’arrivée la plus pratique pour Tokyo." },
       { id:"tokyo-fuji", title:"Tokyo → Fujikawaguchiko", subtitle:"12 nov · Jour 5", mode:"Train",
         depart:"~7:00", arrive:"~9:00", duration:"~2 h",
         operator:"JR / Fujikyu (à définir)", seat:"—", ref:"—",
@@ -1157,7 +1405,7 @@
       { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
         depart:"Aéroport ~6:00 · vol 9:05", arrive:"Soir (Paris)", duration:"Vol de jour",
         operator:"—", seat:"—", ref:"—",
-        status:"paid", payment:"Payé d’avance", price:"Confirmé",
+        status:"paid", payment:"Payé d’avance", price:"Inclus dans les 2 000 € A/R",
         skipMap:true, from:CITIES.tokyo, to:{lat:35.5494,lng:139.7798}, via:[],
         details:["Seuls les horaires de vol sont confirmés pour l’instant."], tips:"Faire les bagages le 28." }
     ];
@@ -2217,6 +2465,244 @@
     }
     if (japanImg.complete && japanImg.naturalWidth) bootCountry();
     else japanImg.onload = bootCountry;
+  </script>
+  <script>
+    // —— Onglets Préparatifs / Sur place (site statique : Date() + localStorage) ——
+    const CHECK_KEY = "japan-trip-check-v1";
+    const PREP_CHECKS = [
+      { id:"vols", label:"Vols A/R", meta:"Payés · ≈ 2 000 € · Paris ↔ Haneda" },
+      { id:"villes", label:"Villes & dates verrouillées", meta:"Itinéraire 8–29 nov 2026 figé" },
+      { id:"hotels", label:"Hôtels / ryokan", meta:"Réservations + adresses + check-in" },
+      { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen, Limited Express, bus Fuji / Shirakawa" },
+      { id:"idees", label:"Idées & billets d’activités", meta:"USJ, teamLab, observatoires, etc." },
+      { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
+      { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
+      { id:"suica", label:"Suica / IC ou Welcome Suica", meta:"Transports + konbini" },
+      { id:"cash", label:"Cash ¥ + carte sans frais", meta:"Certains lieux n’acceptent que le cash" },
+      { id:"adaptateur", label:"Adaptateur type A/B", meta:"Prises japonaises" },
+      { id:"valise", label:"Valise mi-novembre", meta:"Couches, imperméable léger, bonnes chaussures" },
+      { id:"docs", label:"Passeports + copies numériques", meta:"Dans le cloud + hors ligne" }
+    ];
+    const PREP_PLAN = [
+      "Valider tous les hôtels (adresses exactes, horaires d’arrivée).",
+      "Réserver les trajets longue distance (Tokyo→Fuji, Fuji→Kanazawa, Takayama→Kyoto, Osaka→Tokyo).",
+      "Réserver USJ et teamLab dès que les créneaux ouvrent.",
+      "Préparer Suica / eSIM et un peu de cash à l’arrivée.",
+      "Noter les check-out tôt (ex. 29 nov vol matin).",
+      "Relire le programme « Sur place » la veille de chaque étape."
+    ];
+    const PREP_BUDGET = [
+      { label:"Vols A/R", amount:"≈ 2 000 €", note:"Déjà payés", done:true },
+      { label:"Hôtels", amount:"À définir", note:"Pas encore réservés", done:false },
+      { label:"Trajets JP", amount:"À définir", note:"Trains / bus", done:false },
+      { label:"Activités / tickets", amount:"À définir", note:"USJ, teamLab…", done:false },
+      { label:"Nourriture & divers", amount:"Variable", note:"Budget confort ~60–100 €/jour", done:false }
+    ];
+    const PHRASES = [
+      { fr:"Bonjour", jp:"こんにちは", ro:"Konnichiwa" },
+      { fr:"Merci", jp:"ありがとう", ro:"Arigatō" },
+      { fr:"S’il vous plaît", jp:"お願いします", ro:"Onegai shimasu" },
+      { fr:"Excusez-moi / Pardon", jp:"すみません", ro:"Sumimasen" },
+      { fr:"Je ne parle pas japonais", jp:"日本語が話せません", ro:"Nihongo ga hanasemasen" },
+      { fr:"L’addition, s’il vous plaît", jp:"お会計お願いします", ro:"Okaikei onegai shimasu" },
+      { fr:"Où est la gare ?", jp:"駅はどこですか？", ro:"Eki wa doko desu ka?" },
+      { fr:"Combien ça coûte ?", jp:"いくらですか？", ro:"Ikura desu ka?" },
+      { fr:"Avez-vous du wifi ?", jp:"Wi‑Fiはありますか？", ro:"Wi‑Fi wa arimasu ka?" },
+      { fr:"De l’eau, s’il vous plaît", jp:"水をください", ro:"Mizu o kudasai" },
+      { fr:"C’est délicieux", jp:"おいしいです", ro:"Oishii desu" },
+      { fr:"Aide / urgence", jp:"助けてください", ro:"Tasukete kudasai" }
+    ];
+    const ACT_META = {
+      akihabara:{ hours:"Boutiques ~10h–20h", duration:"2–3 h" },
+      shinjuku:{ hours:"Quartier libre", duration:"2–3 h" },
+      "character-street":{ hours:"Sous Tokyo Station ~10h–20h", duration:"1 h" },
+      sensoji:{ hours:"Temple ~6h–17h · boutiques plus tard", duration:"1,5–2 h" },
+      sumida:{ hours:"Promenade libre", duration:"1 h" },
+      ueno:{ hours:"Parc libre · musées ~9h30–17h", duration:"2–3 h" },
+      yanaka:{ hours:"Jour", duration:"2 h" },
+      meiji:{ hours:"Lever du soleil → coucher", duration:"1–1,5 h" },
+      harajuku:{ hours:"Magasins ~11h–20h", duration:"1,5–2 h" },
+      shibuya:{ hours:"Libre", duration:"1,5–2 h" },
+      odaiba:{ hours:"Gundam / centres ~10h–21h", duration:"2–3 h" },
+      teamlab:{ hours:"Créneaux réservés", duration:"1,5–2 h" },
+      "tokyo-tower":{ hours:"~9h–23h", duration:"1–1,5 h" },
+      chureito:{ hours:"Jour · matin idéal", duration:"1–1,5 h" },
+      ropeway:{ hours:"~9h–16h/17h (saison)", duration:"1 h" },
+      kawaguchi:{ hours:"Libre", duration:"1–2 h" },
+      momiji:{ hours:"Jour", duration:"1 h" },
+      oshino:{ hours:"Village ~9h–17h", duration:"1,5–2 h" },
+      kenrokuen:{ hours:"~7h–18h (saison)", duration:"1,5–2 h" },
+      "kanazawa-castle":{ hours:"Parc ~7h–18h", duration:"1–1,5 h" },
+      "higashi-chaya":{ hours:"Jour / soir", duration:"1–2 h" },
+      shirakawa:{ hours:"Village ~jour", duration:"2–3 h" },
+      sanmachi:{ hours:"Jour", duration:"1,5–2 h" },
+      kiyomizu:{ hours:"~6h–18h", duration:"1,5–2 h" },
+      arashiyama:{ hours:"Bambous tôt le matin", duration:"2–3 h" },
+      kinkakuji:{ hours:"~9h–17h", duration:"1–1,5 h" },
+      wagashi:{ hours:"Sur réservation", duration:"1,5 h" },
+      fushimi:{ hours:"~7h–16h (montée libre)", duration:"2–3 h" },
+      daigo:{ hours:"~9h–17h", duration:"2 h" },
+      philosopher:{ hours:"Libre", duration:"1–1,5 h" },
+      nijo:{ hours:"~8h45–16h", duration:"1,5 h" },
+      nishiki:{ hours:"~9h–18h (variable)", duration:"1 h" },
+      "nara-park":{ hours:"Parc libre", duration:"1 h" },
+      kofukuji:{ hours:"~9h–17h", duration:"45 min–1 h" },
+      todaiji:{ hours:"~8h–16h30", duration:"1–1,5 h" },
+      kasuga:{ hours:"~6h30–17h30", duration:"1 h" },
+      dotonbori:{ hours:"Soir idéal", duration:"1–2 h" },
+      usj:{ hours:"Horaires parc (réserver)", duration:"Journée" },
+      "osaka-castle":{ hours:"~9h–17h", duration:"1,5–2 h" },
+      shinsaibashi:{ hours:"Magasins ~10h–20h", duration:"1–2 h" },
+      kuromon:{ hours:"~9h–18h", duration:"1 h" }
+    };
+
+    function japanTodayISO(){
+      try {
+        return new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit"
+        }).format(new Date());
+      } catch (_) {
+        const d = new Date();
+        return d.toISOString().slice(0, 10);
+      }
+    }
+    function dayToISO(day){
+      // "8 nov 2026" → 2026-11-08
+      const m = String(day.date || "").match(/(\d+)\s+nov\s+(\d{4})/i);
+      if (!m) return null;
+      return m[2] + "-11-" + String(m[1]).padStart(2, "0");
+    }
+    function findTripDayByISO(iso){
+      return DAYS.find(d => dayToISO(d) === iso) || null;
+    }
+    function loadChecks(){
+      try { return JSON.parse(localStorage.getItem(CHECK_KEY) || "{}"); } catch (_) { return {}; }
+    }
+    function saveChecks(obj){
+      try { localStorage.setItem(CHECK_KEY, JSON.stringify(obj)); } catch (_) {}
+    }
+    function renderPrep(){
+      const box = document.getElementById("prep-checklist");
+      const plan = document.getElementById("prep-plan");
+      const bud = document.getElementById("prep-budget");
+      if (!box || !plan || !bud) return;
+      const state = loadChecks();
+      box.innerHTML = PREP_CHECKS.map(item => {
+        const on = !!state[item.id];
+        return `<li><input type="checkbox" id="ck-${item.id}" data-check="${item.id}"${on ? " checked" : ""}/><label for="ck-${item.id}" class="${on ? "done" : ""}">${esc(item.label)}<span class="meta">${esc(item.meta)}</span></label></li>`;
+      }).join("");
+      box.querySelectorAll("input[data-check]").forEach(inp => {
+        inp.addEventListener("change", () => {
+          const st = loadChecks();
+          st[inp.dataset.check] = inp.checked;
+          saveChecks(st);
+          const lab = box.querySelector(`label[for="${inp.id}"]`);
+          if (lab) lab.classList.toggle("done", inp.checked);
+        });
+      });
+      plan.innerHTML = PREP_PLAN.map(t => `<li>${esc(t)}</li>`).join("");
+      const rows = PREP_BUDGET.map(b =>
+        `<div class="${b.done ? "" : "muted"}">${esc(b.label)}<span class="meta" style="display:block;font-size:12px;font-weight:400">${esc(b.note)}</span></div><div class="amt">${esc(b.amount)}</div>`
+      ).join("");
+      bud.innerHTML = rows + `<div class="total"><span>Vols déjà sortis</span><span>≈ 2 000 €</span></div>`;
+    }
+    function actMetaFor(act){
+      const slug = photoSlug(act);
+      return (slug && ACT_META[slug]) || { hours: "Horaires variables", duration: "1–2 h" };
+    }
+    function renderOnsiteDay(day){
+      const body = document.getElementById("onsite-day-body");
+      if (!body || !day) { if (body) body.innerHTML = ""; return; }
+      const city = CITIES[day.city];
+      const moves = day.moves || [];
+      const ideas = [].concat(day.ideas || [], day.ideasAfter || []);
+      let html = "";
+      if (moves.length){
+        html += `<p class="lead" style="margin-bottom:10px">Trajets du jour</p>`;
+        moves.forEach(m => {
+          html += `<div class="onsite-act"><div class="t">${esc(m.title)}</div><div class="tags"><span class="tag">${esc(m.mode || "Trajet")}</span><span class="tag">${esc(m.when || "")}</span></div><div class="d">${esc(m.dummy || "")}</div></div>`;
+        });
+      }
+      if (ideas.length){
+        html += `<p class="lead" style="margin:16px 0 10px">Idées · ${esc(city ? city.name : day.city)}</p>`;
+        ideas.forEach(a => {
+          const meta = actMetaFor(a);
+          const map = mapsLinkHtml(a, "detail");
+          html += `<div class="onsite-act"><div class="t">${esc(a.title)}</div><div class="tags"><span class="tag">⏱ ${esc(meta.duration)}</span><span class="tag">🕒 ${esc(meta.hours)}</span></div><div class="d">${esc(a.desc || "")}</div>${map}</div>`;
+        });
+      } else if (!moves.length){
+        html = `<p class="lead">Rien de prévu ce jour-là (transfert / vol).</p>`;
+      }
+      body.innerHTML = html;
+    }
+    function renderOnsite(){
+      const todayBox = document.getElementById("onsite-today");
+      const pick = document.getElementById("onsite-day-pick");
+      const phrases = document.getElementById("onsite-phrases");
+      if (!todayBox || !pick || !phrases) return;
+      const iso = japanTodayISO();
+      const match = findTripDayByISO(iso);
+      const start = "2026-11-08", end = "2026-11-29";
+      if (match){
+        const city = CITIES[match.city];
+        todayBox.innerHTML = `<div class="today-card"><div class="kicker">Aujourd’hui (heure Japon)</div><h3>Jour ${match.n} · ${esc(match.dow)} ${esc(match.date)}</h3><p>${esc(city ? city.name : match.city)}${match.extraCity ? " → " + esc(CITIES[match.extraCity].name) : ""}</p></div>`;
+        renderOnsiteDay(match);
+        pick.hidden = true;
+      } else if (iso < start){
+        const daysLeft = Math.ceil((Date.parse(start + "T00:00:00+09:00") - Date.now()) / 86400000);
+        todayBox.innerHTML = `<div class="today-card"><div class="kicker">Avant le départ</div><h3>Encore ≈ ${daysLeft} jour${daysLeft > 1 ? "s" : ""}</h3><p>Le voyage commence le 8 nov 2026. Choisis un jour ci-dessous pour prévisualiser.</p></div>`;
+        pick.hidden = false;
+      } else if (iso > end){
+        todayBox.innerHTML = `<div class="today-card"><div class="kicker">Après le voyage</div><h3>Trip terminé</h3><p>Tu peux quand même refeuilleter chaque jour.</p></div>`;
+        pick.hidden = false;
+      } else {
+        todayBox.innerHTML = `<div class="today-card"><div class="kicker">Pendant le voyage</div><h3>Jour hors programme ?</h3><p>Choisis un jour ci-dessous.</p></div>`;
+        pick.hidden = false;
+      }
+      pick.innerHTML = DAYS.map(d =>
+        `<button type="button" data-day="${d.n}"${match && match.n === d.n ? " class=\"on\"" : ""}>J${d.n}</button>`
+      ).join("");
+      pick.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          pick.querySelectorAll("button").forEach(b => b.classList.remove("on"));
+          btn.classList.add("on");
+          const day = DAYS.find(d => d.n === Number(btn.dataset.day));
+          renderOnsiteDay(day);
+        });
+      });
+      if (!match){
+        const first = DAYS[0];
+        const b0 = pick.querySelector("button");
+        if (b0) b0.classList.add("on");
+        renderOnsiteDay(first);
+      }
+      phrases.innerHTML = PHRASES.map(p =>
+        `<div class="phrase"><div class="fr">${esc(p.fr)}</div><div class="jp">${esc(p.jp)}</div><div class="ro">${esc(p.ro)}</div></div>`
+      ).join("");
+    }
+    function setAppTab(tab){
+      const app = document.querySelector(".app");
+      const tabs = document.querySelectorAll("#app-tabs button");
+      const prep = document.getElementById("view-prep");
+      const onsite = document.getElementById("view-onsite");
+      if (!app) return;
+      app.classList.remove("tab-map", "tab-prep", "tab-onsite");
+      app.classList.add("tab-" + tab);
+      tabs.forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+      if (prep) prep.classList.toggle("active", tab === "prep");
+      if (onsite) onsite.classList.toggle("active", tab === "onsite");
+      if (tab === "prep") renderPrep();
+      if (tab === "onsite") renderOnsite();
+      if (tab === "map") {
+        requestAnimationFrame(() => {
+          if (currentCity) syncSheetMapInset();
+          else { sizeJapanWorld(); countryCam.fitCover(1.02); }
+        });
+      }
+    }
+    document.getElementById("app-tabs")?.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => setAppTab(btn.dataset.tab));
+    });
   </script>
   <script>
     // Cache le site pour Safari hors ligne (après 1ère ouverture avec Wi‑Fi)
