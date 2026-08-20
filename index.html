@@ -1811,9 +1811,9 @@
         `<button type="button" class="detail-back">← Retour aux jours</button>${html}`;
       cityEl.style.display = "none";
       detailEl.classList.add("show");
-      // Sur mobile, agrandir le panneau pour lire le détail
+      // Mobile : garder la hauteur actuelle (si réduit → moyen pour lire)
       if (window.matchMedia("(max-width: 900px)").matches) {
-        setSheetState("max");
+        if (sheetState() === "min") setSheetState("mid");
       }
       detailEl.querySelector(".detail-back").onclick = () => {
         detailEl.classList.remove("show");
