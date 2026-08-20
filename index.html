@@ -618,13 +618,12 @@
         left: 12px; right: auto;
         top: max(12px, env(safe-area-inset-top)); bottom: auto;
       }
-      .app.city-mode .zoom-ui {
-        right: 12px;
-        top: max(12px, env(safe-area-inset-top)); bottom: auto;
-      }
       .app.city-mode .city-banner {
         top: max(12px, env(safe-area-inset-top));
       }
+
+      /* Pinch suffit — boutons ± inutiles */
+      .zoom-ui { display: none !important; }
 
       .city-frame {
         inset: 0;
@@ -666,17 +665,10 @@
       }
       .sheet-grab { display: block; }
 
-      .overlay.panel-city .overlay-head {
-        padding: 0 10px 6px;
-        border-bottom: 0;
-        background: transparent;
-        min-height: 0;
-        justify-content: flex-end;
-      }
-      .overlay.panel-city .overlay-head .head-text { display: none; }
-      .overlay.panel-city .overlay-head .close {
-        width: 32px; height: 32px;
-      }
+      /* × retiré : ⌂ pour quitter la ville, glisser/flèche pour minimiser */
+      .overlay .close { display: none !important; }
+      .overlay.panel-city .overlay-head { display: none !important; }
+
       .overlay.panel-leg .overlay-head {
         padding: 2px 14px 10px;
         align-items: flex-start;
@@ -691,7 +683,7 @@
         padding: 4px 14px 24px;
         -webkit-overflow-scrolling: touch;
       }
-      .overlay.panel-city .overlay-body { padding-top: 0; }
+      .overlay.panel-city .overlay-body { padding-top: 2px; }
 
       .hint { display: none; }
 
@@ -711,11 +703,8 @@
       }
       .pin .badge { width: 52px; height: 60px; }
       .pin .badge svg { width: 52px; height: 60px; }
-      .home-btn, .zoom-ui button { width: 44px; height: 44px; }
-      .zoom-ui { bottom: calc(66px + env(safe-area-inset-bottom)); }
-      .home-btn { bottom: calc(14px + env(safe-area-inset-bottom)); }
+      .home-btn { width: 44px; height: 44px; bottom: calc(14px + env(safe-area-inset-bottom)); }
       .app.city-mode .home-btn { bottom: auto; }
-      .app.city-mode .zoom-ui { bottom: auto; }
     }
   </style>
 </head>
@@ -2087,6 +2076,9 @@
       panel.classList.add("open");
       bindSheetGrab();
       panel.querySelector(".close").onclick = () => closePanel(true);
+      if (window.matchMedia("(max-width: 900px)").matches) {
+        setSheetState("max");
+      }
       const via = leg.via || [];
       const mid = via.length
         ? via[Math.floor(via.length / 2)]
