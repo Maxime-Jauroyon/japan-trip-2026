@@ -47,9 +47,6 @@
       grid-template-rows: auto 1fr;
       min-height: 0;
     }
-    .app.city-mode {
-      grid-template-rows: 1fr;
-    }
     header {
       display: flex; align-items: center; gap: 16px;
       padding: 8px 16px; min-height: 46px;
@@ -580,6 +577,7 @@
       transition: transform .2s ease;
     }
     .overlay.expanded .sheet-grab .sheet-chevron { transform: rotate(180deg); }
+    .overlay.minimized .sheet-grab .sheet-chevron { transform: none; }
 
     .city-banner {
       display: none;
@@ -600,18 +598,17 @@
       text-overflow: ellipsis;
     }
 
-    @media (max-width: 1100px), (hover: none) and (pointer: coarse) {
+    @media (max-width: 900px) {
       header {
         padding: 6px 12px;
         min-height: 40px;
         gap: 10px;
       }
       header h1 { font-size: 15px; }
-      .prep { gap: 4px; }
-      .pill { font-size: 10px; padding: 3px 6px 3px 5px; }
-      .pill em { display: none; }
+      .prep { display: none; }
+      .force-refresh { font-size: 10px; padding: 4px 8px; }
 
-      /* Vue ville : plus de place pour la carte */
+      .app.city-mode { grid-template-rows: 1fr; }
       .app.city-mode header,
       .app.city-mode #city-list { display: none !important; }
       .app.city-mode .city-banner { display: block; }
@@ -627,9 +624,6 @@
         top: max(12px, env(safe-area-inset-top));
       }
 
-      #city-view {
-        /* filled by .city-frame inset */
-      }
       .city-frame {
         inset: 0;
         box-shadow: none;
@@ -642,14 +636,13 @@
         bottom: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        /* hauteur FIXE — max-height seul casse souvent sur iOS avec flex */
         height: 34% !important;
         max-height: 34% !important;
         min-height: 140px !important;
         transform: translate3d(0, 110%, 0);
         border-radius: 14px 14px 0 0;
         border-left: 0; border-right: 0; border-bottom: 0;
-        transition: transform .25s ease, height .28s ease, max-height .28s ease;
+        transition: transform .25s ease, height .28s ease, max-height .28s ease, min-height .28s ease;
         padding-bottom: env(safe-area-inset-bottom);
         overflow: hidden !important;
       }
@@ -657,6 +650,17 @@
       .overlay.open.expanded {
         height: 78% !important;
         max-height: 78% !important;
+        min-height: 140px !important;
+      }
+      .overlay.open.minimized {
+        height: 52px !important;
+        max-height: 52px !important;
+        min-height: 52px !important;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .overlay.open.minimized .overlay-head,
+      .overlay.open.minimized .overlay-body {
+        display: none !important;
       }
       .sheet-grab { display: block; }
       .overlay-head {
@@ -683,7 +687,6 @@
       #city-list button { flex: 0 0 auto; width: auto; margin-bottom: 0; }
       .hint { display: none; }
 
-      /* Pastilles pays plus faciles à viser / lire */
       .city-mark .ico-wrap {
         width: 44px; height: 44px;
         border-width: 2.5px;
@@ -703,46 +706,11 @@
       .home-btn, .zoom-ui button { width: 44px; height: 44px; }
       .zoom-ui { bottom: calc(66px + env(safe-area-inset-bottom)); }
       .home-btn { bottom: calc(14px + env(safe-area-inset-bottom)); }
+      .app.city-mode .home-btn { bottom: auto; }
+      .app.city-mode .zoom-ui { bottom: auto; }
     }
 
-    /* Filet de sécurité JS — seulement layout tactile, panneau bas borné */
-    html.touch-ui .sheet-grab { display: block; }
-    html.touch-ui .hint { display: none; }
-    html.touch-ui .app.city-mode header,
-    html.touch-ui .app.city-mode #city-list { display: none !important; }
-    html.touch-ui .app.city-mode .city-banner { display: block; }
-    html.touch-ui .city-frame {
-      inset: 0;
-      box-shadow: none;
-    }
-    html.touch-ui .overlay {
-      top: auto !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 34% !important;
-      max-height: 34% !important;
-      min-height: 140px !important;
-      transform: translate3d(0, 110%, 0);
-      border-radius: 14px 14px 0 0;
-      overflow: hidden !important;
-    }
-    html.touch-ui .overlay.open { transform: translate3d(0, 0, 0); }
-    html.touch-ui .overlay.open.expanded {
-      height: 78% !important;
-      max-height: 78% !important;
-    }
-    html.touch-ui .overlay-body {
-      flex: 1 1 0 !important;
-      min-height: 0 !important;
-      overflow: auto !important;
-    }
-    html.touch-ui #city-list {
-      display: flex; width: auto; max-width: calc(100% - 24px);
-      overflow-x: auto; left: 12px; right: 12px; top: 8px; max-height: none;
-    }
-    html.touch-ui #city-list button { flex: 0 0 auto; width: auto; }
+    /* Plus de forçage touch-ui sur grand écran — le @media ci-dessus suffit */
   </style>
 </head>
 <body>
@@ -794,17 +762,14 @@
   </div>
   <script>
     (function syncTouchUi(){
-      const q = "(max-width: 1100px), (hover: none) and (pointer: coarse)";
+      const q = "(max-width: 900px)";
       const apply = () => {
-        const w = Math.min(window.innerWidth || 0, screen.width || 0) || window.innerWidth;
-        const on = window.matchMedia(q).matches || w <= 1100;
-        document.documentElement.classList.toggle("touch-ui", on);
+        document.documentElement.classList.toggle("touch-ui", window.matchMedia(q).matches);
       };
       apply();
       try { window.matchMedia(q).addEventListener("change", apply); } catch (_) {
         window.addEventListener("resize", apply);
       }
-      window.addEventListener("orientationchange", apply);
     })();
     const CITIES = {
       tokyo: { id:"tokyo", name:"Tokyo", jp:"東京", lat:35.6812, lng:139.7671,
@@ -1852,11 +1817,8 @@
       cityEl.style.display = "none";
       detailEl.classList.add("show");
       // Sur mobile, agrandir le panneau pour lire le détail
-      if (window.matchMedia("(max-width: 1100px), (hover: none) and (pointer: coarse)").matches
-          || document.documentElement.classList.contains("touch-ui")) {
-        panel.classList.add("expanded");
-        const grab = panel.querySelector(".sheet-grab");
-        if (grab) grab.setAttribute("aria-expanded", "true");
+      if (window.matchMedia("(max-width: 900px)").matches) {
+        setSheetState("max");
       }
       detailEl.querySelector(".detail-back").onclick = () => {
         detailEl.classList.remove("show");
@@ -1953,20 +1915,73 @@
     }
 
     function sheetGrabHtml(){
-      return `<button type="button" class="sheet-grab" aria-label="Agrandir ou réduire le panneau" aria-expanded="false"><span class="sheet-bar"></span><span class="sheet-chevron">▴</span></button>`;
+      return `<button type="button" class="sheet-grab" aria-label="Glisser ou toucher pour agrandir / réduire" aria-expanded="false"><span class="sheet-bar"></span><span class="sheet-chevron">▴</span></button>`;
+    }
+    function sheetState(){
+      if (panel.classList.contains("minimized")) return "min";
+      if (panel.classList.contains("expanded")) return "max";
+      return "mid";
+    }
+    function setSheetState(s){
+      panel.classList.remove("expanded", "minimized");
+      if (s === "max") panel.classList.add("expanded");
+      if (s === "min") panel.classList.add("minimized");
+      const grab = panel.querySelector(".sheet-grab");
+      if (grab){
+        grab.setAttribute("aria-expanded", s === "max" ? "true" : "false");
+        const ch = grab.querySelector(".sheet-chevron");
+        if (ch) ch.textContent = s === "max" ? "▾" : "▴";
+      }
+      if (currentCity) {
+        requestAnimationFrame(() => requestAnimationFrame(() => fitCityMap()));
+      }
+    }
+    function cycleSheet(){
+      const s = sheetState();
+      if (s === "mid") setSheetState("max");
+      else if (s === "max") setSheetState("min");
+      else setSheetState("mid");
     }
     function bindSheetGrab(){
-      panel.classList.remove("expanded");
+      panel.classList.remove("expanded", "minimized");
       const grab = panel.querySelector(".sheet-grab");
       if (!grab) return;
       grab.setAttribute("aria-expanded", "false");
-      grab.onclick = () => {
-        const on = panel.classList.toggle("expanded");
-        grab.setAttribute("aria-expanded", on ? "true" : "false");
-        if (currentCity) {
-          requestAnimationFrame(() => requestAnimationFrame(() => fitCityMap()));
-        }
+      const ch = grab.querySelector(".sheet-chevron");
+      if (ch) ch.textContent = "▴";
+
+      let drag = null;
+      const onDown = (e) => {
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        drag = { y: e.clientY, state: sheetState(), moved: false, id: e.pointerId };
+        try { grab.setPointerCapture(e.pointerId); } catch (_) {}
       };
+      const onMove = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        if (Math.abs(e.clientY - drag.y) > 10) drag.moved = true;
+      };
+      const onUp = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dy = e.clientY - drag.y;
+        if (drag.moved && Math.abs(dy) > 36) {
+          if (dy > 0) {
+            // vers le bas = réduire
+            if (drag.state === "max") setSheetState("mid");
+            else setSheetState("min");
+          } else {
+            // vers le haut = agrandir
+            if (drag.state === "min") setSheetState("mid");
+            else setSheetState("max");
+          }
+        } else if (!drag.moved) {
+          cycleSheet();
+        }
+        drag = null;
+      };
+      grab.addEventListener("pointerdown", onDown);
+      grab.addEventListener("pointermove", onMove);
+      grab.addEventListener("pointerup", onUp);
+      grab.addEventListener("pointercancel", () => { drag = null; });
     }
 
     function fillCityPanel(c, days, openN){
@@ -2002,13 +2017,13 @@
 
     function closePanel(reset){
       if (reset === undefined) reset = true;
-      panel.classList.remove("open", "expanded");
+      panel.classList.remove("open", "expanded", "minimized");
       panelContext = null;
       setActiveCity(null);
       if (reset) goOverview();
     }
     function goOverview(){
-      panel.classList.remove("open", "expanded");
+      panel.classList.remove("open", "expanded", "minimized");
       panelContext = null;
       document.querySelectorAll("#routes path.route").forEach(p => {
         p.style.stroke = "";
