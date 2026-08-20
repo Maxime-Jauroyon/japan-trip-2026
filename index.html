@@ -2,9 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Japon · 8–29 novembre 2026</title>
   <style>
     :root {
@@ -575,7 +576,7 @@
       text-overflow: ellipsis;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px), (hover: none) and (pointer: coarse) {
       header {
         padding: 6px 12px;
         min-height: 40px;
@@ -592,11 +593,14 @@
       .app.city-mode .city-banner { display: block; }
       .app.city-mode .home-btn {
         left: 12px; right: auto;
-        top: 12px; bottom: auto;
+        top: max(12px, env(safe-area-inset-top)); bottom: auto;
       }
       .app.city-mode .zoom-ui {
         right: 12px;
-        top: 12px; bottom: auto;
+        top: max(12px, env(safe-area-inset-top)); bottom: auto;
+      }
+      .app.city-mode .city-banner {
+        top: max(12px, env(safe-area-inset-top));
       }
 
       #city-view {
@@ -617,6 +621,7 @@
         border-radius: 14px 14px 0 0;
         border-left: 0; border-right: 0; border-bottom: 0;
         transition: transform .25s ease, max-height .28s ease;
+        padding-bottom: env(safe-area-inset-bottom);
       }
       .overlay.open { transform: translateY(0); }
       .overlay.open.expanded { max-height: 88vh; }
@@ -631,7 +636,7 @@
       #city-list {
         display: flex; width: auto; max-width: calc(100% - 24px);
         overflow-x: auto; right: 12px; left: 12px;
-        top: 8px; max-height: none;
+        top: max(8px, env(safe-area-inset-top)); max-height: none;
         -webkit-overflow-scrolling: touch;
         gap: 2px;
       }
@@ -656,9 +661,32 @@
       .pin .badge { width: 52px; height: 60px; }
       .pin .badge svg { width: 52px; height: 60px; }
       .home-btn, .zoom-ui button { width: 44px; height: 44px; }
-      .zoom-ui { bottom: 66px; }
-      .home-btn { bottom: 14px; }
+      .zoom-ui { bottom: calc(66px + env(safe-area-inset-bottom)); }
+      .home-btn { bottom: calc(14px + env(safe-area-inset-bottom)); }
     }
+
+    /* Filet de sécurité JS (iPad / PWA / vieux cache) */
+    html.touch-ui .sheet-grab { display: block; }
+    html.touch-ui .hint { display: none; }
+    html.touch-ui .app.city-mode header,
+    html.touch-ui .app.city-mode #city-list { display: none !important; }
+    html.touch-ui .app.city-mode .city-banner { display: block; }
+    html.touch-ui .overlay {
+      inset: auto 0 0 0 !important;
+      width: 100% !important;
+      max-height: 38vh;
+      transform: translateY(110%);
+      border-radius: 14px 14px 0 0;
+    }
+    html.touch-ui .overlay.open { transform: translateY(0); }
+    html.touch-ui .overlay.open.expanded { max-height: 88vh; }
+    html.touch-ui #city-list {
+      display: flex; width: auto; max-width: calc(100% - 24px);
+      overflow-x: auto; left: 12px; right: 12px; top: 8px; max-height: none;
+    }
+    html.touch-ui #city-list button { flex: 0 0 auto; width: auto; }
+    html.touch-ui #city-view { padding: 0; place-items: stretch; }
+    html.touch-ui .city-frame { max-width: none; box-shadow: none; }
   </style>
 </head>
 <body>
@@ -708,6 +736,19 @@
     </main>
   </div>
   <script>
+    (function syncTouchUi(){
+      const q = "(max-width: 1100px), (hover: none) and (pointer: coarse)";
+      const apply = () => {
+        const short = Math.min(screen.width || 0, screen.height || 0) > 0
+          && Math.min(screen.width, screen.height) <= 1100;
+        const on = window.matchMedia(q).matches || short || ("ontouchstart" in window);
+        document.documentElement.classList.toggle("touch-ui", on);
+      };
+      apply();
+      try { window.matchMedia(q).addEventListener("change", apply); } catch (_) {
+        window.addEventListener("resize", apply);
+      }
+    })();
     const CITIES = {
       tokyo: { id:"tokyo", name:"Tokyo", jp:"東京", lat:35.6812, lng:139.7671,
         stays:[
@@ -1736,7 +1777,8 @@
       cityEl.style.display = "none";
       detailEl.classList.add("show");
       // Sur mobile, agrandir le panneau pour lire le détail
-      if (window.matchMedia("(max-width: 900px)").matches) {
+      if (window.matchMedia("(max-width: 1100px), (hover: none) and (pointer: coarse)").matches
+          || document.documentElement.classList.contains("touch-ui")) {
         panel.classList.add("expanded");
         const grab = panel.querySelector(".sheet-grab");
         if (grab) grab.setAttribute("aria-expanded", "true");
@@ -1997,7 +2039,13 @@
     // Cache le site pour Safari hors ligne (après 1ère ouverture avec Wi‑Fi)
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
+        navigator.serviceWorker.register("./sw.js").then((reg) => {
+          reg.update();
+          if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+        }).catch(() => {});
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          // Nouvelle version prête — un reload suffit au prochain démarrage
+        });
       });
     }
   </script>
