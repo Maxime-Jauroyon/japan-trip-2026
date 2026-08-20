@@ -273,8 +273,6 @@
     .phrase .fr { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
     .phrase .jp { font-size: 16px; font-weight: 600; }
     .phrase .ro { font-size: 12px; color: var(--gold-2); margin-top: 3px; }
-    .app.tab-prep .prep,
-    .app.tab-onsite .prep { display: none; }
     .app.tab-prep #view-map,
     .app.tab-onsite #view-map { display: none; }
 
@@ -831,7 +829,6 @@
       header h1 { font-size: 14px; }
       .tabs { margin-left: 0; width: 100%; order: 3; }
       .tabs button { flex: 1 1 0; text-align: center; padding: 7px 6px; font-size: 12px; }
-      .prep { display: none; }
       .force-refresh { font-size: 10px; padding: 4px 8px; margin-left: auto; }
       .info-view { padding: 14px 14px 36px; }
 
@@ -947,14 +944,6 @@
         <button type="button" data-tab="prep">Préparatifs</button>
         <button type="button" data-tab="onsite">Sur place</button>
       </nav>
-      <div class="prep">
-        <span class="pill ok"><i></i>Dates <em>8–29 nov 2026</em></span>
-        <span class="pill ok"><i></i>Vols</span>
-        <span class="pill ok"><i></i>Villes</span>
-        <span class="pill no"><i></i>Hôtels</span>
-        <span class="pill no"><i></i>Trajets</span>
-        <span class="pill mid"><i></i>Idées</span>
-      </div>
       <button type="button" class="force-refresh" id="force-refresh" title="Vider le cache et recharger">Rafraîchir</button>
     </header>
     <main>
