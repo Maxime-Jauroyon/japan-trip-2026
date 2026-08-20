@@ -527,6 +527,21 @@ main { position: relative; min-height: 0; height: 100%; }
   filter: drop-shadow(0 0 0 3px rgba(250,247,241,0.95)) drop-shadow(0 6px 16px rgba(196,92,38,0.55));
   animation: pinPulse 1.1s ease-in-out infinite;
 }
+.pin.pin-hotel {
+  z-index: 4;
+}
+.pin.pin-hotel .badge {
+  filter: drop-shadow(0 2px 8px rgba(196,165,116,.4));
+}
+.pin.pin-hotel.selected .badge {
+  filter: drop-shadow(0 0 0 3px rgba(250,247,241,0.95)) drop-shadow(0 6px 16px rgba(196,165,116,0.55));
+  animation: none;
+  transform: scale(1.28);
+}
+.move .dummy.stops {
+  color: var(--gold-2);
+  margin-top: 2px;
+}
 @keyframes pinPulse {
   0%, 100% { transform: scale(1.32); }
   50% { transform: scale(1.42); }

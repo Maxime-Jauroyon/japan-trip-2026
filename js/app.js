@@ -101,6 +101,14 @@ function placesOnMap(cityId){
   });
   return pts;
 }
+function hotelsOnMap(cityId){
+  const c = CITIES[cityId];
+  if (!c) return [];
+  return (c.stays || []).filter(s => {
+    const h = s.hotel;
+    return h && h.name && h.name !== "—" && h.lat != null && h.lng != null;
+  });
+}
 
 function pinKind(title){
   const t = (title || "").toLowerCase();
@@ -423,6 +431,7 @@ function layoutCityPins(){
 
 function renderCityPins(id, day, selected){
   const places = placesOnMap(id);
+  const hotels = hotelsOnMap(id);
   const dayKeys = new Set();
   if (day){
     ideasOf(day).forEach(a => {
@@ -456,6 +465,26 @@ function renderCityPins(id, day, selected){
     btn.addEventListener("click", e => {
       e.stopPropagation();
       openActivityDetail(a);
+    });
+    cityPins.appendChild(btn);
+  });
+  hotels.forEach(stay => {
+    const h = stay.hotel;
+    const key = h.lat.toFixed(4) + "," + h.lng.toFixed(4);
+    const isSel = selKey === key;
+    const accent = isSel ? "#e0c99a" : "#c4a574";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "pin pin-hotel" + (isSel ? " selected" : "");
+    btn.dataset.lat = h.lat;
+    btn.dataset.lng = h.lng;
+    btn.dataset.stay = stay.id;
+    btn.title = h.name + " (hôtel)";
+    btn.setAttribute("aria-label", "Hôtel · " + h.name);
+    btn.innerHTML = `<span class="badge">${iconSvg("bag", accent)}</span>`;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      openHotelDetail(stay);
     });
     cityPins.appendChild(btn);
   });
@@ -500,7 +529,7 @@ function showCity(id, dayN){
   }
   cityView.classList.add("visible");
   countryView.classList.add("hidden");
-  hint.textContent = CITIES[id].name + " · glisser / pincer · pastilles = activités";
+  hint.textContent = CITIES[id].name + " · glisser / pincer · pastilles = activités · valise = hôtel";
   setActiveCity(id);
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   const apply = () => {
@@ -608,8 +637,24 @@ function renderMoves(list){
       ? `${statusLabel(leg.status)} · ${leg.payment || ""}`
       : (m.dummy || "");
     const role = m.role ? `<span class="badge-tag" style="margin-bottom:6px">${esc(m.role)}</span>` : "";
-    return `<div class="move"${m.leg ? ` data-leg="${m.leg}"` : ""}>${role}<div class="when">${esc(mode)} · ${esc(when)}</div><div class="title">${esc(m.title)}</div><div class="dummy">${esc(ticket)}</div></div>`;
+    const stops = leg && (leg.fromStop || leg.toStop)
+      ? `<div class="dummy stops">${esc(stopLabel(leg.fromStop))} → ${esc(stopLabel(leg.toStop))}</div>`
+      : "";
+    return `<div class="move"${m.leg ? ` data-leg="${m.leg}"` : ""}>${role}<div class="when">${esc(mode)} · ${esc(when)}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div></div>`;
   }).join("");
+}
+function stopLabel(s){
+  if (!s) return "—";
+  return s.name || "—";
+}
+function stopBlockHtml(leg){
+  if (!leg.fromStop && !leg.toStop) return "";
+  const row = (label, s) => {
+    if (!s) return "";
+    const title = s.jp ? `${s.name} · ${s.jp}` : (s.name || "—");
+    return `<div class="stat wide"><span>${esc(label)} · ${esc(s.kind || "Arrêt")}</span><strong>${esc(title)}</strong></div>`;
+  };
+  return row("Départ", leg.fromStop) + row("Arrivée", leg.toStop);
 }
 
 function photoSlug(act){
@@ -754,10 +799,12 @@ function openActivityDetail(act){
 function openHotelDetail(stay){
   if (!panelContext || panelContext.type !== "city") return;
   const h = stay.hotel || {};
+  const mapAct = (h.lat != null && h.lng != null) ? { lat: h.lat, lng: h.lng, title: h.name } : null;
   showDetailSheet(
     `<span class="sheet-kind hotel">Hôtel</span>` +
     `<div class="detail-hero"><div class="ph">${hotelIconSvg()}</div></div>` +
     `<h3>${esc(h.name || "Hôtel à définir")}</h3>` +
+    (mapAct ? mapsLinkHtml(mapAct, "detail") : "") +
     `<p class="desc">${esc(h.desc || "")}</p>` +
     `<div class="pill-row"><span class="status ${statusClass(h.status)}">${statusLabel(h.status)}</span></div>` +
     `<dl class="detail-kv">` +
@@ -772,6 +819,7 @@ function openHotelDetail(stay){
     `</dl>` +
     notesListHtml(h.notes)
   );
+  if (mapAct) highlightPin(mapAct);
 }
 
 function bindPanel(days, cityId){
@@ -999,6 +1047,7 @@ function openLeg(id){
     `<div class="stat"><span>Mode</span><strong>${esc(leg.mode)}</strong></div>` +
     `<div class="stat"><span>Durée</span><strong>${esc(leg.duration || "—")}</strong></div>` +
     `<div class="stat wide"><span>Compagnie</span><strong>${esc(leg.operator || "—")}</strong></div>` +
+    stopBlockHtml(leg) +
     `</div>` +
     `<dl class="detail-kv">` +
     `<dt>Place</dt><dd>${esc(leg.seat || "—")}</dd>` +
