@@ -111,6 +111,42 @@ function hotelsOnMap(cityId){
   });
 }
 
+/** Gares / aéroports / arrêts des trajets visibles sur la carte ville */
+function stopsOnMap(cityId){
+  const b = MAP_BOUNDS[cityId];
+  if (!b) return [];
+  const byKey = new Map();
+  LEGS.forEach(leg => {
+    [["from", leg.fromStop], ["to", leg.toStop]].forEach(([role, stop]) => {
+      if (!stop || stop.lat == null || stop.lng == null) return;
+      if (!inBounds(b, stop.lat, stop.lng)) return;
+      const key = stop.lat.toFixed(4) + "," + stop.lng.toFixed(4);
+      let entry = byKey.get(key);
+      if (!entry) {
+        entry = {
+          lat: stop.lat,
+          lng: stop.lng,
+          name: stop.name,
+          jp: stop.jp || "",
+          kind: stop.kind || "Arrêt",
+          title: stop.name,
+          legs: []
+        };
+        byKey.set(key, entry);
+      }
+      entry.legs.push({ leg, role });
+    });
+  });
+  return [...byKey.values()];
+}
+
+function stopPinKind(stop){
+  const k = ((stop && stop.kind) || "").toLowerCase();
+  if (/aéroport|aeroport|airport|hnd|cdg/.test(k) || /aéroport|aeroport|haneda|cdg|hnd/i.test(stop.name || "")) return "plane";
+  if (/bus|terminal bus|arrêt bus|arret bus/.test(k)) return "bus";
+  return "train";
+}
+
 function pinKind(title){
   const t = (title || "").toLowerCase();
   if (/gundam/.test(t)) return "gundam";
@@ -139,6 +175,9 @@ function iconSvg(kind, accent){
     town: `<path d="M10 22V12l8-6 8 6v10H10zm5-3h3v-4h-3v4zm7 0h3v-4h-3v4z" fill="${fill}"/>`,
     gundam: `<path d="M14 10h8v3h-2v2h4v7h-3v-4h-6v4h-3v-7h4v-2h-2v-3zm2 1v1h4v-1h-4z" fill="${fill}"/>`,
     bag: `<path d="M13 12h10v10H13V12zm3-3h4v2h-4V9z" fill="${fill}"/>`,
+    train: `<path d="M12 9h12c1.2 0 2 .8 2 2v7H10v-7c0-1.2.8-2 2-2zm2 2v2h8v-2h-8zm-1 5.5a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4zm10 0a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4zM11 20l-2 3h3l1.2-3H11zm10.8 0l1.2 3h3l-2-3h-2.2z" fill="${fill}"/>`,
+    plane: `<path d="M18 7l2 6h6l-2 2-4-.8L18 22l-2-1.2L14 14.2l-4 .8-2-2h6L18 7z" fill="${fill}"/>`,
+    bus: `<path d="M11 8h14c1.2 0 2 1 2 2.2V20h-2.2a1.8 1.8 0 01-3.6 0h-4.4a1.8 1.8 0 01-3.6 0H11V10.2C11 9 11.8 8 13 8zm2 3v3h4v-3h-4zm6 0v3h4v-3h-4z" fill="${fill}"/>`,
     pin: `<circle cx="18" cy="14" r="3.5" fill="${fill}"/>`
   };
   return `<svg viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">${shell}${glyphs[kind] || glyphs.pin}</svg>`;
@@ -240,7 +279,7 @@ function makePanZoom(viewport, world, opts){
     };
   }
   function isMapChrome(el){
-    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .sheet-grab, .overlay"));
+    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .leg-end, .sheet-grab, .overlay"));
   }
   viewport.addEventListener("wheel", e => {
     e.preventDefault();
@@ -433,11 +472,21 @@ function layoutCityPins(){
 function renderCityPins(id, day, selected){
   const places = placesOnMap(id);
   const hotels = hotelsOnMap(id);
+  const stops = stopsOnMap(id);
   const dayKeys = new Set();
+  const dayStopKeys = new Set();
   if (day){
     ideasOf(day).forEach(a => {
       if (a.lat == null) return;
       dayKeys.add(a.lat.toFixed(4) + "," + a.lng.toFixed(4));
+    });
+    (day.moves || []).forEach(m => {
+      if (!m.leg) return;
+      const leg = LEGS.find(l => l.id === m.leg);
+      if (!leg) return;
+      [leg.fromStop, leg.toStop].forEach(s => {
+        if (s && s.lat != null) dayStopKeys.add(s.lat.toFixed(4) + "," + s.lng.toFixed(4));
+      });
     });
   }
   const selKey = selected && selected.lat != null
@@ -466,6 +515,29 @@ function renderCityPins(id, day, selected){
     btn.addEventListener("click", e => {
       e.stopPropagation();
       openActivityDetail(a);
+    });
+    cityPins.appendChild(btn);
+  });
+  stops.forEach(stop => {
+    const key = stop.lat.toFixed(4) + "," + stop.lng.toFixed(4);
+    const onDay = !day || dayStopKeys.has(key);
+    const isSel = selKey === key;
+    const accent = isSel ? "#3d7ea6" : "#2f6f95";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    let cls = "pin pin-stop";
+    if (day) cls += onDay ? " on" : " dim";
+    if (isSel) cls += " selected";
+    else if (selKey && !isSel && day && !onDay) cls += " dim";
+    btn.className = cls;
+    btn.dataset.lat = stop.lat;
+    btn.dataset.lng = stop.lng;
+    btn.title = stop.name + " (" + stop.kind + ")";
+    btn.setAttribute("aria-label", stop.kind + " · " + stop.name);
+    btn.innerHTML = `<span class="badge">${iconSvg(stopPinKind(stop), accent)}</span>`;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      openStopDetail(stop);
     });
     cityPins.appendChild(btn);
   });
@@ -530,7 +602,7 @@ function showCity(id, dayN){
   }
   cityView.classList.add("visible");
   countryView.classList.add("hidden");
-  hint.textContent = CITIES[id].name + " · glisser / pincer · pastilles = activités · valise = hôtel";
+  hint.textContent = CITIES[id].name + " · pastilles = activités · train/avion = gares · valise = hôtel";
   setActiveCity(id);
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   const apply = () => {
@@ -648,14 +720,166 @@ function stopLabel(s){
   if (!s) return "—";
   return s.name || "—";
 }
+function cityIdForCoords(lat, lng){
+  if (lat == null || lng == null) return null;
+  for (const id of ORDER){
+    if (inBounds(MAP_BOUNDS[id], lat, lng)) return id;
+  }
+  return null;
+}
+function legEndPoint(leg, role){
+  if (!leg) return null;
+  const stop = role === "from" ? leg.fromStop : leg.toStop;
+  const fallback = role === "from" ? leg.from : leg.to;
+  const lat = (stop && stop.lat != null) ? stop.lat : (fallback && fallback.lat);
+  const lng = (stop && stop.lng != null) ? stop.lng : (fallback && fallback.lng);
+  if (lat == null || lng == null) return null;
+  const cityId = (fallback && fallback.id) || cityIdForCoords(lat, lng);
+  return {
+    role,
+    lat,
+    lng,
+    name: (stop && stop.name) || (cityId && CITIES[cityId] ? CITIES[cityId].name : "Point"),
+    jp: (stop && stop.jp) || "",
+    kind: (stop && stop.kind) || "",
+    cityId
+  };
+}
+function clearLegEnds(){
+  const el = document.getElementById("leg-ends");
+  if (el) el.innerHTML = "";
+  document.querySelectorAll(".city-mark").forEach(b => {
+    b.classList.remove("leg-from", "leg-to", "leg-related");
+  });
+}
+function renderLegEnds(leg){
+  const host = document.getElementById("leg-ends");
+  if (!host) return;
+  host.innerHTML = "";
+  const ends = [
+    legEndPoint(leg, "from"),
+    legEndPoint(leg, "to")
+  ].filter(Boolean);
+  ends.forEach((end, i) => {
+    const pct = pctIn(JAPAN_BOUNDS, end.lat, end.lng);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "leg-end " + (end.role === "from" ? "from" : "to");
+    btn.style.left = pct.left + "%";
+    btn.style.top = pct.top + "%";
+    btn.dataset.role = end.role;
+    const tag = end.role === "from" ? "Départ" : "Arrivée";
+    btn.title = tag + " · " + end.name;
+    btn.innerHTML =
+      `<span class="leg-end-badge">${end.role === "from" ? "A" : "B"}</span>` +
+      `<span class="leg-end-meta"><em>${esc(tag)}</em><strong>${esc(end.name)}</strong></span>`;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      focusLegEnd(leg, end.role, true);
+    });
+    host.appendChild(btn);
+    if (end.cityId) {
+      const mark = document.querySelector(`.city-mark[data-city="${end.cityId}"]`);
+      if (mark) {
+        mark.classList.add("leg-related", end.role === "from" ? "leg-from" : "leg-to");
+      }
+    }
+  });
+}
+function focusLegEnd(leg, role, pulse){
+  const end = legEndPoint(leg, role);
+  if (!end) return;
+  if (currentCity) showCountry();
+  const pct = pctIn(JAPAN_BOUNDS, end.lat, end.lng);
+  const zoom = Math.max(countryCam.minScale() * 3.2, 3.4);
+  requestAnimationFrame(() => {
+    sizeJapanWorld();
+    countryCam.focusPct(pct.left, pct.top, zoom);
+    document.querySelectorAll(".leg-end").forEach(n => n.classList.toggle("pulse", !!pulse && n.dataset.role === role));
+    if (pulse) {
+      hint.textContent = (role === "from" ? "Départ" : "Arrivée") + " · " + end.name + (end.cityId && CITIES[end.cityId] ? " · " + CITIES[end.cityId].name : "");
+    }
+  });
+}
+function focusLegOverview(leg){
+  const a = legEndPoint(leg, "from");
+  const b = legEndPoint(leg, "to");
+  const pts = [a, b].filter(Boolean);
+  if (!pts.length) return;
+  if (pts.length === 1) {
+    focusLegEnd(leg, pts[0].role, false);
+    return;
+  }
+  const midLat = (pts[0].lat + pts[1].lat) / 2;
+  const midLng = (pts[0].lng + pts[1].lng) / 2;
+  const span = Math.max(Math.abs(pts[0].lat - pts[1].lat), Math.abs(pts[0].lng - pts[1].lng));
+  let zoomMul = 1.35;
+  if (span < 0.4) zoomMul = 3.4;
+  else if (span < 1.2) zoomMul = 2.6;
+  else if (span < 2.5) zoomMul = 2.0;
+  else if (span < 4.5) zoomMul = 1.55;
+  const pct = pctIn(JAPAN_BOUNDS, midLat, midLng);
+  requestAnimationFrame(() => {
+    sizeJapanWorld();
+    countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * zoomMul, 1.4));
+  });
+}
+function openCityAtLegEnd(leg, role){
+  const end = legEndPoint(leg, role);
+  if (!end || !end.cityId || !CITIES[end.cityId]) {
+    focusLegEnd(leg, role, true);
+    return;
+  }
+  openCity(end.cityId);
+  // After city map loads, highlight the stop pin
+  const tryFocus = () => {
+    if (!cityImg.complete || !cityImg.naturalWidth || currentCity !== end.cityId) {
+      setTimeout(tryFocus, 80);
+      return;
+    }
+    const stop = stopsOnMap(end.cityId).find(s =>
+      Math.abs(s.lat - end.lat) < 0.0008 && Math.abs(s.lng - end.lng) < 0.0008
+    );
+    if (stop) openStopDetail(stop);
+    else highlightPin({ lat: end.lat, lng: end.lng, title: end.name });
+  };
+  setTimeout(tryFocus, 120);
+}
 function stopBlockHtml(leg){
   if (!leg.fromStop && !leg.toStop) return "";
-  const row = (label, s) => {
+  const row = (label, s, role) => {
     if (!s) return "";
     const title = s.jp ? `${s.name} · ${s.jp}` : (s.name || "—");
-    return `<div class="stat wide"><span>${esc(label)} · ${esc(s.kind || "Arrêt")}</span><strong>${esc(title)}</strong></div>`;
+    const hasGeo = s.lat != null && s.lng != null;
+    if (!hasGeo) {
+      return `<div class="stat wide"><span>${esc(label)} · ${esc(s.kind || "Arrêt")}</span><strong>${esc(title)}</strong></div>`;
+    }
+    return `<button type="button" class="stat wide stop-jump" data-end="${esc(role)}">` +
+      `<span>${esc(label)} · ${esc(s.kind || "Arrêt")}</span>` +
+      `<strong>${esc(title)}</strong>` +
+      `<em class="jump-hint">Voir sur la carte</em>` +
+      `</button>`;
   };
-  return row("Départ", leg.fromStop) + row("Arrivée", leg.toStop);
+  return row("Départ", leg.fromStop, "from") + row("Arrivée", leg.toStop, "to");
+}
+function legEndsToolbarHtml(leg){
+  const a = legEndPoint(leg, "from");
+  const b = legEndPoint(leg, "to");
+  const btn = (end, role) => {
+    if (!end) return "";
+    const tag = role === "from" ? "Départ" : "Arrivée";
+    const city = end.cityId && CITIES[end.cityId] ? CITIES[end.cityId].name : "";
+    return `<div class="leg-end-actions">` +
+      `<button type="button" class="leg-focus-btn ${role}" data-end="${role}">` +
+      `<span class="ab">${role === "from" ? "A" : "B"}</span>` +
+      `<span class="txt"><em>${esc(tag)}</em><strong>${esc(end.name)}</strong>${city ? `<small>${esc(city)}</small>` : ""}</span>` +
+      `</button>` +
+      (end.cityId
+        ? `<button type="button" class="leg-city-btn" data-end-city="${role}" title="Ouvrir la carte ville">Ville</button>`
+        : "") +
+      `</div>`;
+  };
+  return `<div class="leg-ends-bar">${btn(a, "from")}${btn(b, "to")}</div>`;
 }
 
 function photoSlug(act){
@@ -821,6 +1045,36 @@ function openHotelDetail(stay){
     notesListHtml(h.notes)
   );
   if (mapAct) highlightPin(mapAct);
+}
+
+function openStopDetail(stop){
+  if (!panelContext || panelContext.type !== "city") return;
+  const mapAct = { lat: stop.lat, lng: stop.lng, title: stop.name };
+  const legsHtml = (stop.legs || []).map(({ leg, role }) => {
+    const roleLabel = role === "from" ? "Départ" : "Arrivée";
+    return `<button type="button" class="stop-leg-link" data-leg="${esc(leg.id)}">` +
+      `<span class="when">${esc(roleLabel)} · ${esc(leg.mode)}</span>` +
+      `<strong>${esc(leg.title)}</strong>` +
+      `<span class="dummy">${esc(leg.subtitle || "")}</span>` +
+      `</button>`;
+  }).join("");
+  showDetailSheet(
+    `<span class="sheet-kind stop">Trajet</span>` +
+    `<h3>${esc(stop.name)}</h3>` +
+    (stop.jp ? `<p class="jp-name">${esc(stop.jp)}</p>` : "") +
+    mapsLinkHtml(mapAct, "detail") +
+    `<dl class="detail-kv">` +
+    `<dt>Type</dt><dd>${esc(stop.kind || "Arrêt")}</dd>` +
+    `</dl>` +
+    (legsHtml ? `<div class="stop-legs">${legsHtml}</div>` : "")
+  );
+  const sheet = panel.querySelector(".detail-sheet");
+  if (sheet) {
+    sheet.querySelectorAll(".stop-leg-link[data-leg]").forEach(n => {
+      n.addEventListener("click", () => openLeg(n.dataset.leg));
+    });
+  }
+  highlightPin(mapAct);
 }
 
 function bindPanel(days, cityId){
@@ -999,6 +1253,7 @@ function closePanel(reset){
   document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
   lastFocusAct = null;
   panelContext = null;
+  clearLegEnds();
   setActiveCity(null);
   if (reset) goOverview();
 }
@@ -1007,6 +1262,7 @@ function goOverview(){
   document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
   lastFocusAct = null;
   panelContext = null;
+  clearLegEnds();
   document.querySelectorAll("#routes path.route").forEach(p => {
     p.style.stroke = "";
     p.style.strokeWidth = "";
@@ -1015,23 +1271,26 @@ function goOverview(){
   showCountry();
 }
 function openCity(id){
+  clearLegEnds();
   showCity(id, null);
   fillCityPanel(CITIES[id], daysForCity(id), null);
 }
 function openLeg(id){
   const leg = LEGS.find(l => l.id === id);
+  if (!leg) return;
   panelContext = { type:"leg", leg };
   showCountry();
   document.querySelectorAll("#routes path.route").forEach(p => {
     const on = p.dataset.leg === id;
     p.style.stroke = on ? "#c45c26" : "#6e5a48";
     p.style.strokeWidth = on ? "6" : "4";
-    p.style.opacity = on ? "1" : "0.35";
+    p.style.opacity = on ? "1" : "0.28";
   });
   document.querySelectorAll("#routes path.route-hit").forEach(p => {
     p.style.pointerEvents = "";
   });
   setActiveCity(null);
+  renderLegEnds(leg);
   const tips = leg.tips ? `<p class="note" style="color:var(--gold-2)">${esc(leg.tips)}</p>` : "";
   const details = (leg.details || []).map(d => `<li>${esc(d)}</li>`).join("");
   panel.classList.remove("panel-city");
@@ -1041,6 +1300,7 @@ function openLeg(id){
     `<div class="overlay-head"><div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
     `<div class="overlay-body">` +
     `<span class="sheet-kind trajet">Trajet</span>` +
+    legEndsToolbarHtml(leg) +
     `<div class="pill-row"><span class="status ${statusClass(leg.status)}">${statusLabel(leg.status)}</span></div>` +
     `<div class="trajet-grid">` +
     `<div class="stat"><span>Départ</span><strong>${esc(leg.depart || "—")}</strong></div>` +
@@ -1062,18 +1322,17 @@ function openLeg(id){
   panel.classList.add("open");
   bindSheetGrab();
   panel.querySelector(".close").onclick = () => closePanel(true);
-  if (window.matchMedia("(max-width: 900px)").matches) {
-    setSheetState("max");
-  }
-  const via = leg.via || [];
-  const mid = via.length
-    ? via[Math.floor(via.length / 2)]
-    : { lat: (leg.from.lat + leg.to.lat) / 2, lng: (leg.from.lng + leg.to.lng) / 2 };
-  const pct = pctIn(JAPAN_BOUNDS, mid.lat, mid.lng);
-  requestAnimationFrame(() => {
-    sizeJapanWorld();
-    countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * 1.6, 2.0));
+  panel.querySelectorAll("[data-end]").forEach(n => {
+    n.addEventListener("click", () => focusLegEnd(leg, n.dataset.end, true));
   });
+  panel.querySelectorAll("[data-end-city]").forEach(n => {
+    n.addEventListener("click", () => openCityAtLegEnd(leg, n.dataset.endCity));
+  });
+  if (window.matchMedia("(max-width: 900px)").matches) {
+    setSheetState("mid");
+  }
+  hint.textContent = "Trajet · touche A/B sur la carte ou les boutons Départ / Arrivée";
+  focusLegOverview(leg);
 }
 
 ORDER.forEach(id => {
