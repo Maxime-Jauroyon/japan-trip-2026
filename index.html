@@ -655,7 +655,6 @@
         inset: 0;
         box-shadow: none;
         border-radius: 0;
-        transition: bottom .28s ease;
       }
       /* La carte se réduit au-dessus du panneau — le sud reste visible */
       .app.city-mode.sheet-mid .city-frame { bottom: 42%; }
@@ -1992,11 +1991,17 @@
         const s = sheetState();
         app.classList.add(s === "max" ? "sheet-max" : s === "min" ? "sheet-min" : "sheet-mid");
       }
-      requestAnimationFrame(() => requestAnimationFrame(() => {
+      // Forcer le reflow puis recentrer tout de suite (pas d’attente d’un clic)
+      void cityFrame.offsetHeight;
+      const refresh = () => {
         if (!currentCity) return;
         if (lastFocusAct && lastFocusAct.lat != null) highlightPin(lastFocusAct);
         else fitCityMap();
-      }));
+        cityCam.clamp();
+        cityCam.apply();
+      };
+      refresh();
+      requestAnimationFrame(refresh);
     }
     function setSheetState(s){
       panel.classList.remove("expanded", "minimized");
