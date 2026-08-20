@@ -10,13 +10,13 @@ const CITIES = {
           notes:["Type de chambre à définir","Petit-déjeuner à définir","Emplacement fictif — à remplacer à la résa"],
           desc:"Première base à Tokyo après l’atterrissage à Haneda. Pratique pour les trains et le centre." } },
       { id:"tokyo-2", label:"Séjour 2 — retour", from:"27 nov", to:"29 nov", nights:"2 nuits",
-        hotel:{ name:"Hôtel Hikari", area:"Près de Haneda", address:"Zone Omori / Kamata · accès Keikyu vers HND (indicatif)",
-          lat:35.5835, lng:139.7380,
+        hotel:{ name:"Hôtel Hikari", area:"Près de Haneda", address:"Zone Keikyu Anamori-inari / Tenkubashi (indicatif)",
+          lat:35.5502, lng:139.7518,
           checkIn:"27 nov · après le shinkansen", checkOut:"29 nov · très tôt pour HND",
           status:"placeholder", payment:"Pas encore réservé", price:"—",
           notes:[
             "Vol retour tôt (HND 09:05) — dormir près de l’aéroport.",
-            "Compter ~20–30 min vers Haneda (Keikyu / limousine bus).",
+            "Quelques minutes vers Haneda (Keikyu / navette / taxi).",
             "Emplacement fictif — à remplacer à la résa"
           ],
           desc:"Dernière base à Tokyo côté sud, proche de Haneda pour le décollage matinal. Réservation séparée du séjour 1." } }
@@ -71,7 +71,7 @@ const CITIES = {
 };
 const ORDER = ["tokyo","fuji","kanazawa","shirakawa","takayama","kyoto","nara","osaka"];
 const MAP_BOUNDS = {
-  tokyo:{ west:139.62, south:35.58, east:139.9, north:35.78 },
+  tokyo:{ west:139.62, south:35.52, east:139.9, north:35.78 },
   fuji:{ west:138.55, south:35.28, east:138.92, north:35.62 },
   kanazawa:{ west:136.6, south:36.53, east:136.71, north:36.59 },
   shirakawa:{ west:136.87, south:36.22, east:136.94, north:36.29 },

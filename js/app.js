@@ -545,7 +545,7 @@ function showCity(id, dayN){
   } else {
     cityImg.dataset.id = id;
     cityImg.alt = "Carte de " + CITIES[id].name;
-    cityImg.src = "./maps/" + id + ".png?v=5";
+    cityImg.src = "./maps/" + id + ".png?v=6";
   }
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
