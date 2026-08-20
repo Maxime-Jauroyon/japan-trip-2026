@@ -216,16 +216,17 @@
     #city-view {
       position: absolute; inset: 0;
       display: none;
-      padding: 16px calc(var(--panel-w) + 28px) 16px 200px;
       background: var(--map-paper);
+      z-index: 1;
     }
-    #city-view.visible { display: grid; place-items: center; }
+    #city-view.visible { display: block; }
     .city-frame {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      max-width: 1100px;
-      max-height: 100%;
+      position: absolute;
+      inset: 16px calc(var(--panel-w) + 28px) 16px 200px;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
       overflow: hidden;
       background: var(--map-paper);
       box-shadow: 0 6px 28px rgba(30,40,55,0.16);
@@ -604,19 +605,22 @@
       }
 
       #city-view {
-        padding: 0;
-        place-items: stretch;
+        /* filled by .city-frame inset */
       }
       .city-frame {
-        max-width: none;
+        inset: 0;
         box-shadow: none;
         border-radius: 0;
       }
 
       .overlay {
-        inset: auto 0 0 0;
-        width: 100%;
-        max-height: 38vh;
+        top: auto !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: 38vh !important;
         transform: translateY(110%);
         border-radius: 14px 14px 0 0;
         border-left: 0; border-right: 0; border-bottom: 0;
@@ -624,7 +628,7 @@
         padding-bottom: env(safe-area-inset-bottom);
       }
       .overlay.open { transform: translateY(0); }
-      .overlay.open.expanded { max-height: 88vh; }
+      .overlay.open.expanded { max-height: 88vh !important; }
       .sheet-grab { display: block; }
       .overlay-head {
         padding: 4px 16px 12px;
@@ -665,28 +669,34 @@
       .home-btn { bottom: calc(14px + env(safe-area-inset-bottom)); }
     }
 
-    /* Filet de sécurité JS (iPad / PWA / vieux cache) */
+    /* Filet de sécurité JS — seulement layout tactile, panneau bas borné */
     html.touch-ui .sheet-grab { display: block; }
     html.touch-ui .hint { display: none; }
     html.touch-ui .app.city-mode header,
     html.touch-ui .app.city-mode #city-list { display: none !important; }
     html.touch-ui .app.city-mode .city-banner { display: block; }
+    html.touch-ui .city-frame {
+      inset: 0;
+      box-shadow: none;
+    }
     html.touch-ui .overlay {
-      inset: auto 0 0 0 !important;
+      top: auto !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
       width: 100% !important;
-      max-height: 38vh;
+      height: auto !important;
+      max-height: 38vh !important;
       transform: translateY(110%);
       border-radius: 14px 14px 0 0;
     }
     html.touch-ui .overlay.open { transform: translateY(0); }
-    html.touch-ui .overlay.open.expanded { max-height: 88vh; }
+    html.touch-ui .overlay.open.expanded { max-height: 88vh !important; }
     html.touch-ui #city-list {
       display: flex; width: auto; max-width: calc(100% - 24px);
       overflow-x: auto; left: 12px; right: 12px; top: 8px; max-height: none;
     }
     html.touch-ui #city-list button { flex: 0 0 auto; width: auto; }
-    html.touch-ui #city-view { padding: 0; place-items: stretch; }
-    html.touch-ui .city-frame { max-width: none; box-shadow: none; }
   </style>
 </head>
 <body>
@@ -739,15 +749,15 @@
     (function syncTouchUi(){
       const q = "(max-width: 1100px), (hover: none) and (pointer: coarse)";
       const apply = () => {
-        const short = Math.min(screen.width || 0, screen.height || 0) > 0
-          && Math.min(screen.width, screen.height) <= 1100;
-        const on = window.matchMedia(q).matches || short || ("ontouchstart" in window);
+        const w = Math.min(window.innerWidth || 0, screen.width || 0) || window.innerWidth;
+        const on = window.matchMedia(q).matches || w <= 1100;
         document.documentElement.classList.toggle("touch-ui", on);
       };
       apply();
       try { window.matchMedia(q).addEventListener("change", apply); } catch (_) {
         window.addEventListener("resize", apply);
       }
+      window.addEventListener("orientationchange", apply);
     })();
     const CITIES = {
       tokyo: { id:"tokyo", name:"Tokyo", jp:"東京", lat:35.6812, lng:139.7671,
@@ -1597,8 +1607,8 @@
         banner.hidden = false;
         banner.textContent = CITIES[id].name;
       }
-      countryView.classList.add("hidden");
       cityView.classList.add("visible");
+      countryView.classList.add("hidden");
       hint.textContent = CITIES[id].name + " · glisser / pincer · pastilles = activités";
       setActiveCity(id);
       const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
@@ -1607,6 +1617,9 @@
         fitCityMap();
       };
       cityImg.onload = apply;
+      cityImg.onerror = () => {
+        cityFrame.style.background = "#d5dde3";
+      };
       if (cityImg.dataset.id === id && cityImg.complete && cityImg.naturalWidth){
         apply();
       } else {
@@ -1614,6 +1627,10 @@
         cityImg.alt = "Carte de " + CITIES[id].name;
         cityImg.src = "./maps/" + id + ".png?v=5";
       }
+      // Recalcule le zoom une fois le layout visible
+      requestAnimationFrame(() => {
+        if (cityImg.complete && cityImg.naturalWidth) fitCityMap();
+      });
     }
 
     function esc(s){
