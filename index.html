@@ -79,13 +79,34 @@
       <section id="view-onsite" class="info-view" aria-label="Sur place">
         <div class="info-wrap">
           <h2>Sur place</h2>
-          <p class="lead">Programme du jour (selon la date de ton téléphone, fuseau Japon) et phrases utiles.</p>
+          <p class="lead">Programme du jour, convertisseur ¥/€ et phrases utiles.</p>
 
           <div class="info-sec">
             <h3>Aujourd’hui</h3>
             <div id="onsite-today"></div>
             <div class="day-pick" id="onsite-day-pick" hidden></div>
             <div id="onsite-day-body"></div>
+          </div>
+
+          <div class="info-sec">
+            <h3>Convertisseur ¥ ↔ €</h3>
+            <p class="fx-hint">Taux indicatif, modifiable. Mémorisé sur cet appareil (hors ligne).</p>
+            <div class="fx">
+              <label class="fx-rate">
+                <span>¥ pour 1 €</span>
+                <input type="number" id="fx-rate" inputmode="decimal" min="1" step="0.1" />
+              </label>
+              <div class="fx-grid">
+                <label>
+                  <span>Yen</span>
+                  <input type="number" id="fx-yen" inputmode="decimal" min="0" step="1" placeholder="0" />
+                </label>
+                <label>
+                  <span>Euro</span>
+                  <input type="number" id="fx-eur" inputmode="decimal" min="0" step="0.01" placeholder="0" />
+                </label>
+              </div>
+            </div>
           </div>
 
           <div class="info-sec">

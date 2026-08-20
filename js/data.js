@@ -66,7 +66,7 @@ const JAPAN_BOUNDS = { west:134.3, south:33.7, east:141.1, north:37.35 };
 
 const DAYS = [
   { n:1, date:"8 nov 2026", dow:"Dimanche", city:"tokyo",
-    moves:[{when:"6:50–8:30", title:"Vol Paris → Haneda", dummy:"Vol (confirmé)", mode:"Avion", leg:"arrive"}],
+    moves:[{when:"Arrivée HND 06:50", title:"Vol Paris → Haneda", dummy:"Air France · CDG 09:45 (7 nov)", mode:"Avion", leg:"arrive"}],
     ideas:[
       {title:"Akihabara — arcades / anime", lat:35.6984, lng:139.7731,
         desc:"Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit.",
@@ -298,17 +298,22 @@ const DAYS = [
         desc:"Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs."}
     ] },
   { n:22, date:"29 nov 2026", dow:"Dimanche", city:"tokyo",
-    moves:[{when:"Aéroport ~6:00 · vol 9:05", title:"Tokyo → Paris (CDG)", dummy:"Vol retour", mode:"Avion", leg:"depart"}],
+    moves:[{when:"HND 09:05 → CDG 15:35", title:"Tokyo → Paris (CDG)", dummy:"Air France · 2 pers.", mode:"Avion", leg:"depart"}],
     ideas:[] }
 ];
 
 const LEGS = [
-  { id:"arrive", title:"Paris → Tokyo (Haneda)", subtitle:"8 nov · Jour 1", mode:"Avion",
-    depart:"Soir (Paris)", arrive:"6:50–8:30", duration:"Nuit",
-    operator:"—", seat:"—", ref:"—",
-    status:"paid", payment:"Payé d’avance", price:"≈ 2 000 € A/R",
+  { id:"arrive", title:"Paris → Tokyo (Haneda)", subtitle:"7–8 nov · Jour 1", mode:"Avion",
+    depart:"CDG · sam. 7 nov · 09:45", arrive:"HND · dim. 8 nov · 06:50", duration:"Vol de nuit",
+    operator:"Air France", seat:"2 × standards côte à côte · rangée 36", ref:"—",
+    status:"paid", payment:"Payé d’avance", price:"≈ 2 000 € A/R (2 pers.)",
     skipMap:true, from:{lat:35.5494,lng:139.7798}, to:CITIES.tokyo, via:[],
-    details:["Seuls les horaires de vol sont confirmés pour l’instant.","Budget vols A/R ≈ 2 000 € au total."], tips:"Haneda est l’arrivée la plus pratique pour Tokyo." },
+    details:[
+      "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
+      "Repas et en-cas inclus à bord.",
+      "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant."
+    ],
+    tips:"Atterrissage tôt à Haneda — laisser le temps bagages + train vers l’hôtel." },
   { id:"tokyo-fuji", title:"Tokyo → Fujikawaguchiko", subtitle:"12 nov · Jour 5", mode:"Train",
     depart:"~7:00", arrive:"~9:00", duration:"~2 h",
     operator:"JR / Fujikyu (à définir)", seat:"—", ref:"—",
@@ -359,11 +364,16 @@ const LEGS = [
     via:[{lat:35.05,lng:136.7},{lat:34.95,lng:138.2},{lat:35.25,lng:139.2}],
     details:["Retour à Tokyo pour le séjour 2."], tips:"Les vues vers le Fuji sont un conseil, pas une réservation de place." },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
-    depart:"Aéroport ~6:00 · vol 9:05", arrive:"Soir (Paris)", duration:"Vol de jour",
-    operator:"—", seat:"—", ref:"—",
-    status:"paid", payment:"Payé d’avance", price:"Inclus dans les 2 000 € A/R",
+    depart:"HND · dim. 29 nov · 09:05", arrive:"CDG · dim. 29 nov · 15:35", duration:"Vol de jour",
+    operator:"Air France", seat:"2 × standards côte à côte · rangée 27", ref:"—",
+    status:"paid", payment:"Payé d’avance", price:"Inclus dans les ≈ 2 000 € A/R",
     skipMap:true, from:CITIES.tokyo, to:{lat:35.5494,lng:139.7798}, via:[],
-    details:["Seuls les horaires de vol sont confirmés pour l’instant."], tips:"Faire les bagages le 28." }
+    details:[
+      "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
+      "Repas inclus à bord.",
+      "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant."
+    ],
+    tips:"Check-out tôt — viser Haneda vers 6h–6h30." }
 ];
 
 const LABEL_SIDE = {
@@ -372,8 +382,11 @@ const LABEL_SIDE = {
 };
 
 const CHECK_KEY = "japan-trip-check-v1";
+const FX_KEY = "japan-trip-fx-rate-v1";
+/** Yen pour 1 € — indicative, août 2026 (~185 ¥/€) */
+const FX_DEFAULT = 185;
 const PREP_CHECKS = [
-  { id:"vols", label:"Vols A/R", meta:"Payés · ≈ 2 000 € · Paris ↔ Haneda" },
+  { id:"vols", label:"Vols A/R", meta:"Payés · Air France · ≈ 2 000 € · CDG ↔ HND (2 pers.)" },
   { id:"villes", label:"Villes & dates verrouillées", meta:"Itinéraire 8–29 nov 2026 figé" },
   { id:"hotels", label:"Hôtels / ryokan", meta:"Réservations + adresses + check-in" },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen, Limited Express, bus Fuji / Shirakawa" },
@@ -395,7 +408,7 @@ const PREP_PLAN = [
   "Relire le programme « Sur place » la veille de chaque étape."
 ];
 const PREP_BUDGET = [
-  { label:"Vols A/R", amount:"≈ 2 000 €", note:"Déjà payés", done:true },
+  { label:"Vols A/R", amount:"≈ 2 000 €", note:"Payés · Air France · 2 pers. · CDG ↔ HND", done:true },
   { label:"Hôtels", amount:"À définir", note:"Pas encore réservés", done:false },
   { label:"Trajets JP", amount:"À définir", note:"Trains / bus", done:false },
   { label:"Activités / tickets", amount:"À définir", note:"USJ, teamLab…", done:false },

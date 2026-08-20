@@ -252,6 +252,49 @@ main { position: relative; min-height: 0; height: 100%; }
 .onsite-act .d { color: var(--muted); font-size: 13px; line-height: 1.5; }
 .onsite-act .detail-notes { margin-top: 8px; }
 .onsite-act .detail-notes li { border-top-color: rgba(255,255,255,.06); }
+.fx-hint {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 0 0 12px;
+}
+.fx-rate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.fx-rate input,
+.fx-grid input {
+  width: 100%;
+  max-width: 140px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--cream);
+  font: inherit;
+  font-size: 16px;
+  padding: 8px 10px;
+  border-radius: 4px;
+}
+.fx-rate input { max-width: 110px; text-align: right; }
+.fx-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.fx-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+}
+.fx-grid input { max-width: none; }
 .phrase-grid {
   display: grid;
   gap: 10px;
