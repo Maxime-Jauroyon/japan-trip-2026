@@ -1161,7 +1161,7 @@ function renderPrep(){
   const rows = PREP_BUDGET.map(b =>
     `<div class="${b.done ? "" : "muted"}">${esc(b.label)}<span class="meta" style="display:block;font-size:12px;font-weight:400">${esc(b.note)}</span></div><div class="amt">${esc(b.amount)}</div>`
   ).join("");
-  bud.innerHTML = rows + `<div class="total"><span>Vols déjà sortis</span><span>≈ 2 000 €</span></div>`;
+  bud.innerHTML = rows + `<div class="total"><span>Vols déjà sortis (×2)</span><span>≈ 4 000 €</span></div>`;
 }
 function actMetaFor(act){
   const slug = photoSlug(act);

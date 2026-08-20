@@ -325,9 +325,9 @@ const DAYS = [
 
 const LEGS = [
   { id:"arrive", title:"Paris → Tokyo (Haneda)", subtitle:"7–8 nov · Jour 1", mode:"Avion",
-    depart:"CDG · sam. 7 nov · 09:45", arrive:"HND · dim. 8 nov · 06:50", duration:"Vol de nuit",
+    depart:"CDG · sam. 7 nov · 09:45", arrive:"HND · dim. 8 nov · 06:50", duration:"~13 h",
     operator:"Air France", seat:"2 × standards côte à côte · rangée 36", ref:"—",
-    status:"paid", payment:"Payé d’avance", price:"≈ 2 000 € A/R (2 pers.)",
+    status:"paid", payment:"Payé d’avance", price:"≈ 2 000 € A/R / pers.",
     skipMap:true,
     from:{ id:"tokyo", lat:35.5494, lng:139.7798 }, to:CITIES.tokyo, via:[],
     fromStop:{ kind:"Aéroport", name:"Paris CDG", jp:"パリ CDG" },
@@ -435,9 +435,9 @@ const LEGS = [
     ],
     tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place." },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
-    depart:"HND · dim. 29 nov · 09:05", arrive:"CDG · dim. 29 nov · 15:35", duration:"Vol de jour",
+    depart:"HND · dim. 29 nov · 09:05", arrive:"CDG · dim. 29 nov · 15:35", duration:"~14 h 30",
     operator:"Air France", seat:"2 × standards côte à côte · rangée 27", ref:"—",
-    status:"paid", payment:"Payé d’avance", price:"Inclus dans les ≈ 2 000 € A/R",
+    status:"paid", payment:"Payé d’avance", price:"Inclus · ≈ 2 000 € A/R / pers.",
     skipMap:true,
     from:CITIES.tokyo, to:{ id:"tokyo", lat:35.5494, lng:139.7798 }, via:[],
     fromStop:{ kind:"Aéroport", name:"Tokyo Haneda (HND)", jp:"羽田空港", lat:35.5494, lng:139.7798 },
@@ -461,7 +461,7 @@ const FX_KEY = "japan-trip-fx-rate-v1";
 /** Yen pour 1 € — indicative, août 2026 (~185 ¥/€) */
 const FX_DEFAULT = 185;
 const PREP_CHECKS = [
-  { id:"vols", label:"Vols A/R", meta:"Payés · Air France · ≈ 2 000 € · CDG ↔ HND (2 pers.)" },
+  { id:"vols", label:"Vols A/R", meta:"Payés · Air France · ≈ 2 000 € / pers. · CDG ↔ HND" },
   { id:"villes", label:"Villes & dates verrouillées", meta:"Itinéraire 8–29 nov 2026 figé" },
   { id:"hotels", label:"Hôtels / ryokan", meta:"Réservations + adresses + check-in" },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen, Limited Express, bus Fuji / Shirakawa" },
@@ -483,7 +483,7 @@ const PREP_PLAN = [
   "Relire le programme « Sur place » la veille de chaque étape."
 ];
 const PREP_BUDGET = [
-  { label:"Vols A/R", amount:"≈ 2 000 €", note:"Payés · Air France · 2 pers. · CDG ↔ HND", done:true },
+  { label:"Vols A/R", amount:"≈ 2 000 € / pers.", note:"Payés · Air France · ×2 ≈ 4 000 € · CDG ↔ HND", done:true },
   { label:"Hôtels", amount:"À définir", note:"Pas encore réservés", done:false },
   { label:"Trajets JP", amount:"À définir", note:"Trains / bus", done:false },
   { label:"Activités / tickets", amount:"À définir", note:"USJ, teamLab…", done:false },
