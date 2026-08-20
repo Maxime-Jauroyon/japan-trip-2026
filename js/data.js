@@ -10,12 +10,16 @@ const CITIES = {
           notes:["Type de chambre à définir","Petit-déjeuner à définir","Emplacement fictif — à remplacer à la résa"],
           desc:"Première base à Tokyo après l’atterrissage à Haneda. Pratique pour les trains et le centre." } },
       { id:"tokyo-2", label:"Séjour 2 — retour", from:"27 nov", to:"29 nov", nights:"2 nuits",
-        hotel:{ name:"Hôtel Hikari", area:"Ikebukuro / nord de Tokyo", address:"Zone Ikebukuro Est (indicatif)",
-          lat:35.7295, lng:139.7152,
-          checkIn:"27 nov · après le shinkansen", checkOut:"29 nov · tôt pour l’aéroport",
+        hotel:{ name:"Hôtel Hikari", area:"Près de Haneda", address:"Zone Omori / Kamata · accès Keikyu vers HND (indicatif)",
+          lat:35.5835, lng:139.7380,
+          checkIn:"27 nov · après le shinkansen", checkOut:"29 nov · très tôt pour HND",
           status:"placeholder", payment:"Pas encore réservé", price:"—",
-          notes:["Proche des derniers shopping / Pokemon","Départ tôt pour le vol CDG","Emplacement fictif — à remplacer à la résa"],
-          desc:"Deuxième séjour à Tokyo avant le vol retour. Réservation séparée du séjour 1." } }
+          notes:[
+            "Vol retour tôt (HND 09:05) — dormir près de l’aéroport.",
+            "Compter ~20–30 min vers Haneda (Keikyu / limousine bus).",
+            "Emplacement fictif — à remplacer à la résa"
+          ],
+          desc:"Dernière base à Tokyo côté sud, proche de Haneda pour le décollage matinal. Réservation séparée du séjour 1." } }
     ] },
   fuji: { id:"fuji", name:"Fujikawaguchiko", jp:"河口湖", lat:35.5006, lng:138.7639,
     stays:[{ id:"fuji-1", label:"Séjour lac", from:"12 nov", to:"14 nov", nights:"2 nuits",
@@ -427,7 +431,7 @@ const LEGS = [
     toStop:{ kind:"Gare", name:"Tokyo Station", jp:"東京駅", lat:35.6812, lng:139.7671 },
     details:[
       "Depuis Namba : metro / JR jusqu’à Shin-Osaka (~20–30 min).",
-      "Puis shinkansen Shin-Osaka → Tokyo Station (séjour 2 Ikebukuro ensuite)."
+      "Puis shinkansen Shin-Osaka → Tokyo Station, puis vers l’hôtel côté Haneda (sud)."
     ],
     tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place." },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
@@ -442,9 +446,9 @@ const LEGS = [
       "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
       "Repas inclus à bord.",
       "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
-      "Depuis Ikebukuro : train vers HND (Keikyu / Monorail via Hamamatsucho ou limousine bus)."
+      "Hôtel près de Haneda — trajets courts (Keikyu / navette / taxi)."
     ],
-    tips:"Check-out tôt — viser Haneda vers 6h–6h30." }
+    tips:"Check-out très tôt — viser HND vers 6h–6h30 (vol 09:05)." }
 ];
 
 const LABEL_SIDE = {
