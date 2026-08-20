@@ -1,5 +1,5 @@
 /* Offline cache — 1ère visite en Wi‑Fi, puis utilisable sans réseau dans Safari */
-const CACHE = "japan-trip-2026-v21";
+const CACHE = "japan-trip-2026-v22";
 
 const ASSETS = [
   "./",
@@ -150,9 +150,14 @@ self.addEventListener("fetch", (event) => {
     path.endsWith("/") ||
     path.endsWith("/index.html") ||
     path.endsWith("sw.js");
+  const isAppCode =
+    path.includes("/js/") ||
+    path.includes("/css/") ||
+    path.endsWith(".js") ||
+    path.endsWith(".css");
 
-  // HTML / SW : réseau d’abord pour récupérer les MAJ même en Wi‑Fi
-  if (isDoc) {
+  // HTML / SW / JS / CSS : réseau d’abord pour les mises à jour
+  if (isDoc || isAppCode) {
     event.respondWith(
       (async () => {
         try {
