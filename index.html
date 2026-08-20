@@ -599,6 +599,7 @@
     }
 
     @media (max-width: 900px) {
+      /* Mobile only — desktop layout untouched above */
       header {
         padding: 6px 12px;
         min-height: 40px;
@@ -608,9 +609,10 @@
       .prep { display: none; }
       .force-refresh { font-size: 10px; padding: 4px 8px; }
 
+      #city-list { display: none !important; }
+
       .app.city-mode { grid-template-rows: 1fr; }
-      .app.city-mode header,
-      .app.city-mode #city-list { display: none !important; }
+      .app.city-mode header { display: none !important; }
       .app.city-mode .city-banner { display: block; }
       .app.city-mode .home-btn {
         left: 12px; right: auto;
@@ -636,9 +638,9 @@
         bottom: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        height: 34% !important;
-        max-height: 34% !important;
-        min-height: 140px !important;
+        height: 42% !important;
+        max-height: 42% !important;
+        min-height: 160px !important;
         transform: translate3d(0, 110%, 0);
         border-radius: 14px 14px 0 0;
         border-left: 0; border-right: 0; border-bottom: 0;
@@ -650,7 +652,7 @@
       .overlay.open.expanded {
         height: 78% !important;
         max-height: 78% !important;
-        min-height: 140px !important;
+        min-height: 160px !important;
       }
       .overlay.open.minimized {
         height: 52px !important;
@@ -663,28 +665,34 @@
         display: none !important;
       }
       .sheet-grab { display: block; }
-      .overlay-head {
-        padding: 4px 16px 12px;
+
+      .overlay.panel-city .overlay-head {
+        padding: 0 10px 6px;
+        border-bottom: 0;
+        background: transparent;
+        min-height: 0;
+        justify-content: flex-end;
+      }
+      .overlay.panel-city .overlay-head .head-text { display: none; }
+      .overlay.panel-city .overlay-head .close {
+        width: 32px; height: 32px;
+      }
+      .overlay.panel-leg .overlay-head {
+        padding: 2px 14px 10px;
         align-items: flex-start;
         flex: 0 0 auto;
       }
-      .overlay-head h2 { font-size: 22px; }
+      .overlay.panel-leg .overlay-head h2 { font-size: 18px; }
+
       .overlay-body {
         flex: 1 1 0 !important;
         min-height: 0 !important;
         overflow: auto !important;
-        padding: 10px 16px 28px;
+        padding: 4px 14px 24px;
         -webkit-overflow-scrolling: touch;
       }
+      .overlay.panel-city .overlay-body { padding-top: 0; }
 
-      #city-list {
-        display: flex; width: auto; max-width: calc(100% - 24px);
-        overflow-x: auto; right: 12px; left: 12px;
-        top: max(8px, env(safe-area-inset-top)); max-height: none;
-        -webkit-overflow-scrolling: touch;
-        gap: 2px;
-      }
-      #city-list button { flex: 0 0 auto; width: auto; margin-bottom: 0; }
       .hint { display: none; }
 
       .city-mark .ico-wrap {
@@ -709,8 +717,6 @@
       .app.city-mode .home-btn { bottom: auto; }
       .app.city-mode .zoom-ui { bottom: auto; }
     }
-
-    /* Plus de forçage touch-ui sur grand écran — le @media ci-dessus suffit */
   </style>
 </head>
 <body>
@@ -2006,9 +2012,11 @@
         </section>`;
       }).join("");
 
+      panel.classList.remove("panel-leg");
+      panel.classList.add("panel-city");
       panel.innerHTML =
         sheetGrabHtml() +
-        `<div class="overlay-head"><div><h2>${esc(c.name)}</h2><span class="jp-name">${esc(c.jp)} · ville verrouillée</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+        `<div class="overlay-head"><div class="head-text"><h2>${esc(c.name)}</h2><span class="jp-name">${esc(c.jp)} · ville verrouillée</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
         `<div class="overlay-body"><div class="city-panel">${staysHtml}</div><div class="detail-sheet"></div></div>`;
       panel.classList.add("open");
       bindSheetGrab();
@@ -2017,13 +2025,13 @@
 
     function closePanel(reset){
       if (reset === undefined) reset = true;
-      panel.classList.remove("open", "expanded", "minimized");
+      panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg");
       panelContext = null;
       setActiveCity(null);
       if (reset) goOverview();
     }
     function goOverview(){
-      panel.classList.remove("open", "expanded", "minimized");
+      panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg");
       panelContext = null;
       document.querySelectorAll("#routes path.route").forEach(p => {
         p.style.stroke = "";
@@ -2052,9 +2060,11 @@
       setActiveCity(null);
       const tips = leg.tips ? `<p class="note" style="color:var(--gold-2)">${esc(leg.tips)}</p>` : "";
       const details = (leg.details || []).map(d => `<li>${esc(d)}</li>`).join("");
+      panel.classList.remove("panel-city");
+      panel.classList.add("panel-leg");
       panel.innerHTML =
         sheetGrabHtml() +
-        `<div class="overlay-head"><div><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+        `<div class="overlay-head"><div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
         `<div class="overlay-body">` +
         `<span class="sheet-kind trajet">Trajet</span>` +
         `<div class="pill-row"><span class="status ${statusClass(leg.status)}">${statusLabel(leg.status)}</span></div>` +
