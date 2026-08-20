@@ -257,7 +257,10 @@ const DAYS = [
     ideas:[
       {title:"Universal Studios Japan", lat:34.6654, lng:135.4323,
         desc:"Journée parc — Harry Potter, Super Nintendo World, attractions. Arriver tôt et planifier le parcours.",
-        notes:["Avoir l’app officielle Universal Studios Japan (files, Express Pass, carte du parc)."],
+        notes:[
+          "Avoir l’app officielle Universal Studios Japan (files, Express Pass, carte du parc).",
+          "Billets Super Nintendo World : les faire sur place dès l’entrée."
+        ],
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Universal_Studios_Japan.jpg/640px-Universal_Studios_Japan.jpg"}
     ] },
   { n:18, date:"25 nov 2026", dow:"Mercredi", city:"osaka",
