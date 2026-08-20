@@ -399,7 +399,33 @@
       width: 7px; height: 7px; margin-top: 6px; flex: 0 0 7px;
       border-radius: 50%; background: var(--gold);
     }
-    .act .act-title { font-weight: 500; }
+    .act .act-title { font-weight: 500; flex: 1 1 auto; min-width: 0; }
+    .act-maps {
+      flex: 0 0 auto;
+      display: grid; place-items: center;
+      width: 34px; height: 34px;
+      margin: -4px -2px -4px 4px;
+      border-radius: 6px;
+      color: var(--gold-2);
+      border: 1px solid rgba(196,165,116,.35);
+      background: rgba(196,165,116,.08);
+      text-decoration: none;
+    }
+    .act-maps:hover { background: rgba(196,165,116,.18); color: var(--cream); }
+    .act-maps svg { width: 18px; height: 18px; display: block; }
+    .detail-maps {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin: 0 0 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: var(--gold-2);
+      border: 1px solid rgba(196,165,116,.35);
+      background: rgba(196,165,116,.08);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .detail-maps:hover { background: rgba(196,165,116,.16); color: var(--cream); }
+    .detail-maps svg { width: 16px; height: 16px; }
     .move {
       margin-top: 8px; padding: 11px 12px;
       border: 1px dashed var(--line);
@@ -1596,7 +1622,7 @@
       const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
       renderCityPins(currentCity, day || null, act);
       const pct = pctIn(MAP_BOUNDS[currentCity], act.lat, act.lng);
-      const zoom = Math.max(cityCam.minScale() * 2.4, 2.8);
+      const zoom = Math.max(cityCam.minScale() * 1.35, cityCam.minScale() * 1.15);
       cityCam.focusPct(pct.left, pct.top, zoom);
     }
 
@@ -1694,10 +1720,28 @@
       return [{ stay: c.stays[0], days }];
     }
 
+    function mapsIconSvg(){
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>`;
+    }
+    function mapsDirectionsUrl(act){
+      if (!act || act.lat == null || act.lng == null) return null;
+      const dest = `${act.lat},${act.lng}`;
+      // origin omis → Google Maps utilise la position actuelle sur le téléphone
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=walking`;
+    }
+    function mapsLinkHtml(act, kind){
+      const url = mapsDirectionsUrl(act);
+      if (!url) return "";
+      if (kind === "detail") {
+        return `<a class="detail-maps" href="${esc(url)}" target="_blank" rel="noopener noreferrer"><span>${mapsIconSvg()}</span><span>Itinéraire Google Maps</span></a>`;
+      }
+      return `<a class="act-maps" href="${esc(url)}" target="_blank" rel="noopener noreferrer" title="Itinéraire depuis ma position" aria-label="Ouvrir l’itinéraire Google Maps">${mapsIconSvg()}</a>`;
+    }
+
     function renderIdeas(list, offset){
       offset = offset || 0;
       return (list || []).map((a, i) =>
-        `<div class="act" data-act-idx="${offset + i}" role="button" tabindex="0"><span class="dot"></span><div class="act-title">${esc(a.title)}</div></div>`
+        `<div class="act" data-act-idx="${offset + i}" role="button" tabindex="0"><span class="dot"></span><div class="act-title">${esc(a.title)}</div>${mapsLinkHtml(a, "list")}</div>`
       ).join("");
     }
     function renderMoves(list){
@@ -1839,6 +1883,7 @@
       showDetailSheet(
         `<span class="sheet-kind activity">Activité</span>` +
         `<h3>${esc(act.title)}</h3>` +
+        mapsLinkHtml(act, "detail") +
         `<p class="desc">${esc(act.desc || "")}</p>` +
         gallery
       );
@@ -1894,8 +1939,15 @@
           const act = filtered[idx];
           if (!act) return;
           const open = () => openActivityDetail(act);
-          node.addEventListener("click", open);
-          node.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+          node.addEventListener("click", (e) => {
+            if (e.target.closest && e.target.closest("a.act-maps")) return;
+            open();
+          });
+          node.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+          });
+          const mapBtn = node.querySelector("a.act-maps");
+          if (mapBtn) mapBtn.addEventListener("click", e => e.stopPropagation());
         });
         el.addEventListener("toggle", () => {
           if (!currentCity) return;
