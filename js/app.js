@@ -103,10 +103,11 @@ function placesOnMap(cityId){
 }
 function hotelsOnMap(cityId){
   const c = CITIES[cityId];
-  if (!c) return [];
+  const b = MAP_BOUNDS[cityId];
+  if (!c || !b) return [];
   return (c.stays || []).filter(s => {
     const h = s.hotel;
-    return h && h.name && h.name !== "—" && h.lat != null && h.lng != null;
+    return h && h.name && h.name !== "—" && h.lat != null && h.lng != null && inBounds(b, h.lat, h.lng);
   });
 }
 
@@ -545,7 +546,7 @@ function showCity(id, dayN){
   } else {
     cityImg.dataset.id = id;
     cityImg.alt = "Carte de " + CITIES[id].name;
-    cityImg.src = "./maps/" + id + ".png?v=6";
+    cityImg.src = "./maps/" + id + ".png?v=18";
   }
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
