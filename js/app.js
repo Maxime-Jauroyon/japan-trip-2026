@@ -545,10 +545,15 @@ function renderCityPins(id, day, selected){
     const h = stay.hotel;
     const key = h.lat.toFixed(4) + "," + h.lng.toFixed(4);
     const isSel = selKey === key;
+    const activeStay = day ? stayForDay(id, day) : null;
+    const onStay = !day || (activeStay && activeStay.id === stay.id);
     const accent = isSel ? "#e0c99a" : "#c4a574";
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "pin pin-hotel" + (isSel ? " selected" : "");
+    let cls = "pin pin-hotel";
+    if (day) cls += onStay ? " on" : " dim";
+    if (isSel) cls += " selected";
+    btn.className = cls;
     btn.dataset.lat = h.lat;
     btn.dataset.lng = h.lng;
     btn.dataset.stay = stay.id;
@@ -668,6 +673,17 @@ function stayGroups(c, days){
     ];
   }
   return [{ stay: c.stays[0], days }];
+}
+
+/** Hôtel du séjour correspondant au jour ouvert (Tokyo a 2 séjours). */
+function stayForDay(cityId, day){
+  const c = CITIES[cityId];
+  if (!c || !day) return null;
+  const groups = stayGroups(c, daysForCity(cityId));
+  for (const g of groups){
+    if ((g.days || []).some(d => d.n === day.n)) return g.stay;
+  }
+  return (c.stays && c.stays[0]) || null;
 }
 
 function mapsIconSvg(){
