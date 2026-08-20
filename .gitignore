@@ -1,0 +1,8 @@
+﻿# Dev / tile caches (not needed for the site)
+tools/
+vendor/
+maps/_tiles*/
+maps/_tiles_*/
+*.ps1
+.DS_Store
+Thumbs.db

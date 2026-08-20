@@ -1,0 +1,74 @@
+﻿{
+    "tokyo":  {
+                  "north":  35.78,
+                  "west":  139.62,
+                  "south":  35.58,
+                  "z":  12,
+                  "east":  139.9,
+                  "tiles":  16
+              },
+    "osaka":  {
+                  "north":  34.74,
+                  "west":  135.36,
+                  "south":  34.6,
+                  "z":  12,
+                  "east":  135.6,
+                  "tiles":  6
+              },
+    "shirakawa":  {
+                      "north":  36.29,
+                      "west":  136.87,
+                      "south":  36.22,
+                      "z":  14,
+                      "east":  136.94,
+                      "tiles":  20
+                  },
+    "kanazawa":  {
+                     "north":  36.59,
+                     "west":  136.6,
+                     "south":  36.53,
+                     "z":  13,
+                     "east":  136.71,
+                     "tiles":  6
+                 },
+    "japan":  {
+                  "north":  37.35,
+                  "west":  134.3,
+                  "south":  33.7,
+                  "z":  8,
+                  "east":  141.1,
+                  "tiles":  24
+              },
+    "nara":  {
+                 "north":  34.73,
+                 "west":  135.76,
+                 "south":  34.64,
+                 "z":  13,
+                 "east":  135.9,
+                 "tiles":  12
+             },
+    "fuji":  {
+                 "north":  35.62,
+                 "west":  138.55,
+                 "south":  35.28,
+                 "z":  11,
+                 "east":  138.92,
+                 "tiles":  12
+             },
+    "kyoto":  {
+                  "north":  35.1,
+                  "west":  135.62,
+                  "south":  34.88,
+                  "z":  12,
+                  "east":  135.87,
+                  "tiles":  12
+              },
+    "takayama":  {
+                     "north":  36.18,
+                     "west":  137.21,
+                     "south":  36.11,
+                     "z":  14,
+                     "east":  137.3,
+                     "tiles":  25
+                 }
+}
