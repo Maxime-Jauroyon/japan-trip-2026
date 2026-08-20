@@ -1604,7 +1604,8 @@
         let cls = "pin";
         if (day) cls += onDay ? " on" : " dim";
         if (isSel) cls += " selected";
-        else if (selKey && !isSel) cls += " dim";
+        // Autres activités du même jour : visibles, sans surbrillance
+        else if (selKey && !isSel && (!day || !onDay)) cls += " dim";
         btn.className = cls;
         btn.dataset.lat = a.lat;
         btn.dataset.lng = a.lng;
