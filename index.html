@@ -530,21 +530,134 @@
       color: var(--muted); font-size: 14px; line-height: 1.6;
     }
 
+    .sheet-grab {
+      display: none;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 16px 4px;
+      cursor: pointer;
+      flex: 0 0 auto;
+      touch-action: manipulation;
+    }
+    .sheet-grab .sheet-bar {
+      display: block;
+      width: 42px; height: 4px;
+      margin: 0 auto 6px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.28);
+    }
+    .sheet-grab .sheet-chevron {
+      display: block;
+      font-size: 14px;
+      line-height: 1;
+      transition: transform .2s ease;
+    }
+    .overlay.expanded .sheet-grab .sheet-chevron { transform: rotate(180deg); }
+
+    .city-banner {
+      display: none;
+      position: absolute;
+      left: 50%; top: 12px;
+      transform: translateX(-50%);
+      z-index: 26;
+      pointer-events: none;
+      padding: 8px 14px;
+      background: rgba(8,12,18,.88);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font: 600 14px Georgia, "Times New Roman", serif;
+      color: var(--cream);
+      white-space: nowrap;
+      max-width: calc(100% - 120px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     @media (max-width: 900px) {
-      #city-view { padding: 12px 12px 48%; }
+      header {
+        padding: 6px 12px;
+        min-height: 40px;
+        gap: 10px;
+      }
+      header h1 { font-size: 15px; }
+      .prep { gap: 4px; }
+      .pill { font-size: 10px; padding: 3px 6px 3px 5px; }
+      .pill em { display: none; }
+
+      /* Vue ville : plus de place pour la carte */
+      .app.city-mode header,
+      .app.city-mode #city-list { display: none !important; }
+      .app.city-mode .city-banner { display: block; }
+      .app.city-mode .home-btn {
+        left: 12px; right: auto;
+        top: 12px; bottom: auto;
+      }
+      .app.city-mode .zoom-ui {
+        right: 12px;
+        top: 12px; bottom: auto;
+      }
+
+      #city-view {
+        padding: 0;
+        place-items: stretch;
+      }
+      .city-frame {
+        max-width: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
       .overlay {
-        inset: auto 0 0 0; width: 100%; max-height: 48%;
+        inset: auto 0 0 0;
+        width: 100%;
+        max-height: 38vh;
         transform: translateY(110%);
-        border-radius: 10px 10px 0 0;
+        border-radius: 14px 14px 0 0;
+        border-left: 0; border-right: 0; border-bottom: 0;
+        transition: transform .25s ease, max-height .28s ease;
       }
       .overlay.open { transform: translateY(0); }
+      .overlay.open.expanded { max-height: 88vh; }
+      .sheet-grab { display: block; }
+      .overlay-head {
+        padding: 4px 16px 12px;
+        align-items: flex-start;
+      }
+      .overlay-head h2 { font-size: 22px; }
+      .overlay-body { padding: 10px 16px 28px; -webkit-overflow-scrolling: touch; }
+
       #city-list {
         display: flex; width: auto; max-width: calc(100% - 24px);
-        overflow-x: auto; right: 12px;
+        overflow-x: auto; right: 12px; left: 12px;
+        top: 8px; max-height: none;
+        -webkit-overflow-scrolling: touch;
+        gap: 2px;
       }
-      #city-list button { flex: 0 0 auto; width: auto; }
+      #city-list button { flex: 0 0 auto; width: auto; margin-bottom: 0; }
       .hint { display: none; }
-      .city-mark .label { font-size: 11px; }
+
+      /* Pastilles pays plus faciles à viser / lire */
+      .city-mark .ico-wrap {
+        width: 44px; height: 44px;
+        border-width: 2.5px;
+      }
+      .city-mark .ico-wrap svg { width: 26px; height: 26px; }
+      .city-mark .label {
+        left: 50%; top: calc(100% + 6px);
+        right: auto; transform: translateX(-50%);
+        font-size: 12px; padding: 4px 8px;
+        font-weight: 600;
+      }
+      .city-mark.label-left .label {
+        left: 50%; right: auto; transform: translateX(-50%);
+      }
+      .pin .badge { width: 52px; height: 60px; }
+      .pin .badge svg { width: 52px; height: 60px; }
+      .home-btn, .zoom-ui button { width: 44px; height: 44px; }
+      .zoom-ui { bottom: 66px; }
+      .home-btn { bottom: 14px; }
     }
   </style>
 </head>
@@ -584,7 +697,8 @@
           </div>
         </div>
       </div>
-      <div class="hint" id="hint">Glisser · molette pour zoomer · cliquer une ville</div>
+      <div class="city-banner" id="city-banner" hidden></div>
+      <div class="hint" id="hint">Glisser · pincer pour zoomer · toucher une ville</div>
       <div class="zoom-ui" id="zoom-ui">
         <button type="button" id="z-in" title="Zoom +">+</button>
         <button type="button" id="z-out" title="Zoom −">−</button>
@@ -1130,6 +1244,8 @@
     function makePanZoom(viewport, world, opts){
       const o = Object.assign({ max:6, start:1, mode:"cover" }, opts || {});
       const st = { x:0, y:0, s:o.start, drag:false, lx:0, ly:0 };
+      const pointers = new Map();
+      let pinch0 = null;
       function minScale(){
         const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
         const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
@@ -1174,33 +1290,79 @@
         st.y = vh / 2 - (topPct / 100) * world.offsetHeight * st.s;
         clamp(); apply();
       }
+      function pinchMetrics(){
+        const arr = [...pointers.values()];
+        if (arr.length < 2) return null;
+        const a = arr[0], b = arr[1];
+        return {
+          dist: Math.hypot(b.x - a.x, b.y - a.y) || 1,
+          cx: (a.x + b.x) / 2,
+          cy: (a.y + b.y) / 2
+        };
+      }
+      function isMapChrome(el){
+        return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .sheet-grab, .overlay"));
+      }
       viewport.addEventListener("wheel", e => {
         e.preventDefault();
         const r = viewport.getBoundingClientRect();
         zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 1 / 1.12);
       }, { passive:false });
       viewport.addEventListener("pointerdown", e => {
-        if (e.button !== 0) return;
-        if (e.target.closest && e.target.closest("button, path.route-hit, path.route, .pin")) return;
-        st.drag = true; st.lx = e.clientX; st.ly = e.clientY;
-        viewport.classList.add("dragging");
-        viewport.setPointerCapture(e.pointerId);
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        if (isMapChrome(e.target)) return;
+        pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+        if (pointers.size >= 2) {
+          st.drag = false;
+          viewport.classList.remove("dragging");
+          const p = pinchMetrics();
+          if (p) pinch0 = { dist: p.dist, s: st.s };
+        } else {
+          st.drag = true; st.lx = e.clientX; st.ly = e.clientY;
+          viewport.classList.add("dragging");
+        }
       });
       viewport.addEventListener("pointermove", e => {
+        if (!pointers.has(e.pointerId)) return;
+        pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        if (pointers.size >= 2 && pinch0) {
+          const p = pinchMetrics();
+          if (!p) return;
+          const r = viewport.getBoundingClientRect();
+          const cx = p.cx - r.left, cy = p.cy - r.top;
+          const min = minScale();
+          const ns = Math.min(o.max, Math.max(min, pinch0.s * (p.dist / pinch0.dist)));
+          const k = ns / st.s;
+          st.x = cx - (cx - st.x) * k;
+          st.y = cy - (cy - st.y) * k;
+          st.s = ns;
+          clamp(); apply();
+          return;
+        }
         if (!st.drag) return;
         st.x += e.clientX - st.lx;
         st.y += e.clientY - st.ly;
         st.lx = e.clientX; st.ly = e.clientY;
         clamp(); apply();
       });
-      function endDrag(e){
-        if (!st.drag) return;
-        st.drag = false;
-        viewport.classList.remove("dragging");
+      function endPointer(e){
+        if (!pointers.has(e.pointerId)) return;
+        pointers.delete(e.pointerId);
         try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+        if (pointers.size < 2) pinch0 = null;
+        if (pointers.size === 0) {
+          st.drag = false;
+          viewport.classList.remove("dragging");
+        } else if (pointers.size === 1) {
+          const only = [...pointers.values()][0];
+          st.drag = true;
+          st.lx = only.x; st.ly = only.y;
+          viewport.classList.add("dragging");
+        }
       }
-      viewport.addEventListener("pointerup", endDrag);
-      viewport.addEventListener("pointercancel", endDrag);
+      viewport.addEventListener("pointerup", endPointer);
+      viewport.addEventListener("pointercancel", endPointer);
       return {
         state:st, apply, clamp, zoomAt, fitCover, focusPct, minScale,
         zoomIn(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1.2); },
@@ -1296,9 +1458,12 @@
 
     function showCountry(){
       currentCity = null;
+      document.querySelector(".app").classList.remove("city-mode");
+      const banner = document.getElementById("city-banner");
+      if (banner) { banner.hidden = true; banner.textContent = ""; }
       countryView.classList.remove("hidden");
       cityView.classList.remove("visible");
-      hint.textContent = "Glisser · molette pour zoomer · cliquer une ville";
+      hint.textContent = "Glisser · pincer pour zoomer · toucher une ville";
       setActiveCity(null);
       requestAnimationFrame(() => {
         sizeJapanWorld();
@@ -1385,9 +1550,15 @@
 
     function showCity(id, dayN){
       currentCity = id;
+      document.querySelector(".app").classList.add("city-mode");
+      const banner = document.getElementById("city-banner");
+      if (banner) {
+        banner.hidden = false;
+        banner.textContent = CITIES[id].name;
+      }
       countryView.classList.add("hidden");
       cityView.classList.add("visible");
-      hint.textContent = CITIES[id].name + " · glisser / molette · pastilles = activités";
+      hint.textContent = CITIES[id].name + " · glisser / pincer · pastilles = activités";
       setActiveCity(id);
       const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
       const apply = () => {
@@ -1564,6 +1735,12 @@
         `<button type="button" class="detail-back">← Retour aux jours</button>${html}`;
       cityEl.style.display = "none";
       detailEl.classList.add("show");
+      // Sur mobile, agrandir le panneau pour lire le détail
+      if (window.matchMedia("(max-width: 900px)").matches) {
+        panel.classList.add("expanded");
+        const grab = panel.querySelector(".sheet-grab");
+        if (grab) grab.setAttribute("aria-expanded", "true");
+      }
       detailEl.querySelector(".detail-back").onclick = () => {
         detailEl.classList.remove("show");
         detailEl.innerHTML = "";
@@ -1658,6 +1835,22 @@
       });
     }
 
+    function sheetGrabHtml(){
+      return `<button type="button" class="sheet-grab" aria-label="Agrandir ou réduire le panneau" aria-expanded="false"><span class="sheet-bar"></span><span class="sheet-chevron">▴</span></button>`;
+    }
+    function bindSheetGrab(){
+      panel.classList.remove("expanded");
+      const grab = panel.querySelector(".sheet-grab");
+      if (!grab) return;
+      grab.setAttribute("aria-expanded", "false");
+      grab.onclick = () => {
+        const on = panel.classList.toggle("expanded");
+        grab.setAttribute("aria-expanded", on ? "true" : "false");
+        // Recentrer la carte ville quand le sheet change de taille
+        if (currentCity) requestAnimationFrame(() => fitCityMap());
+      };
+    }
+
     function fillCityPanel(c, days, openN){
       panelContext = { type:"city", city:c, days };
       const groups = stayGroups(c, days);
@@ -1681,21 +1874,23 @@
       }).join("");
 
       panel.innerHTML =
+        sheetGrabHtml() +
         `<div class="overlay-head"><div><h2>${esc(c.name)}</h2><span class="jp-name">${esc(c.jp)} · ville verrouillée</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
         `<div class="overlay-body"><div class="city-panel">${staysHtml}</div><div class="detail-sheet"></div></div>`;
       panel.classList.add("open");
+      bindSheetGrab();
       bindPanel(days, c.id);
     }
 
     function closePanel(reset){
       if (reset === undefined) reset = true;
-      panel.classList.remove("open");
+      panel.classList.remove("open", "expanded");
       panelContext = null;
       setActiveCity(null);
       if (reset) goOverview();
     }
     function goOverview(){
-      panel.classList.remove("open");
+      panel.classList.remove("open", "expanded");
       panelContext = null;
       document.querySelectorAll("#routes path.route").forEach(p => {
         p.style.stroke = "";
@@ -1725,6 +1920,7 @@
       const tips = leg.tips ? `<p class="note" style="color:var(--gold-2)">${esc(leg.tips)}</p>` : "";
       const details = (leg.details || []).map(d => `<li>${esc(d)}</li>`).join("");
       panel.innerHTML =
+        sheetGrabHtml() +
         `<div class="overlay-head"><div><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
         `<div class="overlay-body">` +
         `<span class="sheet-kind trajet">Trajet</span>` +
@@ -1746,6 +1942,7 @@
         tips +
         `</div>`;
       panel.classList.add("open");
+      bindSheetGrab();
       panel.querySelector(".close").onclick = () => closePanel(true);
       const via = leg.via || [];
       const mid = via.length
