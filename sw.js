@@ -1,10 +1,14 @@
 /* Offline cache — 1ère visite en Wi‑Fi, puis utilisable sans réseau dans Safari */
-const CACHE = "japan-trip-2026-v17";
+const CACHE = "japan-trip-2026-v18";
 
 const ASSETS = [
   "./",
   "./index.html",
   "./sw.js",
+  "./css/app.css",
+  "./js/data.js",
+  "./js/app.js",
+  "./js/sw-register.js",
   "./maps/bounds.json",
   "./maps/fuji.png",
   "./maps/japan.png",
