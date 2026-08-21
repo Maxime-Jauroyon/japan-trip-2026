@@ -3,38 +3,89 @@ const CITIES = {
   tokyo: { id:"tokyo", name:"Tokyo", jp:"東京", lat:35.6812, lng:139.7671,
     stays:[
       { id:"tokyo-1", label:"Séjour 1 — arrivée", from:"8 nov", to:"12 nov", nights:"4 nuits",
-        hotel:{ name:"Hôtel Kumo", area:"Près de Tokyo Station", address:"Zone Yaesu / Tokyo Station (indicatif)",
-          lat:35.6802, lng:139.7695,
-          checkIn:"8 nov · après l’arrivée", checkOut:"12 nov · matin",
-          status:"placeholder", payment:"Pas encore réservé", price:"—",
-          notes:["Type de chambre à définir","Petit-déjeuner à définir","Emplacement fictif — à remplacer à la résa"],
-          desc:"Première base à Tokyo après l’atterrissage à Haneda. Pratique pour les trains et le centre." } },
-      { id:"tokyo-2", label:"Séjour 2 — retour", from:"27 nov", to:"29 nov", nights:"2 nuits",
-        hotel:{ name:"Hôtel Hikari", area:"Haneda Airport", address:"Île aéroport · près Terminal 1–2 (indicatif)",
-          lat:35.5488, lng:139.7690,
-          checkIn:"27 nov · après le shinkansen", checkOut:"29 nov · très tôt pour HND",
-          status:"placeholder", payment:"Pas encore réservé", price:"—",
-          notes:[
-            "Vol retour tôt (HND 09:05) — dormir sur l’île aéroport.",
-            "Accès piéton / navette interne vers les terminaux.",
-            "Emplacement fictif — à remplacer à la résa"
+        hotel:{ name:"HomeNest Hotel Akihabara", area:"Akihabara / Torigoe", address:"1 Chome-25-1 Torigoe, Taito, Tokyo (鳥越)",
+          lat:35.7030, lng:139.7832,
+          checkIn:"dim. 8 nov · 16:00–23:00", checkOut:"jeu. 12 nov · 08:00–11:00",
+          status:"paid", payment:"Payé par Léo · non remboursable", price:"491,85 € (total, 2 adultes)",
+          phone:"+81 80 5118 6621",
+          photos:[
+            "./img/hotels/homenest-akihabara.jpg",
+            "./img/hotels/homenest-akihabara-3.jpg",
+            "./img/hotels/homenest-akihabara-4.jpg",
+            "./img/hotels/homenest-akihabara-5.jpg",
+            "./img/hotels/homenest-akihabara-6.jpg"
           ],
-          desc:"Dernière base à Tokyo sur l’île de Haneda pour le décollage matinal. Réservation séparée du séjour 1." } }
+          notes:[
+            "Appartement entier · 2 adultes · 4 nuits",
+            "Réservé sur le compte Booking de Léo · Maxime aussi sur place",
+            "Self check-in · non-fumeurs · pas de repas inclus",
+            "Taxe de séjour Tokyo : souvent déjà dans le total Booking — vérifier à l’arrivée",
+            "Code confidentiel : dans la conf. Booking (ne pas partager)",
+            "Équipé : cuisine, lave-linge, clim, Wi‑Fi, etc."
+          ],
+          desc:"Appartement réservé à Akihabara (Torigoe), pratique pour le centre et Asakusa. Payé intégralement par Léo — non remboursable." } },
+      { id:"tokyo-2", label:"Séjour 2 — retour", from:"27 nov", to:"29 nov", nights:"2 nuits",
+        hotel:{ name:"The Royal Park Hotel Tokyo Haneda Airport Terminal 3", area:"Haneda T3", address:"Haneda Airport 2-6-5, Ota-ku, Tokyo",
+          lat:35.5465, lng:139.7682,
+          checkIn:"ven. 27 nov · à partir de 15:00", checkOut:"dim. 29 nov · jusqu’à 11:00",
+          status:"paid", payment:"Payé par Maxime · annulation gratuite jusqu’au 23 nov 23:59", price:"485,91 € (total, 2 adultes)",
+          phone:"+81 3 6830 1111",
+          photos:[
+            "./img/hotels/royal-park-haneda.jpg",
+            "./img/hotels/royal-park-haneda-2.jpg",
+            "./img/hotels/royal-park-haneda-3.jpg",
+            "./img/hotels/royal-park-haneda-4.jpg"
+          ],
+          notes:[
+            "Chambre lits jumeaux de luxe · accessible PMR · non-fumeurs · 2 nuits",
+            "Petit-déjeuner inclus",
+            "Code confidentiel : dans la conf. Booking (ne pas partager)",
+            "Dans le terminal 3 Haneda — idéal pour le vol HND 09:05"
+          ],
+          desc:"Hôtel dans le Terminal 3 de Haneda. Payé par Maxime — petit-déjeuner compris, parfait pour le départ matinal." } }
     ] },
   fuji: { id:"fuji", name:"Fujikawaguchiko", jp:"河口湖", lat:35.5006, lng:138.7639,
     stays:[{ id:"fuji-1", label:"Séjour lac", from:"12 nov", to:"14 nov", nights:"2 nuits",
-      hotel:{ name:"Ryokan Fuji-view", area:"Kawaguchiko", address:"Rive nord du lac Kawaguchi (indicatif)",
-        lat:35.5088, lng:138.7655,
-        checkIn:"12 nov", checkOut:"14 nov", status:"placeholder", payment:"Pas encore réservé", price:"—",
-        notes:["Vue lac ou Fuji si possible","Emplacement fictif — à remplacer à la résa"],
-        desc:"Base calme au bord du lac, avec vue montagne." } }] },
+      hotel:{ name:"Kawaguchiko Hotel", area:"Funatsu / lac Kawaguchi", address:"Funatsu 200, Fujikawaguchiko, Yamanashi",
+        lat:35.5042, lng:138.7636,
+        checkIn:"jeu. 12 nov · 15:00–21:00", checkOut:"sam. 14 nov · jusqu’à 10:00",
+        status:"paid", payment:"Payé par Maxime · annulation gratuite jusqu’au 8 nov 23:59", price:"424,55 € (total, 2 adultes)",
+        phone:"+81 555 72 1313",
+        photos:[
+          "./img/hotels/kawaguchiko.jpg",
+          "./img/hotels/kawaguchiko-2.jpg",
+          "./img/hotels/kawaguchiko-3.jpg",
+          "./img/hotels/kawaguchiko-4.jpg"
+        ],
+        notes:[
+          "Chambre lits jumeaux · non-fumeurs · 2 adultes · 2 nuits",
+          "Petit-déjeuner inclus",
+          "Code confidentiel : dans la conf. Booking (ne pas partager)",
+          "Vue montagne · salle de bain privée"
+        ],
+        desc:"Hôtel à Funatsu, près du lac Kawaguchi. Réservé et payé par Maxime — petit-déjeuner compris." } }] },
   kanazawa: { id:"kanazawa", name:"Kanazawa", jp:"金沢", lat:36.5611, lng:136.6565,
     stays:[{ id:"kana-1", label:"Séjour Kanazawa", from:"14 nov", to:"17 nov", nights:"3 nuits",
-      hotel:{ name:"Hôtel Kaga", area:"Centre de Kanazawa", address:"Entre Kenroku-en et Omicho (indicatif)",
-        lat:36.5625, lng:136.6578,
-        checkIn:"14 nov", checkOut:"17 nov", status:"placeholder", payment:"Pas encore réservé", price:"—",
-        notes:["Emplacement fictif — à remplacer à la résa"],
-        desc:"Base pour Kenroku-en, le château et les quartiers de thé." } }] },
+      hotel:{ name:"Henn na Hotel Kanazawa Korimbo", area:"Korinbo", address:"Kourinbou 1-2-32, Kanazawa, Ishikawa",
+        lat:36.5646, lng:136.6543,
+        checkIn:"sam. 14 nov · 15:00–00:00", checkOut:"mar. 17 nov · jusqu’à 11:00",
+        status:"paid", payment:"Payé par Léo · annulation gratuite jusqu’au 12 nov 23:59", price:"303,98 € (total, 2 adultes)",
+        phone:"+81 50 5210 5310",
+        photos:[
+          "./img/hotels/henn-na-kanazawa.jpg",
+          "./img/hotels/henn-na-kanazawa-2.jpg",
+          "./img/hotels/henn-na-kanazawa-3.jpg",
+          "./img/hotels/henn-na-kanazawa-4.jpg"
+        ],
+        notes:[
+          "Chambre lits jumeaux standard · non-fumeurs · 2 adultes · 3 nuits",
+          "Petit-déjeuner inclus",
+          "Taxe de séjour (accommodation tax) à payer sur place — non incluse dans le tarif Booking",
+          "Barème Kanazawa : 200 ¥/pers./nuit (chambre 5 000–20 000 ¥) · 500 ¥/pers./nuit (>20 000 ¥) · exonéré <4 999 ¥",
+          "Code confidentiel : dans la conf. Booking (ne pas partager)",
+          "Check-in robot (Henn na) · quartier Korinbo"
+        ],
+        desc:"Hôtel à Korinbo, pratique pour le centre, Kenroku-en et les quartiers de thé. Payé par Léo — petit-déjeuner compris." } }] },
   shirakawa: { id:"shirakawa", name:"Shirakawa-go", jp:"白川郷", lat:36.2578, lng:136.9063,
     stays:[{ id:"shira-day", label:"Visite à la journée", from:"17 nov", to:"17 nov", nights:"Sans nuit",
       hotel:{ name:"—", area:"Excursion d’une journée", address:"—",
@@ -42,32 +93,87 @@ const CITIES = {
         notes:["Pas d’hôtel — bus aller-retour le même jour"], desc:"Visite du village seulement ; nuit à Takayama." } }] },
   takayama: { id:"takayama", name:"Takayama", jp:"高山", lat:36.1461, lng:137.2522,
     stays:[{ id:"taka-1", label:"Séjour Takayama", from:"17 nov", to:"18 nov", nights:"1 nuit",
-      hotel:{ name:"Ryokan Hida", area:"Vieille ville", address:"Près de Sanmachi Suji (indicatif)",
-        lat:36.1452, lng:137.2548,
-        checkIn:"17 nov", checkOut:"18 nov", status:"placeholder", payment:"Pas encore réservé", price:"—",
-        notes:["Emplacement fictif — à remplacer à la résa"],
-        desc:"Une nuit dans les rues historiques avant Kyoto." } }] },
+      hotel:{ name:"Mercure Hida Takayama", area:"Hanasatomachi / gare", address:"4-311-1 Hanasatomachi, Takayama, Gifu",
+        lat:36.1393, lng:137.2521,
+        checkIn:"mar. 17 nov · à partir de 15:00", checkOut:"mer. 18 nov · jusqu’à 11:00",
+        status:"paid", payment:"Payé par Maxime · souci paiement en ligne — possiblement à régler sur place", price:"246,52 € (total, 2 adultes)",
+        phone:"+81 577 35 2702",
+        photos:[
+          "./img/hotels/mercure-takayama.jpg",
+          "./img/hotels/mercure-takayama-2.jpg",
+          "./img/hotels/mercure-takayama-3.jpg",
+          "./img/hotels/mercure-takayama-4.jpg"
+        ],
+        notes:[
+          "Chambre double supérieure · non-fumeurs · 2 adultes · 1 nuit",
+          "Petit-déjeuner inclus",
+          "Taxes à régler au check-in (loi japonaise) : onsen tax 150 ¥ + taxe de séjour / pers. / nuit — même sans utiliser l’onsen",
+          "Montant selon le tarif de la chambre · payé à part (pas dans le prix Booking)",
+          "Souci au paiement en ligne — vérifier / éventuellement payer sur place",
+          "Code confidentiel : dans la conf. Booking (ne pas partager)",
+          "À ~4 min à pied de la gare JR Takayama · onsen en rooftop"
+        ],
+        desc:"Mercure près de la gare, pratique pour la vieille ville et le départ vers Kyoto. Payé par Maxime (souci paiement en ligne — possible règlement sur place) — petit-déjeuner compris, non remboursable." } }] },
   kyoto: { id:"kyoto", name:"Kyoto", jp:"京都", lat:35.0116, lng:135.7681,
     stays:[{ id:"kyo-1", label:"Séjour Kyoto", from:"18 nov", to:"22 nov", nights:"4 nuits",
-      hotel:{ name:"Hôtel Kyo", area:"Centre de Kyoto", address:"Zone Kawaramachi / Shijō (indicatif)",
-        lat:35.0038, lng:135.7688,
-        checkIn:"18 nov", checkOut:"22 nov", status:"placeholder", payment:"Pas encore réservé", price:"—",
-        notes:["Emplacement fictif — à remplacer à la résa"],
-        desc:"Quatre nuits pour temples, Arashiyama et Fushimi." } }] },
-  nara: { id:"nara", name:"Nara", jp:"奈良", lat:34.6851, lng:135.8328,
+      hotel:{ name:"Agora Kyoto Shijo", area:"Shijō / Aburanokōji", address:"36 Kawabokocho, Shijodori Aburanokoji Higashiiru, Shimogyo, Kyoto",
+        lat:35.0039, lng:135.7538,
+        checkIn:"mer. 18 nov · à partir de 15:00", checkOut:"dim. 22 nov · jusqu’à 11:00",
+        status:"paid", payment:"Payé par Léo · non remboursable", price:"822,69 € (total, 2 adultes)",
+        phone:"+81 75 254 7588",
+        photos:[
+          "./img/hotels/agora-kyoto.jpg",
+          "./img/hotels/agora-kyoto-2.jpg",
+          "./img/hotels/agora-kyoto-3.jpg",
+          "./img/hotels/agora-kyoto-4.jpg"
+        ],
+        notes:[
+          "Chambre lits jumeaux d’angle · non-fumeurs · 2 adultes · 4 nuits",
+          "Petit-déjeuner inclus · accessible PMR",
+          "Code confidentiel : dans la conf. Booking (ne pas partager)",
+          "~7 min à pied de Shijō / Karasuma (Hankyu / métro)"
+        ],
+        desc:"Base à Shijō pour temples, Nishiki et le centre. Payé par Léo — petit-déjeuner compris, non remboursable." } }] },
+  nara: { id:"nara", name:"Nara", jp:"奈良", lat:34.6851, lng:135.8050,
     stays:[{ id:"nara-1", label:"Séjour Nara", from:"22 nov", to:"23 nov", nights:"1 nuit",
-      hotel:{ name:"Hôtel Shika", area:"Près du parc de Nara", address:"Entre Kintetsu-Nara et le parc (indicatif)",
-        lat:34.6828, lng:135.8285,
-        checkIn:"22 nov", checkOut:"23 nov", status:"placeholder", payment:"Pas encore réservé", price:"—",
-        notes:["Emplacement fictif — à remplacer à la résa"],
-        desc:"Court séjour pour le parc et les temples." } }] },
+      hotel:{ name:"The Deer Park Inn", area:"Parc de Nara / Kasugano", address:"Kasuganocho 158-5, Nara",
+        lat:34.6841, lng:135.8471,
+        checkIn:"dim. 22 nov · 15:30–21:00", checkOut:"lun. 23 nov · jusqu’à 10:00",
+        status:"paid", payment:"Payé par Maxime · annulation gratuite jusqu’au 16 nov 23:59", price:"59,66 € (total, 2 adultes)",
+        phone:"+81 742 81 7222",
+        photos:[
+          "./img/hotels/deer-park-nara.jpg",
+          "./img/hotels/deer-park-nara-2.jpg",
+          "./img/hotels/deer-park-nara-3.jpg",
+          "./img/hotels/deer-park-nara-4.jpg"
+        ],
+        notes:[
+          "Chambre lits jumeaux · salle de bains commune · non-fumeurs · 1 nuit",
+          "Repas non inclus",
+          "Code confidentiel : dans la conf. Booking (ne pas partager)",
+          "Dans / au bord du parc de Nara — convenir horaires avec l’hôte si besoin"
+        ],
+        desc:"Guest house au bord du parc de Nara. Payé par Maxime — simple et bien placé pour les cerfs et les temples." } }] },
   osaka: { id:"osaka", name:"Osaka", jp:"大阪", lat:34.6937, lng:135.5023,
     stays:[{ id:"osa-1", label:"Séjour Osaka", from:"23 nov", to:"27 nov", nights:"4 nuits",
-      hotel:{ name:"Hôtel Naniwa", area:"Namba", address:"Près de Dotonbori / Namba (indicatif)",
-        lat:34.6685, lng:135.5018,
-        checkIn:"23 nov", checkOut:"27 nov", status:"placeholder", payment:"Pas encore réservé", price:"—",
-        notes:["Pratique pour Dotonbori / USJ","Emplacement fictif — à remplacer à la résa"],
-        desc:"Base food & nightlife à Namba." } }] }
+      hotel:{ name:"Garner Hotel Osaka Honmachi Kita Semba", area:"Honmachi / Awajimachi", address:"2-6-8 Awajimachi, Chuo-ku, Osaka",
+        lat:34.6868, lng:135.5040,
+        checkIn:"lun. 23 nov · 15:00–00:00", checkOut:"ven. 27 nov · jusqu’à 11:00",
+        status:"paid", payment:"Payé par Maxime · non remboursable", price:"234,46 € (total, 2 adultes)",
+        phone:"+81 6 4300 3414",
+        photos:[
+          "./img/hotels/garner-osaka.jpg",
+          "./img/hotels/garner-osaka-2.jpg",
+          "./img/hotels/garner-osaka-3.jpg",
+          "./img/hotels/garner-osaka-4.jpg"
+        ],
+        notes:[
+          "Chambre lits jumeaux standard · non-fumeurs · 2 adultes · 4 nuits",
+          "Petit-déjeuner inclus",
+          "Code confidentiel : dans la conf. Booking (ne pas partager)",
+          "~6 min à pied de Honmachi (Midosuji) · pratique Namba / Shinsaibashi / USJ"
+        ],
+        desc:"Garner IHG à Honmachi, bien placé pour Dotonbori et les trajets. Payé par Maxime — petit-déjeuner compris, non remboursable." } }] }
 };
 const ORDER = ["tokyo","fuji","kanazawa","shirakawa","takayama","kyoto","nara","osaka"];
 const MAP_BOUNDS = {
@@ -89,7 +195,7 @@ const DAYS = [
       {title:"Akihabara — arcades / anime", lat:35.6984, lng:139.7731,
         desc:"Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Akihabara_Electric_Town_Crossing_2023.jpg/640px-Akihabara_Electric_Town_Crossing_2023.jpg"},
-      {title:"Shinjuku — skyline", lat:35.6896, lng:139.6921,
+      {title:"Shinjuku — skyline", lat:35.6938, lng:139.7036,
         desc:"Le cœur néon de Tokyo : gratte-ciel, grands magasins, et vue du soir depuis un observatoire ou un rooftop.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shinjuku_Skyscrapers_at_night.jpg/640px-Shinjuku_Skyscrapers_at_night.jpg"},
       {title:"Tokyo Character Street", lat:35.6815, lng:139.7672,
@@ -97,12 +203,12 @@ const DAYS = [
     ] },
   { n:2, date:"9 nov 2026", dow:"Lundi", city:"tokyo",
     ideas:[
-      {title:"Asakusa — Sensō-ji", lat:35.7147, lng:139.7966,
+      {title:"Asakusa — Sensō-ji", lat:35.7148, lng:139.7967,
         desc:"Le plus vieux temple de Tokyo, via la rue commerçante Nakamise et la grande lanterne Kaminarimon.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Sensoji_Temple_Asakusa_Tokyo.jpg/640px-Sensoji_Temple_Asakusa_Tokyo.jpg"},
       {title:"Promenade Sumida", lat:35.7106, lng:139.8034,
         desc:"Balade le long de la Sumida : ponts, parcs, vues vers la Skytree et le vieux centre."},
-      {title:"Ueno — parc & musées", lat:35.7142, lng:139.7735,
+      {title:"Ueno — parc & musées", lat:35.7188, lng:139.7765,
         desc:"Grand parc avec musées, étang et feuillage d’automne. Après-midi culturel tranquille.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Ueno_Park_Tokyo.jpg/640px-Ueno_Park_Tokyo.jpg"},
       {title:"Sanctuaire Nezu + Yanaka", lat:35.7203, lng:139.7608,
@@ -115,13 +221,13 @@ const DAYS = [
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Meiji_Shrine_Tokyo.jpg/640px-Meiji_Shrine_Tokyo.jpg"},
       {title:"Harajuku / Omotesandō", lat:35.6705, lng:139.7030,
         desc:"Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."},
-      {title:"Shibuya — Hachikō, Pokemon", lat:35.6595, lng:139.7005,
+      {title:"Shibuya — Hachikō, Pokemon", lat:35.6591, lng:139.7006,
         desc:"Le scramble mythique, Hachikō, puis Pokemon et culture jeune autour de la gare.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shibuya_Crossing_2023.jpg/640px-Shibuya_Crossing_2023.jpg"}
     ] },
   { n:4, date:"11 nov 2026", dow:"Mercredi", city:"tokyo",
     ideas:[
-      {title:"Odaiba — Gundam, front de mer", lat:35.6254, lng:139.7755,
+      {title:"Odaiba — Gundam, front de mer", lat:35.6251, lng:139.7753,
         desc:"Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie."},
       {title:"teamLab Planets", lat:35.6490, lng:139.7898,
         desc:"Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance.",
@@ -133,12 +239,12 @@ const DAYS = [
   { n:5, date:"12 nov 2026", dow:"Jeudi", city:"fuji",
     moves:[{when:"~7:00–9:00", title:"Tokyo → Fujikawaguchiko", dummy:"Bus Shinjuku → Kawaguchiko", mode:"Bus", leg:"tokyo-fuji"}],
     ideas:[
-      {title:"Pagode Chūrei-tō", lat:35.5005, lng:138.8016,
+      {title:"Pagode Chūrei-tō", lat:35.5013, lng:138.8014,
         desc:"Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Chureito_Pagoda.jpg/640px-Chureito_Pagoda.jpg"},
-      {title:"Téléphérique panoramique", lat:35.5207, lng:138.7565,
+      {title:"Téléphérique panoramique", lat:35.5206, lng:138.7524,
         desc:"Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin."},
-      {title:"Lac Kawaguchi", lat:35.5170, lng:138.7550,
+      {title:"Lac Kawaguchi", lat:35.5218, lng:138.7556,
         desc:"Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lake_Kawaguchi.jpg/640px-Lake_Kawaguchi.jpg"},
       {title:"Momiji Corridor", lat:35.5092, lng:138.7684,
@@ -327,18 +433,19 @@ const LEGS = [
   { id:"arrive", title:"Paris → Tokyo (Haneda)", subtitle:"7–8 nov · Jour 1", mode:"Avion",
     depart:"CDG · sam. 7 nov · 09:45", arrive:"HND · dim. 8 nov · 06:50", duration:"~13 h",
     operator:"Air France", seat:"2 × standards côte à côte · rangée 36", ref:"—",
-    status:"paid", payment:"Payé d’avance", price:"≈ 2 000 € A/R / pers.",
+    status:"paid", payment:"Payé d’avance", price:"≈ 2 200 € A/R / pers.",
     skipMap:true,
     from:{ id:"tokyo", lat:35.5494, lng:139.7798 }, to:CITIES.tokyo, via:[],
     fromStop:{ kind:"Aéroport", name:"Paris CDG", jp:"パリ CDG" },
     toStop:{ kind:"Aéroport", name:"Tokyo Haneda (HND)", jp:"羽田空港", lat:35.5494, lng:139.7798 },
     details:[
+      "Voyageurs : Léo & Maxime.",
       "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
       "Repas et en-cas inclus à bord.",
       "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
-      "Après HND : Keikyu / Monorail → Tokyo Station (vers l’hôtel)."
+      "Après HND : vers HomeNest Akihabara (Torigoe) — check-in à partir de 16:00."
     ],
-    tips:"Atterrissage tôt à Haneda — laisser le temps bagages + train vers l’hôtel." },
+    tips:"Atterrissage tôt à Haneda — bagages puis dépôt / balade avant check-in 16:00." },
   { id:"tokyo-fuji", title:"Tokyo → Fujikawaguchiko", subtitle:"12 nov · Jour 5", mode:"Bus",
     depart:"~7:00", arrive:"~9:00", duration:"~2 h",
     operator:"Highway bus Shinjuku → Kawaguchiko (Keio / Fujikyu)", seat:"—", ref:"—",
@@ -431,25 +538,28 @@ const LEGS = [
     toStop:{ kind:"Gare", name:"Tokyo Station", jp:"東京駅", lat:35.6812, lng:139.7671 },
     details:[
       "Depuis Namba : metro / JR jusqu’à Shin-Osaka (~20–30 min).",
-      "Puis shinkansen Shin-Osaka → Tokyo Station, puis vers l’hôtel côté Haneda (sud)."
+      "Puis shinkansen Shin-Osaka → Tokyo Station, puis Monorail / Keikyu vers Haneda T3 (Royal Park)."
     ],
     tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place." },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
     depart:"HND · dim. 29 nov · 09:05", arrive:"CDG · dim. 29 nov · 15:35", duration:"~14 h 30",
     operator:"Air France", seat:"2 × standards côte à côte · rangée 27", ref:"—",
-    status:"paid", payment:"Payé d’avance", price:"Inclus · ≈ 2 000 € A/R / pers.",
+    status:"paid", payment:"Payé d’avance", price:"Inclus · ≈ 2 200 € A/R / pers.",
     skipMap:true,
     from:CITIES.tokyo, to:{ id:"tokyo", lat:35.5494, lng:139.7798 }, via:[],
     fromStop:{ kind:"Aéroport", name:"Tokyo Haneda (HND)", jp:"羽田空港", lat:35.5494, lng:139.7798 },
     toStop:{ kind:"Aéroport", name:"Paris CDG", jp:"パリ CDG" },
     details:[
+      "Voyageurs : Léo & Maxime.",
       "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
       "Repas inclus à bord.",
       "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
-      "Hôtel près de Haneda — trajets courts (Keikyu / navette / taxi)."
+      "Hôtel Royal Park dans le Terminal 3 — check-out puis portes d’embarquement à pied."
     ],
-    tips:"Check-out très tôt — viser HND vers 6h–6h30 (vol 09:05)." }
+    tips:"Check-out tôt — viser les contrôles / portes vers 6h30–7h (vol 09:05)." }
 ];
+
+const TRAVELERS = ["Léo", "Maxime"];
 
 const LABEL_SIDE = {
   tokyo: "left", fuji: "right", kanazawa: "left", shirakawa: "right",
@@ -461,34 +571,29 @@ const FX_KEY = "japan-trip-fx-rate-v1";
 /** Yen pour 1 € — indicative, août 2026 (~185 ¥/€) */
 const FX_DEFAULT = 185;
 const PREP_CHECKS = [
-  { id:"vols", label:"Vols A/R", meta:"Payés · Air France · ≈ 2 000 € / pers. · CDG ↔ HND" },
-  { id:"villes", label:"Villes & dates verrouillées", meta:"Itinéraire 8–29 nov 2026 figé" },
-  { id:"hotels", label:"Hôtels / ryokan", meta:"Réservations + adresses + check-in" },
+  { id:"vols", label:"Vols A/R", meta:"Payés · Léo & Maxime · Air France · ≈ 2 200 € / pers. · CDG ↔ HND", done:true },
+  { id:"villes", label:"Villes & dates verrouillées", meta:"Itinéraire 8–29 nov 2026 figé", done:true },
+  { id:"hotels", label:"Hôtels / ryokan", meta:"Tous réservés · Tokyo 1 → Haneda T3", done:true },
+  { id:"taxes", label:"Taxes de séjour / onsen", meta:"Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)", done:false },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen, Limited Express, bus Fuji / Shirakawa" },
   { id:"idees", label:"Idées & billets d’activités", meta:"USJ, teamLab, observatoires, etc." },
   { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
   { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
   { id:"suica", label:"Suica / IC ou Welcome Suica", meta:"Transports + konbini" },
-  { id:"cash", label:"Cash ¥ + carte sans frais", meta:"Certains lieux n’acceptent que le cash" },
+  { id:"cash", label:"Cash ¥ + carte sans frais", meta:"Taxes hôtel + lieux cash-only" },
   { id:"adaptateur", label:"Adaptateur type A/B", meta:"Prises japonaises" },
   { id:"valise", label:"Valise mi-novembre", meta:"Couches, imperméable léger, bonnes chaussures" },
   { id:"docs", label:"Passeports + copies numériques", meta:"Dans le cloud + hors ligne" }
 ];
-const PREP_PLAN = [
-  "Valider tous les hôtels (adresses exactes, horaires d’arrivée).",
-  "Réserver les trajets longue distance (Tokyo→Fuji, Fuji→Kanazawa, Takayama→Kyoto, Osaka→Tokyo).",
-  "Réserver USJ et teamLab dès que les créneaux ouvrent.",
-  "Préparer Suica / eSIM et un peu de cash à l’arrivée.",
-  "Noter les check-out tôt (ex. 29 nov vol matin).",
-  "Relire le programme « Sur place » la veille de chaque étape."
-];
 const PREP_BUDGET = [
-  { label:"Vols A/R", amount:"≈ 2 000 € / pers.", note:"Payés · Air France · ×2 ≈ 4 000 € · CDG ↔ HND", done:true },
-  { label:"Hôtels", amount:"À définir", note:"Pas encore réservés", done:false },
-  { label:"Trajets JP", amount:"À définir", note:"Trains / bus", done:false },
-  { label:"Activités / tickets", amount:"À définir", note:"USJ, teamLab…", done:false },
-  { label:"Nourriture & divers", amount:"Variable", note:"Budget confort ~60–100 €/jour", done:false }
+  { label:"Vols A/R", amount:"≈ 2 200 € / pers.", note:"Payés · Léo & Maxime · Air France · CDG ↔ HND", done:true },
+  { label:"Hôtels (partagés)", amount:"≈ 1 535 € / pers.", note:"Total ≈ 3 070 € ÷ 2 · tous les séjours inclus (Takayama à confirmer sur place)", done:true },
+  { label:"Taxes séjour / onsen", amount:"Quelques ¥ / nuit", note:"Souvent hors Booking · Kanazawa, Takayama… cash/carte au check-in", done:false },
+  { label:"Trajets JP", amount:"À définir / pers.", note:"Trains / bus (à partager)", done:false },
+  { label:"Activités / tickets", amount:"À définir / pers.", note:"USJ, teamLab…", done:false },
+  { label:"Nourriture & divers", amount:"Variable / pers.", note:"Budget confort ~60–100 €/jour", done:false }
 ];
+const PREP_BUDGET_TOTAL = { label:"Déjà engagé / pers.", amount:"≈ 3 735 €", note:"Vols + tous les hôtels (hors taxes séjour / trajets / activités / nourriture)" };
 const PHRASES = [
   { fr:"Bonjour", jp:"こんにちは", ro:"Konnichiwa" },
   { fr:"Merci", jp:"ありがとう", ro:"Arigatō" },

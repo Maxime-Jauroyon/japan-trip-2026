@@ -651,10 +651,37 @@ function statusLabel(s){
 function hotelIconSvg(){
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/><path d="M3 12h18"/></svg>`;
 }
+function hotelPhotos(h){
+  const out = [];
+  const seen = new Set();
+  const push = src => {
+    if (!src || seen.has(src)) return;
+    seen.add(src);
+    out.push(src);
+  };
+  if (h.photo) push(h.photo);
+  (h.photos || []).forEach(push);
+  if (h.img) push(h.img);
+  const slug = h.photoSlug || h.slug;
+  if (slug){
+    push("./img/hotels/" + slug + ".jpg");
+    push("./img/hotels/" + slug + "-2.jpg");
+    push("./img/hotels/" + slug + "-3.jpg");
+    push("./img/hotels/" + slug + "-4.jpg");
+    push("./img/hotels/" + slug + "-5.jpg");
+  }
+  return out.slice(0, 5);
+}
+
 function renderHotelCard(stay){
   const h = stay.hotel || {};
+  const thumbs = hotelPhotos(h);
+  const onErr = `onerror="this.remove();var t=this.parentElement;if(!t)return;t.classList.remove('has-photo');var ph=t.querySelector('.ph');if(ph)ph.style.display='grid'"`;
+  const thumb = thumbs[0]
+    ? `<div class="thumb has-photo"><img src="${esc(thumbs[0])}" alt="" loading="lazy" ${onErr}/><div class="ph" style="display:none">${hotelIconSvg()}</div></div>`
+    : `<div class="thumb"><div class="ph">${hotelIconSvg()}</div></div>`;
   return `<button type="button" class="hotel-card" data-stay="${esc(stay.id)}">
-    <div class="thumb">${hotelIconSvg()}</div>
+    ${thumb}
     <div class="meta">
       <div class="name">${esc(h.name || "Hôtel à définir")}</div>
       <div class="row"><em>${esc(h.area || "")}</em></div>
@@ -1041,9 +1068,10 @@ function openHotelDetail(stay){
   if (!panelContext || panelContext.type !== "city") return;
   const h = stay.hotel || {};
   const mapAct = (h.lat != null && h.lng != null) ? { lat: h.lat, lng: h.lng, title: h.name } : null;
+  const photos = hotelPhotos(h);
   showDetailSheet(
     `<span class="sheet-kind hotel">Hôtel</span>` +
-    `<div class="detail-hero"><div class="ph">${hotelIconSvg()}</div></div>` +
+    renderPhotoGallery(photos, "town") +
     `<h3>${esc(h.name || "Hôtel à définir")}</h3>` +
     (mapAct ? mapsLinkHtml(mapAct, "detail") : "") +
     `<p class="desc">${esc(h.desc || "")}</p>` +
@@ -1055,6 +1083,7 @@ function openHotelDetail(stay){
     `<dt>Adresse</dt><dd>${esc(h.address || "—")}</dd>` +
     `<dt>Arrivée</dt><dd>${esc(h.checkIn || "—")}</dd>` +
     `<dt>Départ</dt><dd>${esc(h.checkOut || "—")}</dd>` +
+    (h.phone ? `<dt>Téléphone</dt><dd>${esc(h.phone)}</dd>` : "") +
     `<dt>Paiement</dt><dd>${esc(h.payment || "—")}</dd>` +
     `<dt>Prix</dt><dd>${esc(h.price || "—")}</dd>` +
     `</dl>` +
@@ -1414,14 +1443,29 @@ function loadChecks(){
 function saveChecks(obj){
   try { localStorage.setItem(CHECK_KEY, JSON.stringify(obj)); } catch (_) {}
 }
+function prepCheckState(){
+  const st = loadChecks();
+  let changed = false;
+  PREP_CHECKS.forEach(item => {
+    if (item.done && !(item.id in st)) {
+      st[item.id] = true;
+      changed = true;
+    }
+  });
+  if (changed) saveChecks(st);
+  return st;
+}
 function renderPrep(){
   const box = document.getElementById("prep-checklist");
-  const plan = document.getElementById("prep-plan");
   const bud = document.getElementById("prep-budget");
-  if (!box || !plan || !bud) return;
-  const state = loadChecks();
+  const who = document.getElementById("prep-travelers");
+  if (!box || !bud) return;
+  if (who && typeof TRAVELERS !== "undefined") {
+    who.textContent = "Voyageurs : " + TRAVELERS.join(" & ");
+  }
+  const state = prepCheckState();
   box.innerHTML = PREP_CHECKS.map(item => {
-    const on = !!state[item.id];
+    const on = Object.prototype.hasOwnProperty.call(state, item.id) ? !!state[item.id] : !!item.done;
     return `<li><input type="checkbox" id="ck-${item.id}" data-check="${item.id}"${on ? " checked" : ""}/><label for="ck-${item.id}" class="${on ? "done" : ""}">${esc(item.label)}<span class="meta">${esc(item.meta)}</span></label></li>`;
   }).join("");
   box.querySelectorAll("input[data-check]").forEach(inp => {
@@ -1433,11 +1477,13 @@ function renderPrep(){
       if (lab) lab.classList.toggle("done", inp.checked);
     });
   });
-  plan.innerHTML = PREP_PLAN.map(t => `<li>${esc(t)}</li>`).join("");
   const rows = PREP_BUDGET.map(b =>
     `<div class="${b.done ? "" : "muted"}">${esc(b.label)}<span class="meta" style="display:block;font-size:12px;font-weight:400">${esc(b.note)}</span></div><div class="amt">${esc(b.amount)}</div>`
   ).join("");
-  bud.innerHTML = rows + `<div class="total"><span>Vols déjà sortis (×2)</span><span>≈ 4 000 €</span></div>`;
+  const tot = (typeof PREP_BUDGET_TOTAL !== "undefined" && PREP_BUDGET_TOTAL)
+    ? PREP_BUDGET_TOTAL
+    : { label:"Total / pers.", amount:"—" };
+  bud.innerHTML = rows + `<div class="total"><span>${esc(tot.label)}</span><span>${esc(tot.amount)}</span></div>`;
 }
 function actMetaFor(act){
   const slug = photoSlug(act);
