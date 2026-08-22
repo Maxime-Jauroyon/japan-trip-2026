@@ -21,6 +21,7 @@ const CITIES = {
             "Self check-in · non-fumeurs · pas de repas inclus",
             "Taxe de séjour Tokyo : souvent déjà dans le total Booking — vérifier à l’arrivée",
             "Code confidentiel : dans la conf. Booking (ne pas partager)",
+            "Arrivée HND ~6h50 · check-in 16h — demander dépôt de bagages à l’hôtel ou consigne gare si besoin",
             "Équipé : cuisine, lave-linge, clim, Wi‑Fi, etc."
           ],
           desc:"Appart-hôtel à Akihabara (Torigoe), calme et pratique pour le centre, Asakusa et le départ vers le Fuji." } },
@@ -190,6 +191,11 @@ const JAPAN_BOUNDS = { west:134.3, south:33.7, east:141.1, north:37.35 };
 const DAYS = [
   { n:1, date:"8 nov 2026", dow:"Dimanche", city:"tokyo",
     moves:[{when:"Arrivée HND 06:50", title:"Vol Paris → Haneda", dummy:"Air France · CDG 09:45 (7 nov)", mode:"Avion", leg:"arrive"}],
+    luggageLocker:{
+      title:"Consigne bagages",
+      desc:"À renseigner quand une consigne sera choisie (coin locker, gare, Ecbo Cloak…).",
+      when:"Après arrivée HND · avant check-in 16h"
+    },
     ideas:[
       {title:"Akihabara — arcades / anime", lat:35.6984, lng:139.7731,
         desc:"Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit.",
@@ -695,5 +701,89 @@ const ACT_META = {
   "osaka-castle":{ hours:"~9h–17h", duration:"1,5–2 h" },
   shinsaibashi:{ hours:"Magasins ~10h–20h", duration:"1–2 h" },
   kuromon:{ hours:"~9h–18h", duration:"1 h" }
+};
+
+/** Version affichée (garder en sync avec sw.js CACHE) */
+const APP_CACHE_VER = "v95";
+
+const PRACTICAL_INFO = [
+  { id:"esim", title:"eSIM / data", items:[
+    "Activer l’eSIM avant l’atterrissage (mode avion → activer à HND).",
+    "Télécharger offline : Google Maps (zones utiles), traducteur, confirmations Booking."
+  ]},
+  { id:"ic", title:"Suica / Welcome Suica", items:[
+    "Carte IC rechargeable : métro, JR urbain, konbini, certains bus.",
+    "Welcome Suica (visiteurs) : validité limitée — recharger au besoin aux bornes.",
+    "Alternative : app Mobile Suica (compte japonais parfois requis)."
+  ]},
+  { id:"jr", title:"Trains & JR Pass", items:[
+    "Shinkansen et trains limités : réserver sièges quand possible (Hokuriku, etc.).",
+    "Bus Fuji, Shirakawa, Takayama : réserver à l’avance en novembre.",
+    "Bagages : shinkansen avec grandes valises → sièges « baggage area » si dispo."
+  ]},
+  { id:"taxes", title:"Taxes de séjour / onsen", items:[
+    "Taxe municipale : souvent au check-in (cash ou carte), parfois déjà dans Booking.",
+    "Onsen / sentō : petite taxe ou serviette — prévoir des ¥100 en pièces."
+  ]},
+  { id:"urgence", title:"Urgences & contacts", items:[
+    "Police : 110 · Ambulance / pompiers : 119",
+    "Ambassade de France à Tokyo : +81 3 5798 6000",
+    "Assurance voyage : numéros dans la conf. / appli assureur (hors ligne).",
+    "Numéros hôtels : fiches détail dans chaque ville."
+  ]},
+  { id:"cash", title:"Cash & cartes", items:[
+    "Beaucoup de lieux acceptent la carte ; petits temples, marchés, taxis parfois cash only.",
+    "Retrait ATM 7-Eleven / poste (JP Bank) — prévenir la banque avant le départ."
+  ]}
+];
+
+const NOV_CLIMATE = {
+  tokyo:{ hi:17, lo:9, note:"Frais le matin · veste + parapluie pluie fine possible" },
+  fuji:{ hi:12, lo:3, note:"Froid en altitude · ciel variable · vue Fuji selon météo" },
+  kanazawa:{ hi:16, lo:8, note:"Humide côté mer du Japon · pluie plus fréquente" },
+  shirakawa:{ hi:11, lo:2, note:"Montagne · possible pluie / neige légère en soirée" },
+  takayama:{ hi:13, lo:1, note:"Nuits froides · matinée marché bien couvert" },
+  kyoto:{ hi:17, lo:7, note:"Automne · couleurs momiji · soirées fraîches" },
+  nara:{ hi:17, lo:7, note:"Similaire Kyoto · parc venté le matin" },
+  osaka:{ hi:18, lo:9, note:"Un peu plus doux · averses possibles" }
+};
+
+const CONTEXT_PHRASES = {
+  hotel:[
+    { fr:"Check-in, s’il vous plaît", jp:"チェックインお願いします", ro:"Chekku-in onegai shimasu" },
+    { fr:"J’ai une réservation au nom de…", jp:"予約しています", ro:"Yoyaku shite imasu" },
+    { fr:"Où est l’ascenseur ?", jp:"エレベーターはどこですか？", ro:"Erebeeta wa doko desu ka?" }
+  ],
+  train:[
+    { fr:"Quai pour … ?", jp:"のりばはどこですか？", ro:"Noriba wa doko desu ka?" },
+    { fr:"Ce train va à … ?", jp:"この電車は行きですか？", ro:"Kono densha wa … iki desu ka?" },
+    { fr:"Où acheter un billet ?", jp:"切符はどこで買えますか？", ro:"Kippu wa doko de kaemasu ka?" }
+  ],
+  bus:[
+    { fr:"Ce bus va à … ?", jp:"このバスは行きですか？", ro:"Kono basu wa … iki desu ka?" },
+    { fr:"Arrêt suivant … ?", jp:"次はですか？", ro:"Tsugi wa … desu ka?" }
+  ],
+  plane:[
+    { fr:"Où est l’immigration ?", jp:"入国審査はどこですか？", ro:"Nyūkoku shinsa wa doko desu ka?" },
+    { fr:"Porte d’embarquement … ?", jp:"ゲートはどこですか？", ro:"Gēto wa doko desu ka?" }
+  ],
+  restaurant:[
+    { fr:"Table pour deux, s’il vous plaît", jp:"二人です", ro:"Futari desu" },
+    { fr:"Sans viande porc, s’il vous plaît", jp:"豚肉なしでお願いします", ro:"Butaniku nashi de onegai shimasu" },
+    { fr:"L’addition, s’il vous plaît", jp:"お会計お願いします", ro:"Okaikei onegai shimasu" }
+  ],
+  shop:[
+    { fr:"Combien ça coûte ?", jp:"いくらですか？", ro:"Ikura desu ka?" },
+    { fr:"Paiement par carte ?", jp:"カード使えますか？", ro:"Kaado tsukaemasu ka?" }
+  ],
+  temple:[
+    { fr:"Peut-on entrer ?", jp:"中に入れますか？", ro:"Naka ni hairemasu ka?" },
+    { fr:"Où est l’entrée ?", jp:"入口はどこですか？", ro:"Iriguchi wa doko desu ka?" }
+  ],
+  visit:[
+    { fr:"Excusez-moi", jp:"すみません", ro:"Sumimasen" },
+    { fr:"C’est magnifique", jp:"きれいですね", ro:"Kirei desu ne" },
+    { fr:"Photo autorisée ?", jp:"写真撮ってもいいですか？", ro:"Shashin totte mo ii desu ka?" }
+  ]
 };
 

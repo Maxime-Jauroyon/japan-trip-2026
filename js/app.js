@@ -305,6 +305,7 @@ const hint = document.getElementById("hint");
 let currentCity = null;
 let panelContext = null;
 let lastFocusAct = null;
+let onsiteSelectedDayN = null;
 
 /* Pan/zoom — mode: cover fills viewport; contain keeps grey letterbox around map */
 function makePanZoom(viewport, world, opts){
@@ -1069,6 +1070,29 @@ function renderIdeas(list, offset){
     `<div class="act" data-act-idx="${offset + i}" role="button" tabindex="0"><span class="dot"></span><div class="act-title">${esc(a.title)}</div>${mapsLinkHtml(a, "list")}</div>`
   ).join("");
 }
+function renderLuggageLocker(day){
+  if (!day) return "";
+  const stay = stayForDay(day.city, day);
+  const h = stay && stay.hotel;
+  const firstStay = h && h.name && h.name !== "—" && isFirstDayOfStay(day.city, day);
+  const checkInSort = firstStay ? parseHotelTimeSort(h.checkIn, 16 * 60) : null;
+  const moveRange = moveSortRange(day.moves || []);
+  const early = firstStay && isEarlyArrivalBeforeCheckIn(moveRange, checkInSort);
+  if (!day.luggageLocker && !early) return "";
+  const locker = day.luggageLocker || {};
+  const title = locker.title || "Consigne bagages";
+  const when = locker.when || (early ? "Après arrivée · avant check-in" : "");
+  const desc = locker.desc || (early ? "À renseigner quand une consigne sera trouvée." : "");
+  // Pas de pin / pas de Maps tant qu’il n’y a pas de coords
+  return `<div class="act act-locker" role="note">` +
+    `<span class="dot"></span>` +
+    `<div>` +
+    `<div class="act-title">${esc(title)}</div>` +
+    (when ? `<div class="when">${esc(when)}</div>` : "") +
+    (desc ? `<div class="dummy">${esc(desc)}</div>` : "") +
+    `</div>` +
+    `</div>`;
+}
 function renderMoves(list){
   return (list || []).map(m => {
     const leg = m.leg ? LEGS.find(l => l.id === m.leg) : null;
@@ -1399,6 +1423,7 @@ function showDetailSheet(html){
       syncSheetMapInset();
     }
   };
+  bindCopyButtons(detailEl);
 }
 
 function openActivityDetail(act){
@@ -1415,7 +1440,8 @@ function openActivityDetail(act){
     mapsLinkHtml(act, "detail") +
     `<p class="desc">${esc(act.desc || "")}</p>` +
     notesListHtml(act.notes) +
-    gallery
+    gallery +
+    contextPhraseHtml(phraseContextForAct(act))
   );
   highlightPin(act);
 }
@@ -1436,13 +1462,14 @@ function openHotelDetail(stay){
     `<dt>Séjour</dt><dd>${esc(stay.label || "")}</dd>` +
     `<dt>Dates</dt><dd>${esc(stay.from)} → ${esc(stay.to)} · ${esc(stay.nights)}</dd>` +
     `<dt>Quartier</dt><dd>${esc(h.area || "—")}</dd>` +
-    `<dt>Adresse</dt><dd>${esc(h.address || "—")}</dd>` +
+    `<dt>Adresse</dt><dd>${copyFieldHtml(h.address || "—")}</dd>` +
     `<dt>Arrivée</dt><dd>${esc(h.checkIn || "—")}</dd>` +
     `<dt>Départ</dt><dd>${esc(h.checkOut || "—")}</dd>` +
-    (h.phone ? `<dt>Téléphone</dt><dd>${esc(h.phone)}</dd>` : "") +
+    (h.phone ? `<dt>Téléphone</dt><dd>${copyFieldHtml(h.phone)}</dd>` : "") +
     `<dt>Prix</dt><dd>${esc(h.price || "—")}</dd>` +
     `</dl>` +
-    notesListHtml(h.notes)
+    notesListHtml(h.notes) +
+    contextPhraseHtml("hotel")
   );
   if (mapAct) highlightPin(mapAct);
 }
@@ -1466,7 +1493,8 @@ function openStopDetail(stop){
     `<dl class="detail-kv">` +
     `<dt>Type</dt><dd>${esc(stop.kind || "Arrêt")}</dd>` +
     `</dl>` +
-    (legsHtml ? `<div class="stop-legs">${legsHtml}</div>` : "")
+    (legsHtml ? `<div class="stop-legs">${legsHtml}</div>` : "") +
+    contextPhraseHtml(stopPhraseContext(stop))
   );
   const sheet = panel.querySelector(".detail-sheet");
   if (sheet) {
@@ -1618,8 +1646,10 @@ function fillCityPanel(c, days, openN){
       const moves = d.moves || [];
       const ideas = ideasForCity(d.ideas, c.id);
       const ideasAfter = ideasForCity(d.ideasAfter, c.id);
+      const lockerHtml = renderLuggageLocker(d);
       let body = "";
       if (moves.length) body += renderMoves(moves);
+      if (lockerHtml) body += `<h4>Bagages</h4>${lockerHtml}`;
       if (ideas.length) body += `<h4>Idées</h4>${renderIdeas(ideas, 0)}`;
       if (ideasAfter.length) body += `<h4>Après l’arrivée</h4>${renderIdeas(ideasAfter, ideas.length)}`;
       if (!body) body = `<p class="note">Rien de prévu ce jour-là pour cette ville.</p>`;
@@ -1708,9 +1738,11 @@ function openLeg(id){
     `</dl>` +
     (details ? `<ul class="detail-notes">${details}</ul>` : "") +
     tips +
+    contextPhraseHtml(legPhraseContext(leg.mode)) +
     `</div>`;
   panel.classList.add("open");
   bindSheetGrab();
+  bindCopyButtons(panel);
   panel.querySelector(".close").onclick = () => closePanel(true);
   panel.querySelectorAll("[data-end]").forEach(n => {
     n.addEventListener("click", () => focusLegEnd(leg, n.dataset.end, true));
@@ -1831,35 +1863,456 @@ function renderPrep(){
     ? PREP_BUDGET_TOTAL
     : { label:"Total / pers.", amount:"—" };
   bud.innerHTML = rows + `<div class="total"><span>${esc(tot.label)}</span><span>${esc(tot.amount)}</span></div>`;
+  renderPracticalInfo();
 }
-function actMetaFor(act){
-  const slug = photoSlug(act);
-  return (slug && ACT_META[slug]) || { hours: "Horaires variables", duration: "1–2 h" };
+
+function copyFieldHtml(text){
+  if (!text || text === "—") return esc(text || "—");
+  return `<span class="copy-field"><span class="copy-text">${esc(text)}</span>` +
+    `<button type="button" class="copy-btn" data-copy-text="${esc(text)}">Copier</button></span>`;
 }
+function bindCopyButtons(root){
+  (root || document).querySelectorAll(".copy-btn[data-copy-text]").forEach(btn => {
+    if (btn.dataset.bound) return;
+    btn.dataset.bound = "1";
+    btn.addEventListener("click", async () => {
+      const t = btn.getAttribute("data-copy-text");
+      if (!t) return;
+      try {
+        await navigator.clipboard.writeText(t);
+        const prev = btn.textContent;
+        btn.textContent = "Copié !";
+        setTimeout(() => { btn.textContent = prev; }, 1600);
+      } catch (_) { /* ignore */ }
+    });
+  });
+}
+function contextPhraseHtml(key){
+  const list = (typeof CONTEXT_PHRASES !== "undefined" && CONTEXT_PHRASES[key]) || [];
+  if (!list.length) return "";
+  return `<div class="context-phrases"><h4>Phrases utiles</h4>` +
+    list.map(p =>
+      `<div class="phrase-sm"><div class="fr">${esc(p.fr)}</div><div class="jp">${esc(p.jp)}</div><div class="ro">${esc(p.ro)}</div></div>`
+    ).join("") + `</div>`;
+}
+function legPhraseContext(mode){
+  const m = String(mode || "").toLowerCase();
+  if (/avion|vol|plane/.test(m)) return "plane";
+  if (/bus/.test(m)) return "bus";
+  return "train";
+}
+function stopPhraseContext(stop){
+  const k = stopPinKind(stop);
+  if (k === "plane") return "plane";
+  if (k === "bus") return "bus";
+  return "train";
+}
+function phraseContextForAct(act){
+  const t = (act.title || "").toLowerCase();
+  if (/temple|sanctuaire|jinja|dera|shrine|todai|fushimi|meiji|senso|kasuga|kinkaku|kiyomizu|pagode|inari|nijo|kōfuku|kofuku/.test(t)) return "temple";
+  if (/marché|marche|market|nishiki|kuromon|omicho|ōmichō|magasin|boutique|shopping|donki|animate|pokemon/.test(t)) return "shop";
+  if (/déjeuner|dejeuner|dîner|diner|restaurant|ramen|sushi|wagashi|thé|tea|izakaya|takoyaki|okonomiyaki|street food/.test(t)) return "restaurant";
+  return "visit";
+}
+
+function openMapForDay(day){
+  if (!day || !CITIES[day.city]) return;
+  setAppTab("map");
+  const id = day.city;
+  clearLegEnds();
+  showCity(id, day.n);
+  fillCityPanel(CITIES[id], daysForCity(id), day.n);
+  requestAnimationFrame(() => {
+    panel.querySelectorAll("details.day").forEach(el => {
+      el.open = Number(el.dataset.dayN) === day.n;
+    });
+    scheduleCityMapRefresh();
+  });
+}
+function getOnsiteSelectedDay(){
+  if (onsiteSelectedDayN != null) return DAYS.find(d => d.n === onsiteSelectedDayN) || null;
+  const iso = japanTodayISO();
+  return findTripDayByISO(iso);
+}
+function syncOnsiteMapBtn(day){
+  const btn = document.getElementById("onsite-map-btn");
+  if (!btn) return;
+  if (day && CITIES[day.city]) {
+    btn.hidden = false;
+    btn.textContent = "Voir sur la carte · " + CITIES[day.city].name;
+  } else btn.hidden = true;
+}
+
+function parseWhenSort(when){
+  const s = String(when || "").toLowerCase();
+  const hm = s.match(/(\d{1,2})[:h](\d{2})/);
+  if (hm) return parseInt(hm[1], 10) * 60 + parseInt(hm[2], 10);
+  if (/matin|morning|tôt|tot/.test(s)) return 8 * 60;
+  if (/après-midi|apres-midi|midi/.test(s)) return 13 * 60;
+  if (/soir|nuit|après|apres/.test(s)) return 19 * 60;
+  if (/arrivée|arrivee|atterr|vol/.test(s)) return 7 * 60;
+  return 12 * 60;
+}
+function parseHotelTimeSort(str, fallback){
+  const s = String(str || "");
+  const hm = s.match(/(\d{1,2})[:h](\d{2})/);
+  if (hm) return parseInt(hm[1], 10) * 60 + parseInt(hm[2], 10);
+  if (/matin/.test(s.toLowerCase())) return 9 * 60;
+  if (/après-midi|apres-midi/.test(s.toLowerCase())) return 15 * 60;
+  return fallback;
+}
+function moveSortRange(moves){
+  let min = Infinity, max = 0;
+  (moves || []).forEach(m => {
+    const t = parseWhenSort(m.when);
+    min = Math.min(min, t);
+    max = Math.max(max, t);
+  });
+  if (!isFinite(min)) min = 0;
+  return { min, max };
+}
+function luggageBeforeCheckInHint(){
+  return "Demander aussi à l’hôtel s’il accepte les bagages avant le check-in.";
+}
+function isEarlyArrivalBeforeCheckIn(moveRange, checkInSort){
+  return moveRange.max > 0 && checkInSort != null && checkInSort > moveRange.max + 45;
+}
+function isFirstDayOfStay(cityId, day){
+  const stay = stayForDay(cityId, day);
+  if (!stay) return false;
+  const groups = stayGroups(CITIES[cityId], daysForCity(cityId));
+  for (const g of groups){
+    if (g.stay.id !== stay.id) continue;
+    return (g.days || []).some(d => d.n === day.n) && g.days[0].n === day.n;
+  }
+  return false;
+}
+function isLastDayOfStay(cityId, day){
+  const stay = stayForDay(cityId, day);
+  if (!stay) return false;
+  const groups = stayGroups(CITIES[cityId], daysForCity(cityId));
+  for (const g of groups){
+    if (g.stay.id !== stay.id) continue;
+    const ds = g.days || [];
+    return ds.some(d => d.n === day.n) && ds[ds.length - 1].n === day.n;
+  }
+  return false;
+}
+function renderDayTimeline(day){
+  if (!day) return "";
+  const cityId = day.city;
+  const city = CITIES[cityId];
+  const items = [];
+  const stay = stayForDay(cityId, day);
+  const h = stay && stay.hotel;
+  const moves = day.moves || [];
+  const moveRange = moveSortRange(moves);
+  const firstStay = h && h.name && h.name !== "—" && isFirstDayOfStay(cityId, day);
+  const lastStay = h && h.name && h.name !== "—" && isLastDayOfStay(cityId, day);
+  const checkInSort = firstStay ? parseHotelTimeSort(h.checkIn, 16 * 60) : null;
+  const earlyArrival = firstStay && isEarlyArrivalBeforeCheckIn(moveRange, checkInSort);
+
+  if (lastStay && !firstStay) {
+    const checkOutSort = parseHotelTimeSort(h.checkOut, 10 * 60);
+    const beforeDepart = moveRange.min < Infinity && moveRange.min > 60
+      ? moveRange.min - 45
+      : checkOutSort;
+    items.push({
+      sort: Math.min(checkOutSort, beforeDepart),
+      cls: "tl-hotel",
+      time: h.checkOut ? "Check-out · " + h.checkOut.split("·")[0].trim() : "Fin de séjour",
+      title: h.name,
+      desc: h.checkOut ? h.checkOut : "",
+      tags: ["Valise"]
+    });
+  }
+
+  moves.forEach(m => {
+    items.push({
+      sort: parseWhenSort(m.when),
+      cls: "tl-move",
+      time: m.when || "Trajet",
+      title: m.title,
+      desc: m.dummy || "",
+      tags: [m.mode || "Trajet"]
+    });
+  });
+
+  if (earlyArrival) {
+    const locker = day.luggageLocker || {};
+    const lockerAct = locker.lat != null && locker.lng != null ? locker : null;
+    items.push({
+      sort: moveRange.max + 10,
+      cls: "tl-locker",
+      time: locker.when || "Après arrivée · avant check-in",
+      title: locker.title || "Consigne bagages",
+      desc: locker.desc || "À renseigner quand une consigne sera trouvée.",
+      tags: ["Valise"],
+      act: lockerAct
+    });
+  }
+
+  (day.ideas || []).forEach((a, i) => {
+    const meta = actMetaFor(a);
+    let sort;
+    if (firstStay && checkInSort != null) {
+      const gap = earlyArrival ? 40 : 25;
+      const afterArrival = (moveRange.max > 0 ? moveRange.max : 8 * 60) + gap;
+      sort = Math.min(afterArrival + i * 35, checkInSort - 15);
+    } else {
+      sort = 10 * 60 + i * 45;
+    }
+    items.push({
+      sort,
+      cls: "tl-idea",
+      time: meta.duration + " · " + meta.hours,
+      title: a.title,
+      desc: a.desc || "",
+      tags: ["Idée"],
+      act: a
+    });
+  });
+
+  if (firstStay) {
+    const afterArrival = moveRange.max > 0 ? moveRange.max + 20 : 0;
+    const sort = Math.max(checkInSort, afterArrival);
+    let desc = [h.checkIn, h.area].filter(Boolean).join(" · ");
+    if (earlyArrival) {
+      desc = (desc ? desc + " — " : "") + luggageBeforeCheckInHint();
+    }
+    items.push({
+      sort,
+      cls: "tl-hotel",
+      time: h.checkIn ? "Check-in · " + h.checkIn : "Hébergement",
+      title: h.name,
+      desc,
+      tags: [stay.label || "Séjour"]
+    });
+  }
+
+  (day.ideasAfter || []).forEach((a, i) => {
+    const meta = actMetaFor(a);
+    let sort;
+    if (firstStay && checkInSort != null) {
+      sort = Math.max(checkInSort, moveRange.max) + 50 + i * 40;
+    } else {
+      sort = 14 * 60 + i * 45;
+    }
+    items.push({
+      sort,
+      cls: "tl-idea",
+      time: meta.duration + " · " + meta.hours,
+      title: a.title,
+      desc: a.desc || "",
+      tags: ["Idée"],
+      act: a
+    });
+  });
+
+  items.sort((a, b) => a.sort - b.sort);
+  if (!items.length) {
+    return `<p class="lead">Rien de prévu ce jour-là${city ? " · " + esc(city.name) : ""}.</p>`;
+  }
+
+  return `<div class="day-timeline">` + items.map(it => {
+    const map = it.act ? mapsLinkHtml(it.act, "detail") : "";
+    const tags = (it.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
+    return `<div class="tl-item ${it.cls}">` +
+      `<div class="tl-time">${esc(it.time)}</div>` +
+      `<div class="tl-title">${esc(it.title)}</div>` +
+      (tags ? `<div class="tl-tags">${tags}</div>` : "") +
+      (it.desc ? `<div class="tl-desc">${esc(it.desc)}</div>` : "") +
+      map +
+      `</div>`;
+  }).join("") + `</div>`;
+}
+
+const WX_LABELS = {
+  0:"Ensoleillé", 1:"Plutôt clair", 2:"Nuageux", 3:"Couvert",
+  45:"Brouillard", 48:"Brouillard", 51:"Bruine", 53:"Bruine", 55:"Bruine",
+  61:"Pluie", 63:"Pluie", 65:"Forte pluie", 71:"Neige", 73:"Neige", 75:"Neige",
+  80:"Averses", 81:"Averses", 82:"Fortes averses", 95:"Orage"
+};
+const WEATHER_CACHE_KEY = "japan-trip-weather-v1";
+function loadWeatherCache(){
+  try { return JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || "{}"); } catch (_) { return {}; }
+}
+function saveWeatherCache(obj){
+  try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(obj)); } catch (_) {}
+}
+function daysUntilISO(iso){
+  const today = japanTodayISO();
+  return Math.round((Date.parse(iso + "T12:00:00+09:00") - Date.parse(today + "T12:00:00+09:00")) / 86400000);
+}
+async function getWeatherForDay(day){
+  const iso = dayToISO(day);
+  const city = CITIES[day.city];
+  if (!iso || !city) return null;
+  const until = daysUntilISO(iso);
+  const climate = (typeof NOV_CLIMATE !== "undefined" && NOV_CLIMATE[day.city]) || null;
+
+  if (until > 16 || until < 0) {
+    if (!climate) return null;
+    return { type:"climate", min:climate.lo, max:climate.hi, note:climate.note };
+  }
+
+  const cacheKey = day.city + "|" + iso;
+  const cache = loadWeatherCache();
+  const hit = cache[cacheKey];
+  if (hit && hit.date === japanTodayISO()) return hit.data;
+
+  if (!navigator.onLine) {
+    if (climate) return { type:"climate", min:climate.lo, max:climate.hi, note:climate.note + " (hors ligne)" };
+    return null;
+  }
+
+  try {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=" + city.lat +
+      "&longitude=" + city.lng +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+      "&timezone=Asia%2FTokyo&start_date=" + iso + "&end_date=" + iso;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("weather");
+    const json = await res.json();
+    const d = json.daily || {};
+    const code = d.weather_code && d.weather_code[0];
+    const data = {
+      type: "forecast",
+      min: Math.round(d.temperature_2m_min[0]),
+      max: Math.round(d.temperature_2m_max[0]),
+      label: WX_LABELS[code] || "Variable",
+      rain: d.precipitation_probability_max ? d.precipitation_probability_max[0] : null
+    };
+    cache[cacheKey] = { date: japanTodayISO(), data };
+    saveWeatherCache(cache);
+    return data;
+  } catch (_) {
+    if (climate) return { type:"climate", min:climate.lo, max:climate.hi, note:climate.note };
+    return null;
+  }
+}
+async function renderOnsiteWeather(day){
+  const box = document.getElementById("onsite-weather");
+  if (!box || !day) { if (box) box.hidden = true; return; }
+  box.hidden = false;
+  box.innerHTML = `<div class="wx-title">Météo · …</div><div class="wx-note">Chargement</div>`;
+  const wx = await getWeatherForDay(day);
+  if (!wx) { box.hidden = true; return; }
+  const cityName = CITIES[day.city] ? CITIES[day.city].name : day.city;
+  if (wx.type === "forecast") {
+    box.innerHTML =
+      `<div class="wx-title">Prévisions · ${esc(cityName)} · ${esc(day.date)}</div>` +
+      `<div class="wx-temps">${wx.min}° – ${wx.max}°C · ${esc(wx.label)}</div>` +
+      (wx.rain != null ? `<div class="wx-note">Pluie : ${wx.rain}%</div>` : "");
+  } else {
+    box.innerHTML =
+      `<div class="wx-title">Climat type · novembre · ${esc(cityName)}</div>` +
+      `<div class="wx-temps">${wx.min}° – ${wx.max}°C</div>` +
+      `<div class="wx-note">${esc(wx.note)}</div>`;
+  }
+}
+
 function renderOnsiteDay(day){
   const body = document.getElementById("onsite-day-body");
   if (!body || !day) { if (body) body.innerHTML = ""; return; }
-  const city = CITIES[day.city];
-  const moves = day.moves || [];
-  const ideas = [].concat(day.ideas || [], day.ideasAfter || []);
-  let html = "";
-  if (moves.length){
-    html += `<p class="lead" style="margin-bottom:10px">Trajets du jour</p>`;
-    moves.forEach(m => {
-      html += `<div class="onsite-act"><div class="t">${esc(m.title)}</div><div class="tags"><span class="tag">${esc(m.mode || "Trajet")}</span><span class="tag">${esc(m.when || "")}</span></div><div class="d">${esc(m.dummy || "")}</div></div>`;
-    });
+  body.innerHTML = renderDayTimeline(day);
+  renderOnsiteWeather(day);
+  syncOnsiteMapBtn(day);
+}
+
+function updateOfflineStatus(){
+  const el = document.getElementById("offline-status");
+  if (!el) return;
+  const online = navigator.onLine;
+  const ver = (typeof APP_CACHE_VER !== "undefined" ? APP_CACHE_VER : "?");
+  const iosApp = isIOSInstalledPWA();
+  el.textContent = (online ? "En ligne" : "Hors ligne") + " · cache " + ver + (iosApp ? " · app" : "");
+  el.classList.toggle("online", online);
+  el.classList.toggle("offline", !online);
+}
+
+const IOS_INSTALL_KEY = "japan-trip-ios-install-dismiss-v1";
+function isIOSDevice(){
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) return true;
+  return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+}
+function isIOSInstalledPWA(){
+  return window.navigator.standalone === true ||
+    window.matchMedia("(display-mode: standalone)").matches;
+}
+function initIOSInstallHint(){
+  const box = document.getElementById("ios-install");
+  const btn = document.getElementById("ios-install-dismiss");
+  if (!box || !btn) return;
+  if (!isIOSDevice() || isIOSInstalledPWA()) {
+    box.hidden = true;
+    return;
   }
-  if (ideas.length){
-    html += `<p class="lead" style="margin:16px 0 10px">Idées · ${esc(city ? city.name : day.city)}</p>`;
-    ideas.forEach(a => {
-      const meta = actMetaFor(a);
-      const map = mapsLinkHtml(a, "detail");
-      html += `<div class="onsite-act"><div class="t">${esc(a.title)}</div><div class="tags"><span class="tag">⏱ ${esc(meta.duration)}</span><span class="tag">🕒 ${esc(meta.hours)}</span></div><div class="d">${esc(a.desc || "")}</div>${notesListHtml(a.notes)}${map}</div>`;
+  try {
+    if (localStorage.getItem(IOS_INSTALL_KEY) === "1") {
+      box.hidden = true;
+      return;
+    }
+  } catch (_) { /* ignore */ }
+  box.hidden = false;
+  btn.addEventListener("click", () => {
+    box.hidden = true;
+    try { localStorage.setItem(IOS_INSTALL_KEY, "1"); } catch (_) { /* ignore */ }
+  });
+}
+
+function renderPracticalInfo(){
+  const box = document.getElementById("prep-practical");
+  if (!box || typeof PRACTICAL_INFO === "undefined") return;
+  box.innerHTML = PRACTICAL_INFO.map(sec =>
+    `<article class="practical-card"><h4>${esc(sec.title)}</h4><ul>` +
+    sec.items.map(it => `<li>${esc(it)}</li>`).join("") +
+    `</ul></article>`
+  ).join("");
+}
+
+function buildPrintHtml(){
+  const who = (typeof TRAVELERS !== "undefined" ? TRAVELERS.join(" & ") : "Voyageurs");
+  let html =
+    `<h1>Voyage au Japon</h1>` +
+    `<p class="print-sub">8–29 novembre 2026 · ${esc(who)}</p>`;
+  DAYS.forEach(day => {
+    const city = CITIES[day.city];
+    html += `<h2>Jour ${day.n} · ${esc(day.dow)} ${esc(day.date)} · ${esc(city ? city.name : day.city)}</h2>`;
+    const stay = stayForDay(day.city, day);
+    const h = stay && stay.hotel;
+    if (h && h.name && h.name !== "—") {
+      html += `<div class="print-hotel"><strong>${esc(h.name)}</strong> · ${esc(h.area || "")}<br>` +
+        `${esc(h.address || "")}<br>` +
+        `Check-in ${esc(h.checkIn || "—")} · Check-out ${esc(h.checkOut || "—")}</div>`;
+    }
+    (day.moves || []).forEach(m => {
+      html += `<h3>${esc(m.when || "Trajet")} · ${esc(m.title)}</h3>` +
+        `<p>${esc(m.mode || "")} — ${esc(m.dummy || "")}</p>`;
     });
-  } else if (!moves.length){
-    html = `<p class="lead">Rien de prévu ce jour-là (transfert / vol).</p>`;
-  }
-  body.innerHTML = html;
+    if (day.luggageLocker) {
+      const L = day.luggageLocker;
+      html += `<h3>${esc(L.title || "Consigne bagages")}</h3>` +
+        `<p>${esc(L.when || "")}${L.when && L.desc ? " — " : ""}${esc(L.desc || "")}</p>`;
+    }
+    [].concat(day.ideas || [], day.ideasAfter || []).forEach(a => {
+      html += `<h3>${esc(a.title)}</h3><p>${esc(a.desc || "")}</p>`;
+    });
+  });
+  return html;
+}
+function printTrip(){
+  const root = document.getElementById("print-root");
+  if (!root) return;
+  root.innerHTML = buildPrintHtml();
+  root.hidden = false;
+  window.print();
+  root.hidden = true;
+}
+
+function actMetaFor(act){
+  const slug = photoSlug(act);
+  return (slug && ACT_META[slug]) || { hours: "Horaires variables", duration: "1–2 h" };
 }
 function loadFxRate(){
   try {
@@ -1910,6 +2363,14 @@ function initFxConverter(){
   yenEl.addEventListener("input", () => { last = "yen"; syncFromYen(); });
   eurEl.addEventListener("input", () => { last = "eur"; syncFromEur(); });
 }
+function onsiteHotelLine(day){
+  const stay = stayForDay(day.city, day);
+  const h = stay && stay.hotel;
+  if (!h || !h.name || h.name === "—") return "";
+  return `<p class="today-hotel"><strong>${esc(h.name)}</strong>` +
+    (h.checkIn ? `<br><span>${esc(h.checkIn)}</span>` : "") +
+    `</p>`;
+}
 function renderOnsite(){
   const todayBox = document.getElementById("onsite-today");
   const pick = document.getElementById("onsite-day-pick");
@@ -1920,18 +2381,27 @@ function renderOnsite(){
   const match = findTripDayByISO(iso);
   const start = "2026-11-08", end = "2026-11-29";
   if (match){
+    onsiteSelectedDayN = match.n;
     const city = CITIES[match.city];
-    todayBox.innerHTML = `<div class="today-card"><div class="kicker">Aujourd’hui (heure Japon)</div><h3>Jour ${match.n} · ${esc(match.dow)} ${esc(match.date)}</h3><p>${esc(city ? city.name : match.city)}${match.extraCity ? " → " + esc(CITIES[match.extraCity].name) : ""}</p></div>`;
+    todayBox.innerHTML =
+      `<div class="today-card"><div class="kicker">Aujourd’hui (heure Japon)</div>` +
+      `<h3>Jour ${match.n} · ${esc(match.dow)} ${esc(match.date)}</h3>` +
+      `<p>${esc(city ? city.name : match.city)}${match.extraCity ? " → " + esc(CITIES[match.extraCity].name) : ""}</p>` +
+      onsiteHotelLine(match) +
+      `</div>`;
     renderOnsiteDay(match);
     pick.hidden = true;
   } else if (iso < start){
+    onsiteSelectedDayN = null;
     const daysLeft = Math.ceil((Date.parse(start + "T00:00:00+09:00") - Date.now()) / 86400000);
     todayBox.innerHTML = `<div class="today-card"><div class="kicker">Avant le départ</div><h3>Encore ≈ ${daysLeft} jour${daysLeft > 1 ? "s" : ""}</h3><p>Le voyage commence le 8 nov 2026. Choisis un jour ci-dessous pour prévisualiser.</p></div>`;
     pick.hidden = false;
   } else if (iso > end){
+    onsiteSelectedDayN = null;
     todayBox.innerHTML = `<div class="today-card"><div class="kicker">Après le voyage</div><h3>Trip terminé</h3><p>Tu peux quand même refeuilleter chaque jour.</p></div>`;
     pick.hidden = false;
   } else {
+    onsiteSelectedDayN = null;
     todayBox.innerHTML = `<div class="today-card"><div class="kicker">Pendant le voyage</div><h3>Jour hors programme ?</h3><p>Choisis un jour ci-dessous.</p></div>`;
     pick.hidden = false;
   }
@@ -1943,11 +2413,13 @@ function renderOnsite(){
       pick.querySelectorAll("button").forEach(b => b.classList.remove("on"));
       btn.classList.add("on");
       const day = DAYS.find(d => d.n === Number(btn.dataset.day));
+      onsiteSelectedDayN = day ? day.n : null;
       renderOnsiteDay(day);
     });
   });
   if (!match){
     const first = DAYS[0];
+    onsiteSelectedDayN = first.n;
     const b0 = pick.querySelector("button");
     if (b0) b0.classList.add("on");
     renderOnsiteDay(first);
@@ -1979,3 +2451,12 @@ function setAppTab(tab){
 document.getElementById("app-tabs")?.querySelectorAll("button").forEach(btn => {
   btn.addEventListener("click", () => setAppTab(btn.dataset.tab));
 });
+document.getElementById("print-trip")?.addEventListener("click", printTrip);
+document.getElementById("onsite-map-btn")?.addEventListener("click", () => {
+  const day = getOnsiteSelectedDay();
+  if (day) openMapForDay(day);
+});
+updateOfflineStatus();
+initIOSInstallHint();
+window.addEventListener("online", updateOfflineStatus);
+window.addEventListener("offline", updateOfflineStatus);
