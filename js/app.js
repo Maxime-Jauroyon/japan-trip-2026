@@ -798,7 +798,7 @@ function highlightPin(act){
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   renderCityPins(currentCity, day || null, act);
   const pct = pctIn(MAP_BOUNDS[currentCity], act.lat, act.lng);
-  const zoom = Math.max(cityCam.minScale() * 1.35, cityCam.minScale() * 1.15);
+  const zoom = cityCam.minScale() * 1.52;
   cityCam.focusPct(pct.left, pct.top, zoom);
 }
 
@@ -818,6 +818,38 @@ function fitCityMap(){
   }
 }
 
+function openDayInPanel(){
+  const dayEl = panel.querySelector("details.day[open]");
+  if (!dayEl) return null;
+  const dayN = Number(dayEl.dataset.dayN);
+  return DAYS.find(d => d.n === dayN) || null;
+}
+
+function refreshCityMapView(){
+  if (!currentCity || !cityImg.naturalWidth) return;
+  layoutCityPins();
+  const run = () => {
+    if (!cityFrame.clientWidth || !cityFrame.clientHeight) return false;
+    if (lastFocusAct && lastFocusAct.lat != null) {
+      const pct = pctIn(MAP_BOUNDS[currentCity], lastFocusAct.lat, lastFocusAct.lng);
+      cityCam.focusPct(pct.left, pct.top, cityCam.minScale() * 1.52);
+    } else {
+      const day = openDayInPanel();
+      if (day) focusDayMap(currentCity, day);
+      else cityCam.fitCover(1);
+    }
+    cityCam.clamp();
+    cityCam.apply();
+    return true;
+  };
+  if (!run()) requestAnimationFrame(() => { if (!run()) requestAnimationFrame(run); });
+}
+
+function scheduleCityMapRefresh(){
+  refreshCityMapView();
+  requestAnimationFrame(() => requestAnimationFrame(refreshCityMapView));
+}
+
 function showCity(id, dayN){
   currentCity = id;
   document.querySelector(".app").classList.add("city-mode");
@@ -833,7 +865,7 @@ function showCity(id, dayN){
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   const apply = () => {
     renderCityPins(id, day || null);
-    fitCityMap();
+    scheduleCityMapRefresh();
   };
   cityImg.onload = apply;
   cityImg.onerror = () => {
@@ -846,11 +878,6 @@ function showCity(id, dayN){
     cityImg.alt = "Carte de " + CITIES[id].name;
     cityImg.src = "./maps/" + id + ".png?v=18";
   }
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      if (cityImg.complete && cityImg.naturalWidth) fitCityMap();
-    });
-  });
 }
 
 function esc(s){
@@ -932,6 +959,85 @@ function stayForDay(cityId, day){
     if ((g.days || []).some(d => d.n === day.n)) return g.stay;
   }
   return (c.stays && c.stays[0]) || null;
+}
+
+function dayPinPoints(cityId, day){
+  const b = MAP_BOUNDS[cityId];
+  if (!b) return [];
+  const inMap = p => p && p.lat != null && inBounds(b, p.lat, p.lng);
+  const isAirport = s => /aéroport|aeroport|airport|\bhnd\b|\bcdg\b/i.test(`${s.kind || ""} ${s.name || ""}`);
+
+  const activities = [];
+  ideasOf(day).forEach(a => { if (inMap(a)) activities.push(a); });
+
+  const stops = [];
+  (day.moves || []).forEach(m => {
+    const leg = LEGS.find(l => l.id === m.leg);
+    if (!leg) return;
+    [leg.fromStop, leg.toStop].forEach(s => {
+      if (!inMap(s)) return;
+      if (activities.length && isAirport(s)) return;
+      stops.push(s);
+    });
+  });
+
+  const stay = stayForDay(cityId, day);
+  const h = stay && stay.hotel;
+  const hotel = inMap(h) ? [h] : [];
+
+  // Cadrer sur le programme du jour, pas les transferts lointains (ex. Haneda le jour 1).
+  if (activities.length) return [...activities, ...hotel];
+  if (stops.length) return [...stops, ...hotel];
+  return hotel;
+}
+
+function focusDayMap(cityId, day){
+  if (!cityImg.naturalWidth) return;
+  layoutCityPins();
+  const bounds = MAP_BOUNDS[cityId];
+  const pts = dayPinPoints(cityId, day);
+  const min = cityCam.minScale();
+  const nw = cityImg.naturalWidth;
+  const nh = cityImg.naturalHeight;
+  if (!pts.length) {
+    cityCam.fitCover(1.38);
+    return;
+  }
+  if (pts.length === 1) {
+    const pct = pctIn(bounds, pts[0].lat, pts[0].lng);
+    cityCam.focusPct(pct.left, pct.top, min * 1.72);
+    return;
+  }
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  pts.forEach(p => {
+    const pct = pctIn(bounds, p.lat, p.lng);
+    const x = (pct.left / 100) * nw;
+    const y = (pct.top / 100) * nh;
+    minX = Math.min(minX, x);
+    maxX = Math.max(maxX, x);
+    minY = Math.min(minY, y);
+    maxY = Math.max(maxY, y);
+  });
+  const pad = 56;
+  const box = {
+    minX: minX - pad,
+    minY: minY - pad,
+    maxX: maxX + pad,
+    maxY: maxY + pad
+  };
+  cityCam.fitWorldBox(box, { top: 32, right: 32, bottom: 32, left: 32 });
+  const cap = min * 1.95;
+  if (cityCam.state.s > cap) {
+    const cx = (box.minX + box.maxX) / 2;
+    const cy = (box.minY + box.maxY) / 2;
+    const vw = cityFrame.clientWidth;
+    const vh = cityFrame.clientHeight;
+    cityCam.state.s = cap;
+    cityCam.state.x = vw / 2 - cx * cap;
+    cityCam.state.y = vh / 2 - cy * cap;
+    cityCam.clamp();
+    cityCam.apply();
+  }
 }
 
 function mapsIconSvg(){
@@ -1411,8 +1517,10 @@ function bindPanel(days, cityId){
       if (el.open && day){
         showCity(currentCity, day.n);
         panel.querySelectorAll("details.day").forEach(o => { if (o !== el) o.open = false; });
+        scheduleCityMapRefresh();
       } else if (![...panel.querySelectorAll("details.day")].some(d => d.open)){
         showCity(currentCity, null);
+        scheduleCityMapRefresh();
       }
     });
   });
@@ -1437,13 +1545,7 @@ function syncSheetMapInset(){
   }
   // Forcer le reflow puis recentrer tout de suite (pas d’attente d’un clic)
   void cityFrame.offsetHeight;
-  const refresh = () => {
-    if (!currentCity) return;
-    if (lastFocusAct && lastFocusAct.lat != null) highlightPin(lastFocusAct);
-    else fitCityMap();
-    cityCam.clamp();
-    cityCam.apply();
-  };
+  const refresh = () => refreshCityMapView();
   refresh();
   requestAnimationFrame(refresh);
 }
@@ -1648,7 +1750,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") closePanel(true);
 });
 window.addEventListener("resize", () => {
-  if (currentCity) fitCityMap();
+  if (currentCity) refreshCityMapView();
   else {
     sizeJapanWorld();
     countryCam.fitCover(1.02);

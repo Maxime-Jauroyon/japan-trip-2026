@@ -839,14 +839,14 @@ button.stat.stop-jump .jump-hint {
 }
 .pin .badge svg { width: 60px; height: 70px; display: block; }
 .pin.dim { opacity: 0.28; filter: grayscale(0.55); z-index: 1; }
-.pin.on .badge { transform: scale(1.12); }
+.pin.on .badge { transform: scale(1.26); }
 .pin.selected {
   z-index: 8;
   opacity: 1;
   filter: none;
 }
 .pin.selected .badge {
-  transform: scale(1.35);
+  transform: scale(1.42);
   filter: drop-shadow(0 0 0 3px rgba(250,247,241,0.95)) drop-shadow(0 6px 16px rgba(196,92,38,0.55));
   animation: pinPulse 1.1s ease-in-out infinite;
 }
@@ -859,7 +859,7 @@ button.stat.stop-jump .jump-hint {
 .pin.pin-hotel.selected .badge {
   filter: drop-shadow(0 0 0 3px rgba(250,247,241,0.95)) drop-shadow(0 6px 16px rgba(196,165,116,0.55));
   animation: none;
-  transform: scale(1.28);
+  transform: scale(1.34);
 }
 .pin.pin-stop {
   z-index: 5;
@@ -870,7 +870,7 @@ button.stat.stop-jump .jump-hint {
 .pin.pin-stop.selected .badge {
   filter: drop-shadow(0 0 0 3px rgba(250,247,241,0.95)) drop-shadow(0 6px 16px rgba(61,126,166,0.55));
   animation: none;
-  transform: scale(1.28);
+  transform: scale(1.34);
 }
 .sheet-kind.stop { color: #7eb3d1; border-color: rgba(126,179,209,.45); }
 .stop-legs {
@@ -915,8 +915,8 @@ button.stat.stop-jump .jump-hint {
   margin-top: 2px;
 }
 @keyframes pinPulse {
-  0%, 100% { transform: scale(1.32); }
-  50% { transform: scale(1.42); }
+  0%, 100% { transform: scale(1.38); }
+  50% { transform: scale(1.48); }
 }
 
 .overlay {
