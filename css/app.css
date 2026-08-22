@@ -1247,7 +1247,7 @@ button.stat.stop-jump .jump-hint {
     border-radius: 0;
   }
   /* La carte se réduit au-dessus du panneau — le sud reste visible */
-  .app.city-mode.sheet-mid.tab-map .city-frame { bottom: 42%; }
+  .app.city-mode.sheet-mid.tab-map .city-frame { bottom: 55%; }
   .app.city-mode.sheet-max.tab-map .city-frame { bottom: 78%; }
   .app.city-mode.sheet-min.tab-map .city-frame { bottom: 52px; }
 
@@ -1257,8 +1257,8 @@ button.stat.stop-jump .jump-hint {
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
-    height: 42% !important;
-    max-height: 42% !important;
+    height: 55% !important;
+    max-height: 55% !important;
     min-height: 160px !important;
     transform: translate3d(0, 110%, 0);
     border-radius: 14px 14px 0 0;
