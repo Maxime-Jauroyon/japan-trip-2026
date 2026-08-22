@@ -1,5 +1,5 @@
 /* Offline cache — 1ère visite en Wi‑Fi, puis utilisable sans réseau dans Safari */
-const CACHE = "japan-trip-2026-v54";
+const CACHE = "japan-trip-2026-v70";
 
 const ASSETS = [
   "./",
@@ -19,6 +19,7 @@ const ASSETS = [
   "./maps/shirakawa.png",
   "./maps/takayama.png",
   "./maps/tokyo.png",
+  "./img/logo.svg",
   "./img/hotels/agora-kyoto.jpg",
   "./img/hotels/agora-kyoto-2.jpg",
   "./img/hotels/agora-kyoto-3.jpg",

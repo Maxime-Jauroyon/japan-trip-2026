@@ -9,18 +9,90 @@
   }
 })();
 function cityIconSvg(id){
-  const stroke = "currentColor";
+  const s = "currentColor";
+  const g = `<ellipse cx="12" cy="21.2" rx="6" ry=".9" fill="${s}" opacity=".11"/>`;
   const icons = {
-    tokyo: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l1.2 4.2H18l-3.6 2.6 1.4 4.2L12 11.8 8.2 14l1.4-4.2L6 7.2h4.8L12 3z" fill="${stroke}" opacity=".15"/><path d="M11 21V9h2v12h-2zm-4 0V12H5v9H3V10l4-2v13H7zm10 0V10l4 2v11h-2v-9h-2v9h-2zM11 7V4h2v3h-2z" fill="${stroke}"/></svg>`,
-    fuji: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L3 20h18L12 4z" fill="${stroke}" opacity=".12"/><path d="M12 5.5L4.8 19h14.4L12 5.5zm0 3.2l2.2 4.1H9.8L12 8.7z" fill="${stroke}"/><path d="M7 19c1.5-2.5 3.2-3.8 5-3.8S15.5 16.5 17 19H7z" fill="${stroke}" opacity=".35"/></svg>`,
-    kanazawa: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20V10l4-3 4 3 4-3 4 3v10H4z" fill="${stroke}" opacity=".12"/><path d="M5 19V11l3.5-2.5L12 11l3.5-2.5L19 11v8H5zm3-8V8h2v3H8zm6 0V8h2v3h-2zM7 19h10v-5H7v5z" fill="${stroke}"/></svg>`,
-    shirakawa: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L4 14h16L12 3z" fill="${stroke}" opacity=".12"/><path d="M12 4.5L5.5 14h13L12 4.5zM7 14v6h10v-6H7zm2 2h2v2H9v-2zm4 0h2v2h-2v-2z" fill="${stroke}"/></svg>`,
-    takayama: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20V11l8-6 8 6v9H4z" fill="${stroke}" opacity=".12"/><path d="M5 19V12l7-5 7 5v7H5zm4-2h2v-3H9v3zm4 0h2v-3h-2v3z" fill="${stroke}"/><circle cx="12" cy="9" r="1.4" fill="${stroke}"/></svg>`,
-    kyoto: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 20V9h2v2h10V9h2v11h-2v-6H7v6H5z" fill="${stroke}" opacity=".12"/><path d="M4 8h16v2H4V8zm3-3h10l1 2H6l1-2zM6 11h2v8H6v-8zm10 0h2v8h-2v-8zM10 13h4v2h-4v-2z" fill="${stroke}"/></svg>`,
-    nara: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5c-3 0-5.5 2.2-5.5 5.2 0 2.4 1.4 4.3 3.5 5.3L9 20h6l-1-4.5c2.1-1 3.5-2.9 3.5-5.3C17.5 7.2 15 5 12 5z" fill="${stroke}" opacity=".12"/><path d="M12 6.2c2.4 0 4.3 1.7 4.3 4 0 1.8-1.1 3.3-2.8 3.9l-.5.2.8 3.5h-3.6l.8-3.5-.5-.2c-1.7-.6-2.8-2.1-2.8-3.9 0-2.3 1.9-4 4.3-4zm-3.2 2.4l1.5 1.1M15.2 8.6l-1.5 1.1" stroke="${stroke}" stroke-width="1.4" stroke-linecap="round"/><circle cx="10.2" cy="10.2" r="0.8" fill="${stroke}"/><circle cx="13.8" cy="10.2" r="0.8" fill="${stroke}"/></svg>`,
-    osaka: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 14c0-3 2-5 5-6v-1.5C10.5 6.5 9.5 5.5 9.5 4.2 9.5 3 10.6 2 12 2s2.5 1 2.5 2.2c0 1.3-1 2.3-2.5 2.3V8c3 1 5 3 5 6v6H7v-6z" fill="${stroke}" opacity=".12"/><path d="M8 20v-5.5c0-2.4 1.6-4.2 4-5V8.2c-1.7 0-2.8-.9-2.8-2.2S10.3 3.8 12 3.8s2.8.9 2.8 2.2-1.1 2.2-2.8 2.2V9.5c2.4.8 4 2.6 4 5V20H8zm2-2h4v-3h-4v3z" fill="${stroke}"/></svg>`
+    tokyo: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 2.2l.85 2.9h3.05L12.75 7.3l.95 2.85L12 8.6l-1.7 1.55.95-2.85-2.85-2.2h3.05L12 2.2z" fill="#e85d4a"/><path d="M10.4 20.8V8.2h3.2v12.6h-3.2z" fill="${s}"/><path d="M7.8 20.8V11.2H5.8v9.6H3.8V9.6L7.5 8v12.8h.3zm8.4 0V8L19.5 6.2V20.8h-2v-9.8h-2v9.8h-2z" fill="${s}"/><rect x="11.1" y="5.2" width="1.8" height="2.4" rx=".3" fill="${s}"/></svg>`,
+    fuji: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 3.2L3.8 20h16.4L12 3.2z" fill="${s}" opacity=".14"/><path d="M12 4.8L5.8 19.2h12.4L12 4.8z" fill="${s}"/><path d="M12 5.2l2 3.6H10L12 5.2z" fill="#fff" opacity=".92"/><path d="M7.2 19.2c1.7-2.1 3.1-3.1 4.8-3.1s3.1 1 4.8 3.1" stroke="${s}" stroke-width=".75" opacity=".35"/></svg>`,
+    kanazawa: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M4.2 19.2V10.2l3.8-2.6 3.8 2.6 3.8-2.6 3.8 2.6v9H4.2z" fill="${s}" opacity=".13"/><path d="M5.2 18.2V11.2l3.3-2.2L12 11.2l3.5-2.2 3.3 2.2v7H5.2z" fill="${s}"/><rect x="7.2" y="12.2" width="1.8" height="5.2" fill="${s}"/><rect x="15" y="12.2" width="1.8" height="5.2" fill="${s}"/><path d="M10.4 8.6h3.2l.55 1.55h-4.3l.55-1.55z" fill="#c4a574"/></svg>`,
+    shirakawa: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 2.8L3.2 13.8h17.6L12 2.8z" fill="${s}"/><path d="M12 4.2L5.8 13.2h12.4L12 4.2z" fill="#8a6a4a" opacity=".38"/><path d="M7.2 13.2v6.8h9.6v-6.8" fill="${s}" opacity=".18"/><rect x="9.1" y="15.2" width="2.1" height="2.1" fill="${s}"/><rect x="12.8" y="15.2" width="2.1" height="2.1" fill="${s}"/></svg>`,
+    takayama: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M3.2 19.2V12.2l8.8-6.8 8.8 6.8v7H3.2z" fill="${s}" opacity=".13"/><path d="M4.2 18.2V12.8l7.8-5.8 7.8 5.8v5.4H4.2z" fill="${s}"/><path d="M7.2 18.2v-3.8h2.8v3.8H7.2zm7.2 0v-3.8h2.8v3.8h-2.8z" fill="#6b5344"/><rect x="10.4" y="9.2" width="3.2" height="2.1" rx=".3" fill="#c4a574"/></svg>`,
+    kyoto: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M8.2 20.2V10.2l7.8-4.8 7.8 4.8v10H8.2z" fill="#c4a574" opacity=".22"/><path d="M9.2 19.2V11.2l5.8-3.6 5.8 3.6v8H9.2z" fill="#d4af37"/><path d="M12 7.4l5.8 3.6V19.2H6.2V11l5.8-3.6z" fill="#e8c547" opacity=".88"/><path d="M12 7.4v11.8" stroke="#8a6a20" stroke-width=".55" opacity=".45"/></svg>`,
+    nara: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 2.6 9 5.4h6L12 2.6z" fill="${s}"/><rect x="11.1" y="5.4" width="1.8" height="1.5" fill="${s}" opacity=".45"/><path d="M12 6.9 8.2 9.8h7.6L12 6.9z" fill="${s}"/><rect x="10.8" y="9.8" width="2.4" height="1.6" fill="${s}" opacity=".45"/><path d="M12 11.4 7.4 14.6h9.2L12 11.4z" fill="${s}"/><rect x="10.5" y="14.6" width="3" height="1.8" fill="${s}" opacity=".45"/><path d="M12 16.4 6.8 19.8h10.4L12 16.4z" fill="${s}"/><rect x="10.2" y="19.8" width="3.6" height="1.4" fill="${s}" opacity=".35"/><path d="M5.2 21.2h13.6v1H5.2z" fill="${s}" opacity=".18"/><path d="M12 2.6v18.6" stroke="${s}" stroke-width=".45" opacity=".22"/></svg>`,
+    osaka: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M6.2 20.2V11.2l5.8-5.6 5.8 5.6v9H6.2z" fill="${s}" opacity=".13"/><path d="M7.2 19.2V12.2l4.8-4.4 4.8 4.4v7H7.2z" fill="${s}"/><path d="M9.6 19.2v-3.8h2.1v3.8H9.6zm3.2 0v-3.8h2.1v3.8h-2.1zm3.2 0v-3.8h2.1v3.8H16z" fill="#fff" opacity=".32"/><path d="M12 8.8c1.4 0 2.4 1 2.4 2.3s-1 2.3-2.4 2.3-2.4-1-2.4-2.3 1-2.3 2.4-2.3z" fill="#c45c26"/><path d="M12 6.8v1.2" stroke="#c45c26" stroke-width="1.1" stroke-linecap="round"/></svg>`
   };
   return icons[id] || icons.tokyo;
+}
+
+function legVehicleKind(mode){
+  const m = (mode || "").toLowerCase();
+  if (/^bus$|bus\s*\+|highway|nohi/.test(m) && !/shinkansen/.test(m)) return "bus";
+  if (/shinkansen/.test(m)) return "shinkansen";
+  if (/bus/.test(m) && !/train|rail|shinkansen|hida|kintetsu/.test(m)) return "bus";
+  if (/train|hida|kintetsu|rail/.test(m)) return "shinkansen";
+  return "train";
+}
+
+function legRouteParts(leg){
+  if (leg.mapSegments && leg.mapSegments.length) {
+    return leg.mapSegments.map((seg, i) => ({
+      pathId: leg.id + "-" + (seg.key || i),
+      legId: leg.id,
+      mode: seg.mode || leg.mode,
+      from: seg.from,
+      to: seg.to,
+      via: seg.via || [],
+      curveSide: seg.curveSide || "",
+      curveAmt: seg.curveAmt
+    }));
+  }
+  return [{
+    pathId: leg.id,
+    legId: leg.id,
+    mode: leg.mode,
+    from: leg.from,
+    to: leg.to,
+    via: leg.via || [],
+    curveSide: leg.curveSide || "",
+    curveAmt: leg.curveAmt
+  }];
+}
+
+/** Map-fixed bow: north = higher lat, south = lower lat (same side both travel directions). */
+function arcControlGeo(a, b, side, amount){
+  const midLat = (a.lat + b.lat) / 2;
+  const midLng = (a.lng + b.lng) / 2;
+  if (side === "north") return { lat: midLat + amount, lng: midLng };
+  if (side === "south") return { lat: midLat - amount, lng: midLng };
+  return { lat: midLat, lng: midLng };
+}
+
+function routeVehicleSvg(kind){
+  if (kind === "bus") {
+    return `<g class="vehicle-shape vehicle-bus"><rect x="-11" y="-5" width="22" height="10" rx="2.2" fill="#e8a020" stroke="#fff" stroke-width="1.2"/><rect x="-8" y="-3" width="5" height="4" rx=".6" fill="#fff" opacity=".85"/><rect x="-1" y="-3" width="5" height="4" rx=".6" fill="#fff" opacity=".85"/><rect x="6" y="-3" width="3" height="4" rx=".6" fill="#fff" opacity=".85"/><circle cx="-6" cy="6.5" r="2.2" fill="#333"/><circle cx="6" cy="6.5" r="2.2" fill="#333"/></g>`;
+  }
+  if (kind === "shinkansen") {
+    return `<g class="vehicle-shape vehicle-shinkansen"><path d="M-13 4h22l3-5.5a2 2 0 00-1.8-2.8H-11.2A2 2 0 00-13-1.5L-13 4z" fill="#f4f8fb" stroke="#2f6f95" stroke-width="1.2"/><rect x="-9" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="-2" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="5" y="-1" width="4" height="3" rx=".5" fill="#7eb3d1"/><path d="M10-1.5l3 2.5" stroke="#c45c26" stroke-width="1.4" stroke-linecap="round"/></g>`;
+  }
+  return `<g class="vehicle-shape vehicle-train"><rect x="-11" y="-4" width="22" height="8" rx="1.8" fill="#2f6f95" stroke="#fff" stroke-width="1.1"/><rect x="-8" y="-2" width="5" height="3.5" rx=".5" fill="#aad0dc"/><rect x="-1" y="-2" width="5" height="3.5" rx=".5" fill="#aad0dc"/><rect x="6" y="-2" width="3" height="3.5" rx=".5" fill="#aad0dc"/><circle cx="-6" cy="5.5" r="1.8" fill="#333"/><circle cx="6" cy="5.5" r="1.8" fill="#333"/></g>`;
+}
+
+function prefersReducedMotion(){
+  try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (_) { return false; }
+}
+
+function resetRouteHighlight(){
+  document.querySelectorAll("#routes g.route-group").forEach(g => {
+    g.classList.remove("route-active", "route-dim");
+  });
+}
+
+function setRouteHighlight(id){
+  document.querySelectorAll("#routes g.route-group").forEach(g => {
+    const on = g.dataset.leg === id;
+    g.classList.toggle("route-active", on);
+    g.classList.toggle("route-dim", !on);
+  });
 }
 
 function daysForCity(id){
@@ -279,7 +351,7 @@ function makePanZoom(viewport, world, opts){
     };
   }
   function isMapChrome(el){
-    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .leg-end, .sheet-grab, .overlay"));
+    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .sheet-grab, .overlay"));
   }
   viewport.addEventListener("wheel", e => {
     e.preventDefault();
@@ -341,8 +413,25 @@ function makePanZoom(viewport, world, opts){
   }
   viewport.addEventListener("pointerup", endPointer);
   viewport.addEventListener("pointercancel", endPointer);
+  function fitWorldBox(box, insets){
+    insets = Object.assign({ top: 48, right: 48, bottom: 48, left: 48 }, insets || {});
+    const vw = viewport.clientWidth, vh = viewport.clientHeight;
+    const availW = Math.max(96, vw - insets.left - insets.right);
+    const availH = Math.max(96, vh - insets.top - insets.bottom);
+    const bw = Math.max(24, box.maxX - box.minX);
+    const bh = Math.max(24, box.maxY - box.minY);
+    const cx = (box.minX + box.maxX) / 2;
+    const cy = (box.minY + box.maxY) / 2;
+    const min = minScale();
+    st.s = Math.min(o.max, Math.max(min, Math.min(availW / bw, availH / bh) * 0.88));
+    const centerX = insets.left + availW / 2;
+    const centerY = insets.top + availH / 2;
+    st.x = centerX - cx * st.s;
+    st.y = centerY - cy * st.s;
+    clamp(); apply();
+  }
   return {
-    state:st, apply, clamp, zoomAt, fitCover, focusPct, minScale,
+    state:st, apply, clamp, zoomAt, fitCover, focusPct, fitWorldBox, minScale,
     zoomIn(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1.2); },
     zoomOut(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1/1.2); }
   };
@@ -365,55 +454,168 @@ function sizeJapanWorld(){
   japanOverlay.style.height = h + "px";
 }
 
-function routePathD(leg){
-  const pts = [leg.from, ...(leg.via || []), leg.to].map(p => projectJapan(p.lat, p.lng));
+function routePathD(spec){
+  const a = spec.from, b = spec.to;
+  if (!a || !b || a.lat == null || b.lat == null) return "";
+  const f = n => (+n).toFixed(1);
+
+  if (spec.curveSide) {
+    const amt = spec.curveAmt != null ? spec.curveAmt : 0.085;
+    const peak = arcControlGeo(a, b, spec.curveSide, amt);
+    const p0 = projectJapan(a.lat, a.lng);
+    const pc = projectJapan(peak.lat, peak.lng);
+    const p1 = projectJapan(b.lat, b.lng);
+    return `M${f(p0.x)},${f(p0.y)} Q${f(pc.x)},${f(pc.y)} ${f(p1.x)},${f(p1.y)}`;
+  }
+
+  const pts = [a, ...(spec.via || []), b]
+    .filter(p => p && p.lat != null)
+    .map(p => projectJapan(p.lat, p.lng));
+  return catmullRomPathD(pts);
+}
+
+/** Smooth curve through waypoints (Catmull-Rom → cubic Bézier). */
+function catmullRomPathD(pts, tension){
+  tension = tension == null ? 0.42 : tension;
   if (pts.length < 2) return "";
-  const f = p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
-  if (pts.length === 2){
+  const f = n => (+n).toFixed(1);
+  const k = 6 / Math.max(0.25, tension);
+  if (pts.length === 2) {
     const a = pts[0], b = pts[1];
-    const mx = (a.x + b.x) / 2 + (b.y - a.y) * 0.08;
-    const my = (a.y + b.y) / 2 - (b.x - a.x) * 0.08;
-    return `M${f(a)} Q${mx.toFixed(1)},${my.toFixed(1)} ${f(b)}`;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const bulge = Math.min(90, Math.max(18, len * 0.1));
+    const mx = (a.x + b.x) / 2 + (-dy / len) * bulge;
+    const my = (a.y + b.y) / 2 + (dx / len) * bulge;
+    return `M${f(a.x)},${f(a.y)} Q${f(mx)},${f(my)} ${f(b.x)},${f(b.y)}`;
   }
-  // Smooth polyline through waypoints (avoids other cities, e.g. Osaka→Tokyo south of Fuji)
-  let d = `M${f(pts[0])}`;
-  for (let i = 1; i < pts.length - 1; i++){
-    const midX = (pts[i].x + pts[i + 1].x) / 2;
-    const midY = (pts[i].y + pts[i + 1].y) / 2;
-    d += ` Q${f(pts[i])} ${midX.toFixed(1)},${midY.toFixed(1)}`;
+  let d = `M${f(pts[0].x)},${f(pts[0].y)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const cp1x = p1.x + (p2.x - p0.x) / k;
+    const cp1y = p1.y + (p2.y - p0.y) / k;
+    const cp2x = p2.x - (p3.x - p1.x) / k;
+    const cp2y = p2.y - (p3.y - p1.y) / k;
+    d += ` C${f(cp1x)},${f(cp1y)} ${f(cp2x)},${f(cp2y)} ${f(p2.x)},${f(p2.y)}`;
   }
-  const last = pts[pts.length - 1], prev = pts[pts.length - 2];
-  d += ` Q${f(prev)} ${f(last)}`;
   return d;
+}
+
+function pathBoundsFromD(d, pad){
+  pad = pad == null ? 36 : pad;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const add = (x, y) => {
+    minX = Math.min(minX, x); minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+  };
+  if (d) {
+    try {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", d);
+      const len = path.getTotalLength();
+      const steps = Math.max(16, Math.ceil(len / 48));
+      for (let i = 0; i <= steps; i++) {
+        const pt = path.getPointAtLength(len * i / steps);
+        add(pt.x, pt.y);
+      }
+    } catch (_) { /* ignore */ }
+  }
+  if (!isFinite(minX)) return null;
+  return { minX: minX - pad, minY: minY - pad, maxX: maxX + pad, maxY: maxY + pad };
 }
 
 function buildCountry(){
   const routes = document.getElementById("routes");
   routes.innerHTML = "";
+  const reduced = prefersReducedMotion();
   LEGS.forEach(leg => {
     if (leg.skipMap) return;
-    const d = routePathD(leg);
-    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.dataset.leg = leg.id;
-    const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    hit.setAttribute("d", d);
-    hit.setAttribute("class", "route-hit");
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", d);
-    path.setAttribute("class", "route");
-    path.dataset.leg = leg.id;
-    const open = e => { e.stopPropagation(); openLeg(leg.id); };
-    hit.addEventListener("click", open);
-    hit.addEventListener("mouseenter", () => path.classList.add("hot"));
-    hit.addEventListener("mouseleave", () => path.classList.remove("hot"));
-    g.appendChild(hit);
-    g.appendChild(path);
-    routes.appendChild(g);
+    legRouteParts(leg).forEach(part => {
+      const d = routePathD(part);
+      if (!d) return;
+      const pathId = "route-" + part.pathId;
+      const vKind = legVehicleKind(part.mode);
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.classList.add("route-group");
+      g.dataset.leg = part.legId;
+      g.dataset.segment = part.pathId;
+      g.dataset.vehicle = vKind;
+
+      const glow = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      glow.setAttribute("d", d);
+      glow.setAttribute("class", "route-glow");
+
+      const track = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      track.setAttribute("id", pathId);
+      track.setAttribute("d", d);
+      track.setAttribute("class", "route-track");
+
+      const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      hit.setAttribute("d", d);
+      hit.setAttribute("class", "route-hit");
+
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", d);
+      path.setAttribute("class", "route");
+      path.dataset.leg = part.legId;
+
+      const vehWrap = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      vehWrap.setAttribute("class", "route-vehicle vehicle-" + vKind);
+      vehWrap.innerHTML = routeVehicleSvg(vKind);
+
+      if (!reduced) {
+        const motion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+        motion.setAttribute("dur", vKind === "bus" ? "14s" : "10s");
+        motion.setAttribute("repeatCount", "indefinite");
+        motion.setAttribute("rotate", "auto");
+        motion.setAttribute("calcMode", "linear");
+        const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+        mpath.setAttribute("href", "#" + pathId);
+        try { mpath.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#" + pathId); } catch (_) { /* ignore */ }
+        motion.appendChild(mpath);
+        vehWrap.appendChild(motion);
+        motion.setAttribute("begin", (Math.random() * 8).toFixed(1) + "s");
+      } else {
+        vehWrap.classList.add("route-vehicle-static");
+      }
+
+      const open = e => { e.stopPropagation(); openLeg(part.legId); };
+      hit.addEventListener("click", open);
+      hit.addEventListener("mouseenter", () => g.classList.add("route-hover"));
+      hit.addEventListener("mouseleave", () => g.classList.remove("route-hover"));
+
+      g.appendChild(glow);
+      g.appendChild(track);
+      g.appendChild(hit);
+      g.appendChild(path);
+      g.appendChild(vehWrap);
+      routes.appendChild(g);
+
+      if (reduced && vehWrap.classList.contains("route-vehicle-static")) {
+        try {
+          const len = track.getTotalLength();
+          const pt = track.getPointAtLength(len * 0.38);
+          vehWrap.setAttribute("transform", `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
+        } catch (_) { /* ignore */ }
+      } else if (!reduced) {
+        try {
+          const len = track.getTotalLength();
+          const motion = vehWrap.querySelector("animateMotion");
+          if (motion && len > 0) {
+            const sec = Math.max(5, Math.min(22, len / (vKind === "bus" ? 55 : 75)));
+            motion.setAttribute("dur", sec.toFixed(1) + "s");
+          }
+        } catch (_) { /* ignore */ }
+      }
+    });
   });
 
   const marks = document.getElementById("country-marks");
   marks.innerHTML = "";
-  ORDER.forEach(id => {
+  ORDER.forEach((id, i) => {
     const c = CITIES[id];
     const pct = pctIn(JAPAN_BOUNDS, c.lat, c.lng);
     const btn = document.createElement("button");
@@ -421,9 +623,16 @@ function buildCountry(){
     btn.className = "city-mark" + (LABEL_SIDE[id] === "left" ? " label-left" : "");
     btn.style.left = pct.left + "%";
     btn.style.top = pct.top + "%";
+    btn.style.setProperty("--mark-i", String(i));
     btn.dataset.city = id;
     btn.title = c.name;
-    btn.innerHTML = `<span class="ico-wrap">${cityIconSvg(id)}</span><span class="label">${c.name}</span>`;
+    btn.innerHTML =
+      `<span class="pin-wrap" style="animation-delay:${(i * 0.07).toFixed(2)}s">` +
+        `<span class="pin-ring" aria-hidden="true"></span>` +
+        `<span class="pin-disc">${cityIconSvg(id)}</span>` +
+        `<span class="pin-pointer" aria-hidden="true"></span>` +
+      `</span>` +
+      `<span class="label">${c.name}</span>`;
     btn.addEventListener("click", e => { e.stopPropagation(); openCity(id); });
     marks.appendChild(btn);
   });
@@ -770,6 +979,54 @@ function cityIdForCoords(lat, lng){
   }
   return null;
 }
+function mapViewportInsets(){
+  const mobile = window.matchMedia("(max-width: 900px)").matches;
+  const panel = document.getElementById("panel");
+  const open = panel && panel.classList.contains("open");
+  if (mobile) {
+    if (!open) return { top: 56, right: 28, bottom: 36, left: 28 };
+    if (panel.classList.contains("minimized")) {
+      return { top: 56, right: 20, bottom: 72, left: 20 };
+    }
+    if (panel.classList.contains("expanded")) {
+      const h = panel.offsetHeight || Math.round(window.innerHeight * 0.78);
+      return { top: 48, right: 16, bottom: h + 20, left: 16 };
+    }
+    const h = panel.offsetHeight || Math.round(window.innerHeight * 0.42);
+    return { top: 52, right: 16, bottom: h + 24, left: 16 };
+  }
+  if (open) {
+    const pw = panel.offsetWidth || 380;
+    return { top: 52, right: pw + 28, bottom: 40, left: 40 };
+  }
+  return { top: 52, right: 52, bottom: 52, left: 52 };
+}
+
+function legPathBounds(leg){
+  const parts = legRouteParts(leg);
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  parts.forEach(part => {
+    const box = pathBoundsFromD(routePathD(part), 0);
+    if (!box) return;
+    minX = Math.min(minX, box.minX); minY = Math.min(minY, box.minY);
+    maxX = Math.max(maxX, box.maxX); maxY = Math.max(maxY, box.maxY);
+  });
+  if (!isFinite(minX)) {
+    [leg.from, ...(leg.via || []), leg.to].forEach(p => {
+      if (!p || p.lat == null) return;
+      const pt = projectJapan(p.lat, p.lng);
+      minX = Math.min(minX, pt.x); minY = Math.min(minY, pt.y);
+      maxX = Math.max(maxX, pt.x); maxY = Math.max(maxY, pt.y);
+    });
+  }
+  if (!isFinite(minX)) return null;
+  const pad = 36;
+  return { minX: minX - pad, minY: minY - pad, maxX: maxX + pad, maxY: maxY + pad };
+}
+
+function setLegMode(on){
+  document.querySelector(".app")?.classList.toggle("leg-mode", !!on);
+}
 function legEndPoint(leg, role){
   if (!leg) return null;
   const stop = role === "from" ? leg.fromStop : leg.toStop;
@@ -789,56 +1046,33 @@ function legEndPoint(leg, role){
   };
 }
 function clearLegEnds(){
-  const el = document.getElementById("leg-ends");
-  if (el) el.innerHTML = "";
   document.querySelectorAll(".city-mark").forEach(b => {
-    b.classList.remove("leg-from", "leg-to", "leg-related");
+    b.classList.remove("leg-from", "leg-to", "leg-via", "leg-related");
   });
 }
 function renderLegEnds(leg){
-  const host = document.getElementById("leg-ends");
-  if (!host) return;
-  host.innerHTML = "";
-  const ends = [
-    legEndPoint(leg, "from"),
-    legEndPoint(leg, "to")
-  ].filter(Boolean);
-  ends.forEach((end, i) => {
-    const pct = pctIn(JAPAN_BOUNDS, end.lat, end.lng);
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "leg-end " + (end.role === "from" ? "from" : "to");
-    btn.style.left = pct.left + "%";
-    btn.style.top = pct.top + "%";
-    btn.dataset.role = end.role;
-    const tag = end.role === "from" ? "Départ" : "Arrivée";
-    btn.title = tag + " · " + end.name;
-    btn.innerHTML =
-      `<span class="leg-end-badge">${end.role === "from" ? "A" : "B"}</span>` +
-      `<span class="leg-end-meta"><em>${esc(tag)}</em><strong>${esc(end.name)}</strong></span>`;
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      focusLegEnd(leg, end.role, true);
-    });
-    host.appendChild(btn);
-    if (end.cityId) {
-      const mark = document.querySelector(`.city-mark[data-city="${end.cityId}"]`);
-      if (mark) {
-        mark.classList.add("leg-related", end.role === "from" ? "leg-from" : "leg-to");
-      }
-    }
+  [legEndPoint(leg, "from"), legEndPoint(leg, "to")].filter(Boolean).forEach(end => {
+    if (!end.cityId) return;
+    const mark = document.querySelector(`.city-mark[data-city="${end.cityId}"]`);
+    if (mark) mark.classList.add("leg-related", end.role === "from" ? "leg-from" : "leg-to");
+  });
+  (leg.viaCities || []).forEach(id => {
+    const mark = document.querySelector(`.city-mark[data-city="${id}"]`);
+    if (mark) mark.classList.add("leg-related", "leg-via");
   });
 }
 function focusLegEnd(leg, role, pulse){
   const end = legEndPoint(leg, role);
   if (!end) return;
   if (currentCity) showCountry();
-  const pct = pctIn(JAPAN_BOUNDS, end.lat, end.lng);
-  const zoom = Math.max(countryCam.minScale() * 3.2, 3.4);
   requestAnimationFrame(() => {
     sizeJapanWorld();
-    countryCam.focusPct(pct.left, pct.top, zoom);
-    document.querySelectorAll(".leg-end").forEach(n => n.classList.toggle("pulse", !!pulse && n.dataset.role === role));
+    const box = legPathBounds(leg);
+    if (box) countryCam.fitWorldBox(box, mapViewportInsets());
+    else {
+      const pct = pctIn(JAPAN_BOUNDS, end.lat, end.lng);
+      countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * 2.4, 2.2));
+    }
     if (pulse) {
       hint.textContent = (role === "from" ? "Départ" : "Arrivée") + " · " + end.name + (end.cityId && CITIES[end.cityId] ? " · " + CITIES[end.cityId].name : "");
     }
@@ -849,22 +1083,26 @@ function focusLegOverview(leg){
   const b = legEndPoint(leg, "to");
   const pts = [a, b].filter(Boolean);
   if (!pts.length) return;
-  if (pts.length === 1) {
-    focusLegEnd(leg, pts[0].role, false);
-    return;
-  }
-  const midLat = (pts[0].lat + pts[1].lat) / 2;
-  const midLng = (pts[0].lng + pts[1].lng) / 2;
-  const span = Math.max(Math.abs(pts[0].lat - pts[1].lat), Math.abs(pts[0].lng - pts[1].lng));
-  let zoomMul = 1.35;
-  if (span < 0.4) zoomMul = 3.4;
-  else if (span < 1.2) zoomMul = 2.6;
-  else if (span < 2.5) zoomMul = 2.0;
-  else if (span < 4.5) zoomMul = 1.55;
-  const pct = pctIn(JAPAN_BOUNDS, midLat, midLng);
   requestAnimationFrame(() => {
     sizeJapanWorld();
-    countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * zoomMul, 1.4));
+    const box = legPathBounds(leg);
+    if (box) {
+      countryCam.fitWorldBox(box, mapViewportInsets());
+    } else if (pts.length === 1) {
+      const pct = pctIn(JAPAN_BOUNDS, pts[0].lat, pts[0].lng);
+      countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * 2.2, 2));
+    } else {
+      const minLat = Math.min(a.lat, b.lat), maxLat = Math.max(a.lat, b.lat);
+      const minLng = Math.min(a.lng, b.lng), maxLng = Math.max(a.lng, b.lng);
+      const p1 = projectJapan(minLat, minLng);
+      const p2 = projectJapan(maxLat, maxLng);
+      countryCam.fitWorldBox({
+        minX: Math.min(p1.x, p2.x),
+        minY: Math.min(p1.y, p2.y),
+        maxX: Math.max(p1.x, p2.x),
+        maxY: Math.max(p1.y, p2.y)
+      }, mapViewportInsets());
+    }
   });
 }
 function openCityAtLegEnd(leg, role){
@@ -1298,6 +1536,7 @@ function closePanel(reset){
   document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
   lastFocusAct = null;
   panelContext = null;
+  setLegMode(false);
   clearLegEnds();
   setActiveCity(null);
   if (reset) goOverview();
@@ -1307,12 +1546,9 @@ function goOverview(){
   document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
   lastFocusAct = null;
   panelContext = null;
+  setLegMode(false);
   clearLegEnds();
-  document.querySelectorAll("#routes path.route").forEach(p => {
-    p.style.stroke = "";
-    p.style.strokeWidth = "";
-    p.style.opacity = "";
-  });
+  resetRouteHighlight();
   showCountry();
 }
 function openCity(id){
@@ -1325,12 +1561,8 @@ function openLeg(id){
   if (!leg) return;
   panelContext = { type:"leg", leg };
   showCountry();
-  document.querySelectorAll("#routes path.route").forEach(p => {
-    const on = p.dataset.leg === id;
-    p.style.stroke = on ? "#c45c26" : "#6e5a48";
-    p.style.strokeWidth = on ? "6" : "4";
-    p.style.opacity = on ? "1" : "0.28";
-  });
+  setLegMode(true);
+  setRouteHighlight(id);
   document.querySelectorAll("#routes path.route-hit").forEach(p => {
     p.style.pointerEvents = "";
   });
@@ -1376,8 +1608,10 @@ function openLeg(id){
   if (window.matchMedia("(max-width: 900px)").matches) {
     setSheetState("mid");
   }
-  hint.textContent = "Trajet · touche A/B sur la carte ou les boutons Départ / Arrivée";
-  focusLegOverview(leg);
+  hint.textContent = "Trajet · détails et arrêts dans le panneau";
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => focusLegOverview(leg));
+  });
 }
 
 ORDER.forEach(id => {

@@ -261,7 +261,7 @@ const DAYS = [
         desc:"Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile."}
     ] },
   { n:7, date:"14 nov 2026", dow:"Samedi", city:"kanazawa",
-    moves:[{when:"~9:00–16:00", title:"Fujikawaguchiko → Kanazawa", dummy:"Bus + shinkansen (à réserver)", mode:"Bus + train", leg:"fuji-kana"}],
+    moves:[{when:"~9:00–16:00", title:"Fujikawaguchiko → Kanazawa", dummy:"Bus Kawaguchiko→Shinjuku puis shinkansen Tokyo→Kanazawa (à réserver)", mode:"Bus + train", leg:"fuji-kana"}],
     ideas:[
       {title:"Kenroku-en", lat:36.5619, lng:136.6626,
         desc:"L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison.",
@@ -450,7 +450,8 @@ const LEGS = [
     operator:"Highway bus Shinjuku → Kawaguchiko (Keio / Fujikyu)", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"tokyo", lat:35.6915, lng:139.6995 }, to:{ id:"fuji", lat:35.4983, lng:138.7685 },
-    via:[{lat:35.61,lng:139.35},{lat:35.55,lng:138.95}],
+    curveSide:"south",
+    curveAmt:0.085,
     fromStop:{ kind:"Gare / terminal bus", name:"Shinjuku Expressway Bus Terminal", jp:"新宿高速バスターミナル", lat:35.6915, lng:139.6995 },
     toStop:{ kind:"Gare", name:"Kawaguchiko Station", jp:"河口湖駅", lat:35.4983, lng:138.7685 },
     details:[
@@ -460,23 +461,52 @@ const LEGS = [
     tips:"Réserver le bus à l’avance en haute saison ; départ matin." },
   { id:"fuji-kana", title:"Fujikawaguchiko → Kanazawa", subtitle:"14 nov · Jour 7", mode:"Bus + train",
     depart:"~9:00", arrive:"~16:00", duration:"~6–7 h",
-    operator:"Bus Kawaguchiko→Tokyo + shinkansen Hokuriku", seat:"—", ref:"—",
+    operator:"Bus Kawaguchiko→Shinjuku + shinkansen Hokuriku (Tokyo→Kanazawa)", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"fuji", lat:35.4983, lng:138.7685 }, to:{ id:"kanazawa", lat:36.5783, lng:136.6480 },
-    via:[{lat:35.85,lng:138.4},{lat:36.4,lng:137.3}],
+    mapSegments:[
+      {
+        key:"bus",
+        mode:"Bus",
+        from:{ id:"fuji", lat:35.4983, lng:138.7685 },
+        to:{ id:"tokyo", lat:35.6915, lng:139.6995 },
+        curveSide:"north",
+        curveAmt:0.085
+      },
+      {
+        key:"rail",
+        mode:"Shinkansen",
+        from:{ id:"tokyo", lat:35.6812, lng:139.7671 },
+        to:{ id:"kanazawa", lat:36.5783, lng:136.6480 },
+        via:[
+          {lat:35.78,lng:139.45},
+          {lat:36.32,lng:139.0},
+          {lat:36.65,lng:138.15},
+          {lat:36.72,lng:137.35},
+          {lat:36.55,lng:136.85}
+        ]
+      }
+    ],
+    viaCities:["tokyo"],
     fromStop:{ kind:"Gare", name:"Kawaguchiko Station", jp:"河口湖駅", lat:35.4983, lng:138.7685 },
     toStop:{ kind:"Gare", name:"Kanazawa Station", jp:"金沢駅", lat:36.5783, lng:136.6480 },
     details:[
-      "Suggestion : bus Kawaguchiko → Shinjuku, puis shinkansen (Kagayaki / Hakutaka) Tokyo → Kanazawa.",
-      "Autre option : via Nagoya (plus de changements). Horaires à figer à la résa."
+      "1) Bus direct Kawaguchiko → Shinjuku (Highway Bus Terminal).",
+      "2) Métro / JR Shinjuku → Tokyo Station (~15–20 min).",
+      "3) Shinkansen Hokuriku (Kagayaki / Hakutaka) Tokyo → Kanazawa.",
+      "Pas de liaison directe Fuji→Kanazawa : retour vers Tokyo obligatoire."
     ],
-    tips:"Journée longue — prévoir déjeuner dans le train / en gare." },
+    tips:"Journée longue — bus matinal depuis Kawaguchiko ; déjeuner en gare ou dans le train." },
   { id:"kana-shira", title:"Kanazawa → Shirakawa-go", subtitle:"17 nov · Jour 10", mode:"Bus",
     depart:"~8:50", arrive:"~10:05", duration:"~1 h 15",
     operator:"Nohi Bus (Kanazawa ↔ Shirakawa-go)", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"kanazawa", lat:36.5783, lng:136.6480 }, to:{ id:"shirakawa", lat:36.2580, lng:136.9063 },
-    via:[{lat:36.4,lng:136.78}],
+    via:[
+      {lat:36.48,lng:136.72},
+      {lat:36.38,lng:136.82},
+      {lat:36.30,lng:136.88}
+    ],
     fromStop:{ kind:"Gare / arrêt bus", name:"Kanazawa Station (Nohi Bus Terminal)", jp:"金沢駅", lat:36.5783, lng:136.6480 },
     toStop:{ kind:"Arrêt bus", name:"Shirakawa-go (Ogimachi)", jp:"白川郷・荻町", lat:36.2580, lng:136.9063 },
     details:["Bus réservation recommandée (places limitées).","Visite à la journée — nuit à Takayama."],
@@ -486,7 +516,11 @@ const LEGS = [
     operator:"Nohi Bus", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"shirakawa", lat:36.2580, lng:136.9063 }, to:{ id:"takayama", lat:36.1420, lng:137.2525 },
-    via:[{lat:36.2,lng:137.05}],
+    via:[
+      {lat:36.22,lng:136.98},
+      {lat:36.18,lng:137.12},
+      {lat:36.15,lng:137.2}
+    ],
     fromStop:{ kind:"Arrêt bus", name:"Shirakawa-go (Ogimachi)", jp:"白川郷・荻町", lat:36.2580, lng:136.9063 },
     toStop:{ kind:"Gare / terminal bus", name:"Takayama Nohi Bus Center", jp:"高山濃飛バスセンター", lat:36.1420, lng:137.2525 },
     details:["Arrivée à côté de la gare JR Takayama et de la vieille ville."],
@@ -496,7 +530,12 @@ const LEGS = [
     operator:"Hida (Wide View) → Nagoya + shinkansen → Kyoto", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"takayama", lat:36.1406, lng:137.2517 }, to:{ id:"kyoto", lat:35.0014, lng:135.7596 },
-    via:[{lat:35.6,lng:136.7},{lat:35.2,lng:136.0}],
+    via:[
+      {lat:35.85,lng:137.0},
+      {lat:35.42,lng:136.76},
+      {lat:35.17,lng:136.88},
+      {lat:35.08,lng:136.2}
+    ],
     fromStop:{ kind:"Gare", name:"Takayama Station", jp:"高山駅", lat:36.1406, lng:137.2517 },
     toStop:{ kind:"Gare", name:"Kyoto Station", jp:"京都駅", lat:35.0014, lng:135.7596 },
     details:[
@@ -509,7 +548,7 @@ const LEGS = [
     operator:"Kintetsu (direct)", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"kyoto", lat:35.0010, lng:135.7600 }, to:{ id:"nara", lat:34.6844, lng:135.8274 },
-    via:[{lat:34.85,lng:135.78}],
+    via:[{lat:34.88,lng:135.72},{lat:34.78,lng:135.78}],
     fromStop:{ kind:"Gare", name:"Kyoto Station (Kintetsu)", jp:"近鉄京都駅", lat:35.0010, lng:135.7600 },
     toStop:{ kind:"Gare", name:"Kintetsu-Nara Station", jp:"近鉄奈良駅", lat:34.6844, lng:135.8274 },
     details:[
@@ -522,7 +561,7 @@ const LEGS = [
     operator:"Kintetsu vers Osaka-Namba", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"nara", lat:34.6844, lng:135.8274 }, to:{ id:"osaka", lat:34.6663, lng:135.5013 },
-    via:[{lat:34.68,lng:135.62}],
+    via:[{lat:34.67,lng:135.68},{lat:34.66,lng:135.58}],
     fromStop:{ kind:"Gare", name:"Kintetsu-Nara Station", jp:"近鉄奈良駅", lat:34.6844, lng:135.8274 },
     toStop:{ kind:"Gare", name:"Osaka-Namba (Kintetsu)", jp:"大阪難波駅", lat:34.6663, lng:135.5013 },
     details:["Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."],
@@ -532,7 +571,14 @@ const LEGS = [
     operator:"JR Tokaido Shinkansen (Nozomi / Hikari)", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
     from:{ id:"osaka", lat:34.7335, lng:135.5002 }, to:{ id:"tokyo", lat:35.6812, lng:139.7671 },
-    via:[{lat:35.05,lng:136.7},{lat:34.95,lng:138.2},{lat:35.25,lng:139.2}],
+    via:[
+      {lat:34.56,lng:135.55},
+      {lat:34.48,lng:136.05},
+      {lat:34.52,lng:136.85},
+      {lat:34.78,lng:137.85},
+      {lat:35.05,lng:138.75},
+      {lat:35.38,lng:139.35}
+    ],
     fromStop:{ kind:"Gare", name:"Shin-Osaka Station", jp:"新大阪駅", lat:34.7335, lng:135.5002 },
     toStop:{ kind:"Gare", name:"Tokyo Station", jp:"東京駅", lat:35.6812, lng:139.7671 },
     details:[

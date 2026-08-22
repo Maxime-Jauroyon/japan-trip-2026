@@ -1,0 +1,15 @@
+<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="logo-disc" cx="32%" cy="26%" r="72%">
+      <stop offset="0%" stop-color="#fffef9"/>
+      <stop offset="58%" stop-color="#f3ebe0"/>
+      <stop offset="100%" stop-color="#e0d4c4"/>
+    </radialGradient>
+  </defs>
+  <circle cx="22" cy="22" r="19.5" fill="url(#logo-disc)" stroke="#c4a574" stroke-width="1.8"/>
+  <path d="M22 9.5 12.5 31h19L22 9.5z" fill="#5a4638"/>
+  <path d="M22 11.2 14.8 28.8h14.4L22 11.2z" fill="#fff" fill-opacity=".9"/>
+  <path d="M8.5 29.5c4.2-5.8 8.8-8.2 13.5-8.2s9.3 2.4 13.5 8.2" stroke="#c45c26" stroke-width="1.65" stroke-linecap="round" stroke-dasharray="4.5 3.2"/>
+  <path d="M33.2 27.8 36.8 26.2v3.4l-1.8.9-1.8-.7v-2.1z" fill="#c45c26"/>
+  <circle cx="36.2" cy="27.8" r=".85" fill="#fff" fill-opacity=".85"/>
+</svg>
