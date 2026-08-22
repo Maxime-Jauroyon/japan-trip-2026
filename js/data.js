@@ -96,7 +96,7 @@ const CITIES = {
       hotel:{ name:"Mercure Hida Takayama", area:"Hanasatomachi / gare", address:"4-311-1 Hanasatomachi, Takayama, Gifu",
         lat:36.1393, lng:137.2521,
         checkIn:"mar. 17 nov · à partir de 15:00", checkOut:"mer. 18 nov · jusqu’à 11:00",
-        status:"paid", payment:"Payé par Maxime · souci paiement en ligne — possiblement à régler sur place", price:"246,52 € (total, 2 adultes)",
+        status:"paid", payment:"Payé par Maxime · non remboursable", price:"246,52 € (total, 2 adultes)",
         phone:"+81 577 35 2702",
         photos:[
           "./img/hotels/mercure-takayama.jpg",
@@ -109,11 +109,10 @@ const CITIES = {
           "Petit-déjeuner inclus",
           "Taxes à régler au check-in (loi japonaise) : onsen tax 150 ¥ + taxe de séjour / pers. / nuit — même sans utiliser l’onsen",
           "Montant selon le tarif de la chambre · payé à part (pas dans le prix Booking)",
-          "Souci au paiement en ligne — vérifier / éventuellement payer sur place",
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "À ~4 min à pied de la gare JR Takayama · onsen en rooftop"
         ],
-        desc:"Mercure près de la gare, pratique pour la vieille ville et le départ vers Kyoto. Payé par Maxime (souci paiement en ligne — possible règlement sur place) — petit-déjeuner compris, non remboursable." } }] },
+        desc:"Mercure près de la gare, pratique pour la vieille ville et le départ vers Kyoto. Payé par Maxime — petit-déjeuner compris, non remboursable." } }] },
   kyoto: { id:"kyoto", name:"Kyoto", jp:"京都", lat:35.0116, lng:135.7681,
     stays:[{ id:"kyo-1", label:"Séjour Kyoto", from:"18 nov", to:"22 nov", nights:"4 nuits",
       hotel:{ name:"Agora Kyoto Shijo", area:"Shijō / Aburanokōji", address:"36 Kawabokocho, Shijodori Aburanokoji Higashiiru, Shimogyo, Kyoto",
@@ -587,7 +586,7 @@ const PREP_CHECKS = [
 ];
 const PREP_BUDGET = [
   { label:"Vols A/R", amount:"≈ 2 200 € / pers.", note:"Payés · Léo & Maxime · Air France · CDG ↔ HND", done:true },
-  { label:"Hôtels (partagés)", amount:"≈ 1 535 € / pers.", note:"Total ≈ 3 070 € ÷ 2 · tous les séjours inclus (Takayama à confirmer sur place)", done:true },
+  { label:"Hôtels (partagés)", amount:"≈ 1 535 € / pers.", note:"Total ≈ 3 070 € ÷ 2 · tous les séjours inclus", done:true },
   { label:"Taxes séjour / onsen", amount:"Quelques ¥ / nuit", note:"Souvent hors Booking · Kanazawa, Takayama… cash/carte au check-in", done:false },
   { label:"Trajets JP", amount:"À définir / pers.", note:"Trains / bus (à partager)", done:false },
   { label:"Activités / tickets", amount:"À définir / pers.", note:"USJ, teamLab…", done:false },
