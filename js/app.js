@@ -799,7 +799,8 @@ function highlightPin(act){
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   renderCityPins(currentCity, day || null, act);
   const pct = pctIn(MAP_BOUNDS[currentCity], act.lat, act.lng);
-  const zoom = cityCam.minScale() * 1.52;
+  const mobile = window.matchMedia("(max-width: 900px)").matches;
+  const zoom = cityCam.minScale() * (mobile ? 2.55 : 1.52);
   cityCam.focusPct(pct.left, pct.top, zoom);
 }
 
@@ -833,7 +834,8 @@ function refreshCityMapView(){
     if (!cityFrame.clientWidth || !cityFrame.clientHeight) return false;
     if (lastFocusAct && lastFocusAct.lat != null) {
       const pct = pctIn(MAP_BOUNDS[currentCity], lastFocusAct.lat, lastFocusAct.lng);
-      cityCam.focusPct(pct.left, pct.top, cityCam.minScale() * 1.52);
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+      cityCam.focusPct(pct.left, pct.top, cityCam.minScale() * (mobile ? 2.55 : 1.52));
     } else {
       const day = openDayInPanel();
       if (day) focusDayMap(currentCity, day);
@@ -847,8 +849,25 @@ function refreshCityMapView(){
 }
 
 function scheduleCityMapRefresh(){
+  // Mobile : attendre que le sheet ait réduit le city-frame avant de zoomer
+  const mobile = window.matchMedia("(max-width: 900px)").matches;
+  if (mobile) {
+    const app = document.querySelector(".app");
+    if (app && panel.classList.contains("open") && currentCity &&
+        !app.classList.contains("sheet-mid") &&
+        !app.classList.contains("sheet-max") &&
+        !app.classList.contains("sheet-min")) {
+      app.classList.add("sheet-mid");
+    }
+    void cityFrame.offsetHeight;
+  }
   refreshCityMapView();
-  requestAnimationFrame(() => requestAnimationFrame(refreshCityMapView));
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      refreshCityMapView();
+      if (mobile) setTimeout(refreshCityMapView, 80);
+    });
+  });
 }
 
 function showCity(id, dayN){
@@ -998,17 +1017,38 @@ function focusDayMap(cityId, day){
   const bounds = MAP_BOUNDS[cityId];
   const pts = dayPinPoints(cityId, day);
   const min = cityCam.minScale();
+  const mobile = window.matchMedia("(max-width: 900px)").matches;
   const nw = cityImg.naturalWidth;
   const nh = cityImg.naturalHeight;
   if (!pts.length) {
-    cityCam.fitCover(1.38);
+    cityCam.fitCover(mobile ? 1.55 : 1.38);
     return;
   }
   if (pts.length === 1) {
     const pct = pctIn(bounds, pts[0].lat, pts[0].lng);
-    cityCam.focusPct(pct.left, pct.top, min * 1.72);
+    cityCam.focusPct(pct.left, pct.top, min * (mobile ? 2.85 : 1.72));
     return;
   }
+  let minL = 100, maxL = 0, minT = 100, maxT = 0;
+  pts.forEach(p => {
+    const pct = pctIn(bounds, p.lat, p.lng);
+    minL = Math.min(minL, pct.left);
+    maxL = Math.max(maxL, pct.left);
+    minT = Math.min(minT, pct.top);
+    maxT = Math.max(maxT, pct.top);
+  });
+  const cx = (minL + maxL) / 2;
+  const cy = (minT + maxT) / 2;
+  const span = Math.max(maxL - minL, maxT - minT, 4);
+
+  if (mobile) {
+    // Sur mobile le cadre est court (sheet) : zoomer fort sur le centre du jour
+    // plutôt qu’un fitWorldBox trop proche du fitCover.
+    const factor = Math.min(3.35, Math.max(2.35, 3.35 - span * 0.028));
+    cityCam.focusPct(cx, cy, min * factor);
+    return;
+  }
+
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   pts.forEach(p => {
     const pct = pctIn(bounds, p.lat, p.lng);
@@ -1029,13 +1069,13 @@ function focusDayMap(cityId, day){
   cityCam.fitWorldBox(box, { top: 32, right: 32, bottom: 32, left: 32 });
   const cap = min * 1.95;
   if (cityCam.state.s > cap) {
-    const cx = (box.minX + box.maxX) / 2;
-    const cy = (box.minY + box.maxY) / 2;
+    const bx = (box.minX + box.maxX) / 2;
+    const by = (box.minY + box.maxY) / 2;
     const vw = cityFrame.clientWidth;
     const vh = cityFrame.clientHeight;
     cityCam.state.s = cap;
-    cityCam.state.x = vw / 2 - cx * cap;
-    cityCam.state.y = vh / 2 - cy * cap;
+    cityCam.state.x = vw / 2 - bx * cap;
+    cityCam.state.y = vh / 2 - by * cap;
     cityCam.clamp();
     cityCam.apply();
   }
