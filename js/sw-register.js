@@ -24,5 +24,25 @@ async function forceRefreshApp(){
   location.replace(url.toString());
 }
 
+function bindForceRefresh(btn){
+  let busy = false;
+  let lastTouch = 0;
+  const run = async (e) => {
+    if (busy) return;
+    busy = true;
+    if (e && e.cancelable) e.preventDefault();
+    btn.blur();
+    await forceRefreshApp();
+  };
+  btn.addEventListener("touchend", (e) => {
+    lastTouch = Date.now();
+    run(e);
+  }, { passive: false });
+  btn.addEventListener("click", (e) => {
+    if (Date.now() - lastTouch < 700) return;
+    run(e);
+  });
+}
+
 const refreshBtn = document.getElementById("force-refresh");
-if (refreshBtn) refreshBtn.addEventListener("click", forceRefreshApp);
+if (refreshBtn) bindForceRefresh(refreshBtn);

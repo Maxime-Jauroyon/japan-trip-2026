@@ -93,8 +93,16 @@ header {
   cursor: pointer;
   border-radius: 2px;
   white-space: nowrap;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .force-refresh:hover { color: var(--cream); border-color: var(--gold); }
+.force-refresh:active { color: var(--cream); border-color: var(--gold); background: rgba(196,165,116,.1); }
+@media (hover: none) {
+  .force-refresh:hover { color: var(--muted); border-color: var(--line); background: transparent; }
+  .force-refresh:active { color: var(--cream); border-color: var(--gold); background: rgba(196,165,116,.1); }
+}
 .tabs {
   display: flex; gap: 4px;
   margin-left: 8px;
@@ -497,7 +505,6 @@ main { position: relative; min-height: 0; height: 100%; }
   to { stroke-dashoffset: -24; }
 }
 #country-marks { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-#country-marks .city-mark { pointer-events: auto; }
 
 /* Leg view — keep map readable */
 .app.leg-mode #country-view::after {
@@ -512,9 +519,9 @@ main { position: relative; min-height: 0; height: 100%; }
   opacity: 0.38;
   pointer-events: none;
 }
-.app.leg-mode .city-mark:not(.leg-related) .pin-wrap {
-  animation: none;
-  transform: scale(0.88);
+.app.leg-mode .city-mark:not(.leg-related) .map-logo {
+  transform: scale(0.82);
+  opacity: 0.55;
 }
 .app.leg-mode .city-mark .label {
   opacity: 0 !important;
@@ -524,23 +531,31 @@ main { position: relative; min-height: 0; height: 100%; }
   opacity: 1;
   pointer-events: auto;
 }
-.app.leg-mode .city-mark.leg-from .pin-disc {
-  box-shadow: 0 0 0 3px rgba(47,111,149,.35);
+.app.leg-mode .city-mark.leg-from .map-logo {
+  filter: drop-shadow(0 0 8px rgba(47,111,149,.75));
+  outline: 2px solid rgba(47,111,149,.85);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
-.app.leg-mode .city-mark.leg-to .pin-disc,
-.app.leg-mode .city-mark.leg-related:not(.leg-from):not(.leg-via) .pin-disc {
-  box-shadow: 0 0 0 3px rgba(196,92,38,.35);
-}
-.app.leg-mode .city-mark.leg-via .pin-disc {
-  box-shadow: 0 0 0 3px rgba(196,165,116,.55);
-  outline: 2px dashed rgba(196,165,116,.7);
-  outline-offset: 2px;
-}
-.city-mark.leg-related .pin-disc {
+.app.leg-mode .city-mark.leg-to .map-logo,
+.app.leg-mode .city-mark.leg-related:not(.leg-from):not(.leg-via) .map-logo {
+  filter: drop-shadow(0 0 8px rgba(196,92,38,.75));
   outline: 2px solid rgba(196,92,38,.85);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 6px;
 }
-.city-mark.leg-from .pin-disc {
+.app.leg-mode .city-mark.leg-via .map-logo {
+  filter: drop-shadow(0 0 8px rgba(196,165,116,.75));
+  outline: 2px dashed rgba(196,165,116,.9);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.city-mark.leg-related .map-logo {
+  outline: 2px solid rgba(196,92,38,.85);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.city-mark.leg-from .map-logo {
   outline-color: rgba(47,111,149,.9);
 }
 .leg-ends-bar {
@@ -641,6 +656,35 @@ button.stat.stop-jump .jump-hint {
   color: #7eb3d1;
   margin-top: 2px;
 }
+#country-marks .city-mark {
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+#country-marks .map-logo {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 56px;
+  filter: drop-shadow(0 2px 5px rgba(30,40,52,.18));
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+#country-marks .map-logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+#country-marks .city-mark:hover .map-logo,
+#country-marks .city-mark.active .map-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 10px rgba(30,40,52,.24));
+}
+#country-marks .city-mark.active .map-logo {
+  filter:
+    drop-shadow(0 0 0 2px rgba(196,92,38,.35))
+    drop-shadow(0 4px 10px rgba(30,40,52,.24));
+}
+
 .city-mark {
   position: absolute;
   transform: translate(-50%, -100%);
@@ -1215,14 +1259,25 @@ button.stat.stop-jump .jump-hint {
     min-height: 40px;
     gap: 8px;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 45;
   }
-  header h1.brand { gap: 8px; }
+  header h1.brand { gap: 8px; order: 1; flex: 1 1 auto; min-width: 0; }
   .brand-mark { width: 32px; height: 32px; }
   .brand-title { font-size: 14px; }
   .brand-sub { font-size: 9px; letter-spacing: 0.06em; }
-  .tabs { margin-left: 0; width: 100%; order: 3; }
+  .tabs { margin-left: 0; flex: 0 0 100%; width: 100%; order: 3; }
   .tabs button { flex: 1 1 0; text-align: center; padding: 7px 6px; font-size: 12px; }
-  .force-refresh { font-size: 10px; padding: 4px 8px; margin-left: auto; }
+  .force-refresh {
+    order: 2;
+    position: relative;
+    z-index: 2;
+    font-size: 11px;
+    padding: 8px 12px;
+    min-height: 44px;
+    min-width: 44px;
+    margin-left: auto;
+  }
   .info-view { padding: 14px 14px 36px; }
 
   #city-list { display: none !important; }
@@ -1307,25 +1362,11 @@ button.stat.stop-jump .jump-hint {
 
   .hint { display: none; }
 
-  .city-mark .pin-disc {
-    width: 44px; height: 44px;
-    border-width: 2.5px;
+  #country-marks .map-logo {
+    width: 50px;
+    height: 50px;
   }
-  .city-mark .pin-disc svg { width: 26px; height: 26px; }
-  .city-mark .label {
-    opacity: 1;
-    left: 50%; top: calc(100% + 6px);
-    right: auto; transform: translateX(-50%);
-    font-size: 12px; padding: 4px 8px;
-    font-weight: 600;
-  }
-  .city-mark.label-left .label {
-    left: 50%; right: auto; transform: translateX(-50%);
-  }
-  .city-mark:hover .label,
-  .city-mark.active .label {
-    transform: translateX(-50%);
-  }
+  .city-mark .label { display: none !important; }
   .pin .badge { width: 52px; height: 60px; }
   .pin .badge svg { width: 52px; height: 60px; }
   .home-btn { width: 44px; height: 44px; bottom: calc(14px + env(safe-area-inset-bottom)); }

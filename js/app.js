@@ -8,6 +8,22 @@
     window.addEventListener("resize", apply);
   }
 })();
+function cityMapLogoSvg(id){
+  const ink = "#1e2834";
+  const o = `stroke="${ink}" stroke-width=".9" stroke-linejoin="round"`;
+  const icons = {
+    tokyo: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 3 17 7h-2L16 3z" fill="#e85d4a" ${o}/><path d="M13.2 7h5.6v2.4h-5.6z" fill="#e85d4a" ${o}/><path d="M14 9.4h4v8.6h-4z" fill="#d44a38" ${o}/><rect x="13.8" y="11.2" width="4.4" height="1.3" fill="#fff" opacity=".85"/><rect x="13.8" y="14.2" width="4.4" height="1.3" fill="#fff" opacity=".85"/><path d="M12.2 18h7.6v1.8H12.2z" fill="#e85d4a" ${o}/><path d="M10.5 19.8h10.8L23 26H9l1.5-6.2z" fill="#c94a38" ${o}/></svg>`,
+    fuji: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 5 5 26.5h22L16 5z" fill="#5b8fd4" ${o}/><path d="M16 5 10.4 16h11.2L16 5z" fill="#f4f8fc" ${o}/></svg>`,
+    kanazawa: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 26.5V17.5l9-6.5 9 6.5V26.5H7z" fill="#8a98a6" ${o}/><path d="M8.5 25V18.5l7.5-5.2 7.5 5.2V25H8.5z" fill="#f5f7fa" ${o}/><path d="M6.5 17.8 16 10.5 25.5 17.8" fill="#6b5344" ${o}/><path d="M8 17.2 16 11.2l8 6" fill="#9a7a52" ${o}/><path d="M12.5 25v-4.5h7V25h-7z" fill="#6b5344" ${o}/></svg>`,
+    shirakawa: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 3.5 2.5 17.5h27L16 3.5z" fill="#6b5344" ${o}/><path d="M16 5.5 5.5 16h21L16 5.5z" fill="#9a7a52" ${o}/><path d="M8.5 17v9.5h15V17" fill="#ebe0cc" ${o}/><path d="M8.5 17h15" stroke="${ink}" stroke-width=".65" opacity=".35"/><rect x="11.5" y="20" width="3" height="3" fill="#5a4638" ${o}/><rect x="17.5" y="20" width="3" height="3" fill="#5a4638" ${o}/></svg>`,
+    takayama: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 26.5V16.5L16 8.5 27.5 16.5v10H4.5z" fill="#6b5344" ${o}/><path d="M6 25V17.5l10-6.5 10 6.5V25H6z" fill="#e8dcc8" ${o}/><path d="M5 16.5 16 9.5 27 16.5" fill="#8a6a4a" ${o}/><path d="M9.5 25v-5h4v5h-4zm9 0v-5h4v5h-4z" fill="#5a4638" ${o}/><rect x="14.2" y="13.5" width="3.6" height="4.8" rx=".3" fill="#e85d4a" ${o}/></svg>`,
+    kyoto: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 26.5V20.5l6-3.5 6 3.5v6H10z" fill="#c49a20" ${o}/><path d="M11.5 20.5V16l4.5-2.5 4.5 2.5v4.5H11.5z" fill="#e8c547" ${o}/><path d="M13 16V12.5l3-1.8 3 1.8V16H13z" fill="#ffe890" ${o}/><path d="M15.2 10.8 16 9l.8 1.8H15.2z" fill="#c49a20" ${o}/><path d="M7 26.8h18" stroke="#5b8fd4" stroke-width="1.8" stroke-linecap="round" opacity=".45"/></svg>`,
+    nara: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 26.5V20.5c0-1.2 5.2-2.2 11.5-2.2s11.5 1 11.5 2.2v6H4.5z" fill="#8a6a4a" ${o}/><path d="M6 25.5V21c0-.8 4.5-1.5 10-1.5s10 .7 10 1.5v4.5H6z" fill="#c45c26" ${o}/><path d="M8 21.2c2.5-.6 5.2-.9 8-.9s5.5.3 8 .9" stroke="${ink}" stroke-width=".65" opacity=".3"/><path d="M13.5 14.5V21M18.5 14.5V21" stroke="#6b5344" stroke-width="1.4" stroke-linecap="round"/><path d="M12 14.5h8l-1-3.5h-6l-1 3.5z" fill="#6b5344" ${o}/></svg>`,
+    osaka: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 26.5h19v-2.2H6.5z" fill="#8a929a" ${o}/><path d="M7.5 24.3h17v2.2H7.5z" fill="#a8aeb4" ${o}/><path d="M8 24.3V21.8h16v2.5H8z" fill="#f5f7fa" ${o}/><path d="M6.2 21.8q9.8-2.8 19.6 0L24.5 23.8H7.5L6.2 21.8z" fill="#3d8a62" ${o}/><path d="M10 21.8V18.8h12v3H10z" fill="#f5f7fa" ${o}/><path d="M8.8 18.8q7.2-2.2 14.4 0L22.5 20.5H9.5L8.8 18.8z" fill="#4a9a72" ${o}/><path d="M12 18.8V16.2h8v2.6H12z" fill="#f5f7fa" ${o}/><path d="M11.2 16.2q4.8-1.8 9.6 0L20.5 17.6H11.5L11.2 16.2z" fill="#5aaa82" ${o}/><path d="M15.2 13.8h1.6v2.4h-1.6z" fill="#f5f7fa" ${o}/><path d="M14.5 13.8q1.5-1.4 3 0L17 15h-2l-.5-1.2z" fill="#6bbc92" ${o}/><circle cx="16" cy="12.8" r="1.1" fill="#d4af37" ${o}/></svg>`
+  };
+  return icons[id] || icons.tokyo;
+}
+
 function cityIconSvg(id){
   const s = "currentColor";
   const g = `<ellipse cx="12" cy="21.2" rx="6" ry=".9" fill="${s}" opacity=".11"/>`;
@@ -627,11 +643,7 @@ function buildCountry(){
     btn.dataset.city = id;
     btn.title = c.name;
     btn.innerHTML =
-      `<span class="pin-wrap" style="animation-delay:${(i * 0.07).toFixed(2)}s">` +
-        `<span class="pin-ring" aria-hidden="true"></span>` +
-        `<span class="pin-disc">${cityIconSvg(id)}</span>` +
-        `<span class="pin-pointer" aria-hidden="true"></span>` +
-      `</span>` +
+      `<span class="map-logo">${cityMapLogoSvg(id)}</span>` +
       `<span class="label">${c.name}</span>`;
     btn.addEventListener("click", e => { e.stopPropagation(); openCity(id); });
     marks.appendChild(btn);
@@ -1309,10 +1321,10 @@ function openHotelDetail(stay){
   const photos = hotelPhotos(h);
   showDetailSheet(
     `<span class="sheet-kind hotel">Hôtel</span>` +
-    renderPhotoGallery(photos, "town") +
     `<h3>${esc(h.name || "Hôtel à définir")}</h3>` +
     (mapAct ? mapsLinkHtml(mapAct, "detail") : "") +
     `<p class="desc">${esc(h.desc || "")}</p>` +
+    renderPhotoGallery(photos, "town") +
     `<div class="pill-row"><span class="status ${statusClass(h.status)}">${statusLabel(h.status)}</span></div>` +
     `<dl class="detail-kv">` +
     `<dt>Séjour</dt><dd>${esc(stay.label || "")}</dd>` +
@@ -1322,7 +1334,6 @@ function openHotelDetail(stay){
     `<dt>Arrivée</dt><dd>${esc(h.checkIn || "—")}</dd>` +
     `<dt>Départ</dt><dd>${esc(h.checkOut || "—")}</dd>` +
     (h.phone ? `<dt>Téléphone</dt><dd>${esc(h.phone)}</dd>` : "") +
-    `<dt>Paiement</dt><dd>${esc(h.payment || "—")}</dd>` +
     `<dt>Prix</dt><dd>${esc(h.price || "—")}</dd>` +
     `</dl>` +
     notesListHtml(h.notes)

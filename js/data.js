@@ -23,7 +23,7 @@ const CITIES = {
             "Code confidentiel : dans la conf. Booking (ne pas partager)",
             "Équipé : cuisine, lave-linge, clim, Wi‑Fi, etc."
           ],
-          desc:"Appartement réservé à Akihabara (Torigoe), pratique pour le centre et Asakusa. Payé intégralement par Léo — non remboursable." } },
+          desc:"Appart-hôtel à Akihabara (Torigoe), calme et pratique pour le centre, Asakusa et le départ vers le Fuji." } },
       { id:"tokyo-2", label:"Séjour 2 — retour", from:"27 nov", to:"29 nov", nights:"2 nuits",
         hotel:{ name:"The Royal Park Hotel Tokyo Haneda Airport Terminal 3", area:"Haneda T3", address:"Haneda Airport 2-6-5, Ota-ku, Tokyo",
           lat:35.5465, lng:139.7682,
@@ -42,7 +42,7 @@ const CITIES = {
             "Code confidentiel : dans la conf. Booking (ne pas partager)",
             "Dans le terminal 3 Haneda — idéal pour le vol HND 09:05"
           ],
-          desc:"Hôtel dans le Terminal 3 de Haneda. Payé par Maxime — petit-déjeuner compris, parfait pour le départ matinal." } }
+          desc:"Hôtel dans le terminal 3 de Haneda — idéal pour le vol du matin, sans transfert depuis la ville." } }
     ] },
   fuji: { id:"fuji", name:"Fujikawaguchiko", jp:"河口湖", lat:35.5006, lng:138.7639,
     stays:[{ id:"fuji-1", label:"Séjour lac", from:"12 nov", to:"14 nov", nights:"2 nuits",
@@ -63,7 +63,7 @@ const CITIES = {
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "Vue montagne · salle de bain privée"
         ],
-        desc:"Hôtel à Funatsu, près du lac Kawaguchi. Réservé et payé par Maxime — petit-déjeuner compris." } }] },
+        desc:"Hôtel au bord du lac Kawaguchi, base pour le Fuji, les téléphériques et les villages alentour." } }] },
   kanazawa: { id:"kanazawa", name:"Kanazawa", jp:"金沢", lat:36.5611, lng:136.6565,
     stays:[{ id:"kana-1", label:"Séjour Kanazawa", from:"14 nov", to:"17 nov", nights:"3 nuits",
       hotel:{ name:"Henn na Hotel Kanazawa Korimbo", area:"Korinbo", address:"Kourinbou 1-2-32, Kanazawa, Ishikawa",
@@ -85,7 +85,7 @@ const CITIES = {
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "Check-in robot (Henn na) · quartier Korinbo"
         ],
-        desc:"Hôtel à Korinbo, pratique pour le centre, Kenroku-en et les quartiers de thé. Payé par Léo — petit-déjeuner compris." } }] },
+        desc:"Hôtel design à Korinbo, à pied de Kenroku-en, Omicho et du centre historique." } }] },
   shirakawa: { id:"shirakawa", name:"Shirakawa-go", jp:"白川郷", lat:36.2578, lng:136.9063,
     stays:[{ id:"shira-day", label:"Visite à la journée", from:"17 nov", to:"17 nov", nights:"Sans nuit",
       hotel:{ name:"—", area:"Excursion d’une journée", address:"—",
@@ -112,7 +112,7 @@ const CITIES = {
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "À ~4 min à pied de la gare JR Takayama · onsen en rooftop"
         ],
-        desc:"Mercure près de la gare, pratique pour la vieille ville et le départ vers Kyoto. Payé par Maxime — petit-déjeuner compris, non remboursable." } }] },
+        desc:"Mercure à deux pas de la gare JR, onsen en rooftop, vieille ville et marché du matin accessibles à pied." } }] },
   kyoto: { id:"kyoto", name:"Kyoto", jp:"京都", lat:35.0116, lng:135.7681,
     stays:[{ id:"kyo-1", label:"Séjour Kyoto", from:"18 nov", to:"22 nov", nights:"4 nuits",
       hotel:{ name:"Agora Kyoto Shijo", area:"Shijō / Aburanokōji", address:"36 Kawabokocho, Shijodori Aburanokoji Higashiiru, Shimogyo, Kyoto",
@@ -132,7 +132,7 @@ const CITIES = {
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "~7 min à pied de Shijō / Karasuma (Hankyu / métro)"
         ],
-        desc:"Base à Shijō pour temples, Nishiki et le centre. Payé par Léo — petit-déjeuner compris, non remboursable." } }] },
+        desc:"Hôtel à Shijō, base compacte pour Nishiki, Gion, les temples et les bus vers Arashiyama." } }] },
   nara: { id:"nara", name:"Nara", jp:"奈良", lat:34.6851, lng:135.8050,
     stays:[{ id:"nara-1", label:"Séjour Nara", from:"22 nov", to:"23 nov", nights:"1 nuit",
       hotel:{ name:"The Deer Park Inn", area:"Parc de Nara / Kasugano", address:"Kasuganocho 158-5, Nara",
@@ -152,7 +152,7 @@ const CITIES = {
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "Dans / au bord du parc de Nara — convenir horaires avec l’hôte si besoin"
         ],
-        desc:"Guest house au bord du parc de Nara. Payé par Maxime — simple et bien placé pour les cerfs et les temples." } }] },
+        desc:"Guest house au bord du parc de Nara — cerfs le matin, Todai-ji et Kasuga à pied." } }] },
   osaka: { id:"osaka", name:"Osaka", jp:"大阪", lat:34.6937, lng:135.5023,
     stays:[{ id:"osa-1", label:"Séjour Osaka", from:"23 nov", to:"27 nov", nights:"4 nuits",
       hotel:{ name:"Garner Hotel Osaka Honmachi Kita Semba", area:"Honmachi / Awajimachi", address:"2-6-8 Awajimachi, Chuo-ku, Osaka",
@@ -172,7 +172,7 @@ const CITIES = {
           "Code confidentiel : dans la conf. Booking (ne pas partager)",
           "~6 min à pied de Honmachi (Midosuji) · pratique Namba / Shinsaibashi / USJ"
         ],
-        desc:"Garner IHG à Honmachi, bien placé pour Dotonbori et les trajets. Payé par Maxime — petit-déjeuner compris, non remboursable." } }] }
+        desc:"Garner IHG à Honmachi, métro direct pour Namba, Dotonbori et Universal Studios." } }] }
 };
 const ORDER = ["tokyo","fuji","kanazawa","shirakawa","takayama","kyoto","nara","osaka"];
 const MAP_BOUNDS = {
