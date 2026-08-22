@@ -457,6 +457,29 @@ function makePanZoom(viewport, world, opts){
 const countryCam = makePanZoom(countryViewport, countryWorld, { max:7, start:1, mode:"cover" });
 const cityCam = makePanZoom(cityFrame, cityWorld, { max:9, start:1, mode:"cover" });
 
+const MAP_IMG_VER = "19";
+const preloadedMaps = new Map();
+
+function cityMapUrl(id){
+  return "./maps/" + id + ".png?v=" + MAP_IMG_VER;
+}
+
+/** Précharge toutes les cartes ville dès le démarrage (mémoire + cache navigateur). */
+function preloadCityMaps(){
+  ORDER.forEach(id => {
+    if (preloadedMaps.has(id)) return;
+    const img = new Image();
+    img.decoding = "async";
+    img.src = cityMapUrl(id);
+    preloadedMaps.set(id, img);
+  });
+}
+
+function isCityMapReady(id){
+  const img = preloadedMaps.get(id);
+  return !!(img && img.complete && img.naturalWidth);
+}
+
 function sizeJapanWorld(){
   if (!japanImg.naturalWidth) return;
   const w = japanImg.naturalWidth, h = japanImg.naturalHeight;
@@ -896,7 +919,16 @@ function showCity(id, dayN){
   } else {
     cityImg.dataset.id = id;
     cityImg.alt = "Carte de " + CITIES[id].name;
-    cityImg.src = "./maps/" + id + ".png?v=18";
+    const url = cityMapUrl(id);
+    // Si déjà préchargée : appliquer tout de suite après assignation src
+    if (isCityMapReady(id)) {
+      cityImg.onload = null;
+      cityImg.src = url;
+      if (cityImg.complete && cityImg.naturalWidth) apply();
+      else cityImg.onload = apply;
+    } else {
+      cityImg.src = url;
+    }
   }
 }
 
@@ -1834,6 +1866,8 @@ function bootCountry(){
   buildCountry();
   showCountry();
 }
+// Précharge les cartes villes dès que possible (en parallèle de la carte Japon)
+preloadCityMaps();
 if (japanImg.complete && japanImg.naturalWidth) bootCountry();
 else japanImg.onload = bootCountry;
 // —— Onglets Préparatifs / Sur place (site statique : Date() + localStorage) ——

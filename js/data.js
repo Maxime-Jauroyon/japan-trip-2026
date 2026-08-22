@@ -704,7 +704,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v96";
+const APP_CACHE_VER = "v97";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
