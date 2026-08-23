@@ -466,10 +466,11 @@ const LEGS = [
     ],
     tips:"Réserver le bus à l'avance en haute saison ; départ matin.",
     bookings:{
-      opens:"Dès ~août–oct 2026 (1–4 mois avant · automne = saturé)",
+      note:"Sur le formulaire : Departing=Shinjuku Expressway Bus Terminal · Arriving=Kawaguchiko Sta.",
       links:[
         { site:"Highway Bus", label:"Bus Shinjuku → Kawaguchiko · 12 nov 2026",
-          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&offStationCd=001&onStationCd=095&useDate=20261112" }
+          openFrom:"2026-09-12",
+          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112" }
       ]
     } },
   { id:"fuji-kana", title:"Fujikawaguchiko → Kanazawa", subtitle:"14 nov · Jour 7", mode:"Bus + train",
@@ -511,13 +512,16 @@ const LEGS = [
     ],
     tips:"Journée longue — bus matinal depuis Kawaguchiko ; déjeuner en gare ou dans le train.",
     bookings:{
-      opens:"Bus ~14 oct · Shinkansen 14 oct · 10:00 JST",
+      note:"Bus : Departing=Kawaguchiko Sta. · Arriving=Shinjuku Expressway Bus Terminal.",
       links:[
         { site:"Highway Bus", label:"Bus Kawaguchiko → Shinjuku · 14 nov 2026",
-          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&offStationCd=051&onStationCd=001&useDate=20261114" },
+          openFrom:"2026-09-14",
+          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114" },
         { site:"JR West", label:"Shinkansen Tokyo → Kanazawa · 14 nov 2026",
+          openFrom:"2026-10-14", openTime:"10:00",
           url:"https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Tokyo&arrival=Kanazawa&date=2026-11-14" },
         { site:"JR East", label:"Alternative · Hokuriku Shinkansen · 14 nov",
+          openFrom:"2026-10-14", openTime:"10:00",
           url:"https://www.eki-net.com/en/jreast-train-reservation/Top/Index" }
       ]
     } },
@@ -536,9 +540,9 @@ const LEGS = [
     details:["Bus réservation recommandée (places limitées).","Visite à la journée — nuit à Takayama."],
     tips:"Garder le billet retour / correspondance Takayama du même jour.",
     bookings:{
-      opens:"17 oct 2026 (1 mois avant · même jour du mois précédent)",
       links:[
         { site:"Japan Bus Online", label:"Bus Kanazawa → Shirakawa-go · 17 nov 2026",
+          openFrom:"2026-10-17",
           url:"https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117" }
       ]
     } },
@@ -557,11 +561,11 @@ const LEGS = [
     details:["Arrivée à côté de la gare JR Takayama et de la vieille ville."],
     tips:"Check-in ryokan puis balade Sanmachi.",
     bookings:{
-      opens:"17 oct 2026 (1 mois avant)",
-      note:"Choisir un bus partant de Kanazawa/Toyama/Takaoka puis arrêts Shirakawa → Takayama (consigne du site).",
+      note:"Sur Japan Bus Online : ouvrir le sens Kanazawa→Takayama, choisir un bus vers Takayama, puis arrêts boarding=Shirakawa-go / alighting=Takayama Nohi Bus Center.",
       links:[
         { site:"Japan Bus Online", label:"Bus Shirakawa-go → Takayama · 17 nov 2026",
-          url:"https://japanbusonline.com/en/Detail/11900040002/0/4212032/4162027/20261117" }
+          openFrom:"2026-10-17",
+          url:"https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117" }
       ]
     } },
   { id:"taka-kyo", title:"Takayama → Kyoto", subtitle:"18 nov · Jour 11", mode:"Train",
@@ -583,11 +587,12 @@ const LEGS = [
     ],
     tips:"L'heure de départ à Takayama est le vrai rendez-vous.",
     bookings:{
-      opens:"18 oct 2026 · 10:00 JST (Hida + correspondance Nagoya → Kyoto)",
       links:[
         { site:"JR West", label:"Train Takayama → Kyoto · 18 nov 2026 (Hida + Shinkansen)",
+          openFrom:"2026-10-18", openTime:"10:00",
           url:"https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Takayama&arrival=Kyoto&date=2026-11-18" },
         { site:"e5489", label:"Alternative · réservation JR West (EN)",
+          openFrom:"2026-10-18", openTime:"10:00",
           url:"https://e5489.jr-odekake.net/e5489/ibpc/CBTrainEntryExternalPC?LANG=en" }
       ]
     } },
@@ -605,10 +610,10 @@ const LEGS = [
     ],
     tips:"Idéal pour arriver et enchaîner le parc avant la nuit.",
     bookings:{
-      opens:"Pas obligatoire · IC (Suica…) le jour J",
       note:"Train local / express : pas de résa nécessaire. Limited Express Kintetsu optionnel.",
       links:[
         { site:"Kintetsu", label:"Limited Express Kyoto → Kintetsu-Nara (optionnel)",
+          optional:true, openFrom:"2026-10-22", openTime:"10:30",
           url:"https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/" }
       ]
     } },
@@ -623,10 +628,10 @@ const LEGS = [
     details:["Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."],
     tips:"Soirée street food à Dotonbori.",
     bookings:{
-      opens:"Pas obligatoire · IC (Suica…) le jour J",
       note:"Train direct Namba : pas de résa nécessaire.",
       links:[
         { site:"Kintetsu", label:"Limited Express Kintetsu-Nara → Osaka-Namba (optionnel)",
+          optional:true, openFrom:"2026-10-23", openTime:"10:30",
           url:"https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/" }
       ]
     } },
@@ -651,10 +656,10 @@ const LEGS = [
     ],
     tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place.",
     bookings:{
-      opens:"Déjà ouvert (SmartEX · 1 an avant · réserver tôt pour sièges bagages XL)",
       note:"SmartEX ne préremplit pas l'URL : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
       links:[
         { site:"SmartEX", label:"Shinkansen Shin-Osaka → Tokyo · 27 nov 2026",
+          openFrom:"2025-11-27",
           url:"https://smart-ex.jp/en/reservation/reserve_smart/sp/" }
       ]
     } },
@@ -770,7 +775,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v98";
+const APP_CACHE_VER = "v105";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[

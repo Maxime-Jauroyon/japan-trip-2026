@@ -42,10 +42,10 @@ function cityIconSvg(id){
 
 function legVehicleKind(mode){
   const m = (mode || "").toLowerCase();
-  if (/^bus$|bus\s*\+|highway|nohi/.test(m) && !/shinkansen/.test(m)) return "bus";
+  if (/avion|flight|plane|^air\b/.test(m)) return "plane";
   if (/shinkansen/.test(m)) return "shinkansen";
-  if (/bus/.test(m) && !/train|rail|shinkansen|hida|kintetsu/.test(m)) return "bus";
-  if (/train|hida|kintetsu|rail/.test(m)) return "shinkansen";
+  if (/bus/.test(m)) return "bus";
+  if (/train|hida|kintetsu|rail/.test(m)) return "train";
   return "train";
 }
 
@@ -88,9 +88,43 @@ function routeVehicleSvg(kind){
     return `<g class="vehicle-shape vehicle-bus"><rect x="-11" y="-5" width="22" height="10" rx="2.2" fill="#e8a020" stroke="#fff" stroke-width="1.2"/><rect x="-8" y="-3" width="5" height="4" rx=".6" fill="#fff" opacity=".85"/><rect x="-1" y="-3" width="5" height="4" rx=".6" fill="#fff" opacity=".85"/><rect x="6" y="-3" width="3" height="4" rx=".6" fill="#fff" opacity=".85"/><circle cx="-6" cy="6.5" r="2.2" fill="#333"/><circle cx="6" cy="6.5" r="2.2" fill="#333"/></g>`;
   }
   if (kind === "shinkansen") {
-    return `<g class="vehicle-shape vehicle-shinkansen"><path d="M-13 4h22l3-5.5a2 2 0 00-1.8-2.8H-11.2A2 2 0 00-13-1.5L-13 4z" fill="#f4f8fb" stroke="#2f6f95" stroke-width="1.2"/><rect x="-9" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="-2" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="5" y="-1" width="4" height="3" rx=".5" fill="#7eb3d1"/><path d="M10-1.5l3 2.5" stroke="#c45c26" stroke-width="1.4" stroke-linecap="round"/></g>`;
+    /* Silhouette type N700 — nez ogival + bande bleue JR */
+    return `<g class="vehicle-shape vehicle-shinkansen">` +
+      `<path d="M-14 5.2V-.2c0-2.2 1.6-3.8 3.6-3.8h14.2c2.4 0 4.6 1.1 6.6 3.2L14.2 5.2H-14z" fill="#f7fbfe" stroke="#1a5f8a" stroke-width="1.15"/>` +
+      `<path d="M-13.2 1.1h20.8c1.4 0 2.7.35 3.9 1.05" fill="none" stroke="#2f7fb0" stroke-width="2.1" stroke-linecap="round"/>` +
+      `<rect x="-10.2" y="-2.4" width="4.2" height="2.6" rx=".45" fill="#5aa0c8"/>` +
+      `<rect x="-4.4" y="-2.4" width="4.2" height="2.6" rx=".45" fill="#5aa0c8"/>` +
+      `<rect x="1.4" y="-2.4" width="4.2" height="2.6" rx=".45" fill="#5aa0c8"/>` +
+      `<path d="M9.2-2.1c1.5.15 2.9.85 4.2 2.05" fill="none" stroke="#c45c26" stroke-width="1.35" stroke-linecap="round"/>` +
+      `<circle cx="11.6" cy="-.2" r=".55" fill="#c45c26"/>` +
+      `</g>`;
   }
-  return `<g class="vehicle-shape vehicle-train"><rect x="-11" y="-4" width="22" height="8" rx="1.8" fill="#2f6f95" stroke="#fff" stroke-width="1.1"/><rect x="-8" y="-2" width="5" height="3.5" rx=".5" fill="#aad0dc"/><rect x="-1" y="-2" width="5" height="3.5" rx=".5" fill="#aad0dc"/><rect x="6" y="-2" width="3" height="3.5" rx=".5" fill="#aad0dc"/><circle cx="-6" cy="5.5" r="1.8" fill="#333"/><circle cx="6" cy="5.5" r="1.8" fill="#333"/></g>`;
+  return `<g class="vehicle-shape vehicle-train"><path d="M-13 4h22l3-5.5a2 2 0 00-1.8-2.8H-11.2A2 2 0 00-13-1.5L-13 4z" fill="#f4f8fb" stroke="#2f6f95" stroke-width="1.2"/><rect x="-9" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="-2" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="5" y="-1" width="4" height="3" rx=".5" fill="#7eb3d1"/><path d="M10-1.5l3 2.5" stroke="#c45c26" stroke-width="1.4" stroke-linecap="round"/></g>`;
+}
+
+/** Logo UI (panneau trajet) — Shinkansen reconnaissable. */
+function modeLogoSvg(mode){
+  const kind = legVehicleKind(mode);
+  if (kind === "shinkansen") {
+    return `<svg class="mode-logo mode-logo-shinkansen" viewBox="0 0 48 28" aria-hidden="true">` +
+      `<defs><linearGradient id="skNose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f8fcff"/><stop offset="1" stop-color="#e8f2f8"/></linearGradient></defs>` +
+      `<path d="M2 22V8.2C2 5.4 4.2 3.2 7 3.2h22.5c4.2 0 8 2.1 11.2 5.8L44 22H2z" fill="url(#skNose)" stroke="#1a5f8a" stroke-width="1.4"/>` +
+      `<path d="M3.5 14.2h31.5c2.2 0 4.2.5 6 1.5" fill="none" stroke="#2f7fb0" stroke-width="3.2" stroke-linecap="round"/>` +
+      `<rect x="8" y="6.2" width="6.5" height="4.2" rx=".7" fill="#5aa0c8"/>` +
+      `<rect x="16.5" y="6.2" width="6.5" height="4.2" rx=".7" fill="#5aa0c8"/>` +
+      `<rect x="25" y="6.2" width="6.5" height="4.2" rx=".7" fill="#5aa0c8"/>` +
+      `<path d="M34.5 6.8c2.4.3 4.6 1.4 6.6 3.2" fill="none" stroke="#c45c26" stroke-width="1.8" stroke-linecap="round"/>` +
+      `<circle cx="38.2" cy="9.2" r=".9" fill="#c45c26"/>` +
+      `<text x="24" y="26.2" text-anchor="middle" font-size="5.2" font-weight="700" fill="#1a5f8a" letter-spacing=".4">新幹線</text>` +
+      `</svg>`;
+  }
+  return "";
+}
+
+function modeStatHtml(mode){
+  const logo = modeLogoSvg(mode);
+  if (!logo) return `<div class="stat"><span>Mode</span><strong>${esc(mode)}</strong></div>`;
+  return `<div class="stat mode-stat"><span>Mode</span><strong class="mode-with-logo">${logo}<span>${esc(mode)}</span></strong></div>`;
 }
 
 function prefersReducedMotion(){
@@ -1357,20 +1391,92 @@ function stopBlockHtml(leg){
   };
   return row("Départ", leg.fromStop, "from") + row("Arrivée", leg.toStop, "to");
 }
+function parseBookingDate(iso){
+  if (!iso) return null;
+  const m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return null;
+  return new Date(+m[1], +m[2] - 1, +m[3]);
+}
+function todayLocalDate(){
+  const n = new Date();
+  return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+}
+function formatBookingDateFr(d){
+  if (!d) return "";
+  return d.toLocaleDateString("fr-FR", { day:"numeric", month:"short", year:"numeric" });
+}
+/** Jaune = pas encore · Rouge = réservable · Vert = déjà réservé. */
+function bookingOpenStatus(link, leg){
+  const legDone = leg && (leg.status === "reserved" || leg.status === "paid");
+  const linkDone = !!(link.reserved || link.paid || legDone);
+  if (linkDone) {
+    return {
+      key:"reserved",
+      label: leg && leg.status === "paid" ? "Payé / réservé" : "Réservé"
+    };
+  }
+  if (link.optional && !link.openFrom) {
+    return { key:"optional", label:"Optionnel · IC le jour J" };
+  }
+  const open = parseBookingDate(link.openFrom);
+  if (!open) return { key:"bookable", label: link.optional ? "Optionnel · réservable" : "Réservable" };
+  const today = todayLocalDate();
+  const days = Math.round((open.getTime() - today.getTime()) / 86400000);
+  const when = formatBookingDateFr(open);
+  const time = link.openTime ? ` · ${link.openTime} JST` : "";
+  if (days <= 0) {
+    return {
+      key:"bookable",
+      label: link.optional ? "Optionnel · réservable" : "Réservable — à réserver"
+    };
+  }
+  // Pas encore (jaune) — y compris « bientôt »
+  if (days <= 14) {
+    return {
+      key:"wait",
+      label: `${link.optional ? "Optionnel · " : ""}Bientôt · dans ${days} j · ${when}${time}`
+    };
+  }
+  return {
+    key:"wait",
+    label: `${link.optional ? "Optionnel · " : ""}Pas encore · ouvre ${when}${time}`
+  };
+}
 function legBookingsHtml(leg){
   const b = leg.bookings;
   if (!b || !b.links || !b.links.length) return "";
-  const opens = b.opens
-    ? `<p class="note booking-opens">Ouverture ventes · ${esc(b.opens)}</p>`
-    : "";
+  const statuses = b.links.map(l => bookingOpenStatus(l, leg));
+  const required = statuses.filter(s => s.key !== "optional");
+  const pool = required.length ? required : statuses;
+  const hasReserved = pool.some(s => s.key === "reserved");
+  const hasBookable = pool.some(s => s.key === "bookable");
+  const hasWait = pool.some(s => s.key === "wait");
+  const allReserved = pool.length && pool.every(s => s.key === "reserved");
+  const summaryKey = allReserved ? "reserved"
+    : hasReserved && (hasBookable || hasWait) ? "bookable"
+    : hasBookable ? "bookable"
+    : hasWait ? "wait"
+    : "optional";
+  const summaryLabel =
+    summaryKey === "reserved" ? "Déjà réservé" :
+    summaryKey === "bookable" && hasWait ? "Partiellement réservable" :
+    summaryKey === "bookable" ? "Réservable — action requise" :
+    summaryKey === "wait" ? "Pas encore réservable" :
+    "Réservation optionnelle";
+  const summary =
+    `<div class="booking-summary status-${esc(summaryKey)}">` +
+    `<span class="booking-dot" aria-hidden="true"></span>` +
+    `<span>${esc(summaryLabel)}</span></div>`;
   const note = b.note ? `<p class="note booking-note">${esc(b.note)}</p>` : "";
-  const links = b.links.map(l =>
-    `<a class="booking-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">` +
-    `<span class="booking-site">${esc(l.site || "Book")}</span>` +
-    `<strong>${esc(l.label)}</strong>` +
-    `</a>`
-  ).join("");
-  return `<div class="leg-bookings"><h4>Réservation en ligne (EN)</h4>${opens}<div class="booking-links">${links}</div>${note}</div>`;
+  const links = b.links.map((l, i) => {
+    const st = statuses[i];
+    return `<a class="booking-link status-${esc(st.key)}" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">` +
+      `<span class="booking-status"><span class="booking-dot" aria-hidden="true"></span>${esc(st.label)}</span>` +
+      `<span class="booking-site">${esc(l.site || "Book")}</span>` +
+      `<strong>${esc(l.label)}</strong>` +
+      `</a>`;
+  }).join("");
+  return `<div class="leg-bookings"><h4>Réservation en ligne (EN)</h4>${summary}<div class="booking-links">${links}</div>${note}</div>`;
 }
 function legEndsToolbarHtml(leg){
   const a = legEndPoint(leg, "from");
@@ -1812,7 +1918,7 @@ function openLeg(id){
     `<div class="trajet-grid">` +
     `<div class="stat"><span>Départ</span><strong>${esc(leg.depart || "—")}</strong></div>` +
     `<div class="stat"><span>Arrivée</span><strong>${esc(leg.arrive || "—")}</strong></div>` +
-    `<div class="stat"><span>Mode</span><strong>${esc(leg.mode)}</strong></div>` +
+    modeStatHtml(leg.mode) +
     `<div class="stat"><span>Durée</span><strong>${esc(leg.duration || "—")}</strong></div>` +
     `<div class="stat wide"><span>Compagnie</span><strong>${esc(leg.operator || "—")}</strong></div>` +
     stopBlockHtml(leg) +
@@ -2322,6 +2428,7 @@ function updateOfflineStatus(){
 }
 
 const IOS_INSTALL_KEY = "japan-trip-ios-install-dismiss-v1";
+const BOOKING_ALERT_KEY = "japan-trip-booking-alert-dismiss-v1";
 function isIOSDevice(){
   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) return true;
   return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
@@ -2345,10 +2452,97 @@ function initIOSInstallHint(){
     }
   } catch (_) { /* ignore */ }
   box.hidden = false;
+  syncBottomBanners();
   btn.addEventListener("click", () => {
     box.hidden = true;
     try { localStorage.setItem(IOS_INSTALL_KEY, "1"); } catch (_) { /* ignore */ }
+    syncBottomBanners();
   });
+}
+
+function loadDismissedBookingAlerts(){
+  try {
+    const raw = localStorage.getItem(BOOKING_ALERT_KEY);
+    if (!raw) return new Set();
+    const arr = JSON.parse(raw);
+    return new Set(Array.isArray(arr) ? arr : []);
+  } catch (_) {
+    return new Set();
+  }
+}
+function saveDismissedBookingAlerts(set){
+  try { localStorage.setItem(BOOKING_ALERT_KEY, JSON.stringify([...set])); } catch (_) { /* ignore */ }
+}
+function collectBookableAlerts(){
+  const out = [];
+  LEGS.forEach(leg => {
+    const links = leg.bookings?.links;
+    if (!links) return;
+    links.forEach((link, i) => {
+      if (bookingOpenStatus(link, leg).key !== "bookable") return;
+      out.push({
+        id: leg.id + ":" + i,
+        legId: leg.id,
+        legTitle: leg.title || (leg.from + " → " + leg.to),
+        label: link.label,
+        site: link.site,
+        url: link.url
+      });
+    });
+  });
+  return out;
+}
+function syncBottomBanners(){
+  const ios = document.getElementById("ios-install");
+  const booking = document.getElementById("booking-alert");
+  if (!booking) return;
+  const iosVisible = ios && !ios.hidden;
+  booking.classList.toggle("above-ios", iosVisible && !booking.hidden);
+}
+function renderBookingAlert(){
+  const box = document.getElementById("booking-alert");
+  const list = document.getElementById("booking-alert-list");
+  const btn = document.getElementById("booking-alert-dismiss");
+  if (!box || !list || !btn) return;
+
+  const dismissed = loadDismissedBookingAlerts();
+  const alerts = collectBookableAlerts().filter(a => !dismissed.has(a.id));
+  if (!alerts.length) {
+    box.hidden = true;
+    syncBottomBanners();
+    return;
+  }
+
+  list.innerHTML = alerts.map(a =>
+    `<li><button type="button" class="booking-alert-item" data-leg-id="${esc(a.legId)}" data-url="${esc(a.url)}">` +
+    `<span><strong>${esc(a.legTitle)}</strong><span>${esc(a.label)} · ${esc(a.site)}</span></span>` +
+    `<span class="booking-alert-go" aria-hidden="true">Voir →</span></button></li>`
+  ).join("");
+
+  list.querySelectorAll(".booking-alert-item").forEach(el => {
+    el.addEventListener("click", () => {
+      const legId = el.dataset.legId;
+      const url = el.dataset.url;
+      if (legId) openLeg(legId);
+      if (url) window.open(url, "_blank", "noopener,noreferrer");
+    });
+  });
+
+  box.hidden = false;
+  syncBottomBanners();
+
+  if (btn._bookingBound) return;
+  btn._bookingBound = true;
+  btn.addEventListener("click", () => {
+    const dismissedNow = loadDismissedBookingAlerts();
+    collectBookableAlerts().forEach(a => dismissedNow.add(a.id));
+    saveDismissedBookingAlerts(dismissedNow);
+    box.hidden = true;
+    syncBottomBanners();
+  });
+}
+function initBookingAlert(){
+  renderBookingAlert();
 }
 
 function renderPracticalInfo(){
@@ -2548,5 +2742,6 @@ document.getElementById("onsite-map-btn")?.addEventListener("click", () => {
 });
 updateOfflineStatus();
 initIOSInstallHint();
+initBookingAlert();
 window.addEventListener("online", updateOfflineStatus);
 window.addEventListener("offline", updateOfflineStatus);
