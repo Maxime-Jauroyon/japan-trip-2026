@@ -387,8 +387,9 @@ const DAYS = [
       {title:"Universal Studios Japan", lat:34.6654, lng:135.4323,
         desc:"Journée parc — Harry Potter, Super Nintendo World, attractions. Arriver tôt et planifier le parcours.",
         notes:[
+          "Billets en ligne ~2 mois avant (rappel dès le 24 sept 2026) — plus de vente au guichet en général.",
           "Avoir l’app officielle Universal Studios Japan (files, Express Pass, carte du parc).",
-          "Billets Super Nintendo World : les faire sur place dès l’entrée."
+          "Super Nintendo World : Express Pass recommandé, sinon timed-entry / file le jour J."
         ],
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Universal_Studios_Japan.jpg/640px-Universal_Studios_Japan.jpg"}
     ] },
@@ -702,7 +703,8 @@ const PREP_CHECKS = [
   { id:"taxes", label:"Taxes de séjour / onsen", meta:"Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)", done:false },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen Osaka→Tokyo payé · reste Fuji / Hokuriku / Nohi / Hida…" },
   { id:"osa-tokyo-tickets", label:"QR Ticket Osaka → Tokyo (Apple Wallet)", meta:"Payé par Léo · 158,72 € · Nozomi 90 · 11:30→13:57 · ajouter les QR dans Wallet dès le 27 oct 2026", remindFrom:"2026-10-27", done:false },
-  { id:"idees", label:"Idées & billets d’activités", meta:"USJ, teamLab, observatoires, etc." },
+  { id:"usj-tickets", label:"Billets Universal Studios Japan", meta:"Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin", remindFrom:"2026-09-24", done:false },
+  { id:"idees", label:"Idées & billets d’activités", meta:"USJ (rappel 24 sept) · teamLab, observatoires, etc." },
   { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
   { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
   { id:"suica", label:"Welcome Suica Mobile (iPhone ×2)", meta:"App Store avant départ · émettre à HND · Express Mode" },
@@ -779,7 +781,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v112";
+const APP_CACHE_VER = "v113";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
