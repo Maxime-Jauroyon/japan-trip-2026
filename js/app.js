@@ -1357,6 +1357,21 @@ function stopBlockHtml(leg){
   };
   return row("Départ", leg.fromStop, "from") + row("Arrivée", leg.toStop, "to");
 }
+function legBookingsHtml(leg){
+  const b = leg.bookings;
+  if (!b || !b.links || !b.links.length) return "";
+  const opens = b.opens
+    ? `<p class="note booking-opens">Ouverture ventes · ${esc(b.opens)}</p>`
+    : "";
+  const note = b.note ? `<p class="note booking-note">${esc(b.note)}</p>` : "";
+  const links = b.links.map(l =>
+    `<a class="booking-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">` +
+    `<span class="booking-site">${esc(l.site || "Book")}</span>` +
+    `<strong>${esc(l.label)}</strong>` +
+    `</a>`
+  ).join("");
+  return `<div class="leg-bookings"><h4>Réservation en ligne (EN)</h4>${opens}<div class="booking-links">${links}</div>${note}</div>`;
+}
 function legEndsToolbarHtml(leg){
   const a = legEndPoint(leg, "from");
   const b = legEndPoint(leg, "to");
@@ -1809,6 +1824,7 @@ function openLeg(id){
     `<dt>Prix</dt><dd>${esc(leg.price || "—")}</dd>` +
     `</dl>` +
     (details ? `<ul class="detail-notes">${details}</ul>` : "") +
+    legBookingsHtml(leg) +
     tips +
     contextPhraseHtml(legPhraseContext(leg.mode)) +
     `</div>`;

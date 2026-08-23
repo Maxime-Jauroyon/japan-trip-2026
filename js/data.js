@@ -464,7 +464,14 @@ const LEGS = [
       "Suggestion la plus simple avec bagages : bus direct depuis Shinjuku.",
       "Alternative rail : JR Chuo → Ōtsuki puis Fujikyu Railway → Kawaguchiko."
     ],
-    tips:"Réserver le bus à l’avance en haute saison ; départ matin." },
+    tips:"Réserver le bus à l'avance en haute saison ; départ matin.",
+    bookings:{
+      opens:"Dès ~août–oct 2026 (1–4 mois avant · automne = saturé)",
+      links:[
+        { site:"Highway Bus", label:"Bus Shinjuku → Kawaguchiko · 12 nov 2026",
+          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&offStationCd=001&onStationCd=095&useDate=20261112" }
+      ]
+    } },
   { id:"fuji-kana", title:"Fujikawaguchiko → Kanazawa", subtitle:"14 nov · Jour 7", mode:"Bus + train",
     depart:"~9:00", arrive:"~16:00", duration:"~6–7 h",
     operator:"Bus Kawaguchiko→Shinjuku + shinkansen Hokuriku (Tokyo→Kanazawa)", seat:"—", ref:"—",
@@ -502,7 +509,18 @@ const LEGS = [
       "3) Shinkansen Hokuriku (Kagayaki / Hakutaka) Tokyo → Kanazawa.",
       "Pas de liaison directe Fuji→Kanazawa : retour vers Tokyo obligatoire."
     ],
-    tips:"Journée longue — bus matinal depuis Kawaguchiko ; déjeuner en gare ou dans le train." },
+    tips:"Journée longue — bus matinal depuis Kawaguchiko ; déjeuner en gare ou dans le train.",
+    bookings:{
+      opens:"Bus ~14 oct · Shinkansen 14 oct · 10:00 JST",
+      links:[
+        { site:"Highway Bus", label:"Bus Kawaguchiko → Shinjuku · 14 nov 2026",
+          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&offStationCd=051&onStationCd=001&useDate=20261114" },
+        { site:"JR West", label:"Shinkansen Tokyo → Kanazawa · 14 nov 2026",
+          url:"https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Tokyo&arrival=Kanazawa&date=2026-11-14" },
+        { site:"JR East", label:"Alternative · Hokuriku Shinkansen · 14 nov",
+          url:"https://www.eki-net.com/en/jreast-train-reservation/Top/Index" }
+      ]
+    } },
   { id:"kana-shira", title:"Kanazawa → Shirakawa-go", subtitle:"17 nov · Jour 10", mode:"Bus",
     depart:"~8:50", arrive:"~10:05", duration:"~1 h 15",
     operator:"Nohi Bus (Kanazawa ↔ Shirakawa-go)", seat:"—", ref:"—",
@@ -516,7 +534,14 @@ const LEGS = [
     fromStop:{ kind:"Gare / arrêt bus", name:"Kanazawa Station (Nohi Bus Terminal)", jp:"金沢駅", lat:36.5783, lng:136.6480 },
     toStop:{ kind:"Arrêt bus", name:"Shirakawa-go (Ogimachi)", jp:"白川郷・荻町", lat:36.2580, lng:136.9063 },
     details:["Bus réservation recommandée (places limitées).","Visite à la journée — nuit à Takayama."],
-    tips:"Garder le billet retour / correspondance Takayama du même jour." },
+    tips:"Garder le billet retour / correspondance Takayama du même jour.",
+    bookings:{
+      opens:"17 oct 2026 (1 mois avant · même jour du mois précédent)",
+      links:[
+        { site:"Japan Bus Online", label:"Bus Kanazawa → Shirakawa-go · 17 nov 2026",
+          url:"https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117" }
+      ]
+    } },
   { id:"shira-taka", title:"Shirakawa-go → Takayama", subtitle:"17 nov · Jour 10", mode:"Bus",
     depart:"~14:00", arrive:"~14:50", duration:"~50 min",
     operator:"Nohi Bus", seat:"—", ref:"—",
@@ -530,7 +555,15 @@ const LEGS = [
     fromStop:{ kind:"Arrêt bus", name:"Shirakawa-go (Ogimachi)", jp:"白川郷・荻町", lat:36.2580, lng:136.9063 },
     toStop:{ kind:"Gare / terminal bus", name:"Takayama Nohi Bus Center", jp:"高山濃飛バスセンター", lat:36.1420, lng:137.2525 },
     details:["Arrivée à côté de la gare JR Takayama et de la vieille ville."],
-    tips:"Check-in ryokan puis balade Sanmachi." },
+    tips:"Check-in ryokan puis balade Sanmachi.",
+    bookings:{
+      opens:"17 oct 2026 (1 mois avant)",
+      note:"Choisir un bus partant de Kanazawa/Toyama/Takaoka puis arrêts Shirakawa → Takayama (consigne du site).",
+      links:[
+        { site:"Japan Bus Online", label:"Bus Shirakawa-go → Takayama · 17 nov 2026",
+          url:"https://japanbusonline.com/en/Detail/11900040002/0/4212032/4162027/20261117" }
+      ]
+    } },
   { id:"taka-kyo", title:"Takayama → Kyoto", subtitle:"18 nov · Jour 11", mode:"Train",
     depart:"~13:30", arrive:"~16:30", duration:"~3 h",
     operator:"Hida (Wide View) → Nagoya + shinkansen → Kyoto", seat:"—", ref:"—",
@@ -548,7 +581,16 @@ const LEGS = [
       "Classique : Limited Express Hida Takayama → Nagoya, puis Tokaido Shinkansen Nagoya → Kyoto.",
       "Réserver les places Hida (paysage + places assises)."
     ],
-    tips:"L’heure de départ à Takayama est le vrai rendez-vous." },
+    tips:"L'heure de départ à Takayama est le vrai rendez-vous.",
+    bookings:{
+      opens:"18 oct 2026 · 10:00 JST (Hida + correspondance Nagoya → Kyoto)",
+      links:[
+        { site:"JR West", label:"Train Takayama → Kyoto · 18 nov 2026 (Hida + Shinkansen)",
+          url:"https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Takayama&arrival=Kyoto&date=2026-11-18" },
+        { site:"e5489", label:"Alternative · réservation JR West (EN)",
+          url:"https://e5489.jr-odekake.net/e5489/ibpc/CBTrainEntryExternalPC?LANG=en" }
+      ]
+    } },
   { id:"kyo-nara", title:"Kyoto → Nara", subtitle:"22 nov · Jour 15", mode:"Train",
     depart:"~16:15", arrive:"~17:15", duration:"~45–50 min",
     operator:"Kintetsu (direct)", seat:"—", ref:"—",
@@ -561,7 +603,15 @@ const LEGS = [
       "Kintetsu-Nara est plus près du parc / Todai-ji que JR Nara.",
       "Alternative : JR Nara Line (un peu plus long à pied ensuite)."
     ],
-    tips:"Idéal pour arriver et enchaîner le parc avant la nuit." },
+    tips:"Idéal pour arriver et enchaîner le parc avant la nuit.",
+    bookings:{
+      opens:"Pas obligatoire · IC (Suica…) le jour J",
+      note:"Train local / express : pas de résa nécessaire. Limited Express Kintetsu optionnel.",
+      links:[
+        { site:"Kintetsu", label:"Limited Express Kyoto → Kintetsu-Nara (optionnel)",
+          url:"https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/" }
+      ]
+    } },
   { id:"nara-osa", title:"Nara → Osaka", subtitle:"23 nov · Jour 16", mode:"Train",
     depart:"~16:15", arrive:"~17:00", duration:"~35–45 min",
     operator:"Kintetsu vers Osaka-Namba", seat:"—", ref:"—",
@@ -571,7 +621,15 @@ const LEGS = [
     fromStop:{ kind:"Gare", name:"Kintetsu-Nara Station", jp:"近鉄奈良駅", lat:34.6844, lng:135.8274 },
     toStop:{ kind:"Gare", name:"Osaka-Namba (Kintetsu)", jp:"大阪難波駅", lat:34.6663, lng:135.5013 },
     details:["Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."],
-    tips:"Soirée street food à Dotonbori." },
+    tips:"Soirée street food à Dotonbori.",
+    bookings:{
+      opens:"Pas obligatoire · IC (Suica…) le jour J",
+      note:"Train direct Namba : pas de résa nécessaire.",
+      links:[
+        { site:"Kintetsu", label:"Limited Express Kintetsu-Nara → Osaka-Namba (optionnel)",
+          url:"https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/" }
+      ]
+    } },
   { id:"osa-tokyo", title:"Osaka → Tokyo", subtitle:"27 nov · Jour 20", mode:"Shinkansen",
     depart:"~11:30", arrive:"~14:00", duration:"~2 h 30",
     operator:"JR Tokaido Shinkansen (Nozomi / Hikari)", seat:"—", ref:"—",
@@ -591,7 +649,15 @@ const LEGS = [
       "Depuis Namba : metro / JR jusqu’à Shin-Osaka (~20–30 min).",
       "Puis shinkansen Shin-Osaka → Tokyo Station, puis Monorail / Keikyu vers Haneda T3 (Royal Park)."
     ],
-    tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place." },
+    tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place.",
+    bookings:{
+      opens:"Déjà ouvert (SmartEX · 1 an avant · réserver tôt pour sièges bagages XL)",
+      note:"SmartEX ne préremplit pas l'URL : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
+      links:[
+        { site:"SmartEX", label:"Shinkansen Shin-Osaka → Tokyo · 27 nov 2026",
+          url:"https://smart-ex.jp/en/reservation/reserve_smart/sp/" }
+      ]
+    } },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
     depart:"HND · dim. 29 nov · 09:05", arrive:"CDG · dim. 29 nov · 15:35", duration:"~14 h 30",
     operator:"Air France", seat:"2 × standards côte à côte · rangée 27", ref:"—",
@@ -704,7 +770,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v97";
+const APP_CACHE_VER = "v98";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[

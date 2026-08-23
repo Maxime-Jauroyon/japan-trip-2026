@@ -1175,6 +1175,46 @@ button.stat.stop-jump .jump-hint {
   width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
 }
 
+.leg-bookings {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(196,165,116,.22);
+}
+.leg-bookings h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.booking-opens, .booking-note { font-size: 12px; margin-bottom: 8px; }
+.booking-links { display: flex; flex-direction: column; gap: 8px; }
+.booking-link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--cream);
+  background: rgba(196,165,116,.1);
+  border: 1px solid rgba(196,165,116,.35);
+  transition: background .15s, border-color .15s;
+}
+.booking-link:hover {
+  background: rgba(196,165,116,.18);
+  border-color: var(--gold);
+}
+.booking-link .booking-site {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+}
+.booking-link strong { font-size: 13px; font-weight: 600; line-height: 1.35; }
+
 .detail-sheet { display: none; }
 .detail-sheet.show { display: block; }
 .detail-back {
