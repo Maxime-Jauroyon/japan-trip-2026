@@ -656,11 +656,11 @@ const LEGS = [
     ],
     tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place.",
     bookings:{
-      note:"Tokaido Shinkansen = SmartEX (JR Central), pas JR West comme le Hokuriku. À saisir : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
+      note:"Tokaido Shinkansen = SmartEX (JR Central), pas JR West comme le Hokuriku. Lien = guide de réservation ; à saisir : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
       links:[
         { site:"SmartEX", label:"Shinkansen Shin-Osaka → Tokyo · 27 nov 2026",
           openFrom:"2025-11-27",
-          url:"https://smart-ex.jp/en/" }
+          url:"https://smart-ex.jp/en/reservation/reserve_smart/sp/" }
       ]
     } },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
@@ -701,7 +701,7 @@ const PREP_CHECKS = [
   { id:"idees", label:"Idées & billets d’activités", meta:"USJ, teamLab, observatoires, etc." },
   { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
   { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
-  { id:"suica", label:"Suica / IC ou Welcome Suica", meta:"Transports + konbini" },
+  { id:"suica", label:"Welcome Suica Mobile (iPhone ×2)", meta:"App Store avant départ · émettre à HND · Express Mode" },
   { id:"cash", label:"Cash ¥ + carte sans frais", meta:"Taxes hôtel + lieux cash-only" },
   { id:"adaptateur", label:"Adaptateur type A/B", meta:"Prises japonaises" },
   { id:"valise", label:"Valise mi-novembre", meta:"Couches, imperméable léger, bonnes chaussures" },
@@ -775,17 +775,21 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v106";
+const APP_CACHE_VER = "v108";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
     "Activer l’eSIM avant l’atterrissage (mode avion → activer à HND).",
     "Télécharger offline : Google Maps (zones utiles), traducteur, confirmations Booking."
   ]},
-  { id:"ic", title:"Suica / Welcome Suica", items:[
-    "Carte IC rechargeable : métro, JR urbain, konbini, certains bus.",
-    "Welcome Suica (visiteurs) : validité limitée — recharger au besoin aux bornes.",
-    "Alternative : app Mobile Suica (compte japonais parfois requis)."
+  { id:"ic", title:"Suica sur iPhone (×2)", items:[
+    "Recommandé visiteurs : app « Welcome Suica Mobile » (JR East) — EN + cartes étrangères via Apple Pay.",
+    "Avant le départ : télécharger l’app App Store ; depuis la France, émettre la carte souvent seulement après atterrissage (Wi‑Fi HND).",
+    "À HND : ouvrir l’app → mot-clé secret → choisir recharge (ex. 3 000–5 000 ¥) → payer Apple Pay → ajouter à Wallet.",
+    "Express Mode : Réglages → Wallet & Apple Pay → Carte de transport Express → choisir Suica (tap sans Face ID).",
+    "Alternative : Wallet → + → Carte de transport → Suica ; si la carte Visa est refusée, passer par Welcome Suica Mobile (Mastercard / Amex souvent OK).",
+    "Validité Welcome Suica Mobile : 180 jours dès l’émission · solde non remboursable · recharge dans l’app à tout moment.",
+    "Usage : métro, JR urbain, bus, konbini · 1 téléphone = 1 Suica (chacun son iPhone)."
   ]},
   { id:"jr", title:"Trains & JR Pass", items:[
     "Shinkansen et trains limités : réserver sièges quand possible (Hokuriku, etc.).",
