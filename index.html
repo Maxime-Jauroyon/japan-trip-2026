@@ -69,6 +69,13 @@
         <button type="button" class="btn-secondary" id="booking-alert-dismiss">Compris</button>
       </div>
     </div>
+    <div class="reminder-alert" id="reminder-alert" hidden role="dialog" aria-labelledby="reminder-alert-title">
+      <div class="reminder-alert-inner">
+        <p id="reminder-alert-title"><strong>Rappel billets</strong></p>
+        <ul class="booking-alert-list" id="reminder-alert-list"></ul>
+        <button type="button" class="btn-secondary" id="reminder-alert-dismiss">Compris</button>
+      </div>
+    </div>
     <main>
       <div id="view-map">
       <nav id="city-list"></nav>
@@ -108,6 +115,18 @@
           <h2>Préparatifs</h2>
           <p class="lead">Checklist et budget. Les cases cochées sont mémorisées sur cet appareil.</p>
           <p class="lead travelers" id="prep-travelers"></p>
+
+          <div class="info-sec prep-bookings-sec" id="prep-bookings-sec">
+            <h3><span class="booking-dot" aria-hidden="true"></span> À réserver maintenant</h3>
+            <p class="lead prep-bookings-lead" id="prep-bookings-lead">Trajets dont la réservation est ouverte.</p>
+            <div class="prep-bookings-list" id="prep-bookings"></div>
+          </div>
+
+          <div class="info-sec prep-reminders-sec" id="prep-reminders-sec" hidden>
+            <h3>Rappels billets</h3>
+            <p class="lead prep-bookings-lead">Actions à faire à date fixe (ex. récupérer les billets).</p>
+            <div class="prep-reminders-list" id="prep-reminders"></div>
+          </div>
 
           <div class="info-sec">
             <h3>Checklist</h3>

@@ -2059,7 +2059,85 @@ function renderPrep(){
     ? PREP_BUDGET_TOTAL
     : { label:"Total / pers.", amount:"—" };
   bud.innerHTML = rows + `<div class="total"><span>${esc(tot.label)}</span><span>${esc(tot.amount)}</span></div>`;
+  renderPrepBookings();
+  renderPrepReminders();
   renderPracticalInfo();
+}
+
+function renderPrepBookings(){
+  const box = document.getElementById("prep-bookings");
+  const lead = document.getElementById("prep-bookings-lead");
+  const sec = document.getElementById("prep-bookings-sec");
+  if (!box || !sec) return;
+  const alerts = collectBookableAlerts();
+  sec.classList.toggle("has-bookable", alerts.length > 0);
+  if (!alerts.length) {
+    if (lead) lead.textContent = "Rien d’ouvert pour l’instant — cette section s’allumera dès qu’un trajet devient réservable.";
+    box.innerHTML = `<p class="prep-bookings-empty">Aucun trajet à réserver maintenant.</p>`;
+    return;
+  }
+  if (lead) {
+    lead.textContent = alerts.length === 1
+      ? "1 trajet est réservable — à faire avant d’oublier."
+      : alerts.length + " trajets sont réservables — à faire avant d’oublier.";
+  }
+  box.innerHTML = alerts.map(a =>
+    `<a class="prep-booking-card" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">` +
+    `<span class="prep-booking-status"><span class="booking-dot" aria-hidden="true"></span>Réservable</span>` +
+    `<strong>${esc(a.legTitle)}</strong>` +
+    `<span class="prep-booking-meta">${esc(a.label)} · ${esc(a.site)}</span>` +
+    `<span class="prep-booking-go">Ouvrir le site →</span></a>`
+  ).join("");
+}
+
+function collectPrepReminders(){
+  if (typeof PREP_CHECKS === "undefined") return [];
+  const state = prepCheckState();
+  const today = todayLocalDate();
+  return PREP_CHECKS.filter(item => item.remindFrom).map(item => {
+    const due = parseBookingDate(item.remindFrom);
+    const done = Object.prototype.hasOwnProperty.call(state, item.id) ? !!state[item.id] : !!item.done;
+    const days = due ? Math.round((due.getTime() - today.getTime()) / 86400000) : null;
+    const active = due ? days <= 0 : false;
+    const soon = due ? days > 0 && days <= 45 : false;
+    return { ...item, due, days, done, active, soon };
+  }).filter(r => !r.done);
+}
+
+function renderPrepReminders(){
+  const box = document.getElementById("prep-reminders");
+  const sec = document.getElementById("prep-reminders-sec");
+  if (!box || !sec) return;
+  const list = collectPrepReminders();
+  if (!list.length) {
+    sec.hidden = true;
+    return;
+  }
+  sec.hidden = false;
+  const anyActive = list.some(r => r.active);
+  sec.classList.toggle("has-due", anyActive);
+  box.innerHTML = list.map(r => {
+    const when = r.due ? formatBookingDateFr(r.due) : "";
+    const badge = r.active
+      ? `<span class="prep-reminder-badge due">À faire maintenant</span>`
+      : r.days != null
+        ? `<span class="prep-reminder-badge">Dans ${r.days} j · ${esc(when)}</span>`
+        : "";
+    return `<div class="prep-reminder-card${r.active ? " due" : ""}">` +
+      `${badge}<strong>${esc(r.label)}</strong>` +
+      `<span class="prep-booking-meta">${esc(r.meta)}</span>` +
+      `<label class="prep-reminder-check"><input type="checkbox" data-check="${esc(r.id)}"/> Marquer comme fait</label>` +
+      `</div>`;
+  }).join("");
+  box.querySelectorAll("input[data-check]").forEach(inp => {
+    inp.addEventListener("change", () => {
+      const st = loadChecks();
+      st[inp.dataset.check] = inp.checked;
+      saveChecks(st);
+      renderPrep();
+      renderReminderAlert();
+    });
+  });
 }
 
 function copyFieldHtml(text){
@@ -2429,6 +2507,7 @@ function updateOfflineStatus(){
 
 const IOS_INSTALL_KEY = "japan-trip-ios-install-dismiss-v1";
 const BOOKING_ALERT_KEY = "japan-trip-booking-alert-dismiss-v1";
+const REMINDER_ALERT_KEY = "japan-trip-reminder-alert-dismiss-v1";
 function isIOSDevice(){
   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) return true;
   return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
@@ -2493,11 +2572,22 @@ function collectBookableAlerts(){
   return out;
 }
 function syncBottomBanners(){
-  const ios = document.getElementById("ios-install");
-  const booking = document.getElementById("booking-alert");
-  if (!booking) return;
-  const iosVisible = ios && !ios.hidden;
-  booking.classList.toggle("above-ios", iosVisible && !booking.hidden);
+  const layers = [
+    { el: document.getElementById("ios-install"), est: 132 },
+    { el: document.getElementById("booking-alert"), est: 150 },
+    { el: document.getElementById("reminder-alert"), est: 150 }
+  ];
+  let bottom = 12;
+  layers.forEach(({ el, est }) => {
+    if (!el) return;
+    if (el.hidden) {
+      el.style.bottom = "";
+      el.classList.remove("above-ios");
+      return;
+    }
+    el.style.bottom = `calc(${bottom}px + env(safe-area-inset-bottom))`;
+    bottom += est;
+  });
 }
 function renderBookingAlert(){
   const box = document.getElementById("booking-alert");
@@ -2543,6 +2633,67 @@ function renderBookingAlert(){
 }
 function initBookingAlert(){
   renderBookingAlert();
+}
+
+function loadDismissedReminderAlerts(){
+  try {
+    const raw = localStorage.getItem(REMINDER_ALERT_KEY);
+    if (!raw) return new Set();
+    const arr = JSON.parse(raw);
+    return new Set(Array.isArray(arr) ? arr : []);
+  } catch (_) {
+    return new Set();
+  }
+}
+function saveDismissedReminderAlerts(set){
+  try { localStorage.setItem(REMINDER_ALERT_KEY, JSON.stringify([...set])); } catch (_) { /* ignore */ }
+}
+function collectDueReminderAlerts(){
+  return collectPrepReminders().filter(r => r.active);
+}
+function renderReminderAlert(){
+  const box = document.getElementById("reminder-alert");
+  const list = document.getElementById("reminder-alert-list");
+  const btn = document.getElementById("reminder-alert-dismiss");
+  if (!box || !list || !btn) return;
+
+  const dismissed = loadDismissedReminderAlerts();
+  const alerts = collectDueReminderAlerts().filter(a => !dismissed.has(a.id));
+  if (!alerts.length) {
+    box.hidden = true;
+    syncBottomBanners();
+    return;
+  }
+
+  list.innerHTML = alerts.map(a =>
+    `<li><button type="button" class="reminder-alert-item" data-tab="prep" data-check-id="${esc(a.id)}">` +
+    `<span><strong>${esc(a.label)}</strong><span>${esc(a.meta)}</span></span>` +
+    `<span class="reminder-alert-go" aria-hidden="true">Préparatifs →</span></button></li>`
+  ).join("");
+
+  list.querySelectorAll(".reminder-alert-item").forEach(el => {
+    el.addEventListener("click", () => {
+      setAppTab("prep");
+      const sec = document.getElementById("prep-reminders-sec");
+      if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  box.hidden = false;
+  syncBottomBanners();
+
+  if (btn._reminderBound) return;
+  btn._reminderBound = true;
+  btn.addEventListener("click", () => {
+    const dismissedNow = loadDismissedReminderAlerts();
+    collectDueReminderAlerts().forEach(a => dismissedNow.add(a.id));
+    saveDismissedReminderAlerts(dismissedNow);
+    box.hidden = true;
+    syncBottomBanners();
+  });
+}
+function initReminderAlert(){
+  renderReminderAlert();
 }
 
 function renderPracticalInfo(){
@@ -2743,5 +2894,6 @@ document.getElementById("onsite-map-btn")?.addEventListener("click", () => {
 updateOfflineStatus();
 initIOSInstallHint();
 initBookingAlert();
+initReminderAlert();
 window.addEventListener("online", updateOfflineStatus);
 window.addEventListener("offline", updateOfflineStatus);

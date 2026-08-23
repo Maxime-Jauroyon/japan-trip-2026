@@ -419,7 +419,7 @@ const DAYS = [
       {title:"Marché Kuromon", lat:34.6651, lng:135.5066,
         desc:"Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord."}
     ],
-    moves:[{when:"~11:30–14:00", title:"Osaka → Tokyo", dummy:"Shinkansen Shin-Osaka → Tokyo", mode:"Shinkansen", leg:"osa-tokyo"}] },
+    moves:[{when:"11:30–13:57", title:"Osaka → Tokyo", dummy:"Nozomi 90 · QR Wallet · payé par Léo 158,72 €", mode:"Shinkansen", leg:"osa-tokyo"}] },
   { n:21, date:"28 nov 2026", dow:"Samedi", city:"tokyo",
     ideas:[
       {title:"Jardins Est du Palais impérial", lat:35.6867, lng:139.7556,
@@ -636,9 +636,9 @@ const LEGS = [
       ]
     } },
   { id:"osa-tokyo", title:"Osaka → Tokyo", subtitle:"27 nov · Jour 20", mode:"Shinkansen",
-    depart:"~11:30", arrive:"~14:00", duration:"~2 h 30",
-    operator:"JR Tokaido Shinkansen (Nozomi / Hikari)", seat:"—", ref:"—",
-    status:"placeholder", payment:"Pas encore réservé", price:"—",
+    depart:"11:30", arrive:"13:57", duration:"2 h 27",
+    operator:"JR Tokaido Shinkansen · Nozomi 90", seat:"—", ref:"—",
+    status:"paid", payment:"Payé par Léo · 158,72 € (total, 2 pers.)", price:"158,72 €",
     from:{ id:"osaka", lat:34.7335, lng:135.5002 }, to:{ id:"tokyo", lat:35.6812, lng:139.7671 },
     via:[
       {lat:34.56,lng:135.55},
@@ -651,15 +651,18 @@ const LEGS = [
     fromStop:{ kind:"Gare", name:"Shin-Osaka Station", jp:"新大阪駅", lat:34.7335, lng:135.5002 },
     toStop:{ kind:"Gare", name:"Tokyo Station", jp:"東京駅", lat:35.6812, lng:139.7671 },
     details:[
+      "Nozomi 90 · Shin-Osaka 11:30 → Tokyo 13:57 · 27 nov 2026.",
+      "Payé par Léo · 158,72 € (2 pers.).",
+      "Billets en QR Ticket dans Apple Wallet (SmartEX) — rappel J−30 (27 oct) pour les ajouter / vérifier.",
       "Depuis Namba : metro / JR jusqu’à Shin-Osaka (~20–30 min).",
-      "Puis shinkansen Shin-Osaka → Tokyo Station, puis Monorail / Keikyu vers Haneda T3 (Royal Park)."
+      "À Tokyo Station : Monorail / Keikyu vers Haneda T3 (Royal Park)."
     ],
-    tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place.",
+    tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair).",
     bookings:{
-      note:"Tokaido Shinkansen = SmartEX (JR Central), pas JR West comme le Hokuriku. Lien = guide de réservation ; à saisir : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
+      note:"Payé par Léo · Nozomi 90 · 158,72 €. QR Ticket Apple Wallet via SmartEX — rappel 27 oct : ajouter / vérifier les billets.",
       links:[
-        { site:"SmartEX", label:"Shinkansen Shin-Osaka → Tokyo · 27 nov 2026",
-          openFrom:"2025-11-27",
+        { site:"SmartEX", label:"Nozomi 90 · Shin-Osaka → Tokyo · 27 nov 2026",
+          openFrom:"2025-11-27", reserved:true,
           url:"https://smart-ex.jp/en/reservation/reserve_smart/sp/" }
       ]
     } },
@@ -697,7 +700,8 @@ const PREP_CHECKS = [
   { id:"villes", label:"Villes & dates verrouillées", meta:"Itinéraire 8–29 nov 2026 figé", done:true },
   { id:"hotels", label:"Hôtels / ryokan", meta:"Tous réservés · Tokyo 1 → Haneda T3", done:true },
   { id:"taxes", label:"Taxes de séjour / onsen", meta:"Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)", done:false },
-  { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen, Limited Express, bus Fuji / Shirakawa" },
+  { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen Osaka→Tokyo payé · reste Fuji / Hokuriku / Nohi / Hida…" },
+  { id:"osa-tokyo-tickets", label:"QR Ticket Osaka → Tokyo (Apple Wallet)", meta:"Payé par Léo · 158,72 € · Nozomi 90 · 11:30→13:57 · ajouter les QR dans Wallet dès le 27 oct 2026", remindFrom:"2026-10-27", done:false },
   { id:"idees", label:"Idées & billets d’activités", meta:"USJ, teamLab, observatoires, etc." },
   { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
   { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
@@ -711,7 +715,7 @@ const PREP_BUDGET = [
   { label:"Vols A/R", amount:"≈ 2 200 € / pers.", note:"Payés · Léo & Maxime · Air France · CDG ↔ HND", done:true },
   { label:"Hôtels (partagés)", amount:"≈ 1 535 € / pers.", note:"Total ≈ 3 070 € ÷ 2 · tous les séjours inclus", done:true },
   { label:"Taxes séjour / onsen", amount:"Quelques ¥ / nuit", note:"Souvent hors Booking · Kanazawa, Takayama… cash/carte au check-in", done:false },
-  { label:"Trajets JP", amount:"À définir / pers.", note:"Trains / bus (à partager)", done:false },
+  { label:"Trajets JP", amount:"158,72 € + reste", note:"Osaka→Tokyo Nozomi 90 payé par Léo (QR Apple Wallet) · reste Fuji / Hokuriku / Nohi / Hida…", done:false },
   { label:"Activités / tickets", amount:"À définir / pers.", note:"USJ, teamLab…", done:false },
   { label:"Nourriture & divers", amount:"Variable / pers.", note:"Budget confort ~60–100 €/jour", done:false }
 ];
@@ -775,7 +779,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v108";
+const APP_CACHE_VER = "v112";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
