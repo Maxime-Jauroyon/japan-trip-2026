@@ -656,11 +656,11 @@ const LEGS = [
     ],
     tips:"Les vues Fuji côté droit direction Tokyo (si ciel clair) — pas une résa de place.",
     bookings:{
-      note:"SmartEX ne préremplit pas l'URL : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
+      note:"Tokaido Shinkansen = SmartEX (JR Central), pas JR West comme le Hokuriku. À saisir : Shin-Osaka → Tokyo, 27 nov 2026, 2 passagers.",
       links:[
         { site:"SmartEX", label:"Shinkansen Shin-Osaka → Tokyo · 27 nov 2026",
           openFrom:"2025-11-27",
-          url:"https://smart-ex.jp/en/reservation/reserve_smart/sp/" }
+          url:"https://smart-ex.jp/en/" }
       ]
     } },
   { id:"depart", title:"Tokyo → Paris (CDG)", subtitle:"29 nov · Jour 22", mode:"Avion",
@@ -775,7 +775,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v105";
+const APP_CACHE_VER = "v106";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
