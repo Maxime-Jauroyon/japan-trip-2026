@@ -133,16 +133,47 @@ function prefersReducedMotion(){
 
 function resetRouteHighlight(){
   document.querySelectorAll("#routes g.route-group").forEach(g => {
-    g.classList.remove("route-active", "route-dim");
+    g.classList.remove("route-active", "route-dim", "route-hover");
   });
 }
 
 function setRouteHighlight(id){
+  const leg = LEGS.find(l => l.id === id);
+  const journeyId = leg && leg.journey;
   document.querySelectorAll("#routes g.route-group").forEach(g => {
-    const on = g.dataset.leg === id;
+    const on = journeyId
+      ? g.dataset.journey === journeyId
+      : g.dataset.leg === id;
     g.classList.toggle("route-active", on);
     g.classList.toggle("route-dim", !on);
   });
+}
+
+function setJourneyHighlight(journeyId){
+  document.querySelectorAll("#routes g.route-group").forEach(g => {
+    const on = g.dataset.journey === journeyId;
+    g.classList.toggle("route-active", on);
+    g.classList.toggle("route-dim", !on);
+  });
+}
+
+function journeyById(id){
+  return (typeof JOURNEYS !== "undefined" && JOURNEYS[id]) || null;
+}
+
+function legsInJourney(journeyId){
+  const j = journeyById(journeyId);
+  if (j && j.legs && j.legs.length) {
+    return j.legs.map(lid => LEGS.find(l => l.id === lid)).filter(Boolean);
+  }
+  return LEGS.filter(l => l.journey === journeyId);
+}
+
+function dayMovesForJourney(journeyId){
+  const j = journeyById(journeyId);
+  const day = j && j.day != null ? DAYS.find(d => d.n === j.day) : null;
+  if (!day) return [];
+  return (day.moves || []).filter(m => m.journey === journeyId);
 }
 
 function daysForCity(id){
@@ -150,7 +181,7 @@ function daysForCity(id){
   const map = new Map();
   DAYS.forEach(d => {
     const cityDay = d.city === id || d.extraCity === id;
-    const moves = movesForCity(d.moves, id);
+    const moves = movesForCityDay(d.moves, id, cityDay);
     if (!cityDay && !moves.length) return;
     map.set(d.n, Object.assign({}, d, {
       moves,
@@ -169,13 +200,9 @@ function legCityId(point){
   return null;
 }
 
-function movesForCity(moves, cityId){
-  return (moves || []).filter(m => {
-    if (!m.leg) return true;
-    const leg = LEGS.find(l => l.id === m.leg);
-    if (!leg) return true;
-    return legCityId(leg.from) === cityId || legCityId(leg.to) === cityId;
-  }).map(m => {
+function withMoveRoles(moves, cityId){
+  return (moves || []).map(m => {
+    if (m.role) return Object.assign({}, m);
     const leg = m.leg ? LEGS.find(l => l.id === m.leg) : null;
     let role = "";
     if (leg){
@@ -184,6 +211,35 @@ function movesForCity(moves, cityId){
     }
     return Object.assign({}, m, { role });
   });
+}
+
+function touchesCityMove(m, cityId){
+  if (!m.leg) return true;
+  const leg = LEGS.find(l => l.id === m.leg);
+  if (!leg) return true;
+  return legCityId(leg.from) === cityId || legCityId(leg.to) === cityId;
+}
+
+function movesForCityDay(rawMoves, cityId, cityDay){
+  rawMoves = rawMoves || [];
+  if (cityDay) return withMoveRoles(rawMoves, cityId);
+
+  const activeJourneys = new Set(
+    rawMoves.filter(m => m.journey && touchesCityMove(m, cityId)).map(m => m.journey)
+  );
+  const out = [];
+  const doneJourney = new Set();
+  rawMoves.forEach(m => {
+    if (m.journey && activeJourneys.has(m.journey)) {
+      if (!doneJourney.has(m.journey)) {
+        doneJourney.add(m.journey);
+        out.push(...withMoveRoles(rawMoves.filter(x => x.journey === m.journey), cityId));
+      }
+    } else if (touchesCityMove(m, cityId)) {
+      out.push(...withMoveRoles([m], cityId));
+    }
+  });
+  return out;
 }
 
 function ideasOf(d){ return [].concat(d.ideas || [], d.ideasAfter || []); }
@@ -354,12 +410,22 @@ function makePanZoom(viewport, world, opts){
       ? Math.min(vw / ww, vh / wh)
       : Math.max(vw / ww, vh / wh);
   }
-  function apply(){ world.style.transform = `translate(${st.x}px,${st.y}px) scale(${st.s})`; }
+  function maxScale(){
+    if (typeof o.maxRelative === "number") {
+      return Math.max(o.max || 6, minScale() * o.maxRelative);
+    }
+    return o.max;
+  }
+  function apply(){
+    world.style.transform = `translate(${st.x}px,${st.y}px) scale(${st.s})`;
+    if (typeof o.onChange === "function") o.onChange(st.s, minScale());
+  }
   function clamp(){
     const vw = viewport.clientWidth, vh = viewport.clientHeight;
     const min = minScale();
+    const max = maxScale();
     if (st.s < min) st.s = min;
-    if (st.s > o.max) st.s = o.max;
+    if (st.s > max) st.s = max;
     const ww = world.offsetWidth * st.s, wh = world.offsetHeight * st.s;
     if (ww <= vw) st.x = (vw - ww) / 2;
     else st.x = Math.min(0, Math.max(vw - ww, st.x));
@@ -368,7 +434,8 @@ function makePanZoom(viewport, world, opts){
   }
   function zoomAt(cx, cy, factor){
     const min = minScale();
-    const ns = Math.min(o.max, Math.max(min, st.s * factor));
+    const max = maxScale();
+    const ns = Math.min(max, Math.max(min, st.s * factor));
     const k = ns / st.s;
     st.x = cx - (cx - st.x) * k;
     st.y = cy - (cy - st.y) * k;
@@ -378,7 +445,8 @@ function makePanZoom(viewport, world, opts){
   function fitCover(extra){
     extra = extra == null ? 1 : extra;
     const min = minScale();
-    st.s = Math.min(o.max, min * extra);
+    const max = maxScale();
+    st.s = Math.min(max, min * extra);
     st.x = (viewport.clientWidth - world.offsetWidth * st.s) / 2;
     st.y = (viewport.clientHeight - world.offsetHeight * st.s) / 2;
     clamp(); apply();
@@ -386,7 +454,8 @@ function makePanZoom(viewport, world, opts){
   function focusPct(leftPct, topPct, s){
     const vw = viewport.clientWidth, vh = viewport.clientHeight;
     const min = minScale();
-    st.s = Math.min(o.max, Math.max(min, s));
+    const max = maxScale();
+    st.s = Math.min(max, Math.max(min, s));
     st.x = vw / 2 - (leftPct / 100) * world.offsetWidth * st.s;
     st.y = vh / 2 - (topPct / 100) * world.offsetHeight * st.s;
     clamp(); apply();
@@ -402,7 +471,7 @@ function makePanZoom(viewport, world, opts){
     };
   }
   function isMapChrome(el){
-    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .sheet-grab, .overlay"));
+    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .zone-hub, .sheet-grab, .overlay"));
   }
   viewport.addEventListener("wheel", e => {
     e.preventDefault();
@@ -412,6 +481,7 @@ function makePanZoom(viewport, world, opts){
   viewport.addEventListener("pointerdown", e => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     if (isMapChrome(e.target)) return;
+    e.preventDefault();
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
     if (pointers.size >= 2) {
@@ -424,6 +494,8 @@ function makePanZoom(viewport, world, opts){
       viewport.classList.add("dragging");
     }
   });
+  viewport.addEventListener("dragstart", e => { e.preventDefault(); });
+  viewport.addEventListener("selectstart", e => { e.preventDefault(); });
   viewport.addEventListener("pointermove", e => {
     if (!pointers.has(e.pointerId)) return;
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -433,7 +505,8 @@ function makePanZoom(viewport, world, opts){
       const r = viewport.getBoundingClientRect();
       const cx = p.cx - r.left, cy = p.cy - r.top;
       const min = minScale();
-      const ns = Math.min(o.max, Math.max(min, pinch0.s * (p.dist / pinch0.dist)));
+      const max = maxScale();
+      const ns = Math.min(max, Math.max(min, pinch0.s * (p.dist / pinch0.dist)));
       const k = ns / st.s;
       st.x = cx - (cx - st.x) * k;
       st.y = cy - (cy - st.y) * k;
@@ -474,7 +547,8 @@ function makePanZoom(viewport, world, opts){
     const cx = (box.minX + box.maxX) / 2;
     const cy = (box.minY + box.maxY) / 2;
     const min = minScale();
-    st.s = Math.min(o.max, Math.max(min, Math.min(availW / bw, availH / bh) * 0.88));
+    const max = maxScale();
+    st.s = Math.min(max, Math.max(min, Math.min(availW / bw, availH / bh) * 0.88));
     const centerX = insets.left + availW / 2;
     const centerY = insets.top + availH / 2;
     st.x = centerX - cx * st.s;
@@ -482,16 +556,26 @@ function makePanZoom(viewport, world, opts){
     clamp(); apply();
   }
   return {
-    state:st, apply, clamp, zoomAt, fitCover, focusPct, fitWorldBox, minScale,
+    state:st, apply, clamp, zoomAt, fitCover, focusPct, fitWorldBox, minScale, maxScale,
     zoomIn(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1.2); },
     zoomOut(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1/1.2); }
   };
 }
 
 const countryCam = makePanZoom(countryViewport, countryWorld, { max:7, start:1, mode:"cover" });
-const cityCam = makePanZoom(cityFrame, cityWorld, { max:9, start:1, mode:"cover" });
+const cityCam = makePanZoom(cityFrame, cityWorld, {
+  max:18,
+  maxRelative:16,
+  start:1,
+  mode:"cover",
+  onChange(){ updateCityLod(); }
+});
 
-const MAP_IMG_VER = "19";
+const MAP_IMG_VER = "20";
+const cityZonesEl = document.getElementById("city-zones");
+const cityHubs = document.getElementById("city-hubs");
+let currentCityLod = -1;
+let currentMapDay = null;
 const preloadedMaps = new Map();
 
 function cityMapUrl(id){
@@ -617,6 +701,7 @@ function buildCountry(){
       g.dataset.leg = part.legId;
       g.dataset.segment = part.pathId;
       g.dataset.vehicle = vKind;
+      if (leg.journey) g.dataset.journey = leg.journey;
 
       const glow = document.createElementNS("http://www.w3.org/2000/svg", "path");
       glow.setAttribute("d", d);
@@ -656,7 +741,12 @@ function buildCountry(){
         vehWrap.classList.add("route-vehicle-static");
       }
 
-      const open = e => { e.stopPropagation(); openLeg(part.legId); };
+      const open = e => {
+        e.stopPropagation();
+        const hitLeg = LEGS.find(l => l.id === part.legId);
+        if (hitLeg && hitLeg.journey) openJourney(hitLeg.journey, hitLeg.id);
+        else openLeg(part.legId);
+      };
       hit.addEventListener("click", open);
       hit.addEventListener("mouseenter", () => g.classList.add("route-hover"));
       hit.addEventListener("mouseleave", () => g.classList.remove("route-hover"));
@@ -738,17 +828,198 @@ function layoutCityPins(){
   cityWorld.style.height = nh + "px";
   cityPins.style.width = nw + "px";
   cityPins.style.height = nh + "px";
-  cityPins.querySelectorAll(".pin").forEach(pin => {
+  if (cityHubs) {
+    cityHubs.style.width = nw + "px";
+    cityHubs.style.height = nh + "px";
+  }
+  if (cityZonesEl) {
+    cityZonesEl.setAttribute("width", nw);
+    cityZonesEl.setAttribute("height", nh);
+    cityZonesEl.setAttribute("viewBox", `0 0 ${nw} ${nh}`);
+  }
+  const placePin = (pin) => {
     const lat = Number(pin.dataset.lat), lng = Number(pin.dataset.lng);
     const pct = pctIn(MAP_BOUNDS[currentCity], lat, lng);
     pin.style.left = (pct.left / 100) * nw + "px";
     pin.style.top = (pct.top / 100) * nh + "px";
     const inB = pct.left >= -2 && pct.left <= 102 && pct.top >= -2 && pct.top <= 102;
     pin.style.display = inB ? "" : "none";
+  };
+  cityPins.querySelectorAll(".pin").forEach(placePin);
+  if (cityHubs) cityHubs.querySelectorAll(".zone-hub").forEach(placePin);
+  layoutCityZones(currentMapDay);
+  updateCityLod(true);
+}
+
+function pointInZone(lat, lng, z){
+  return lng >= z.west && lng <= z.east && lat >= z.south && lat <= z.north;
+}
+function zonesForCity(id){
+  return (typeof CITY_ZONES !== "undefined" && CITY_ZONES[id]) ? CITY_ZONES[id] : [];
+}
+function zoneForPoint(cityId, lat, lng){
+  return zonesForCity(cityId).find(z => pointInZone(lat, lng, z)) || null;
+}
+function lightenHex(hex, amount){
+  const n = String(hex || "").replace("#", "");
+  if (n.length !== 6) return hex;
+  const ch = (i) => parseInt(n.slice(i, i + 2), 16);
+  const L = (c) => Math.min(255, Math.round(c + (255 - c) * amount));
+  return "#" + [L(ch(0)), L(ch(2)), L(ch(4))].map(x => x.toString(16).padStart(2, "0")).join("");
+}
+/** Couleurs réservées — hors palette des zones (rouge, bleu, violet, or, teal, vert). */
+const PIN_COLOR_HOTEL = "#c97b84";
+const PIN_COLOR_HOTEL_SEL = "#e8a8b0";
+const PIN_COLOR_STOP = "#6e7c85";
+const PIN_COLOR_STOP_SEL = "#9aa4ad";
+const PIN_COLOR_ACT_FALLBACK = "#a85a32";
+function activityPinColor(cityId, lat, lng, selected){
+  const z = zoneForPoint(cityId, lat, lng);
+  const base = z ? z.color : PIN_COLOR_ACT_FALLBACK;
+  return selected ? lightenHex(base, 0.22) : base;
+}
+function zoneCenter(z){
+  return { lat: (z.south + z.north) / 2, lng: (z.west + z.east) / 2 };
+}
+function countPlacesInZone(cityId, zone){
+  return placesOnMap(cityId).filter(a => pointInZone(a.lat, a.lng, zone)).length;
+}
+function cityLodLevel(){
+  const min = cityCam.minScale();
+  if (!min) return 0;
+  const r = cityCam.state.s / min;
+  if (r < 1.22) return 0;
+  if (r < 2.45) return 1;
+  return 2;
+}
+function smoothstep(edge0, edge1, x){
+  if (edge1 === edge0) return x >= edge1 ? 1 : 0;
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+function dayZoneIds(cityId, day){
+  const ids = new Set();
+  if (!day) return ids;
+  ideasOf(day).forEach(a => {
+    if (a.lat == null) return;
+    const z = zoneForPoint(cityId, a.lat, a.lng);
+    if (z) ids.add(z.id);
   });
+  const stay = stayForDay(cityId, day);
+  const h = stay && stay.hotel;
+  if (h && h.lat != null) {
+    const z = zoneForPoint(cityId, h.lat, h.lng);
+    if (z) ids.add(z.id);
+  }
+  return ids;
+}
+function layoutCityZones(day){
+  if (!cityZonesEl || !currentCity || !cityImg.naturalWidth) return;
+  const nw = cityImg.naturalWidth, nh = cityImg.naturalHeight;
+  const bounds = MAP_BOUNDS[currentCity];
+  const zones = zonesForCity(currentCity);
+  const onZones = dayZoneIds(currentCity, day);
+  const filterDay = !!(day && onZones.size);
+  cityZonesEl.innerHTML = zones.map(z => {
+    const tl = pctIn(bounds, z.north, z.west);
+    const br = pctIn(bounds, z.south, z.east);
+    const x = (Math.min(tl.left, br.left) / 100) * nw;
+    const y = (Math.min(tl.top, br.top) / 100) * nh;
+    const w = (Math.abs(br.left - tl.left) / 100) * nw;
+    const h = (Math.abs(br.top - tl.top) / 100) * nh;
+    const on = !filterDay || onZones.has(z.id);
+    const cls = "zone-poly" + (filterDay ? (on ? " on" : " dim") : "");
+    return `<g class="${cls}" data-zone="${esc(z.id)}">` +
+      `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(28, w * 0.08)}" fill="${esc(z.color)}" />` +
+      `<text x="${x + w / 2}" y="${y + h / 2}" text-anchor="middle" dominant-baseline="middle">${esc(z.name)}</text>` +
+      `</g>`;
+  }).join("");
+}
+function renderCityHubs(id, day){
+  if (!cityHubs) return;
+  cityHubs.innerHTML = "";
+  const onZones = dayZoneIds(id, day);
+  const filterDay = !!(day && onZones.size);
+  zonesForCity(id).forEach(z => {
+    const n = countPlacesInZone(id, z);
+    if (!n && id !== "shirakawa") return;
+    const c = zoneCenter(z);
+    const on = !filterDay || onZones.has(z.id);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    let cls = "zone-hub";
+    if (filterDay) cls += on ? " on" : " dim";
+    btn.className = cls;
+    btn.dataset.lat = c.lat;
+    btn.dataset.lng = c.lng;
+    btn.dataset.zone = z.id;
+    btn.title = z.name;
+    btn.setAttribute("aria-label", z.name);
+    const dayCount = filterDay && on
+      ? ideasOf(day).filter(a => a.lat != null && pointInZone(a.lat, a.lng, z)).length
+      : n;
+    btn.innerHTML =
+      `<span class="zone-hub-dot" style="background:${esc(z.color)}"></span>` +
+      `<span class="zone-hub-label">${esc(z.name)}</span>` +
+      (dayCount ? `<span class="zone-hub-count">${dayCount}</span>` : "");
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const pct = pctIn(MAP_BOUNDS[id], c.lat, c.lng);
+      const zoom = cityCam.minScale() * 2.7;
+      cityCam.focusPct(pct.left, pct.top, zoom);
+    });
+    cityHubs.appendChild(btn);
+  });
+}
+function updateCityLod(force){
+  if (!currentCity || !cityView.classList.contains("visible")) return;
+  const min = cityCam.minScale() || 1;
+  const s = cityCam.state.s || min;
+  const ratio = Math.max(1, s / min);
+  const screenFactor = Math.max(0.44, Math.min(1.28, 1.42 / Math.pow(ratio, 0.32)));
+  let pinScale = screenFactor / ratio;
+  if (ratio < 2.8) pinScale *= 0.86 + ratio * 0.05;
+  pinScale = Math.round(pinScale * 50) / 50;
+  const mobilePins = window.matchMedia("(max-width: 900px)").matches;
+  const baseW = mobilePins ? 74 : 84;
+  const baseH = mobilePins ? 86 : 98;
+  const badgeW = Math.max(34, Math.round(baseW * pinScale));
+  const badgeH = Math.round(badgeW * baseH / baseW);
+  cityWorld.style.setProperty("--pin-badge-w", badgeW + "px");
+  cityWorld.style.setProperty("--pin-badge-h", badgeH + "px");
+  cityWorld.dataset.pinSm = badgeW < 52 ? "1" : "";
+  // Hubs plus gros au dézoom max (ratio ≈ 1), puis se réduisent en zoomant
+  const hubScale = Math.max(0.9, Math.min(1.75, 1.75 / Math.pow(ratio, 0.4))) / Math.max(1, Math.min(ratio, 1.12));
+  cityWorld.style.setProperty("--hub-scale", String(hubScale));
+
+  // Hubs → zones → pins : pas de fondu pins/zones en même temps (évite pins « flous »)
+  const hubOp = 1 - smoothstep(1.12, 1.45, ratio);
+  const zoneOp = smoothstep(1.12, 1.45, ratio) * (1 - smoothstep(2.05, 2.32, ratio));
+  const pinRamp = smoothstep(2.34, 2.42, ratio);
+  const pinOp = pinRamp >= 0.5 ? 1 : 0;
+  cityWorld.style.setProperty("--hub-opacity", hubOp.toFixed(3));
+  cityWorld.style.setProperty("--zone-opacity", zoneOp.toFixed(3));
+  cityWorld.style.setProperty("--pin-opacity", String(pinOp));
+  cityWorld.classList.toggle("day-filter", !!(currentMapDay && dayZoneIds(currentCity, currentMapDay).size));
+  cityWorld.classList.toggle("pins-live", pinOp >= 1);
+  cityWorld.classList.toggle("hubs-live", hubOp >= 0.35);
+
+  const lod = pinOp >= 1 ? 2 : zoneOp >= 0.4 ? 1 : 0;
+  if (!force && lod === currentCityLod) return;
+  currentCityLod = lod;
+  cityWorld.classList.remove("lod-0", "lod-1", "lod-2");
+  cityWorld.classList.add("lod-" + lod);
+  if (hint && countryView.classList.contains("hidden")) {
+    hint.textContent = lod === 0
+      ? "Zones · zoomer pour les détails"
+      : lod === 1
+        ? "Quartiers · zoomer pour les pins"
+        : "Glisser · pincer · toucher un pin";
+  }
 }
 
 function renderCityPins(id, day, selected){
+  currentMapDay = day || null;
   const places = placesOnMap(id);
   const hotels = hotelsOnMap(id);
   const stops = stopsOnMap(id);
@@ -777,7 +1048,7 @@ function renderCityPins(id, day, selected){
     const onDay = !day || dayKeys.has(key);
     const isSel = selKey === key;
     const kind = pinKind(a.title);
-    const accent = isSel ? "#e85d20" : "#a85a32";
+    const accent = activityPinColor(id, a.lat, a.lng, isSel);
     const btn = document.createElement("button");
     btn.type = "button";
     let cls = "pin";
@@ -801,7 +1072,7 @@ function renderCityPins(id, day, selected){
     const key = stop.lat.toFixed(4) + "," + stop.lng.toFixed(4);
     const onDay = !day || dayStopKeys.has(key);
     const isSel = selKey === key;
-    const accent = isSel ? "#3d7ea6" : "#2f6f95";
+    const accent = isSel ? PIN_COLOR_STOP_SEL : PIN_COLOR_STOP;
     const btn = document.createElement("button");
     btn.type = "button";
     let cls = "pin pin-stop";
@@ -826,7 +1097,7 @@ function renderCityPins(id, day, selected){
     const isSel = selKey === key;
     const activeStay = day ? stayForDay(id, day) : null;
     const onStay = !day || (activeStay && activeStay.id === stay.id);
-    const accent = isSel ? "#e0c99a" : "#c4a574";
+    const accent = isSel ? PIN_COLOR_HOTEL_SEL : PIN_COLOR_HOTEL;
     const btn = document.createElement("button");
     btn.type = "button";
     let cls = "pin pin-hotel";
@@ -845,20 +1116,26 @@ function renderCityPins(id, day, selected){
     });
     cityPins.appendChild(btn);
   });
+  renderCityHubs(id, day || null);
   layoutCityPins();
 }
 
-function highlightPin(act){
+function highlightPin(act, opts){
   if (!currentCity || !act || act.lat == null) return;
   lastFocusAct = act;
   const dayEl = panel.querySelector("details.day[open]");
   const dayN = dayEl ? Number(dayEl.dataset.dayN) : null;
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   renderCityPins(currentCity, day || null, act);
-  const pct = pctIn(MAP_BOUNDS[currentCity], act.lat, act.lng);
-  const mobile = window.matchMedia("(max-width: 900px)").matches;
-  const zoom = cityCam.minScale() * (mobile ? 2.55 : 1.52);
-  cityCam.focusPct(pct.left, pct.top, zoom);
+  if (opts && opts.zoom) {
+    const pct = pctIn(MAP_BOUNDS[currentCity], act.lat, act.lng);
+    const mobile = window.matchMedia("(max-width: 900px)").matches;
+    const zoom = cityCam.minScale() * (mobile ? 2.8 : 2.6);
+    cityCam.focusPct(pct.left, pct.top, zoom);
+    return;
+  }
+  cityCam.clamp();
+  cityCam.apply();
 }
 
 function fitCityMap(){
@@ -890,9 +1167,8 @@ function refreshCityMapView(){
   const run = () => {
     if (!cityFrame.clientWidth || !cityFrame.clientHeight) return false;
     if (lastFocusAct && lastFocusAct.lat != null) {
-      const pct = pctIn(MAP_BOUNDS[currentCity], lastFocusAct.lat, lastFocusAct.lng);
-      const mobile = window.matchMedia("(max-width: 900px)").matches;
-      cityCam.focusPct(pct.left, pct.top, cityCam.minScale() * (mobile ? 2.55 : 1.52));
+      cityCam.clamp();
+      cityCam.apply();
     } else {
       const day = openDayInPanel();
       if (day) focusDayMap(currentCity, day);
@@ -1092,7 +1368,7 @@ function focusDayMap(cityId, day){
   }
   if (pts.length === 1) {
     const pct = pctIn(bounds, pts[0].lat, pts[0].lng);
-    cityCam.focusPct(pct.left, pct.top, min * (mobile ? 2.85 : 1.72));
+    cityCam.focusPct(pct.left, pct.top, min * (mobile ? 2.8 : 2.6));
     return;
   }
   let minL = 100, maxL = 0, minT = 100, maxT = 0;
@@ -1110,7 +1386,7 @@ function focusDayMap(cityId, day){
   if (mobile) {
     // Sur mobile le cadre est court (sheet) : zoomer fort sur le centre du jour
     // plutôt qu’un fitWorldBox trop proche du fitCover.
-    const factor = Math.min(3.35, Math.max(2.35, 3.35 - span * 0.028));
+    const factor = Math.min(3.1, Math.max(2.5, 3.1 - span * 0.02));
     cityCam.focusPct(cx, cy, min * factor);
     return;
   }
@@ -1133,7 +1409,7 @@ function focusDayMap(cityId, day){
     maxY: maxY + pad
   };
   cityCam.fitWorldBox(box, { top: 32, right: 32, bottom: 32, left: 32 });
-  const cap = min * 1.95;
+  const cap = min * 2.7;
   if (cityCam.state.s > cap) {
     const bx = (box.minX + box.maxX) / 2;
     const by = (box.minY + box.maxY) / 2;
@@ -1169,6 +1445,13 @@ function notesListHtml(notes){
   if (!list.length) return "";
   return `<ul class="detail-notes">${list.map(n => `<li>${esc(n)}</li>`).join("")}</ul>`;
 }
+function actLinksHtml(links){
+  const list = links || [];
+  if (!list.length) return "";
+  return `<div class="act-links">` + list.map(l =>
+    `<a class="act-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label || l.url)}</a>`
+  ).join("") + `</div>`;
+}
 
 function renderIdeas(list, offset){
   offset = offset || 0;
@@ -1199,21 +1482,88 @@ function renderLuggageLocker(day){
     `</div>` +
     `</div>`;
 }
-function renderMoves(list){
-  return (list || []).map(m => {
-    const leg = m.leg ? LEGS.find(l => l.id === m.leg) : null;
-    const mode = (leg && leg.mode) || m.mode || "";
-    const when = leg
-      ? `${leg.depart || "—"} → ${leg.arrive || "—"}`
-      : (m.when || "");
-    const ticket = leg
-      ? `${statusLabel(leg.status)} · ${leg.payment || ""}`
-      : (m.dummy || "");
-    const role = m.role ? `<span class="badge-tag" style="margin-bottom:6px">${esc(m.role)}</span>` : "";
-    const stops = leg && (leg.fromStop || leg.toStop)
-      ? `<div class="dummy stops">${esc(stopLabel(leg.fromStop))} → ${esc(stopLabel(leg.toStop))}</div>`
+function stopEntryOnCity(cityId, stopRef){
+  if (!cityId || !stopRef || stopRef.lat == null || stopRef.lng == null) return null;
+  const b = MAP_BOUNDS[cityId];
+  if (!b || !inBounds(b, stopRef.lat, stopRef.lng)) return null;
+  const key = stopRef.lat.toFixed(4) + "," + stopRef.lng.toFixed(4);
+  return stopsOnMap(cityId).find(s =>
+    s.lat.toFixed(4) + "," + s.lng.toFixed(4) === key
+  ) || null;
+}
+function moveStationBtnHtml(cityId, stop, role){
+  const entry = stopEntryOnCity(cityId, stop);
+  if (!entry) return "";
+  const label = role === "from" ? "Départ" : "Arrivée";
+  return `<button type="button" class="move-station-btn" data-stop-lat="${entry.lat}" data-stop-lng="${entry.lng}">` +
+    `<span class="move-station-role">${esc(label)}</span>` +
+    `<span class="move-station-name">${esc(entry.name)}</span>` +
+    `</button>`;
+}
+function groupMovesByJourney(list){
+  const groups = [];
+  let current = null;
+  (list || []).forEach(m => {
+    if (m.journey) {
+      if (!current || current.id !== m.journey) {
+        current = { id: m.journey, title: "", meta: "", dest: "", moves: [] };
+        groups.push(current);
+      }
+      const j = journeyById(m.journey);
+      if (m.journeyTitle) current.title = m.journeyTitle;
+      else if (j && j.title) current.title = j.title;
+      if (m.journeyMeta) current.meta = m.journeyMeta;
+      else if (j && j.meta) current.meta = j.meta;
+      if (j && j.dest) current.dest = j.dest;
+      current.moves.push(m);
+      return;
+    }
+    current = null;
+    groups.push({ id: null, moves: [m] });
+  });
+  return groups;
+}
+function renderMoveCard(m, cityId){
+  const leg = m.leg ? LEGS.find(l => l.id === m.leg) : null;
+  const mode = (leg && leg.mode) || m.mode || "";
+  const when = leg
+    ? `${leg.depart || "—"} → ${leg.arrive || "—"}`
+    : (m.when || "");
+  const ticket = leg
+    ? `${statusLabel(leg.status)} · ${leg.payment || ""}`
+    : (m.dummy || "");
+  const role = m.role ? `<span class="badge-tag" style="margin-bottom:6px">${esc(m.role)}</span>` : "";
+  const stops = leg && (leg.fromStop || leg.toStop)
+    ? `<div class="dummy stops">${esc(stopLabel(leg.fromStop))} → ${esc(stopLabel(leg.toStop))}</div>`
+    : "";
+  const stationBtns = leg
+    ? [moveStationBtnHtml(cityId, leg.fromStop, "from"), moveStationBtnHtml(cityId, leg.toStop, "to")].filter(Boolean).join("")
+    : "";
+  const stationActions = stationBtns
+    ? `<div class="move-station-actions">${stationBtns}</div>`
+    : "";
+  const cls = m.transfer ? "move move-transfer" : "move";
+  return `<div class="${cls}"${m.leg ? ` data-leg="${m.leg}"` : ""}>${role}<div class="when">${esc(mode)} · ${esc(when)}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div>${stationActions}</div>`;
+}
+function renderMoves(list, cityId){
+  return groupMovesByJourney(list).map(g => {
+    const inner = g.moves.map(m => renderMoveCard(m, cityId)).join("");
+    if (!g.id) return inner;
+    const j = journeyById(g.id);
+    const destLine = g.dest
+      ? `<p class="journey-dest">Destination · <strong>${esc(g.dest)}</strong>${j && j.destJp ? ` <span class="jp-name">${esc(j.destJp)}</span>` : ""}</p>`
       : "";
-    return `<div class="move"${m.leg ? ` data-leg="${m.leg}"` : ""}>${role}<div class="when">${esc(mode)} · ${esc(when)}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div></div>`;
+    return `<section class="journey-block" data-journey="${esc(g.id)}">` +
+      `<div class="journey-head">` +
+      `<div class="journey-head-text">` +
+      (j && j.subtitle ? `<span class="journey-label">${esc(j.subtitle)}</span>` : "") +
+      `<h3>${esc(g.title || "Trajet")}</h3>` +
+      `</div>` +
+      (g.meta ? `<span class="journey-meta">${esc(g.meta)}</span>` : "") +
+      `</div>` +
+      destLine +
+      `<div class="journey-steps">${inner}</div>` +
+      `</section>`;
   }).join("");
 }
 function stopLabel(s){
@@ -1351,6 +1701,103 @@ function focusLegOverview(leg){
         maxY: Math.max(p1.y, p2.y)
       }, mapViewportInsets());
     }
+  });
+}
+function renderJourneyEnds(journey, legs){
+  clearLegEnds();
+  if (!legs.length) return;
+  const first = legs[0];
+  const last = legs[legs.length - 1];
+  [legEndPoint(first, "from"), legEndPoint(last, "to")].forEach(end => {
+    if (!end || !end.cityId) return;
+    const mark = document.querySelector(`.city-mark[data-city="${end.cityId}"]`);
+    if (mark) mark.classList.add("leg-related", end.role === "from" ? "leg-from" : "leg-to");
+  });
+  const viaIds = new Set();
+  legs.forEach((leg, i) => {
+    if (i > 0) {
+      const from = legEndPoint(leg, "from");
+      if (from && from.cityId) viaIds.add(from.cityId);
+    }
+    if (i < legs.length - 1) {
+      const to = legEndPoint(leg, "to");
+      if (to && to.cityId) viaIds.add(to.cityId);
+    }
+  });
+  viaIds.forEach(id => {
+    const firstLeg = legs[0];
+    const lastLeg = legs[legs.length - 1];
+    const fromId = legEndPoint(firstLeg, "from")?.cityId;
+    const toId = legEndPoint(lastLeg, "to")?.cityId;
+    if (id === fromId || id === toId) return;
+    const mark = document.querySelector(`.city-mark[data-city="${id}"]`);
+    if (mark) mark.classList.add("leg-related", "leg-via");
+  });
+}
+function journeyPathBounds(legs){
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  legs.forEach(leg => {
+    const box = legPathBounds(leg);
+    if (!box) return;
+    minX = Math.min(minX, box.minX); minY = Math.min(minY, box.minY);
+    maxX = Math.max(maxX, box.maxX); maxY = Math.max(maxY, box.maxY);
+  });
+  if (!isFinite(minX)) return null;
+  return { minX, minY, maxX, maxY };
+}
+function focusJourneyOverview(legs){
+  requestAnimationFrame(() => {
+    sizeJapanWorld();
+    const box = journeyPathBounds(legs);
+    if (box) countryCam.fitWorldBox(box, mapViewportInsets());
+  });
+}
+function openJourney(journeyId, focusLegId){
+  const j = journeyById(journeyId);
+  const legs = legsInJourney(journeyId);
+  if (!j || !legs.length) {
+    if (focusLegId) openLeg(focusLegId, { forceSingle: true });
+    return;
+  }
+  const moves = dayMovesForJourney(journeyId);
+  panelContext = { type: "journey", journey: j, legs };
+  showCountry();
+  setLegMode(true);
+  setJourneyHighlight(journeyId);
+  document.querySelectorAll("#routes path.route-hit").forEach(p => {
+    p.style.pointerEvents = "";
+  });
+  setActiveCity(null);
+  renderJourneyEnds(j, legs);
+  const destLine = j.dest
+    ? `<p class="journey-dest panel-journey-dest">Destination · <strong>${esc(j.dest)}</strong>${j.destJp ? ` <span class="jp-name">${esc(j.destJp)}</span>` : ""}</p>`
+    : "";
+  panel.classList.remove("panel-city");
+  panel.classList.add("panel-leg", "panel-journey");
+  panel.innerHTML =
+    sheetGrabHtml() +
+    `<div class="overlay-head"><div class="head-text"><h2>${esc(j.title)}</h2><span class="jp-name">${esc(j.subtitle || "")}${j.meta ? " · " + esc(j.meta) : ""}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+    `<div class="overlay-body">` +
+    `<span class="sheet-kind trajet">Trajet · ${legs.length} étapes</span>` +
+    destLine +
+    `<div class="journey-panel-steps">${moves.map(m => renderMoveCard(m, null)).join("")}</div>` +
+    `<p class="note">Cliquer une étape pour les détails et réservations.</p>` +
+    `</div>`;
+  panel.classList.add("open");
+  bindSheetGrab();
+  panel.querySelector(".close").onclick = () => closePanel(true);
+  panel.querySelectorAll(".move[data-leg]").forEach(n => {
+    n.addEventListener("click", e => {
+      e.stopPropagation();
+      openLeg(n.dataset.leg, { fromJourney: true });
+    });
+  });
+  if (window.matchMedia("(max-width: 900px)").matches) {
+    setSheetState("mid");
+  }
+  hint.textContent = "Trajet · " + j.title;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => focusJourneyOverview(legs));
   });
 }
 function openCityAtLegEnd(leg, role){
@@ -1619,7 +2066,7 @@ function showDetailSheet(html){
   bindCopyButtons(detailEl);
 }
 
-function openActivityDetail(act){
+function openActivityDetail(act, opts){
   if (!panelContext || panelContext.type !== "city") return;
   const targetCity = cityIdForAct(act);
   if (targetCity && currentCity && targetCity !== currentCity){
@@ -1633,10 +2080,11 @@ function openActivityDetail(act){
     mapsLinkHtml(act, "detail") +
     `<p class="desc">${esc(act.desc || "")}</p>` +
     notesListHtml(act.notes) +
+    actLinksHtml(act.links) +
     gallery +
     contextPhraseHtml(phraseContextForAct(act))
   );
-  highlightPin(act);
+  highlightPin(act, opts);
 }
 
 function openHotelDetail(stay){
@@ -1667,7 +2115,7 @@ function openHotelDetail(stay){
   if (mapAct) highlightPin(mapAct);
 }
 
-function openStopDetail(stop){
+function openStopDetail(stop, opts){
   if (!panelContext || panelContext.type !== "city") return;
   const mapAct = { lat: stop.lat, lng: stop.lng, title: stop.name };
   const legsHtml = (stop.legs || []).map(({ leg, role }) => {
@@ -1695,13 +2143,29 @@ function openStopDetail(stop){
       n.addEventListener("click", () => openLeg(n.dataset.leg));
     });
   }
-  highlightPin(mapAct);
+  highlightPin(mapAct, opts);
 }
 
 function bindPanel(days, cityId){
   days = days || [];
   cityId = cityId || (panelContext && panelContext.city && panelContext.city.id);
   panel.querySelector(".close").onclick = () => closePanel(true);
+  panel.querySelectorAll(".move-station-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const lat = Number(btn.dataset.stopLat);
+      const lng = Number(btn.dataset.stopLng);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+      const stop = stopEntryOnCity(cityId, { lat, lng });
+      if (stop) openStopDetail(stop, { zoom: true });
+      else highlightPin({ lat, lng, title: btn.querySelector(".move-station-name")?.textContent || "Gare" }, { zoom: true });
+    });
+  });
+  panel.querySelectorAll(".journey-block[data-journey]").forEach(block => {
+    block.querySelector(".journey-head")?.addEventListener("click", () => {
+      openJourney(block.dataset.journey);
+    });
+  });
   panel.querySelectorAll(".move[data-leg]").forEach(n =>
     n.addEventListener("click", () => openLeg(n.dataset.leg))
   );
@@ -1722,7 +2186,7 @@ function bindPanel(days, cityId){
       const idx = Number(node.dataset.actIdx);
       const act = filtered[idx];
       if (!act) return;
-      const open = () => openActivityDetail(act);
+      const open = () => openActivityDetail(act, { zoom: true });
       node.addEventListener("click", (e) => {
         if (e.target.closest && e.target.closest("a.act-maps")) return;
         open();
@@ -1841,7 +2305,7 @@ function fillCityPanel(c, days, openN){
       const ideasAfter = ideasForCity(d.ideasAfter, c.id);
       const lockerHtml = renderLuggageLocker(d);
       let body = "";
-      if (moves.length) body += renderMoves(moves);
+      if (moves.length) body += renderMoves(moves, c.id);
       if (lockerHtml) body += `<h4>Bagages</h4>${lockerHtml}`;
       if (ideas.length) body += `<h4>Idées</h4>${renderIdeas(ideas, 0)}`;
       if (ideasAfter.length) body += `<h4>Après l’arrivée</h4>${renderIdeas(ideasAfter, ideas.length)}`;
@@ -1868,7 +2332,7 @@ function fillCityPanel(c, days, openN){
 
 function closePanel(reset){
   if (reset === undefined) reset = true;
-  panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg");
+  panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg", "panel-journey");
   document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
   lastFocusAct = null;
   panelContext = null;
@@ -1878,7 +2342,7 @@ function closePanel(reset){
   if (reset) goOverview();
 }
 function goOverview(){
-  panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg");
+  panel.classList.remove("open", "expanded", "minimized", "panel-city", "panel-leg", "panel-journey");
   document.querySelector(".app")?.classList.remove("sheet-mid", "sheet-max", "sheet-min");
   lastFocusAct = null;
   panelContext = null;
@@ -1892,13 +2356,19 @@ function openCity(id){
   showCity(id, null);
   fillCityPanel(CITIES[id], daysForCity(id), null);
 }
-function openLeg(id){
+function openLeg(id, opts){
+  opts = opts || {};
   const leg = LEGS.find(l => l.id === id);
   if (!leg) return;
-  panelContext = { type:"leg", leg };
+  if (leg.journey && !opts.fromJourney && !opts.forceSingle) {
+    openJourney(leg.journey, id);
+    return;
+  }
+  panelContext = { type:"leg", leg, journey: leg.journey || null };
   showCountry();
   setLegMode(true);
-  setRouteHighlight(id);
+  if (leg.journey) setJourneyHighlight(leg.journey);
+  else setRouteHighlight(id);
   document.querySelectorAll("#routes path.route-hit").forEach(p => {
     p.style.pointerEvents = "";
   });
@@ -1906,13 +2376,18 @@ function openLeg(id){
   renderLegEnds(leg);
   const tips = leg.tips ? `<p class="note" style="color:var(--gold-2)">${esc(leg.tips)}</p>` : "";
   const details = (leg.details || []).map(d => `<li>${esc(d)}</li>`).join("");
-  panel.classList.remove("panel-city");
+  const j = leg.journey ? journeyById(leg.journey) : null;
+  const journeyBack = leg.journey
+    ? `<button type="button" class="journey-back" data-journey="${esc(leg.journey)}">← ${esc(j && j.title ? j.title : "Trajet complet")}</button>`
+    : "";
+  panel.classList.remove("panel-city", "panel-journey");
   panel.classList.add("panel-leg");
   panel.innerHTML =
     sheetGrabHtml() +
     `<div class="overlay-head"><div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
     `<div class="overlay-body">` +
-    `<span class="sheet-kind trajet">Trajet</span>` +
+    journeyBack +
+    `<span class="sheet-kind trajet">Étape</span>` +
     legEndsToolbarHtml(leg) +
     `<div class="pill-row"><span class="status ${statusClass(leg.status)}">${statusLabel(leg.status)}</span></div>` +
     `<div class="trajet-grid">` +
@@ -1938,6 +2413,9 @@ function openLeg(id){
   bindSheetGrab();
   bindCopyButtons(panel);
   panel.querySelector(".close").onclick = () => closePanel(true);
+  panel.querySelectorAll(".journey-back[data-journey]").forEach(n => {
+    n.addEventListener("click", () => openJourney(n.dataset.journey));
+  });
   panel.querySelectorAll("[data-end]").forEach(n => {
     n.addEventListener("click", () => focusLegEnd(leg, n.dataset.end, true));
   });
@@ -2123,9 +2601,16 @@ function renderPrepReminders(){
       : r.days != null
         ? `<span class="prep-reminder-badge">Dans ${r.days} j · ${esc(when)}</span>`
         : "";
+    const linkList = (r.links && r.links.length)
+      ? r.links
+      : (r.url ? [{ label: r.urlLabel || "Ouvrir le guide →", url: r.url }] : []);
+    const linksHtml = linkList.map(l =>
+      `<a class="prep-reminder-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a>`
+    ).join("");
     return `<div class="prep-reminder-card${r.active ? " due" : ""}">` +
       `${badge}<strong>${esc(r.label)}</strong>` +
       `<span class="prep-booking-meta">${esc(r.meta)}</span>` +
+      (linksHtml ? `<div class="prep-reminder-links">${linksHtml}</div>` : "") +
       `<label class="prep-reminder-check"><input type="checkbox" data-check="${esc(r.id)}"/> Marquer comme fait</label>` +
       `</div>`;
   }).join("");
@@ -2301,14 +2786,29 @@ function renderDayTimeline(day){
     });
   }
 
-  moves.forEach(m => {
-    items.push({
-      sort: parseWhenSort(m.when),
-      cls: "tl-move",
-      time: m.when || "Trajet",
-      title: m.title,
-      desc: m.dummy || "",
-      tags: [m.mode || "Trajet"]
+  groupMovesByJourney(moves).forEach(g => {
+    if (g.id) {
+      items.push({
+        sort: parseWhenSort(g.moves[0] && g.moves[0].when),
+        cls: "tl-journey",
+        time: g.meta || (g.moves[0] && g.moves[0].when) || "Trajet",
+        title: g.title,
+        desc: g.dest ? "Destination · " + g.dest : "",
+        tags: ["Trajet"],
+        journeyId: g.id,
+        moves: g.moves
+      });
+      return;
+    }
+    g.moves.forEach(m => {
+      items.push({
+        sort: parseWhenSort(m.when),
+        cls: "tl-move",
+        time: m.when || "Trajet",
+        title: m.title,
+        desc: m.dummy || "",
+        tags: [m.mode || "Trajet"]
+      });
     });
   });
 
@@ -2391,6 +2891,18 @@ function renderDayTimeline(day){
   return `<div class="day-timeline">` + items.map(it => {
     const map = it.act ? mapsLinkHtml(it.act, "detail") : "";
     const tags = (it.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
+    if (it.cls === "tl-journey") {
+      const steps = (it.moves || []).map(m =>
+        `<div class="tl-journey-step">${m.role ? `<span class="tl-step-role">${esc(m.role)}</span>` : ""}<span>${esc(m.title)}</span></div>`
+      ).join("");
+      return `<div class="tl-item tl-journey"${it.journeyId ? ` data-journey="${esc(it.journeyId)}"` : ""}>` +
+        `<div class="tl-time">${esc(it.time)}</div>` +
+        `<div class="tl-title">${esc(it.title)}</div>` +
+        (tags ? `<div class="tl-tags">${tags}</div>` : "") +
+        (it.desc ? `<div class="tl-desc tl-journey-dest">${esc(it.desc)}</div>` : "") +
+        `<div class="tl-journey-steps">${steps}</div>` +
+        `</div>`;
+    }
     return `<div class="tl-item ${it.cls}">` +
       `<div class="tl-time">${esc(it.time)}</div>` +
       `<div class="tl-title">${esc(it.title)}</div>` +
@@ -2665,11 +3177,12 @@ function renderReminderAlert(){
     return;
   }
 
-  list.innerHTML = alerts.map(a =>
-    `<li><button type="button" class="reminder-alert-item" data-tab="prep" data-check-id="${esc(a.id)}">` +
+  list.innerHTML = alerts.map(a => {
+    const firstUrl = (a.links && a.links[0] && a.links[0].url) || a.url || "";
+    return `<li><button type="button" class="reminder-alert-item" data-url="${esc(firstUrl)}" data-check-id="${esc(a.id)}">` +
     `<span><strong>${esc(a.label)}</strong><span>${esc(a.meta)}</span></span>` +
-    `<span class="reminder-alert-go" aria-hidden="true">Préparatifs →</span></button></li>`
-  ).join("");
+    `<span class="reminder-alert-go" aria-hidden="true">Préparatifs →</span></button></li>`;
+  }).join("");
 
   list.querySelectorAll(".reminder-alert-item").forEach(el => {
     el.addEventListener("click", () => {

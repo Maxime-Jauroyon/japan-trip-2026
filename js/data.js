@@ -188,6 +188,54 @@ const MAP_BOUNDS = {
 };
 const JAPAN_BOUNDS = { west:134.3, south:33.7, east:141.1, north:37.35 };
 
+/** Zones ville : loin = 1 hub / zone · milieu = polygones colorés · près = pins détails */
+const CITY_ZONES = {
+  tokyo:[
+    { id:"asakusa", name:"Asakusa", color:"#c45c4a", west:139.755, south:35.705, east:139.815, north:35.735 },
+    { id:"akihabara", name:"Akihabara", color:"#4a7ab8", west:139.75, south:35.665, east:139.79, north:35.705 },
+    { id:"shinjuku", name:"Shinjuku", color:"#6b5b95", west:139.685, south:35.68, east:139.72, north:35.705 },
+    { id:"shibuya", name:"Shibuya", color:"#d4a017", west:139.688, south:35.655, east:139.715, north:35.68 },
+    { id:"odaiba", name:"Odaiba", color:"#2a9d8f", west:139.74, south:35.615, east:139.81, north:35.665 },
+    { id:"ikebukuro", name:"Ikebukuro", color:"#b85a8a", west:139.70, south:35.72, east:139.73, north:35.74 }
+  ],
+  fuji:[
+    { id:"kawaguchi", name:"Kawaguchi", color:"#3d7ea6", west:138.74, south:35.49, east:138.82, north:35.54 },
+    { id:"chureito", name:"Chūrei-tō", color:"#c45c4a", west:138.785, south:35.48, east:138.83, north:35.52 },
+    { id:"oshino", name:"Oshino", color:"#6b8e4e", west:138.81, south:35.44, east:138.86, north:35.48 },
+    { id:"saiko", name:"Saiko", color:"#2a9d8f", west:138.66, south:35.48, east:138.72, north:35.52 }
+  ],
+  kanazawa:[
+    { id:"centre", name:"Kenrokuen", color:"#c45c4a", west:136.652, south:36.556, east:136.672, north:36.572 },
+    { id:"higashi", name:"Higashi", color:"#d4a017", west:136.654, south:36.568, east:136.68, north:36.58 },
+    { id:"station", name:"Gare", color:"#4a7ab8", west:136.64, south:36.55, east:136.655, north:36.575 }
+  ],
+  shirakawa:[
+    { id:"ogimachi", name:"Ogimachi", color:"#6b8e4e", west:136.895, south:36.25, east:136.915, north:36.27 }
+  ],
+  takayama:[
+    { id:"sanmachi", name:"Sanmachi", color:"#c45c4a", west:137.248, south:36.138, east:137.265, north:36.155 },
+    { id:"miyagawa", name:"Gare", color:"#4a7ab8", west:137.245, south:36.13, east:137.265, north:36.15 }
+  ],
+  kyoto:[
+    { id:"higashiyama", name:"Gion", color:"#c45c4a", west:135.768, south:34.99, east:135.795, north:35.015 },
+    { id:"north", name:"Nord", color:"#6b8e4e", west:135.715, south:35.015, east:135.81, north:35.05 },
+    { id:"arashiyama", name:"Arashiyama", color:"#2a9d8f", west:135.66, south:35.005, east:135.69, north:35.03 },
+    { id:"fushimi", name:"Fushimi", color:"#d4a017", west:135.765, south:34.96, east:135.79, north:34.985 },
+    { id:"centre", name:"Centre", color:"#4a7ab8", west:135.74, south:34.995, east:135.775, north:35.02 },
+    { id:"daigo", name:"Daigo", color:"#3d7ea6", west:135.81, south:34.945, east:135.835, north:34.96 }
+  ],
+  nara:[
+    { id:"parc", name:"Parc", color:"#6b8e4e", west:135.83, south:34.678, east:135.855, north:34.7 },
+    { id:"centre", name:"Centre", color:"#c45c4a", west:135.82, south:34.675, east:135.84, north:34.69 }
+  ],
+  osaka:[
+    { id:"namba", name:"Namba", color:"#c45c4a", west:135.49, south:34.655, east:135.515, north:34.68 },
+    { id:"castle", name:"Château", color:"#4a7ab8", west:135.515, south:34.675, east:135.54, north:34.7 },
+    { id:"usj", name:"USJ", color:"#6b5b95", west:135.42, south:34.655, east:135.445, north:34.68 },
+    { id:"shinsekai", name:"Shinsekai", color:"#d4a017", west:135.495, south:34.645, east:135.515, north:34.67 }
+  ]
+};
+
 const DAYS = [
   { n:1, date:"8 nov 2026", dow:"Dimanche", city:"tokyo",
     moves:[{when:"Arrivée HND 06:50", title:"Vol Paris → Haneda", dummy:"Air France · CDG 09:45 (7 nov)", mode:"Avion", leg:"arrive"}],
@@ -267,7 +315,11 @@ const DAYS = [
         desc:"Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile."}
     ] },
   { n:7, date:"14 nov 2026", dow:"Samedi", city:"kanazawa",
-    moves:[{when:"~9:00–16:00", title:"Fujikawaguchiko → Kanazawa", dummy:"Bus Kawaguchiko→Shinjuku puis shinkansen Tokyo→Kanazawa (à réserver)", mode:"Bus + train", leg:"fuji-kana"}],
+    moves:[
+      {journey:"fuji-kana", journeyTitle:"Fujikawaguchiko → Kanazawa", journeyMeta:"~9:00 → ~15:30", when:"~9:00–11:00", title:"Fujikawaguchiko → Shinjuku", dummy:"Highway Bus · à réserver", mode:"Bus", leg:"fuji-tokyo", role:"① Bus"},
+      {journey:"fuji-kana", when:"~11:00–12:00", title:"Shinjuku → Tokyo Station", dummy:"JR / métro · ~15–25 min + marge", mode:"Correspondance", transfer:true, role:"↔ Transfert"},
+      {journey:"fuji-kana", when:"~12:30–15:30", title:"Tokyo → Kanazawa", dummy:"Shinkansen Hokuriku · à réserver", mode:"Shinkansen", leg:"tokyo-kana", role:"② Train"}
+    ],
     ideas:[
       {title:"Kenroku-en", lat:36.5619, lng:136.6626,
         desc:"L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison.",
@@ -391,6 +443,10 @@ const DAYS = [
           "Avoir l’app officielle Universal Studios Japan (files, Express Pass, carte du parc).",
           "Super Nintendo World : Express Pass recommandé, sinon timed-entry / file le jour J."
         ],
+        links:[
+          { label:"Guide YouTube · réserver les billets USJ", url:"https://youtu.be/z3XQLNuE_t8" },
+          { label:"App Store · app officielle USJ", url:"https://apps.apple.com/app/universal-studios-japan/id532097000" }
+        ],
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Universal_Studios_Japan.jpg/640px-Universal_Studios_Japan.jpg"}
     ] },
   { n:18, date:"25 nov 2026", dow:"Mercredi", city:"osaka",
@@ -435,6 +491,19 @@ const DAYS = [
     ideas:[] }
 ];
 
+const JOURNEYS = {
+  "fuji-kana": {
+    id: "fuji-kana",
+    title: "Fujikawaguchiko → Kanazawa",
+    dest: "Kanazawa",
+    destJp: "金沢",
+    subtitle: "14 nov · Jour 7",
+    meta: "~9:00 → ~15:30",
+    day: 7,
+    legs: ["fuji-tokyo", "tokyo-kana"]
+  }
+};
+
 const LEGS = [
   { id:"arrive", title:"Paris → Tokyo (Haneda)", subtitle:"7–8 nov · Jour 1", mode:"Avion",
     depart:"CDG · sam. 7 nov · 09:45", arrive:"HND · dim. 8 nov · 06:50", duration:"~13 h",
@@ -474,50 +543,52 @@ const LEGS = [
           url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112" }
       ]
     } },
-  { id:"fuji-kana", title:"Fujikawaguchiko → Kanazawa", subtitle:"14 nov · Jour 7", mode:"Bus + train",
-    depart:"~9:00", arrive:"~16:00", duration:"~6–7 h",
-    operator:"Bus Kawaguchiko→Shinjuku + shinkansen Hokuriku (Tokyo→Kanazawa)", seat:"—", ref:"—",
+  { id:"fuji-tokyo", journey:"fuji-kana", title:"Fujikawaguchiko → Shinjuku", subtitle:"14 nov · Jour 7 · ① Bus", mode:"Bus",
+    depart:"~9:00", arrive:"~11:00", duration:"~2 h",
+    operator:"Highway bus Kawaguchiko → Shinjuku (Keio / Fujikyu)", seat:"—", ref:"—",
     status:"placeholder", payment:"Pas encore réservé", price:"—",
-    from:{ id:"fuji", lat:35.4983, lng:138.7685 }, to:{ id:"kanazawa", lat:36.5783, lng:136.6480 },
-    mapSegments:[
-      {
-        key:"bus",
-        mode:"Bus",
-        from:{ id:"fuji", lat:35.4983, lng:138.7685 },
-        to:{ id:"tokyo", lat:35.6915, lng:139.6995 },
-        curveSide:"north",
-        curveAmt:0.085
-      },
-      {
-        key:"rail",
-        mode:"Shinkansen",
-        from:{ id:"tokyo", lat:35.6812, lng:139.7671 },
-        to:{ id:"kanazawa", lat:36.5783, lng:136.6480 },
-        via:[
-          {lat:35.78,lng:139.45},
-          {lat:36.32,lng:139.0},
-          {lat:36.65,lng:138.15},
-          {lat:36.72,lng:137.35},
-          {lat:36.55,lng:136.85}
-        ]
-      }
-    ],
-    viaCities:["tokyo"],
+    from:{ id:"fuji", lat:35.4983, lng:138.7685 }, to:{ id:"tokyo", lat:35.6915, lng:139.6995 },
+    curveSide:"north",
+    curveAmt:0.085,
     fromStop:{ kind:"Gare", name:"Kawaguchiko Station", jp:"河口湖駅", lat:35.4983, lng:138.7685 },
-    toStop:{ kind:"Gare", name:"Kanazawa Station", jp:"金沢駅", lat:36.5783, lng:136.6480 },
+    toStop:{ kind:"Gare / terminal bus", name:"Shinjuku Expressway Bus Terminal", jp:"新宿高速バスターミナル", lat:35.6915, lng:139.6995 },
     details:[
-      "1) Bus direct Kawaguchiko → Shinjuku (Highway Bus Terminal).",
-      "2) Métro / JR Shinjuku → Tokyo Station (~15–20 min).",
-      "3) Shinkansen Hokuriku (Kagayaki / Hakutaka) Tokyo → Kanazawa.",
-      "Pas de liaison directe Fuji→Kanazawa : retour vers Tokyo obligatoire."
+      "Bus direct Kawaguchiko → Shinjuku Expressway Bus Terminal.",
+      "Ensuite : transfert vers Tokyo Station pour le shinkansen (étape 2).",
+      "Pas de liaison directe Fuji → Kanazawa."
     ],
-    tips:"Journée longue — bus matinal depuis Kawaguchiko ; déjeuner en gare ou dans le train.",
+    tips:"Départ matin recommandé — laisser ~1 h à Tokyo pour le transfert + un repas léger.",
     bookings:{
-      note:"Bus : Departing=Kawaguchiko Sta. · Arriving=Shinjuku Expressway Bus Terminal.",
+      note:"Sur le formulaire : Departing=Kawaguchiko Sta. · Arriving=Shinjuku Expressway Bus Terminal.",
       links:[
         { site:"Highway Bus", label:"Bus Kawaguchiko → Shinjuku · 14 nov 2026",
           openFrom:"2026-09-14",
-          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114" },
+          url:"https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114" }
+      ]
+    } },
+  { id:"tokyo-kana", journey:"fuji-kana", title:"Tokyo → Kanazawa", subtitle:"14 nov · Jour 7 · ② Shinkansen", mode:"Shinkansen",
+    depart:"~12:30", arrive:"~15:30", duration:"~2 h 30–3 h",
+    operator:"Hokuriku Shinkansen (Kagayaki / Hakutaka)", seat:"—", ref:"—",
+    status:"placeholder", payment:"Pas encore réservé", price:"—",
+    from:{ id:"tokyo", lat:35.6812, lng:139.7671 }, to:{ id:"kanazawa", lat:36.5783, lng:136.6480 },
+    via:[
+      {lat:35.78,lng:139.45},
+      {lat:36.32,lng:139.0},
+      {lat:36.65,lng:138.15},
+      {lat:36.72,lng:137.35},
+      {lat:36.55,lng:136.85}
+    ],
+    fromStop:{ kind:"Gare", name:"Tokyo Station", jp:"東京駅", lat:35.6812, lng:139.7671 },
+    toStop:{ kind:"Gare", name:"Kanazawa Station", jp:"金沢駅", lat:36.5783, lng:136.6480 },
+    details:[
+      "Après le bus : JR / métro Shinjuku → Tokyo Station (~15–25 min).",
+      "Shinkansen Hokuriku : Kagayaki (plus rapide) ou Hakutaka.",
+      "Réserver les places assises dès l’ouverture (J−30)."
+    ],
+    tips:"Viser un départ vers 12:30 pour arriver en début d’après-midi à Kanazawa.",
+    bookings:{
+      note:"Départ Tokyo Station · arrivée Kanazawa Station.",
+      links:[
         { site:"JR West", label:"Shinkansen Tokyo → Kanazawa · 14 nov 2026",
           openFrom:"2026-10-14", openTime:"10:00",
           url:"https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Tokyo&arrival=Kanazawa&date=2026-11-14" },
@@ -703,7 +774,11 @@ const PREP_CHECKS = [
   { id:"taxes", label:"Taxes de séjour / onsen", meta:"Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)", done:false },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen Osaka→Tokyo payé · reste Fuji / Hokuriku / Nohi / Hida…" },
   { id:"osa-tokyo-tickets", label:"QR Ticket Osaka → Tokyo (Apple Wallet)", meta:"Payé par Léo · 158,72 € · Nozomi 90 · 11:30→13:57 · ajouter les QR dans Wallet dès le 27 oct 2026", remindFrom:"2026-10-27", done:false },
-  { id:"usj-tickets", label:"Billets Universal Studios Japan", meta:"Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin", remindFrom:"2026-09-24", done:false },
+  { id:"usj-tickets", label:"Billets Universal Studios Japan", meta:"Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin", remindFrom:"2026-09-24", done:false,
+    links:[
+      { label:"Guide YouTube · réserver USJ", url:"https://youtu.be/z3XQLNuE_t8" },
+      { label:"App Store · app officielle USJ", url:"https://apps.apple.com/app/universal-studios-japan/id532097000" }
+    ] },
   { id:"idees", label:"Idées & billets d’activités", meta:"USJ (rappel 24 sept) · teamLab, observatoires, etc." },
   { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
   { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
@@ -781,7 +856,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v113";
+const APP_CACHE_VER = "v140";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[

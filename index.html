@@ -12,14 +12,14 @@
   <link rel="apple-touch-icon" href="./img/logo.svg" />
   <link rel="stylesheet" href="./css/app.css" />
   <link rel="preload" as="image" href="./maps/japan.png?v=9" />
-  <link rel="preload" as="image" href="./maps/tokyo.png?v=19" />
-  <link rel="preload" as="image" href="./maps/fuji.png?v=19" />
-  <link rel="preload" as="image" href="./maps/kanazawa.png?v=19" />
-  <link rel="preload" as="image" href="./maps/shirakawa.png?v=19" />
-  <link rel="preload" as="image" href="./maps/takayama.png?v=19" />
-  <link rel="preload" as="image" href="./maps/kyoto.png?v=19" />
-  <link rel="preload" as="image" href="./maps/nara.png?v=19" />
-  <link rel="preload" as="image" href="./maps/osaka.png?v=19" />
+  <link rel="preload" as="image" href="./maps/tokyo.png?v=20" />
+  <link rel="preload" as="image" href="./maps/fuji.png?v=20" />
+  <link rel="preload" as="image" href="./maps/kanazawa.png?v=20" />
+  <link rel="preload" as="image" href="./maps/shirakawa.png?v=20" />
+  <link rel="preload" as="image" href="./maps/takayama.png?v=20" />
+  <link rel="preload" as="image" href="./maps/kyoto.png?v=20" />
+  <link rel="preload" as="image" href="./maps/nara.png?v=20" />
+  <link rel="preload" as="image" href="./maps/osaka.png?v=20" />
 </head>
 <body>
   <div class="app tab-map">
@@ -95,6 +95,8 @@
           <div class="city-frame" id="city-frame">
             <div class="city-world" id="city-world">
               <img id="city-img" alt="" draggable="false" />
+              <svg class="city-zones" id="city-zones" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <div class="pins pins-hubs" id="city-hubs"></div>
               <div class="pins" id="city-pins"></div>
             </div>
           </div>
