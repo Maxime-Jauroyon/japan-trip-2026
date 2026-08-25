@@ -24,6 +24,8 @@ html, body {
   height: 100%;
   height: 100dvh;
   max-height: 100dvh;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 body {
   font-family: "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
@@ -46,7 +48,9 @@ body {
 header {
   grid-area: header;
   display: flex; align-items: center; gap: 16px;
-  padding: 8px 16px; min-height: var(--header-h);
+  padding: 8px 16px;
+  padding-top: calc(8px + env(safe-area-inset-top, 0px));
+  min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   border-bottom: 1px solid var(--line);
   background: #0c1118;
   z-index: 20;
@@ -122,10 +126,11 @@ main {
   margin-left: 0;
   flex: 0 0 auto;
   min-width: 0;
-  /* Desktop : même rangée que le header, centré */
+  /* Desktop : même rangée que le header, centré (sous la safe-area) */
   grid-area: header;
   justify-self: center;
-  align-self: center;
+  align-self: end;
+  margin-bottom: calc((var(--header-h) - 28px) / 2);
   z-index: 22;
   padding: 0 8px;
   pointer-events: none;
@@ -2250,7 +2255,8 @@ button.stat.stop-jump .jump-hint {
   }
   header {
     padding: 6px 10px;
-    min-height: var(--header-h);
+    padding-top: calc(6px + env(safe-area-inset-top, 0px));
+    min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
     gap: 8px;
     position: relative;
     z-index: 45;
@@ -2408,5 +2414,29 @@ button.stat.stop-jump .jump-hint {
   .booking-alert,
   .reminder-alert {
     bottom: calc(12px + var(--tabbar-h));
+  }
+}
+
+/* ——— Mode app (écran d’accueil / PWA) uniquement ——— */
+@media (display-mode: standalone), (display-mode: fullscreen) {
+  :root {
+    --standalone: 1;
+  }
+}
+html.standalone body,
+html.standalone .app {
+  /* Hook pour styles JS+CSS « app only » */
+}
+html.standalone header {
+  /* Déjà géré via safe-area ; renfort si besoin */
+  padding-top: calc(8px + env(safe-area-inset-top, 0px));
+}
+@media (max-width: 900px) {
+  html.standalone header {
+    padding-top: calc(6px + env(safe-area-inset-top, 0px));
+  }
+  /* Carte Japon : un peu d’air autour (letterbox discret, couleur map-paper) */
+  html.standalone #country-view .pan-viewport {
+    background: var(--map-paper);
   }
 }

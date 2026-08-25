@@ -406,9 +406,14 @@ function makePanZoom(viewport, world, opts){
   function minScale(){
     const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
     const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
-    return o.mode === "contain"
-      ? Math.min(vw / ww, vh / wh)
-      : Math.max(vw / ww, vh / wh);
+    const cover = Math.max(vw / ww, vh / wh);
+    const contain = Math.min(vw / ww, vh / wh);
+    if (o.mode === "contain") return contain;
+    // Mode app : autoriser un léger letterbox (carte moins « collée »)
+    if (o.softMin && isStandaloneApp()) {
+      return contain * 0.92;
+    }
+    return cover;
   }
   function maxScale(){
     if (typeof o.maxRelative === "number") {
@@ -562,7 +567,12 @@ function makePanZoom(viewport, world, opts){
   };
 }
 
-const countryCam = makePanZoom(countryViewport, countryWorld, { max:7, start:1, mode:"cover" });
+const countryCam = makePanZoom(countryViewport, countryWorld, {
+  max:7,
+  start:1,
+  mode:"cover",
+  softMin:true
+});
 const cityCam = makePanZoom(cityFrame, cityWorld, {
   max:18,
   maxRelative:16,
@@ -577,6 +587,7 @@ const cityHubs = document.getElementById("city-hubs");
 let currentCityLod = -1;
 let currentMapDay = null;
 const preloadedMaps = new Map();
+markStandaloneMode();
 
 function cityMapUrl(id){
   return "./maps/" + id + ".png?v=" + MAP_IMG_VER;
@@ -814,9 +825,18 @@ function showCountry(){
   setActiveCity(null);
   requestAnimationFrame(() => {
     sizeJapanWorld();
-    // Fill viewport with map (ocean color matches PNG fill — no grey frame)
-    countryCam.fitCover(1.02);
+    fitJapanHome();
   });
+}
+
+/** Cadrage carte Japon — un peu plus large en mode app (écran d’accueil). */
+function fitJapanHome(){
+  sizeJapanWorld();
+  if (isStandaloneApp() && window.matchMedia("(max-width: 900px)").matches) {
+    countryCam.fitCover(1);
+  } else {
+    countryCam.fitCover(1.02);
+  }
 }
 
 function layoutCityPins(){
@@ -2458,10 +2478,7 @@ document.addEventListener("keydown", e => {
 });
 window.addEventListener("resize", () => {
   if (currentCity) refreshCityMapView();
-  else {
-    sizeJapanWorld();
-    countryCam.fitCover(1.02);
-  }
+  else fitJapanHome();
 });
 
 function bootCountry(){
@@ -3027,9 +3044,19 @@ function isIOSDevice(){
   if (/iPad|iPhone|iPod/.test(navigator.userAgent)) return true;
   return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
 }
-function isIOSInstalledPWA(){
+function isStandaloneApp(){
   return window.navigator.standalone === true ||
-    window.matchMedia("(display-mode: standalone)").matches;
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.matchMedia("(display-mode: fullscreen)").matches;
+}
+function isIOSInstalledPWA(){
+  return isStandaloneApp();
+}
+/** Classe html.standalone + .app.standalone pour CSS / JS « mode app » uniquement. */
+function markStandaloneMode(){
+  const on = isStandaloneApp();
+  document.documentElement.classList.toggle("standalone", on);
+  document.querySelector(".app")?.classList.toggle("standalone", on);
 }
 function initIOSInstallHint(){
   const box = document.getElementById("ios-install");
@@ -3395,7 +3422,7 @@ function setAppTab(tab){
   if (tab === "map") {
     requestAnimationFrame(() => {
       if (currentCity) syncSheetMapInset();
-      else { sizeJapanWorld(); countryCam.fitCover(1.02); }
+      else fitJapanHome();
     });
   }
 }
@@ -3408,6 +3435,7 @@ document.getElementById("onsite-map-btn")?.addEventListener("click", () => {
   if (day) openMapForDay(day);
 });
 updateOfflineStatus();
+markStandaloneMode();
 initIOSInstallHint();
 initBookingAlert();
 initReminderAlert();
