@@ -1153,15 +1153,16 @@ button.stat.stop-jump .jump-hint {
   border: 0; background: transparent; cursor: pointer;
   padding: 0;
   z-index: 2;
+  -webkit-tap-highlight-color: transparent;
 }
 .pin .badge {
   width: 84px;
   height: 98px;
   display: grid; place-items: center;
-  /* box-shadow (pas filter) : Safari masque souvent filter sous un parent transformé */
-  box-shadow: 0 3px 8px rgba(0,0,0,.4);
-  border-radius: 6px;
-  transition: transform .18s ease, box-shadow .18s ease;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  transition: transform .18s ease;
 }
 @media (max-width: 900px) {
   .pin .badge {
@@ -1170,13 +1171,15 @@ button.stat.stop-jump .jump-hint {
   }
 }
 .city-world[data-pin-sm="1"] .pin .badge {
-  box-shadow: 0 1px 3px rgba(0,0,0,.35);
+  box-shadow: none;
 }
 .pin .badge svg {
   width: 100%;
   height: 100%;
   display: block;
   shape-rendering: geometricPrecision;
+  /* Ombre qui suit la forme du pin (pas un rectangle) */
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.35));
 }
 .pin.dim { opacity: 0.28; z-index: 1; }
 .pin.on .badge { transform: scale(1.26); }
@@ -1186,30 +1189,39 @@ button.stat.stop-jump .jump-hint {
 }
 .pin.selected .badge {
   transform: scale(1.42);
-  box-shadow: 0 0 0 3px rgba(250,247,241,0.95), 0 6px 16px rgba(196,92,38,0.55);
+  box-shadow: none;
   animation: pinPulse 1.1s ease-in-out infinite;
+}
+.pin.selected .badge svg {
+  filter: drop-shadow(0 0 2px rgba(250,247,241,.95)) drop-shadow(0 3px 8px rgba(196,92,38,.5));
 }
 .pin.pin-hotel {
   z-index: 4;
 }
 .pin.pin-hotel .badge {
-  box-shadow: 0 2px 8px rgba(196,165,116,.45);
+  box-shadow: none;
 }
 .pin.pin-hotel.selected .badge {
-  box-shadow: 0 0 0 3px rgba(250,247,241,0.95), 0 6px 16px rgba(196,165,116,0.55);
+  box-shadow: none;
   animation: none;
   transform: scale(1.34);
+}
+.pin.pin-hotel.selected .badge svg {
+  filter: drop-shadow(0 0 2px rgba(250,247,241,.95)) drop-shadow(0 3px 8px rgba(196,165,116,.5));
 }
 .pin.pin-stop {
   z-index: 5;
 }
 .pin.pin-stop .badge {
-  box-shadow: 0 2px 8px rgba(47,111,149,.45);
+  box-shadow: none;
 }
 .pin.pin-stop.selected .badge {
-  box-shadow: 0 0 0 3px rgba(250,247,241,0.95), 0 6px 16px rgba(61,126,166,0.55);
+  box-shadow: none;
   animation: none;
   transform: scale(1.34);
+}
+.pin.pin-stop.selected .badge svg {
+  filter: drop-shadow(0 0 2px rgba(250,247,241,.95)) drop-shadow(0 3px 8px rgba(61,126,166,.5));
 }
 .sheet-kind.stop { color: #7eb3d1; border-color: rgba(126,179,209,.45); }
 .stop-legs {
