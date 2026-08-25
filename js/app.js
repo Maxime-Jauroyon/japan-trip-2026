@@ -406,14 +406,9 @@ function makePanZoom(viewport, world, opts){
   function minScale(){
     const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
     const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
-    const cover = Math.max(vw / ww, vh / wh);
-    const contain = Math.min(vw / ww, vh / wh);
-    if (o.mode === "contain") return contain;
-    // Mode app : autoriser un léger letterbox (carte moins « collée »)
-    if (o.softMin && isStandaloneApp()) {
-      return contain * 0.92;
-    }
-    return cover;
+    return o.mode === "contain"
+      ? Math.min(vw / ww, vh / wh)
+      : Math.max(vw / ww, vh / wh);
   }
   function maxScale(){
     if (typeof o.maxRelative === "number") {
@@ -567,12 +562,7 @@ function makePanZoom(viewport, world, opts){
   };
 }
 
-const countryCam = makePanZoom(countryViewport, countryWorld, {
-  max:7,
-  start:1,
-  mode:"cover",
-  softMin:true
-});
+const countryCam = makePanZoom(countryViewport, countryWorld, { max:7, start:1, mode:"cover" });
 const cityCam = makePanZoom(cityFrame, cityWorld, {
   max:18,
   maxRelative:16,
@@ -824,19 +814,14 @@ function showCountry(){
   hint.textContent = "Glisser · pincer pour zoomer · toucher une ville";
   setActiveCity(null);
   requestAnimationFrame(() => {
-    sizeJapanWorld();
     fitJapanHome();
   });
 }
 
-/** Cadrage carte Japon — un peu plus large en mode app (écran d’accueil). */
+/** Cadrage Japon : en mode app, pas de ×1.02 qui coupe le bord droit. */
 function fitJapanHome(){
   sizeJapanWorld();
-  if (isStandaloneApp() && window.matchMedia("(max-width: 900px)").matches) {
-    countryCam.fitCover(1);
-  } else {
-    countryCam.fitCover(1.02);
-  }
+  countryCam.fitCover(isStandaloneApp() ? 1 : 1.02);
 }
 
 function layoutCityPins(){
@@ -3052,7 +3037,6 @@ function isStandaloneApp(){
 function isIOSInstalledPWA(){
   return isStandaloneApp();
 }
-/** Classe html.standalone + .app.standalone pour CSS / JS « mode app » uniquement. */
 function markStandaloneMode(){
   const on = isStandaloneApp();
   document.documentElement.classList.toggle("standalone", on);
