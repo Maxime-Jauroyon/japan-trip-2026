@@ -16,6 +16,8 @@
   --map-paper: #e8ece6;
   --map-frame: #9aa8b4;
   --panel-w: 420px;
+  --header-h: 46px;
+  --tabbar-h: 0px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
@@ -35,14 +37,25 @@ body {
   max-height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header"
+    "main";
   min-height: 0;
+  position: relative;
 }
 header {
+  grid-area: header;
   display: flex; align-items: center; gap: 16px;
-  padding: 8px 16px; min-height: 46px;
+  padding: 8px 16px; min-height: var(--header-h);
   border-bottom: 1px solid var(--line);
   background: #0c1118;
   z-index: 20;
+}
+main {
+  grid-area: main;
+  position: relative;
+  min-height: 0;
+  height: 100%;
 }
 .brand {
   display: flex;
@@ -105,9 +118,17 @@ header {
 }
 .tabs {
   display: flex; gap: 4px;
-  margin-left: 8px;
-  flex: 1 1 auto;
+  align-items: center;
+  margin-left: 0;
+  flex: 0 0 auto;
   min-width: 0;
+  /* Desktop : même rangée que le header, centré */
+  grid-area: header;
+  justify-self: center;
+  align-self: center;
+  z-index: 22;
+  padding: 0 8px;
+  pointer-events: none;
 }
 .tabs button {
   border: 1px solid transparent;
@@ -119,6 +140,9 @@ header {
   cursor: pointer;
   border-radius: 2px;
   white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
 }
 .tabs button.active {
   color: var(--cream);
@@ -139,7 +163,6 @@ header {
 .pill.no { color: var(--no); }
 .pill em { color: var(--cream); font-style: normal; font-weight: 600; margin-left: 2px; }
 
-main { position: relative; min-height: 0; height: 100%; }
 #view-map {
   position: absolute; inset: 0;
 }
@@ -2214,22 +2237,64 @@ button.stat.stop-jump .jump-hint {
 
 @media (max-width: 900px) {
   /* Mobile only — desktop layout untouched above */
+  :root {
+    --header-h: 44px;
+    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+  .app {
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header"
+      "main"
+      "tabs";
+  }
   header {
     padding: 6px 10px;
-    min-height: 40px;
+    min-height: var(--header-h);
     gap: 8px;
-    flex-wrap: wrap;
     position: relative;
     z-index: 45;
   }
-  header h1.brand { gap: 8px; order: 1; flex: 1 1 auto; min-width: 0; }
+  header h1.brand { gap: 8px; flex: 1 1 auto; min-width: 0; }
   .brand-mark { width: 32px; height: 32px; }
   .brand-title { font-size: 14px; }
   .brand-sub { font-size: 9px; letter-spacing: 0.06em; }
-  .tabs { margin-left: 0; flex: 0 0 100%; width: 100%; order: 3; }
-  .tabs button { flex: 1 1 0; text-align: center; padding: 7px 6px; font-size: 12px; }
+
+  .tabs {
+    grid-area: tabs;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    height: auto;
+    min-height: 56px;
+    width: 100%;
+    margin: 0;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    gap: 4px;
+    justify-content: stretch;
+    justify-self: stretch;
+    align-self: stretch;
+    background: #0c1118;
+    border-top: 1px solid var(--line);
+    z-index: 50;
+    box-shadow: 0 -6px 20px rgba(0,0,0,.25);
+    pointer-events: auto;
+  }
+  .tabs button {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 10px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    min-height: 44px;
+  }
+  .tabs button.active {
+    background: rgba(196,165,116,.16);
+  }
+
   .force-refresh {
-    order: 2;
     position: relative;
     z-index: 2;
     font-size: 11px;
@@ -2239,7 +2304,6 @@ button.stat.stop-jump .jump-hint {
     margin-left: auto;
   }
   .offline-status {
-    order: 2;
     font-size: 9px;
     padding: 3px 6px;
     max-width: 42vw;
@@ -2250,7 +2314,8 @@ button.stat.stop-jump .jump-hint {
 
   #city-list { display: none !important; }
 
-  .app.city-mode.tab-map { grid-template-rows: 1fr; }
+  /* Header masqué en ville, mais barre d’onglets reste */
+  .app.city-mode.tab-map { grid-template-rows: 1fr auto; grid-template-areas: "main" "tabs"; }
   .app.city-mode.tab-map header { display: none !important; }
   .app.city-mode.tab-map .city-banner { display: block; }
   .app.city-mode.tab-map .home-btn {
@@ -2269,7 +2334,7 @@ button.stat.stop-jump .jump-hint {
     box-shadow: none;
     border-radius: 0;
   }
-  /* La carte se réduit au-dessus du panneau — le sud reste visible */
+  /* Carte au-dessus du sheet (main déjà au-dessus de la tab bar) */
   .app.city-mode.sheet-mid.tab-map .city-frame { bottom: 55%; }
   .app.city-mode.sheet-max.tab-map .city-frame { bottom: 78%; }
   .app.city-mode.sheet-min.tab-map .city-frame { bottom: 52px; }
@@ -2287,7 +2352,7 @@ button.stat.stop-jump .jump-hint {
     border-radius: 14px 14px 0 0;
     border-left: 0; border-right: 0; border-bottom: 0;
     transition: transform .25s ease, height .28s ease, max-height .28s ease, min-height .28s ease;
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: 0;
     overflow: hidden !important;
   }
   .overlay.open { transform: translate3d(0, 0, 0); }
@@ -2300,7 +2365,7 @@ button.stat.stop-jump .jump-hint {
     height: 52px !important;
     max-height: 52px !important;
     min-height: 52px !important;
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: 0;
   }
   .overlay.open.minimized .overlay-head,
   .overlay.open.minimized .overlay-body {
@@ -2335,6 +2400,13 @@ button.stat.stop-jump .jump-hint {
     height: 50px;
   }
   .city-mark .label { display: none !important; }
-  .home-btn { width: 44px; height: 44px; bottom: calc(14px + env(safe-area-inset-bottom)); }
+  .home-btn { width: 44px; height: 44px; bottom: 14px; }
   .app.city-mode.tab-map .home-btn { bottom: auto; }
+
+  /* Popups fixed = viewport : remonter au-dessus de la tab bar */
+  .ios-install,
+  .booking-alert,
+  .reminder-alert {
+    bottom: calc(12px + var(--tabbar-h));
+  }
 }
