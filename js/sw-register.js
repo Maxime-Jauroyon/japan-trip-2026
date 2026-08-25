@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
     location.reload();
   });
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=153").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=154").then((reg) => {
       reg.update();
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
       reg.addEventListener("updatefound", () => {

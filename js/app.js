@@ -3057,6 +3057,27 @@ function markStandaloneMode(){
   const on = isStandaloneApp();
   document.documentElement.classList.toggle("standalone", on);
   document.querySelector(".app")?.classList.toggle("standalone", on);
+  if (!on) return;
+  syncStandaloneHeight();
+  if (!window.__standaloneHeightBound) {
+    window.__standaloneHeightBound = true;
+    window.addEventListener("resize", syncStandaloneHeight);
+    window.visualViewport?.addEventListener("resize", syncStandaloneHeight);
+  }
+}
+/** Hauteur réelle du webview — comble la bande vide sous la tab bar (sans toucher à la largeur). */
+function syncStandaloneHeight(){
+  if (!isStandaloneApp()) return;
+  const h = Math.round(window.innerHeight || 0);
+  if (h < 100) return;
+  document.documentElement.style.setProperty("--app-h", h + "px");
+  requestAnimationFrame(() => {
+    if (typeof currentCity !== "undefined" && currentCity) {
+      if (typeof refreshCityMapView === "function") refreshCityMapView();
+    } else if (typeof fitJapanHome === "function") {
+      fitJapanHome();
+    }
+  });
 }
 function initIOSInstallHint(){
   const box = document.getElementById("ios-install");
