@@ -997,28 +997,24 @@ function updateCityLod(force){
   const min = cityCam.minScale() || 1;
   const s = cityCam.state.s || min;
   const ratio = Math.max(1, s / min);
-  const screenFactor = Math.max(0.44, Math.min(1.28, 1.42 / Math.pow(ratio, 0.32)));
-  let pinScale = screenFactor / ratio;
-  if (ratio < 2.8) pinScale *= 0.86 + ratio * 0.05;
-  pinScale = Math.round(pinScale * 50) / 50;
   const mobilePins = window.matchMedia("(max-width: 900px)").matches;
-  const baseW = mobilePins ? 74 : 84;
-  const baseH = mobilePins ? 86 : 98;
-  const badgeW = Math.max(34, Math.round(baseW * pinScale));
-  const badgeH = Math.round(badgeW * baseH / baseW);
-  cityWorld.style.setProperty("--pin-badge-w", badgeW + "px");
-  cityWorld.style.setProperty("--pin-badge-h", badgeH + "px");
-  cityWorld.dataset.pinSm = badgeW < 52 ? "1" : "";
+  /* Taille écran des pins : scale CSS (Safari mobile ignore souvent width via var pendant le pinch) */
+  let pinScale = Math.max(0.44, Math.min(1.28, 1.42 / Math.pow(ratio, 0.32))) / ratio;
+  if (ratio < 2.8) pinScale *= 0.86 + ratio * 0.05;
+  pinScale = Math.max(0.26, Math.min(1.35, Math.round(pinScale * 100) / 100));
+  cityWorld.style.setProperty("--pin-scale", String(pinScale));
+  cityWorld.dataset.pinSm = pinScale < 0.55 ? "1" : "";
   // Hubs plus gros au dézoom max (ratio ≈ 1), puis se réduisent en zoomant
   const hubScale = Math.max(0.9, Math.min(1.75, 1.75 / Math.pow(ratio, 0.4))) / Math.max(1, Math.min(ratio, 1.12));
   cityWorld.style.setProperty("--hub-scale", String(hubScale));
 
-  // Hubs → zones → pins. Mobile zoom-jour (~×2.5) saute les zones : pins plus tôt.
-  // Jamais de « trou » où tout est invisible.
-  const pinStart = mobilePins ? 1.95 : 2.28;
-  const hubOp = 1 - smoothstep(1.12, 1.45, ratio);
-  const zoneFade = smoothstep(pinStart - 0.2, pinStart + 0.08, ratio);
-  const zoneOp = smoothstep(1.12, 1.45, ratio) * (1 - zoneFade);
+  // Hubs → zones → pins. Mobile : zones plus longtemps, pins seulement à fort zoom.
+  const pinStart = mobilePins ? 3.15 : 2.28;
+  const zoneIn0 = mobilePins ? 1.05 : 1.12;
+  const zoneIn1 = mobilePins ? 1.32 : 1.45;
+  const hubOp = 1 - smoothstep(zoneIn0, zoneIn1, ratio);
+  const zoneFade = smoothstep(pinStart - 0.4, pinStart + 0.12, ratio);
+  const zoneOp = smoothstep(zoneIn0, zoneIn1, ratio) * (1 - zoneFade);
   let pinOp = ratio >= pinStart ? 1 : 0;
   if (hubOp < 0.12 && zoneOp < 0.12) pinOp = 1;
   cityWorld.style.setProperty("--hub-opacity", hubOp.toFixed(3));
@@ -3032,8 +3028,7 @@ function updateOfflineStatus(){
   if (!el) return;
   const online = navigator.onLine;
   const ver = (typeof APP_CACHE_VER !== "undefined" ? APP_CACHE_VER : "?");
-  const iosApp = isIOSInstalledPWA();
-  el.textContent = (online ? "En ligne" : "Hors ligne") + " · cache " + ver + (iosApp ? " · app" : "");
+  el.textContent = (online ? "En ligne" : "Hors ligne") + " · cache " + ver;
   el.classList.toggle("online", online);
   el.classList.toggle("offline", !online);
 }

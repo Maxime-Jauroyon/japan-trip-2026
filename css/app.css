@@ -1148,21 +1148,28 @@ button.stat.stop-jump .jump-hint {
 }
 .pin {
   position: absolute;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%) scale(var(--pin-scale, 1));
   transform-origin: center bottom;
   pointer-events: auto;
   border: 0; background: transparent; cursor: pointer;
   padding: 0;
   z-index: 2;
+  will-change: transform;
 }
 .pin .badge {
-  width: var(--pin-badge-w, 84px);
-  height: var(--pin-badge-h, 98px);
+  width: 84px;
+  height: 98px;
   display: grid; place-items: center;
   /* box-shadow (pas filter) : Safari masque souvent filter sous un parent transformé */
   box-shadow: 0 3px 8px rgba(0,0,0,.4);
   border-radius: 6px;
   transition: transform .18s ease, box-shadow .18s ease;
+}
+@media (max-width: 900px) {
+  .pin .badge {
+    width: 74px;
+    height: 86px;
+  }
 }
 .city-world[data-pin-sm="1"] .pin .badge {
   box-shadow: 0 1px 3px rgba(0,0,0,.35);
