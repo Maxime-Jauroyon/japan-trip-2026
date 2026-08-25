@@ -1054,7 +1054,7 @@ button.stat.stop-jump .jump-hint {
 }
 .zone-hub {
   position: absolute;
-  transform: translate(-50%, -50%) scale(var(--hub-scale, 1));
+  transform: translate(-50%, -50%);
   transform-origin: center center;
   border: 0;
   background: rgba(20, 28, 38, .88);
@@ -1085,7 +1085,6 @@ button.stat.stop-jump .jump-hint {
 }
 .zone-hub.on {
   box-shadow: 0 0 0 2px rgba(255,255,255,.45), 0 8px 20px rgba(0,0,0,.45);
-  transform: translate(-50%, -50%) scale(calc(var(--hub-scale, 1) * 1.06));
 }
 .zone-hub:hover { filter: brightness(1.08); }
 .zone-hub-dot {
@@ -1148,13 +1147,12 @@ button.stat.stop-jump .jump-hint {
 }
 .pin {
   position: absolute;
-  transform: translate(-50%, -100%) scale(var(--pin-scale, 1));
+  transform: translate(-50%, -100%);
   transform-origin: center bottom;
   pointer-events: auto;
   border: 0; background: transparent; cursor: pointer;
   padding: 0;
   z-index: 2;
-  will-change: transform;
 }
 .pin .badge {
   width: 84px;

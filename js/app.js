@@ -992,21 +992,34 @@ function renderCityHubs(id, day){
     cityHubs.appendChild(btn);
   });
 }
+function applyCityPinScales(pinScale){
+  if (!cityPins) return;
+  const t = "translate(-50%, -100%) scale(" + pinScale + ")";
+  cityPins.querySelectorAll(".pin").forEach(pin => {
+    pin.style.transform = t;
+  });
+}
 function updateCityLod(force){
   if (!currentCity || !cityView.classList.contains("visible")) return;
   const min = cityCam.minScale() || 1;
   const s = cityCam.state.s || min;
   const ratio = Math.max(1, s / min);
   const mobilePins = window.matchMedia("(max-width: 900px)").matches;
-  /* Taille écran des pins : scale CSS (Safari mobile ignore souvent width via var pendant le pinch) */
-  let pinScale = Math.max(0.44, Math.min(1.28, 1.42 / Math.pow(ratio, 0.32))) / ratio;
-  if (ratio < 2.8) pinScale *= 0.86 + ratio * 0.05;
-  pinScale = Math.max(0.26, Math.min(1.35, Math.round(pinScale * 100) / 100));
+  /* Compensation partielle : les pins grossissent au zoom (pas taille écran fixe).
+     Scale en inline style — Safari ignore souvent les CSS vars sous un parent transformé. */
+  const pinScale = Math.max(0.38, Math.min(1.3, 1 / Math.pow(ratio, 0.42)));
   cityWorld.style.setProperty("--pin-scale", String(pinScale));
   cityWorld.dataset.pinSm = pinScale < 0.55 ? "1" : "";
+  applyCityPinScales(pinScale);
   // Hubs plus gros au dézoom max (ratio ≈ 1), puis se réduisent en zoomant
   const hubScale = Math.max(0.9, Math.min(1.75, 1.75 / Math.pow(ratio, 0.4))) / Math.max(1, Math.min(ratio, 1.12));
   cityWorld.style.setProperty("--hub-scale", String(hubScale));
+  if (cityHubs) {
+    cityHubs.querySelectorAll(".zone-hub").forEach(hub => {
+      const on = hub.classList.contains("on") ? 1.06 : 1;
+      hub.style.transform = "translate(-50%, -50%) scale(" + (hubScale * on) + ")";
+    });
+  }
 
   // Hubs → zones → pins. Mobile : zones plus longtemps, pins seulement à fort zoom.
   const pinStart = mobilePins ? 3.15 : 2.28;
