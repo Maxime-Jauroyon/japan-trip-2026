@@ -3053,49 +3053,10 @@ function isStandaloneApp(){
 function isIOSInstalledPWA(){
   return isStandaloneApp();
 }
-let standaloneShellBound = false;
-let lastStandaloneShell = "";
 function markStandaloneMode(){
   const on = isStandaloneApp();
   document.documentElement.classList.toggle("standalone", on);
   document.querySelector(".app")?.classList.toggle("standalone", on);
-  if (!on) return;
-  syncStandaloneShell();
-  if (standaloneShellBound) return;
-  standaloneShellBound = true;
-  window.addEventListener("resize", syncStandaloneShell);
-  if (window.visualViewport) {
-    visualViewport.addEventListener("resize", syncStandaloneShell);
-  }
-}
-/** Aligne html/body sur la taille réelle du webview (évite bande bas + coupe droite). */
-function syncStandaloneShell(){
-  if (!isStandaloneApp()) return;
-  const w = Math.round(window.innerWidth || 0);
-  const h = Math.round(window.innerHeight || 0);
-  const root = document.documentElement;
-  if (w) root.style.setProperty("--shell-w", w + "px");
-  if (h) root.style.setProperty("--shell-h", h + "px");
-  const meta = document.querySelector('meta[name="viewport"]');
-  if (meta) {
-    meta.setAttribute(
-      "content",
-      "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover"
-    );
-  }
-  window.scrollTo(0, 0);
-  root.scrollLeft = 0;
-  document.body.scrollLeft = 0;
-  const key = w + "x" + h;
-  if (key === lastStandaloneShell) return;
-  lastStandaloneShell = key;
-  requestAnimationFrame(() => {
-    if (typeof currentCity !== "undefined" && currentCity) {
-      if (typeof refreshCityMapView === "function") refreshCityMapView();
-    } else if (typeof fitJapanHome === "function") {
-      fitJapanHome();
-    }
-  });
 }
 function initIOSInstallHint(){
   const box = document.getElementById("ios-install");

@@ -46,12 +46,9 @@ body {
     "main";
   min-height: 0;
   min-width: 0;
-  width: 100%;
-  max-width: 100%;
   position: relative;
   overflow: hidden;
 }
-.app > * { min-width: 0; max-width: 100%; }
 header {
   grid-area: header;
   display: flex; align-items: center; gap: 16px;
@@ -60,11 +57,13 @@ header {
   border-bottom: 1px solid var(--line);
   background: #0c1118;
   z-index: 20;
+  min-width: 0;
 }
 main {
   grid-area: main;
   position: relative;
   min-height: 0;
+  min-width: 0;
   height: 100%;
 }
 .brand {
@@ -538,7 +537,6 @@ main {
   background: var(--map-frame);
   overflow: hidden;
   min-height: 0;
-  contain: paint;
 }
 #stage::after {
   content: "";
@@ -602,7 +600,6 @@ main {
   overflow: hidden;
   background: #aad0dc;
   isolation: isolate;
-  contain: paint;
 }
 #country-view.hidden { display: none; }
 .pan-viewport {
@@ -611,7 +608,6 @@ main {
   cursor: grab;
   touch-action: none;
   background: #aad0dc;
-  contain: paint;
 }
 .pan-viewport.dragging { cursor: grabbing; }
 .pan-world {
@@ -2425,43 +2421,21 @@ button.stat.stop-jump .jump-hint {
   }
 }
 
-/* Mode app : safe-area haut seulement ; shell = innerWidth/Height (pas de bande bas / coupe droite) */
+/* Mode app uniquement : safe-area en haut (caméra) — pas en bas */
 @media (display-mode: standalone), (display-mode: fullscreen) {
   header {
     padding-top: calc(8px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
 }
-html.standalone,
-html.standalone body {
-  width: var(--shell-w, 100%);
-  height: var(--shell-h, 100%);
-  max-width: var(--shell-w, 100%);
-  max-height: var(--shell-h, 100%);
-  overflow: hidden;
-  overscroll-behavior: none;
-  background: #0c1118;
-}
-html.standalone .app {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  overflow: hidden;
-}
 html.standalone header {
   padding-top: calc(8px + env(safe-area-inset-top, 0px));
   min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
-  overflow: hidden;
 }
 @media (max-width: 900px) {
   html.standalone header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
-  }
-  html.standalone .tabs {
-    padding-bottom: 0;
-    margin-bottom: 0;
   }
 }
 @media (max-width: 900px) and (display-mode: standalone),
@@ -2469,9 +2443,5 @@ html.standalone header {
   header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
-  }
-  .tabs {
-    padding-bottom: 0;
-    margin-bottom: 0;
   }
 }

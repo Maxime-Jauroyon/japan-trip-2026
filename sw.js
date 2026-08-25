@@ -1,5 +1,5 @@
 /* Offline cache — 1ère visite en Wi‑Fi, puis utilisable sans réseau dans Safari */
-const CACHE = "japan-trip-2026-v149";
+const CACHE = "japan-trip-2026-v150";
 
 const ASSETS = [
   "./",

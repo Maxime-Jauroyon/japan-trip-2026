@@ -9,24 +9,12 @@
   <meta name="theme-color" content="#0c1118" />
   <title>Japon · 8–29 novembre 2026</title>
   <script>
-    /* Mode app : verrouiller zoom + taille shell avant paint. */
+    /* Mode app (iOS) : classe dispo avant le CSS */
     (function () {
       var standalone = window.navigator.standalone === true ||
         window.matchMedia("(display-mode: standalone)").matches ||
         window.matchMedia("(display-mode: fullscreen)").matches;
-      if (!standalone) return;
-      document.documentElement.classList.add("standalone");
-      var w = Math.round(window.innerWidth || 0);
-      var h = Math.round(window.innerHeight || 0);
-      if (w) document.documentElement.style.setProperty("--shell-w", w + "px");
-      if (h) document.documentElement.style.setProperty("--shell-h", h + "px");
-      var meta = document.querySelector('meta[name="viewport"]');
-      if (meta) {
-        meta.setAttribute(
-          "content",
-          "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover"
-        );
-      }
+      if (standalone) document.documentElement.classList.add("standalone");
     })();
   </script>
   <link rel="icon" href="./img/logo.svg" type="image/svg+xml" />
