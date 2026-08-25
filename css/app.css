@@ -2421,27 +2421,44 @@ button.stat.stop-jump .jump-hint {
   }
 }
 
-/* Mode app uniquement : safe-area en haut (caméra) — pas en bas */
+/* Mode app uniquement : safe-area haut (caméra) ; bas = tab bar étendue (pas de bande vide) */
 @media (display-mode: standalone), (display-mode: fullscreen) {
   header {
     padding-top: calc(8px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
 }
+html.standalone,
+html.standalone body {
+  background: #0c1118;
+}
 html.standalone header {
   padding-top: calc(8px + env(safe-area-inset-top, 0px));
   min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
 }
 @media (max-width: 900px) {
+  html.standalone {
+    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
   html.standalone header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
+  /* Remplit la zone home indicator avec le fond de la tab bar */
+  html.standalone .tabs {
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  }
 }
 @media (max-width: 900px) and (display-mode: standalone),
        (max-width: 900px) and (display-mode: fullscreen) {
+  :root {
+    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
   header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  }
+  .tabs {
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
   }
 }
