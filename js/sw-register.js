@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
     location.reload();
   });
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=151").then((reg) => {
       reg.update();
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
       reg.addEventListener("updatefound", () => {
@@ -36,7 +36,8 @@ async function forceRefreshApp(){
   } catch (_) {}
   const url = new URL(location.href);
   url.searchParams.set("refresh", String(Date.now()));
-  location.replace(url.toString());
+  /* Bypass HTTP cache on the next navigation */
+  location.replace(url.pathname + url.search + url.hash);
 }
 
 function bindForceRefresh(btn){
@@ -47,6 +48,7 @@ function bindForceRefresh(btn){
     busy = true;
     if (e && e.cancelable) e.preventDefault();
     btn.blur();
+    btn.textContent = "…";
     await forceRefreshApp();
   };
   btn.addEventListener("touchend", (e) => {

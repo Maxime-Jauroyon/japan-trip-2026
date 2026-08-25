@@ -1,5 +1,5 @@
 /* Offline cache — 1ère visite en Wi‑Fi, puis utilisable sans réseau dans Safari */
-const CACHE = "japan-trip-2026-v150";
+const CACHE = "japan-trip-2026-v151";
 
 const ASSETS = [
   "./",
@@ -148,13 +148,18 @@ const ASSETS = [
   "./img/activities/yasaka.jpg"
 ];
 
+async function putFresh(cache, url){
+  const res = await fetch(url, { cache: "reload" });
+  if (res && res.ok) await cache.put(url, res.clone());
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE);
       for (const url of ASSETS) {
         try {
-          await cache.add(url);
+          await putFresh(cache, url);
         } catch (e) {
           /* ignore single failures */
         }
@@ -170,6 +175,10 @@ self.addEventListener("activate", (event) => {
       Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
 
 self.addEventListener("fetch", (event) => {
@@ -190,15 +199,15 @@ self.addEventListener("fetch", (event) => {
     path.endsWith(".js") ||
     path.endsWith(".css");
 
-  // HTML / SW / JS / CSS : réseau d’abord pour les mises à jour
+  // HTML / SW / JS / CSS : réseau d’abord (sans cache HTTP) pour les mises à jour
   if (isDoc || isAppCode) {
     event.respondWith(
       (async () => {
         try {
-          const res = await fetch(req);
+          const res = await fetch(req, { cache: "no-store" });
           if (res && res.ok) {
             const cache = await caches.open(CACHE);
-            cache.put(req, res.clone());
+            try { await cache.put(req, res.clone()); } catch (_) { /* ignore */ }
           }
           return res;
         } catch (e) {
