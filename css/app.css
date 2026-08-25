@@ -2421,7 +2421,7 @@ button.stat.stop-jump .jump-hint {
   }
 }
 
-/* Mode app : safe-area haut (header) + bas (tab bar), même logique */
+/* Mode app : safe-area uniquement en haut (caméra). Bas : pas de padding (= pas de bande). */
 @media (display-mode: standalone), (display-mode: fullscreen) {
   header {
     padding-top: calc(8px + env(safe-area-inset-top, 0px));
@@ -2435,7 +2435,7 @@ html.standalone body {
   overflow: hidden;
   background: #0c1118;
 }
-/* Colle l’app aux 4 bords du webview (évite la bande sous la tab bar) */
+/* Plein écran sans ajouter de marge en bas */
 html.standalone .app {
   position: fixed;
   inset: 0;
@@ -2443,6 +2443,8 @@ html.standalone .app {
   height: auto;
   max-height: none;
   min-height: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 html.standalone header {
   padding-top: calc(8px + env(safe-area-inset-top, 0px));
@@ -2450,32 +2452,37 @@ html.standalone header {
 }
 @media (max-width: 900px) {
   html.standalone {
-    /* Hauteur réelle de la barre = contenu + zone home indicator */
-    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
+    --tabbar-h: 56px;
   }
   html.standalone header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
-  /* Miroir du padding-top du header : remplit la zone home indicator */
+  /* Onglets collés au bord bas de l’écran — sans safe-area (ça agrandissait la bande) */
+  html.standalone .app {
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header"
+      "main";
+    padding-bottom: var(--tabbar-h);
+  }
+  html.standalone .app.city-mode.tab-map {
+    grid-template-rows: 1fr;
+    grid-template-areas: "main";
+  }
   html.standalone .tabs {
-    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
-    min-height: calc(56px + env(safe-area-inset-bottom, 0px));
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    grid-area: unset;
+    width: 100%;
+    margin: 0;
+    padding: 6px 8px;
+    min-height: var(--tabbar-h);
+    height: var(--tabbar-h);
+    box-sizing: border-box;
     background: #0c1118;
-  }
-}
-@media (max-width: 900px) and (display-mode: standalone),
-       (max-width: 900px) and (display-mode: fullscreen) {
-  :root {
-    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
-  }
-  header {
-    padding-top: calc(6px + env(safe-area-inset-top, 0px));
-    min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
-  }
-  .tabs {
-    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
-    min-height: calc(56px + env(safe-area-inset-bottom, 0px));
-    background: #0c1118;
+    z-index: 50;
   }
 }

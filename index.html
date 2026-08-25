@@ -19,7 +19,7 @@
   </script>
   <link rel="icon" href="./img/logo.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./img/logo.svg" />
-  <link rel="stylesheet" href="./css/app.css?v=155" />
+  <link rel="stylesheet" href="./css/app.css?v=156" />
   <link rel="preload" as="image" href="./maps/japan.png?v=9" />
   <link rel="preload" as="image" href="./maps/tokyo.png?v=20" />
   <link rel="preload" as="image" href="./maps/fuji.png?v=20" />
@@ -64,27 +64,6 @@
       <button type="button" data-tab="prep">Préparatifs</button>
       <button type="button" data-tab="onsite">Sur place</button>
     </nav>
-    <div class="ios-install" id="ios-install" hidden role="dialog" aria-labelledby="ios-install-title">
-      <div class="ios-install-inner">
-        <p id="ios-install-title"><strong>iPhone · mode app</strong></p>
-        <p>Ouvre dans <strong>Safari</strong>, touche <span class="ios-share" aria-hidden="true">↑</span> <strong>Partager</strong>, puis <strong>Sur l’écran d’accueil</strong>. Une fois installée, l’app fonctionne hors ligne après la 1<sup>re</sup> visite en Wi‑Fi.</p>
-        <button type="button" class="btn-secondary" id="ios-install-dismiss">Compris</button>
-      </div>
-    </div>
-    <div class="booking-alert" id="booking-alert" hidden role="dialog" aria-labelledby="booking-alert-title">
-      <div class="booking-alert-inner">
-        <p id="booking-alert-title"><span class="booking-dot" aria-hidden="true"></span> <strong>Réservations ouvertes</strong></p>
-        <ul class="booking-alert-list" id="booking-alert-list"></ul>
-        <button type="button" class="btn-secondary" id="booking-alert-dismiss">Compris</button>
-      </div>
-    </div>
-    <div class="reminder-alert" id="reminder-alert" hidden role="dialog" aria-labelledby="reminder-alert-title">
-      <div class="reminder-alert-inner">
-        <p id="reminder-alert-title"><strong>Rappel billets</strong></p>
-        <ul class="booking-alert-list" id="reminder-alert-list"></ul>
-        <button type="button" class="btn-secondary" id="reminder-alert-dismiss">Compris</button>
-      </div>
-    </div>
     <main>
       <div id="view-map">
       <nav id="city-list"></nav>
@@ -219,10 +198,32 @@
     </main>
   </div>
 
+  <div class="ios-install" id="ios-install" hidden role="dialog" aria-labelledby="ios-install-title">
+    <div class="ios-install-inner">
+      <p id="ios-install-title"><strong>iPhone · mode app</strong></p>
+      <p>Ouvre dans <strong>Safari</strong>, touche <span class="ios-share" aria-hidden="true">↑</span> <strong>Partager</strong>, puis <strong>Sur l’écran d’accueil</strong>. Une fois installée, l’app fonctionne hors ligne après la 1<sup>re</sup> visite en Wi‑Fi.</p>
+      <button type="button" class="btn-secondary" id="ios-install-dismiss">Compris</button>
+    </div>
+  </div>
+  <div class="booking-alert" id="booking-alert" hidden role="dialog" aria-labelledby="booking-alert-title">
+    <div class="booking-alert-inner">
+      <p id="booking-alert-title"><span class="booking-dot" aria-hidden="true"></span> <strong>Réservations ouvertes</strong></p>
+      <ul class="booking-alert-list" id="booking-alert-list"></ul>
+      <button type="button" class="btn-secondary" id="booking-alert-dismiss">Compris</button>
+    </div>
+  </div>
+  <div class="reminder-alert" id="reminder-alert" hidden role="dialog" aria-labelledby="reminder-alert-title">
+    <div class="reminder-alert-inner">
+      <p id="reminder-alert-title"><strong>Rappel billets</strong></p>
+      <ul class="booking-alert-list" id="reminder-alert-list"></ul>
+      <button type="button" class="btn-secondary" id="reminder-alert-dismiss">Compris</button>
+    </div>
+  </div>
+
   <div id="print-root" class="print-root" hidden aria-hidden="true"></div>
 
-  <script src="./js/data.js?v=155"></script>
-  <script src="./js/app.js?v=155"></script>
-  <script src="./js/sw-register.js?v=155"></script>
+  <script src="./js/data.js?v=156"></script>
+  <script src="./js/app.js?v=156"></script>
+  <script src="./js/sw-register.js?v=156"></script>
 </body>
 </html>
