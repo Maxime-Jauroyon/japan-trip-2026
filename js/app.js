@@ -1005,9 +1005,14 @@ function updateCityLod(force){
   const s = cityCam.state.s || min;
   const ratio = Math.max(1, s / min);
   const mobilePins = window.matchMedia("(max-width: 900px)").matches;
-  /* Compensation partielle : les pins grossissent au zoom (pas taille écran fixe).
-     Scale en inline style — Safari ignore souvent les CSS vars sous un parent transformé. */
-  const pinScale = Math.max(0.38, Math.min(1.3, 1 / Math.pow(ratio, 0.42)));
+
+  // Hubs → zones → pins. Mobile : zones plus longtemps, pins seulement à fort zoom.
+  const pinStart = mobilePins ? 3.15 : 2.28;
+  const zoneIn0 = mobilePins ? 1.05 : 1.12;
+  const zoneIn1 = mobilePins ? 1.32 : 1.45;
+  /* Taille bonne à l’apparition ; en zoomant plus, le scale baisse assez pour
+     que la taille à l’écran diminue (pas seulement rester constante). */
+  const pinScale = Math.max(0.15, Math.min(1.2, Math.pow(pinStart / ratio, 1.4)));
   cityWorld.style.setProperty("--pin-scale", String(pinScale));
   cityWorld.dataset.pinSm = pinScale < 0.55 ? "1" : "";
   applyCityPinScales(pinScale);
@@ -1021,10 +1026,6 @@ function updateCityLod(force){
     });
   }
 
-  // Hubs → zones → pins. Mobile : zones plus longtemps, pins seulement à fort zoom.
-  const pinStart = mobilePins ? 3.15 : 2.28;
-  const zoneIn0 = mobilePins ? 1.05 : 1.12;
-  const zoneIn1 = mobilePins ? 1.32 : 1.45;
   const hubOp = 1 - smoothstep(zoneIn0, zoneIn1, ratio);
   const zoneFade = smoothstep(pinStart - 0.4, pinStart + 0.12, ratio);
   const zoneOp = smoothstep(zoneIn0, zoneIn1, ratio) * (1 - zoneFade);
