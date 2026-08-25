@@ -406,9 +406,10 @@ function makePanZoom(viewport, world, opts){
   function minScale(){
     const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
     const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
-    return o.mode === "contain"
-      ? Math.min(vw / ww, vh / wh)
-      : Math.max(vw / ww, vh / wh);
+    const cover = Math.max(vw / ww, vh / wh);
+    const contain = Math.min(vw / ww, vh / wh);
+    if (o.mode === "contain") return contain;
+    return cover;
   }
   function maxScale(){
     if (typeof o.maxRelative === "number") {
@@ -449,6 +450,17 @@ function makePanZoom(viewport, world, opts){
     st.s = Math.min(max, min * extra);
     st.x = (viewport.clientWidth - world.offsetWidth * st.s) / 2;
     st.y = (viewport.clientHeight - world.offsetHeight * st.s) / 2;
+    clamp(); apply();
+  }
+  /** Toute la carte visible (letterbox si besoin) — évite de couper gauche/droite. */
+  function fitContain(pad){
+    pad = pad == null ? 1 : pad;
+    const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
+    const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
+    const max = maxScale();
+    st.s = Math.min(max, Math.min(vw / ww, vh / wh) * pad);
+    st.x = (vw - ww * st.s) / 2;
+    st.y = (vh - wh * st.s) / 2;
     clamp(); apply();
   }
   function focusPct(leftPct, topPct, s){
@@ -556,13 +568,17 @@ function makePanZoom(viewport, world, opts){
     clamp(); apply();
   }
   return {
-    state:st, apply, clamp, zoomAt, fitCover, focusPct, fitWorldBox, minScale, maxScale,
+    state:st, apply, clamp, zoomAt, fitCover, fitContain, focusPct, fitWorldBox, minScale, maxScale,
     zoomIn(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1.2); },
     zoomOut(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1/1.2); }
   };
 }
 
-const countryCam = makePanZoom(countryViewport, countryWorld, { max:7, start:1, mode:"cover" });
+const countryCam = makePanZoom(countryViewport, countryWorld, {
+  max:7,
+  start:1,
+  mode:"cover"
+});
 const cityCam = makePanZoom(cityFrame, cityWorld, {
   max:18,
   maxRelative:16,
@@ -818,9 +834,9 @@ function showCountry(){
   });
 }
 
-/** Cadrage Japon : en mode app, pas de ×1.02 qui coupe le bord droit. */
 function fitJapanHome(){
   sizeJapanWorld();
+  /* Standalone : cover exact (pas le ×1.02 qui rogne un peu les côtés). */
   countryCam.fitCover(isStandaloneApp() ? 1 : 1.02);
 }
 
@@ -3041,6 +3057,18 @@ function markStandaloneMode(){
   const on = isStandaloneApp();
   document.documentElement.classList.toggle("standalone", on);
   document.querySelector(".app")?.classList.toggle("standalone", on);
+  if (!on) return;
+  /* Empêche le zoom navigateur qui coupe toute l’UI à droite en PWA. */
+  const meta = document.querySelector('meta[name="viewport"]');
+  if (meta) {
+    meta.setAttribute(
+      "content",
+      "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover"
+    );
+  }
+  window.scrollTo(0, 0);
+  document.documentElement.scrollLeft = 0;
+  document.body.scrollLeft = 0;
 }
 function initIOSInstallHint(){
   const box = document.getElementById("ios-install");
