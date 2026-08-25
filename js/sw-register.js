@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
     location.reload();
   });
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=151").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=152").then((reg) => {
       reg.update();
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
       reg.addEventListener("updatefound", () => {
@@ -23,33 +23,53 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+function withTimeout(promise, ms){
+  return Promise.race([
+    promise,
+    new Promise((resolve) => setTimeout(resolve, ms))
+  ]);
+}
+
 async function forceRefreshApp(){
   try {
-    if ("serviceWorker" in navigator) {
-      const regs = await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map((r) => r.unregister()));
-    }
-    if (window.caches) {
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => caches.delete(k)));
-    }
-  } catch (_) {}
+    await withTimeout((async () => {
+      if ("serviceWorker" in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister()));
+      }
+      if (window.caches) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((k) => caches.delete(k)));
+      }
+    })(), 2500);
+  } catch (_) { /* ignore */ }
   const url = new URL(location.href);
   url.searchParams.set("refresh", String(Date.now()));
-  /* Bypass HTTP cache on the next navigation */
   location.replace(url.pathname + url.search + url.hash);
 }
 
 function bindForceRefresh(btn){
   let busy = false;
   let lastTouch = 0;
+  const label = btn.textContent;
   const run = async (e) => {
     if (busy) return;
     busy = true;
     if (e && e.cancelable) e.preventDefault();
     btn.blur();
+    btn.disabled = true;
     btn.textContent = "…";
-    await forceRefreshApp();
+    try {
+      await forceRefreshApp();
+    } catch (_) {
+      /* navigation should have happened; restore if still here */
+    }
+    // Si le reload n’a pas eu lieu (blocage iOS), on restaure le bouton
+    setTimeout(() => {
+      busy = false;
+      btn.disabled = false;
+      btn.textContent = label;
+    }, 3000);
   };
   btn.addEventListener("touchend", (e) => {
     lastTouch = Date.now();
