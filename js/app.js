@@ -992,11 +992,14 @@ function updateCityLod(force){
   const hubScale = Math.max(0.9, Math.min(1.75, 1.75 / Math.pow(ratio, 0.4))) / Math.max(1, Math.min(ratio, 1.12));
   cityWorld.style.setProperty("--hub-scale", String(hubScale));
 
-  // Hubs → zones → pins : pas de fondu pins/zones en même temps (évite pins « flous »)
+  // Hubs → zones → pins. Mobile zoom-jour (~×2.5) saute les zones : pins plus tôt.
+  // Jamais de « trou » où tout est invisible.
+  const pinStart = mobilePins ? 1.95 : 2.28;
   const hubOp = 1 - smoothstep(1.12, 1.45, ratio);
-  const zoneOp = smoothstep(1.12, 1.45, ratio) * (1 - smoothstep(2.05, 2.32, ratio));
-  const pinRamp = smoothstep(2.34, 2.42, ratio);
-  const pinOp = pinRamp >= 0.5 ? 1 : 0;
+  const zoneFade = smoothstep(pinStart - 0.2, pinStart + 0.08, ratio);
+  const zoneOp = smoothstep(1.12, 1.45, ratio) * (1 - zoneFade);
+  let pinOp = ratio >= pinStart ? 1 : 0;
+  if (hubOp < 0.12 && zoneOp < 0.12) pinOp = 1;
   cityWorld.style.setProperty("--hub-opacity", hubOp.toFixed(3));
   cityWorld.style.setProperty("--zone-opacity", zoneOp.toFixed(3));
   cityWorld.style.setProperty("--pin-opacity", String(pinOp));
