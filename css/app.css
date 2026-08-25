@@ -2421,31 +2421,28 @@ button.stat.stop-jump .jump-hint {
   }
 }
 
-/* Mode app : safe-area haut ; hauteur = écran réel (supprime la bande vide en bas) */
+/* Mode app : safe-area haut (header) + bas (tab bar), même logique */
 @media (display-mode: standalone), (display-mode: fullscreen) {
   header {
     padding-top: calc(8px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
 }
-html.standalone {
-  height: 100%;
-  height: -webkit-fill-available;
-  max-height: none;
-  background: #0c1118;
-}
+html.standalone,
 html.standalone body {
   height: 100%;
-  min-height: 100%;
-  min-height: -webkit-fill-available;
   max-height: none;
+  overflow: hidden;
   background: #0c1118;
-  /* pas de position:fixed — ça avait cassé le layout */
 }
+/* Colle l’app aux 4 bords du webview (évite la bande sous la tab bar) */
 html.standalone .app {
-  height: var(--app-h, 100%);
-  min-height: var(--app-h, 100%);
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
   max-height: none;
+  min-height: 0;
 }
 html.standalone header {
   padding-top: calc(8px + env(safe-area-inset-top, 0px));
@@ -2453,27 +2450,32 @@ html.standalone header {
 }
 @media (max-width: 900px) {
   html.standalone {
-    --tabbar-h: 56px;
+    /* Hauteur réelle de la barre = contenu + zone home indicator */
+    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
   }
   html.standalone header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
-  /* Pas de padding safe-area en bas : la tab bar reste compacte, collée au bord */
+  /* Miroir du padding-top du header : remplit la zone home indicator */
   html.standalone .tabs {
-    padding-bottom: 6px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+    min-height: calc(56px + env(safe-area-inset-bottom, 0px));
+    background: #0c1118;
   }
 }
 @media (max-width: 900px) and (display-mode: standalone),
        (max-width: 900px) and (display-mode: fullscreen) {
   :root {
-    --tabbar-h: 56px;
+    --tabbar-h: calc(56px + env(safe-area-inset-bottom, 0px));
   }
   header {
     padding-top: calc(6px + env(safe-area-inset-top, 0px));
     min-height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
   }
   .tabs {
-    padding-bottom: 6px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+    min-height: calc(56px + env(safe-area-inset-bottom, 0px));
+    background: #0c1118;
   }
 }

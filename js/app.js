@@ -3058,19 +3058,7 @@ function markStandaloneMode(){
   document.documentElement.classList.toggle("standalone", on);
   document.querySelector(".app")?.classList.toggle("standalone", on);
   if (!on) return;
-  syncStandaloneHeight();
-  if (!window.__standaloneHeightBound) {
-    window.__standaloneHeightBound = true;
-    window.addEventListener("resize", syncStandaloneHeight);
-    window.visualViewport?.addEventListener("resize", syncStandaloneHeight);
-  }
-}
-/** Hauteur réelle du webview — comble la bande vide sous la tab bar (sans toucher à la largeur). */
-function syncStandaloneHeight(){
-  if (!isStandaloneApp()) return;
-  const h = Math.round(window.innerHeight || 0);
-  if (h < 100) return;
-  document.documentElement.style.setProperty("--app-h", h + "px");
+  /* Recadrer la carte une fois le layout fixed/inset stabilisé */
   requestAnimationFrame(() => {
     if (typeof currentCity !== "undefined" && currentCity) {
       if (typeof refreshCityMapView === "function") refreshCityMapView();
@@ -3078,6 +3066,16 @@ function syncStandaloneHeight(){
       fitJapanHome();
     }
   });
+  if (!window.__standaloneResizeBound) {
+    window.__standaloneResizeBound = true;
+    window.addEventListener("resize", () => {
+      if (typeof currentCity !== "undefined" && currentCity) {
+        if (typeof refreshCityMapView === "function") refreshCityMapView();
+      } else if (typeof fitJapanHome === "function") {
+        fitJapanHome();
+      }
+    });
+  }
 }
 function initIOSInstallHint(){
   const box = document.getElementById("ios-install");
