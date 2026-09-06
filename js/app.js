@@ -330,7 +330,7 @@ function pinKind(title){
   if (/gundam/.test(t)) return "gundam";
   if (/jinja|dera|shrine|temple|sanctuaire|inari|meiji|yasaka|kasuga|pagode|kinkaku|chūrei|churei|namba yasaka|hozenji|palais|kiyomizu|tōdai|todai|kōfuku|kofuku|nijn|nijō|nijo/.test(t)) return "torii";
   if (/château|chateau|castle|jinya|tower|tour|tsūten|tsuten/.test(t)) return "castle";
-  if (/arcade|pokemon|nintendo|animate|universal|den den|teamlab|mugiwara|sunshine|character street|itoya/.test(t)) return "play";
+  if (/arcade|pokemon|nintendo|animate|universal|den den|teamlab|mugiwara|sunshine|character street|itoya|fuji-?q|highland/.test(t)) return "play";
   if (/lac|lake|parc|park|bambou|bamboo|forêt|forest|jardin|garden|sumida|momiji|téléphérique|telepherique|ropeway|yanaka|oshino|saiko|kenroku|philosophe|philosopher/.test(t)) return "nature";
   if (/marché|marche|market|omicho|ōmichō|nishiki|kuromon|miyagawa|dotonbori|shinsaibashi|ginza/.test(t)) return "market";
   if (/déjeuner|dîner|diner|thé|tea|wagashi|takoyaki|feuille d’or|feuille d'or|gold leaf|food|cérémonie|ceremonie/.test(t)) return "food";
@@ -1990,7 +1990,8 @@ function photoSlug(act){
     [/shirakawa/, "shirakawa"], [/sanmachi/, "sanmachi"], [/kiyomizu/, "kiyomizu"],
     [/arashiyama|bambou/, "arashiyama"], [/kinkaku/, "kinkakuji"], [/fushimi|inari/, "fushimi"],
     [/nij[oō]|nijo|nijō/, "nijo"], [/parc de nara|cerfs/, "nara-park"], [/t[oō]dai|todai/, "todaiji"],
-    [/d[oō]tonbori|dotonbori/, "dotonbori"], [/universal/, "usj"], [/château d[’']osaka|osaka castle/, "osaka-castle"],
+    [/d[oō]tonbori|dotonbori/, "dotonbori"], [/universal/, "usj"], [/fuji-?q|highland/, "fujiq"],
+    [/château d[’']osaka|osaka castle/, "osaka-castle"],
     [/teamlab/, "teamlab"], [/nishiki/, "nishiki"], [/kuromon/, "kuromon"],
     [/character street|tokyo character/, "character-street"], [/sumida/, "sumida"],
     [/nezu|yanaka/, "yanaka"], [/oshino/, "oshino"], [/iyashi|saiko/, "saiko"],

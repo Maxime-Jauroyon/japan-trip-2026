@@ -201,6 +201,7 @@ const CITY_ZONES = {
   fuji:[
     { id:"kawaguchi", name:"Kawaguchi", color:"#3d7ea6", west:138.74, south:35.49, east:138.82, north:35.54 },
     { id:"chureito", name:"Chūrei-tō", color:"#c45c4a", west:138.785, south:35.48, east:138.83, north:35.52 },
+    { id:"fujiq", name:"Fuji-Q", color:"#6b5b95", west:138.76, south:35.475, east:138.80, north:35.50 },
     { id:"oshino", name:"Oshino", color:"#6b8e4e", west:138.81, south:35.44, east:138.86, north:35.48 },
     { id:"saiko", name:"Saiko", color:"#2a9d8f", west:138.66, south:35.48, east:138.72, north:35.52 }
   ],
@@ -301,10 +302,7 @@ const DAYS = [
         desc:"Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
         img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lake_Kawaguchi.jpg/640px-Lake_Kawaguchi.jpg"},
       {title:"Momiji Corridor", lat:35.5092, lng:138.7684,
-        desc:"Allée d’érables au bord du lac, célèbre en automne. Novembre = pic des momiji."}
-    ] },
-  { n:6, date:"13 nov 2026", dow:"Vendredi", city:"fuji",
-    ideas:[
+        desc:"Allée d’érables au bord du lac, célèbre en automne. Novembre = pic des momiji."},
       {title:"Oshino Hakkai", lat:35.4598, lng:138.8338,
         desc:"Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks."},
       {title:"Saiko Iyashi-no-Sato", lat:35.4972, lng:138.6874,
@@ -313,6 +311,25 @@ const DAYS = [
         desc:"Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac."},
       {title:"Music Forest + lac", lat:35.5096, lng:138.7675,
         desc:"Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile."}
+    ] },
+  { n:6, date:"13 nov 2026", dow:"Vendredi", city:"fuji",
+    ideas:[
+      {title:"Fuji-Q Highland", lat:35.4874, lng:138.7806, slug:"fujiq",
+        desc:"Journée parc d’attractions au pied du Fuji — coasters (Fujiyama, Eejanaika, Takabisha…), Thomas Land et maison de l’horreur à part.",
+        notes:[
+          "Entrée au parc gratuite ; pour les manèges il faut un One Day Pass (ワンデイパス) — rides illimités (sauf exceptions).",
+          "One Day Pass adulte ~¥6 000–7 900 selon le jour (tarif saisonnier) · en ligne ou au guichet · pas de remboursement après achat.",
+          "Maison de l’horreur « Super Scary Labyrinth of Fear » (戦慄迷宮) : non incluse dans le One Day Pass — ticket horodaté à part.",
+          "Horreur : payer sur place (bornes près de l’attraction / info) ou via l’app dès J−3 à 18h JST · ~¥3 000–4 000 / groupe avec One Day Pass (jusqu’à 3–4 pers.).",
+          "App officielle « Q-chan » : files d’attente, carte, achat One Day Pass / priorités / tickets horodatés.",
+          "Accès : gare Fujikyu Highland (歩 ~5 min) ou bus depuis Kawaguchiko · arriver à l’ouverture."
+        ],
+        links:[
+          { label:"Tarifs & billets officiels (EN/JP)", url:"https://www.fujiq.jp/en/ticket/" },
+          { label:"Acheter One Day Pass (site officiel)", url:"https://www.fujiq.jp/ticket/" },
+          { label:"App Store · Q-chan (Fuji-Q)", url:"https://apps.apple.com/app/q-chan/id1483774385" }
+        ],
+        img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Fuji-Q_Highland_Fujiyama.jpg/640px-Fuji-Q_Highland_Fujiyama.jpg"}
     ] },
   { n:7, date:"14 nov 2026", dow:"Samedi", city:"kanazawa",
     moves:[
@@ -774,12 +791,18 @@ const PREP_CHECKS = [
   { id:"taxes", label:"Taxes de séjour / onsen", meta:"Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)", done:false },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen Osaka→Tokyo payé · reste Fuji / Hokuriku / Nohi / Hida…" },
   { id:"osa-tokyo-tickets", label:"QR Ticket Osaka → Tokyo (Apple Wallet)", meta:"Payé par Léo · 158,72 € · Nozomi 90 · 11:30→13:57 · ajouter les QR dans Wallet dès le 27 oct 2026", remindFrom:"2026-10-27", done:false },
+  { id:"fujiq-tickets", label:"Billets Fuji-Q Highland (One Day Pass)", meta:"Jour 6 · ven. 13 nov 2026 · ワンデイパス en ligne/guichet · maison de l’horreur = ticket à part (sur place)", done:false,
+    links:[
+      { label:"Tarifs & billets officiels", url:"https://www.fujiq.jp/en/ticket/" },
+      { label:"Acheter One Day Pass", url:"https://www.fujiq.jp/ticket/" },
+      { label:"App Store · Q-chan", url:"https://apps.apple.com/app/q-chan/id1483774385" }
+    ] },
   { id:"usj-tickets", label:"Billets Universal Studios Japan", meta:"Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin", remindFrom:"2026-09-24", done:false,
     links:[
       { label:"Guide YouTube · réserver USJ", url:"https://youtu.be/z3XQLNuE_t8" },
       { label:"App Store · app officielle USJ", url:"https://apps.apple.com/app/universal-studios-japan/id532097000" }
     ] },
-  { id:"idees", label:"Idées & billets d’activités", meta:"USJ (rappel 24 sept) · teamLab, observatoires, etc." },
+  { id:"idees", label:"Idées & billets d’activités", meta:"Fuji-Q (13 nov) · USJ (rappel 24 sept) · teamLab, observatoires…" },
   { id:"assurance", label:"Assurance voyage", meta:"Contrat + numéros d’urgence" },
   { id:"esim", label:"eSIM / data", meta:"Activer avant l’atterrissage" },
   { id:"suica", label:"Welcome Suica Mobile (iPhone ×2)", meta:"App Store avant départ · émettre à HND · Express Mode" },
@@ -793,7 +816,7 @@ const PREP_BUDGET = [
   { label:"Hôtels (partagés)", amount:"≈ 1 535 € / pers.", note:"Total ≈ 3 070 € ÷ 2 · tous les séjours inclus", done:true },
   { label:"Taxes séjour / onsen", amount:"Quelques ¥ / nuit", note:"Souvent hors Booking · Kanazawa, Takayama… cash/carte au check-in", done:false },
   { label:"Trajets JP", amount:"158,72 € + reste", note:"Osaka→Tokyo Nozomi 90 payé par Léo (QR Apple Wallet) · reste Fuji / Hokuriku / Nohi / Hida…", done:false },
-  { label:"Activités / tickets", amount:"À définir / pers.", note:"USJ, teamLab…", done:false },
+  { label:"Activités / tickets", amount:"À définir / pers.", note:"Fuji-Q One Day Pass + horreur sur place · USJ · teamLab…", done:false },
   { label:"Nourriture & divers", amount:"Variable / pers.", note:"Budget confort ~60–100 €/jour", done:false }
 ];
 const PREP_BUDGET_TOTAL = { label:"Déjà engagé / pers.", amount:"≈ 3 735 €", note:"Vols + tous les hôtels (hors taxes séjour / trajets / activités / nourriture)" };
@@ -850,13 +873,14 @@ const ACT_META = {
   kasuga:{ hours:"~6h30–17h30", duration:"1 h" },
   dotonbori:{ hours:"Soir idéal", duration:"1–2 h" },
   usj:{ hours:"Horaires parc (réserver)", duration:"Journée" },
+  fujiq:{ hours:"Parc ~9h–17h/20h (saison) · vérifier le jour J", duration:"Journée" },
   "osaka-castle":{ hours:"~9h–17h", duration:"1,5–2 h" },
   shinsaibashi:{ hours:"Magasins ~10h–20h", duration:"1–2 h" },
   kuromon:{ hours:"~9h–18h", duration:"1 h" }
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v160";
+const APP_CACHE_VER = "v161";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
