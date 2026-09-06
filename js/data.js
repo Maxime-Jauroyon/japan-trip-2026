@@ -791,10 +791,15 @@ const PREP_CHECKS = [
   { id:"taxes", label:"Taxes de séjour / onsen", meta:"Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)", done:false },
   { id:"trajets", label:"Trajets (trains / bus)", meta:"Shinkansen Osaka→Tokyo payé · reste Fuji / Hokuriku / Nohi / Hida…" },
   { id:"osa-tokyo-tickets", label:"QR Ticket Osaka → Tokyo (Apple Wallet)", meta:"Payé par Léo · 158,72 € · Nozomi 90 · 11:30→13:57 · ajouter les QR dans Wallet dès le 27 oct 2026", remindFrom:"2026-10-27", done:false },
-  { id:"fujiq-tickets", label:"Billets Fuji-Q Highland (One Day Pass)", meta:"Jour 6 · ven. 13 nov 2026 · ワンデイパス en ligne/guichet · maison de l’horreur = ticket à part (sur place)", done:false,
+  { id:"fujiq-tickets", label:"Billets Fuji-Q Highland (One Day Pass)", meta:"Jour 6 · ven. 13 nov 2026 · ワンデイパス achetable dès maintenant (en ligne/guichet) · ~¥6 000–7 900 / adulte", remindFrom:"2026-10-13", done:false,
     links:[
       { label:"Tarifs & billets officiels", url:"https://www.fujiq.jp/en/ticket/" },
       { label:"Acheter One Day Pass", url:"https://www.fujiq.jp/ticket/" },
+      { label:"App Store · Q-chan", url:"https://apps.apple.com/app/q-chan/id1483774385" }
+    ] },
+  { id:"fujiq-horror", label:"Fuji-Q · maison de l’horreur (ticket à part)", meta:"Ven. 13 nov · 戦慄迷宮 non incluse dans le pass · ticket horodaté dès mar. 10 nov 18h JST (app) ou sur place le jour J", remindFrom:"2026-11-10", done:false,
+    links:[
+      { label:"Tarifs / tickets horodatés", url:"https://www.fujiq.jp/en/ticket/" },
       { label:"App Store · Q-chan", url:"https://apps.apple.com/app/q-chan/id1483774385" }
     ] },
   { id:"usj-tickets", label:"Billets Universal Studios Japan", meta:"Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin", remindFrom:"2026-09-24", done:false,
@@ -880,7 +885,7 @@ const ACT_META = {
 };
 
 /** Version affichée (garder en sync avec sw.js CACHE) */
-const APP_CACHE_VER = "v161";
+const APP_CACHE_VER = "v162";
 
 const PRACTICAL_INFO = [
   { id:"esim", title:"eSIM / data", items:[
