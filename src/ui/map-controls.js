@@ -2,7 +2,6 @@
 
 import { onMapContainerResize } from "../map/controller.js";
 import { COUNTRY_PITCH, map, mapMode } from "../map/map-view.js";
-import { startVehicles } from "../map/routes.js";
 import { closePanel } from "./panels/panel.js";
 
 /** Boutons flottants de la carte, Échap, redimensionnement, reprise d’animation. */
@@ -21,9 +20,6 @@ export function initMapControls() {
   };
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") closePanel(true);
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden && mapMode === "country") startVehicles();
   });
   let resizeTimer = 0;
   window.addEventListener("resize", () => {

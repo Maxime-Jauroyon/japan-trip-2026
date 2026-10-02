@@ -1,16 +1,15 @@
-/* Trajets sur la carte Japon : couches GeoJSON, surbrillance, véhicules animés. */
+/* Trajets sur la carte Japon : couches GeoJSON, surbrillance, pastilles de mode. */
 
 import { LEGS } from "../core/data.js";
-import { prefersReducedMotion } from "../core/env.js";
 import { legRouteParts, legVehicleKind } from "../domain/legs.js";
 import { routePartCoords, toWorld } from "./geo.js";
 import { map, mapMode, mapStyleReady, mapStyleTheme } from "./map-view.js";
 import { TRANSPORT_COLORS as ROUTE_COLORS, TRANSPORT_LABELS, transportIconSvg } from "../shared/icons.js";
 import { mapEl } from "../core/elements.js";
 
-let vehicleAnims = [];
+let routeBadges = [];
+let badgeZoomBound = false;
 
-let vehicleRaf = 0;
 
 let routeHighlight = null;
 
@@ -126,39 +125,41 @@ export function setRoutesVisible(on){
   });
 }
 
-/* —— Véhicules animés le long des trajets —— */
+/* —— Pastilles de mode, fixes au milieu de chaque trajet —— */
 /** Trajet trop court à l’écran : la pastille recouvrirait les villes → masquée. */
-function syncVehicleVisibility(v){
+function syncBadgeVisibility(v){
   const a = map.project(v.coords[0]), b = map.project(v.coords[v.coords.length - 1]);
   v.el.classList.toggle("is-hidden", Math.hypot(b.x - a.x, b.y - a.y) < 90);
 }
 
-function placeVehicle(v, t){
-  const target = t * v.total;
-  let i = 1;
-  while (i < v.cum.length - 1 && v.cum[i] < target) i++;
-  const a = v.coords[i - 1], b = v.coords[i];
-  const seg = (v.cum[i] - v.cum[i - 1]) || 1e-9;
-  const k = Math.max(0, Math.min(1, (target - v.cum[i - 1]) / seg));
-  v.marker.setLngLat([a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k]);
-  syncVehicleVisibility(v);
+function syncRouteBadges(){
+  if (map && mapMode === "country") routeBadges.forEach(syncBadgeVisibility);
 }
 
-export function buildVehicles(){
-  vehicleAnims.forEach(v => v.marker.remove());
-  vehicleAnims = [];
+/** Point situé à mi-parcours (en distance projetée) le long du tracé. */
+function routeMidpoint(coords){
+  const cum = [0];
+  for (let i = 1; i < coords.length; i++) {
+    const a = toWorld({ lat: coords[i - 1][1], lng: coords[i - 1][0] });
+    const b = toWorld({ lat: coords[i][1], lng: coords[i][0] });
+    cum.push(cum[i - 1] + Math.hypot(b.x - a.x, b.y - a.y));
+  }
+  const target = cum[cum.length - 1] / 2;
+  let i = 1;
+  while (i < cum.length - 1 && cum[i] < target) i++;
+  const a = coords[i - 1], b = coords[i];
+  const k = Math.max(0, Math.min(1, (target - cum[i - 1]) / ((cum[i] - cum[i - 1]) || 1e-9)));
+  return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+}
+
+export function buildRouteBadges(){
+  routeBadges.forEach(v => v.marker.remove());
+  routeBadges = [];
   if (!map) return;
   // Construit avant le chargement du style (buildCountry) : les données ne dépendent pas de la carte
   if (!ROUTE_DATA) ROUTE_DATA = buildRouteData();
   ROUTE_DATA.features.forEach(f => {
     const coords = f.geometry.coordinates;
-    const cum = [0];
-    for (let i = 1; i < coords.length; i++) {
-      const a = toWorld({ lat: coords[i - 1][1], lng: coords[i - 1][0] });
-      const b = toWorld({ lat: coords[i][1], lng: coords[i][0] });
-      cum.push(cum[i - 1] + Math.hypot(b.x - a.x, b.y - a.y));
-    }
-    const total = cum[cum.length - 1] || 1e-9;
     const kind = f.properties.vehicle;
     const el = document.createElement("div");
     el.className = "route-vehicle vehicle-" + kind;
@@ -166,41 +167,24 @@ export function buildVehicles(){
     el.dataset.journey = f.properties.journey;
     el.style.setProperty("--mode-c", ROUTE_COLORS[kind] || ROUTE_COLORS.train);
     el.innerHTML = `<span class="vehicle-badge">${transportIconSvg(kind)}</span>`;
-    const marker = new maplibregl.Marker({ element: el })
-      .setLngLat(coords[0]);
-    /* durée ≈ ancienne carte : longueur / vitesse, bornée 5–22 s */
-    const px = total * 2600;
-    const dur = Math.max(5, Math.min(22, px / (kind === "bus" ? 55 : 75)));
-    const v = { marker, el, coords, cum, total, dur, offset: Math.random() * 8, feature: f };
-    placeVehicle(v, 0.38);
-    vehicleAnims.push(v);
+    const marker = new maplibregl.Marker({ element: el }).setLngLat(routeMidpoint(coords));
+    routeBadges.push({ marker, el, coords, feature: f });
   });
-}
-
-function vehiclesLoop(now){
-  vehicleRaf = 0;
-  if (!map || mapMode !== "country" || document.hidden) return;
-  vehicleAnims.forEach(v => {
-    const t = (((now / 1000) + v.offset) % v.dur) / v.dur;
-    placeVehicle(v, t);
-  });
-  vehicleRaf = requestAnimationFrame(vehiclesLoop);
-}
-
-export function startVehicles(){
-  if (!map) return;
-  vehicleAnims.forEach(v => { if (!v.marker._map) v.marker.addTo(map); });
-  if (prefersReducedMotion()) {
-    vehicleAnims.forEach(v => placeVehicle(v, 0.5));
-    return;
+  if (!badgeZoomBound) {
+    badgeZoomBound = true;
+    map.on("move", syncRouteBadges);
+    map.on("idle", syncRouteBadges);
   }
-  if (!vehicleRaf) vehicleRaf = requestAnimationFrame(vehiclesLoop);
 }
 
-export function stopVehicles(){
-  if (vehicleRaf) cancelAnimationFrame(vehicleRaf);
-  vehicleRaf = 0;
-  vehicleAnims.forEach(v => v.marker.remove());
+export function showRouteBadges(){
+  if (!map) return;
+  routeBadges.forEach(v => { if (!v.marker._map) v.marker.addTo(map); });
+  syncRouteBadges();
+}
+
+export function hideRouteBadges(){
+  routeBadges.forEach(v => v.marker.remove());
 }
 
 /* —— Surbrillance trajets (feature-state) —— */
@@ -212,7 +196,7 @@ export function applyRouteHighlight(){
     if (h) on = h.journey ? f.properties.journey === h.journey : f.properties.leg === h.leg;
     map.setFeatureState({ source: "routes", id: f.id }, { active: !!h && on, dim: !!h && !on, hover: f.id === routeHoverId });
   });
-  vehicleAnims.forEach(v => {
+  routeBadges.forEach(v => {
     const p = v.feature.properties;
     let on = false;
     if (h) on = h.journey ? p.journey === h.journey : p.leg === h.leg;
@@ -255,11 +239,6 @@ export function legGeoCoords(leg){
     });
   }
   return coords;
-}
-
-export function stopVehiclesLoopOnly(){
-  if (vehicleRaf) cancelAnimationFrame(vehicleRaf);
-  vehicleRaf = 0;
 }
 
 /** Légende des couleurs de trajets (vue Japon), limitée aux modes présents dans le voyage. */

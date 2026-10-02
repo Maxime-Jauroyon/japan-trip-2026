@@ -9,28 +9,8 @@ import { hotelPhotos } from "../domain/photos.js";
 import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
 import { hotelIconSvg, mapsIconSvg, modeBadgeHtml, placeGlyphSvg } from "../shared/icons.js";
 
-/** Logo UI (panneau trajet) — Shinkansen reconnaissable. */
-function modeLogoSvg(mode){
-  const kind = legVehicleKind(mode);
-  if (kind === "shinkansen") {
-    return `<svg class="mode-logo mode-logo-shinkansen" viewBox="0 0 48 28" aria-hidden="true">` +
-      `<defs><linearGradient id="skNose" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f8fcff"/><stop offset="1" stop-color="#e8f2f8"/></linearGradient></defs>` +
-      `<path d="M2 22V8.2C2 5.4 4.2 3.2 7 3.2h22.5c4.2 0 8 2.1 11.2 5.8L44 22H2z" fill="url(#skNose)" stroke="#1a5f8a" stroke-width="1.4"/>` +
-      `<path d="M3.5 14.2h31.5c2.2 0 4.2.5 6 1.5" fill="none" stroke="#2f7fb0" stroke-width="3.2" stroke-linecap="round"/>` +
-      `<rect x="8" y="6.2" width="6.5" height="4.2" rx=".7" fill="#5aa0c8"/>` +
-      `<rect x="16.5" y="6.2" width="6.5" height="4.2" rx=".7" fill="#5aa0c8"/>` +
-      `<rect x="25" y="6.2" width="6.5" height="4.2" rx=".7" fill="#5aa0c8"/>` +
-      `<path d="M34.5 6.8c2.4.3 4.6 1.4 6.6 3.2" fill="none" stroke="#c45c26" stroke-width="1.8" stroke-linecap="round"/>` +
-      `<circle cx="38.2" cy="9.2" r=".9" fill="#c45c26"/>` +
-      `<text x="24" y="26.2" text-anchor="middle" font-size="5.2" font-weight="700" fill="#1a5f8a" letter-spacing=".4">新幹線</text>` +
-      `</svg>`;
-  }
-  return "";
-}
-
 export function modeStatHtml(mode){
-  const logo = modeLogoSvg(mode);
-  return `<div class="stat mode-stat"><span>Mode</span><strong class="mode-with-badge">${modeBadgeHtml(legVehicleKind(mode))}<b class="mode-name">${esc(mode || "—")}</b></strong>${logo}</div>`;
+  return `<div class="stat mode-stat"><span>Mode</span><strong class="mode-with-badge">${modeBadgeHtml(legVehicleKind(mode))}<b class="mode-name">${esc(mode || "—")}</b></strong></div>`;
 }
 
 /** Pastille du mode d’un trajet (texte libre « Bus », « Shinkansen »…). */

@@ -1,8 +1,7 @@
 /* Onglets de l’app (Carte, Préparatifs, Sur place, Réglages). */
 
 import { state } from "../core/state.js";
-import { map, mapMode } from "../map/map-view.js";
-import { startVehicles, stopVehiclesLoopOnly } from "../map/routes.js";
+import { map } from "../map/map-view.js";
 import { syncSheetMapInset } from "./panels/panel.js";
 import { getOnsiteSelectedDay, openMapForDay, renderOnsite } from "./views/onsite-view.js";
 import { renderPrep } from "./views/prep-view.js";
@@ -31,11 +30,8 @@ export function setAppTab(tab){
     requestAnimationFrame(() => {
       if (!map) return;
       map.resize();
-      if (mapMode === "country") startVehicles();
       if (state.currentCity) syncSheetMapInset();
     });
-  } else {
-    stopVehiclesLoopOnly();
   }
 }
 

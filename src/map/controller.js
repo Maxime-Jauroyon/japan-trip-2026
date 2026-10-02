@@ -15,7 +15,7 @@ import { buildCountry, setActiveCity, syncCountryLabels } from "./country.js";
 import { boundsOfCoords } from "./geo.js";
 import { buildMapStyle } from "./map-style.js";
 import { COUNTRY_PITCH, JAPAN_MAX_BOUNDS, cameraMove, fitGeoBounds, fitJapanHome, map, mapMode, mapReliefEnabled, mapStyleReady, mapStyleTheme, mapViewportInsets, resolvedTheme, setMapInstance, setMapModeValue, setMapStyleReady, setMapStyleTheme, showMapFallback, syncMapControls } from "./map-view.js";
-import { addTripLayers, applyRouteHighlight, legGeoCoords, setRouteHover, setRoutesVisible, startVehicles, stopVehicles } from "./routes.js";
+import { addTripLayers, applyRouteHighlight, legGeoCoords, setRouteHover, setRoutesVisible, hideRouteBadges, showRouteBadges } from "./routes.js";
 
 function onMapStyleLoad(){
   setMapStyleReady(true);
@@ -55,14 +55,14 @@ function setMapMode(mode){
     map.touchZoomRotate.enableRotation();
     map.touchPitch.enable();
     map.keyboard.enableRotation();
-    startVehicles();
+    showRouteBadges();
   } else {
     map.setMaxBounds(null);
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
     map.touchPitch.disable();
     map.keyboard.disableRotation();
-    stopVehicles();
+    hideRouteBadges();
   }
   applyMapModeToStyle();
   syncMapControls();

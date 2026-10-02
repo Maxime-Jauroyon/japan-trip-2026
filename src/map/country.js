@@ -6,7 +6,7 @@ import { isMobileUi } from "../core/env.js";
 import { hooks } from "../core/hooks.js";
 import { legEndPoint } from "../domain/legs.js";
 import { map } from "./map-view.js";
-import { buildVehicles, renderRouteLegend } from "./routes.js";
+import { buildRouteBadges, renderRouteLegend } from "./routes.js";
 import { cityMapLogoSvg } from "../shared/icons.js";
 
 let countryMarks = [];
@@ -33,7 +33,7 @@ export function buildCountry(){
     const marker = new maplibregl.Marker({ element: btn, anchor: "center" }).setLngLat([c.lng, c.lat]).addTo(map);
     countryMarks.push(marker);
   });
-  buildVehicles();
+  buildRouteBadges();
   renderRouteLegend();
 }
 
