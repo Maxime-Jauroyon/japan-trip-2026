@@ -1,5 +1,7 @@
 /* Offline cache — 1ère visite en Wi‑Fi, puis utilisable sans réseau dans Safari */
-const CACHE = "japan-trip-2026-v162";
+const CACHE = "japan-trip-2026-v163";
+/* Tuiles de carte : cache séparé, conservé entre les versions (cf. js/offline-maps.js) */
+const TILE_CACHE = "japan-tiles-v1";
 
 const ASSETS = [
   "./",
@@ -8,17 +10,11 @@ const ASSETS = [
   "./css/app.css",
   "./js/data.js",
   "./js/app.js",
+  "./js/map-style.js",
+  "./js/offline-maps.js",
+  "./js/lib/maplibre-gl.js",
+  "./js/lib/maplibre-gl.css",
   "./js/sw-register.js",
-  "./maps/bounds.json",
-  "./maps/fuji.png",
-  "./maps/japan.png",
-  "./maps/kanazawa.png",
-  "./maps/kyoto.png",
-  "./maps/nara.png",
-  "./maps/osaka.png",
-  "./maps/shirakawa.png",
-  "./maps/takayama.png",
-  "./maps/tokyo.png",
   "./img/logo.svg",
   "./img/hotels/agora-kyoto.jpg",
   "./img/hotels/agora-kyoto-2.jpg",
@@ -172,7 +168,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+      Promise.all(keys.filter((k) => k !== CACHE && k !== TILE_CACHE).map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
 });
@@ -193,11 +189,13 @@ self.addEventListener("fetch", (event) => {
     path.endsWith("/") ||
     path.endsWith("/index.html") ||
     path.endsWith("sw.js");
-  const isAppCode =
+  /* Librairie (1 Mo) : cache d’abord, rafraîchie à chaque nouvelle version du SW */
+  const isLib = path.includes("/js/lib/");
+  const isAppCode = !isLib && (
     path.includes("/js/") ||
     path.includes("/css/") ||
     path.endsWith(".js") ||
-    path.endsWith(".css");
+    path.endsWith(".css"));
 
   // HTML / SW / JS / CSS : réseau d’abord (sans cache HTTP) pour les mises à jour
   if (isDoc || isAppCode) {
