@@ -1,13 +1,18 @@
-// Cache le site pour Safari hors ligne (après 1ère ouverture avec Wi‑Fi)
-if ("serviceWorker" in navigator) {
+/* Service worker : cache le site pour Safari hors ligne (après une 1re ouverture en Wi‑Fi),
+   applique les mises à jour, et bouton « Rafraîchir l’application ». */
+import { APP_VERSION, TILE_CACHE } from "../config.js";
+
+/** Enregistre sw.js ; une nouvelle version prend la main puis recharge la page. */
+export function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
   let refreshing = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     if (refreshing) return;
     refreshing = true;
     location.reload();
   });
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=163").then((reg) => {
+  const register = () => {
+    navigator.serviceWorker.register("./sw.js?v=" + APP_VERSION.replace(/^v/, "")).then((reg) => {
       reg.update();
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
       reg.addEventListener("updatefound", () => {
@@ -20,17 +25,20 @@ if ("serviceWorker" in navigator) {
         });
       });
     }).catch(() => {});
-  });
+  };
+  if (document.readyState === "complete") register();
+  else window.addEventListener("load", register);
 }
 
-function withTimeout(promise, ms){
+function withTimeout(promise, ms) {
   return Promise.race([
     promise,
     new Promise((resolve) => setTimeout(resolve, ms))
   ]);
 }
 
-async function forceRefreshApp(){
+/** Vide les caches de l’app (sauf les cartes hors ligne) puis recharge. */
+async function forceRefreshApp() {
   try {
     await withTimeout((async () => {
       if ("serviceWorker" in navigator) {
@@ -39,7 +47,7 @@ async function forceRefreshApp(){
       }
       if (window.caches) {
         const keys = await caches.keys();
-        await Promise.all(keys.filter((k) => k !== "japan-tiles-v1").map((k) => caches.delete(k)));
+        await Promise.all(keys.filter((k) => k !== TILE_CACHE).map((k) => caches.delete(k)));
       }
     })(), 2500);
   } catch (_) { /* ignore */ }
@@ -48,7 +56,9 @@ async function forceRefreshApp(){
   location.replace(url.pathname + url.search + url.hash);
 }
 
-function bindForceRefresh(btn){
+/** Bouton « Rafraîchir l’application » (Réglages) — robuste au double tap iOS. */
+export function bindForceRefresh(btn) {
+  if (!btn) return;
   let busy = false;
   let lastTouch = 0;
   const label = btn.textContent;
@@ -62,9 +72,9 @@ function bindForceRefresh(btn){
     try {
       await forceRefreshApp();
     } catch (_) {
-      /* navigation should have happened; restore if still here */
+      /* la navigation aurait dû avoir lieu */
     }
-    // Si le reload n’a pas eu lieu (blocage iOS), on restaure le bouton
+    // Si le rechargement n’a pas eu lieu (blocage iOS), on restaure le bouton
     setTimeout(() => {
       busy = false;
       btn.disabled = false;
@@ -80,6 +90,3 @@ function bindForceRefresh(btn){
     run(e);
   });
 }
-
-const refreshBtn = document.getElementById("force-refresh");
-if (refreshBtn) bindForceRefresh(refreshBtn);

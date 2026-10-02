@@ -1,0 +1,182 @@
+{
+  "common": [
+    {
+      "fr": "Bonjour",
+      "jp": "こんにちは",
+      "ro": "Konnichiwa"
+    },
+    {
+      "fr": "Merci",
+      "jp": "ありがとう",
+      "ro": "Arigatō"
+    },
+    {
+      "fr": "S’il vous plaît",
+      "jp": "お願いします",
+      "ro": "Onegai shimasu"
+    },
+    {
+      "fr": "Excusez-moi / Pardon",
+      "jp": "すみません",
+      "ro": "Sumimasen"
+    },
+    {
+      "fr": "Je ne parle pas japonais",
+      "jp": "日本語が話せません",
+      "ro": "Nihongo ga hanasemasen"
+    },
+    {
+      "fr": "L’addition, s’il vous plaît",
+      "jp": "お会計お願いします",
+      "ro": "Okaikei onegai shimasu"
+    },
+    {
+      "fr": "Où est la gare ?",
+      "jp": "駅はどこですか？",
+      "ro": "Eki wa doko desu ka?"
+    },
+    {
+      "fr": "Combien ça coûte ?",
+      "jp": "いくらですか？",
+      "ro": "Ikura desu ka?"
+    },
+    {
+      "fr": "Avez-vous du wifi ?",
+      "jp": "Wi‑Fiはありますか？",
+      "ro": "Wi‑Fi wa arimasu ka?"
+    },
+    {
+      "fr": "De l’eau, s’il vous plaît",
+      "jp": "水をください",
+      "ro": "Mizu o kudasai"
+    },
+    {
+      "fr": "C’est délicieux",
+      "jp": "おいしいです",
+      "ro": "Oishii desu"
+    },
+    {
+      "fr": "Aide / urgence",
+      "jp": "助けてください",
+      "ro": "Tasukete kudasai"
+    }
+  ],
+  "context": {
+    "hotel": [
+      {
+        "fr": "Check-in, s’il vous plaît",
+        "jp": "チェックインお願いします",
+        "ro": "Chekku-in onegai shimasu"
+      },
+      {
+        "fr": "J’ai une réservation au nom de…",
+        "jp": "予約しています",
+        "ro": "Yoyaku shite imasu"
+      },
+      {
+        "fr": "Où est l’ascenseur ?",
+        "jp": "エレベーターはどこですか？",
+        "ro": "Erebeeta wa doko desu ka?"
+      }
+    ],
+    "train": [
+      {
+        "fr": "Quai pour … ?",
+        "jp": "のりばはどこですか？",
+        "ro": "Noriba wa doko desu ka?"
+      },
+      {
+        "fr": "Ce train va à … ?",
+        "jp": "この電車は行きですか？",
+        "ro": "Kono densha wa … iki desu ka?"
+      },
+      {
+        "fr": "Où acheter un billet ?",
+        "jp": "切符はどこで買えますか？",
+        "ro": "Kippu wa doko de kaemasu ka?"
+      }
+    ],
+    "bus": [
+      {
+        "fr": "Ce bus va à … ?",
+        "jp": "このバスは行きですか？",
+        "ro": "Kono basu wa … iki desu ka?"
+      },
+      {
+        "fr": "Arrêt suivant … ?",
+        "jp": "次はですか？",
+        "ro": "Tsugi wa … desu ka?"
+      }
+    ],
+    "plane": [
+      {
+        "fr": "Où est l’immigration ?",
+        "jp": "入国審査はどこですか？",
+        "ro": "Nyūkoku shinsa wa doko desu ka?"
+      },
+      {
+        "fr": "Porte d’embarquement … ?",
+        "jp": "ゲートはどこですか？",
+        "ro": "Gēto wa doko desu ka?"
+      }
+    ],
+    "restaurant": [
+      {
+        "fr": "Table pour deux, s’il vous plaît",
+        "jp": "二人です",
+        "ro": "Futari desu"
+      },
+      {
+        "fr": "Sans viande porc, s’il vous plaît",
+        "jp": "豚肉なしでお願いします",
+        "ro": "Butaniku nashi de onegai shimasu"
+      },
+      {
+        "fr": "L’addition, s’il vous plaît",
+        "jp": "お会計お願いします",
+        "ro": "Okaikei onegai shimasu"
+      }
+    ],
+    "shop": [
+      {
+        "fr": "Combien ça coûte ?",
+        "jp": "いくらですか？",
+        "ro": "Ikura desu ka?"
+      },
+      {
+        "fr": "Paiement par carte ?",
+        "jp": "カード使えますか？",
+        "ro": "Kaado tsukaemasu ka?"
+      }
+    ],
+    "temple": [
+      {
+        "fr": "Peut-on entrer ?",
+        "jp": "中に入れますか？",
+        "ro": "Naka ni hairemasu ka?"
+      },
+      {
+        "fr": "Où est l’entrée ?",
+        "jp": "入口はどこですか？",
+        "ro": "Iriguchi wa doko desu ka?"
+      }
+    ],
+    "visit": [
+      {
+        "fr": "Excusez-moi",
+        "jp": "すみません",
+        "ro": "Sumimasen"
+      },
+      {
+        "fr": "C’est magnifique",
+        "jp": "きれいですね",
+        "ro": "Kirei desu ne"
+      },
+      {
+        "fr": "Photo autorisée ?",
+        "jp": "写真撮ってもいいですか？",
+        "ro": "Shashin totte mo ii desu ka?"
+      }
+    ]
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "checks": [
+    {
+      "id": "vols",
+      "label": "Vols A/R",
+      "meta": "Payés · Léo & Maxime · Air France · ≈ 2 200 € / pers. · CDG ↔ HND",
+      "done": true
+    },
+    {
+      "id": "villes",
+      "label": "Villes & dates verrouillées",
+      "meta": "Itinéraire 8–29 nov 2026 figé",
+      "done": true
+    },
+    {
+      "id": "hotels",
+      "label": "Hôtels / ryokan",
+      "meta": "Tous réservés · Tokyo 1 → Haneda T3",
+      "done": true
+    },
+    {
+      "id": "taxes",
+      "label": "Taxes de séjour / onsen",
+      "meta": "Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)",
+      "done": false
+    },
+    {
+      "id": "trajets",
+      "label": "Trajets (trains / bus)",
+      "meta": "Shinkansen Osaka→Tokyo payé · reste Fuji / Hokuriku / Nohi / Hida…"
+    },
+    {
+      "id": "osa-tokyo-tickets",
+      "label": "QR Ticket Osaka → Tokyo (Apple Wallet)",
+      "meta": "Payé par Léo · 158,72 € · Nozomi 90 · 11:30→13:57 · ajouter les QR dans Wallet dès le 27 oct 2026",
+      "remindFrom": "2026-10-27",
+      "done": false
+    },
+    {
+      "id": "fujiq-tickets",
+      "label": "Billets Fuji-Q Highland (One Day Pass)",
+      "meta": "Jour 6 · ven. 13 nov 2026 · ワンデイパス achetable dès maintenant (en ligne/guichet) · ~¥6 000–7 900 / adulte",
+      "remindFrom": "2026-10-13",
+      "done": false,
+      "links": [
+        {
+          "label": "Tarifs & billets officiels",
+          "url": "https://www.fujiq.jp/en/ticket/"
+        },
+        {
+          "label": "Acheter One Day Pass",
+          "url": "https://www.fujiq.jp/ticket/"
+        },
+        {
+          "label": "App Store · Q-chan",
+          "url": "https://apps.apple.com/app/q-chan/id1483774385"
+        }
+      ]
+    },
+    {
+      "id": "fujiq-horror",
+      "label": "Fuji-Q · maison de l’horreur (ticket à part)",
+      "meta": "Ven. 13 nov · 戦慄迷宮 non incluse dans le pass · ticket horodaté dès mar. 10 nov 18h JST (app) ou sur place le jour J",
+      "remindFrom": "2026-11-10",
+      "done": false,
+      "links": [
+        {
+          "label": "Tarifs / tickets horodatés",
+          "url": "https://www.fujiq.jp/en/ticket/"
+        },
+        {
+          "label": "App Store · Q-chan",
+          "url": "https://apps.apple.com/app/q-chan/id1483774385"
+        }
+      ]
+    },
+    {
+      "id": "usj-tickets",
+      "label": "Billets Universal Studios Japan",
+      "meta": "Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin",
+      "remindFrom": "2026-09-24",
+      "done": false,
+      "links": [
+        {
+          "label": "Guide YouTube · réserver USJ",
+          "url": "https://youtu.be/z3XQLNuE_t8"
+        },
+        {
+          "label": "App Store · app officielle USJ",
+          "url": "https://apps.apple.com/app/universal-studios-japan/id532097000"
+        }
+      ]
+    },
+    {
+      "id": "idees",
+      "label": "Idées & billets d’activités",
+      "meta": "Fuji-Q (13 nov) · USJ (rappel 24 sept) · teamLab, observatoires…"
+    },
+    {
+      "id": "assurance",
+      "label": "Assurance voyage",
+      "meta": "Contrat + numéros d’urgence"
+    },
+    {
+      "id": "esim",
+      "label": "eSIM / data",
+      "meta": "Activer avant l’atterrissage"
+    },
+    {
+      "id": "suica",
+      "label": "Welcome Suica Mobile (iPhone ×2)",
+      "meta": "App Store avant départ · émettre à HND · Express Mode"
+    },
+    {
+      "id": "cash",
+      "label": "Cash ¥ + carte sans frais",
+      "meta": "Taxes hôtel + lieux cash-only"
+    },
+    {
+      "id": "adaptateur",
+      "label": "Adaptateur type A/B",
+      "meta": "Prises japonaises"
+    },
+    {
+      "id": "valise",
+      "label": "Valise mi-novembre",
+      "meta": "Couches, imperméable léger, bonnes chaussures"
+    },
+    {
+      "id": "docs",
+      "label": "Passeports + copies numériques",
+      "meta": "Dans le cloud + hors ligne"
+    }
+  ],
+  "budget": [
+    {
+      "label": "Vols A/R",
+      "amount": "≈ 2 200 € / pers.",
+      "note": "Payés · Léo & Maxime · Air France · CDG ↔ HND",
+      "done": true
+    },
+    {
+      "label": "Hôtels (partagés)",
+      "amount": "≈ 1 535 € / pers.",
+      "note": "Total ≈ 3 070 € ÷ 2 · tous les séjours inclus",
+      "done": true
+    },
+    {
+      "label": "Taxes séjour / onsen",
+      "amount": "Quelques ¥ / nuit",
+      "note": "Souvent hors Booking · Kanazawa, Takayama… cash/carte au check-in",
+      "done": false
+    },
+    {
+      "label": "Trajets JP",
+      "amount": "158,72 € + reste",
+      "note": "Osaka→Tokyo Nozomi 90 payé par Léo (QR Apple Wallet) · reste Fuji / Hokuriku / Nohi / Hida…",
+      "done": false
+    },
+    {
+      "label": "Activités / tickets",
+      "amount": "À définir / pers.",
+      "note": "Fuji-Q One Day Pass + horreur sur place · USJ · teamLab…",
+      "done": false
+    },
+    {
+      "label": "Nourriture & divers",
+      "amount": "Variable / pers.",
+      "note": "Budget confort ~60–100 €/jour",
+      "done": false
+    }
+  ],
+  "budgetTotal": {
+    "label": "Déjà engagé / pers.",
+    "amount": "≈ 3 735 €",
+    "note": "Vols + tous les hôtels (hors taxes séjour / trajets / activités / nourriture)"
+  }
+}

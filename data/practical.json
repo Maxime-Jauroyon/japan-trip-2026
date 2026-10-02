@@ -1,0 +1,58 @@
+[
+  {
+    "id": "esim",
+    "title": "eSIM / data",
+    "items": [
+      "Activer l’eSIM avant l’atterrissage (mode avion → activer à HND).",
+      "Télécharger offline : Google Maps (zones utiles), traducteur, confirmations Booking."
+    ]
+  },
+  {
+    "id": "ic",
+    "title": "Suica sur iPhone (×2)",
+    "items": [
+      "Recommandé visiteurs : app « Welcome Suica Mobile » (JR East) — EN + cartes étrangères via Apple Pay.",
+      "Avant le départ : télécharger l’app App Store ; depuis la France, émettre la carte souvent seulement après atterrissage (Wi‑Fi HND).",
+      "À HND : ouvrir l’app → mot-clé secret → choisir recharge (ex. 3 000–5 000 ¥) → payer Apple Pay → ajouter à Wallet.",
+      "Express Mode : Réglages → Wallet & Apple Pay → Carte de transport Express → choisir Suica (tap sans Face ID).",
+      "Alternative : Wallet → + → Carte de transport → Suica ; si la carte Visa est refusée, passer par Welcome Suica Mobile (Mastercard / Amex souvent OK).",
+      "Validité Welcome Suica Mobile : 180 jours dès l’émission · solde non remboursable · recharge dans l’app à tout moment.",
+      "Usage : métro, JR urbain, bus, konbini · 1 téléphone = 1 Suica (chacun son iPhone)."
+    ]
+  },
+  {
+    "id": "jr",
+    "title": "Trains & JR Pass",
+    "items": [
+      "Shinkansen et trains limités : réserver sièges quand possible (Hokuriku, etc.).",
+      "Bus Fuji, Shirakawa, Takayama : réserver à l’avance en novembre.",
+      "Bagages : shinkansen avec grandes valises → sièges « baggage area » si dispo."
+    ]
+  },
+  {
+    "id": "taxes",
+    "title": "Taxes de séjour / onsen",
+    "items": [
+      "Taxe municipale : souvent au check-in (cash ou carte), parfois déjà dans Booking.",
+      "Onsen / sentō : petite taxe ou serviette — prévoir des ¥100 en pièces."
+    ]
+  },
+  {
+    "id": "urgence",
+    "title": "Urgences & contacts",
+    "items": [
+      "Police : 110 · Ambulance / pompiers : 119",
+      "Ambassade de France à Tokyo : +81 3 5798 6000",
+      "Assurance voyage : numéros dans la conf. / appli assureur (hors ligne).",
+      "Numéros hôtels : fiches détail dans chaque ville."
+    ]
+  },
+  {
+    "id": "cash",
+    "title": "Cash & cartes",
+    "items": [
+      "Beaucoup de lieux acceptent la carte ; petits temples, marchés, taxis parfois cash only.",
+      "Retrait ATM 7-Eleven / poste (JP Bank) — prévenir la banque avant le départ."
+    ]
+  }
+]

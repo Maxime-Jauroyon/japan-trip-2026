@@ -1,0 +1,15 @@
+{
+  "title": "Voyage au Japon",
+  "shortTitle": "Japon",
+  "startDate": "2026-11-08",
+  "endDate": "2026-11-29",
+  "datesLabel": "8–29 nov 2026",
+  "datesLabelLong": "8–29 novembre 2026",
+  "startLabel": "8 nov 2026",
+  "climateMonth": "novembre",
+  "travelers": [
+    "Léo",
+    "Maxime"
+  ],
+  "fxDefault": 185
+}

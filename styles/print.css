@@ -1,0 +1,38 @@
+/* Impression / PDF du voyage. */
+
+.print-root { display: none; }
+
+@media print {
+  body * { visibility: hidden; }
+  .print-root, .print-root * { visibility: visible; }
+  .print-root {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    color: #111;
+    padding: 24px 32px;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+  .print-root h1 { font-size: 22pt; margin: 0 0 4px; }
+  .print-root .print-sub { color: #444; margin-bottom: 20px; }
+  .print-root h2 {
+    font-size: 14pt;
+    margin: 18px 0 6px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    page-break-after: avoid;
+  }
+  .print-root h3 { font-size: 12pt; margin: 10px 0 4px; }
+  .print-root p, .print-root li { margin: 0 0 4px; }
+  .print-root ul { margin: 4px 0 8px 18px; padding: 0; }
+  .print-root .print-hotel {
+    background: #f5f5f5;
+    padding: 8px 10px;
+    margin: 6px 0;
+    border-radius: 4px;
+  }
+}

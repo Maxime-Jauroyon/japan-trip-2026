@@ -1,0 +1,170 @@
+{
+  "akihabara": {
+    "hours": "Boutiques ~10h–20h",
+    "duration": "2–3 h"
+  },
+  "shinjuku": {
+    "hours": "Quartier libre",
+    "duration": "2–3 h"
+  },
+  "character-street": {
+    "hours": "Sous Tokyo Station ~10h–20h",
+    "duration": "1 h"
+  },
+  "sensoji": {
+    "hours": "Temple ~6h–17h · boutiques plus tard",
+    "duration": "1,5–2 h"
+  },
+  "sumida": {
+    "hours": "Promenade libre",
+    "duration": "1 h"
+  },
+  "ueno": {
+    "hours": "Parc libre · musées ~9h30–17h",
+    "duration": "2–3 h"
+  },
+  "yanaka": {
+    "hours": "Jour",
+    "duration": "2 h"
+  },
+  "meiji": {
+    "hours": "Lever du soleil → coucher",
+    "duration": "1–1,5 h"
+  },
+  "harajuku": {
+    "hours": "Magasins ~11h–20h",
+    "duration": "1,5–2 h"
+  },
+  "shibuya": {
+    "hours": "Libre",
+    "duration": "1,5–2 h"
+  },
+  "odaiba": {
+    "hours": "Gundam / centres ~10h–21h",
+    "duration": "2–3 h"
+  },
+  "teamlab": {
+    "hours": "Créneaux réservés",
+    "duration": "1,5–2 h"
+  },
+  "tokyo-tower": {
+    "hours": "~9h–23h",
+    "duration": "1–1,5 h"
+  },
+  "chureito": {
+    "hours": "Jour · matin idéal",
+    "duration": "1–1,5 h"
+  },
+  "ropeway": {
+    "hours": "~9h–16h/17h (saison)",
+    "duration": "1 h"
+  },
+  "kawaguchi": {
+    "hours": "Libre",
+    "duration": "1–2 h"
+  },
+  "momiji": {
+    "hours": "Jour",
+    "duration": "1 h"
+  },
+  "oshino": {
+    "hours": "Village ~9h–17h",
+    "duration": "1,5–2 h"
+  },
+  "kenrokuen": {
+    "hours": "~7h–18h (saison)",
+    "duration": "1,5–2 h"
+  },
+  "kanazawa-castle": {
+    "hours": "Parc ~7h–18h",
+    "duration": "1–1,5 h"
+  },
+  "higashi-chaya": {
+    "hours": "Jour / soir",
+    "duration": "1–2 h"
+  },
+  "shirakawa": {
+    "hours": "Village ~jour",
+    "duration": "2–3 h"
+  },
+  "sanmachi": {
+    "hours": "Jour",
+    "duration": "1,5–2 h"
+  },
+  "kiyomizu": {
+    "hours": "~6h–18h",
+    "duration": "1,5–2 h"
+  },
+  "arashiyama": {
+    "hours": "Bambous tôt le matin",
+    "duration": "2–3 h"
+  },
+  "kinkakuji": {
+    "hours": "~9h–17h",
+    "duration": "1–1,5 h"
+  },
+  "wagashi": {
+    "hours": "Sur réservation",
+    "duration": "1,5 h"
+  },
+  "fushimi": {
+    "hours": "~7h–16h (montée libre)",
+    "duration": "2–3 h"
+  },
+  "daigo": {
+    "hours": "~9h–17h",
+    "duration": "2 h"
+  },
+  "philosopher": {
+    "hours": "Libre",
+    "duration": "1–1,5 h"
+  },
+  "nijo": {
+    "hours": "~8h45–16h",
+    "duration": "1,5 h"
+  },
+  "nishiki": {
+    "hours": "~9h–18h (variable)",
+    "duration": "1 h"
+  },
+  "nara-park": {
+    "hours": "Parc libre",
+    "duration": "1 h"
+  },
+  "kofukuji": {
+    "hours": "~9h–17h",
+    "duration": "45 min–1 h"
+  },
+  "todaiji": {
+    "hours": "~8h–16h30",
+    "duration": "1–1,5 h"
+  },
+  "kasuga": {
+    "hours": "~6h30–17h30",
+    "duration": "1 h"
+  },
+  "dotonbori": {
+    "hours": "Soir idéal",
+    "duration": "1–2 h"
+  },
+  "usj": {
+    "hours": "Horaires parc (réserver)",
+    "duration": "Journée"
+  },
+  "fujiq": {
+    "hours": "Parc ~9h–17h/20h (saison) · vérifier le jour J",
+    "duration": "Journée"
+  },
+  "osaka-castle": {
+    "hours": "~9h–17h",
+    "duration": "1,5–2 h"
+  },
+  "shinsaibashi": {
+    "hours": "Magasins ~10h–20h",
+    "duration": "1–2 h"
+  },
+  "kuromon": {
+    "hours": "~9h–18h",
+    "duration": "1 h"
+  }
+}

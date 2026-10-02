@@ -1,0 +1,729 @@
+[
+  {
+    "id": "arrive",
+    "title": "Paris → Tokyo (Haneda)",
+    "subtitle": "7–8 nov · Jour 1",
+    "mode": "Avion",
+    "depart": "CDG · sam. 7 nov · 09:45",
+    "arrive": "HND · dim. 8 nov · 06:50",
+    "duration": "~13 h",
+    "operator": "Air France",
+    "seat": "2 × standards côte à côte · rangée 36",
+    "ref": "—",
+    "status": "paid",
+    "payment": "Payé d’avance",
+    "price": "≈ 2 200 € A/R / pers.",
+    "skipMap": true,
+    "from": {
+      "id": "tokyo",
+      "lat": 35.5494,
+      "lng": 139.7798
+    },
+    "to": {
+      "city": "tokyo"
+    },
+    "via": [],
+    "fromStop": {
+      "kind": "Aéroport",
+      "name": "Paris CDG",
+      "jp": "パリ CDG"
+    },
+    "toStop": {
+      "kind": "Aéroport",
+      "name": "Tokyo Haneda (HND)",
+      "jp": "羽田空港",
+      "lat": 35.5494,
+      "lng": 139.7798
+    },
+    "details": [
+      "Voyageurs : Léo & Maxime.",
+      "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
+      "Repas et en-cas inclus à bord.",
+      "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
+      "Après HND : vers HomeNest Akihabara (Torigoe) — check-in à partir de 16:00."
+    ],
+    "tips": "Atterrissage tôt à Haneda — bagages puis dépôt / balade avant check-in 16:00."
+  },
+  {
+    "id": "tokyo-fuji",
+    "title": "Tokyo → Fujikawaguchiko",
+    "subtitle": "12 nov · Jour 5",
+    "mode": "Bus",
+    "depart": "~7:00",
+    "arrive": "~9:00",
+    "duration": "~2 h",
+    "operator": "Highway bus Shinjuku → Kawaguchiko (Keio / Fujikyu)",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "tokyo",
+      "lat": 35.6915,
+      "lng": 139.6995
+    },
+    "to": {
+      "id": "fuji",
+      "lat": 35.4983,
+      "lng": 138.7685
+    },
+    "curveSide": "south",
+    "curveAmt": 0.085,
+    "fromStop": {
+      "kind": "Gare / terminal bus",
+      "name": "Shinjuku Expressway Bus Terminal",
+      "jp": "新宿高速バスターミナル",
+      "lat": 35.6915,
+      "lng": 139.6995
+    },
+    "toStop": {
+      "kind": "Gare",
+      "name": "Kawaguchiko Station",
+      "jp": "河口湖駅",
+      "lat": 35.4983,
+      "lng": 138.7685
+    },
+    "details": [
+      "Suggestion la plus simple avec bagages : bus direct depuis Shinjuku.",
+      "Alternative rail : JR Chuo → Ōtsuki puis Fujikyu Railway → Kawaguchiko."
+    ],
+    "tips": "Réserver le bus à l'avance en haute saison ; départ matin.",
+    "bookings": {
+      "note": "Sur le formulaire : Departing=Shinjuku Expressway Bus Terminal · Arriving=Kawaguchiko Sta.",
+      "links": [
+        {
+          "site": "Highway Bus",
+          "label": "Bus Shinjuku → Kawaguchiko · 12 nov 2026",
+          "openFrom": "2026-09-12",
+          "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112"
+        }
+      ]
+    }
+  },
+  {
+    "id": "fuji-tokyo",
+    "journey": "fuji-kana",
+    "title": "Fujikawaguchiko → Shinjuku",
+    "subtitle": "14 nov · Jour 7 · ① Bus",
+    "mode": "Bus",
+    "depart": "~9:00",
+    "arrive": "~11:00",
+    "duration": "~2 h",
+    "operator": "Highway bus Kawaguchiko → Shinjuku (Keio / Fujikyu)",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "fuji",
+      "lat": 35.4983,
+      "lng": 138.7685
+    },
+    "to": {
+      "id": "tokyo",
+      "lat": 35.6915,
+      "lng": 139.6995
+    },
+    "curveSide": "north",
+    "curveAmt": 0.085,
+    "fromStop": {
+      "kind": "Gare",
+      "name": "Kawaguchiko Station",
+      "jp": "河口湖駅",
+      "lat": 35.4983,
+      "lng": 138.7685
+    },
+    "toStop": {
+      "kind": "Gare / terminal bus",
+      "name": "Shinjuku Expressway Bus Terminal",
+      "jp": "新宿高速バスターミナル",
+      "lat": 35.6915,
+      "lng": 139.6995
+    },
+    "details": [
+      "Bus direct Kawaguchiko → Shinjuku Expressway Bus Terminal.",
+      "Ensuite : transfert vers Tokyo Station pour le shinkansen (étape 2).",
+      "Pas de liaison directe Fuji → Kanazawa."
+    ],
+    "tips": "Départ matin recommandé — laisser ~1 h à Tokyo pour le transfert + un repas léger.",
+    "bookings": {
+      "note": "Sur le formulaire : Departing=Kawaguchiko Sta. · Arriving=Shinjuku Expressway Bus Terminal.",
+      "links": [
+        {
+          "site": "Highway Bus",
+          "label": "Bus Kawaguchiko → Shinjuku · 14 nov 2026",
+          "openFrom": "2026-09-14",
+          "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114"
+        }
+      ]
+    }
+  },
+  {
+    "id": "tokyo-kana",
+    "journey": "fuji-kana",
+    "title": "Tokyo → Kanazawa",
+    "subtitle": "14 nov · Jour 7 · ② Shinkansen",
+    "mode": "Shinkansen",
+    "depart": "~12:30",
+    "arrive": "~15:30",
+    "duration": "~2 h 30–3 h",
+    "operator": "Hokuriku Shinkansen (Kagayaki / Hakutaka)",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "tokyo",
+      "lat": 35.6812,
+      "lng": 139.7671
+    },
+    "to": {
+      "id": "kanazawa",
+      "lat": 36.5783,
+      "lng": 136.648
+    },
+    "via": [
+      {
+        "lat": 35.78,
+        "lng": 139.45
+      },
+      {
+        "lat": 36.32,
+        "lng": 139
+      },
+      {
+        "lat": 36.65,
+        "lng": 138.15
+      },
+      {
+        "lat": 36.72,
+        "lng": 137.35
+      },
+      {
+        "lat": 36.55,
+        "lng": 136.85
+      }
+    ],
+    "fromStop": {
+      "kind": "Gare",
+      "name": "Tokyo Station",
+      "jp": "東京駅",
+      "lat": 35.6812,
+      "lng": 139.7671
+    },
+    "toStop": {
+      "kind": "Gare",
+      "name": "Kanazawa Station",
+      "jp": "金沢駅",
+      "lat": 36.5783,
+      "lng": 136.648
+    },
+    "details": [
+      "Après le bus : JR / métro Shinjuku → Tokyo Station (~15–25 min).",
+      "Shinkansen Hokuriku : Kagayaki (plus rapide) ou Hakutaka.",
+      "Réserver les places assises dès l’ouverture (J−30)."
+    ],
+    "tips": "Viser un départ vers 12:30 pour arriver en début d’après-midi à Kanazawa.",
+    "bookings": {
+      "note": "Départ Tokyo Station · arrivée Kanazawa Station.",
+      "links": [
+        {
+          "site": "JR West",
+          "label": "Shinkansen Tokyo → Kanazawa · 14 nov 2026",
+          "openFrom": "2026-10-14",
+          "openTime": "10:00",
+          "url": "https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Tokyo&arrival=Kanazawa&date=2026-11-14"
+        },
+        {
+          "site": "JR East",
+          "label": "Alternative · Hokuriku Shinkansen · 14 nov",
+          "openFrom": "2026-10-14",
+          "openTime": "10:00",
+          "url": "https://www.eki-net.com/en/jreast-train-reservation/Top/Index"
+        }
+      ]
+    }
+  },
+  {
+    "id": "kana-shira",
+    "title": "Kanazawa → Shirakawa-go",
+    "subtitle": "17 nov · Jour 10",
+    "mode": "Bus",
+    "depart": "~8:50",
+    "arrive": "~10:05",
+    "duration": "~1 h 15",
+    "operator": "Nohi Bus (Kanazawa ↔ Shirakawa-go)",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "kanazawa",
+      "lat": 36.5783,
+      "lng": 136.648
+    },
+    "to": {
+      "id": "shirakawa",
+      "lat": 36.258,
+      "lng": 136.9063
+    },
+    "via": [
+      {
+        "lat": 36.48,
+        "lng": 136.72
+      },
+      {
+        "lat": 36.38,
+        "lng": 136.82
+      },
+      {
+        "lat": 36.3,
+        "lng": 136.88
+      }
+    ],
+    "fromStop": {
+      "kind": "Gare / arrêt bus",
+      "name": "Kanazawa Station (Nohi Bus Terminal)",
+      "jp": "金沢駅",
+      "lat": 36.5783,
+      "lng": 136.648
+    },
+    "toStop": {
+      "kind": "Arrêt bus",
+      "name": "Shirakawa-go (Ogimachi)",
+      "jp": "白川郷・荻町",
+      "lat": 36.258,
+      "lng": 136.9063
+    },
+    "details": [
+      "Bus réservation recommandée (places limitées).",
+      "Visite à la journée — nuit à Takayama."
+    ],
+    "tips": "Garder le billet retour / correspondance Takayama du même jour.",
+    "bookings": {
+      "links": [
+        {
+          "site": "Japan Bus Online",
+          "label": "Bus Kanazawa → Shirakawa-go · 17 nov 2026",
+          "openFrom": "2026-10-17",
+          "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117"
+        }
+      ]
+    }
+  },
+  {
+    "id": "shira-taka",
+    "title": "Shirakawa-go → Takayama",
+    "subtitle": "17 nov · Jour 10",
+    "mode": "Bus",
+    "depart": "~14:00",
+    "arrive": "~14:50",
+    "duration": "~50 min",
+    "operator": "Nohi Bus",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "shirakawa",
+      "lat": 36.258,
+      "lng": 136.9063
+    },
+    "to": {
+      "id": "takayama",
+      "lat": 36.142,
+      "lng": 137.2525
+    },
+    "via": [
+      {
+        "lat": 36.22,
+        "lng": 136.98
+      },
+      {
+        "lat": 36.18,
+        "lng": 137.12
+      },
+      {
+        "lat": 36.15,
+        "lng": 137.2
+      }
+    ],
+    "fromStop": {
+      "kind": "Arrêt bus",
+      "name": "Shirakawa-go (Ogimachi)",
+      "jp": "白川郷・荻町",
+      "lat": 36.258,
+      "lng": 136.9063
+    },
+    "toStop": {
+      "kind": "Gare / terminal bus",
+      "name": "Takayama Nohi Bus Center",
+      "jp": "高山濃飛バスセンター",
+      "lat": 36.142,
+      "lng": 137.2525
+    },
+    "details": [
+      "Arrivée à côté de la gare JR Takayama et de la vieille ville."
+    ],
+    "tips": "Check-in ryokan puis balade Sanmachi.",
+    "bookings": {
+      "note": "Sur Japan Bus Online : ouvrir le sens Kanazawa→Takayama, choisir un bus vers Takayama, puis arrêts boarding=Shirakawa-go / alighting=Takayama Nohi Bus Center.",
+      "links": [
+        {
+          "site": "Japan Bus Online",
+          "label": "Bus Shirakawa-go → Takayama · 17 nov 2026",
+          "openFrom": "2026-10-17",
+          "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117"
+        }
+      ]
+    }
+  },
+  {
+    "id": "taka-kyo",
+    "title": "Takayama → Kyoto",
+    "subtitle": "18 nov · Jour 11",
+    "mode": "Train",
+    "depart": "~13:30",
+    "arrive": "~16:30",
+    "duration": "~3 h",
+    "operator": "Hida (Wide View) → Nagoya + shinkansen → Kyoto",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "takayama",
+      "lat": 36.1406,
+      "lng": 137.2517
+    },
+    "to": {
+      "id": "kyoto",
+      "lat": 35.0014,
+      "lng": 135.7596
+    },
+    "via": [
+      {
+        "lat": 35.85,
+        "lng": 137
+      },
+      {
+        "lat": 35.42,
+        "lng": 136.76
+      },
+      {
+        "lat": 35.17,
+        "lng": 136.88
+      },
+      {
+        "lat": 35.08,
+        "lng": 136.2
+      }
+    ],
+    "fromStop": {
+      "kind": "Gare",
+      "name": "Takayama Station",
+      "jp": "高山駅",
+      "lat": 36.1406,
+      "lng": 137.2517
+    },
+    "toStop": {
+      "kind": "Gare",
+      "name": "Kyoto Station",
+      "jp": "京都駅",
+      "lat": 35.0014,
+      "lng": 135.7596
+    },
+    "details": [
+      "Classique : Limited Express Hida Takayama → Nagoya, puis Tokaido Shinkansen Nagoya → Kyoto.",
+      "Réserver les places Hida (paysage + places assises)."
+    ],
+    "tips": "L'heure de départ à Takayama est le vrai rendez-vous.",
+    "bookings": {
+      "links": [
+        {
+          "site": "JR West",
+          "label": "Train Takayama → Kyoto · 18 nov 2026 (Hida + Shinkansen)",
+          "openFrom": "2026-10-18",
+          "openTime": "10:00",
+          "url": "https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Takayama&arrival=Kyoto&date=2026-11-18"
+        },
+        {
+          "site": "e5489",
+          "label": "Alternative · réservation JR West (EN)",
+          "openFrom": "2026-10-18",
+          "openTime": "10:00",
+          "url": "https://e5489.jr-odekake.net/e5489/ibpc/CBTrainEntryExternalPC?LANG=en"
+        }
+      ]
+    }
+  },
+  {
+    "id": "kyo-nara",
+    "title": "Kyoto → Nara",
+    "subtitle": "22 nov · Jour 15",
+    "mode": "Train",
+    "depart": "~16:15",
+    "arrive": "~17:15",
+    "duration": "~45–50 min",
+    "operator": "Kintetsu (direct)",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "kyoto",
+      "lat": 35.001,
+      "lng": 135.76
+    },
+    "to": {
+      "id": "nara",
+      "lat": 34.6844,
+      "lng": 135.8274
+    },
+    "via": [
+      {
+        "lat": 34.88,
+        "lng": 135.72
+      },
+      {
+        "lat": 34.78,
+        "lng": 135.78
+      }
+    ],
+    "fromStop": {
+      "kind": "Gare",
+      "name": "Kyoto Station (Kintetsu)",
+      "jp": "近鉄京都駅",
+      "lat": 35.001,
+      "lng": 135.76
+    },
+    "toStop": {
+      "kind": "Gare",
+      "name": "Kintetsu-Nara Station",
+      "jp": "近鉄奈良駅",
+      "lat": 34.6844,
+      "lng": 135.8274
+    },
+    "details": [
+      "Kintetsu-Nara est plus près du parc / Todai-ji que JR Nara.",
+      "Alternative : JR Nara Line (un peu plus long à pied ensuite)."
+    ],
+    "tips": "Idéal pour arriver et enchaîner le parc avant la nuit.",
+    "bookings": {
+      "note": "Train local / express : pas de résa nécessaire. Limited Express Kintetsu optionnel.",
+      "links": [
+        {
+          "site": "Kintetsu",
+          "label": "Limited Express Kyoto → Kintetsu-Nara (optionnel)",
+          "optional": true,
+          "openFrom": "2026-10-22",
+          "openTime": "10:30",
+          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
+        }
+      ]
+    }
+  },
+  {
+    "id": "nara-osa",
+    "title": "Nara → Osaka",
+    "subtitle": "23 nov · Jour 16",
+    "mode": "Train",
+    "depart": "~16:15",
+    "arrive": "~17:00",
+    "duration": "~35–45 min",
+    "operator": "Kintetsu vers Osaka-Namba",
+    "seat": "—",
+    "ref": "—",
+    "status": "placeholder",
+    "payment": "Pas encore réservé",
+    "price": "—",
+    "from": {
+      "id": "nara",
+      "lat": 34.6844,
+      "lng": 135.8274
+    },
+    "to": {
+      "id": "osaka",
+      "lat": 34.6663,
+      "lng": 135.5013
+    },
+    "via": [
+      {
+        "lat": 34.67,
+        "lng": 135.68
+      },
+      {
+        "lat": 34.66,
+        "lng": 135.58
+      }
+    ],
+    "fromStop": {
+      "kind": "Gare",
+      "name": "Kintetsu-Nara Station",
+      "jp": "近鉄奈良駅",
+      "lat": 34.6844,
+      "lng": 135.8274
+    },
+    "toStop": {
+      "kind": "Gare",
+      "name": "Osaka-Namba (Kintetsu)",
+      "jp": "大阪難波駅",
+      "lat": 34.6663,
+      "lng": 135.5013
+    },
+    "details": [
+      "Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."
+    ],
+    "tips": "Soirée street food à Dotonbori.",
+    "bookings": {
+      "note": "Train direct Namba : pas de résa nécessaire.",
+      "links": [
+        {
+          "site": "Kintetsu",
+          "label": "Limited Express Kintetsu-Nara → Osaka-Namba (optionnel)",
+          "optional": true,
+          "openFrom": "2026-10-23",
+          "openTime": "10:30",
+          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
+        }
+      ]
+    }
+  },
+  {
+    "id": "osa-tokyo",
+    "title": "Osaka → Tokyo",
+    "subtitle": "27 nov · Jour 20",
+    "mode": "Shinkansen",
+    "depart": "11:30",
+    "arrive": "13:57",
+    "duration": "2 h 27",
+    "operator": "JR Tokaido Shinkansen · Nozomi 90",
+    "seat": "—",
+    "ref": "—",
+    "status": "paid",
+    "payment": "Payé par Léo · 158,72 € (total, 2 pers.)",
+    "price": "158,72 €",
+    "from": {
+      "id": "osaka",
+      "lat": 34.7335,
+      "lng": 135.5002
+    },
+    "to": {
+      "id": "tokyo",
+      "lat": 35.6812,
+      "lng": 139.7671
+    },
+    "via": [
+      {
+        "lat": 34.56,
+        "lng": 135.55
+      },
+      {
+        "lat": 34.48,
+        "lng": 136.05
+      },
+      {
+        "lat": 34.52,
+        "lng": 136.85
+      },
+      {
+        "lat": 34.78,
+        "lng": 137.85
+      },
+      {
+        "lat": 35.05,
+        "lng": 138.75
+      },
+      {
+        "lat": 35.38,
+        "lng": 139.35
+      }
+    ],
+    "fromStop": {
+      "kind": "Gare",
+      "name": "Shin-Osaka Station",
+      "jp": "新大阪駅",
+      "lat": 34.7335,
+      "lng": 135.5002
+    },
+    "toStop": {
+      "kind": "Gare",
+      "name": "Tokyo Station",
+      "jp": "東京駅",
+      "lat": 35.6812,
+      "lng": 139.7671
+    },
+    "details": [
+      "Nozomi 90 · Shin-Osaka 11:30 → Tokyo 13:57 · 27 nov 2026.",
+      "Payé par Léo · 158,72 € (2 pers.).",
+      "Billets en QR Ticket dans Apple Wallet (SmartEX) — rappel J−30 (27 oct) pour les ajouter / vérifier.",
+      "Depuis Namba : metro / JR jusqu’à Shin-Osaka (~20–30 min).",
+      "À Tokyo Station : Monorail / Keikyu vers Haneda T3 (Royal Park)."
+    ],
+    "tips": "Les vues Fuji côté droit direction Tokyo (si ciel clair).",
+    "bookings": {
+      "note": "Payé par Léo · Nozomi 90 · 158,72 €. QR Ticket Apple Wallet via SmartEX — rappel 27 oct : ajouter / vérifier les billets.",
+      "links": [
+        {
+          "site": "SmartEX",
+          "label": "Nozomi 90 · Shin-Osaka → Tokyo · 27 nov 2026",
+          "openFrom": "2025-11-27",
+          "reserved": true,
+          "url": "https://smart-ex.jp/en/reservation/reserve_smart/sp/"
+        }
+      ]
+    }
+  },
+  {
+    "id": "depart",
+    "title": "Tokyo → Paris (CDG)",
+    "subtitle": "29 nov · Jour 22",
+    "mode": "Avion",
+    "depart": "HND · dim. 29 nov · 09:05",
+    "arrive": "CDG · dim. 29 nov · 15:35",
+    "duration": "~14 h 30",
+    "operator": "Air France",
+    "seat": "2 × standards côte à côte · rangée 27",
+    "ref": "—",
+    "status": "paid",
+    "payment": "Payé d’avance",
+    "price": "Inclus · ≈ 2 200 € A/R / pers.",
+    "skipMap": true,
+    "from": {
+      "city": "tokyo"
+    },
+    "to": {
+      "id": "tokyo",
+      "lat": 35.5494,
+      "lng": 139.7798
+    },
+    "via": [],
+    "fromStop": {
+      "kind": "Aéroport",
+      "name": "Tokyo Haneda (HND)",
+      "jp": "羽田空港",
+      "lat": 35.5494,
+      "lng": 139.7798
+    },
+    "toStop": {
+      "kind": "Aéroport",
+      "name": "Paris CDG",
+      "jp": "パリ CDG"
+    },
+    "details": [
+      "Voyageurs : Léo & Maxime.",
+      "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
+      "Repas inclus à bord.",
+      "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
+      "Hôtel Royal Park dans le Terminal 3 — check-out puis portes d’embarquement à pied."
+    ],
+    "tips": "Check-out tôt — viser les contrôles / portes vers 6h30–7h (vol 09:05)."
+  }
+]

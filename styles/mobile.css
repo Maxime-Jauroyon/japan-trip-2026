@@ -1,0 +1,227 @@
+/* Mobile (≤ 900 px) : barre d’onglets en bas, bottom sheet, pastilles villes. */
+
+@media (max-width: 900px) {
+  /* Mobile only — desktop layout untouched above */
+  :root {
+    --header-h: 44px;
+    --tabbar-h: 60px;
+  }
+  .app {
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header"
+      "main"
+      "tabs";
+  }
+  header {
+    padding: 6px 10px;
+    min-height: var(--header-h);
+    gap: 8px;
+    position: relative;
+    z-index: 45;
+  }
+  header h1.brand { gap: 8px; flex: 1 1 auto; min-width: 0; }
+  .brand-mark { width: 32px; height: 32px; }
+  .brand-title { font-size: 14px; }
+  .brand-sub { font-size: 9px; letter-spacing: 0.06em; }
+
+  .tabs {
+    grid-area: tabs;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    height: auto;
+    min-height: var(--tabbar-h);
+    width: 100%;
+    margin: 0;
+    padding: 6px 8px;
+    gap: 4px;
+    justify-content: stretch;
+    justify-self: stretch;
+    align-self: stretch;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    z-index: 50;
+    box-shadow: 0 -6px 20px rgba(0,0,0,.25);
+    pointer-events: auto;
+  }
+  .tabs button {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 10px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    min-height: 44px;
+  }
+  .tabs button.active {
+    background: rgba(var(--gold-rgb), .16);
+  }
+
+  .offline-status {
+    font-size: 9px;
+    padding: 3px 6px;
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .info-view { padding: 14px 14px 36px; }
+
+  /* Barre d’onglets : icône + libellé */
+  .tabs {
+    border-radius: 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+    background: var(--glass-strong) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    backdrop-filter: blur(18px) saturate(1.4);
+    padding: 5px 6px !important;
+  }
+  .tabs button {
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    font-size: 10.5px !important;
+    letter-spacing: .01em;
+    padding: 5px 2px !important;
+    border-radius: 12px !important;
+    min-height: 48px !important;
+  }
+  .tabs button svg { width: 22px; height: 22px; }
+  .tabs button.active { background: rgba(var(--gold-rgb), .14) !important; box-shadow: none; }
+
+  /* Villes : rangée de pastilles défilante au-dessus de la carte */
+  #city-list {
+    left: 0; right: 0; top: 0;
+    width: auto; max-height: none;
+    display: flex; gap: 6px;
+    overflow-x: auto; overflow-y: hidden;
+    padding: 10px 12px;
+    background: transparent;
+    border: 0; border-radius: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  #city-list::-webkit-scrollbar { display: none; }
+  #city-list button {
+    flex: 0 0 auto;
+    width: auto;
+    margin: 0;
+    padding: 5px 12px 5px 5px;
+    border-radius: 999px;
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  #city-list button .ico { flex-basis: 26px; height: 26px; border-radius: 50%; }
+  #city-list button .ico svg { width: 19px; height: 19px; }
+  .app.city-mode #city-list { display: none; }
+  .app.leg-mode #city-list { display: none; }
+  /* Sheet ouvert : ⌂ en haut à gauche (sinon caché sous le sheet) */
+  #view-map:has(#panel.open) .home-btn {
+    left: 12px; right: auto;
+    top: max(12px, env(safe-area-inset-top)); bottom: auto;
+  }
+
+  .map-ctrl { top: 62px; bottom: auto; right: 12px; }
+  .map-ctrl-zoom { display: none !important; }
+  .home-btn { width: 44px; height: 44px; }
+
+  .city-mark .map-logo { width: 40px; height: 40px; }
+  .city-mark .map-logo svg { width: 27px; height: 27px; }
+  .city-mark .mark-halo { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+  .city-mark .label { left: 46px; font-size: 12px; padding: 4px 9px 5px; }
+  .city-mark.label-left .label { right: 46px; }
+  .pin .badge { width: 40px; height: 47px; }
+  .pin-cluster-bubble { width: 42px; height: 42px; }
+  .route-chip { font-size: 11px; padding: 3px 8px 3px 6px; }
+  .route-chip svg { width: 13px; height: 13px; }
+  /* Résumé du jour sous le nom de la ville (en-tête masqué en vue ville) */
+  .day-summary { top: calc(max(12px, env(safe-area-inset-top)) + 46px); font-size: 11.5px; padding: 6px 12px; }
+  .overlay { border-radius: 18px 18px 0 0; box-shadow: 0 -10px 40px rgba(0, 0, 0, .3); }
+
+  /* Header masqué en ville, mais barre d’onglets reste */
+  .app.city-mode.tab-map { grid-template-rows: 1fr auto; grid-template-areas: "main" "tabs"; }
+  .app.city-mode.tab-map header { display: none !important; }
+  .app.city-mode.tab-map .city-banner { display: block; }
+  .app.city-mode.tab-map .home-btn {
+    left: 12px; right: auto;
+    top: max(12px, env(safe-area-inset-top)); bottom: auto;
+  }
+  .app.city-mode.tab-map .city-banner {
+    top: max(12px, env(safe-area-inset-top));
+  }
+
+  .overlay {
+    top: auto !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 55% !important;
+    max-height: 55% !important;
+    min-height: 160px !important;
+    transform: translate3d(0, 110%, 0);
+    border-radius: 14px 14px 0 0;
+    border-left: 0; border-right: 0; border-bottom: 0;
+    transition: transform .25s ease, height .28s ease, max-height .28s ease, min-height .28s ease;
+    padding-bottom: 0;
+    overflow: hidden !important;
+  }
+  .overlay.open { transform: translate3d(0, 0, 0); }
+  .overlay.open.expanded {
+    height: 78% !important;
+    max-height: 78% !important;
+    min-height: 160px !important;
+  }
+  .overlay.open.minimized {
+    height: 52px !important;
+    max-height: 52px !important;
+    min-height: 52px !important;
+    padding-bottom: 0;
+  }
+  .overlay.open.minimized .overlay-head,
+  .overlay.open.minimized .overlay-body {
+    display: none !important;
+  }
+  .sheet-grab { display: block; }
+
+  /* × retiré : ⌂ pour quitter la ville, glisser/flèche pour minimiser */
+  .overlay .close { display: none !important; }
+  .overlay.panel-city .overlay-head { display: none !important; }
+
+  .overlay.panel-leg .overlay-head {
+    padding: 2px 14px 10px;
+    align-items: flex-start;
+    flex: 0 0 auto;
+  }
+  .overlay.panel-leg .overlay-head h2 { font-size: 18px; }
+
+  .overlay-body {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    overflow: auto !important;
+    padding: 4px 14px 24px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .overlay.panel-city .overlay-body { padding-top: 2px; }
+
+  .hint { display: none; }
+
+  .app.city-mode.tab-map .home-btn { bottom: auto; }
+
+  /* Popups fixed = viewport : remonter au-dessus de la tab bar */
+  .ios-install,
+  .booking-alert,
+  .reminder-alert {
+    bottom: calc(12px + var(--tabbar-h));
+  }
+}

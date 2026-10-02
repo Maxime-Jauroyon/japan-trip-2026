@@ -1,0 +1,19 @@
+{
+  "name": "japan-trip-2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Carnet de voyage Japon (8–29 nov 2026) — site statique (GitHub Pages), modules ES sans build.",
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "node --test \"tests/*.test.js\"",
+    "validate": "node scripts/validate-data.mjs",
+    "check": "node scripts/validate-data.mjs && node scripts/check-architecture.mjs && node --test \"tests/*.test.js\"",
+    "precache": "node scripts/gen-precache.mjs",
+    "version:bump": "node scripts/bump-version.mjs",
+    "architecture": "node scripts/check-architecture.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
