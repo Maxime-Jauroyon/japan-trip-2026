@@ -23,15 +23,13 @@
         "title": "Akihabara — arcades / anime",
         "lat": 35.6984,
         "lng": 139.7731,
-        "desc": "Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Akihabara_Electric_Town_Crossing_2023.jpg/640px-Akihabara_Electric_Town_Crossing_2023.jpg"
+        "desc": "Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit."
       },
       {
         "title": "Shinjuku — skyline",
         "lat": 35.6938,
         "lng": 139.7036,
-        "desc": "Le cœur néon de Tokyo : gratte-ciel, grands magasins, et vue du soir depuis un observatoire ou un rooftop.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shinjuku_Skyscrapers_at_night.jpg/640px-Shinjuku_Skyscrapers_at_night.jpg"
+        "desc": "Le cœur néon de Tokyo : gratte-ciel, grands magasins, et vue du soir depuis un observatoire ou un rooftop."
       },
       {
         "title": "Tokyo Character Street",
@@ -51,8 +49,7 @@
         "title": "Asakusa — Sensō-ji",
         "lat": 35.7148,
         "lng": 139.7967,
-        "desc": "Le plus vieux temple de Tokyo, via la rue commerçante Nakamise et la grande lanterne Kaminarimon.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Sensoji_Temple_Asakusa_Tokyo.jpg/640px-Sensoji_Temple_Asakusa_Tokyo.jpg"
+        "desc": "Le plus vieux temple de Tokyo, via la rue commerçante Nakamise et la grande lanterne Kaminarimon."
       },
       {
         "title": "Promenade Sumida",
@@ -64,8 +61,7 @@
         "title": "Ueno — parc & musées",
         "lat": 35.7188,
         "lng": 139.7765,
-        "desc": "Grand parc avec musées, étang et feuillage d’automne. Après-midi culturel tranquille.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Ueno_Park_Tokyo.jpg/640px-Ueno_Park_Tokyo.jpg"
+        "desc": "Grand parc avec musées, étang et feuillage d’automne. Après-midi culturel tranquille."
       },
       {
         "title": "Sanctuaire Nezu + Yanaka",
@@ -85,8 +81,7 @@
         "title": "Sanctuaire Meiji",
         "lat": 35.6764,
         "lng": 139.6993,
-        "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Meiji_Shrine_Tokyo.jpg/640px-Meiji_Shrine_Tokyo.jpg"
+        "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier."
       },
       {
         "title": "Harajuku / Omotesandō",
@@ -98,8 +93,7 @@
         "title": "Shibuya — Hachikō, Pokemon",
         "lat": 35.6591,
         "lng": 139.7006,
-        "desc": "Le scramble mythique, Hachikō, puis Pokemon et culture jeune autour de la gare.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shibuya_Crossing_2023.jpg/640px-Shibuya_Crossing_2023.jpg"
+        "desc": "Le scramble mythique, Hachikō, puis Pokemon et culture jeune autour de la gare."
       }
     ]
   },
@@ -119,15 +113,13 @@
         "title": "teamLab Planets",
         "lat": 35.649,
         "lng": 139.7898,
-        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/TeamLab_Borderless.jpg/640px-TeamLab_Borderless.jpg"
+        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance."
       },
       {
         "title": "Tokyo Tower de nuit",
         "lat": 35.6586,
         "lng": 139.7454,
-        "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Tokyo_Tower_at_night_2019.jpg/640px-Tokyo_Tower_at_night_2019.jpg"
+        "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique."
       }
     ]
   },
@@ -150,8 +142,7 @@
         "title": "Pagode Chūrei-tō",
         "lat": 35.5013,
         "lng": 138.8014,
-        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Chureito_Pagoda.jpg/640px-Chureito_Pagoda.jpg"
+        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair."
       },
       {
         "title": "Téléphérique panoramique",
@@ -163,8 +154,7 @@
         "title": "Lac Kawaguchi",
         "lat": 35.5218,
         "lng": 138.7556,
-        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lake_Kawaguchi.jpg/640px-Lake_Kawaguchi.jpg"
+        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets."
       },
       {
         "title": "Momiji Corridor",
@@ -231,8 +221,7 @@
             "label": "App Store · Q-chan (Fuji-Q)",
             "url": "https://apps.apple.com/app/q-chan/id1483774385"
           }
-        ],
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Fuji-Q_Highland_Fujiyama.jpg/640px-Fuji-Q_Highland_Fujiyama.jpg"
+        ]
       }
     ]
   },
@@ -277,15 +266,13 @@
         "title": "Kenroku-en",
         "lat": 36.5619,
         "lng": 136.6626,
-        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Kenrokuen_Kanazawa.jpg/640px-Kenrokuen_Kanazawa.jpg"
+        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison."
       },
       {
         "title": "Château de Kanazawa",
         "lat": 36.5642,
         "lng": 136.6592,
-        "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Kanazawa_Castle_Park.jpg/640px-Kanazawa_Castle_Park.jpg"
+        "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc."
       },
       {
         "title": "Higashi Chaya",
@@ -386,15 +373,13 @@
         "title": "Village de Shirakawa-go",
         "lat": 36.2578,
         "lng": 136.9063,
-        "desc": "Maisons gassho-zukuri UNESCO aux toits de chaume. Monter au belvédère pour la photo classique.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Shirakawa-go.jpg/640px-Shirakawa-go.jpg"
+        "desc": "Maisons gassho-zukuri UNESCO aux toits de chaume. Monter au belvédère pour la photo classique."
       },
       {
         "title": "Sanmachi Suji",
         "lat": 36.1466,
         "lng": 137.2596,
-        "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Takayama_Sanmachi.jpg/640px-Takayama_Sanmachi.jpg"
+        "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir."
       }
     ]
   },
@@ -446,8 +431,7 @@
         "title": "Kiyomizu-dera",
         "lat": 34.9949,
         "lng": 135.785,
-        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Kiyomizu-dera_Kyoto.jpg/640px-Kiyomizu-dera_Kyoto.jpg"
+        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville."
       },
       {
         "title": "Cérémonie du thé",
@@ -473,15 +457,13 @@
         "title": "Forêt de bambous d’Arashiyama",
         "lat": 35.0173,
         "lng": 135.6722,
-        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Arashiyama_Bamboo_Grove.jpg/640px-Arashiyama_Bamboo_Grove.jpg"
+        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde."
       },
       {
         "title": "Kinkaku-ji",
         "lat": 35.0394,
         "lng": 135.7292,
-        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Kinkaku-ji_Golden_Pavilion.jpg/640px-Kinkaku-ji_Golden_Pavilion.jpg"
+        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto."
       },
       {
         "title": "Atelier wagashi",
@@ -501,8 +483,7 @@
         "title": "Fushimi Inari",
         "lat": 34.9671,
         "lng": 135.7727,
-        "desc": "Des milliers de torii vermillon montent la colline. Monter autant que l’on veut, puis redescendre.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Fushimi_Inari_Shrine_Torii.jpg/640px-Fushimi_Inari_Shrine_Torii.jpg"
+        "desc": "Des milliers de torii vermillon montent la colline. Monter autant que l’on veut, puis redescendre."
       },
       {
         "title": "Daigo-ji",
@@ -529,8 +510,7 @@
         "title": "Château Nijō",
         "lat": 35.0142,
         "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Nijo_Castle_Kyoto.jpg/640px-Nijo_Castle_Kyoto.jpg"
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru."
       },
       {
         "title": "Marché Nishiki",
@@ -560,8 +540,7 @@
         "title": "Parc de Nara",
         "lat": 34.6851,
         "lng": 135.843,
-        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Nara_Park_deer.jpg/640px-Nara_Park_deer.jpg"
+        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs."
       },
       {
         "title": "Kōfuku-ji",
@@ -573,8 +552,7 @@
         "title": "Tōdai-ji",
         "lat": 34.689,
         "lng": 135.8398,
-        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Todaiji_Temple_Nara.jpg/640px-Todaiji_Temple_Nara.jpg"
+        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde."
       },
       {
         "title": "Kasuga Taisha",
@@ -597,8 +575,7 @@
         "title": "Dotonbori",
         "lat": 34.6687,
         "lng": 135.5013,
-        "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dotonbori_Osaka_at_night.jpg/640px-Dotonbori_Osaka_at_night.jpg"
+        "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée."
       }
     ]
   },
@@ -627,8 +604,7 @@
             "label": "App Store · app officielle USJ",
             "url": "https://apps.apple.com/app/universal-studios-japan/id532097000"
           }
-        ],
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Universal_Studios_Japan.jpg/640px-Universal_Studios_Japan.jpg"
+        ]
       }
     ]
   },
@@ -660,8 +636,7 @@
         "title": "Dotonbori",
         "lat": 34.6687,
         "lng": 135.5013,
-        "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dotonbori_Osaka_at_night.jpg/640px-Dotonbori_Osaka_at_night.jpg"
+        "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico."
       }
     ]
   },
@@ -675,8 +650,7 @@
         "title": "Château d’Osaka",
         "lat": 34.6873,
         "lng": 135.5262,
-        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte.",
-        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Osaka_Castle_01.jpg/640px-Osaka_Castle_01.jpg"
+        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte."
       },
       {
         "title": "Shinsaibashi",

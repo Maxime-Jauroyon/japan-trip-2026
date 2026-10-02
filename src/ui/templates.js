@@ -255,16 +255,31 @@ export function legEndsToolbarHtml(leg){
   return `<div class="leg-ends-bar">${btn(a, "from")}${btn(b, "to")}</div>`;
 }
 
-export function renderPhotoGallery(srcs, kind){
-  if (!srcs.length){
+/** Mention de l’auteur et de la licence (obligatoire pour les photos Creative Commons). */
+function photoCreditHtml(credit){
+  if (!credit || !credit.author) return "";
+  const lic = credit.licenseUrl
+    ? `<a href="${esc(credit.licenseUrl)}" target="_blank" rel="noopener">${esc(credit.license)}</a>`
+    : esc(credit.license || "");
+  const who = credit.source
+    ? `<a href="${esc(credit.source)}" target="_blank" rel="noopener">${esc(credit.author)}</a>`
+    : esc(credit.author);
+  return `<span class="photo-credit">© ${who}${lic ? " · " + lic : ""}</span>`;
+}
+
+/** Galerie : grande photo puis vignettes. `photos` : chemins ou { src, credit }. */
+export function renderPhotoGallery(photos, kind){
+  const list = photos.map(p => (typeof p === "string" ? { src: p } : p));
+  if (!list.length){
     return `<div class="detail-hero"><div class="ph">${iconSvg(kind, "#c4a574")}</div></div>`;
   }
   const onErr = `onerror="var box=this.closest('.shot,.detail-hero');if(!box)return;this.remove();if(!box.querySelector('img'))box.style.display='none'"`;
-  const hero = `<div class="detail-hero"><img src="${esc(srcs[0])}" alt="" loading="lazy" ${onErr}/><div class="ph" style="display:none">${iconSvg(kind, "#c4a574")}</div></div>`;
-  const rest = srcs.slice(1);
+  const hero = `<div class="detail-hero"><img src="${esc(list[0].src)}" alt="" loading="lazy" ${onErr}/>` +
+    `<div class="ph" style="display:none">${iconSvg(kind, "#c4a574")}</div>${photoCreditHtml(list[0].credit)}</div>`;
+  const rest = list.slice(1);
   if (!rest.length) return hero;
-  const shots = rest.map((src, i) =>
-    `<div class="shot${rest.length === 1 || (rest.length === 3 && i === 0) ? " wide" : ""}"><img src="${esc(src)}" alt="" loading="lazy" ${onErr}/></div>`
+  const shots = rest.map((p, i) =>
+    `<div class="shot${rest.length === 1 || (rest.length === 3 && i === 0) ? " wide" : ""}"><img src="${esc(p.src)}" alt="" loading="lazy" ${onErr}/>${photoCreditHtml(p.credit)}</div>`
   ).join("");
   return hero + `<div class="photo-gallery">${shots}</div>`;
 }

@@ -21,7 +21,7 @@ export let CONTEXT_PHRASES = {};
 export let ACT_META = {};
 export let TRIP = null;
 export let PHOTO_RULES = [];
-export let PHOTO_RELATED = {};
+export let PLACE_PHOTOS = {};
 export let PRACTICAL_INFO = [];
 
 export const DATA_FILES = [
@@ -65,7 +65,8 @@ export function hydrate(raw) {
   PRACTICAL_INFO = raw.practical;
   /* Photos : motif (sur le titre en minuscules) → nom de fichier dans img/activities. */
   PHOTO_RULES = raw.photos.rules.map(r => ({ re: new RegExp(r.match), slug: r.slug }));
-  PHOTO_RELATED = raw.photos.related;
+  /* Photos par lieu : [{ file, author, license, licenseUrl, source }] (img/activities/<file>) */
+  PLACE_PHOTOS = raw.photos.places;
 }
 
 /** Charge tous les fichiers de /data (réseau d’abord, cache SW hors ligne). */

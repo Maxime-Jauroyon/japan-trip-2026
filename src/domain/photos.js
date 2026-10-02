@@ -1,6 +1,6 @@
 /* Photos des activités et hôtels (img/activities, img/hotels) — règles dans data/photos.json. */
 
-import { PHOTO_RELATED, PHOTO_RULES } from "../core/data.js";
+import { PHOTO_RULES, PLACE_PHOTOS } from "../core/data.js";
 
 export function hotelPhotos(h){
   const out = [];
@@ -33,32 +33,18 @@ export function photoSlug(act){
   return null;
 }
 
-export function photosFor(act){
-  const out = [];
-  const seen = new Set();
-  const push = src => {
-    if (!src || seen.has(src)) return;
-    seen.add(src);
-    out.push(src);
+/** Photo affichable : { src, credit? } — credit = { author, license, licenseUrl, source }. */
+function placePhoto(p){
+  return {
+    src: "./img/activities/" + p.file,
+    credit: { author: p.author, license: p.license, licenseUrl: p.licenseUrl, source: p.source }
   };
-  if (act.photo) push(act.photo);
-  (act.photos || []).forEach(push);
-  if (act.img) push(act.img);
-  const slug = photoSlug(act);
-  if (slug){
-    push("./img/activities/" + slug + ".jpg");
-    push("./img/activities/" + slug + "-2.jpg");
-    push("./img/activities/" + slug + "-3.jpg");
-    // photos voisines (même ambiance) en complément
-    (PHOTO_RELATED[slug] || []).forEach(r => {
-      push("./img/activities/" + r + ".jpg");
-      push("./img/activities/" + r + "-2.jpg");
-    });
-  }
-  return out.slice(0, 5);
 }
 
-function photoFor(act){
-  const list = photosFor(act);
-  return list[0] || null;
+/** Photos d’une activité : `photos` explicites de l’idée, puis celles du lieu (data/photos.json). */
+export function photosFor(act){
+  const out = (act.photos || []).map(src => ({ src }));
+  const slug = photoSlug(act);
+  (slug && PLACE_PHOTOS[slug] || []).forEach(p => out.push(placePhoto(p)));
+  return out.slice(0, 4);
 }
