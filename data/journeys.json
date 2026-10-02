@@ -1,0 +1,15 @@
+[
+  {
+    "id": "fuji-kana",
+    "title": "Fujikawaguchiko → Kanazawa",
+    "dest": "Kanazawa",
+    "destJp": "金沢",
+    "subtitle": "14 nov · Jour 7",
+    "meta": "~9:00 → ~15:30",
+    "day": 7,
+    "legs": [
+      "fuji-tokyo",
+      "tokyo-kana"
+    ]
+  }
+]

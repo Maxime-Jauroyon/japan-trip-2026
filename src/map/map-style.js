@@ -1,11 +1,20 @@
+/* Styles de carte MapLibre (OpenFreeMap / OpenMapTiles) — sombre & clair. Pas de clé API. Relief : AWS Terrarium. */
+
+import { TILE_PROTOCOL } from "../config.js";
+
 /* Styles de carte MapLibre (OpenFreeMap / OpenMapTiles) — sombre & clair.
    Pas de clé API. Relief : AWS Terrarium (gratuit). */
-const MAP_TILES_URL = "https://tiles.openfreemap.org/planet";
-const MAP_GLYPHS_URL = "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf";
-const MAP_DEM_TILES = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
-const MAP_FONT = ["Noto Sans Regular"];
-const MAP_FONT_BOLD = ["Noto Sans Bold"];
-const MAP_FONT_ITALIC = ["Noto Sans Italic"];
+export const MAP_TILES_URL = "https://tiles.openfreemap.org/planet";
+
+export const MAP_GLYPHS_URL = "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf";
+
+export const MAP_DEM_TILES = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
+
+export const MAP_FONT = ["Noto Sans Regular"];
+
+export const MAP_FONT_BOLD = ["Noto Sans Bold"];
+
+export const MAP_FONT_ITALIC = ["Noto Sans Italic"];
 
 const MAP_PALETTES = {
   dark: {
@@ -82,9 +91,9 @@ const MAP_PALETTES = {
   }
 };
 
-/** URL servie via le cache hors ligne (protocole jtcache://, cf. offline-maps.js). */
+/** URL servie via le cache hors ligne (protocole jtcache://, cf. map/offline-tiles.js). */
 function viaTileCache(url){
-  return typeof TILE_PROTOCOL !== "undefined" ? url.replace(/^https:\/\//, TILE_PROTOCOL + "://") : url;
+  return url.replace(/^https:\/\//, TILE_PROTOCOL + "://");
 }
 
 function mapPalette(theme){
@@ -94,7 +103,7 @@ function mapPalette(theme){
 const MAP_NAME = ["coalesce", ["get", "name:fr"], ["get", "name:latin"], ["get", "name_en"], ["get", "name"]];
 
 /** Style complet construit localement : seules les tuiles viennent du réseau (ou du cache hors ligne). */
-function buildMapStyle(theme){
+export function buildMapStyle(theme){
   const p = mapPalette(theme);
   const z = (stops) => ["interpolate", ["exponential", 1.5], ["zoom"]].concat(stops);
   return {

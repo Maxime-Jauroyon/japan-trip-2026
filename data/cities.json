@@ -1,0 +1,796 @@
+{
+  "japanBounds": {
+    "west": 134.3,
+    "south": 33.7,
+    "east": 141.1,
+    "north": 37.35
+  },
+  "cities": [
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "jp": "東京",
+      "lat": 35.6812,
+      "lng": 139.7671,
+      "stays": [
+        {
+          "id": "tokyo-1",
+          "label": "Séjour 1 — arrivée",
+          "from": "8 nov",
+          "to": "12 nov",
+          "nights": "4 nuits",
+          "hotel": {
+            "name": "HomeNest Hotel Akihabara",
+            "area": "Akihabara / Torigoe",
+            "address": "1 Chome-25-1 Torigoe, Taito, Tokyo (鳥越)",
+            "lat": 35.703,
+            "lng": 139.7832,
+            "checkIn": "dim. 8 nov · 16:00–23:00",
+            "checkOut": "jeu. 12 nov · 08:00–11:00",
+            "status": "paid",
+            "payment": "Payé par Léo · non remboursable",
+            "price": "491,85 € (total, 2 adultes)",
+            "phone": "+81 80 5118 6621",
+            "photos": [
+              "./img/hotels/homenest-akihabara.jpg",
+              "./img/hotels/homenest-akihabara-3.jpg",
+              "./img/hotels/homenest-akihabara-4.jpg",
+              "./img/hotels/homenest-akihabara-5.jpg",
+              "./img/hotels/homenest-akihabara-6.jpg"
+            ],
+            "notes": [
+              "Appartement entier · 2 adultes · 4 nuits",
+              "Réservé sur le compte Booking de Léo · Maxime aussi sur place",
+              "Self check-in · non-fumeurs · pas de repas inclus",
+              "Taxe de séjour Tokyo : souvent déjà dans le total Booking — vérifier à l’arrivée",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "Arrivée HND ~6h50 · check-in 16h — demander dépôt de bagages à l’hôtel ou consigne gare si besoin",
+              "Équipé : cuisine, lave-linge, clim, Wi‑Fi, etc."
+            ],
+            "desc": "Appart-hôtel à Akihabara (Torigoe), calme et pratique pour le centre, Asakusa et le départ vers le Fuji."
+          },
+          "days": {
+            "from": 1,
+            "to": 5
+          }
+        },
+        {
+          "id": "tokyo-2",
+          "label": "Séjour 2 — retour",
+          "from": "27 nov",
+          "to": "29 nov",
+          "nights": "2 nuits",
+          "hotel": {
+            "name": "The Royal Park Hotel Tokyo Haneda Airport Terminal 3",
+            "area": "Haneda T3",
+            "address": "Haneda Airport 2-6-5, Ota-ku, Tokyo",
+            "lat": 35.5465,
+            "lng": 139.7682,
+            "checkIn": "ven. 27 nov · à partir de 15:00",
+            "checkOut": "dim. 29 nov · jusqu’à 11:00",
+            "status": "paid",
+            "payment": "Payé par Maxime · annulation gratuite jusqu’au 23 nov 23:59",
+            "price": "485,91 € (total, 2 adultes)",
+            "phone": "+81 3 6830 1111",
+            "photos": [
+              "./img/hotels/royal-park-haneda.jpg",
+              "./img/hotels/royal-park-haneda-2.jpg",
+              "./img/hotels/royal-park-haneda-3.jpg",
+              "./img/hotels/royal-park-haneda-4.jpg"
+            ],
+            "notes": [
+              "Chambre lits jumeaux de luxe · accessible PMR · non-fumeurs · 2 nuits",
+              "Petit-déjeuner inclus",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "Dans le terminal 3 Haneda — idéal pour le vol HND 09:05"
+            ],
+            "desc": "Hôtel dans le terminal 3 de Haneda — idéal pour le vol du matin, sans transfert depuis la ville."
+          },
+          "days": {
+            "from": 20
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 139.62,
+          "south": 35.52,
+          "east": 139.9,
+          "north": 35.78
+        },
+        "label": {
+          "side": "right",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "asakusa",
+            "name": "Asakusa",
+            "color": "#c45c4a",
+            "west": 139.755,
+            "south": 35.705,
+            "east": 139.815,
+            "north": 35.735
+          },
+          {
+            "id": "akihabara",
+            "name": "Akihabara",
+            "color": "#4a7ab8",
+            "west": 139.75,
+            "south": 35.665,
+            "east": 139.79,
+            "north": 35.705
+          },
+          {
+            "id": "shinjuku",
+            "name": "Shinjuku",
+            "color": "#6b5b95",
+            "west": 139.685,
+            "south": 35.68,
+            "east": 139.72,
+            "north": 35.705
+          },
+          {
+            "id": "shibuya",
+            "name": "Shibuya",
+            "color": "#d4a017",
+            "west": 139.688,
+            "south": 35.655,
+            "east": 139.715,
+            "north": 35.68
+          },
+          {
+            "id": "odaiba",
+            "name": "Odaiba",
+            "color": "#2a9d8f",
+            "west": 139.74,
+            "south": 35.615,
+            "east": 139.81,
+            "north": 35.665
+          },
+          {
+            "id": "ikebukuro",
+            "name": "Ikebukuro",
+            "color": "#b85a8a",
+            "west": 139.7,
+            "south": 35.72,
+            "east": 139.73,
+            "north": 35.74
+          }
+        ]
+      },
+      "climate": {
+        "hi": 17,
+        "lo": 9,
+        "note": "Frais le matin · veste + parapluie pluie fine possible"
+      }
+    },
+    {
+      "id": "fuji",
+      "name": "Fujikawaguchiko",
+      "jp": "河口湖",
+      "lat": 35.5006,
+      "lng": 138.7639,
+      "stays": [
+        {
+          "id": "fuji-1",
+          "label": "Séjour lac",
+          "from": "12 nov",
+          "to": "14 nov",
+          "nights": "2 nuits",
+          "hotel": {
+            "name": "Kawaguchiko Hotel",
+            "area": "Funatsu / lac Kawaguchi",
+            "address": "Funatsu 200, Fujikawaguchiko, Yamanashi",
+            "lat": 35.5042,
+            "lng": 138.7636,
+            "checkIn": "jeu. 12 nov · 15:00–21:00",
+            "checkOut": "sam. 14 nov · jusqu’à 10:00",
+            "status": "paid",
+            "payment": "Payé par Maxime · annulation gratuite jusqu’au 8 nov 23:59",
+            "price": "424,55 € (total, 2 adultes)",
+            "phone": "+81 555 72 1313",
+            "photos": [
+              "./img/hotels/kawaguchiko.jpg",
+              "./img/hotels/kawaguchiko-2.jpg",
+              "./img/hotels/kawaguchiko-3.jpg",
+              "./img/hotels/kawaguchiko-4.jpg"
+            ],
+            "notes": [
+              "Chambre lits jumeaux · non-fumeurs · 2 adultes · 2 nuits",
+              "Petit-déjeuner inclus",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "Vue montagne · salle de bain privée"
+            ],
+            "desc": "Hôtel au bord du lac Kawaguchi, base pour le Fuji, les téléphériques et les villages alentour."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 138.55,
+          "south": 35.28,
+          "east": 138.92,
+          "north": 35.62
+        },
+        "label": {
+          "side": "left",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "kawaguchi",
+            "name": "Kawaguchi",
+            "color": "#3d7ea6",
+            "west": 138.74,
+            "south": 35.49,
+            "east": 138.82,
+            "north": 35.54
+          },
+          {
+            "id": "chureito",
+            "name": "Chūrei-tō",
+            "color": "#c45c4a",
+            "west": 138.785,
+            "south": 35.48,
+            "east": 138.83,
+            "north": 35.52
+          },
+          {
+            "id": "fujiq",
+            "name": "Fuji-Q",
+            "color": "#6b5b95",
+            "west": 138.76,
+            "south": 35.475,
+            "east": 138.8,
+            "north": 35.5
+          },
+          {
+            "id": "oshino",
+            "name": "Oshino",
+            "color": "#6b8e4e",
+            "west": 138.81,
+            "south": 35.44,
+            "east": 138.86,
+            "north": 35.48
+          },
+          {
+            "id": "saiko",
+            "name": "Saiko",
+            "color": "#2a9d8f",
+            "west": 138.66,
+            "south": 35.48,
+            "east": 138.72,
+            "north": 35.52
+          }
+        ]
+      },
+      "climate": {
+        "hi": 12,
+        "lo": 3,
+        "note": "Froid en altitude · ciel variable · vue Fuji selon météo"
+      }
+    },
+    {
+      "id": "kanazawa",
+      "name": "Kanazawa",
+      "jp": "金沢",
+      "lat": 36.5611,
+      "lng": 136.6565,
+      "stays": [
+        {
+          "id": "kana-1",
+          "label": "Séjour Kanazawa",
+          "from": "14 nov",
+          "to": "17 nov",
+          "nights": "3 nuits",
+          "hotel": {
+            "name": "Henn na Hotel Kanazawa Korimbo",
+            "area": "Korinbo",
+            "address": "Kourinbou 1-2-32, Kanazawa, Ishikawa",
+            "lat": 36.5646,
+            "lng": 136.6543,
+            "checkIn": "sam. 14 nov · 15:00–00:00",
+            "checkOut": "mar. 17 nov · jusqu’à 11:00",
+            "status": "paid",
+            "payment": "Payé par Léo · annulation gratuite jusqu’au 12 nov 23:59",
+            "price": "303,98 € (total, 2 adultes)",
+            "phone": "+81 50 5210 5310",
+            "photos": [
+              "./img/hotels/henn-na-kanazawa.jpg",
+              "./img/hotels/henn-na-kanazawa-2.jpg",
+              "./img/hotels/henn-na-kanazawa-3.jpg",
+              "./img/hotels/henn-na-kanazawa-4.jpg"
+            ],
+            "notes": [
+              "Chambre lits jumeaux standard · non-fumeurs · 2 adultes · 3 nuits",
+              "Petit-déjeuner inclus",
+              "Taxe de séjour (accommodation tax) à payer sur place — non incluse dans le tarif Booking",
+              "Barème Kanazawa : 200 ¥/pers./nuit (chambre 5 000–20 000 ¥) · 500 ¥/pers./nuit (>20 000 ¥) · exonéré <4 999 ¥",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "Check-in robot (Henn na) · quartier Korinbo"
+            ],
+            "desc": "Hôtel design à Korinbo, à pied de Kenroku-en, Omicho et du centre historique."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 136.6,
+          "south": 36.53,
+          "east": 136.71,
+          "north": 36.59
+        },
+        "label": {
+          "side": "left",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "centre",
+            "name": "Kenrokuen",
+            "color": "#c45c4a",
+            "west": 136.652,
+            "south": 36.556,
+            "east": 136.672,
+            "north": 36.572
+          },
+          {
+            "id": "higashi",
+            "name": "Higashi",
+            "color": "#d4a017",
+            "west": 136.654,
+            "south": 36.568,
+            "east": 136.68,
+            "north": 36.58
+          },
+          {
+            "id": "station",
+            "name": "Gare",
+            "color": "#4a7ab8",
+            "west": 136.64,
+            "south": 36.55,
+            "east": 136.655,
+            "north": 36.575
+          }
+        ]
+      },
+      "climate": {
+        "hi": 16,
+        "lo": 8,
+        "note": "Humide côté mer du Japon · pluie plus fréquente"
+      }
+    },
+    {
+      "id": "shirakawa",
+      "name": "Shirakawa-go",
+      "jp": "白川郷",
+      "lat": 36.2578,
+      "lng": 136.9063,
+      "stays": [
+        {
+          "id": "shira-day",
+          "label": "Visite à la journée",
+          "from": "17 nov",
+          "to": "17 nov",
+          "nights": "Sans nuit",
+          "hotel": {
+            "name": "—",
+            "area": "Excursion d’une journée",
+            "address": "—",
+            "checkIn": "—",
+            "checkOut": "—",
+            "status": "placeholder",
+            "payment": "—",
+            "price": "—",
+            "notes": [
+              "Pas d’hôtel — bus aller-retour le même jour"
+            ],
+            "desc": "Visite du village seulement ; nuit à Takayama."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 136.87,
+          "south": 36.22,
+          "east": 136.94,
+          "north": 36.29
+        },
+        "label": {
+          "side": "left",
+          "minZoom": 8.2
+        },
+        "zones": [
+          {
+            "id": "ogimachi",
+            "name": "Ogimachi",
+            "color": "#6b8e4e",
+            "west": 136.895,
+            "south": 36.25,
+            "east": 136.915,
+            "north": 36.27,
+            "alwaysShowHub": true
+          }
+        ]
+      },
+      "climate": {
+        "hi": 11,
+        "lo": 2,
+        "note": "Montagne · possible pluie / neige légère en soirée"
+      }
+    },
+    {
+      "id": "takayama",
+      "name": "Takayama",
+      "jp": "高山",
+      "lat": 36.1461,
+      "lng": 137.2522,
+      "stays": [
+        {
+          "id": "taka-1",
+          "label": "Séjour Takayama",
+          "from": "17 nov",
+          "to": "18 nov",
+          "nights": "1 nuit",
+          "hotel": {
+            "name": "Mercure Hida Takayama",
+            "area": "Hanasatomachi / gare",
+            "address": "4-311-1 Hanasatomachi, Takayama, Gifu",
+            "lat": 36.1393,
+            "lng": 137.2521,
+            "checkIn": "mar. 17 nov · à partir de 15:00",
+            "checkOut": "mer. 18 nov · jusqu’à 11:00",
+            "status": "paid",
+            "payment": "Payé par Maxime · non remboursable",
+            "price": "246,52 € (total, 2 adultes)",
+            "phone": "+81 577 35 2702",
+            "photos": [
+              "./img/hotels/mercure-takayama.jpg",
+              "./img/hotels/mercure-takayama-2.jpg",
+              "./img/hotels/mercure-takayama-3.jpg",
+              "./img/hotels/mercure-takayama-4.jpg"
+            ],
+            "notes": [
+              "Chambre double supérieure · non-fumeurs · 2 adultes · 1 nuit",
+              "Petit-déjeuner inclus",
+              "Taxes à régler au check-in (loi japonaise) : onsen tax 150 ¥ + taxe de séjour / pers. / nuit — même sans utiliser l’onsen",
+              "Montant selon le tarif de la chambre · payé à part (pas dans le prix Booking)",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "À ~4 min à pied de la gare JR Takayama · onsen en rooftop"
+            ],
+            "desc": "Mercure à deux pas de la gare JR, onsen en rooftop, vieille ville et marché du matin accessibles à pied."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 137.21,
+          "south": 36.11,
+          "east": 137.3,
+          "north": 36.18
+        },
+        "label": {
+          "side": "right",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "sanmachi",
+            "name": "Sanmachi",
+            "color": "#c45c4a",
+            "west": 137.248,
+            "south": 36.138,
+            "east": 137.265,
+            "north": 36.155
+          },
+          {
+            "id": "miyagawa",
+            "name": "Gare",
+            "color": "#4a7ab8",
+            "west": 137.245,
+            "south": 36.13,
+            "east": 137.265,
+            "north": 36.15
+          }
+        ]
+      },
+      "climate": {
+        "hi": 13,
+        "lo": 1,
+        "note": "Nuits froides · matinée marché bien couvert"
+      }
+    },
+    {
+      "id": "kyoto",
+      "name": "Kyoto",
+      "jp": "京都",
+      "lat": 35.0116,
+      "lng": 135.7681,
+      "stays": [
+        {
+          "id": "kyo-1",
+          "label": "Séjour Kyoto",
+          "from": "18 nov",
+          "to": "22 nov",
+          "nights": "4 nuits",
+          "hotel": {
+            "name": "Agora Kyoto Shijo",
+            "area": "Shijō / Aburanokōji",
+            "address": "36 Kawabokocho, Shijodori Aburanokoji Higashiiru, Shimogyo, Kyoto",
+            "lat": 35.0039,
+            "lng": 135.7538,
+            "checkIn": "mer. 18 nov · à partir de 15:00",
+            "checkOut": "dim. 22 nov · jusqu’à 11:00",
+            "status": "paid",
+            "payment": "Payé par Léo · non remboursable",
+            "price": "822,69 € (total, 2 adultes)",
+            "phone": "+81 75 254 7588",
+            "photos": [
+              "./img/hotels/agora-kyoto.jpg",
+              "./img/hotels/agora-kyoto-2.jpg",
+              "./img/hotels/agora-kyoto-3.jpg",
+              "./img/hotels/agora-kyoto-4.jpg"
+            ],
+            "notes": [
+              "Chambre lits jumeaux d’angle · non-fumeurs · 2 adultes · 4 nuits",
+              "Petit-déjeuner inclus · accessible PMR",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "~7 min à pied de Shijō / Karasuma (Hankyu / métro)"
+            ],
+            "desc": "Hôtel à Shijō, base compacte pour Nishiki, Gion, les temples et les bus vers Arashiyama."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 135.62,
+          "south": 34.88,
+          "east": 135.87,
+          "north": 35.1
+        },
+        "label": {
+          "side": "left",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "higashiyama",
+            "name": "Gion",
+            "color": "#c45c4a",
+            "west": 135.768,
+            "south": 34.99,
+            "east": 135.795,
+            "north": 35.015
+          },
+          {
+            "id": "north",
+            "name": "Nord",
+            "color": "#6b8e4e",
+            "west": 135.715,
+            "south": 35.015,
+            "east": 135.81,
+            "north": 35.05
+          },
+          {
+            "id": "arashiyama",
+            "name": "Arashiyama",
+            "color": "#2a9d8f",
+            "west": 135.66,
+            "south": 35.005,
+            "east": 135.69,
+            "north": 35.03
+          },
+          {
+            "id": "fushimi",
+            "name": "Fushimi",
+            "color": "#d4a017",
+            "west": 135.765,
+            "south": 34.96,
+            "east": 135.79,
+            "north": 34.985
+          },
+          {
+            "id": "centre",
+            "name": "Centre",
+            "color": "#4a7ab8",
+            "west": 135.74,
+            "south": 34.995,
+            "east": 135.775,
+            "north": 35.02
+          },
+          {
+            "id": "daigo",
+            "name": "Daigo",
+            "color": "#3d7ea6",
+            "west": 135.81,
+            "south": 34.945,
+            "east": 135.835,
+            "north": 34.96
+          }
+        ]
+      },
+      "climate": {
+        "hi": 17,
+        "lo": 7,
+        "note": "Automne · couleurs momiji · soirées fraîches"
+      }
+    },
+    {
+      "id": "nara",
+      "name": "Nara",
+      "jp": "奈良",
+      "lat": 34.6851,
+      "lng": 135.805,
+      "stays": [
+        {
+          "id": "nara-1",
+          "label": "Séjour Nara",
+          "from": "22 nov",
+          "to": "23 nov",
+          "nights": "1 nuit",
+          "hotel": {
+            "name": "The Deer Park Inn",
+            "area": "Parc de Nara / Kasugano",
+            "address": "Kasuganocho 158-5, Nara",
+            "lat": 34.6841,
+            "lng": 135.8471,
+            "checkIn": "dim. 22 nov · 15:30–21:00",
+            "checkOut": "lun. 23 nov · jusqu’à 10:00",
+            "status": "paid",
+            "payment": "Payé par Maxime · annulation gratuite jusqu’au 16 nov 23:59",
+            "price": "59,66 € (total, 2 adultes)",
+            "phone": "+81 742 81 7222",
+            "photos": [
+              "./img/hotels/deer-park-nara.jpg",
+              "./img/hotels/deer-park-nara-2.jpg",
+              "./img/hotels/deer-park-nara-3.jpg",
+              "./img/hotels/deer-park-nara-4.jpg"
+            ],
+            "notes": [
+              "Chambre lits jumeaux · salle de bains commune · non-fumeurs · 1 nuit",
+              "Repas non inclus",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "Dans / au bord du parc de Nara — convenir horaires avec l’hôte si besoin"
+            ],
+            "desc": "Guest house au bord du parc de Nara — cerfs le matin, Todai-ji et Kasuga à pied."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 135.76,
+          "south": 34.64,
+          "east": 135.9,
+          "north": 34.73
+        },
+        "label": {
+          "side": "right",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "parc",
+            "name": "Parc",
+            "color": "#6b8e4e",
+            "west": 135.83,
+            "south": 34.678,
+            "east": 135.855,
+            "north": 34.7
+          },
+          {
+            "id": "centre",
+            "name": "Centre",
+            "color": "#c45c4a",
+            "west": 135.82,
+            "south": 34.675,
+            "east": 135.84,
+            "north": 34.69
+          }
+        ]
+      },
+      "climate": {
+        "hi": 17,
+        "lo": 7,
+        "note": "Similaire Kyoto · parc venté le matin"
+      }
+    },
+    {
+      "id": "osaka",
+      "name": "Osaka",
+      "jp": "大阪",
+      "lat": 34.6937,
+      "lng": 135.5023,
+      "stays": [
+        {
+          "id": "osa-1",
+          "label": "Séjour Osaka",
+          "from": "23 nov",
+          "to": "27 nov",
+          "nights": "4 nuits",
+          "hotel": {
+            "name": "Garner Hotel Osaka Honmachi Kita Semba",
+            "area": "Honmachi / Awajimachi",
+            "address": "2-6-8 Awajimachi, Chuo-ku, Osaka",
+            "lat": 34.6868,
+            "lng": 135.504,
+            "checkIn": "lun. 23 nov · 15:00–00:00",
+            "checkOut": "ven. 27 nov · jusqu’à 11:00",
+            "status": "paid",
+            "payment": "Payé par Maxime · non remboursable",
+            "price": "234,46 € (total, 2 adultes)",
+            "phone": "+81 6 4300 3414",
+            "photos": [
+              "./img/hotels/garner-osaka.jpg",
+              "./img/hotels/garner-osaka-2.jpg",
+              "./img/hotels/garner-osaka-3.jpg",
+              "./img/hotels/garner-osaka-4.jpg"
+            ],
+            "notes": [
+              "Chambre lits jumeaux standard · non-fumeurs · 2 adultes · 4 nuits",
+              "Petit-déjeuner inclus",
+              "Code confidentiel : dans la conf. Booking (ne pas partager)",
+              "~6 min à pied de Honmachi (Midosuji) · pratique Namba / Shinsaibashi / USJ"
+            ],
+            "desc": "Garner IHG à Honmachi, métro direct pour Namba, Dotonbori et Universal Studios."
+          }
+        }
+      ],
+      "map": {
+        "bounds": {
+          "west": 135.36,
+          "south": 34.6,
+          "east": 135.6,
+          "north": 34.74
+        },
+        "label": {
+          "side": "left",
+          "minZoom": 0
+        },
+        "zones": [
+          {
+            "id": "namba",
+            "name": "Namba",
+            "color": "#c45c4a",
+            "west": 135.49,
+            "south": 34.655,
+            "east": 135.515,
+            "north": 34.68
+          },
+          {
+            "id": "castle",
+            "name": "Château",
+            "color": "#4a7ab8",
+            "west": 135.515,
+            "south": 34.675,
+            "east": 135.54,
+            "north": 34.7
+          },
+          {
+            "id": "usj",
+            "name": "USJ",
+            "color": "#6b5b95",
+            "west": 135.42,
+            "south": 34.655,
+            "east": 135.445,
+            "north": 34.68
+          },
+          {
+            "id": "shinsekai",
+            "name": "Shinsekai",
+            "color": "#d4a017",
+            "west": 135.495,
+            "south": 34.645,
+            "east": 135.515,
+            "north": 34.67
+          }
+        ]
+      },
+      "climate": {
+        "hi": 18,
+        "lo": 9,
+        "note": "Un peu plus doux · averses possibles"
+      }
+    }
+  ]
+}

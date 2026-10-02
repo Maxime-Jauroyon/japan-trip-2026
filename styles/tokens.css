@@ -1,0 +1,63 @@
+/* Jetons de design : couleurs, ombres, rayons — thème sombre (défaut) et clair (data-theme="light"). */
+
+:root {
+  --bg: #0a0e14;
+  --surface: #0c1118;
+  --panel: #121821;
+  --panel-2: #1a222e;
+  --glass: rgba(12, 17, 24, .72);
+  --glass-strong: rgba(14, 19, 27, .9);
+  --glass-border: rgba(255, 255, 255, .09);
+  --overlay-bg: rgba(14, 19, 27, .94);
+  --line: rgba(160, 175, 190, 0.2);
+  --fg-rgb: 255, 255, 255;
+  --gold-rgb: 196, 165, 116;
+  --blue-rgb: 79, 152, 199;
+  --blue-ink: #8cc0de;
+  --gold: #c4a574;
+  --gold-2: #e0c99a;
+  --ok: #6fceae;
+  --mid: #e0a45a;
+  --no: #7d8694;
+  --cream: #e8eef6;
+  --muted: #8b95a6;
+  --ink: #1a222c;
+  --paper: #f7f4ee;
+  --accent: #c45c26;
+  --map-bg: #121922;
+  --shadow-lg: 0 18px 50px rgba(0, 0, 0, .45);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, .35);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, .3);
+  --radius: 14px;
+  --panel-w: 420px;
+  --header-h: 52px;
+  --tabbar-h: 0px;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f3efe7;
+  --surface: #f8f5ef;
+  --panel: #fffdf9;
+  --panel-2: #f4efe6;
+  --glass: rgba(255, 252, 246, .74);
+  --glass-strong: rgba(255, 252, 246, .92);
+  --glass-border: rgba(80, 60, 30, .12);
+  --overlay-bg: rgba(255, 253, 249, .96);
+  --line: rgba(90, 75, 55, 0.16);
+  --fg-rgb: 70, 52, 30;
+  --gold-rgb: 166, 124, 58;
+  --blue-rgb: 47, 111, 149;
+  --blue-ink: #2f6f95;
+  --gold: #9f7a3c;
+  --gold-2: #8a6a30;
+  --ok: #2f9a78;
+  --mid: #b9771f;
+  --no: #78808b;
+  --cream: #1f2833;
+  --muted: #677180;
+  --map-bg: #f2eee4;
+  --shadow-lg: 0 18px 50px rgba(70, 52, 30, .16);
+  --shadow-md: 0 8px 24px rgba(70, 52, 30, .14);
+  --shadow-sm: 0 2px 8px rgba(70, 52, 30, .12);
+  color-scheme: light;
+}

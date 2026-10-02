@@ -1,0 +1,368 @@
+{
+  "rules": [
+    {
+      "match": "akihabara",
+      "slug": "akihabara"
+    },
+    {
+      "match": "shinjuku",
+      "slug": "shinjuku"
+    },
+    {
+      "match": "sens[oō]-?ji|asakusa",
+      "slug": "sensoji"
+    },
+    {
+      "match": "ueno",
+      "slug": "ueno"
+    },
+    {
+      "match": "meiji",
+      "slug": "meiji"
+    },
+    {
+      "match": "harajuku|omotesand[oō]",
+      "slug": "harajuku"
+    },
+    {
+      "match": "shibuya",
+      "slug": "shibuya"
+    },
+    {
+      "match": "odaiba|gundam",
+      "slug": "odaiba"
+    },
+    {
+      "match": "tokyo tower",
+      "slug": "tokyo-tower"
+    },
+    {
+      "match": "chūrei|churei|pagode",
+      "slug": "chureito"
+    },
+    {
+      "match": "kawaguchi|lac kawaguchi",
+      "slug": "kawaguchi"
+    },
+    {
+      "match": "kenroku",
+      "slug": "kenrokuen"
+    },
+    {
+      "match": "château de kanazawa",
+      "slug": "kanazawa-castle"
+    },
+    {
+      "match": "shirakawa",
+      "slug": "shirakawa"
+    },
+    {
+      "match": "sanmachi",
+      "slug": "sanmachi"
+    },
+    {
+      "match": "kiyomizu",
+      "slug": "kiyomizu"
+    },
+    {
+      "match": "arashiyama|bambou",
+      "slug": "arashiyama"
+    },
+    {
+      "match": "kinkaku",
+      "slug": "kinkakuji"
+    },
+    {
+      "match": "fushimi|inari",
+      "slug": "fushimi"
+    },
+    {
+      "match": "nij[oō]|nijo|nijō",
+      "slug": "nijo"
+    },
+    {
+      "match": "parc de nara|cerfs",
+      "slug": "nara-park"
+    },
+    {
+      "match": "t[oō]dai|todai",
+      "slug": "todaiji"
+    },
+    {
+      "match": "d[oō]tonbori|dotonbori",
+      "slug": "dotonbori"
+    },
+    {
+      "match": "universal",
+      "slug": "usj"
+    },
+    {
+      "match": "fuji-?q|highland",
+      "slug": "fujiq"
+    },
+    {
+      "match": "château d[’']osaka|osaka castle",
+      "slug": "osaka-castle"
+    },
+    {
+      "match": "teamlab",
+      "slug": "teamlab"
+    },
+    {
+      "match": "nishiki",
+      "slug": "nishiki"
+    },
+    {
+      "match": "kuromon",
+      "slug": "kuromon"
+    },
+    {
+      "match": "character street|tokyo character",
+      "slug": "character-street"
+    },
+    {
+      "match": "sumida",
+      "slug": "sumida"
+    },
+    {
+      "match": "nezu|yanaka",
+      "slug": "yanaka"
+    },
+    {
+      "match": "oshino",
+      "slug": "oshino"
+    },
+    {
+      "match": "iyashi|saiko",
+      "slug": "saiko"
+    },
+    {
+      "match": "itchiku|kubota",
+      "slug": "itchiku"
+    },
+    {
+      "match": "music forest",
+      "slug": "music-forest"
+    },
+    {
+      "match": "higashi chaya",
+      "slug": "higashi-chaya"
+    },
+    {
+      "match": "ōmichō|omicho|ōmicho",
+      "slug": "omicho"
+    },
+    {
+      "match": "oyama",
+      "slug": "oyama"
+    },
+    {
+      "match": "xxie|21st|musée du xxi",
+      "slug": "kanazawa-museum"
+    },
+    {
+      "match": "nishi chaya",
+      "slug": "nishi-chaya"
+    },
+    {
+      "match": "nagamachi|samoura",
+      "slug": "nagamachi"
+    },
+    {
+      "match": "feuille d[’']or|gold leaf",
+      "slug": "gold-leaf"
+    },
+    {
+      "match": "myōryū|myoryu|ninja",
+      "slug": "myoryuji"
+    },
+    {
+      "match": "teramachi",
+      "slug": "teramachi"
+    },
+    {
+      "match": "miyagawa",
+      "slug": "miyagawa"
+    },
+    {
+      "match": "jinya",
+      "slug": "jinya"
+    },
+    {
+      "match": "pontochō|pontocho",
+      "slug": "pontocho"
+    },
+    {
+      "match": "cérémonie du thé|ceremonie du the|matcha",
+      "slug": "tea"
+    },
+    {
+      "match": "wagashi",
+      "slug": "wagashi"
+    },
+    {
+      "match": "yasaka",
+      "slug": "yasaka"
+    },
+    {
+      "match": "daigo",
+      "slug": "daigo"
+    },
+    {
+      "match": "philosophe",
+      "slug": "philosopher"
+    },
+    {
+      "match": "kōfuku|kofuku",
+      "slug": "kofukuji"
+    },
+    {
+      "match": "kasuga",
+      "slug": "kasuga"
+    },
+    {
+      "match": "namba yasaka",
+      "slug": "namba-yasaka"
+    },
+    {
+      "match": "den den",
+      "slug": "denden"
+    },
+    {
+      "match": "shinsekai|tsūten|tsuten",
+      "slug": "shinsekai"
+    },
+    {
+      "match": "shinsaibashi",
+      "slug": "shinsaibashi"
+    },
+    {
+      "match": "hozenji",
+      "slug": "hozenji"
+    },
+    {
+      "match": "palais impérial|jardins est",
+      "slug": "imperial"
+    },
+    {
+      "match": "ginza|itoya",
+      "slug": "ginza"
+    },
+    {
+      "match": "animate",
+      "slug": "animate"
+    },
+    {
+      "match": "téléphérique|telepherique|ropeway|panoramique",
+      "slug": "ropeway"
+    },
+    {
+      "match": "momiji",
+      "slug": "momiji"
+    }
+  ],
+  "related": {
+    "akihabara": [
+      "shinjuku",
+      "shibuya"
+    ],
+    "shinjuku": [
+      "shibuya",
+      "tokyo-tower"
+    ],
+    "sensoji": [
+      "ueno",
+      "yanaka"
+    ],
+    "ueno": [
+      "sensoji",
+      "yanaka"
+    ],
+    "meiji": [
+      "harajuku",
+      "shibuya"
+    ],
+    "harajuku": [
+      "meiji",
+      "shibuya"
+    ],
+    "shibuya": [
+      "harajuku",
+      "shinjuku"
+    ],
+    "odaiba": [
+      "tokyo-tower",
+      "teamlab"
+    ],
+    "teamlab": [
+      "odaiba",
+      "tokyo-tower"
+    ],
+    "tokyo-tower": [
+      "odaiba",
+      "shinjuku"
+    ],
+    "chureito": [
+      "kawaguchi",
+      "oshino"
+    ],
+    "kawaguchi": [
+      "chureito",
+      "ropeway"
+    ],
+    "kenrokuen": [
+      "kanazawa-castle",
+      "higashi-chaya"
+    ],
+    "kanazawa-castle": [
+      "kenrokuen",
+      "omicho"
+    ],
+    "shirakawa": [
+      "sanmachi"
+    ],
+    "sanmachi": [
+      "shirakawa",
+      "miyagawa"
+    ],
+    "kiyomizu": [
+      "yasaka",
+      "fushimi"
+    ],
+    "arashiyama": [
+      "kinkakuji",
+      "philosopher"
+    ],
+    "kinkakuji": [
+      "arashiyama",
+      "nijo"
+    ],
+    "fushimi": [
+      "kiyomizu",
+      "daigo"
+    ],
+    "nijo": [
+      "nishiki",
+      "philosopher"
+    ],
+    "nara-park": [
+      "todaiji",
+      "kasuga"
+    ],
+    "todaiji": [
+      "nara-park",
+      "kofukuji"
+    ],
+    "dotonbori": [
+      "osaka-castle",
+      "shinsaibashi"
+    ],
+    "usj": [
+      "dotonbori"
+    ],
+    "osaka-castle": [
+      "dotonbori",
+      "kuromon"
+    ]
+  }
+}

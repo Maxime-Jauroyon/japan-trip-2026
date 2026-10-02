@@ -1,29 +1,35 @@
 /* Cartes hors ligne : toutes les tuiles passent par le protocole « jtcache:// »
    (thread principal → Cache API). Cache d’abord, réseau ensuite ; chaque tuile vue
    est gardée. Le bouton de Réglages pré-télécharge le Japon + les 8 villes. */
-const TILE_CACHE = "japan-tiles-v1";
-const OFFLINE_MAPS_KEY = "japan-trip-offline-maps-v1";
-const TILE_PROTOCOL = "jtcache";
+
+import { OFFLINE_MAPS_KEY, TILE_CACHE, TILE_PROTOCOL } from "../config.js";
+import { JAPAN_BOUNDS, MAP_BOUNDS, ORDER } from "../core/data.js";
+import { MAP_DEM_TILES, MAP_FONT, MAP_FONT_BOLD, MAP_FONT_ITALIC, MAP_GLYPHS_URL, MAP_TILES_URL } from "./map-style.js";
 
 function tileRealUrl(url){
   return url.replace(TILE_PROTOCOL + "://", "https://");
 }
+
 /** Clé de cache stable : OpenFreeMap change le dossier de version chaque semaine. */
 function tileCacheKey(realUrl){
   return realUrl.replace(/(tiles\.openfreemap\.org\/planet)\/[^/]+\/(\d+\/\d+\/\d+\.pbf)$/, "$1/_/$2");
 }
+
 function isTileJsonUrl(realUrl){
   return /tiles\.openfreemap\.org\/planet\/?$/.test(realUrl);
 }
+
 function hasCacheApi(){
   try { return typeof caches !== "undefined" && !!caches.open; } catch (_) { return false; }
 }
+
 function fetchWithTimeout(url, ms, signal){
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), ms);
   if (signal) signal.addEventListener("abort", () => ctrl.abort());
   return fetch(url, { signal: ctrl.signal, mode: "cors", credentials: "omit" }).finally(() => clearTimeout(t));
 }
+
 function protocolize(json){
   const out = Object.assign({}, json);
   if (Array.isArray(out.tiles)) out.tiles = out.tiles.map(u => u.replace(/^https:\/\//, TILE_PROTOCOL + "://"));
@@ -61,21 +67,14 @@ async function loadTileBytes(realUrl, signal){
   return res.arrayBuffer();
 }
 
-if (typeof maplibregl !== "undefined" && maplibregl.addProtocol) {
-  maplibregl.addProtocol(TILE_PROTOCOL, async (params, abortController) => {
-    const realUrl = tileRealUrl(params.url);
-    const signal = abortController && abortController.signal;
-    if (isTileJsonUrl(realUrl)) return { data: await loadTileJson(realUrl, signal) };
-    return { data: await loadTileBytes(realUrl, signal) };
-  });
-}
-
 /* —— Pré-téléchargement —— */
 function lngToTileX(lng, z){ return Math.floor((lng + 180) / 360 * Math.pow(2, z)); }
+
 function latToTileY(lat, z){
   const r = lat * Math.PI / 180;
   return Math.floor((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * Math.pow(2, z));
 }
+
 function tilesInBounds(b, z){
   const out = [];
   const x0 = lngToTileX(b.west, z), x1 = lngToTileX(b.east, z);
@@ -83,10 +82,12 @@ function tilesInBounds(b, z){
   for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) out.push([z, x, y]);
   return out;
 }
+
 function padBounds(b, k){
   const dx = (b.east - b.west) * k, dy = (b.north - b.south) * k;
   return { west: b.west - dx, east: b.east + dx, south: b.south - dy, north: b.north + dy };
 }
+
 const OFFLINE_GLYPH_RANGES = ["0-255", "256-511", "8192-8447", "9472-9727"];
 
 /** Liste des URL à télécharger (Japon en 3D + villes jusqu’au z14, relief, polices). */
@@ -115,9 +116,10 @@ async function offlineMapUrls(){
   return [...urls];
 }
 
-let offlineDownload = null;
+export let offlineDownload = null;
+
 /** Télécharge ce qui manque ; onProgress(done, total, bytes). */
-async function downloadOfflineMaps(onProgress){
+export async function downloadOfflineMaps(onProgress){
   if (!hasCacheApi()) throw new Error("Cache indisponible sur ce navigateur");
   if (offlineDownload) return offlineDownload.promise;
   const ctrl = new AbortController();
@@ -159,18 +161,22 @@ async function downloadOfflineMaps(onProgress){
   offlineDownload = { promise: run, ctrl };
   try { return await run; } finally { offlineDownload = null; }
 }
-function cancelOfflineMaps(){
+
+export function cancelOfflineMaps(){
   if (offlineDownload) offlineDownload.ctrl.abort();
 }
-async function clearOfflineMaps(){
+
+export async function clearOfflineMaps(){
   cancelOfflineMaps();
   try { localStorage.removeItem(OFFLINE_MAPS_KEY); } catch (_) { /* ignore */ }
   if (hasCacheApi()) await caches.delete(TILE_CACHE);
 }
-function offlineMapsInfo(){
+
+export function offlineMapsInfo(){
   try { return JSON.parse(localStorage.getItem(OFFLINE_MAPS_KEY) || "null"); } catch (_) { return null; }
 }
-async function offlineStorageUsage(){
+
+export async function offlineStorageUsage(){
   try {
     if (navigator.storage && navigator.storage.estimate) {
       const e = await navigator.storage.estimate();
@@ -178,4 +184,15 @@ async function offlineStorageUsage(){
     }
   } catch (_) { /* ignore */ }
   return null;
+}
+
+/** Branche le protocole jtcache:// sur MapLibre (à appeler avant la création de la carte). */
+export function registerTileProtocol() {
+  if (typeof maplibregl === "undefined" || !maplibregl.addProtocol) return;
+  maplibregl.addProtocol(TILE_PROTOCOL, async (params, abortController) => {
+    const realUrl = tileRealUrl(params.url);
+    const signal = abortController && abortController.signal;
+    if (isTileJsonUrl(realUrl)) return { data: await loadTileJson(realUrl, signal) };
+    return { data: await loadTileBytes(realUrl, signal) };
+  });
 }

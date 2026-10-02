@@ -1,0 +1,761 @@
+[
+  {
+    "n": 1,
+    "date": "8 nov 2026",
+    "dow": "Dimanche",
+    "city": "tokyo",
+    "moves": [
+      {
+        "when": "Arrivée HND 06:50",
+        "title": "Vol Paris → Haneda",
+        "dummy": "Air France · CDG 09:45 (7 nov)",
+        "mode": "Avion",
+        "leg": "arrive"
+      }
+    ],
+    "luggageLocker": {
+      "title": "Consigne bagages",
+      "desc": "À renseigner quand une consigne sera choisie (coin locker, gare, Ecbo Cloak…).",
+      "when": "Après arrivée HND · avant check-in 16h"
+    },
+    "ideas": [
+      {
+        "title": "Akihabara — arcades / anime",
+        "lat": 35.6984,
+        "lng": 139.7731,
+        "desc": "Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Akihabara_Electric_Town_Crossing_2023.jpg/640px-Akihabara_Electric_Town_Crossing_2023.jpg"
+      },
+      {
+        "title": "Shinjuku — skyline",
+        "lat": 35.6938,
+        "lng": 139.7036,
+        "desc": "Le cœur néon de Tokyo : gratte-ciel, grands magasins, et vue du soir depuis un observatoire ou un rooftop.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shinjuku_Skyscrapers_at_night.jpg/640px-Shinjuku_Skyscrapers_at_night.jpg"
+      },
+      {
+        "title": "Tokyo Character Street",
+        "lat": 35.6815,
+        "lng": 139.7672,
+        "desc": "Galerie souterraine sous Tokyo Station, pleine de boutiques anime, Pokemon et personnages — parfait pour le premier jour."
+      }
+    ]
+  },
+  {
+    "n": 2,
+    "date": "9 nov 2026",
+    "dow": "Lundi",
+    "city": "tokyo",
+    "ideas": [
+      {
+        "title": "Asakusa — Sensō-ji",
+        "lat": 35.7148,
+        "lng": 139.7967,
+        "desc": "Le plus vieux temple de Tokyo, via la rue commerçante Nakamise et la grande lanterne Kaminarimon.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Sensoji_Temple_Asakusa_Tokyo.jpg/640px-Sensoji_Temple_Asakusa_Tokyo.jpg"
+      },
+      {
+        "title": "Promenade Sumida",
+        "lat": 35.7106,
+        "lng": 139.8034,
+        "desc": "Balade le long de la Sumida : ponts, parcs, vues vers la Skytree et le vieux centre."
+      },
+      {
+        "title": "Ueno — parc & musées",
+        "lat": 35.7188,
+        "lng": 139.7765,
+        "desc": "Grand parc avec musées, étang et feuillage d’automne. Après-midi culturel tranquille.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Ueno_Park_Tokyo.jpg/640px-Ueno_Park_Tokyo.jpg"
+      },
+      {
+        "title": "Sanctuaire Nezu + Yanaka",
+        "lat": 35.7203,
+        "lng": 139.7608,
+        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses."
+      }
+    ]
+  },
+  {
+    "n": 3,
+    "date": "10 nov 2026",
+    "dow": "Mardi",
+    "city": "tokyo",
+    "ideas": [
+      {
+        "title": "Sanctuaire Meiji",
+        "lat": 35.6764,
+        "lng": 139.6993,
+        "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Meiji_Shrine_Tokyo.jpg/640px-Meiji_Shrine_Tokyo.jpg"
+      },
+      {
+        "title": "Harajuku / Omotesandō",
+        "lat": 35.6705,
+        "lng": 139.703,
+        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
+      },
+      {
+        "title": "Shibuya — Hachikō, Pokemon",
+        "lat": 35.6591,
+        "lng": 139.7006,
+        "desc": "Le scramble mythique, Hachikō, puis Pokemon et culture jeune autour de la gare.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shibuya_Crossing_2023.jpg/640px-Shibuya_Crossing_2023.jpg"
+      }
+    ]
+  },
+  {
+    "n": 4,
+    "date": "11 nov 2026",
+    "dow": "Mercredi",
+    "city": "tokyo",
+    "ideas": [
+      {
+        "title": "Odaiba — Gundam, front de mer",
+        "lat": 35.6251,
+        "lng": 139.7753,
+        "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie."
+      },
+      {
+        "title": "teamLab Planets",
+        "lat": 35.649,
+        "lng": 139.7898,
+        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/TeamLab_Borderless.jpg/640px-TeamLab_Borderless.jpg"
+      },
+      {
+        "title": "Tokyo Tower de nuit",
+        "lat": 35.6586,
+        "lng": 139.7454,
+        "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Tokyo_Tower_at_night_2019.jpg/640px-Tokyo_Tower_at_night_2019.jpg"
+      }
+    ]
+  },
+  {
+    "n": 5,
+    "date": "12 nov 2026",
+    "dow": "Jeudi",
+    "city": "fuji",
+    "moves": [
+      {
+        "when": "~7:00–9:00",
+        "title": "Tokyo → Fujikawaguchiko",
+        "dummy": "Bus Shinjuku → Kawaguchiko",
+        "mode": "Bus",
+        "leg": "tokyo-fuji"
+      }
+    ],
+    "ideas": [
+      {
+        "title": "Pagode Chūrei-tō",
+        "lat": 35.5013,
+        "lng": 138.8014,
+        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Chureito_Pagoda.jpg/640px-Chureito_Pagoda.jpg"
+      },
+      {
+        "title": "Téléphérique panoramique",
+        "lat": 35.5206,
+        "lng": 138.7524,
+        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin."
+      },
+      {
+        "title": "Lac Kawaguchi",
+        "lat": 35.5218,
+        "lng": 138.7556,
+        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lake_Kawaguchi.jpg/640px-Lake_Kawaguchi.jpg"
+      },
+      {
+        "title": "Momiji Corridor",
+        "lat": 35.5092,
+        "lng": 138.7684,
+        "desc": "Allée d’érables au bord du lac, célèbre en automne. Novembre = pic des momiji."
+      },
+      {
+        "title": "Oshino Hakkai",
+        "lat": 35.4598,
+        "lng": 138.8338,
+        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks."
+      },
+      {
+        "title": "Saiko Iyashi-no-Sato",
+        "lat": 35.4972,
+        "lng": 138.6874,
+        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme."
+      },
+      {
+        "title": "Musée Itchiku Kubota",
+        "lat": 35.5208,
+        "lng": 138.7781,
+        "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac."
+      },
+      {
+        "title": "Music Forest + lac",
+        "lat": 35.5096,
+        "lng": 138.7675,
+        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile."
+      }
+    ]
+  },
+  {
+    "n": 6,
+    "date": "13 nov 2026",
+    "dow": "Vendredi",
+    "city": "fuji",
+    "ideas": [
+      {
+        "title": "Fuji-Q Highland",
+        "lat": 35.4874,
+        "lng": 138.7806,
+        "slug": "fujiq",
+        "desc": "Journée parc d’attractions au pied du Fuji — coasters (Fujiyama, Eejanaika, Takabisha…), Thomas Land et maison de l’horreur à part.",
+        "notes": [
+          "Entrée au parc gratuite ; pour les manèges il faut un One Day Pass (ワンデイパス) — rides illimités (sauf exceptions).",
+          "One Day Pass adulte ~¥6 000–7 900 selon le jour (tarif saisonnier) · en ligne ou au guichet · pas de remboursement après achat.",
+          "Maison de l’horreur « Super Scary Labyrinth of Fear » (戦慄迷宮) : non incluse dans le One Day Pass — ticket horodaté à part.",
+          "Horreur : payer sur place (bornes près de l’attraction / info) ou via l’app dès J−3 à 18h JST · ~¥3 000–4 000 / groupe avec One Day Pass (jusqu’à 3–4 pers.).",
+          "App officielle « Q-chan » : files d’attente, carte, achat One Day Pass / priorités / tickets horodatés.",
+          "Accès : gare Fujikyu Highland (歩 ~5 min) ou bus depuis Kawaguchiko · arriver à l’ouverture."
+        ],
+        "links": [
+          {
+            "label": "Tarifs & billets officiels (EN/JP)",
+            "url": "https://www.fujiq.jp/en/ticket/"
+          },
+          {
+            "label": "Acheter One Day Pass (site officiel)",
+            "url": "https://www.fujiq.jp/ticket/"
+          },
+          {
+            "label": "App Store · Q-chan (Fuji-Q)",
+            "url": "https://apps.apple.com/app/q-chan/id1483774385"
+          }
+        ],
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Fuji-Q_Highland_Fujiyama.jpg/640px-Fuji-Q_Highland_Fujiyama.jpg"
+      }
+    ]
+  },
+  {
+    "n": 7,
+    "date": "14 nov 2026",
+    "dow": "Samedi",
+    "city": "kanazawa",
+    "moves": [
+      {
+        "journey": "fuji-kana",
+        "journeyTitle": "Fujikawaguchiko → Kanazawa",
+        "journeyMeta": "~9:00 → ~15:30",
+        "when": "~9:00–11:00",
+        "title": "Fujikawaguchiko → Shinjuku",
+        "dummy": "Highway Bus · à réserver",
+        "mode": "Bus",
+        "leg": "fuji-tokyo",
+        "role": "① Bus"
+      },
+      {
+        "journey": "fuji-kana",
+        "when": "~11:00–12:00",
+        "title": "Shinjuku → Tokyo Station",
+        "dummy": "JR / métro · ~15–25 min + marge",
+        "mode": "Correspondance",
+        "transfer": true,
+        "role": "↔ Transfert"
+      },
+      {
+        "journey": "fuji-kana",
+        "when": "~12:30–15:30",
+        "title": "Tokyo → Kanazawa",
+        "dummy": "Shinkansen Hokuriku · à réserver",
+        "mode": "Shinkansen",
+        "leg": "tokyo-kana",
+        "role": "② Train"
+      }
+    ],
+    "ideas": [
+      {
+        "title": "Kenroku-en",
+        "lat": 36.5619,
+        "lng": 136.6626,
+        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Kenrokuen_Kanazawa.jpg/640px-Kenrokuen_Kanazawa.jpg"
+      },
+      {
+        "title": "Château de Kanazawa",
+        "lat": 36.5642,
+        "lng": 136.6592,
+        "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Kanazawa_Castle_Park.jpg/640px-Kanazawa_Castle_Park.jpg"
+      },
+      {
+        "title": "Higashi Chaya",
+        "lat": 36.5733,
+        "lng": 136.6667,
+        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle."
+      }
+    ]
+  },
+  {
+    "n": 8,
+    "date": "15 nov 2026",
+    "dow": "Dimanche",
+    "city": "kanazawa",
+    "ideas": [
+      {
+        "title": "Marché Ōmichō",
+        "lat": 36.5722,
+        "lng": 136.6576,
+        "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles."
+      },
+      {
+        "title": "Sanctuaire Oyama",
+        "lat": 36.5664,
+        "lng": 136.6534,
+        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château."
+      },
+      {
+        "title": "Musée du XXIe siècle",
+        "lat": 36.5611,
+        "lng": 136.6584,
+        "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes."
+      },
+      {
+        "title": "Nishi Chaya",
+        "lat": 36.5626,
+        "lng": 136.645,
+        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré."
+      }
+    ]
+  },
+  {
+    "n": 9,
+    "date": "16 nov 2026",
+    "dow": "Lundi",
+    "city": "kanazawa",
+    "ideas": [
+      {
+        "title": "Nagamachi (quartier samouraï)",
+        "lat": 36.5616,
+        "lng": 136.6481,
+        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable."
+      },
+      {
+        "title": "Atelier feuille d’or",
+        "lat": 36.5604,
+        "lng": 136.6562,
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir."
+      },
+      {
+        "title": "Myōryū-ji",
+        "lat": 36.5551,
+        "lng": 136.6486,
+        "desc": "Le « temple des ninjas » — visite guidée à réserver pour portes secrètes et pièges."
+      },
+      {
+        "title": "Teramachi",
+        "lat": 36.5542,
+        "lng": 136.6502,
+        "desc": "Quartier des temples au sud du centre : ruelles calmes et nombreux petits temples bouddhistes."
+      }
+    ]
+  },
+  {
+    "n": 10,
+    "date": "17 nov 2026",
+    "dow": "Mardi",
+    "city": "shirakawa",
+    "extraCity": "takayama",
+    "moves": [
+      {
+        "when": "~8:50–10:05",
+        "title": "Kanazawa → Shirakawa-go",
+        "dummy": "Nohi Bus · Kanazawa Station",
+        "mode": "Bus",
+        "leg": "kana-shira"
+      },
+      {
+        "when": "~14:00–14:50",
+        "title": "Shirakawa-go → Takayama",
+        "dummy": "Nohi Bus · Bus Center",
+        "mode": "Bus",
+        "leg": "shira-taka"
+      }
+    ],
+    "ideas": [
+      {
+        "title": "Village de Shirakawa-go",
+        "lat": 36.2578,
+        "lng": 136.9063,
+        "desc": "Maisons gassho-zukuri UNESCO aux toits de chaume. Monter au belvédère pour la photo classique.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Shirakawa-go.jpg/640px-Shirakawa-go.jpg"
+      },
+      {
+        "title": "Sanmachi Suji",
+        "lat": 36.1466,
+        "lng": 137.2596,
+        "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Takayama_Sanmachi.jpg/640px-Takayama_Sanmachi.jpg"
+      }
+    ]
+  },
+  {
+    "n": 11,
+    "date": "18 nov 2026",
+    "dow": "Mercredi",
+    "city": "takayama",
+    "extraCity": "kyoto",
+    "ideas": [
+      {
+        "title": "Marché Miyagawa",
+        "lat": 36.1456,
+        "lng": 137.2581,
+        "desc": "Marché matinal au bord de la rivière : produits locaux, pickles et spécialités Hida avant le départ."
+      },
+      {
+        "title": "Takayama Jinya",
+        "lat": 36.145,
+        "lng": 137.2566,
+        "desc": "Ancien bureau d’administration d’époque Edo, salles tatami et complexe administratif rare."
+      }
+    ],
+    "moves": [
+      {
+        "when": "~13:30–16:30",
+        "title": "Takayama → Kyoto",
+        "dummy": "Hida + shinkansen · Kyoto Station",
+        "mode": "Train",
+        "leg": "taka-kyo"
+      }
+    ],
+    "ideasAfter": [
+      {
+        "title": "Ruelle Pontochō au crépuscule",
+        "lat": 35.0039,
+        "lng": 135.7714,
+        "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto."
+      }
+    ]
+  },
+  {
+    "n": 12,
+    "date": "19 nov 2026",
+    "dow": "Jeudi",
+    "city": "kyoto",
+    "ideas": [
+      {
+        "title": "Kiyomizu-dera",
+        "lat": 34.9949,
+        "lng": 135.785,
+        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Kiyomizu-dera_Kyoto.jpg/640px-Kiyomizu-dera_Kyoto.jpg"
+      },
+      {
+        "title": "Cérémonie du thé",
+        "lat": 35,
+        "lng": 135.7805,
+        "desc": "Expérience matcha calme vers Higashiyama — gestes et pâtisseries de saison."
+      },
+      {
+        "title": "Sanctuaire Yasaka",
+        "lat": 35.0036,
+        "lng": 135.7786,
+        "desc": "Sanctuaire vermillon au bord de Gion, vivant au crépuscule quand les lanternes s’allument."
+      }
+    ]
+  },
+  {
+    "n": 13,
+    "date": "20 nov 2026",
+    "dow": "Vendredi",
+    "city": "kyoto",
+    "ideas": [
+      {
+        "title": "Forêt de bambous d’Arashiyama",
+        "lat": 35.0173,
+        "lng": 135.6722,
+        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Arashiyama_Bamboo_Grove.jpg/640px-Arashiyama_Bamboo_Grove.jpg"
+      },
+      {
+        "title": "Kinkaku-ji",
+        "lat": 35.0394,
+        "lng": 135.7292,
+        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Kinkaku-ji_Golden_Pavilion.jpg/640px-Kinkaku-ji_Golden_Pavilion.jpg"
+      },
+      {
+        "title": "Atelier wagashi",
+        "lat": 35.018,
+        "lng": 135.755,
+        "desc": "Façonner des pâtisseries japonaises à la main, puis matcha pour le vrai rituel de salon de thé."
+      }
+    ]
+  },
+  {
+    "n": 14,
+    "date": "21 nov 2026",
+    "dow": "Samedi",
+    "city": "kyoto",
+    "ideas": [
+      {
+        "title": "Fushimi Inari",
+        "lat": 34.9671,
+        "lng": 135.7727,
+        "desc": "Des milliers de torii vermillon montent la colline. Monter autant que l’on veut, puis redescendre.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Fushimi_Inari_Shrine_Torii.jpg/640px-Fushimi_Inari_Shrine_Torii.jpg"
+      },
+      {
+        "title": "Daigo-ji",
+        "lat": 34.9516,
+        "lng": 135.821,
+        "desc": "Grand complexe de temples aux érables d’automne et pagode à cinq étages au sud-est de Kyoto."
+      },
+      {
+        "title": "Chemin des Philosophes",
+        "lat": 35.0265,
+        "lng": 135.7956,
+        "desc": "Promenade le long du canal entre Ginkaku-ji et Nanzen-ji — pic des momiji en novembre."
+      }
+    ]
+  },
+  {
+    "n": 15,
+    "date": "22 nov 2026",
+    "dow": "Dimanche",
+    "city": "kyoto",
+    "extraCity": "nara",
+    "ideas": [
+      {
+        "title": "Château Nijō",
+        "lat": 35.0142,
+        "lng": 135.7482,
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Nijo_Castle_Kyoto.jpg/640px-Nijo_Castle_Kyoto.jpg"
+      },
+      {
+        "title": "Marché Nishiki",
+        "lat": 35.005,
+        "lng": 135.7649,
+        "desc": "Rue couverte gastronomique — « la cuisine de Kyoto » : pickles, fruits de mer, dégustations."
+      }
+    ],
+    "moves": [
+      {
+        "when": "~16:15–17:15",
+        "title": "Kyoto → Nara",
+        "dummy": "Kintetsu → Kintetsu-Nara",
+        "mode": "Train",
+        "leg": "kyo-nara"
+      }
+    ]
+  },
+  {
+    "n": 16,
+    "date": "23 nov 2026",
+    "dow": "Lundi",
+    "city": "nara",
+    "extraCity": "osaka",
+    "ideas": [
+      {
+        "title": "Parc de Nara",
+        "lat": 34.6851,
+        "lng": 135.843,
+        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Nara_Park_deer.jpg/640px-Nara_Park_deer.jpg"
+      },
+      {
+        "title": "Kōfuku-ji",
+        "lat": 34.6833,
+        "lng": 135.831,
+        "desc": "Temple historique avec pagode à cinq étages dominant le parc."
+      },
+      {
+        "title": "Tōdai-ji",
+        "lat": 34.689,
+        "lng": 135.8398,
+        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Todaiji_Temple_Nara.jpg/640px-Todaiji_Temple_Nara.jpg"
+      },
+      {
+        "title": "Kasuga Taisha",
+        "lat": 34.6814,
+        "lng": 135.8484,
+        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière."
+      }
+    ],
+    "moves": [
+      {
+        "when": "~16:15–17:00",
+        "title": "Nara → Osaka",
+        "dummy": "Kintetsu → Osaka-Namba",
+        "mode": "Train",
+        "leg": "nara-osa"
+      }
+    ],
+    "ideasAfter": [
+      {
+        "title": "Dotonbori",
+        "lat": 34.6687,
+        "lng": 135.5013,
+        "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dotonbori_Osaka_at_night.jpg/640px-Dotonbori_Osaka_at_night.jpg"
+      }
+    ]
+  },
+  {
+    "n": 17,
+    "date": "24 nov 2026",
+    "dow": "Mardi",
+    "city": "osaka",
+    "ideas": [
+      {
+        "title": "Universal Studios Japan",
+        "lat": 34.6654,
+        "lng": 135.4323,
+        "desc": "Journée parc — Harry Potter, Super Nintendo World, attractions. Arriver tôt et planifier le parcours.",
+        "notes": [
+          "Billets en ligne ~2 mois avant (rappel dès le 24 sept 2026) — plus de vente au guichet en général.",
+          "Avoir l’app officielle Universal Studios Japan (files, Express Pass, carte du parc).",
+          "Super Nintendo World : Express Pass recommandé, sinon timed-entry / file le jour J."
+        ],
+        "links": [
+          {
+            "label": "Guide YouTube · réserver les billets USJ",
+            "url": "https://youtu.be/z3XQLNuE_t8"
+          },
+          {
+            "label": "App Store · app officielle USJ",
+            "url": "https://apps.apple.com/app/universal-studios-japan/id532097000"
+          }
+        ],
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Universal_Studios_Japan.jpg/640px-Universal_Studios_Japan.jpg"
+      }
+    ]
+  },
+  {
+    "n": 18,
+    "date": "25 nov 2026",
+    "dow": "Mercredi",
+    "city": "osaka",
+    "ideas": [
+      {
+        "title": "Namba Yasaka",
+        "lat": 34.6606,
+        "lng": 135.4966,
+        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour."
+      },
+      {
+        "title": "Den Den Town",
+        "lat": 34.6626,
+        "lng": 135.5061,
+        "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba."
+      },
+      {
+        "title": "Shinsekai",
+        "lat": 34.6525,
+        "lng": 135.5063,
+        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school."
+      },
+      {
+        "title": "Dotonbori",
+        "lat": 34.6687,
+        "lng": 135.5013,
+        "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dotonbori_Osaka_at_night.jpg/640px-Dotonbori_Osaka_at_night.jpg"
+      }
+    ]
+  },
+  {
+    "n": 19,
+    "date": "26 nov 2026",
+    "dow": "Jeudi",
+    "city": "osaka",
+    "ideas": [
+      {
+        "title": "Château d’Osaka",
+        "lat": 34.6873,
+        "lng": 135.5262,
+        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte.",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Osaka_Castle_01.jpg/640px-Osaka_Castle_01.jpg"
+      },
+      {
+        "title": "Shinsaibashi",
+        "lat": 34.6751,
+        "lng": 135.501,
+        "desc": "Galerie marchande couverte qui mène à Dotonbori — mode, grands magasins, flânerie."
+      },
+      {
+        "title": "Hozenji Yokocho",
+        "lat": 34.6681,
+        "lng": 135.505,
+        "desc": "Petite ruelle au sanctuaire moussu près de Dotonbori — contraste calme avec les néons."
+      }
+    ]
+  },
+  {
+    "n": 20,
+    "date": "27 nov 2026",
+    "dow": "Vendredi",
+    "city": "tokyo",
+    "extraCity": "osaka",
+    "ideas": [
+      {
+        "title": "Marché Kuromon",
+        "lat": 34.6651,
+        "lng": 135.5066,
+        "desc": "Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord."
+      }
+    ],
+    "moves": [
+      {
+        "when": "11:30–13:57",
+        "title": "Osaka → Tokyo",
+        "dummy": "Nozomi 90 · QR Wallet · payé par Léo 158,72 €",
+        "mode": "Shinkansen",
+        "leg": "osa-tokyo"
+      }
+    ]
+  },
+  {
+    "n": 21,
+    "date": "28 nov 2026",
+    "dow": "Samedi",
+    "city": "tokyo",
+    "ideas": [
+      {
+        "title": "Jardins Est du Palais impérial",
+        "lat": 35.6867,
+        "lng": 139.7556,
+        "desc": "Jardins gratuits sur l’ancien château — douves, pelouses, pause verte au centre de Tokyo."
+      },
+      {
+        "title": "Ginza / Itoya",
+        "lat": 35.6717,
+        "lng": 139.765,
+        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs."
+      },
+      {
+        "title": "Animate",
+        "lat": 35.7308,
+        "lng": 139.7148,
+        "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs."
+      }
+    ]
+  },
+  {
+    "n": 22,
+    "date": "29 nov 2026",
+    "dow": "Dimanche",
+    "city": "tokyo",
+    "moves": [
+      {
+        "when": "HND 09:05 → CDG 15:35",
+        "title": "Tokyo → Paris (CDG)",
+        "dummy": "Air France · 2 pers.",
+        "mode": "Avion",
+        "leg": "depart"
+      }
+    ],
+    "ideas": []
+  }
+]
