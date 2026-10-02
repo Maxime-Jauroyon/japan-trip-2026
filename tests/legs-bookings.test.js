@@ -13,6 +13,8 @@ test("type de véhicule selon le mode", () => {
   assert.equal(legVehicleKind("Shinkansen Hokuriku"), "shinkansen");
   assert.equal(legVehicleKind("Bus"), "bus");
   assert.equal(legVehicleKind("Train Hida"), "train");
+  assert.equal(legVehicleKind("Correspondance"), "transfer");
+  assert.equal(legVehicleKind("Métro Ginza"), "metro");
 });
 
 test("segments carte et extrémités des trajets", () => {

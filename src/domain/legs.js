@@ -8,6 +8,8 @@ export function legVehicleKind(mode){
   if (/avion|flight|plane|^air\b/.test(m)) return "plane";
   if (/shinkansen/.test(m)) return "shinkansen";
   if (/bus/.test(m)) return "bus";
+  if (/correspondance|transfert|transfer|à pied|a pied/.test(m)) return "transfer";
+  if (/métro|metro|subway/.test(m)) return "metro";
   if (/train|hida|kintetsu|rail/.test(m)) return "train";
   return "train";
 }

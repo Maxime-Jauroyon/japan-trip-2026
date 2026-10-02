@@ -10,7 +10,7 @@ import { scheduleCityMapRefresh } from "../../map/city.js";
 import { showCity } from "../../map/controller.js";
 import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
-import { mapsLinkHtml } from "../templates.js";
+import { mapsLinkHtml, modeBadgeFor } from "../templates.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderOnsiteWeather } from "./weather.js";
 
@@ -96,6 +96,7 @@ function renderDayTimeline(day){
         time: m.when || "Trajet",
         title: m.title,
         desc: m.dummy || "",
+        mode: m.transfer ? "Correspondance" : (m.mode || ""),
         tags: [m.mode || "Trajet"]
       });
     });
@@ -182,7 +183,7 @@ function renderDayTimeline(day){
     const tags = (it.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
     if (it.cls === "tl-journey") {
       const steps = (it.moves || []).map(m =>
-        `<div class="tl-journey-step">${m.role ? `<span class="tl-step-role">${esc(m.role)}</span>` : ""}<span>${esc(m.title)}</span></div>`
+        `<div class="tl-journey-step">${modeBadgeFor(m.transfer ? "Correspondance" : m.mode, "tl-step-badge")}${m.role ? `<span class="tl-step-role">${esc(m.role)}</span>` : ""}<span>${esc(m.title)}</span></div>`
       ).join("");
       return `<div class="tl-item tl-journey"${it.journeyId ? ` data-journey="${esc(it.journeyId)}"` : ""}>` +
         `<div class="tl-time">${esc(it.time)}</div>` +
@@ -193,7 +194,7 @@ function renderDayTimeline(day){
         `</div>`;
     }
     return `<div class="tl-item ${it.cls}">` +
-      `<div class="tl-time">${esc(it.time)}</div>` +
+      `<div class="tl-time">${it.cls === "tl-move" ? modeBadgeFor(it.mode, "tl-badge") : ""}${esc(it.time)}</div>` +
       `<div class="tl-title">${esc(it.title)}</div>` +
       (tags ? `<div class="tl-tags">${tags}</div>` : "") +
       (it.desc ? `<div class="tl-desc">${esc(it.desc)}</div>` : "") +
