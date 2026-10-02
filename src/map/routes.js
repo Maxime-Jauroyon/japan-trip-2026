@@ -5,9 +5,8 @@ import { prefersReducedMotion } from "../core/env.js";
 import { legRouteParts, legVehicleKind } from "../domain/legs.js";
 import { routePartCoords, toWorld } from "./geo.js";
 import { map, mapMode, mapStyleReady, mapStyleTheme } from "./map-view.js";
-import { routeVehicleSvg } from "../shared/icons.js";
-
-const ROUTE_COLORS = { shinkansen: "#3f9fdc", train: "#e2583e", bus: "#f0a830", plane: "#c4a574" };
+import { TRANSPORT_COLORS as ROUTE_COLORS, TRANSPORT_LABELS, transportIconSvg } from "../shared/icons.js";
+import { mapEl } from "../core/elements.js";
 
 let vehicleAnims = [];
 
@@ -128,9 +127,10 @@ export function setRoutesVisible(on){
 }
 
 /* —— Véhicules animés le long des trajets —— */
-function vehicleBearing(a, b){
-  const pa = toWorld({ lat: a[1], lng: a[0] }), pb = toWorld({ lat: b[1], lng: b[0] });
-  return Math.atan2(pb.x - pa.x, -(pb.y - pa.y)) * 180 / Math.PI;
+/** Trajet trop court à l’écran : la pastille recouvrirait les villes → masquée. */
+function syncVehicleVisibility(v){
+  const a = map.project(v.coords[0]), b = map.project(v.coords[v.coords.length - 1]);
+  v.el.classList.toggle("is-hidden", Math.hypot(b.x - a.x, b.y - a.y) < 90);
 }
 
 function placeVehicle(v, t){
@@ -141,21 +141,15 @@ function placeVehicle(v, t){
   const seg = (v.cum[i] - v.cum[i - 1]) || 1e-9;
   const k = Math.max(0, Math.min(1, (target - v.cum[i - 1]) / seg));
   v.marker.setLngLat([a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k]);
-  let r = vehicleBearing(a, b) - 90;
-  r = ((r + 540) % 360) - 180;
-  const flip = r > 90 || r < -90;
-  if (flip) r += 180;
-  v.marker.setRotation(r);
-  if (v.flip !== flip) {
-    v.flip = flip;
-    v.el.classList.toggle("flip", flip);
-  }
+  syncVehicleVisibility(v);
 }
 
 export function buildVehicles(){
   vehicleAnims.forEach(v => v.marker.remove());
   vehicleAnims = [];
-  if (!map || !ROUTE_DATA) return;
+  if (!map) return;
+  // Construit avant le chargement du style (buildCountry) : les données ne dépendent pas de la carte
+  if (!ROUTE_DATA) ROUTE_DATA = buildRouteData();
   ROUTE_DATA.features.forEach(f => {
     const coords = f.geometry.coordinates;
     const cum = [0];
@@ -170,13 +164,14 @@ export function buildVehicles(){
     el.className = "route-vehicle vehicle-" + kind;
     el.dataset.leg = f.properties.leg;
     el.dataset.journey = f.properties.journey;
-    el.innerHTML = `<svg viewBox="-16 -10 32 20" width="34" height="22" aria-hidden="true">${routeVehicleSvg(kind)}</svg>`;
-    const marker = new maplibregl.Marker({ element: el, rotationAlignment: "map", pitchAlignment: "map" })
+    el.style.setProperty("--mode-c", ROUTE_COLORS[kind] || ROUTE_COLORS.train);
+    el.innerHTML = `<span class="vehicle-badge">${transportIconSvg(kind)}</span>`;
+    const marker = new maplibregl.Marker({ element: el })
       .setLngLat(coords[0]);
     /* durée ≈ ancienne carte : longueur / vitesse, bornée 5–22 s */
     const px = total * 2600;
     const dur = Math.max(5, Math.min(22, px / (kind === "bus" ? 55 : 75)));
-    const v = { marker, el, coords, cum, total, dur, offset: Math.random() * 8, flip: null, feature: f };
+    const v = { marker, el, coords, cum, total, dur, offset: Math.random() * 8, feature: f };
     placeVehicle(v, 0.38);
     vehicleAnims.push(v);
   });
@@ -196,7 +191,7 @@ export function startVehicles(){
   if (!map) return;
   vehicleAnims.forEach(v => { if (!v.marker._map) v.marker.addTo(map); });
   if (prefersReducedMotion()) {
-    vehicleAnims.forEach(v => placeVehicle(v, 0.38));
+    vehicleAnims.forEach(v => placeVehicle(v, 0.5));
     return;
   }
   if (!vehicleRaf) vehicleRaf = requestAnimationFrame(vehiclesLoop);
@@ -265,4 +260,23 @@ export function legGeoCoords(leg){
 export function stopVehiclesLoopOnly(){
   if (vehicleRaf) cancelAnimationFrame(vehicleRaf);
   vehicleRaf = 0;
+}
+
+/** Légende des couleurs de trajets (vue Japon), limitée aux modes présents dans le voyage. */
+export function renderRouteLegend(){
+  if (!mapEl) return;
+  if (!ROUTE_DATA) ROUTE_DATA = buildRouteData();
+  let el = document.getElementById("route-legend");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "route-legend";
+    el.className = "route-legend";
+    el.setAttribute("aria-label", "Légende des trajets");
+    mapEl.parentElement.appendChild(el);
+  }
+  const kinds = ["plane", "shinkansen", "train", "bus"]
+    .filter(k => ROUTE_DATA.features.some(f => f.properties.vehicle === k));
+  el.innerHTML = kinds.map(k =>
+    `<span class="route-legend-item" style="--mode-c:${ROUTE_COLORS[k]}"><i class="vehicle-badge">${transportIconSvg(k)}</i>${TRANSPORT_LABELS[k]}</span>`
+  ).join("");
 }

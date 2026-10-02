@@ -245,17 +245,52 @@
 .city-mark.leg-to .map-logo { border-color: #e2583e; box-shadow: 0 6px 18px rgba(0,0,0,.38), 0 0 0 5px rgba(226,88,62,.35); }
 .city-mark.leg-via .map-logo { border-style: dashed; }
 
-/* —— Véhicules animés sur les trajets —— */
+/* —— Véhicules animés sur les trajets : pastille du mode (cf. .mode-badge), toujours droite —— */
 .route-vehicle {
   pointer-events: none;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .4));
   transition: opacity .25s ease;
 }
-.route-vehicle svg { display: block; overflow: visible; }
-.route-vehicle.flip svg { transform: scaleX(-1); }
+.vehicle-badge {
+  display: grid; place-items: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  color: #fff;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .35), transparent 58%),
+    linear-gradient(160deg, color-mix(in srgb, var(--mode-c) 85%, #fff), var(--mode-c) 55%, color-mix(in srgb, var(--mode-c) 78%, #000));
+  border: 2px solid #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+}
+.vehicle-badge svg { width: 15px; height: 15px; }
 .route-vehicle.route-dim { opacity: .12; }
-.route-vehicle.route-active { filter: drop-shadow(0 0 6px rgba(255, 255, 255, .35)) drop-shadow(0 3px 6px rgba(0, 0, 0, .45)); }
+.route-vehicle.is-hidden { opacity: 0; }
+.route-vehicle.route-active .vehicle-badge {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--mode-c) 35%, transparent), 0 4px 10px rgba(0, 0, 0, .45);
+}
+.vehicle-badge { transition: transform .25s ease, box-shadow .25s ease; }
 #stage.mode-city .route-vehicle { display: none; }
+
+/* Légende des trajets (vue Japon) */
+.route-legend {
+  position: absolute; left: 14px; bottom: 44px; z-index: 15;
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
+  max-width: calc(100% - 28px);
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+  font: 600 11px/1 -apple-system, "Segoe UI", sans-serif;
+  color: var(--cream);
+  pointer-events: none;
+}
+.route-legend:empty, #stage.mode-city .route-legend, .app.leg-mode .route-legend { display: none; }
+.route-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.route-legend .vehicle-badge { width: 18px; height: 18px; border-width: 1.5px; box-shadow: none; }
+.route-legend .vehicle-badge svg { width: 11px; height: 11px; }
 
 /* —— Pins des lieux (vue ville) ——
    MapLibre écrit l’opacité inline sur l’élément marqueur → l’état visuel se règle sur les enfants. */
@@ -436,8 +471,12 @@
   animation: chipIn .4s ease calc(.5s + var(--chip-i, 0) * 120ms) backwards;
 }
 .route-chip.is-hidden { visibility: hidden; }
-.route-chip svg { width: 15px; height: 15px; color: var(--gold-2); }
-.route-chip.transit svg { color: var(--blue-ink); }
+.route-chip .chip-icon {
+  display: grid; place-items: center;
+  width: 19px; height: 19px; border-radius: 50%;
+  color: #fff; background: var(--mode-c);
+}
+.route-chip .chip-icon svg { width: 12px; height: 12px; }
 @keyframes chipIn { from { opacity: 0; transform: scale(.7); } }
 #stage.mode-country .day-summary,
 .day-summary[hidden] { display: none; }

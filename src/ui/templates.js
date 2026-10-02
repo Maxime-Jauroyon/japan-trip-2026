@@ -7,7 +7,7 @@ import { bookingOpenStatus } from "../domain/bookings.js";
 import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/legs.js";
 import { hotelPhotos } from "../domain/photos.js";
 import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
-import { hotelIconSvg, mapsIconSvg, placeGlyphSvg } from "../shared/icons.js";
+import { hotelIconSvg, mapsIconSvg, modeBadgeHtml, placeGlyphSvg } from "../shared/icons.js";
 
 /** Logo UI (panneau trajet) — Shinkansen reconnaissable. */
 function modeLogoSvg(mode){
@@ -30,8 +30,12 @@ function modeLogoSvg(mode){
 
 export function modeStatHtml(mode){
   const logo = modeLogoSvg(mode);
-  if (!logo) return `<div class="stat"><span>Mode</span><strong>${esc(mode)}</strong></div>`;
-  return `<div class="stat mode-stat"><span>Mode</span><strong class="mode-with-logo">${logo}<span>${esc(mode)}</span></strong></div>`;
+  return `<div class="stat mode-stat"><span>Mode</span><strong class="mode-with-badge">${modeBadgeHtml(legVehicleKind(mode))}<b class="mode-name">${esc(mode || "—")}</b></strong>${logo}</div>`;
+}
+
+/** Pastille du mode d’un trajet (texte libre « Bus », « Shinkansen »…). */
+export function modeBadgeFor(mode, extraClass){
+  return modeBadgeHtml(legVehicleKind(mode), extraClass);
 }
 
 export function statusClass(s){
@@ -154,8 +158,13 @@ export function renderMoveCard(m, cityId){
   const stationActions = stationBtns
     ? `<div class="move-station-actions">${stationBtns}</div>`
     : "";
+  const kind = m.transfer ? "transfer" : legVehicleKind(mode);
   const cls = m.transfer ? "move move-transfer" : "move";
-  return `<div class="${cls}"${m.leg ? ` data-leg="${m.leg}"` : ""}>${role}<div class="when">${esc(mode)} · ${esc(when)}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div>${stationActions}</div>`;
+  const duration = leg && leg.duration ? ` · ${esc(leg.duration)}` : "";
+  return `<div class="${cls}"${m.leg ? ` data-leg="${m.leg}"` : ""}>` +
+    modeBadgeHtml(kind, "move-badge") +
+    `<div class="move-body">${role}<div class="when">${esc(mode)} · ${esc(when)}${duration}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div>${stationActions}</div>` +
+    `</div>`;
 }
 
 export function renderMoves(list, cityId){

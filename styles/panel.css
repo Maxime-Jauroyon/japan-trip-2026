@@ -106,10 +106,11 @@ button.stat.stop-jump .jump-hint {
   margin-top: 12px;
 }
 .stop-leg-link {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  row-gap: 2px;
+  align-items: center;
   width: 100%;
   text-align: left;
   padding: 10px 12px;
@@ -120,6 +121,8 @@ button.stat.stop-jump .jump-hint {
   cursor: pointer;
   font: inherit;
 }
+.stop-leg-link .stop-leg-badge { grid-row: 1 / span 3; align-self: center; }
+.stop-leg-link > :not(.stop-leg-badge) { grid-column: 2; }
 .stop-leg-link:hover {
   background: rgba(var(--blue-rgb), .22);
 }
@@ -168,6 +171,8 @@ button.stat.stop-jump .jump-hint {
   background: transparent;
   border-bottom: 1px solid var(--line);
 }
+.overlay-head .head-text { flex: 1 1 auto; min-width: 0; }
+.overlay-head .head-badge { --badge: 40px; align-self: center; }
 .overlay-head h2 { font-family: Georgia, serif; font-size: 26px; line-height: 1.1; }
 .overlay-head .jp-name {
   display: block; margin-top: 6px; color: var(--gold);
@@ -293,6 +298,10 @@ button.stat.stop-jump .jump-hint {
 .detail-maps:hover { background: rgba(var(--gold-rgb), .16); color: var(--cream); }
 .detail-maps svg { width: 16px; height: 16px; }
 .move {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 11px;
   margin-top: 8px;
   padding: 11px 12px;
   border: 1px dashed var(--line);
@@ -311,6 +320,7 @@ button.stat.stop-jump .jump-hint {
   background: rgba(110, 124, 133, .1);
   border-color: rgba(110, 124, 133, .45);
 }
+.move-body { min-width: 0; }
 .move .when { color: var(--gold-2); font-size: 12px; }
 .move .title { margin-top: 3px; font-weight: 500; }
 .move .dummy { color: var(--muted); font-size: 12px; margin-top: 4px; }
@@ -482,6 +492,8 @@ button.stat.stop-jump .jump-hint {
   color: var(--cream);
 }
 .tl-journey-step:first-child { margin-top: 0; }
+.tl-journey-step { display: flex; align-items: center; gap: 8px; }
+.tl-step-badge { --badge: 22px; }
 .tl-step-role {
   display: inline-block;
   margin-right: 6px;
@@ -537,12 +549,14 @@ button.stat.stop-jump .jump-hint {
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;
 }
 .trajet-grid .stat.wide { grid-column: 1 / -1; }
-.mode-stat strong.mode-with-logo {
+.mode-stat strong.mode-with-badge {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
 }
+.mode-stat .mode-badge { --badge: 26px; }
+.mode-stat .mode-name { font-weight: 600; }
+.mode-stat .mode-logo { margin-top: 8px; }
 .mode-logo {
   width: 72px;
   height: auto;
@@ -799,3 +813,31 @@ button.stat.stop-jump .jump-hint {
 }
 .photo-credit a { color: inherit; text-decoration: none; }
 .photo-gallery .shot .photo-credit { font-size: 8.5px; right: 4px; bottom: 4px; }
+
+/* —— Pastille de mode de transport (couleur = trait du trajet sur la carte) —— */
+.mode-badge {
+  --badge: 34px;
+  font-style: normal;
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: var(--badge); height: var(--badge);
+  border-radius: 50%;
+  color: #fff;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .32), transparent 58%),
+    linear-gradient(160deg, color-mix(in srgb, var(--mode-c) 85%, #fff), var(--mode-c) 55%, color-mix(in srgb, var(--mode-c) 80%, #000));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mode-c) 22%, transparent), 0 3px 8px rgba(0, 0, 0, .22);
+}
+.mode-badge svg { width: 56%; height: 56%; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .25)); }
+.mode-badge.mode-transfer, .mode-badge.mode-walk { box-shadow: 0 0 0 2px color-mix(in srgb, var(--mode-c) 30%, transparent); }
+.move.move-transfer .mode-badge { --badge: 28px; margin-left: 3px; }
+/* Étapes d’un trajet groupé : la ligne relie les pastilles */
+.journey-steps { border-left: 0; padding-left: 0; position: relative; }
+.journey-steps::before {
+  content: ""; position: absolute; left: 28px; top: 24px; bottom: 24px;
+  border-left: 2px dashed rgba(var(--gold-rgb), .4);
+}
+.journey-steps .move { position: relative; background: var(--panel-2); }
+.journey-steps .move.move-transfer { background: linear-gradient(rgba(110, 124, 133, .1), rgba(110, 124, 133, .1)), var(--panel-2); }
+.journey-steps .move:hover { background: linear-gradient(rgba(var(--gold-rgb), .06), rgba(var(--gold-rgb), .06)), var(--panel-2); }

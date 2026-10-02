@@ -6,7 +6,7 @@ import { isMobileUi } from "../core/env.js";
 import { hooks } from "../core/hooks.js";
 import { legEndPoint } from "../domain/legs.js";
 import { map } from "./map-view.js";
-import { buildVehicles } from "./routes.js";
+import { buildVehicles, renderRouteLegend } from "./routes.js";
 import { cityMapLogoSvg } from "../shared/icons.js";
 
 let countryMarks = [];
@@ -34,6 +34,7 @@ export function buildCountry(){
     countryMarks.push(marker);
   });
   buildVehicles();
+  renderRouteLegend();
 }
 
 export function syncCountryLabels(){

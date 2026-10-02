@@ -32,25 +32,6 @@ export function cityIconSvg(id){
   return icons[id] || icons.tokyo;
 }
 
-export function routeVehicleSvg(kind){
-  if (kind === "bus") {
-    return `<g class="vehicle-shape vehicle-bus"><rect x="-11" y="-5" width="22" height="10" rx="2.2" fill="#e8a020" stroke="#fff" stroke-width="1.2"/><rect x="-8" y="-3" width="5" height="4" rx=".6" fill="#fff" opacity=".85"/><rect x="-1" y="-3" width="5" height="4" rx=".6" fill="#fff" opacity=".85"/><rect x="6" y="-3" width="3" height="4" rx=".6" fill="#fff" opacity=".85"/><circle cx="-6" cy="6.5" r="2.2" fill="#333"/><circle cx="6" cy="6.5" r="2.2" fill="#333"/></g>`;
-  }
-  if (kind === "shinkansen") {
-    /* Silhouette type N700 — nez ogival + bande bleue JR */
-    return `<g class="vehicle-shape vehicle-shinkansen">` +
-      `<path d="M-14 5.2V-.2c0-2.2 1.6-3.8 3.6-3.8h14.2c2.4 0 4.6 1.1 6.6 3.2L14.2 5.2H-14z" fill="#f7fbfe" stroke="#1a5f8a" stroke-width="1.15"/>` +
-      `<path d="M-13.2 1.1h20.8c1.4 0 2.7.35 3.9 1.05" fill="none" stroke="#2f7fb0" stroke-width="2.1" stroke-linecap="round"/>` +
-      `<rect x="-10.2" y="-2.4" width="4.2" height="2.6" rx=".45" fill="#5aa0c8"/>` +
-      `<rect x="-4.4" y="-2.4" width="4.2" height="2.6" rx=".45" fill="#5aa0c8"/>` +
-      `<rect x="1.4" y="-2.4" width="4.2" height="2.6" rx=".45" fill="#5aa0c8"/>` +
-      `<path d="M9.2-2.1c1.5.15 2.9.85 4.2 2.05" fill="none" stroke="#c45c26" stroke-width="1.35" stroke-linecap="round"/>` +
-      `<circle cx="11.6" cy="-.2" r=".55" fill="#c45c26"/>` +
-      `</g>`;
-  }
-  return `<g class="vehicle-shape vehicle-train"><path d="M-13 4h22l3-5.5a2 2 0 00-1.8-2.8H-11.2A2 2 0 00-13-1.5L-13 4z" fill="#f4f8fb" stroke="#2f6f95" stroke-width="1.2"/><rect x="-9" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="-2" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="5" y="-1" width="4" height="3" rx=".5" fill="#7eb3d1"/><path d="M10-1.5l3 2.5" stroke="#c45c26" stroke-width="1.4" stroke-linecap="round"/></g>`;
-}
-
 /* Glyphes des lieux : traits blancs (currentColor) sur la tête colorée des pins, grille 24 px. */
 const PLACE_GLYPHS = {
   torii: `<path d="M3 6.5c3 .8 6 1.2 9 1.2s6-.4 9-1.2M5 10.5h14M7 7.8V20M17 7.8V20M12 8v2.5"/>`,
@@ -80,4 +61,35 @@ export function hotelIconSvg(){
 
 export function mapsIconSvg(){
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>`;
+}
+
+/* —— Transports : un pictogramme + une couleur par mode, partout (carte, panneaux, pastilles) —— */
+export const TRANSPORT_COLORS = {
+  plane: "#c4a574", shinkansen: "#3f9fdc", train: "#e2583e", bus: "#f0a830",
+  metro: "#8a6fd1", walk: "#4f9a72", transfer: "#6e7c85"
+};
+export const TRANSPORT_LABELS = {
+  plane: "Avion", shinkansen: "Shinkansen", train: "Train", bus: "Bus",
+  metro: "Métro", walk: "À pied", transfer: "Correspondance"
+};
+const TRANSPORT_GLYPHS = {
+  plane: PLACE_GLYPHS.plane,
+  shinkansen: `<path d="M2.5 16.5h16.8c1.5 0 2.4-1.6 1.6-2.9C19 10.5 15.6 7.5 10.5 7.5h-6a2 2 0 0 0-2 2z"/><path d="M2.5 12.5h14.8M7 7.5v5M11.5 7.6v4.9M4 20.5h16"/>`,
+  train: PLACE_GLYPHS.train,
+  bus: PLACE_GLYPHS.bus,
+  metro: `<rect x="5" y="3" width="14" height="14" rx="6"/><path d="M5 10h14M8.5 20.5l2-3.5M15.5 20.5l-2-3.5M9 13.5h.01M15 13.5h.01M10 6h4"/>`,
+  walk: `<circle cx="13" cy="4.5" r="1.8"/><path d="M10.5 21l2-6 2.5 2.5V21M7 13l2.5-5 3 1 2.5 3.5 2.5 1M12.5 9l-1.5 5"/>`,
+  transfer: `<path d="M4 8h15M15.5 4.5 19 8l-3.5 3.5M20 16H5M8.5 12.5 5 16l3.5 3.5"/>`
+};
+
+/** Pictogramme d’un mode de transport (traits currentColor, grille 24 px). */
+export function transportIconSvg(kind){
+  const g = TRANSPORT_GLYPHS[kind] || TRANSPORT_GLYPHS.train;
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${g}</svg>`;
+}
+
+/** Pastille ronde colorée du mode (cf. styles .mode-badge). */
+export function modeBadgeHtml(kind, extraClass = ""){
+  const k = TRANSPORT_GLYPHS[kind] ? kind : "train";
+  return `<i class="mode-badge mode-${k}${extraClass ? " " + extraClass : ""}" style="--mode-c:${TRANSPORT_COLORS[k]}" title="${TRANSPORT_LABELS[k]}">${transportIconSvg(k)}</i>`;
 }

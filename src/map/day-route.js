@@ -4,6 +4,7 @@
 import { mapEl } from "../core/elements.js";
 import { prefersReducedMotion } from "../core/env.js";
 import { itinerarySummary, segmentEstimate } from "../domain/itinerary.js";
+import { TRANSPORT_COLORS, transportIconSvg } from "../shared/icons.js";
 import { bowedSegment } from "./geo.js";
 import { map, mapStyleReady, mapStyleTheme } from "./map-view.js";
 
@@ -77,8 +78,6 @@ function formatDuration(min) {
 }
 const formatKm = (km) => (km < 10 ? km.toFixed(1).replace(".", ",") : String(Math.round(km))) + " km";
 
-const WALK_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4" r="2" fill="currentColor"/><path d="M10.5 21l2-6 2.5 2.5V21M7 13l2.5-5 3 1 2.5 3.5 2.5 1M12.5 9l-1.5 5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const TRANSIT_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M5 11h14M8 21l2-4M16 21l-2-4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="8.5" cy="14" r="1" fill="currentColor"/><circle cx="15.5" cy="14" r="1" fill="currentColor"/></svg>`;
 
 function renderChips(segments) {
   chipMarkers.forEach((m) => m.remove());
@@ -89,7 +88,9 @@ function renderChips(segments) {
     el.className = "route-chip " + seg.estimate.mode;
     el.style.setProperty("--chip-i", String(i));
     el.title = (seg.estimate.mode === "walk" ? "À pied" : "Transports") + " · ≈ " + formatKm(seg.estimate.km);
-    el.innerHTML = (seg.estimate.mode === "walk" ? WALK_SVG : TRANSIT_SVG) + `<span>${formatDuration(seg.estimate.minutes)}</span>`;
+    const kind = seg.estimate.mode === "walk" ? "walk" : "metro";
+    el.style.setProperty("--mode-c", TRANSPORT_COLORS[kind]);
+    el.innerHTML = `<i class="chip-icon">${transportIconSvg(kind)}</i><span>${formatDuration(seg.estimate.minutes)}</span>`;
     chipMarkers.push(new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(seg.mid).addTo(map));
   });
   updateDayRouteChips();

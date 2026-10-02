@@ -271,12 +271,14 @@
 .tl-item.tl-locker::before { border-color: #c4a574; }
 .tl-item.tl-idea::before { border-color: var(--ok); }
 .tl-time {
+  display: flex; align-items: center; gap: 7px;
   font-size: 11px;
   letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--gold-2);
   margin-bottom: 4px;
 }
+.tl-badge { --badge: 22px; }
 .tl-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
 .tl-desc { color: var(--muted); font-size: 13px; line-height: 1.45; }
 .tl-tags {

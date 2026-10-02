@@ -13,7 +13,7 @@ import { highlightPin, scheduleCityMapRefresh } from "../../map/city.js";
 import { showCity } from "../../map/controller.js";
 import { clearLegEnds } from "../../map/country.js";
 import { bindSheetGrab, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
-import { actLinksHtml, contextPhraseHtml, copyFieldHtml, mapsLinkHtml, notesListHtml, renderHotelCard, renderIdeas, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
+import { actLinksHtml, contextPhraseHtml, copyFieldHtml, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderIdeas, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
 
 export function openActivityDetail(act, opts){
   if (!state.panelContext || state.panelContext.type !== "city") return;
@@ -70,6 +70,7 @@ export function openStopDetail(stop, opts){
   const legsHtml = (stop.legs || []).map(({ leg, role }) => {
     const roleLabel = role === "from" ? "Départ" : "Arrivée";
     return `<button type="button" class="stop-leg-link" data-leg="${esc(leg.id)}">` +
+      modeBadgeFor(leg.mode, "stop-leg-badge") +
       `<span class="when">${esc(roleLabel)} · ${esc(leg.mode)}</span>` +
       `<strong>${esc(leg.title)}</strong>` +
       `<span class="dummy">${esc(leg.subtitle || "")}</span>` +

@@ -13,7 +13,10 @@ import { focusJourneyOverview, focusLegEnd, focusLegOverview, showCountry } from
 import { renderJourneyEnds, renderLegEnds, setActiveCity, setLegMode } from "../../map/country.js";
 import { setJourneyHighlight, setRouteHighlight } from "../../map/routes.js";
 import { bindSheetGrab, closePanel, setSheetState, sheetGrabHtml } from "./panel.js";
-import { bindCopyButtons, contextPhraseHtml, legBookingsHtml, legEndsToolbarHtml, modeStatHtml, renderMoveCard, statusClass, statusLabel, stopBlockHtml } from "../templates.js";
+import { bindCopyButtons, contextPhraseHtml, legBookingsHtml, legEndsToolbarHtml, modeBadgeFor, modeStatHtml, renderMoveCard, statusClass, statusLabel, stopBlockHtml } from "../templates.js";
+
+/** Ligne clé / valeur, omise quand la valeur est vide (« — »). */
+const kvRow = (label, value) => (value && value !== "—" ? `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>` : "");
 
 export function openJourney(journeyId, focusLegId){
   const j = journeyById(journeyId);
@@ -108,7 +111,7 @@ export function openLeg(id, opts){
   panel.classList.add("panel-leg");
   panel.innerHTML =
     sheetGrabHtml() +
-    `<div class="overlay-head"><div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+    `<div class="overlay-head">${modeBadgeFor(leg.mode, "head-badge")}<div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
     `<div class="overlay-body">` +
     journeyBack +
     `<span class="sheet-kind trajet">Étape</span>` +
@@ -123,8 +126,8 @@ export function openLeg(id, opts){
     stopBlockHtml(leg) +
     `</div>` +
     `<dl class="detail-kv">` +
-    `<dt>Place</dt><dd>${esc(leg.seat || "—")}</dd>` +
-    `<dt>Réf. résa</dt><dd>${esc(leg.ref || "—")}</dd>` +
+    kvRow("Place", leg.seat) +
+    kvRow("Réf. résa", leg.ref) +
     `<dt>Paiement</dt><dd>${esc(leg.payment || "—")}</dd>` +
     `<dt>Prix</dt><dd>${esc(leg.price || "—")}</dd>` +
     `</dl>` +
