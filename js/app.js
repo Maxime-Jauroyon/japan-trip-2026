@@ -361,457 +361,477 @@ function iconSvg(kind, accent){
   return `<svg viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">${shell}${glyphs[kind] || glyphs.pin}</svg>`;
 }
 
-function mercY(lat){
-  const r = lat * Math.PI / 180;
-  return Math.log(Math.tan(Math.PI / 4 + r / 2));
-}
-function pctIn(b, lat, lng){
-  const yN = mercY(b.north), yS = mercY(b.south);
-  return {
-    left: ((lng - b.west) / (b.east - b.west)) * 100,
-    top: ((yN - mercY(lat)) / (yN - yS)) * 100
-  };
-}
-function projectJapan(lat, lng){
-  const p = pctIn(JAPAN_BOUNDS, lat, lng);
-  const w = japanImg.naturalWidth || 1000;
-  const h = japanImg.naturalHeight || 1000;
-  return { x: (p.left / 100) * w, y: (p.top / 100) * h };
-}
-
+/* ======================= Carte interactive (MapLibre) =======================
+   Japon : 3D (relief + inclinaison). Villes : 2D, verrouillée nord.
+   Une seule instance de carte : vol fluide Japon → ville. */
 const panel = document.getElementById("panel");
 const cityList = document.getElementById("city-list");
-const countryView = document.getElementById("country-view");
-const cityView = document.getElementById("city-view");
-const cityImg = document.getElementById("city-img");
-const cityPins = document.getElementById("city-pins");
-const cityFrame = document.getElementById("city-frame");
-const cityWorld = document.getElementById("city-world");
-const countryViewport = document.getElementById("country-viewport");
-const countryWorld = document.getElementById("country-world");
-const japanImg = document.getElementById("japan-img");
-const japanOverlay = document.getElementById("japan-overlay");
+const stageEl = document.getElementById("stage");
+const mapEl = document.getElementById("map");
 const hint = document.getElementById("hint");
 let currentCity = null;
 let panelContext = null;
 let lastFocusAct = null;
 let onsiteSelectedDayN = null;
-
-/* Pan/zoom — mode: cover fills viewport; contain keeps grey letterbox around map */
-function makePanZoom(viewport, world, opts){
-  const o = Object.assign({ max:6, start:1, mode:"cover" }, opts || {});
-  const st = { x:0, y:0, s:o.start, drag:false, lx:0, ly:0 };
-  const pointers = new Map();
-  let pinch0 = null;
-  function minScale(){
-    const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
-    const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
-    const cover = Math.max(vw / ww, vh / wh);
-    const contain = Math.min(vw / ww, vh / wh);
-    if (o.mode === "contain") return contain;
-    return cover;
-  }
-  function maxScale(){
-    if (typeof o.maxRelative === "number") {
-      return Math.max(o.max || 6, minScale() * o.maxRelative);
-    }
-    return o.max;
-  }
-  function apply(){
-    world.style.transform = `translate(${st.x}px,${st.y}px) scale(${st.s})`;
-    if (typeof o.onChange === "function") o.onChange(st.s, minScale());
-  }
-  function clamp(){
-    const vw = viewport.clientWidth, vh = viewport.clientHeight;
-    const min = minScale();
-    const max = maxScale();
-    if (st.s < min) st.s = min;
-    if (st.s > max) st.s = max;
-    const ww = world.offsetWidth * st.s, wh = world.offsetHeight * st.s;
-    if (ww <= vw) st.x = (vw - ww) / 2;
-    else st.x = Math.min(0, Math.max(vw - ww, st.x));
-    if (wh <= vh) st.y = (vh - wh) / 2;
-    else st.y = Math.min(0, Math.max(vh - wh, st.y));
-  }
-  function zoomAt(cx, cy, factor){
-    const min = minScale();
-    const max = maxScale();
-    const ns = Math.min(max, Math.max(min, st.s * factor));
-    const k = ns / st.s;
-    st.x = cx - (cx - st.x) * k;
-    st.y = cy - (cy - st.y) * k;
-    st.s = ns;
-    clamp(); apply();
-  }
-  function fitCover(extra){
-    extra = extra == null ? 1 : extra;
-    const min = minScale();
-    const max = maxScale();
-    st.s = Math.min(max, min * extra);
-    st.x = (viewport.clientWidth - world.offsetWidth * st.s) / 2;
-    st.y = (viewport.clientHeight - world.offsetHeight * st.s) / 2;
-    clamp(); apply();
-  }
-  /** Toute la carte visible (letterbox si besoin) — évite de couper gauche/droite. */
-  function fitContain(pad){
-    pad = pad == null ? 1 : pad;
-    const ww = world.offsetWidth || 1, wh = world.offsetHeight || 1;
-    const vw = viewport.clientWidth || 1, vh = viewport.clientHeight || 1;
-    const max = maxScale();
-    st.s = Math.min(max, Math.min(vw / ww, vh / wh) * pad);
-    st.x = (vw - ww * st.s) / 2;
-    st.y = (vh - wh * st.s) / 2;
-    clamp(); apply();
-  }
-  function focusPct(leftPct, topPct, s){
-    const vw = viewport.clientWidth, vh = viewport.clientHeight;
-    const min = minScale();
-    const max = maxScale();
-    st.s = Math.min(max, Math.max(min, s));
-    st.x = vw / 2 - (leftPct / 100) * world.offsetWidth * st.s;
-    st.y = vh / 2 - (topPct / 100) * world.offsetHeight * st.s;
-    clamp(); apply();
-  }
-  function pinchMetrics(){
-    const arr = [...pointers.values()];
-    if (arr.length < 2) return null;
-    const a = arr[0], b = arr[1];
-    return {
-      dist: Math.hypot(b.x - a.x, b.y - a.y) || 1,
-      cx: (a.x + b.x) / 2,
-      cy: (a.y + b.y) / 2
-    };
-  }
-  function isMapChrome(el){
-    return !!(el && el.closest && el.closest("button, path.route-hit, path.route, .pin, .zone-hub, .sheet-grab, .overlay"));
-  }
-  viewport.addEventListener("wheel", e => {
-    e.preventDefault();
-    const r = viewport.getBoundingClientRect();
-    zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 1 / 1.12);
-  }, { passive:false });
-  viewport.addEventListener("pointerdown", e => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    if (isMapChrome(e.target)) return;
-    e.preventDefault();
-    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
-    if (pointers.size >= 2) {
-      st.drag = false;
-      viewport.classList.remove("dragging");
-      const p = pinchMetrics();
-      if (p) pinch0 = { dist: p.dist, s: st.s };
-    } else {
-      st.drag = true; st.lx = e.clientX; st.ly = e.clientY;
-      viewport.classList.add("dragging");
-    }
-  });
-  viewport.addEventListener("dragstart", e => { e.preventDefault(); });
-  viewport.addEventListener("selectstart", e => { e.preventDefault(); });
-  viewport.addEventListener("pointermove", e => {
-    if (!pointers.has(e.pointerId)) return;
-    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (pointers.size >= 2 && pinch0) {
-      const p = pinchMetrics();
-      if (!p) return;
-      const r = viewport.getBoundingClientRect();
-      const cx = p.cx - r.left, cy = p.cy - r.top;
-      const min = minScale();
-      const max = maxScale();
-      const ns = Math.min(max, Math.max(min, pinch0.s * (p.dist / pinch0.dist)));
-      const k = ns / st.s;
-      st.x = cx - (cx - st.x) * k;
-      st.y = cy - (cy - st.y) * k;
-      st.s = ns;
-      clamp(); apply();
-      return;
-    }
-    if (!st.drag) return;
-    st.x += e.clientX - st.lx;
-    st.y += e.clientY - st.ly;
-    st.lx = e.clientX; st.ly = e.clientY;
-    clamp(); apply();
-  });
-  function endPointer(e){
-    if (!pointers.has(e.pointerId)) return;
-    pointers.delete(e.pointerId);
-    try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
-    if (pointers.size < 2) pinch0 = null;
-    if (pointers.size === 0) {
-      st.drag = false;
-      viewport.classList.remove("dragging");
-    } else if (pointers.size === 1) {
-      const only = [...pointers.values()][0];
-      st.drag = true;
-      st.lx = only.x; st.ly = only.y;
-      viewport.classList.add("dragging");
-    }
-  }
-  viewport.addEventListener("pointerup", endPointer);
-  viewport.addEventListener("pointercancel", endPointer);
-  function fitWorldBox(box, insets){
-    insets = Object.assign({ top: 48, right: 48, bottom: 48, left: 48 }, insets || {});
-    const vw = viewport.clientWidth, vh = viewport.clientHeight;
-    const availW = Math.max(96, vw - insets.left - insets.right);
-    const availH = Math.max(96, vh - insets.top - insets.bottom);
-    const bw = Math.max(24, box.maxX - box.minX);
-    const bh = Math.max(24, box.maxY - box.minY);
-    const cx = (box.minX + box.maxX) / 2;
-    const cy = (box.minY + box.maxY) / 2;
-    const min = minScale();
-    const max = maxScale();
-    st.s = Math.min(max, Math.max(min, Math.min(availW / bw, availH / bh) * 0.88));
-    const centerX = insets.left + availW / 2;
-    const centerY = insets.top + availH / 2;
-    st.x = centerX - cx * st.s;
-    st.y = centerY - cy * st.s;
-    clamp(); apply();
-  }
-  return {
-    state:st, apply, clamp, zoomAt, fitCover, fitContain, focusPct, fitWorldBox, minScale, maxScale,
-    zoomIn(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1.2); },
-    zoomOut(){ zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1/1.2); }
-  };
-}
-
-const countryCam = makePanZoom(countryViewport, countryWorld, {
-  max:7,
-  start:1,
-  mode:"cover"
-});
-const cityCam = makePanZoom(cityFrame, cityWorld, {
-  max:18,
-  maxRelative:16,
-  start:1,
-  mode:"cover",
-  onChange(){ updateCityLod(); }
-});
-
-const MAP_IMG_VER = "20";
-const cityZonesEl = document.getElementById("city-zones");
-const cityHubs = document.getElementById("city-hubs");
 let currentCityLod = -1;
 let currentMapDay = null;
-const preloadedMaps = new Map();
+
+const MAP_RELIEF_KEY = "japan-trip-map-relief-v1";
+const COUNTRY_PITCH = 48;
+const ROUTE_COLORS = { shinkansen: "#3f9fdc", train: "#e2583e", bus: "#f0a830", plane: "#c4a574" };
+const JAPAN_MAX_BOUNDS = [[121, 22], [157, 48]];
+
+let map = null;
+let mapStyleTheme = null;
+let mapMode = "country";
+let mapStyleReady = false;
+let countryMarks = [];
+let pinMarkers = [];
+let hubMarkers = [];
+let vehicleAnims = [];
+let vehicleRaf = 0;
+let routeHighlight = null;
+let routeHoverId = null;
+const routeCoords = new Map();
 markStandaloneMode();
 
-function cityMapUrl(id){
-  return "./maps/" + id + ".png?v=" + MAP_IMG_VER;
+function isMobileUi(){
+  return window.matchMedia("(max-width: 900px)").matches;
+}
+function mapReliefEnabled(){
+  try { return localStorage.getItem(MAP_RELIEF_KEY) !== "0"; } catch (_) { return true; }
+}
+function resolvedTheme(){
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
-/** Précharge toutes les cartes ville dès le démarrage (mémoire + cache navigateur). */
-function preloadCityMaps(){
-  ORDER.forEach(id => {
-    if (preloadedMaps.has(id)) return;
-    const img = new Image();
-    img.decoding = "async";
-    img.src = cityMapUrl(id);
-    preloadedMaps.set(id, img);
-  });
+/* —— Géométrie (Web Mercator, unités « monde » 0..1) —— */
+function mercX(lng){ return (lng + 180) / 360; }
+function mercY(lat){
+  const s = Math.sin(lat * Math.PI / 180);
+  return 0.5 - Math.log((1 + s) / (1 - s)) / (4 * Math.PI);
 }
-
-function isCityMapReady(id){
-  const img = preloadedMaps.get(id);
-  return !!(img && img.complete && img.naturalWidth);
+function unmercY(y){
+  return Math.atan(Math.sinh((0.5 - y) * 2 * Math.PI)) * 180 / Math.PI;
 }
+function toWorld(p){ return { x: mercX(p.lng), y: mercY(p.lat) }; }
+function fromWorld(p){ return [p.x * 360 - 180, unmercY(p.y)]; }
 
-function sizeJapanWorld(){
-  if (!japanImg.naturalWidth) return;
-  const w = japanImg.naturalWidth, h = japanImg.naturalHeight;
-  japanImg.style.width = w + "px";
-  japanImg.style.height = h + "px";
-  countryWorld.style.width = w + "px";
-  countryWorld.style.height = h + "px";
-  japanOverlay.setAttribute("width", w);
-  japanOverlay.setAttribute("height", h);
-  japanOverlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
-  japanOverlay.style.width = w + "px";
-  japanOverlay.style.height = h + "px";
+function sampleQuad(a, c, b, n){
+  const out = [];
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, u = 1 - t;
+    out.push({ x: u * u * a.x + 2 * u * t * c.x + t * t * b.x, y: u * u * a.y + 2 * u * t * c.y + t * t * b.y });
+  }
+  return out;
 }
-
-function routePathD(spec){
+function sampleCubic(p0, c1, c2, p1, n, skipFirst){
+  const out = [];
+  for (let i = skipFirst ? 1 : 0; i <= n; i++) {
+    const t = i / n, u = 1 - t;
+    out.push({
+      x: u * u * u * p0.x + 3 * u * u * t * c1.x + 3 * u * t * t * c2.x + t * t * t * p1.x,
+      y: u * u * u * p0.y + 3 * u * u * t * c1.y + 3 * u * t * t * c2.y + t * t * t * p1.y
+    });
+  }
+  return out;
+}
+/** Même tracé que l’ancienne carte (arc / Catmull-Rom), en coordonnées géographiques. */
+function routePartCoords(spec){
   const a = spec.from, b = spec.to;
-  if (!a || !b || a.lat == null || b.lat == null) return "";
-  const f = n => (+n).toFixed(1);
-
+  if (!a || !b || a.lat == null || b.lat == null) return [];
   if (spec.curveSide) {
     const amt = spec.curveAmt != null ? spec.curveAmt : 0.085;
     const peak = arcControlGeo(a, b, spec.curveSide, amt);
-    const p0 = projectJapan(a.lat, a.lng);
-    const pc = projectJapan(peak.lat, peak.lng);
-    const p1 = projectJapan(b.lat, b.lng);
-    return `M${f(p0.x)},${f(p0.y)} Q${f(pc.x)},${f(pc.y)} ${f(p1.x)},${f(p1.y)}`;
+    return sampleQuad(toWorld(a), toWorld(peak), toWorld(b), 48).map(fromWorld);
   }
-
-  const pts = [a, ...(spec.via || []), b]
-    .filter(p => p && p.lat != null)
-    .map(p => projectJapan(p.lat, p.lng));
-  return catmullRomPathD(pts);
-}
-
-/** Smooth curve through waypoints (Catmull-Rom → cubic Bézier). */
-function catmullRomPathD(pts, tension){
-  tension = tension == null ? 0.42 : tension;
-  if (pts.length < 2) return "";
-  const f = n => (+n).toFixed(1);
-  const k = 6 / Math.max(0.25, tension);
+  const pts = [a, ...(spec.via || []), b].filter(p => p && p.lat != null).map(toWorld);
+  if (pts.length < 2) return [];
   if (pts.length === 2) {
-    const a = pts[0], b = pts[1];
-    const dx = b.x - a.x, dy = b.y - a.y;
-    const len = Math.hypot(dx, dy) || 1;
-    const bulge = Math.min(90, Math.max(18, len * 0.1));
-    const mx = (a.x + b.x) / 2 + (-dy / len) * bulge;
-    const my = (a.y + b.y) / 2 + (dx / len) * bulge;
-    return `M${f(a.x)},${f(a.y)} Q${f(mx)},${f(my)} ${f(b.x)},${f(b.y)}`;
+    const [p, q] = pts;
+    const dx = q.x - p.x, dy = q.y - p.y;
+    const len = Math.hypot(dx, dy) || 1e-9;
+    const unit = 1 / 2600; /* ≈ 1 px de l’ancienne carte PNG */
+    const bulge = Math.min(90 * unit, Math.max(18 * unit, len * 0.1));
+    const c = { x: (p.x + q.x) / 2 + (-dy / len) * bulge, y: (p.y + q.y) / 2 + (dx / len) * bulge };
+    return sampleQuad(p, c, q, 40).map(fromWorld);
   }
-  let d = `M${f(pts[0].x)},${f(pts[0].y)}`;
+  const k = 6 / 0.42;
+  let out = [];
   for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[Math.max(0, i - 1)];
-    const p1 = pts[i];
-    const p2 = pts[i + 1];
-    const p3 = pts[Math.min(pts.length - 1, i + 2)];
-    const cp1x = p1.x + (p2.x - p0.x) / k;
-    const cp1y = p1.y + (p2.y - p0.y) / k;
-    const cp2x = p2.x - (p3.x - p1.x) / k;
-    const cp2y = p2.y - (p3.y - p1.y) / k;
-    d += ` C${f(cp1x)},${f(cp1y)} ${f(cp2x)},${f(cp2y)} ${f(p2.x)},${f(p2.y)}`;
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const c1 = { x: p1.x + (p2.x - p0.x) / k, y: p1.y + (p2.y - p0.y) / k };
+    const c2 = { x: p2.x - (p3.x - p1.x) / k, y: p2.y - (p3.y - p1.y) / k };
+    out = out.concat(sampleCubic(p1, c1, c2, p2, 18, i > 0));
   }
-  return d;
+  return out.map(fromWorld);
 }
-
-function pathBoundsFromD(d, pad){
-  pad = pad == null ? 36 : pad;
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  const add = (x, y) => {
-    minX = Math.min(minX, x); minY = Math.min(minY, y);
-    maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+function boundsOfCoords(coords){
+  if (!coords.length) return null;
+  let w = Infinity, s = Infinity, e = -Infinity, n = -Infinity;
+  coords.forEach(([lng, lat]) => {
+    w = Math.min(w, lng); e = Math.max(e, lng);
+    s = Math.min(s, lat); n = Math.max(n, lat);
+  });
+  return [[w, s], [e, n]];
+}
+/** Cadrage d’une emprise [[w,s],[e,n]] dans la zone utile (hors marges `pad`).
+    Calcul direct (cameraForBounds cumule le padding déjà appliqué à la carte). */
+function cameraForGeoBounds(b, pad, maxZoom){
+  const W = Math.max(64, mapEl.clientWidth), H = Math.max(64, mapEl.clientHeight);
+  const availW = Math.max(80, W - pad.left - pad.right);
+  const availH = Math.max(80, H - pad.top - pad.bottom);
+  const bw = Math.max(1e-9, (mercX(b[1][0]) - mercX(b[0][0])) * 512);
+  const bh = Math.max(1e-9, (mercY(b[0][1]) - mercY(b[1][1])) * 512);
+  let zoom = Math.log2(Math.min(availW / bw, availH / bh));
+  if (maxZoom != null) zoom = Math.min(zoom, maxZoom);
+  const cy = unmercY((mercY(b[0][1]) + mercY(b[1][1])) / 2);
+  return { center: [(b[0][0] + b[1][0]) / 2, cy], zoom };
+}
+/** Zoom « cover » (ancienne carte remplie) et « contain » pour une ville. */
+function cityZoomInfo(id){
+  const b = MAP_BOUNDS[id];
+  const W = Math.max(64, mapEl.clientWidth), H = Math.max(64, mapEl.clientHeight);
+  const bw = (mercX(b.east) - mercX(b.west)) * 512;
+  const bh = (mercY(b.south) - mercY(b.north)) * 512;
+  return {
+    cover: Math.log2(Math.max(W / bw, H / bh)),
+    contain: Math.log2(Math.min(W / bw, H / bh)),
+    center: [(b.west + b.east) / 2, (b.south + b.north) / 2]
   };
-  if (d) {
-    try {
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", d);
-      const len = path.getTotalLength();
-      const steps = Math.max(16, Math.ceil(len / 48));
-      for (let i = 0; i <= steps; i++) {
-        const pt = path.getPointAtLength(len * i / steps);
-        add(pt.x, pt.y);
-      }
-    } catch (_) { /* ignore */ }
-  }
-  if (!isFinite(minX)) return null;
-  return { minX: minX - pad, minY: minY - pad, maxX: maxX + pad, maxY: maxY + pad };
+}
+function cityCoverZoom(){
+  return currentCity ? cityZoomInfo(currentCity).cover : 12;
 }
 
-function buildCountry(){
-  const routes = document.getElementById("routes");
-  routes.innerHTML = "";
-  const reduced = prefersReducedMotion();
+/* —— Données routes —— */
+function buildRouteData(){
+  routeCoords.clear();
+  const features = [];
+  let fid = 1;
   LEGS.forEach(leg => {
     if (leg.skipMap) return;
     legRouteParts(leg).forEach(part => {
-      const d = routePathD(part);
-      if (!d) return;
-      const pathId = "route-" + part.pathId;
-      const vKind = legVehicleKind(part.mode);
-      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.classList.add("route-group");
-      g.dataset.leg = part.legId;
-      g.dataset.segment = part.pathId;
-      g.dataset.vehicle = vKind;
-      if (leg.journey) g.dataset.journey = leg.journey;
-
-      const glow = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      glow.setAttribute("d", d);
-      glow.setAttribute("class", "route-glow");
-
-      const track = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      track.setAttribute("id", pathId);
-      track.setAttribute("d", d);
-      track.setAttribute("class", "route-track");
-
-      const hit = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      hit.setAttribute("d", d);
-      hit.setAttribute("class", "route-hit");
-
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", d);
-      path.setAttribute("class", "route");
-      path.dataset.leg = part.legId;
-
-      const vehWrap = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      vehWrap.setAttribute("class", "route-vehicle vehicle-" + vKind);
-      vehWrap.innerHTML = routeVehicleSvg(vKind);
-
-      if (!reduced) {
-        const motion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-        motion.setAttribute("dur", vKind === "bus" ? "14s" : "10s");
-        motion.setAttribute("repeatCount", "indefinite");
-        motion.setAttribute("rotate", "auto");
-        motion.setAttribute("calcMode", "linear");
-        const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
-        mpath.setAttribute("href", "#" + pathId);
-        try { mpath.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#" + pathId); } catch (_) { /* ignore */ }
-        motion.appendChild(mpath);
-        vehWrap.appendChild(motion);
-        motion.setAttribute("begin", (Math.random() * 8).toFixed(1) + "s");
-      } else {
-        vehWrap.classList.add("route-vehicle-static");
-      }
-
-      const open = e => {
-        e.stopPropagation();
-        const hitLeg = LEGS.find(l => l.id === part.legId);
-        if (hitLeg && hitLeg.journey) openJourney(hitLeg.journey, hitLeg.id);
-        else openLeg(part.legId);
-      };
-      hit.addEventListener("click", open);
-      hit.addEventListener("mouseenter", () => g.classList.add("route-hover"));
-      hit.addEventListener("mouseleave", () => g.classList.remove("route-hover"));
-
-      g.appendChild(glow);
-      g.appendChild(track);
-      g.appendChild(hit);
-      g.appendChild(path);
-      g.appendChild(vehWrap);
-      routes.appendChild(g);
-
-      if (reduced && vehWrap.classList.contains("route-vehicle-static")) {
-        try {
-          const len = track.getTotalLength();
-          const pt = track.getPointAtLength(len * 0.38);
-          vehWrap.setAttribute("transform", `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
-        } catch (_) { /* ignore */ }
-      } else if (!reduced) {
-        try {
-          const len = track.getTotalLength();
-          const motion = vehWrap.querySelector("animateMotion");
-          if (motion && len > 0) {
-            const sec = Math.max(5, Math.min(22, len / (vKind === "bus" ? 55 : 75)));
-            motion.setAttribute("dur", sec.toFixed(1) + "s");
-          }
-        } catch (_) { /* ignore */ }
-      }
+      const coords = routePartCoords(part);
+      if (coords.length < 2) return;
+      routeCoords.set(part.pathId, coords);
+      features.push({
+        type: "Feature",
+        id: fid++,
+        properties: {
+          segment: part.pathId,
+          leg: part.legId,
+          journey: leg.journey || "",
+          vehicle: legVehicleKind(part.mode)
+        },
+        geometry: { type: "LineString", coordinates: coords }
+      });
     });
   });
+  return { type: "FeatureCollection", features };
+}
+let ROUTE_DATA = null;
 
-  const marks = document.getElementById("country-marks");
-  marks.innerHTML = "";
+function routeColorExpr(){
+  return ["match", ["get", "vehicle"],
+    "shinkansen", ROUTE_COLORS.shinkansen,
+    "bus", ROUTE_COLORS.bus,
+    "plane", ROUTE_COLORS.plane,
+    ROUTE_COLORS.train];
+}
+const FS_ACTIVE = ["boolean", ["feature-state", "active"], false];
+const FS_DIM = ["boolean", ["feature-state", "dim"], false];
+const FS_HOVER = ["boolean", ["feature-state", "hover"], false];
+
+function addTripLayers(){
+  if (!map) return;
+  const theme = mapStyleTheme;
+  if (!ROUTE_DATA) ROUTE_DATA = buildRouteData();
+  map.addSource("routes", { type: "geojson", data: ROUTE_DATA });
+  map.addSource("zones", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+  const lineW = (base) => ["interpolate", ["linear"], ["zoom"], 4, base, 8, base * 1.6, 12, base * 2.2];
+  /* Une seule interpolation de zoom par expression : l’état (actif / survol) va dans les sorties */
+  const lineWState = (base, on) => ["interpolate", ["linear"], ["zoom"],
+    4, ["case", ["any", FS_ACTIVE, FS_HOVER], on, base],
+    8, ["case", ["any", FS_ACTIVE, FS_HOVER], on * 1.6, base * 1.6],
+    12, ["case", ["any", FS_ACTIVE, FS_HOVER], on * 2.2, base * 2.2]];
+  map.addLayer({
+    id: "zone-fill", type: "fill", source: "zones",
+    paint: { "fill-color": ["get", "color"], "fill-opacity": 0 }
+  });
+  map.addLayer({
+    id: "zone-line", type: "line", source: "zones",
+    paint: { "line-color": ["get", "color"], "line-width": ["case", ["get", "on"], 3, 2], "line-opacity": 0 }
+  });
+  map.addLayer({
+    id: "zone-label", type: "symbol", source: "zones",
+    layout: {
+      "text-field": ["get", "name"], "text-font": MAP_FONT_BOLD,
+      "text-size": ["case", ["get", "on"], 19, 17], "text-allow-overlap": true
+    },
+    paint: {
+      "text-color": theme === "light" ? "#1f2833" : "#f4efe6",
+      "text-halo-color": theme === "light" ? "rgba(247,244,238,.9)" : "rgba(10,14,20,.8)",
+      "text-halo-width": 2, "text-opacity": 0
+    }
+  });
+  map.addLayer({
+    id: "route-casing", type: "line", source: "routes",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": theme === "light" ? "#fffaf3" : "#06090d",
+      "line-width": lineW(5),
+      "line-opacity": ["case", FS_DIM, 0.12, 0.85]
+    }
+  });
+  map.addLayer({
+    id: "route-glow", type: "line", source: "routes",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": routeColorExpr(),
+      "line-width": lineW(9),
+      "line-blur": 6,
+      "line-opacity": ["case", FS_DIM, 0, FS_ACTIVE, 0.6, FS_HOVER, 0.5, theme === "light" ? 0.18 : 0.3]
+    }
+  });
+  map.addLayer({
+    id: "route-line", type: "line", source: "routes",
+    filter: ["!=", ["get", "vehicle"], "plane"],
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": routeColorExpr(),
+      "line-width": lineWState(2.4, 3.4),
+      "line-opacity": ["case", FS_DIM, 0.22, 1]
+    }
+  });
+  map.addLayer({
+    id: "route-line-dashed", type: "line", source: "routes",
+    filter: ["==", ["get", "vehicle"], "plane"],
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: {
+      "line-color": routeColorExpr(),
+      "line-width": lineWState(2.2, 3),
+      "line-dasharray": [1.2, 1.6],
+      "line-opacity": ["case", FS_DIM, 0.22, 1]
+    }
+  });
+  map.addLayer({
+    id: "route-hit", type: "line", source: "routes",
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": "#000", "line-width": 26, "line-opacity": 0.001 }
+  });
+}
+
+function onMapStyleLoad(){
+  mapStyleReady = true;
+  try { addTripLayers(); } catch (e) { console.warn("trip layers", e); }
+  applyMapModeToStyle();
+  applyRouteHighlight();
+  if (currentCity) layoutCityZones(currentMapDay);
+}
+
+function setRoutesVisible(on){
+  if (!map || !mapStyleReady) return;
+  ["route-casing", "route-glow", "route-line", "route-line-dashed", "route-hit"].forEach(id => {
+    if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
+  });
+}
+function applyTerrain(){
+  if (!map || !mapStyleReady) return;
+  const want = mapMode === "country" && mapReliefEnabled();
+  try {
+    if (want) map.setTerrain({ source: "dem", exaggeration: 1.7 });
+    else map.setTerrain(null);
+  } catch (_) { /* ignore */ }
+}
+function applyMapModeToStyle(){
+  setRoutesVisible(mapMode === "country");
+  applyTerrain();
+}
+
+function setMapMode(mode){
+  mapMode = mode;
+  stageEl.classList.toggle("mode-city", mode === "city");
+  stageEl.classList.toggle("mode-country", mode === "country");
+  if (!map) return;
+  const country = mode === "country";
+  if (country) {
+    clearCityMarkers();
+    setZonesData([]);
+    map.setMaxBounds(JAPAN_MAX_BOUNDS);
+    map.setMinZoom(3.6);
+    map.dragRotate.enable();
+    map.touchZoomRotate.enableRotation();
+    map.touchPitch.enable();
+    map.keyboard.enableRotation();
+    startVehicles();
+  } else {
+    map.setMaxBounds(null);
+    map.dragRotate.disable();
+    map.touchZoomRotate.disableRotation();
+    map.touchPitch.disable();
+    map.keyboard.disableRotation();
+    stopVehicles();
+  }
+  applyMapModeToStyle();
+  syncMapControls();
+  syncCountryLabels();
+}
+
+/* —— Véhicules animés le long des trajets —— */
+function vehicleBearing(a, b){
+  const pa = toWorld({ lat: a[1], lng: a[0] }), pb = toWorld({ lat: b[1], lng: b[0] });
+  return Math.atan2(pb.x - pa.x, -(pb.y - pa.y)) * 180 / Math.PI;
+}
+function placeVehicle(v, t){
+  const target = t * v.total;
+  let i = 1;
+  while (i < v.cum.length - 1 && v.cum[i] < target) i++;
+  const a = v.coords[i - 1], b = v.coords[i];
+  const seg = (v.cum[i] - v.cum[i - 1]) || 1e-9;
+  const k = Math.max(0, Math.min(1, (target - v.cum[i - 1]) / seg));
+  v.marker.setLngLat([a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k]);
+  let r = vehicleBearing(a, b) - 90;
+  r = ((r + 540) % 360) - 180;
+  const flip = r > 90 || r < -90;
+  if (flip) r += 180;
+  v.marker.setRotation(r);
+  if (v.flip !== flip) {
+    v.flip = flip;
+    v.el.classList.toggle("flip", flip);
+  }
+}
+function buildVehicles(){
+  vehicleAnims.forEach(v => v.marker.remove());
+  vehicleAnims = [];
+  if (!map || !ROUTE_DATA) return;
+  ROUTE_DATA.features.forEach(f => {
+    const coords = f.geometry.coordinates;
+    const cum = [0];
+    for (let i = 1; i < coords.length; i++) {
+      const a = toWorld({ lat: coords[i - 1][1], lng: coords[i - 1][0] });
+      const b = toWorld({ lat: coords[i][1], lng: coords[i][0] });
+      cum.push(cum[i - 1] + Math.hypot(b.x - a.x, b.y - a.y));
+    }
+    const total = cum[cum.length - 1] || 1e-9;
+    const kind = f.properties.vehicle;
+    const el = document.createElement("div");
+    el.className = "route-vehicle vehicle-" + kind;
+    el.dataset.leg = f.properties.leg;
+    el.dataset.journey = f.properties.journey;
+    el.innerHTML = `<svg viewBox="-16 -10 32 20" width="34" height="22" aria-hidden="true">${routeVehicleSvg(kind)}</svg>`;
+    const marker = new maplibregl.Marker({ element: el, rotationAlignment: "map", pitchAlignment: "map" })
+      .setLngLat(coords[0]);
+    /* durée ≈ ancienne carte : longueur / vitesse, bornée 5–22 s */
+    const px = total * 2600;
+    const dur = Math.max(5, Math.min(22, px / (kind === "bus" ? 55 : 75)));
+    const v = { marker, el, coords, cum, total, dur, offset: Math.random() * 8, flip: null, feature: f };
+    placeVehicle(v, 0.38);
+    vehicleAnims.push(v);
+  });
+}
+function vehiclesLoop(now){
+  vehicleRaf = 0;
+  if (!map || mapMode !== "country" || document.hidden) return;
+  vehicleAnims.forEach(v => {
+    const t = (((now / 1000) + v.offset) % v.dur) / v.dur;
+    placeVehicle(v, t);
+  });
+  vehicleRaf = requestAnimationFrame(vehiclesLoop);
+}
+function startVehicles(){
+  if (!map) return;
+  vehicleAnims.forEach(v => { if (!v.marker._map) v.marker.addTo(map); });
+  if (prefersReducedMotion()) {
+    vehicleAnims.forEach(v => placeVehicle(v, 0.38));
+    return;
+  }
+  if (!vehicleRaf) vehicleRaf = requestAnimationFrame(vehiclesLoop);
+}
+function stopVehicles(){
+  if (vehicleRaf) cancelAnimationFrame(vehicleRaf);
+  vehicleRaf = 0;
+  vehicleAnims.forEach(v => v.marker.remove());
+}
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && mapMode === "country") startVehicles();
+});
+
+/* —— Surbrillance trajets (feature-state) —— */
+function applyRouteHighlight(){
+  if (!map || !mapStyleReady || !ROUTE_DATA || !map.getSource("routes")) return;
+  const h = routeHighlight;
+  ROUTE_DATA.features.forEach(f => {
+    let on = false;
+    if (h) on = h.journey ? f.properties.journey === h.journey : f.properties.leg === h.leg;
+    map.setFeatureState({ source: "routes", id: f.id }, { active: !!h && on, dim: !!h && !on, hover: f.id === routeHoverId });
+  });
+  vehicleAnims.forEach(v => {
+    const p = v.feature.properties;
+    let on = false;
+    if (h) on = h.journey ? p.journey === h.journey : p.leg === h.leg;
+    v.el.classList.toggle("route-active", !!h && on);
+    v.el.classList.toggle("route-dim", !!h && !on);
+  });
+}
+function resetRouteHighlight(){
+  routeHighlight = null;
+  applyRouteHighlight();
+}
+function setRouteHighlight(id){
+  const leg = LEGS.find(l => l.id === id);
+  routeHighlight = leg && leg.journey ? { journey: leg.journey } : { leg: id };
+  applyRouteHighlight();
+}
+function setJourneyHighlight(journeyId){
+  routeHighlight = { journey: journeyId };
+  applyRouteHighlight();
+}
+
+/* —— Marqueurs villes (vue Japon) —— */
+function buildCountry(){
+  countryMarks.forEach(m => m.remove());
+  countryMarks = [];
   ORDER.forEach((id, i) => {
     const c = CITIES[id];
-    const pct = pctIn(JAPAN_BOUNDS, c.lat, c.lng);
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "city-mark" + (LABEL_SIDE[id] === "left" ? " label-left" : "");
-    btn.style.left = pct.left + "%";
-    btn.style.top = pct.top + "%";
+    const side = (MARK_LABELS[id] && MARK_LABELS[id].side) || LABEL_SIDE[id];
+    btn.className = "city-mark" + (side === "left" ? " label-left" : "");
     btn.style.setProperty("--mark-i", String(i));
     btn.dataset.city = id;
     btn.title = c.name;
+    btn.setAttribute("aria-label", c.name);
     btn.innerHTML =
+      `<span class="mark-float"><span class="mark-halo" aria-hidden="true"></span>` +
       `<span class="map-logo">${cityMapLogoSvg(id)}</span>` +
-      `<span class="label">${c.name}</span>`;
+      `<span class="label">${esc(c.name)}<small>${esc(c.jp)}</small></span></span>`;
     btn.addEventListener("click", e => { e.stopPropagation(); openCity(id); });
-    marks.appendChild(btn);
+    const marker = new maplibregl.Marker({ element: btn, anchor: "center" }).setLngLat([c.lng, c.lat]).addTo(map);
+    countryMarks.push(marker);
+  });
+  buildVehicles();
+}
+
+/** Noms des villes : toujours sur grand écran, à partir d’un certain zoom sur mobile. */
+/* Côté et zoom minimal du nom de chaque ville (évite les chevauchements dans les Alpes). */
+const MARK_LABELS = {
+  tokyo: { side: "right", zoom: 0 },
+  fuji: { side: "left", zoom: 0 },
+  kanazawa: { side: "left", zoom: 0 },
+  shirakawa: { side: "left", zoom: 8.2 },
+  takayama: { side: "right", zoom: 0 },
+  kyoto: { side: "left", zoom: 0 },
+  nara: { side: "right", zoom: 0 },
+  osaka: { side: "left", zoom: 0 }
+};
+function syncCountryLabels(){
+  if (!map) return;
+  const z = map.getZoom();
+  const base = isMobileUi() ? 6.6 : 0;
+  document.querySelectorAll(".city-mark").forEach(el => {
+    const cfg = MARK_LABELS[el.dataset.city] || { zoom: 0 };
+    el.classList.toggle("label-on", z >= Math.max(base, cfg.zoom));
   });
 }
 
@@ -820,58 +840,51 @@ function setActiveCity(id){
   document.querySelectorAll(".city-mark").forEach(b => b.classList.toggle("active", b.dataset.city === id));
 }
 
-function showCountry(){
+function cameraMove(cam, instant){
+  if (!map) return;
+  const opts = Object.assign({ essential: true }, cam);
+  if (instant || prefersReducedMotion()) {
+    map.jumpTo(opts);
+    return;
+  }
+  const from = map.getCenter();
+  const far = !cam.center || Math.abs(from.lng - (cam.center.lng != null ? cam.center.lng : cam.center[0])) > 0.6 ||
+    Math.abs(from.lat - (cam.center.lat != null ? cam.center.lat : cam.center[1])) > 0.6 ||
+    (cam.zoom != null && Math.abs(map.getZoom() - cam.zoom) > 2.5);
+  if (far) map.flyTo(Object.assign({ duration: 1600, curve: 1.3 }, opts));
+  else map.easeTo(Object.assign({ duration: 650 }, opts));
+}
+
+/** fitHome : recadrer sur tout le voyage (bouton ⌂, fermeture du panneau). */
+function showCountry(instant, fitHome){
   currentCity = null;
   document.querySelector(".app").classList.remove("city-mode");
   const banner = document.getElementById("city-banner");
   if (banner) { banner.hidden = true; banner.textContent = ""; }
-  countryView.classList.remove("hidden");
-  cityView.classList.remove("visible");
-  hint.textContent = "Glisser · pincer pour zoomer · toucher une ville";
+  hint.textContent = "Glisser · pincer pour zoomer · 2 doigts pour incliner · toucher une ville";
   setActiveCity(null);
-  requestAnimationFrame(() => {
-    fitJapanHome();
-  });
+  const wasCity = mapMode === "city";
+  setMapMode("country");
+  if (wasCity || instant || fitHome) fitJapanHome(instant);
 }
 
-function fitJapanHome(){
-  sizeJapanWorld();
-  /* Standalone : cover exact (pas le ×1.02 qui rogne un peu les côtés). */
-  countryCam.fitCover(isStandaloneApp() ? 1 : 1.02);
+/** Cadre de départ : toutes les villes du voyage, carte inclinée. */
+function fitJapanHome(instant){
+  if (!map || !mapEl.clientWidth) return;
+  const pts = ORDER.map(id => [CITIES[id].lng, CITIES[id].lat]);
+  const b = boundsOfCoords(pts);
+  const mobile = isMobileUi();
+  const padX = mobile ? 0.45 : 0.6, padY = mobile ? 0.25 : 0.45;
+  const bounds = [[b[0][0] - padX, b[0][1] - padY], [b[1][0] + padX, b[1][1] + padY]];
+  const pitch = mapReliefEnabled() ? COUNTRY_PITCH : 30;
+  const pad = mapViewportInsets();
+  const cam = cameraForGeoBounds(bounds, pad);
+  /* inclinaison : le haut de la carte s’éloigne → on peut zoomer un peu */
+  const bonus = mobile ? 0 : pitch / 220;
+  cameraMove({ center: cam.center, zoom: cam.zoom + bonus, pitch: mobile ? Math.min(pitch, 42) : pitch, bearing: 0, padding: pad }, instant);
 }
 
-function layoutCityPins(){
-  if (!currentCity || !cityImg.naturalWidth) return;
-  const nw = cityImg.naturalWidth, nh = cityImg.naturalHeight;
-  cityImg.style.width = nw + "px";
-  cityImg.style.height = nh + "px";
-  cityWorld.style.width = nw + "px";
-  cityWorld.style.height = nh + "px";
-  cityPins.style.width = nw + "px";
-  cityPins.style.height = nh + "px";
-  if (cityHubs) {
-    cityHubs.style.width = nw + "px";
-    cityHubs.style.height = nh + "px";
-  }
-  if (cityZonesEl) {
-    cityZonesEl.setAttribute("width", nw);
-    cityZonesEl.setAttribute("height", nh);
-    cityZonesEl.setAttribute("viewBox", `0 0 ${nw} ${nh}`);
-  }
-  const placePin = (pin) => {
-    const lat = Number(pin.dataset.lat), lng = Number(pin.dataset.lng);
-    const pct = pctIn(MAP_BOUNDS[currentCity], lat, lng);
-    pin.style.left = (pct.left / 100) * nw + "px";
-    pin.style.top = (pct.top / 100) * nh + "px";
-    const inB = pct.left >= -2 && pct.left <= 102 && pct.top >= -2 && pct.top <= 102;
-    pin.style.display = inB ? "" : "none";
-  };
-  cityPins.querySelectorAll(".pin").forEach(placePin);
-  if (cityHubs) cityHubs.querySelectorAll(".zone-hub").forEach(placePin);
-  layoutCityZones(currentMapDay);
-  updateCityLod(true);
-}
-
+/* —— Zones de quartier (vue ville) —— */
 function pointInZone(lat, lng, z){
   return lng >= z.west && lng <= z.east && lat >= z.south && lat <= z.north;
 }
@@ -905,14 +918,6 @@ function zoneCenter(z){
 function countPlacesInZone(cityId, zone){
   return placesOnMap(cityId).filter(a => pointInZone(a.lat, a.lng, zone)).length;
 }
-function cityLodLevel(){
-  const min = cityCam.minScale();
-  if (!min) return 0;
-  const r = cityCam.state.s / min;
-  if (r < 1.22) return 0;
-  if (r < 2.45) return 1;
-  return 2;
-}
 function smoothstep(edge0, edge1, x){
   if (edge1 === edge0) return x >= edge1 ? 1 : 0;
   const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
@@ -934,31 +939,60 @@ function dayZoneIds(cityId, day){
   }
   return ids;
 }
+/* Seuils LOD (rapport au zoom « cover ») : bulles → zones → pins */
+function lodThresholds(){
+  const mobile = isMobileUi();
+  return {
+    pinStart: mobile ? 3.15 : 2.28,
+    zoneIn0: mobile ? 1.05 : 1.12,
+    zoneIn1: mobile ? 1.32 : 1.45
+  };
+}
+function setZonesData(features){
+  if (!map || !mapStyleReady) return;
+  const src = map.getSource("zones");
+  if (src) src.setData({ type: "FeatureCollection", features });
+}
 function layoutCityZones(day){
-  if (!cityZonesEl || !currentCity || !cityImg.naturalWidth) return;
-  const nw = cityImg.naturalWidth, nh = cityImg.naturalHeight;
-  const bounds = MAP_BOUNDS[currentCity];
+  if (!currentCity) return;
   const zones = zonesForCity(currentCity);
   const onZones = dayZoneIds(currentCity, day);
   const filterDay = !!(day && onZones.size);
-  cityZonesEl.innerHTML = zones.map(z => {
-    const tl = pctIn(bounds, z.north, z.west);
-    const br = pctIn(bounds, z.south, z.east);
-    const x = (Math.min(tl.left, br.left) / 100) * nw;
-    const y = (Math.min(tl.top, br.top) / 100) * nh;
-    const w = (Math.abs(br.left - tl.left) / 100) * nw;
-    const h = (Math.abs(br.top - tl.top) / 100) * nh;
-    const on = !filterDay || onZones.has(z.id);
-    const cls = "zone-poly" + (filterDay ? (on ? " on" : " dim") : "");
-    return `<g class="${cls}" data-zone="${esc(z.id)}">` +
-      `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(28, w * 0.08)}" fill="${esc(z.color)}" />` +
-      `<text x="${x + w / 2}" y="${y + h / 2}" text-anchor="middle" dominant-baseline="middle">${esc(z.name)}</text>` +
-      `</g>`;
-  }).join("");
+  const features = zones.filter(z => !filterDay || onZones.has(z.id)).map(z => ({
+    type: "Feature",
+    properties: { id: z.id, name: z.name, color: z.color, on: filterDay },
+    geometry: {
+      type: "Polygon",
+      coordinates: [[[z.west, z.south], [z.east, z.south], [z.east, z.north], [z.west, z.north], [z.west, z.south]]]
+    }
+  }));
+  setZonesData(features);
+  if (!map || !mapStyleReady || !map.getLayer("zone-fill")) return;
+  const base = cityCoverZoom();
+  const t = lodThresholds();
+  const zAt = r => base + Math.log2(r);
+  const stops = (val) => ["interpolate", ["linear"], ["zoom"],
+    zAt(t.zoneIn0), 0, zAt(t.zoneIn1), val, zAt(t.pinStart - 0.4), val, zAt(t.pinStart + 0.12), 0];
+  map.setPaintProperty("zone-fill", "fill-opacity", stops(["case", ["get", "on"], 0.38, 0.24]));
+  map.setPaintProperty("zone-line", "line-opacity", stops(["case", ["get", "on"], 0.9, 0.55]));
+  map.setPaintProperty("zone-label", "text-opacity", stops(1));
 }
+
+function clearCityMarkers(){
+  pinMarkers.forEach(m => m.remove());
+  hubMarkers.forEach(m => m.remove());
+  pinMarkers = [];
+  hubMarkers = [];
+}
+function addCityMarker(el, lat, lng, anchor, list){
+  if (!map) return;
+  const m = new maplibregl.Marker({ element: el, anchor }).setLngLat([lng, lat]).addTo(map);
+  list.push(m);
+}
+
 function renderCityHubs(id, day){
-  if (!cityHubs) return;
-  cityHubs.innerHTML = "";
+  hubMarkers.forEach(m => m.remove());
+  hubMarkers = [];
   const onZones = dayZoneIds(id, day);
   const filterDay = !!(day && onZones.size);
   zonesForCity(id).forEach(z => {
@@ -971,8 +1005,6 @@ function renderCityHubs(id, day){
     let cls = "zone-hub";
     if (filterDay) cls += on ? " on" : " dim";
     btn.className = cls;
-    btn.dataset.lat = c.lat;
-    btn.dataset.lng = c.lng;
     btn.dataset.zone = z.id;
     btn.title = z.name;
     btn.setAttribute("aria-label", z.name);
@@ -980,72 +1012,49 @@ function renderCityHubs(id, day){
       ? ideasOf(day).filter(a => a.lat != null && pointInZone(a.lat, a.lng, z)).length
       : n;
     btn.innerHTML =
+      `<span class="zone-hub-chip">` +
       `<span class="zone-hub-dot" style="background:${esc(z.color)}"></span>` +
       `<span class="zone-hub-label">${esc(z.name)}</span>` +
-      (dayCount ? `<span class="zone-hub-count">${dayCount}</span>` : "");
+      (dayCount ? `<span class="zone-hub-count">${dayCount}</span>` : "") +
+      `</span>`;
     btn.addEventListener("click", e => {
       e.stopPropagation();
-      const pct = pctIn(MAP_BOUNDS[id], c.lat, c.lng);
-      const zoom = cityCam.minScale() * 2.7;
-      cityCam.focusPct(pct.left, pct.top, zoom);
+      cameraMove({ center: [c.lng, c.lat], zoom: cityCoverZoom() + Math.log2(2.7), padding: mapViewportInsets() });
     });
-    cityHubs.appendChild(btn);
+    addCityMarker(btn, c.lat, c.lng, "center", hubMarkers);
   });
 }
-function applyCityPinScales(pinScale){
-  if (!cityPins) return;
-  const t = "translate(-50%, -100%) scale(" + pinScale + ")";
-  cityPins.querySelectorAll(".pin").forEach(pin => {
-    pin.style.transform = t;
-  });
-}
+
 function updateCityLod(force){
-  if (!currentCity || !cityView.classList.contains("visible")) return;
-  const min = cityCam.minScale() || 1;
-  const s = cityCam.state.s || min;
-  const ratio = Math.max(1, s / min);
-  const mobilePins = window.matchMedia("(max-width: 900px)").matches;
-
-  // Hubs → zones → pins. Mobile : zones plus longtemps, pins seulement à fort zoom.
-  const pinStart = mobilePins ? 3.15 : 2.28;
-  const zoneIn0 = mobilePins ? 1.05 : 1.12;
-  const zoneIn1 = mobilePins ? 1.32 : 1.45;
-  /* Taille bonne à l’apparition ; en zoomant plus, le scale baisse assez pour
-     que la taille à l’écran diminue (pas seulement rester constante). */
-  const pinScale = Math.max(0.15, Math.min(1.2, Math.pow(pinStart / ratio, 1.4)));
-  cityWorld.style.setProperty("--pin-scale", String(pinScale));
-  cityWorld.dataset.pinSm = pinScale < 0.55 ? "1" : "";
-  applyCityPinScales(pinScale);
-  // Hubs plus gros au dézoom max (ratio ≈ 1), puis se réduisent en zoomant
-  const hubScale = Math.max(0.9, Math.min(1.75, 1.75 / Math.pow(ratio, 0.4))) / Math.max(1, Math.min(ratio, 1.12));
-  cityWorld.style.setProperty("--hub-scale", String(hubScale));
-  if (cityHubs) {
-    cityHubs.querySelectorAll(".zone-hub").forEach(hub => {
-      const on = hub.classList.contains("on") ? 1.06 : 1;
-      hub.style.transform = "translate(-50%, -50%) scale(" + (hubScale * on) + ")";
-    });
-  }
-
-  const hubOp = 1 - smoothstep(zoneIn0, zoneIn1, ratio);
-  const zoneFade = smoothstep(pinStart - 0.4, pinStart + 0.12, ratio);
-  const zoneOp = smoothstep(zoneIn0, zoneIn1, ratio) * (1 - zoneFade);
-  let pinOp = ratio >= pinStart ? 1 : 0;
+  if (!map || !currentCity || mapMode !== "city") return;
+  const base = cityCoverZoom();
+  const ratio = Math.max(1, Math.pow(2, map.getZoom() - base));
+  const t = lodThresholds();
+  /* Taille bonne à l’apparition ; en zoomant plus, le scale baisse pour que
+     la taille à l’écran reste lisible sans masquer la carte. */
+  const pinScale = Math.max(0.82, Math.min(1, Math.pow(ratio / t.pinStart, -0.15)));
+  const hubScale = Math.max(0.88, Math.min(1.12, 1.12 / Math.pow(ratio, 0.4)));
+  const hubOp = 1 - smoothstep(t.zoneIn0, t.zoneIn1, ratio);
+  const zoneFade = smoothstep(t.pinStart - 0.4, t.pinStart + 0.12, ratio);
+  const zoneOp = smoothstep(t.zoneIn0, t.zoneIn1, ratio) * (1 - zoneFade);
+  let pinOp = ratio >= t.pinStart ? 1 : 0;
   if (hubOp < 0.12 && zoneOp < 0.12) pinOp = 1;
-  cityWorld.style.setProperty("--hub-opacity", hubOp.toFixed(3));
-  cityWorld.style.setProperty("--zone-opacity", zoneOp.toFixed(3));
-  cityWorld.style.setProperty("--pin-opacity", String(pinOp));
-  cityWorld.classList.toggle("day-filter", !!(currentMapDay && dayZoneIds(currentCity, currentMapDay).size));
-  cityWorld.classList.toggle("pins-live", pinOp >= 1);
-  cityWorld.classList.toggle("hubs-live", hubOp >= 0.35);
+  mapEl.style.setProperty("--pin-scale", pinScale.toFixed(3));
+  mapEl.style.setProperty("--hub-scale", hubScale.toFixed(3));
+  mapEl.style.setProperty("--hub-opacity", hubOp.toFixed(3));
+  mapEl.style.setProperty("--pin-opacity", String(pinOp));
+  mapEl.classList.toggle("day-filter", !!(currentMapDay && dayZoneIds(currentCity, currentMapDay).size));
+  mapEl.classList.toggle("pins-live", pinOp >= 1);
+  mapEl.classList.toggle("hubs-live", hubOp >= 0.35);
 
   const lod = pinOp >= 1 ? 2 : zoneOp >= 0.4 ? 1 : 0;
   if (!force && lod === currentCityLod) return;
   currentCityLod = lod;
-  cityWorld.classList.remove("lod-0", "lod-1", "lod-2");
-  cityWorld.classList.add("lod-" + lod);
-  if (hint && countryView.classList.contains("hidden")) {
+  mapEl.classList.remove("lod-0", "lod-1", "lod-2");
+  mapEl.classList.add("lod-" + lod);
+  if (hint) {
     hint.textContent = lod === 0
-      ? "Zones · zoomer pour les détails"
+      ? "Quartiers · zoomer pour les détails"
       : lod === 1
         ? "Quartiers · zoomer pour les pins"
         : "Glisser · pincer · toucher un pin";
@@ -1054,6 +1063,8 @@ function updateCityLod(force){
 
 function renderCityPins(id, day, selected){
   currentMapDay = day || null;
+  pinMarkers.forEach(m => m.remove());
+  pinMarkers = [];
   const places = placesOnMap(id);
   const hotels = hotelsOnMap(id);
   const stops = stopsOnMap(id);
@@ -1076,7 +1087,6 @@ function renderCityPins(id, day, selected){
   const selKey = selected && selected.lat != null
     ? selected.lat.toFixed(4) + "," + selected.lng.toFixed(4)
     : null;
-  cityPins.innerHTML = "";
   places.forEach(a => {
     const key = a.lat.toFixed(4) + "," + a.lng.toFixed(4);
     const onDay = !day || dayKeys.has(key);
@@ -1091,8 +1101,6 @@ function renderCityPins(id, day, selected){
     // Autres activités du même jour : visibles, sans surbrillance
     else if (selKey && !isSel && (!day || !onDay)) cls += " dim";
     btn.className = cls;
-    btn.dataset.lat = a.lat;
-    btn.dataset.lng = a.lng;
     btn.title = a.title;
     btn.setAttribute("aria-label", a.title);
     btn.innerHTML = `<span class="badge">${iconSvg(kind, accent)}</span>`;
@@ -1100,7 +1108,7 @@ function renderCityPins(id, day, selected){
       e.stopPropagation();
       openActivityDetail(a);
     });
-    cityPins.appendChild(btn);
+    addCityMarker(btn, a.lat, a.lng, "bottom", pinMarkers);
   });
   stops.forEach(stop => {
     const key = stop.lat.toFixed(4) + "," + stop.lng.toFixed(4);
@@ -1114,8 +1122,6 @@ function renderCityPins(id, day, selected){
     if (isSel) cls += " selected";
     else if (selKey && !isSel && day && !onDay) cls += " dim";
     btn.className = cls;
-    btn.dataset.lat = stop.lat;
-    btn.dataset.lng = stop.lng;
     btn.title = stop.name + " (" + stop.kind + ")";
     btn.setAttribute("aria-label", stop.kind + " · " + stop.name);
     btn.innerHTML = `<span class="badge">${iconSvg(stopPinKind(stop), accent)}</span>`;
@@ -1123,7 +1129,7 @@ function renderCityPins(id, day, selected){
       e.stopPropagation();
       openStopDetail(stop);
     });
-    cityPins.appendChild(btn);
+    addCityMarker(btn, stop.lat, stop.lng, "bottom", pinMarkers);
   });
   hotels.forEach(stay => {
     const h = stay.hotel;
@@ -1138,8 +1144,6 @@ function renderCityPins(id, day, selected){
     if (day) cls += onStay ? " on" : " dim";
     if (isSel) cls += " selected";
     btn.className = cls;
-    btn.dataset.lat = h.lat;
-    btn.dataset.lng = h.lng;
     btn.dataset.stay = stay.id;
     btn.title = h.name + " (hôtel)";
     btn.setAttribute("aria-label", "Hôtel · " + h.name);
@@ -1148,10 +1152,11 @@ function renderCityPins(id, day, selected){
       e.stopPropagation();
       openHotelDetail(stay);
     });
-    cityPins.appendChild(btn);
+    addCityMarker(btn, h.lat, h.lng, "bottom", pinMarkers);
   });
   renderCityHubs(id, day || null);
-  layoutCityPins();
+  layoutCityZones(day || null);
+  updateCityLod(true);
 }
 
 function highlightPin(act, opts){
@@ -1162,29 +1167,8 @@ function highlightPin(act, opts){
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
   renderCityPins(currentCity, day || null, act);
   if (opts && opts.zoom) {
-    const pct = pctIn(MAP_BOUNDS[currentCity], act.lat, act.lng);
-    const mobile = window.matchMedia("(max-width: 900px)").matches;
-    const zoom = cityCam.minScale() * (mobile ? 2.8 : 2.6);
-    cityCam.focusPct(pct.left, pct.top, zoom);
-    return;
-  }
-  cityCam.clamp();
-  cityCam.apply();
-}
-
-function fitCityMap(){
-  if (!cityImg.naturalWidth) return;
-  layoutCityPins();
-  // iOS: attendre que le layout (header masqué) ait une vraie hauteur
-  const run = () => {
-    if (!cityFrame.clientWidth || !cityFrame.clientHeight) return false;
-    cityCam.fitCover(1);
-    return true;
-  };
-  if (!run()) {
-    requestAnimationFrame(() => {
-      if (!run()) requestAnimationFrame(run);
-    });
+    const zoom = cityCoverZoom() + Math.log2(isMobileUi() ? 3.3 : 2.8);
+    cameraMove({ center: [act.lng, act.lat], zoom: Math.max(map.getZoom(), zoom), padding: mapViewportInsets() });
   }
 }
 
@@ -1195,29 +1179,36 @@ function openDayInPanel(){
   return DAYS.find(d => d.n === dayN) || null;
 }
 
-function refreshCityMapView(){
-  if (!currentCity || !cityImg.naturalWidth) return;
-  layoutCityPins();
-  const run = () => {
-    if (!cityFrame.clientWidth || !cityFrame.clientHeight) return false;
-    if (lastFocusAct && lastFocusAct.lat != null) {
-      cityCam.clamp();
-      cityCam.apply();
-    } else {
-      const day = openDayInPanel();
-      if (day) focusDayMap(currentCity, day);
-      else cityCam.fitCover(1);
-    }
-    cityCam.clamp();
-    cityCam.apply();
-    return true;
-  };
-  if (!run()) requestAnimationFrame(() => { if (!run()) requestAnimationFrame(run); });
+/** Vue d’ensemble de la ville, ajustée à la zone visible (hors panneau / liste). */
+function cityHomeCamera(id){
+  const info = cityZoomInfo(id);
+  const pad = mapViewportInsets();
+  const W = Math.max(64, mapEl.clientWidth), H = Math.max(64, mapEl.clientHeight);
+  const vis = Math.min((W - pad.left - pad.right) / W, (H - pad.top - pad.bottom) / H);
+  const zoom = info.cover + Math.log2(Math.max(0.55, Math.min(1, vis)) * (isMobileUi() ? 1.1 : 1.02));
+  return { center: info.center, zoom, pitch: 0, bearing: 0, padding: pad };
 }
 
+function refreshCityMapView(opts){
+  if (!map || !currentCity || !mapEl.clientWidth) return;
+  opts = opts || {};
+  const info = cityZoomInfo(currentCity);
+  map.setMinZoom(Math.max(3.6, info.contain - 0.4));
+  updateCityLod(true);
+  layoutCityZones(currentMapDay);
+  if (lastFocusAct && lastFocusAct.lat != null) {
+    cameraMove({ center: [lastFocusAct.lng, lastFocusAct.lat], padding: mapViewportInsets(), pitch: 0, bearing: 0 }, opts.instant);
+    return;
+  }
+  const day = openDayInPanel();
+  const cam = day ? dayCamera(currentCity, day) : cityHomeCamera(currentCity);
+  cameraMove(cam, opts.instant);
+}
+
+let cityRefreshTimer = 0;
 function scheduleCityMapRefresh(){
-  // Mobile : attendre que le sheet ait réduit le city-frame avant de zoomer
-  const mobile = window.matchMedia("(max-width: 900px)").matches;
+  // Mobile : laisser le sheet se poser avant de recadrer
+  const mobile = isMobileUi();
   if (mobile) {
     const app = document.querySelector(".app");
     if (app && panel.classList.contains("open") && currentCity &&
@@ -1226,54 +1217,28 @@ function scheduleCityMapRefresh(){
         !app.classList.contains("sheet-min")) {
       app.classList.add("sheet-mid");
     }
-    void cityFrame.offsetHeight;
   }
-  refreshCityMapView();
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      refreshCityMapView();
-      if (mobile) setTimeout(refreshCityMapView, 80);
-    });
-  });
+  clearTimeout(cityRefreshTimer);
+  cityRefreshTimer = setTimeout(() => refreshCityMapView(), mobile ? 60 : 0);
 }
 
 function showCity(id, dayN){
+  const enteringCity = currentCity !== id || mapMode !== "city";
   currentCity = id;
+  if (enteringCity) lastFocusAct = null;
   document.querySelector(".app").classList.add("city-mode");
   const banner = document.getElementById("city-banner");
   if (banner) {
     banner.hidden = false;
     banner.textContent = CITIES[id].name;
   }
-  cityView.classList.add("visible");
-  countryView.classList.add("hidden");
   hint.textContent = CITIES[id].name + " · pastilles = activités · train/avion = gares · valise = hôtel";
   setActiveCity(id);
+  setMapMode("city");
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
-  const apply = () => {
-    renderCityPins(id, day || null);
-    scheduleCityMapRefresh();
-  };
-  cityImg.onload = apply;
-  cityImg.onerror = () => {
-    cityFrame.style.background = "#d5dde3";
-  };
-  if (cityImg.dataset.id === id && cityImg.complete && cityImg.naturalWidth){
-    apply();
-  } else {
-    cityImg.dataset.id = id;
-    cityImg.alt = "Carte de " + CITIES[id].name;
-    const url = cityMapUrl(id);
-    // Si déjà préchargée : appliquer tout de suite après assignation src
-    if (isCityMapReady(id)) {
-      cityImg.onload = null;
-      cityImg.src = url;
-      if (cityImg.complete && cityImg.naturalWidth) apply();
-      else cityImg.onload = apply;
-    } else {
-      cityImg.src = url;
-    }
-  }
+  currentCityLod = -1;
+  renderCityPins(id, day || null);
+  scheduleCityMapRefresh();
 }
 
 function esc(s){
@@ -1387,74 +1352,28 @@ function dayPinPoints(cityId, day){
   return hotel;
 }
 
-function focusDayMap(cityId, day){
-  if (!cityImg.naturalWidth) return;
-  layoutCityPins();
-  const bounds = MAP_BOUNDS[cityId];
+/** Caméra cadrée sur le programme du jour (activités + hôtel). */
+function dayCamera(cityId, day){
   const pts = dayPinPoints(cityId, day);
-  const min = cityCam.minScale();
-  const mobile = window.matchMedia("(max-width: 900px)").matches;
-  const nw = cityImg.naturalWidth;
-  const nh = cityImg.naturalHeight;
+  const info = cityZoomInfo(cityId);
+  const mobile = isMobileUi();
+  const pad = mapViewportInsets();
+  const base = { pitch: 0, bearing: 0, padding: pad };
   if (!pts.length) {
-    cityCam.fitCover(mobile ? 1.55 : 1.38);
-    return;
+    return Object.assign(base, { center: info.center, zoom: info.cover + Math.log2(mobile ? 1.55 : 1.38) });
   }
   if (pts.length === 1) {
-    const pct = pctIn(bounds, pts[0].lat, pts[0].lng);
-    cityCam.focusPct(pct.left, pct.top, min * (mobile ? 2.8 : 2.6));
-    return;
+    return Object.assign(base, { center: [pts[0].lng, pts[0].lat], zoom: info.cover + Math.log2(mobile ? 3.3 : 2.6) });
   }
-  let minL = 100, maxL = 0, minT = 100, maxT = 0;
-  pts.forEach(p => {
-    const pct = pctIn(bounds, p.lat, p.lng);
-    minL = Math.min(minL, pct.left);
-    maxL = Math.max(maxL, pct.left);
-    minT = Math.min(minT, pct.top);
-    maxT = Math.max(maxT, pct.top);
-  });
-  const cx = (minL + maxL) / 2;
-  const cy = (minT + maxT) / 2;
-  const span = Math.max(maxL - minL, maxT - minT, 4);
-
-  if (mobile) {
-    // Sur mobile le cadre est court (sheet) : zoomer fort sur le centre du jour
-    // plutôt qu’un fitWorldBox trop proche du fitCover.
-    const factor = Math.min(3.1, Math.max(2.5, 3.1 - span * 0.02));
-    cityCam.focusPct(cx, cy, min * factor);
-    return;
-  }
-
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  pts.forEach(p => {
-    const pct = pctIn(bounds, p.lat, p.lng);
-    const x = (pct.left / 100) * nw;
-    const y = (pct.top / 100) * nh;
-    minX = Math.min(minX, x);
-    maxX = Math.max(maxX, x);
-    minY = Math.min(minY, y);
-    maxY = Math.max(maxY, y);
-  });
-  const pad = 56;
-  const box = {
-    minX: minX - pad,
-    minY: minY - pad,
-    maxX: maxX + pad,
-    maxY: maxY + pad
-  };
-  cityCam.fitWorldBox(box, { top: 32, right: 32, bottom: 32, left: 32 });
-  const cap = min * 2.7;
-  if (cityCam.state.s > cap) {
-    const bx = (box.minX + box.maxX) / 2;
-    const by = (box.minY + box.maxY) / 2;
-    const vw = cityFrame.clientWidth;
-    const vh = cityFrame.clientHeight;
-    cityCam.state.s = cap;
-    cityCam.state.x = vw / 2 - bx * cap;
-    cityCam.state.y = vh / 2 - by * cap;
-    cityCam.clamp();
-    cityCam.apply();
-  }
+  const b = boundsOfCoords(pts.map(p => [p.lng, p.lat]));
+  const maxZoom = info.cover + Math.log2(mobile ? 3.4 : 2.7);
+  const extra = { top: pad.top + 40, right: pad.right + 40, bottom: pad.bottom + 40, left: pad.left + 40 };
+  const cam = cameraForGeoBounds(b, extra, maxZoom);
+  return Object.assign(base, { center: cam.center, zoom: Math.max(cam.zoom, info.cover + Math.log2(1.2)) });
+}
+function focusDayMap(cityId, day){
+  if (!map || currentCity !== cityId) return;
+  cameraMove(dayCamera(cityId, day));
 }
 
 function mapsIconSvg(){
@@ -1612,48 +1531,46 @@ function cityIdForCoords(lat, lng){
   return null;
 }
 function mapViewportInsets(){
-  const mobile = window.matchMedia("(max-width: 900px)").matches;
-  const panel = document.getElementById("panel");
+  const mobile = isMobileUi();
   const open = panel && panel.classList.contains("open");
+  const H = mapEl.clientHeight || window.innerHeight;
+  const W = mapEl.clientWidth || window.innerWidth;
+  const clampPad = (p) => ({
+    top: Math.min(p.top, H * 0.4), bottom: Math.min(p.bottom, H * 0.85),
+    left: Math.min(p.left, W * 0.3), right: Math.min(p.right, W * 0.7)
+  });
   if (mobile) {
-    if (!open) return { top: 56, right: 28, bottom: 36, left: 28 };
-    if (panel.classList.contains("minimized")) {
-      return { top: 56, right: 20, bottom: 72, left: 20 };
-    }
-    if (panel.classList.contains("expanded")) {
-      const h = panel.offsetHeight || Math.round(window.innerHeight * 0.78);
-      return { top: 48, right: 16, bottom: h + 20, left: 16 };
-    }
-    const h = panel.offsetHeight || Math.round(window.innerHeight * 0.42);
-    return { top: 52, right: 16, bottom: h + 24, left: 16 };
+    const top = currentCity ? 64 : 72;
+    if (!open) return clampPad({ top, right: 24, bottom: 36, left: 24 });
+    const h = panel.offsetHeight || Math.round(H * 0.55);
+    return clampPad({ top, right: 18, bottom: h + 18, left: 18 });
   }
+  const left = 214;
   if (open) {
-    const pw = panel.offsetWidth || 380;
-    return { top: 52, right: pw + 28, bottom: 40, left: 40 };
+    const pw = panel.offsetWidth || 400;
+    return clampPad({ top: 56, right: pw + 36, bottom: 44, left });
   }
-  return { top: 52, right: 52, bottom: 52, left: 52 };
+  return clampPad({ top: 56, right: 72, bottom: 56, left });
 }
 
-function legPathBounds(leg){
-  const parts = legRouteParts(leg);
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  parts.forEach(part => {
-    const box = pathBoundsFromD(routePathD(part), 0);
-    if (!box) return;
-    minX = Math.min(minX, box.minX); minY = Math.min(minY, box.minY);
-    maxX = Math.max(maxX, box.maxX); maxY = Math.max(maxY, box.maxY);
+function legGeoCoords(leg){
+  let coords = [];
+  legRouteParts(leg).forEach(part => {
+    coords = coords.concat(routeCoords.get(part.pathId) || routePartCoords(part));
   });
-  if (!isFinite(minX)) {
+  if (!coords.length) {
     [leg.from, ...(leg.via || []), leg.to].forEach(p => {
-      if (!p || p.lat == null) return;
-      const pt = projectJapan(p.lat, p.lng);
-      minX = Math.min(minX, pt.x); minY = Math.min(minY, pt.y);
-      maxX = Math.max(maxX, pt.x); maxY = Math.max(maxY, pt.y);
+      if (p && p.lat != null) coords.push([p.lng, p.lat]);
     });
   }
-  if (!isFinite(minX)) return null;
-  const pad = 36;
-  return { minX: minX - pad, minY: minY - pad, maxX: maxX + pad, maxY: maxY + pad };
+  return coords;
+}
+function fitGeoBounds(b, maxZoom){
+  if (!map || !b) return;
+  const pad = mapViewportInsets();
+  const extra = { top: pad.top + 40, right: pad.right + 40, bottom: pad.bottom + 40, left: pad.left + 40 };
+  const cam = cameraForGeoBounds(b, extra, maxZoom || 9.5);
+  cameraMove({ center: cam.center, zoom: cam.zoom - map.getPitch() / 400, padding: pad });
 }
 
 function setLegMode(on){
@@ -1698,44 +1615,14 @@ function focusLegEnd(leg, role, pulse){
   if (!end) return;
   if (currentCity) showCountry();
   requestAnimationFrame(() => {
-    sizeJapanWorld();
-    const box = legPathBounds(leg);
-    if (box) countryCam.fitWorldBox(box, mapViewportInsets());
-    else {
-      const pct = pctIn(JAPAN_BOUNDS, end.lat, end.lng);
-      countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * 2.4, 2.2));
-    }
+    cameraMove({ center: [end.lng, end.lat], zoom: Math.max(map ? map.getZoom() : 8, 9), padding: mapViewportInsets() });
     if (pulse) {
       hint.textContent = (role === "from" ? "Départ" : "Arrivée") + " · " + end.name + (end.cityId && CITIES[end.cityId] ? " · " + CITIES[end.cityId].name : "");
     }
   });
 }
 function focusLegOverview(leg){
-  const a = legEndPoint(leg, "from");
-  const b = legEndPoint(leg, "to");
-  const pts = [a, b].filter(Boolean);
-  if (!pts.length) return;
-  requestAnimationFrame(() => {
-    sizeJapanWorld();
-    const box = legPathBounds(leg);
-    if (box) {
-      countryCam.fitWorldBox(box, mapViewportInsets());
-    } else if (pts.length === 1) {
-      const pct = pctIn(JAPAN_BOUNDS, pts[0].lat, pts[0].lng);
-      countryCam.focusPct(pct.left, pct.top, Math.max(countryCam.minScale() * 2.2, 2));
-    } else {
-      const minLat = Math.min(a.lat, b.lat), maxLat = Math.max(a.lat, b.lat);
-      const minLng = Math.min(a.lng, b.lng), maxLng = Math.max(a.lng, b.lng);
-      const p1 = projectJapan(minLat, minLng);
-      const p2 = projectJapan(maxLat, maxLng);
-      countryCam.fitWorldBox({
-        minX: Math.min(p1.x, p2.x),
-        minY: Math.min(p1.y, p2.y),
-        maxX: Math.max(p1.x, p2.x),
-        maxY: Math.max(p1.y, p2.y)
-      }, mapViewportInsets());
-    }
-  });
+  requestAnimationFrame(() => fitGeoBounds(boundsOfCoords(legGeoCoords(leg)), 9.5));
 }
 function renderJourneyEnds(journey, legs){
   clearLegEnds();
@@ -1768,22 +1655,11 @@ function renderJourneyEnds(journey, legs){
     if (mark) mark.classList.add("leg-related", "leg-via");
   });
 }
-function journeyPathBounds(legs){
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  legs.forEach(leg => {
-    const box = legPathBounds(leg);
-    if (!box) return;
-    minX = Math.min(minX, box.minX); minY = Math.min(minY, box.minY);
-    maxX = Math.max(maxX, box.maxX); maxY = Math.max(maxY, box.maxY);
-  });
-  if (!isFinite(minX)) return null;
-  return { minX, minY, maxX, maxY };
-}
 function focusJourneyOverview(legs){
   requestAnimationFrame(() => {
-    sizeJapanWorld();
-    const box = journeyPathBounds(legs);
-    if (box) countryCam.fitWorldBox(box, mapViewportInsets());
+    let coords = [];
+    legs.forEach(leg => { coords = coords.concat(legGeoCoords(leg)); });
+    fitGeoBounds(boundsOfCoords(coords), 9);
   });
 }
 function openJourney(journeyId, focusLegId){
@@ -1798,9 +1674,6 @@ function openJourney(journeyId, focusLegId){
   showCountry();
   setLegMode(true);
   setJourneyHighlight(journeyId);
-  document.querySelectorAll("#routes path.route-hit").forEach(p => {
-    p.style.pointerEvents = "";
-  });
   setActiveCity(null);
   renderJourneyEnds(j, legs);
   const destLine = j.dest
@@ -1843,7 +1716,7 @@ function openCityAtLegEnd(leg, role){
   openCity(end.cityId);
   // After city map loads, highlight the stop pin
   const tryFocus = () => {
-    if (!cityImg.complete || !cityImg.naturalWidth || currentCity !== end.cityId) {
+    if (currentCity !== end.cityId) {
       setTimeout(tryFocus, 80);
       return;
     }
@@ -2263,11 +2136,11 @@ function syncSheetMapInset(){
     const s = sheetState();
     app.classList.add(s === "max" ? "sheet-max" : s === "min" ? "sheet-min" : "sheet-mid");
   }
-  // Forcer le reflow puis recentrer tout de suite (pas d’attente d’un clic)
-  void cityFrame.offsetHeight;
-  const refresh = () => refreshCityMapView();
-  refresh();
-  requestAnimationFrame(refresh);
+  // Recadrer une fois la transition du sheet terminée
+  clearTimeout(syncSheetMapInset.timer);
+  syncSheetMapInset.timer = setTimeout(() => {
+    if (currentCity) refreshCityMapView();
+  }, mobile ? 300 : 0);
 }
 function setSheetState(s){
   panel.classList.remove("expanded", "minimized");
@@ -2384,7 +2257,7 @@ function goOverview(){
   setLegMode(false);
   clearLegEnds();
   resetRouteHighlight();
-  showCountry();
+  showCountry(false, true);
 }
 function openCity(id){
   clearLegEnds();
@@ -2404,9 +2277,6 @@ function openLeg(id, opts){
   setLegMode(true);
   if (leg.journey) setJourneyHighlight(leg.journey);
   else setRouteHighlight(id);
-  document.querySelectorAll("#routes path.route-hit").forEach(p => {
-    p.style.pointerEvents = "";
-  });
   setActiveCity(null);
   renderLegEnds(leg);
   const tips = leg.tips ? `<p class="note" style="color:var(--gold-2)">${esc(leg.tips)}</p>` : "";
@@ -2477,31 +2347,148 @@ ORDER.forEach(id => {
 });
 
 document.getElementById("z-home").onclick = () => closePanel(true);
-document.getElementById("z-in").onclick = () => {
-  if (countryView.classList.contains("hidden")) cityCam.zoomIn();
-  else countryCam.zoomIn();
+document.getElementById("z-in").onclick = () => { if (map) map.zoomIn(); };
+document.getElementById("z-out").onclick = () => { if (map) map.zoomOut(); };
+document.getElementById("z-north").onclick = () => {
+  if (!map) return;
+  map.easeTo({ bearing: 0, duration: 500 });
 };
-document.getElementById("z-out").onclick = () => {
-  if (countryView.classList.contains("hidden")) cityCam.zoomOut();
-  else countryCam.zoomOut();
+document.getElementById("z-3d").onclick = () => {
+  if (!map || mapMode !== "country") return;
+  const flat = map.getPitch() < 10;
+  map.easeTo({ pitch: flat ? COUNTRY_PITCH : 0, bearing: flat ? map.getBearing() : 0, duration: 700 });
 };
+function syncMapControls(){
+  const app = document.querySelector(".app");
+  if (!map || !app) return;
+  const bearing = map.getBearing();
+  const needle = document.querySelector("#z-north .compass-needle");
+  if (needle) needle.style.transform = `rotate(${-bearing}deg)`;
+  const north = document.getElementById("z-north");
+  if (north) north.classList.toggle("rotated", Math.abs(bearing) > 0.5);
+  const btn3d = document.getElementById("z-3d");
+  if (btn3d) {
+    const tilted = map.getPitch() >= 10;
+    btn3d.textContent = tilted ? "2D" : "3D";
+    btn3d.title = tilted ? "Vue à plat" : "Vue inclinée (relief)";
+    btn3d.hidden = mapMode !== "country";
+  }
+}
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") closePanel(true);
 });
+let mapResizeTimer = 0;
+let lastMapSize = "";
 window.addEventListener("resize", () => {
-  if (currentCity) refreshCityMapView();
-  else fitJapanHome();
+  clearTimeout(mapResizeTimer);
+  mapResizeTimer = setTimeout(() => {
+    if (!map) return;
+    map.resize();
+    const size = mapEl.clientWidth + "x" + mapEl.clientHeight;
+    if (size === lastMapSize) return;
+    lastMapSize = size;
+    if (currentCity) refreshCityMapView({ instant: true });
+    else if (!panel.classList.contains("open")) fitJapanHome(true);
+  }, 120);
 });
 
-function bootCountry(){
-  sizeJapanWorld();
-  buildCountry();
-  showCountry();
+function showMapFallback(msg){
+  const fb = document.getElementById("map-fallback");
+  if (fb) {
+    fb.hidden = false;
+    fb.querySelector("p").textContent = msg;
+  }
 }
-// Précharge les cartes villes dès que possible (en parallèle de la carte Japon)
-preloadCityMaps();
-if (japanImg.complete && japanImg.naturalWidth) bootCountry();
-else japanImg.onload = bootCountry;
+function initMap(){
+  if (typeof maplibregl === "undefined" || !mapEl) {
+    showMapFallback("La carte n’a pas pu se charger. Vérifie la connexion puis touche « Rafraîchir » dans Réglages.");
+    return;
+  }
+  if (typeof maplibregl.supported === "function" && !maplibregl.supported({ failIfMajorPerformanceCaveat: false })) {
+    showMapFallback("Ce navigateur ne prend pas en charge WebGL : carte interactive indisponible.");
+    return;
+  }
+  mapStyleTheme = resolvedTheme();
+  try {
+    map = new maplibregl.Map({
+      container: mapEl,
+      style: buildMapStyle(mapStyleTheme),
+      center: [137.6, 35.6],
+      zoom: 5.2,
+      pitch: 0,
+      minZoom: 3.6,
+      maxZoom: 18.5,
+      maxPitch: 70,
+      maxBounds: JAPAN_MAX_BOUNDS,
+      attributionControl: false,
+      dragRotate: true,
+      touchPitch: true,
+      fadeDuration: 180,
+      localIdeographFontFamily: "'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', sans-serif",
+      maxTileCacheZoomLevels: 4
+    });
+  } catch (e) {
+    console.warn("map init", e);
+    showMapFallback("La carte interactive n’a pas pu démarrer sur cet appareil.");
+    return;
+  }
+  map.addControl(new maplibregl.AttributionControl({
+    compact: true,
+    customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · Relief <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener">Terrain Tiles</a>'
+  }), "bottom-left");
+  map.on("style.load", onMapStyleLoad);
+  map.on("move", () => {
+    if (mapMode === "city") updateCityLod();
+    else syncCountryLabels();
+  });
+  map.on("rotate", syncMapControls);
+  map.on("pitch", syncMapControls);
+  map.on("click", "route-hit", e => {
+    const f = e.features && e.features[0];
+    if (!f || mapMode !== "country") return;
+    const hitLeg = LEGS.find(l => l.id === f.properties.leg);
+    if (hitLeg && hitLeg.journey) openJourney(hitLeg.journey, hitLeg.id);
+    else if (hitLeg) openLeg(hitLeg.id);
+  });
+  map.on("mousemove", "route-hit", e => {
+    const f = e.features && e.features[0];
+    map.getCanvas().style.cursor = "pointer";
+    if (f && f.id !== routeHoverId) {
+      routeHoverId = f.id;
+      applyRouteHighlight();
+    }
+  });
+  map.on("mouseleave", "route-hit", () => {
+    map.getCanvas().style.cursor = "";
+    routeHoverId = null;
+    applyRouteHighlight();
+  });
+  map.on("error", e => {
+    /* Tuiles manquantes hors ligne : ignorées (fond de carte uni). */
+    if (e && e.error && !/Failed to fetch|NetworkError|AJAXError|Load failed/i.test(String(e.error.message || e.error))) {
+      console.warn("map", e.error);
+    }
+  });
+  buildCountry();
+  setMapMode("country");
+  lastMapSize = mapEl.clientWidth + "x" + mapEl.clientHeight;
+  fitJapanHome(true);
+}
+/** Thème appliqué à la carte (style complet reconstruit, couches du voyage rajoutées). */
+function applyMapTheme(){
+  if (!map) return;
+  const t = resolvedTheme();
+  if (t === mapStyleTheme) return;
+  mapStyleTheme = t;
+  mapStyleReady = false;
+  map.setStyle(buildMapStyle(t), { diff: false });
+}
+function setMapRelief(on){
+  try { localStorage.setItem(MAP_RELIEF_KEY, on ? "1" : "0"); } catch (_) { /* ignore */ }
+  applyTerrain();
+  if (map && mapMode === "country") map.easeTo({ pitch: on ? COUNTRY_PITCH : 30, duration: 600 });
+}
+initMap();
 // —— Onglets Préparatifs / Sur place (site statique : Date() + localStorage) ——
 function japanTodayISO(){
   try {
@@ -3438,23 +3425,156 @@ function renderOnsite(){
 function setAppTab(tab){
   const app = document.querySelector(".app");
   const tabs = document.querySelectorAll("#app-tabs button");
-  const prep = document.getElementById("view-prep");
-  const onsite = document.getElementById("view-onsite");
   if (!app) return;
-  app.classList.remove("tab-map", "tab-prep", "tab-onsite");
+  app.classList.remove("tab-map", "tab-prep", "tab-onsite", "tab-settings");
   app.classList.add("tab-" + tab);
-  tabs.forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
-  if (prep) prep.classList.toggle("active", tab === "prep");
-  if (onsite) onsite.classList.toggle("active", tab === "onsite");
+  tabs.forEach(b => {
+    const on = b.dataset.tab === tab;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-current", on ? "page" : "false");
+  });
+  ["prep", "onsite", "settings"].forEach(t => {
+    const view = document.getElementById("view-" + t);
+    if (view) view.classList.toggle("active", tab === t);
+  });
   if (tab === "prep") renderPrep();
   if (tab === "onsite") renderOnsite();
+  if (tab === "settings") renderSettings();
   if (tab === "map") {
     requestAnimationFrame(() => {
+      if (!map) return;
+      map.resize();
+      if (mapMode === "country") startVehicles();
       if (currentCity) syncSheetMapInset();
-      else fitJapanHome();
     });
+  } else {
+    stopVehiclesLoopOnly();
   }
 }
+function stopVehiclesLoopOnly(){
+  if (vehicleRaf) cancelAnimationFrame(vehicleRaf);
+  vehicleRaf = 0;
+}
+
+/* —— Réglages : thème, relief, cartes hors ligne —— */
+const THEME_KEY = "japan-trip-theme-v1";
+function themePref(){
+  try {
+    const v = localStorage.getItem(THEME_KEY);
+    return v === "light" || v === "dark" ? v : "auto";
+  } catch (_) { return "auto"; }
+}
+function applyThemePref(){
+  const pref = themePref();
+  let dark = true;
+  try { dark = window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (_) { /* ignore */ }
+  const t = pref === "auto" ? (dark ? "dark" : "light") : pref;
+  document.documentElement.dataset.theme = t;
+  document.documentElement.dataset.themePref = pref;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute("content", t === "light" ? "#f6f2ea" : "#0c1118");
+  document.querySelectorAll("#theme-picker [data-theme-choice]").forEach(b => {
+    const on = b.dataset.themeChoice === pref;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-checked", on ? "true" : "false");
+  });
+  applyMapTheme();
+}
+function setThemePref(pref){
+  try {
+    if (pref === "auto") localStorage.removeItem(THEME_KEY);
+    else localStorage.setItem(THEME_KEY, pref);
+  } catch (_) { /* ignore */ }
+  applyThemePref();
+}
+try {
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    if (themePref() === "auto") applyThemePref();
+  });
+} catch (_) { /* ignore */ }
+
+function formatBytes(n){
+  if (n == null) return "";
+  if (n < 1024 * 1024) return Math.max(1, Math.round(n / 1024)) + " Ko";
+  return (n / (1024 * 1024)).toFixed(n > 100 * 1024 * 1024 ? 0 : 1).replace(".", ",") + " Mo";
+}
+async function renderOfflineMapsStatus(){
+  const status = document.getElementById("offline-maps-status");
+  const clearBtn = document.getElementById("offline-maps-clear");
+  const dlBtn = document.getElementById("offline-maps-download");
+  if (!status) return;
+  if (typeof offlineDownload !== "undefined" && offlineDownload) return;
+  const info = offlineMapsInfo();
+  const usage = await offlineStorageUsage();
+  const used = usage != null ? " · stockage utilisé : " + formatBytes(usage) : "";
+  if (info) {
+    const d = new Date(info.at);
+    const when = isNaN(d) ? "" : d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+    status.innerHTML = `<span class="ok-dot" aria-hidden="true"></span> Cartes disponibles hors ligne` +
+      (when ? ` (téléchargées le ${esc(when)})` : "") + esc(used) +
+      (info.failed ? `<br><small>${info.failed} tuiles manquantes — relancer en Wi‑Fi pour compléter.</small>` : "");
+    status.classList.add("ready");
+    if (dlBtn) dlBtn.textContent = "Mettre à jour les cartes";
+  } else {
+    status.textContent = "Pas encore téléchargées. Les zones déjà consultées restent en cache" + used + ".";
+    status.classList.remove("ready");
+    if (dlBtn) dlBtn.textContent = "Télécharger les cartes hors ligne";
+  }
+  if (clearBtn) clearBtn.hidden = !info;
+}
+function renderSettings(){
+  applyThemePref();
+  const relief = document.getElementById("relief-toggle");
+  if (relief) relief.checked = mapReliefEnabled();
+  renderOfflineMapsStatus();
+  updateOfflineStatus();
+}
+function bindSettings(){
+  document.querySelectorAll("#theme-picker [data-theme-choice]").forEach(b => {
+    b.addEventListener("click", () => setThemePref(b.dataset.themeChoice));
+  });
+  const relief = document.getElementById("relief-toggle");
+  if (relief) relief.addEventListener("change", () => setMapRelief(relief.checked));
+  const dlBtn = document.getElementById("offline-maps-download");
+  const clearBtn = document.getElementById("offline-maps-clear");
+  const prog = document.getElementById("offline-maps-progress");
+  const status = document.getElementById("offline-maps-status");
+  if (dlBtn) dlBtn.addEventListener("click", async () => {
+    if (typeof offlineDownload !== "undefined" && offlineDownload) {
+      cancelOfflineMaps();
+      return;
+    }
+    if (navigator.onLine === false) {
+      status.textContent = "Hors ligne : connecte-toi (idéalement en Wi‑Fi) pour télécharger.";
+      return;
+    }
+    dlBtn.textContent = "Annuler";
+    if (clearBtn) clearBtn.hidden = true;
+    prog.hidden = false;
+    prog.style.setProperty("--p", "0%");
+    status.classList.remove("ready");
+    status.textContent = "Préparation…";
+    try {
+      await downloadOfflineMaps((done, total, bytes) => {
+        prog.style.setProperty("--p", (100 * done / total).toFixed(1) + "%");
+        status.textContent = `Téléchargement… ${done} / ${total} tuiles · ${formatBytes(bytes)}`;
+      });
+      prog.hidden = true;
+      await renderOfflineMapsStatus();
+    } catch (e) {
+      prog.hidden = true;
+      status.textContent = "Interrompu : " + (e && e.message ? e.message : "erreur réseau") + ". Les tuiles déjà reçues sont gardées.";
+      dlBtn.textContent = "Reprendre le téléchargement";
+    }
+  });
+  if (clearBtn) clearBtn.addEventListener("click", async () => {
+    if (!confirm("Supprimer les cartes hors ligne de cet appareil ?")) return;
+    await clearOfflineMaps();
+    renderOfflineMapsStatus();
+  });
+}
+bindSettings();
+applyThemePref();
 document.getElementById("app-tabs")?.querySelectorAll("button").forEach(btn => {
   btn.addEventListener("click", () => setAppTab(btn.dataset.tab));
 });

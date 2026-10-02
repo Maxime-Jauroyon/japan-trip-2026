@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
     location.reload();
   });
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js?v=162").then((reg) => {
+    navigator.serviceWorker.register("./sw.js?v=163").then((reg) => {
       reg.update();
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
       reg.addEventListener("updatefound", () => {
@@ -39,7 +39,7 @@ async function forceRefreshApp(){
       }
       if (window.caches) {
         const keys = await caches.keys();
-        await Promise.all(keys.map((k) => caches.delete(k)));
+        await Promise.all(keys.filter((k) => k !== "japan-tiles-v1").map((k) => caches.delete(k)));
       }
     })(), 2500);
   } catch (_) { /* ignore */ }

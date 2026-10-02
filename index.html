@@ -7,6 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="Japon 2026" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0c1118" />
+  <meta name="color-scheme" content="dark light" />
   <title>Japon · 8–29 novembre 2026</title>
   <script>
     /* Mode app (iOS) : classe dispo avant le CSS */
@@ -16,19 +17,22 @@
         window.matchMedia("(display-mode: fullscreen)").matches;
       if (standalone) document.documentElement.classList.add("standalone");
     })();
+    /* Thème (Réglages) : appliqué avant le CSS pour éviter un flash */
+    (function () {
+      var pref = "auto";
+      try { pref = localStorage.getItem("japan-trip-theme-v1") || "auto"; } catch (e) {}
+      var dark = true;
+      try { dark = window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (e) {}
+      var t = pref === "light" || pref === "dark" ? pref : (dark ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute("content", t === "light" ? "#f6f2ea" : "#0c1118");
+    })();
   </script>
   <link rel="icon" href="./img/logo.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./img/logo.svg" />
-  <link rel="stylesheet" href="./css/app.css?v=162" />
-  <link rel="preload" as="image" href="./maps/japan.png?v=9" />
-  <link rel="preload" as="image" href="./maps/tokyo.png?v=20" />
-  <link rel="preload" as="image" href="./maps/fuji.png?v=20" />
-  <link rel="preload" as="image" href="./maps/kanazawa.png?v=20" />
-  <link rel="preload" as="image" href="./maps/shirakawa.png?v=20" />
-  <link rel="preload" as="image" href="./maps/takayama.png?v=20" />
-  <link rel="preload" as="image" href="./maps/kyoto.png?v=20" />
-  <link rel="preload" as="image" href="./maps/nara.png?v=20" />
-  <link rel="preload" as="image" href="./maps/osaka.png?v=20" />
+  <link rel="stylesheet" href="./js/lib/maplibre-gl.css?v=5.24.0" />
+  <link rel="stylesheet" href="./css/app.css?v=163" />
 </head>
 <body>
   <div class="app tab-map">
@@ -56,47 +60,34 @@
           <span class="brand-sub">8–29 nov 2026</span>
         </span>
       </h1>
-      <button type="button" class="force-refresh" id="force-refresh" title="Vider le cache et recharger">Rafraîchir</button>
       <span class="offline-status" id="offline-status" aria-live="polite"></span>
     </header>
     <nav class="tabs" id="app-tabs" aria-label="Sections">
-      <button type="button" data-tab="map" class="active">Carte</button>
-      <button type="button" data-tab="prep">Préparatifs</button>
-      <button type="button" data-tab="onsite">Sur place</button>
+      <button type="button" data-tab="map" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="1.7"/></svg><span>Carte</span></button>
+      <button type="button" data-tab="prep"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9 4.5V3h6v1.5M8.5 10.5l1.6 1.6 3-3.2M8.5 16h7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Préparatifs</span></button>
+      <button type="button" data-tab="onsite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Sur place</span></button>
+      <button type="button" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Réglages</span></button>
     </nav>
     <main>
       <div id="view-map">
       <nav id="city-list"></nav>
-      <div id="stage">
-        <div id="country-view">
-          <div class="pan-viewport" id="country-viewport">
-            <div class="pan-world" id="country-world">
-              <img class="basemap" id="japan-img" src="./maps/japan.png?v=9" alt="Carte du Japon" draggable="false" />
-              <svg class="route-layer" id="japan-overlay" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
-                <g id="routes"></g>
-              </svg>
-              <div id="country-marks"></div>
-            </div>
-          </div>
-        </div>
-        <div id="city-view">
-          <div class="city-frame" id="city-frame">
-            <div class="city-world" id="city-world">
-              <img id="city-img" alt="" draggable="false" />
-              <svg class="city-zones" id="city-zones" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"></svg>
-              <div class="pins pins-hubs" id="city-hubs"></div>
-              <div class="pins" id="city-pins"></div>
-            </div>
-          </div>
-        </div>
+      <div id="stage" class="mode-country">
+        <div id="map" class="map-root" role="region" aria-label="Carte interactive du voyage"></div>
+        <div class="map-fallback" id="map-fallback" hidden><p></p></div>
       </div>
       <div class="city-banner" id="city-banner" hidden></div>
       <div class="hint" id="hint">Glisser · pincer pour zoomer · toucher une ville</div>
-      <div class="zoom-ui" id="zoom-ui">
-        <button type="button" id="z-in" title="Zoom +">+</button>
-        <button type="button" id="z-out" title="Zoom −">−</button>
+      <div class="map-ctrl" id="zoom-ui">
+        <div class="map-ctrl-group map-ctrl-zoom">
+          <button type="button" id="z-in" title="Zoom +" aria-label="Zoomer">+</button>
+          <button type="button" id="z-out" title="Zoom −" aria-label="Dézoomer">−</button>
+        </div>
+        <div class="map-ctrl-group">
+          <button type="button" id="z-north" title="Nord en haut" aria-label="Remettre le nord en haut"><svg class="compass-needle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l3.2 9H8.8L12 3z" fill="#e2583e"/><path d="M12 21l-3.2-9h6.4L12 21z" fill="currentColor" opacity=".55"/></svg></button>
+          <button type="button" id="z-3d" class="btn-3d" title="Vue à plat">2D</button>
+        </div>
       </div>
-      <button type="button" class="home-btn" id="z-home" title="Vue Japon">⌂</button>
+      <button type="button" class="home-btn" id="z-home" title="Vue Japon" aria-label="Retour à la carte du Japon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5M6.5 10v9h4v-5h3v5h4v-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <aside class="overlay" id="panel"></aside>
       </div>
 
@@ -133,22 +124,6 @@
             <div class="practical-grid" id="prep-practical"></div>
           </div>
 
-          <div class="info-sec">
-            <h3>Sur iPhone (Safari)</h3>
-            <p class="lead" style="margin-bottom:10px">Pas de bouton « Installer » sur iOS — ajoute l’app manuellement :</p>
-            <ol class="ios-steps">
-              <li>Ouvre ce site dans <strong>Safari</strong> (pas Chrome).</li>
-              <li>Touche <strong>Partager</strong> <span class="ios-share" aria-hidden="true">↑</span> en bas.</li>
-              <li>Choisis <strong>Sur l’écran d’accueil</strong> → <strong>Ajouter</strong>.</li>
-              <li>Lance <strong>Japon 2026</strong> depuis l’icône : mode plein écran + cache offline.</li>
-            </ol>
-          </div>
-
-          <div class="info-sec">
-            <h3>Export</h3>
-            <p class="lead" style="margin-bottom:12px">Imprimer ou enregistrer en PDF depuis le navigateur (Ctrl+P / ⌘P).</p>
-            <button type="button" class="btn-secondary" id="print-trip">Imprimer / PDF du voyage</button>
-          </div>
         </div>
       </section>
 
@@ -195,6 +170,66 @@
           </div>
         </div>
       </section>
+
+      <section id="view-settings" class="info-view" aria-label="Réglages">
+        <div class="info-wrap">
+          <h2>Réglages</h2>
+          <p class="lead">Apparence, carte et mode hors ligne. Mémorisés sur cet appareil.</p>
+
+          <div class="info-sec">
+            <h3>Apparence</h3>
+            <div class="segmented" id="theme-picker" role="radiogroup" aria-label="Thème">
+              <button type="button" role="radio" data-theme-choice="auto"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></svg><span>Auto</span></button>
+              <button type="button" role="radio" data-theme-choice="light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Clair</span></button>
+              <button type="button" role="radio" data-theme-choice="dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.5A8 8 0 019.5 4.5a8 8 0 1010 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Sombre</span></button>
+            </div>
+            <p class="setting-hint">« Auto » suit le mode clair / sombre de l’iPhone.</p>
+          </div>
+
+          <div class="info-sec">
+            <h3>Carte</h3>
+            <label class="switch-row">
+              <span class="switch-text"><strong>Relief 3D</strong><small>Montagnes en relief sur la carte du Japon (le Fuji, les Alpes japonaises…). Désactiver pour économiser la batterie.</small></span>
+              <input type="checkbox" id="relief-toggle" class="switch" />
+            </label>
+          </div>
+
+          <div class="info-sec">
+            <h3>Cartes hors ligne</h3>
+            <p class="lead">Télécharge le Japon et les 8 villes du voyage pour naviguer sans réseau (environ 60 à 120 Mo, idéalement en Wi‑Fi).</p>
+            <div class="offline-card">
+              <p class="offline-maps-status" id="offline-maps-status">…</p>
+              <div class="progress" id="offline-maps-progress" hidden><span></span></div>
+              <div class="offline-actions">
+                <button type="button" class="btn-primary" id="offline-maps-download">Télécharger les cartes hors ligne</button>
+                <button type="button" class="btn-secondary" id="offline-maps-clear" hidden>Supprimer</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-sec">
+            <h3>Application</h3>
+            <p class="lead" style="margin-bottom:12px">Si une mise à jour n’apparaît pas : vider le cache de l’app (les cartes hors ligne sont conservées).</p>
+            <button type="button" class="btn-secondary" id="force-refresh" title="Vider le cache et recharger">Rafraîchir l’application</button>
+          </div>
+          <div class="info-sec">
+            <h3>Sur iPhone (Safari)</h3>
+            <p class="lead" style="margin-bottom:10px">Pas de bouton « Installer » sur iOS — ajoute l’app manuellement :</p>
+            <ol class="ios-steps">
+              <li>Ouvre ce site dans <strong>Safari</strong> (pas Chrome).</li>
+              <li>Touche <strong>Partager</strong> <span class="ios-share" aria-hidden="true">↑</span> en bas.</li>
+              <li>Choisis <strong>Sur l’écran d’accueil</strong> → <strong>Ajouter</strong>.</li>
+              <li>Lance <strong>Japon 2026</strong> depuis l’icône : mode plein écran + cache offline.</li>
+            </ol>
+          </div>
+
+          <div class="info-sec">
+            <h3>Export</h3>
+            <p class="lead" style="margin-bottom:12px">Imprimer ou enregistrer en PDF depuis le navigateur (Ctrl+P / ⌘P).</p>
+            <button type="button" class="btn-secondary" id="print-trip">Imprimer / PDF du voyage</button>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -222,8 +257,11 @@
 
   <div id="print-root" class="print-root" hidden aria-hidden="true"></div>
 
-  <script src="./js/data.js?v=162"></script>
-  <script src="./js/app.js?v=162"></script>
-  <script src="./js/sw-register.js?v=162"></script>
+  <script src="./js/lib/maplibre-gl.js?v=5.24.0"></script>
+  <script src="./js/map-style.js?v=163"></script>
+  <script src="./js/offline-maps.js?v=163"></script>
+  <script src="./js/data.js?v=163"></script>
+  <script src="./js/app.js?v=163"></script>
+  <script src="./js/sw-register.js?v=163"></script>
 </body>
 </html>
