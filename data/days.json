@@ -33,8 +33,8 @@
       },
       {
         "title": "Tokyo Character Street",
-        "lat": 35.6815,
-        "lng": 139.7672,
+        "lat": 35.6806,
+        "lng": 139.7684,
         "desc": "Galerie souterraine sous Tokyo Station, pleine de boutiques anime, Pokemon et personnages — parfait pour le premier jour."
       }
     ]
@@ -59,8 +59,8 @@
       },
       {
         "title": "Ueno — parc & musées",
-        "lat": 35.7188,
-        "lng": 139.7765,
+        "lat": 35.7155,
+        "lng": 139.7745,
         "desc": "Grand parc avec musées, étang et feuillage d’automne. Après-midi culturel tranquille."
       },
       {
@@ -78,16 +78,16 @@
     "city": "tokyo",
     "ideas": [
       {
+        "title": "Harajuku / Omotesandō",
+        "lat": 35.6714,
+        "lng": 139.7048,
+        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
+      },
+      {
         "title": "Sanctuaire Meiji",
         "lat": 35.6764,
         "lng": 139.6993,
         "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier."
-      },
-      {
-        "title": "Harajuku / Omotesandō",
-        "lat": 35.6705,
-        "lng": 139.703,
-        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
       },
       {
         "title": "Shibuya — Hachikō, Pokemon",
@@ -104,16 +104,16 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Odaiba — Gundam, front de mer",
-        "lat": 35.6251,
-        "lng": 139.7753,
-        "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie."
-      },
-      {
         "title": "teamLab Planets",
         "lat": 35.649,
         "lng": 139.7898,
         "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance."
+      },
+      {
+        "title": "Odaiba — Gundam, front de mer",
+        "lat": 35.6251,
+        "lng": 139.7753,
+        "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie."
       },
       {
         "title": "Tokyo Tower de nuit",
@@ -139,52 +139,52 @@
     ],
     "ideas": [
       {
-        "title": "Pagode Chūrei-tō",
-        "lat": 35.5013,
-        "lng": 138.8014,
-        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair."
-      },
-      {
-        "title": "Téléphérique panoramique",
-        "lat": 35.5206,
-        "lng": 138.7524,
-        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin."
-      },
-      {
-        "title": "Lac Kawaguchi",
-        "lat": 35.5218,
-        "lng": 138.7556,
-        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets."
-      },
-      {
-        "title": "Momiji Corridor",
-        "lat": 35.5092,
-        "lng": 138.7684,
-        "desc": "Allée d’érables au bord du lac, célèbre en automne. Novembre = pic des momiji."
-      },
-      {
         "title": "Oshino Hakkai",
         "lat": 35.4598,
         "lng": 138.8338,
         "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks."
       },
       {
-        "title": "Saiko Iyashi-no-Sato",
-        "lat": 35.4972,
-        "lng": 138.6874,
-        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme."
-      },
-      {
-        "title": "Musée Itchiku Kubota",
-        "lat": 35.5208,
-        "lng": 138.7781,
-        "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac."
+        "title": "Pagode Chūrei-tō",
+        "lat": 35.5013,
+        "lng": 138.8014,
+        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair."
       },
       {
         "title": "Music Forest + lac",
-        "lat": 35.5096,
-        "lng": 138.7675,
+        "lat": 35.5218,
+        "lng": 138.769,
         "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile."
+      },
+      {
+        "title": "Momiji Corridor",
+        "lat": 35.5256,
+        "lng": 138.7624,
+        "desc": "Allée d’érables au bord du lac, célèbre en automne. Novembre = pic des momiji."
+      },
+      {
+        "title": "Musée Itchiku Kubota",
+        "lat": 35.5274,
+        "lng": 138.7598,
+        "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac."
+      },
+      {
+        "title": "Saiko Iyashi-no-Sato",
+        "lat": 35.504,
+        "lng": 138.6612,
+        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme."
+      },
+      {
+        "title": "Lac Kawaguchi",
+        "lat": 35.5233,
+        "lng": 138.7465,
+        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets."
+      },
+      {
+        "title": "Téléphérique panoramique",
+        "lat": 35.504,
+        "lng": 138.7705,
+        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin."
       }
     ]
   },
@@ -263,6 +263,12 @@
     ],
     "ideas": [
       {
+        "title": "Higashi Chaya",
+        "lat": 36.5733,
+        "lng": 136.6667,
+        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle."
+      },
+      {
         "title": "Kenroku-en",
         "lat": 36.5619,
         "lng": 136.6626,
@@ -270,15 +276,9 @@
       },
       {
         "title": "Château de Kanazawa",
-        "lat": 36.5642,
-        "lng": 136.6592,
+        "lat": 36.5653,
+        "lng": 136.659,
         "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc."
-      },
-      {
-        "title": "Higashi Chaya",
-        "lat": 36.5733,
-        "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle."
       }
     ]
   },
@@ -289,28 +289,28 @@
     "city": "kanazawa",
     "ideas": [
       {
+        "title": "Sanctuaire Oyama",
+        "lat": 36.566,
+        "lng": 136.6555,
+        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château."
+      },
+      {
         "title": "Marché Ōmichō",
-        "lat": 36.5722,
-        "lng": 136.6576,
+        "lat": 36.5717,
+        "lng": 136.656,
         "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles."
       },
       {
-        "title": "Sanctuaire Oyama",
-        "lat": 36.5664,
-        "lng": 136.6534,
-        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château."
+        "title": "Nishi Chaya",
+        "lat": 36.557,
+        "lng": 136.6475,
+        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré."
       },
       {
         "title": "Musée du XXIe siècle",
         "lat": 36.5611,
         "lng": 136.6584,
         "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes."
-      },
-      {
-        "title": "Nishi Chaya",
-        "lat": 36.5626,
-        "lng": 136.645,
-        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré."
       }
     ]
   },
@@ -322,15 +322,9 @@
     "ideas": [
       {
         "title": "Nagamachi (quartier samouraï)",
-        "lat": 36.5616,
-        "lng": 136.6481,
+        "lat": 36.5628,
+        "lng": 136.65,
         "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable."
-      },
-      {
-        "title": "Atelier feuille d’or",
-        "lat": 36.5604,
-        "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir."
       },
       {
         "title": "Myōryū-ji",
@@ -343,6 +337,12 @@
         "lat": 36.5542,
         "lng": 136.6502,
         "desc": "Quartier des temples au sud du centre : ruelles calmes et nombreux petits temples bouddhistes."
+      },
+      {
+        "title": "Atelier feuille d’or",
+        "lat": 36.5604,
+        "lng": 136.6562,
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir."
       }
     ]
   },
@@ -377,8 +377,8 @@
       },
       {
         "title": "Sanmachi Suji",
-        "lat": 36.1466,
-        "lng": 137.2596,
+        "lat": 36.1415,
+        "lng": 137.2595,
         "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir."
       }
     ]
@@ -398,8 +398,8 @@
       },
       {
         "title": "Takayama Jinya",
-        "lat": 36.145,
-        "lng": 137.2566,
+        "lat": 36.1397,
+        "lng": 137.2577,
         "desc": "Ancien bureau d’administration d’époque Edo, salles tatami et complexe administratif rare."
       }
     ],
@@ -537,16 +537,16 @@
     "extraCity": "osaka",
     "ideas": [
       {
+        "title": "Kasuga Taisha",
+        "lat": 34.6814,
+        "lng": 135.8484,
+        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière."
+      },
+      {
         "title": "Parc de Nara",
         "lat": 34.6851,
         "lng": 135.843,
         "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs."
-      },
-      {
-        "title": "Kōfuku-ji",
-        "lat": 34.6833,
-        "lng": 135.831,
-        "desc": "Temple historique avec pagode à cinq étages dominant le parc."
       },
       {
         "title": "Tōdai-ji",
@@ -555,10 +555,10 @@
         "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde."
       },
       {
-        "title": "Kasuga Taisha",
-        "lat": 34.6814,
-        "lng": 135.8484,
-        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière."
+        "title": "Kōfuku-ji",
+        "lat": 34.6833,
+        "lng": 135.831,
+        "desc": "Temple historique avec pagode à cinq étages dominant le parc."
       }
     ],
     "moves": [
@@ -622,8 +622,8 @@
       },
       {
         "title": "Den Den Town",
-        "lat": 34.6626,
-        "lng": 135.5061,
+        "lat": 34.66,
+        "lng": 135.5058,
         "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba."
       },
       {
@@ -660,8 +660,8 @@
       },
       {
         "title": "Hozenji Yokocho",
-        "lat": 34.6681,
-        "lng": 135.505,
+        "lat": 34.6683,
+        "lng": 135.5027,
         "desc": "Petite ruelle au sanctuaire moussu près de Dotonbori — contraste calme avec les néons."
       }
     ]
@@ -697,16 +697,16 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Jardins Est du Palais impérial",
-        "lat": 35.6867,
-        "lng": 139.7556,
-        "desc": "Jardins gratuits sur l’ancien château — douves, pelouses, pause verte au centre de Tokyo."
+        "title": "Ginza / Itoya",
+        "lat": 35.6729,
+        "lng": 139.7672,
+        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs."
       },
       {
-        "title": "Ginza / Itoya",
-        "lat": 35.6717,
-        "lng": 139.765,
-        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs."
+        "title": "Jardins Est du Palais impérial",
+        "lat": 35.6862,
+        "lng": 139.7574,
+        "desc": "Jardins gratuits sur l’ancien château — douves, pelouses, pause verte au centre de Tokyo."
       },
       {
         "title": "Animate",

@@ -72,3 +72,8 @@ test("photos d’une activité : fichiers locaux avec crédit", async () => {
   });
   DAYS.forEach((d) => ideasOf(d).forEach((a) => assert.ok(photosFor(a).length > 0, a.title)));
 });
+
+test("un jour de voyage n’apparaît que dans les villes qu’il touche", () => {
+  const withDay7 = Object.keys(CITIES).filter((id) => daysForCity(id).some((d) => d.n === 7));
+  assert.deepEqual(withDay7.sort(), ["fuji", "kanazawa", "tokyo"]);
+});

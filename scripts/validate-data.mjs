@@ -94,7 +94,8 @@ legs.forEach((l) => {
   if (l.curveSide && !["north", "south"].includes(l.curveSide)) err(w, `curveSide inconnu ${l.curveSide}`);
   if (l.journey && !journeyIds.has(l.journey)) err(w, `journey inconnu « ${l.journey} »`);
   [["fromStop", l.fromStop], ["toStop", l.toStop]].forEach(([k, s]) => {
-    if (s && s.lat != null) checkCoord(s, `${w} ${k}`);
+    if (s && s.lat != null && checkCoord(s, `${w} ${k}`) && !/aéroport/i.test(s.kind || "")
+      && !cities.some((c) => c.map && c.map.bounds && inside(c.map.bounds, s))) err(w, `${k} hors de toute ville du voyage`);
   });
   ((l.bookings && l.bookings.links) || []).forEach((link, i) => {
     const wl = `${w} réservation ${i}`;
@@ -118,7 +119,10 @@ days.forEach((d, i) => {
   ["ideas", "ideasAfter"].forEach((key) => (d[key] || []).forEach((a, k) => {
     const wa = `${w} ${key}[${k}] « ${a.title} »`;
     if (!isStr(a.title)) err(wa, "titre manquant");
-    if (a.lat != null || a.lng != null) checkCoord(a, wa);
+    if ((a.lat != null || a.lng != null) && checkCoord(a, wa)) {
+      // Un pin mal géocodé tombe souvent dans une autre région : il doit être dans l’emprise d’une ville
+      if (!cities.some((c) => c.map && c.map.bounds && inside(c.map.bounds, a))) err(wa, "coordonnées hors de toute ville du voyage");
+    }
   }));
 });
 journeys.forEach((j) => {

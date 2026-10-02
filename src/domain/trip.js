@@ -37,9 +37,10 @@ function withMoveRoles(moves, cityId){
 }
 
 function touchesCityMove(m, cityId){
-  if (!m.leg) return true;
+  // Sans trajet (ex. correspondance dans un voyage) : ne rattache le jour à aucune ville
+  if (!m.leg) return false;
   const leg = LEGS.find(l => l.id === m.leg);
-  if (!leg) return true;
+  if (!leg) return false;
   return legCityId(leg.from) === cityId || legCityId(leg.to) === cityId;
 }
 

@@ -311,7 +311,7 @@
 }
 .pin-tail::before {
   content: "";
-  position: absolute; left: -7px; bottom: 7px;
+  position: absolute; left: -8.25px; bottom: 2px; /* pointe (coin arrondi) pile sur le point d’ancrage */
   width: 14px; height: 14px;
   background: color-mix(in srgb, var(--c) 82%, #000);
   border-right: 2.5px solid #fff;
