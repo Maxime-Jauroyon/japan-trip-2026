@@ -719,6 +719,7 @@ button.stat.stop-jump .jump-hint {
   margin-top: 14px;
 }
 .photo-gallery .shot {
+  position: relative;
   aspect-ratio: 4 / 3;
   border-radius: 4px;
   overflow: hidden;
@@ -784,3 +785,17 @@ button.stat.stop-jump .jump-hint {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Crédit photo (auteur · licence) en bas à droite de chaque image */
+.photo-credit {
+  position: absolute; right: 6px; bottom: 6px;
+  max-width: calc(100% - 12px);
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .55);
+  color: rgba(255, 255, 255, .9);
+  font-size: 9.5px; line-height: 1.5;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.photo-credit a { color: inherit; text-decoration: none; }
+.photo-gallery .shot .photo-credit { font-size: 8.5px; right: 4px; bottom: 4px; }

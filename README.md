@@ -32,7 +32,7 @@ data/                 ← CONTENU DU VOYAGE (JSON)
   phrases.json          phrases utiles (générales + par contexte)
   places-meta.json      horaires / durées des activités
   practical.json        infos pratiques
-  photos.json           photo d’une activité d’après son titre (motif → img/activities/<slug>.jpg)
+  photos.json           photos des lieux (Wikimedia Commons, avec auteur + licence) et motif titre → lieu
 src/                  code (modules ES)
   main.js               point d’entrée : charge data/ puis démarre carte + interface
   config.js             version de l’app, clés localStorage
@@ -65,8 +65,9 @@ Repères :
   `{ "id": "tokyo", "lat": …, "lng": … }` ; un jour référence ses trajets par `"leg": "<id>"`.
 - **Statuts** : `paid`, `reserved`, `placeholder`.
 - **Dates de réservation** : `openFrom` / `remindFrom` au format `AAAA-MM-JJ`.
-- **Photos** : `img/activities/<slug>.jpg` (+ `-2.jpg`…) — choisies par `"slug"` sur l’idée ou par
-  les motifs de `photos.json` ; photos d’hôtels listées dans `cities.json`.
+- **Photos** : `photos.json` → `places.<lieu>` liste les fichiers de `img/activities/` avec auteur et
+  licence (affichés sous chaque photo, obligatoire en Creative Commons). Le lieu d’une idée vient de
+  son `"slug"` ou du premier motif de `rules` qui correspond au titre (mettre les motifs précis en premier).
 
 ## Publier une nouvelle version
 

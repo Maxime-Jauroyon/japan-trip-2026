@@ -201,6 +201,10 @@
       "slug": "wagashi"
     },
     {
+      "match": "namba yasaka",
+      "slug": "namba-yasaka"
+    },
+    {
       "match": "yasaka",
       "slug": "yasaka"
     },
@@ -219,10 +223,6 @@
     {
       "match": "kasuga",
       "slug": "kasuga"
-    },
-    {
-      "match": "namba yasaka",
-      "slug": "namba-yasaka"
     },
     {
       "match": "den den",
@@ -261,108 +261,1417 @@
       "slug": "momiji"
     }
   ],
-  "related": {
+  "places": {
     "akihabara": [
-      "shinjuku",
-      "shibuya"
+      {
+        "file": "akihabara.jpg",
+        "author": "Hyppolyte de Saint-Rambert",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_9999_281.jpg"
+      },
+      {
+        "file": "akihabara-2.jpg",
+        "author": "BWard 1997",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_Street_-_31-5-2026.jpg"
+      },
+      {
+        "file": "akihabara-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_12.jpg"
+      }
     ],
-    "shinjuku": [
-      "shibuya",
-      "tokyo-tower"
-    ],
-    "sensoji": [
-      "ueno",
-      "yanaka"
-    ],
-    "ueno": [
-      "sensoji",
-      "yanaka"
-    ],
-    "meiji": [
-      "harajuku",
-      "shibuya"
-    ],
-    "harajuku": [
-      "meiji",
-      "shibuya"
-    ],
-    "shibuya": [
-      "harajuku",
-      "shinjuku"
-    ],
-    "odaiba": [
-      "tokyo-tower",
-      "teamlab"
-    ],
-    "teamlab": [
-      "odaiba",
-      "tokyo-tower"
-    ],
-    "tokyo-tower": [
-      "odaiba",
-      "shinjuku"
-    ],
-    "chureito": [
-      "kawaguchi",
-      "oshino"
-    ],
-    "kawaguchi": [
-      "chureito",
-      "ropeway"
-    ],
-    "kenrokuen": [
-      "kanazawa-castle",
-      "higashi-chaya"
-    ],
-    "kanazawa-castle": [
-      "kenrokuen",
-      "omicho"
-    ],
-    "shirakawa": [
-      "sanmachi"
-    ],
-    "sanmachi": [
-      "shirakawa",
-      "miyagawa"
-    ],
-    "kiyomizu": [
-      "yasaka",
-      "fushimi"
+    "animate": [
+      {
+        "file": "animate.jpg",
+        "author": "othree",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Animate_Annex_and_Lashinbang_Ikebukuro_Main_Store_(52857684578).jpg"
+      }
     ],
     "arashiyama": [
-      "kinkakuji",
-      "philosopher"
+      {
+        "file": "arashiyama.jpg",
+        "author": "Naokijp",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2021_Sagano_Bamboo_forest_in_Arashiyama,_Kyoto,_Japan.jpg"
+      },
+      {
+        "file": "arashiyama-2.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Arashiyama,_Part_II_-_Arashiyama7534.jpg"
+      },
+      {
+        "file": "arashiyama-3.jpg",
+        "author": "Strangeeye 294",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove_(215912603).jpeg"
+      }
     ],
-    "kinkakuji": [
-      "arashiyama",
-      "nijo"
+    "character-street": [
+      {
+        "file": "character-street.jpg",
+        "author": "Dr.yellow",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_station_%22Ichibangai_-_Character_Street%22.jpg"
+      },
+      {
+        "file": "character-street-2.jpg",
+        "author": "電車(新幹線)でゴー！",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Pokemon_store_in_Tokyo_Station_01.jpg"
+      },
+      {
+        "file": "character-street-3.jpg",
+        "author": "Mike Peel",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:At_Tokyo_2024_292.jpg"
+      }
     ],
-    "fushimi": [
-      "kiyomizu",
-      "daigo"
+    "chureito": [
+      {
+        "file": "chureito.jpg",
+        "author": "Dang Son",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:12-Chureito-pagoda-and-Mount-Fuji-Japan_(29677439878).jpg"
+      },
+      {
+        "file": "chureito-2.jpg",
+        "author": "Stjepko Krehula",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Chureito_Pagoda_and_Mount_Fuji_2023-03-07.jpg"
+      },
+      {
+        "file": "chureito-3.jpg",
+        "author": "Supanut Arunoprayote",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Chureito_Pagoda_and_Mount_Fuji_20241022.jpg"
+      }
     ],
-    "nijo": [
-      "nishiki",
-      "philosopher"
+    "daigo": [
+      {
+        "file": "daigo.jpg",
+        "author": "Moyan Brenn",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kyoto_(15610568093).jpg"
+      },
+      {
+        "file": "daigo-2.jpg",
+        "author": "Suicasmo",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Benten-d%C5%8D,_Daigoji_20161116.jpg"
+      },
+      {
+        "file": "daigo-3.jpg",
+        "author": "663highland",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Daigoji01_1024.jpg"
+      }
     ],
-    "nara-park": [
-      "todaiji",
-      "kasuga"
-    ],
-    "todaiji": [
-      "nara-park",
-      "kofukuji"
+    "denden": [
+      {
+        "file": "denden.jpg",
+        "author": "Oilstreet",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Nipponbashi_Osaka_Japan01-r.jpg"
+      },
+      {
+        "file": "denden-2.jpg",
+        "author": "Kansai explorer",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nipponbashi-3S_south_view20100320.JPG"
+      }
     ],
     "dotonbori": [
-      "osaka-castle",
-      "shinsaibashi"
+      {
+        "file": "dotonbori.jpg",
+        "author": "Type specimen",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Osaka_Dotonbori_Ebisu_Bridge.jpg"
+      },
+      {
+        "file": "dotonbori-2.jpg",
+        "author": "gérard",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Canal_D%C5%8Dtonbori_%E9%81%93%E9%A0%93%E5%A0%80_-_Flickr_-_uphillblok.jpg"
+      },
+      {
+        "file": "dotonbori-3.jpg",
+        "author": "Type specimen",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
+      }
     ],
-    "usj": [
-      "dotonbori"
+    "fujiq": [
+      {
+        "file": "fujiq.jpg",
+        "author": "Nayvik",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:FujiQ_Highland_MainGate.JPG"
+      },
+      {
+        "file": "fujiq-2.jpg",
+        "author": "Priscilla Du Preez artographybyp",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Roller_coaster_in_a_park_(Unsplash).jpg"
+      },
+      {
+        "file": "fujiq-3.jpg",
+        "author": "Jeremy Thompson",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fuji-Q_Highland_2011_(5900024530).jpg"
+      }
+    ],
+    "fushimi": [
+      {
+        "file": "fushimi.jpg",
+        "author": "Luka Peternel",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Fushimi-Inari-Shrine-Senbon-Torii-2018-Luka-Peternel.jpg"
+      },
+      {
+        "file": "fushimi-2.jpg",
+        "author": "DuckMaestro",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2026-06-29_kyoto-fushimi-inari_torii-romon_night.jpg"
+      },
+      {
+        "file": "fushimi-3.jpg",
+        "author": "Basile Morin",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg"
+      }
+    ],
+    "ginza": [
+      {
+        "file": "ginza.jpg",
+        "author": "Kakidai",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ginza-WAKO_at_night.jpg"
+      },
+      {
+        "file": "ginza-2.jpg",
+        "author": "Basile Morin",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Illuminated_street_corner_at_blue_hour_-_facade_of_the_building_Fujiya_in_Ginza_Chuo-ku_Tokyo_Japan.jpg"
+      },
+      {
+        "file": "ginza-3.jpg",
+        "author": "Fabio Achilli",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Chuo_Dori_Street,_Ginza_(30312237258).jpg"
+      }
+    ],
+    "gold-leaf": [
+      {
+        "file": "gold-leaf.jpg",
+        "author": "Eckhard Pecher",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanazawa_Gold_Factory.jpg"
+      },
+      {
+        "file": "gold-leaf-2.jpg",
+        "author": "Kishi Ganku",
+        "license": "Public domain",
+        "licenseUrl": "",
+        "source": "https://commons.wikimedia.org/wiki/File:Kishi_Ganku_-_Fusuma-_Tigers_and_Dragon_-_Google_Art_Project.jpg"
+      }
+    ],
+    "harajuku": [
+      {
+        "file": "harajuku.jpg",
+        "author": "japanvlogjp",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Japan_Tokyo_Takeshita_street_at_summer_-_%E6%9D%B1%E4%BA%AC%E7%AB%B9%E4%B8%8B.jpg"
+      },
+      {
+        "file": "harajuku-2.jpg",
+        "author": "Ryosuke Yagi",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Harajuku_Takeshita_Street_snow_2016-01-18.jpg"
+      },
+      {
+        "file": "harajuku-3.jpg",
+        "author": "Syced",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Marion_Cr%C3%AApes_in_Harajuku_Takeshita.jpg"
+      }
+    ],
+    "higashi-chaya": [
+      {
+        "file": "higashi-chaya.jpg",
+        "author": "Andrea Schaffer",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Higashi_Chaya_district,_Kanazawa_(3810720612).jpg"
+      },
+      {
+        "file": "higashi-chaya-2.jpg",
+        "author": "Raita Futo",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Higashi_Chaya_District_(50154603457).jpg"
+      },
+      {
+        "file": "higashi-chaya-3.jpg",
+        "author": "AudaCity3371",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Higashi_Chaya_District_of_Kanazawa_-_panoramio.jpg"
+      }
+    ],
+    "hozenji": [
+      {
+        "file": "hozenji.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Osaka_-_Osaka194.jpg"
+      },
+      {
+        "file": "hozenji-2.jpg",
+        "author": "Choi2451",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Hozenji_Yokocho_at_night.jpg"
+      },
+      {
+        "file": "hozenji-3.jpg",
+        "author": "frakorea's photos",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Osakanightview-3.jpg"
+      }
+    ],
+    "imperial": [
+      {
+        "file": "imperial.jpg",
+        "author": "Thomas Julin",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nijubashi_bridge_at_the_imperial_palace_in_tokyo,_japan_-_panoramio.jpg"
+      },
+      {
+        "file": "imperial-2.jpg",
+        "author": "Kirin Square",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nijuubashi2.jpg"
+      },
+      {
+        "file": "imperial-3.jpg",
+        "author": "Chris 73",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Imperial_Palace_Tokyo_Nijubashi_Bridge.JPG"
+      }
+    ],
+    "itchiku": [
+      {
+        "file": "itchiku.jpg",
+        "author": "江戸村のとくぞう",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Itchiku_Kubota_Art_Museum_2018c.jpg"
+      },
+      {
+        "file": "itchiku-2.jpg",
+        "author": "江戸村のとくぞう",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Itchiku_Kubota_Art_Museum_2018b.jpg"
+      },
+      {
+        "file": "itchiku-3.jpg",
+        "author": "江戸村のとくぞう",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Itchiku_Kubota_Art_Museum_2018d.jpg"
+      }
+    ],
+    "jinya": [
+      {
+        "file": "jinya.jpg",
+        "author": "Alexkom000",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2024-10-27_Takayama_Jinya.jpg"
+      },
+      {
+        "file": "jinya-2.jpg",
+        "author": "Wpcpey",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Takayama_Jinya_inside_view_201706.jpg"
+      },
+      {
+        "file": "jinya-3.jpg",
+        "author": "Wpcpey",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Takayama_Jinya_inside_view2_201706.JPG"
+      }
+    ],
+    "kanazawa-castle": [
+      {
+        "file": "kanazawa-castle.jpg",
+        "author": "663highland",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:131109_Kanazawa_Castle_Kanazawa_Ishikawa_pref_Japan01s5p.jpg"
+      },
+      {
+        "file": "kanazawa-castle-2.jpg",
+        "author": "Alexkom000",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2024-10-26_Kanazawa_Castle,_Ishikawa-mon.jpg"
+      },
+      {
+        "file": "kanazawa-castle-3.jpg",
+        "author": "fish0835",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanazawa_Castle,_Kanazawa_City;_April_2016_(03).jpg"
+      }
+    ],
+    "kanazawa-museum": [
+      {
+        "file": "kanazawa-museum.jpg",
+        "author": "金沢市",
+        "license": "CC BY 2.1 jp",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.1/jp/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:21st_Century_Museum_of_Contemporary_Art,_Kanazawa009.jpg"
+      },
+      {
+        "file": "kanazawa-museum-2.jpg",
+        "author": "金沢市",
+        "license": "CC BY 2.1 jp",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.1/jp/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:21st_Century_Museum_of_Contemporary_Art,_Kanazawa011.jpg"
+      },
+      {
+        "file": "kanazawa-museum-3.jpg",
+        "author": "金沢市",
+        "license": "CC BY 2.1 jp",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.1/jp/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:21st_Century_Museum_of_Contemporary_Art,_Kanazawa002.jpg"
+      }
+    ],
+    "kasuga": [
+      {
+        "file": "kasuga.jpg",
+        "author": "663highland",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Kasuga-taisha11bs3200.jpg"
+      },
+      {
+        "file": "kasuga-2.jpg",
+        "author": "Gzzz",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Lanterns_Kasuga-taisha_Nara.jpg"
+      },
+      {
+        "file": "kasuga-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Kasuga-taisha_Lanterns_%26_Deer_02.jpg"
+      }
+    ],
+    "kawaguchi": [
+      {
+        "file": "kawaguchi.jpg",
+        "author": "Marion & Christoph Aistleitner",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Fuji_Kawaguchi_457.JPG"
+      },
+      {
+        "file": "kawaguchi-2.jpg",
+        "author": "Midori",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG"
+      },
+      {
+        "file": "kawaguchi-3.jpg",
+        "author": "Marion & Christoph Aistleitner",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Fuji_Kawaguchi_357.JPG"
+      }
+    ],
+    "kenrokuen": [
+      {
+        "file": "kenrokuen.jpg",
+        "author": "KimonBerlin",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kotojitoro_(lantern)_in_Kenrokuen_garden,_Kanazawa,_Japan_(2621640037).jpg"
+      },
+      {
+        "file": "kenrokuen-2.jpg",
+        "author": "Japanexperterna.se",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Stone_lantern_Kenrokuen.jpg"
+      },
+      {
+        "file": "kenrokuen-3.jpg",
+        "author": "tab2_dawa",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kenroku-en-winter-lantern.jpg"
+      }
+    ],
+    "kinkakuji": [
+      {
+        "file": "kinkakuji.jpg",
+        "author": "Basile Morin",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day,_Kyoto,_Japan.jpg"
+      },
+      {
+        "file": "kinkakuji-2.jpg",
+        "author": "Jaycangel",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kinkaku-ji_the_Golden_Temple_in_Kyoto_overlooking_the_lake_-_high_rez.JPG"
+      },
+      {
+        "file": "kinkakuji-3.jpg",
+        "author": "Chainwit",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kyoto_2020_at_Kinkaku-ji.jpg"
+      }
+    ],
+    "kiyomizu": [
+      {
+        "file": "kiyomizu.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
+      },
+      {
+        "file": "kiyomizu-2.jpg",
+        "author": "Jordy Meow",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
+      },
+      {
+        "file": "kiyomizu-3.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg"
+      }
+    ],
+    "kofukuji": [
+      {
+        "file": "kofukuji.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Eastern_Golden_Hall_%26_Five-Storied_Pagoda_1.jpg"
+      },
+      {
+        "file": "kofukuji-2.jpg",
+        "author": "663highland",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kofukuji12st5s3200.jpg"
+      },
+      {
+        "file": "kofukuji-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Five-Storied_Pagoda_03.jpg"
+      }
+    ],
+    "kuromon": [
+      {
+        "file": "kuromon.jpg",
+        "author": "DVMG",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kuromon_Market_-_panoramio.jpg"
+      },
+      {
+        "file": "kuromon-2.jpg",
+        "author": "Mr.ちゅらさん",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kuromon_Ichiba_Market_at_Lalaport_Kadoma1.jpg"
+      },
+      {
+        "file": "kuromon-3.jpg",
+        "author": "Mr.ちゅらさん",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kuromon_Ichiba_Market_at_Lalaport_Kadoma2.jpg"
+      }
+    ],
+    "meiji": [
+      {
+        "file": "meiji.jpg",
+        "author": "TAKA@P.P.R.S",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Meiji_Jingu,_Tokyo;_February_2011_(01).jpg"
+      },
+      {
+        "file": "meiji-2.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Meiji-jingu_Torii_1.jpg"
+      },
+      {
+        "file": "meiji-3.jpg",
+        "author": "Akonnchiroll",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Meiji_Jingu_2023-3.jpg"
+      }
+    ],
+    "miyagawa": [
+      {
+        "file": "miyagawa.jpg",
+        "author": "bryan",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Hida-Takayama_Miyagawa_Morning_Market_(15668520238).jpg"
+      },
+      {
+        "file": "miyagawa-2.jpg",
+        "author": "KimonBerlin",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Morning_market_(11272886764).jpg"
+      },
+      {
+        "file": "miyagawa-3.jpg",
+        "author": "z tanuki",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Miyagawa_Morning_market_,_%E5%AE%AE%E5%B7%9D%E6%9C%9D%E5%B8%82_-_panoramio.jpg"
+      }
+    ],
+    "momiji": [
+      {
+        "file": "momiji.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Kawaguchiko,_Part_II_-_Kawaguchiko6811.jpg"
+      }
+    ],
+    "music-forest": [
+      {
+        "file": "music-forest.jpg",
+        "author": "xiquinhosilva",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kawaguchiko_Music_Forest_2017_(29592047287).jpg"
+      },
+      {
+        "file": "music-forest-2.jpg",
+        "author": "xiquinhosilva",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kawaguchiko_Music_Forest_2017_(30659676108).jpg"
+      },
+      {
+        "file": "music-forest-3.jpg",
+        "author": "xiquinhosilva",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kawaguchiko_Music_Forest_2017_(43812072134).jpg"
+      }
+    ],
+    "myoryuji": [
+      {
+        "file": "myoryuji.jpg",
+        "author": "Irina Gelbukh",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ninja-dera_1.jpg"
+      }
+    ],
+    "nagamachi": [
+      {
+        "file": "nagamachi.jpg",
+        "author": "Andrea Schaffer",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nagamachi_district,_Kanazawa_(3810829584).jpg"
+      },
+      {
+        "file": "nagamachi-2.jpg",
+        "author": "Hirorinmasa",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nagamachi_Bukeyashiki.jpg"
+      },
+      {
+        "file": "nagamachi-3.jpg",
+        "author": "Douglas Perkins",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Onosho_Waterway_in_Nagamachi_Samurai_District_Apr_10,_2009.jpg"
+      }
+    ],
+    "namba-yasaka": [
+      {
+        "file": "namba-yasaka.jpg",
+        "author": "Hyppolyte de Saint-Rambert",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Namba_Yasaka_jinja_(Osaka_Naniwa-ku)_Shrine_hdsr_S5_l05.jpg"
+      },
+      {
+        "file": "namba-yasaka-2.jpg",
+        "author": "Hyppolyte de Saint-Rambert",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Namba_Yasaka_jinja_(Osaka_Naniwa-ku)_Shrine_hdsr_S5_l10.jpg"
+      },
+      {
+        "file": "namba-yasaka-3.jpg",
+        "author": "Hyppolyte de Saint-Rambert",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Namba_Yasaka_jinja_(Osaka_Naniwa-ku)_Shrine_hdsr_S5_l13.jpg"
+      }
+    ],
+    "nara-park": [
+      {
+        "file": "nara-park.jpg",
+        "author": "Marek Ślusarczyk (Tupungato)",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:005_Autumn_in_Nara_Park,_Japan_-_Nara_deer_CC-BY_Creative_Commons_Attribution.jpg"
+      },
+      {
+        "file": "nara-park-2.jpg",
+        "author": "Feri88",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Park_-_panoramio_(2).jpg"
+      },
+      {
+        "file": "nara-park-3.jpg",
+        "author": "merec0",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2008-10-11_deer_near_a_stand_selling_deer_cookies_in_Nara.jpg"
+      }
+    ],
+    "nijo": [
+      {
+        "file": "nijo.jpg",
+        "author": "Wikimedia Commons",
+        "license": "Public domain",
+        "licenseUrl": "",
+        "source": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
+      },
+      {
+        "file": "nijo-2.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ninomaru_Palace,_November_2016.jpg"
+      },
+      {
+        "file": "nijo-3.jpg",
+        "author": "Reggaeman",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nijo_Castle_Ninomaru_03.JPG"
+      }
+    ],
+    "nishi-chaya": [
+      {
+        "file": "nishi-chaya.jpg",
+        "author": "Benh LIEU SONG",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanazawa_Nishi_Chaya_Dusk_(45916568732).jpg"
+      },
+      {
+        "file": "nishi-chaya-2.jpg",
+        "author": "金沢市",
+        "license": "CC BY 2.1 jp",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.1/jp/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishichayagai003.jpg"
+      },
+      {
+        "file": "nishi-chaya-3.jpg",
+        "author": "TTTNIS",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishi_Chaya-gai.jpg"
+      }
+    ],
+    "nishiki": [
+      {
+        "file": "nishiki.jpg",
+        "author": "collinox",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-3.jpg",
+        "author": "ignis",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
+      }
+    ],
+    "odaiba": [
+      {
+        "file": "odaiba.jpg",
+        "author": "Nesnad",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Odaiba_close_up_-_2025_Jan_14_01-27PM.jpeg"
+      },
+      {
+        "file": "odaiba-2.jpg",
+        "author": "rumpleteaser",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Hotaluna_by_Rainbow_Bridge_Tokyo_(7813816026).jpg"
+      },
+      {
+        "file": "odaiba-3.jpg",
+        "author": "ltsc1980",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Diver_City_Tokyo_(20873006931).jpg"
+      }
+    ],
+    "omicho": [
+      {
+        "file": "omicho.jpg",
+        "author": "(WT-shared) Jpatokal at wts wikivoyage",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Omicho_Market.JPG"
+      },
+      {
+        "file": "omicho-2.jpg",
+        "author": "dconvertini",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%E3%83%9A%E3%82%A4%E3%83%9A%E3%82%A4_%E4%BD%BF%E3%81%84%E3%81%BE%E3%81%A3%E3%81%97%E3%80%82_(48877153177).jpg"
+      },
+      {
+        "file": "omicho-3.jpg",
+        "author": "dconvertini",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanazawa_Omicho_Market,_Japan_(48876956676).jpg"
+      }
     ],
     "osaka-castle": [
-      "dotonbori",
-      "kuromon"
+      {
+        "file": "osaka-castle.jpg",
+        "author": "Dick Thomas Johnson",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Osaka_Castle_2022-04-23.jpg"
+      },
+      {
+        "file": "osaka-castle-2.jpg",
+        "author": "Manish Prabhune",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Osaka_Castle_-_Japan.jpg"
+      },
+      {
+        "file": "osaka-castle-3.jpg",
+        "author": "William.q.trang",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:DCMI_(1105).jpg"
+      }
+    ],
+    "oshino": [
+      {
+        "file": "oshino.jpg",
+        "author": "MaedaAkihiko",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Oshino-Hakkai-Nakaike.jpg"
+      },
+      {
+        "file": "oshino-2.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Oshino_Hakkai_-_Oshino6878.jpg"
+      },
+      {
+        "file": "oshino-3.jpg",
+        "author": "Hiroaki Kaneko",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:%E9%9B%AA%E3%81%AE%E5%BF%8D%E9%87%8E%E3%81%A8%E5%AF%8C%E5%A3%AB%E5%B1%B1_(Snow-covered_Oshino_with_Mt.Fuji)_31_Jan,_2015_-_panoramio.jpg"
+      }
+    ],
+    "oyama": [
+      {
+        "file": "oyama.jpg",
+        "author": "そらみみ",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Torii_and_Gate_of_Oyama_Shrine.JPG"
+      },
+      {
+        "file": "oyama-2.jpg",
+        "author": "La Japonie facile",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:East_Gate,_Oyama_Shrine,_Kanazawa_-_Mar_9,_2012.jpg"
+      },
+      {
+        "file": "oyama-3.jpg",
+        "author": "Motokoka",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Oyama_jinja_shrine_gate.jpg"
+      }
+    ],
+    "philosopher": [
+      {
+        "file": "philosopher.jpg",
+        "author": "Reggaeman",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:Tetsugaku_no_Michi_01.JPG"
+      },
+      {
+        "file": "philosopher-2.jpg",
+        "author": "Gzzz",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tetsugaku-no-michi_-_Philosopher%27s_Walk_-_Kyoto.jpg"
+      },
+      {
+        "file": "philosopher-3.jpg",
+        "author": "David Monniaux",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:Japan_Kyoto_philosophers_walk_DSC00297.jpg"
+      }
+    ],
+    "pontocho": [
+      {
+        "file": "pontocho.jpg",
+        "author": "Sergiy Galyonkin",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pontocho_Alley,_Kyoto_(52450102682).jpg"
+      },
+      {
+        "file": "pontocho-2.jpg",
+        "author": "Sergiy Galyonkin",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pontocho_Alley,_Kyoto_(52406856003).jpg"
+      },
+      {
+        "file": "pontocho-3.jpg",
+        "author": "Wolfiewolf",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Pontocho_by_Wolfiewolf_in_Nabeyacho,_Kyoto.jpg"
+      }
+    ],
+    "ropeway": [
+      {
+        "file": "ropeway.jpg",
+        "author": "663highland",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:170505_Kachikachiyama_Ropeway_Lake_Kawaguchi_Japan07s3.jpg"
+      },
+      {
+        "file": "ropeway-2.jpg",
+        "author": "Ippukucho",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:KachikachiyamaRopeway.JPG"
+      },
+      {
+        "file": "ropeway-3.jpg",
+        "author": "663highland",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:170505_Kachikachiyama_Ropeway_Lake_Kawaguchi_Japan06s3.jpg"
+      }
+    ],
+    "saiko": [
+      {
+        "file": "saiko.jpg",
+        "author": "Davide Mauro",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Iyashinosato_village_04.jpg"
+      },
+      {
+        "file": "saiko-2.jpg",
+        "author": "Davide Mauro",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Iyashinosato_village_06.jpg"
+      },
+      {
+        "file": "saiko-3.jpg",
+        "author": "Davide Mauro",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Iyashinosato_village_02.jpg"
+      }
+    ],
+    "sanmachi": [
+      {
+        "file": "sanmachi.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:One_of_the_three_main_streets_in_Sanmachi-Suji_(6156038234).jpg"
+      },
+      {
+        "file": "sanmachi-2.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shops_in_one_of_the_three_main_streets_in_Sanmachi-Suji_(6156040666).jpg"
+      }
+    ],
+    "sensoji": [
+      {
+        "file": "sensoji.jpg",
+        "author": "Akonnchiroll",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Sensoji_2023.jpg"
+      },
+      {
+        "file": "sensoji-2.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Senso-ji_Kaminarimon_6.jpg"
+      },
+      {
+        "file": "sensoji-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Senso-ji_Kaminarimon_4.jpg"
+      }
+    ],
+    "shibuya": [
+      {
+        "file": "shibuya.jpg",
+        "author": "Yoshikazu TAKADA",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shibuya_Scramble_Crossing_(31000739560).jpg"
+      },
+      {
+        "file": "shibuya-2.jpg",
+        "author": "Benh LIEU SONG (Flickr)",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg"
+      },
+      {
+        "file": "shibuya-3.jpg",
+        "author": "Real Estate Japan",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shibuya_scramble_square_sky_view_of_crossing_(48995414042).jpg"
+      }
+    ],
+    "shinjuku": [
+      {
+        "file": "shinjuku.jpg",
+        "author": "Morio",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:Skyscrapers_of_Shinjuku_2009_January.jpg"
+      },
+      {
+        "file": "shinjuku-2.jpg",
+        "author": "Luke Ma",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Shinjuku_night_-_Sony_A7R_(11790838755).jpg"
+      },
+      {
+        "file": "shinjuku-3.jpg",
+        "author": "Syced",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:August_2007_Shinjuku_6.jpg"
+      }
+    ],
+    "shinsaibashi": [
+      {
+        "file": "shinsaibashi.jpg",
+        "author": "そらみみ",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:View_of_Shinsaibashi-suji_Shopping_Street_from_Ebisubashi_Bridge.jpg"
+      },
+      {
+        "file": "shinsaibashi-2.jpg",
+        "author": "Francisco Restivo",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinsaibashi-suji_(4793145349).jpg"
+      },
+      {
+        "file": "shinsaibashi-3.jpg",
+        "author": "WPPilot",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinsaibashi_Suji_Shopping_Street_Osaka_Japan_by_Don_Ramey_Logan.jpg"
+      }
+    ],
+    "shinsekai": [
+      {
+        "file": "shinsekai.jpg",
+        "author": "Sakai Yayoi",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinsekai_and_Tsutenkaku_Tower.jpg"
+      },
+      {
+        "file": "shinsekai-2.jpg",
+        "author": "Dick Thomas Johnson",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinsekai_Tsutenkaku_at_night_2022-04-23.jpg"
+      }
+    ],
+    "shirakawa": [
+      {
+        "file": "shirakawa.jpg",
+        "author": "663highland",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Ogi_Shirakawa-g%C5%8D,_Gifu,_Japan.jpg"
+      },
+      {
+        "file": "shirakawa-2.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shirakawa_Gassho-zukuri_18.jpg"
+      },
+      {
+        "file": "shirakawa-3.jpg",
+        "author": "lienyuan lee",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Gassho_houses_at_shirakawa_-_panoramio.jpg"
+      }
+    ],
+    "sumida": [
+      {
+        "file": "sumida.jpg",
+        "author": "Basile Morin",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Asahi_Breweries_headquarters_building_with_the_Asahi_Flame_and_Skytree_at_blue_hour_with_full_moon,_Sumida-ku,_Tokyo,_Japan.jpg"
+      },
+      {
+        "file": "sumida-2.jpg",
+        "author": "VaneTrz20",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Skytree_in_winter.jpg"
+      },
+      {
+        "file": "sumida-3.jpg",
+        "author": "Basile Morin",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:X-shaped_pedestrian_Sakura_bridge_over_Sumida_river,_linking_Tait%C5%8D_and_Sumida_wards,_view_from_Tokyo_Skytree,_Japan.jpg"
+      }
+    ],
+    "tea": [
+      {
+        "file": "tea.jpg",
+        "author": "WorldContributor",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Japanese_cup_of_matcha_during_the_tea_ceremony.jpg"
+      },
+      {
+        "file": "tea-2.jpg",
+        "author": "KuboBella",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Japanese_Tea_Ceremony_Serving_Tea.jpg"
+      },
+      {
+        "file": "tea-3.jpg",
+        "author": "WorldContributor",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Japanese_tea_tray_with_two_cups_of_matcha_along_with_some_sweets_during_a_tea_ceremony.jpg"
+      }
+    ],
+    "teamlab": [
+      {
+        "file": "teamlab.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Japan_2024-04-28_(53893216325).jpg"
+      },
+      {
+        "file": "teamlab-2.jpg",
+        "author": "Manmakro",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:The_glistening_balls.jpg"
+      },
+      {
+        "file": "teamlab-3.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Japan_2024-04-28_(53893216070).jpg"
+      }
+    ],
+    "teramachi": [
+      {
+        "file": "teramachi.jpg",
+        "author": "Isoyan",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanazawa-shi_Teramachi-Dai,Ishikawa,temple_district.JPG"
+      }
+    ],
+    "todaiji": [
+      {
+        "file": "todaiji.jpg",
+        "author": "Wiiii",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:T%C5%8Ddai-ji_Kon-d%C5%8D.jpg"
+      },
+      {
+        "file": "todaiji-2.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Todai-ji_Daibutsuden_Interior_Daibutsu_07.jpg"
+      },
+      {
+        "file": "todaiji-3.jpg",
+        "author": "Cun Cun",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:T%C5%8Ddai-ji_Daibutsuden,_June_2019.jpg"
+      }
+    ],
+    "tokyo-tower": [
+      {
+        "file": "tokyo-tower.jpg",
+        "author": "Melv_L - MACASR",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Tower_at_night_(1).jpg"
+      },
+      {
+        "file": "tokyo-tower-2.jpg",
+        "author": "Kakidai",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Tower_at_night_7.JPG"
+      },
+      {
+        "file": "tokyo-tower-3.jpg",
+        "author": "David Kernan",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Tower,_Minato_City.jpg"
+      }
+    ],
+    "ueno": [
+      {
+        "file": "ueno.jpg",
+        "author": "Bernard Gagnon",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ueno_park.jpg"
+      },
+      {
+        "file": "ueno-2.jpg",
+        "author": "Ximonic (Simo Räsänen)",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Walkway_by_Shinobazu_Pond_in_Ueno_Park,_Ueno-k%C5%8Den,_Tait%C5%8D,_Tokyo,_Japan,_2024_May.jpg"
+      },
+      {
+        "file": "ueno-3.jpg",
+        "author": "Guilhem Vellut",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinobazu_Pond_@_Ueno_Park_(14041716455).jpg"
+      }
+    ],
+    "usj": [
+      {
+        "file": "usj.jpg",
+        "author": "Momopy~commonswiki",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:USJ_5years.JPG"
+      },
+      {
+        "file": "usj-2.jpg",
+        "author": "archive 2025 ark",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Super_Nintendo_World_Entrance_5th_Anniversary_decoration_at_Universal_Studios_Japan.jpg"
+      },
+      {
+        "file": "usj-3.jpg",
+        "author": "Terence Ong",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Universal_Studios_Japan_9.JPG"
+      }
+    ],
+    "wagashi": [
+      {
+        "file": "wagashi.jpg",
+        "author": "Douglas Perkins",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Wagashi_closeup_14.jpg"
+      },
+      {
+        "file": "wagashi-2.jpg",
+        "author": "Douglas Perkins",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Summer_wagashi_10.jpg"
+      },
+      {
+        "file": "wagashi-3.jpg",
+        "author": "guretaro",
+        "license": "Public domain",
+        "licenseUrl": "",
+        "source": "https://commons.wikimedia.org/wiki/File:Kurikinton,_a_Japanese_sweet.jpg"
+      }
+    ],
+    "yanaka": [
+      {
+        "file": "yanaka.jpg",
+        "author": "Dick Thomas Johnson",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Yanaka_Ginza_(53149155977).jpg"
+      },
+      {
+        "file": "yanaka-2.jpg",
+        "author": "Dick Thomas Johnson",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Yanaka_Ginza_(52492088947).jpg"
+      },
+      {
+        "file": "yanaka-3.jpg",
+        "author": "Christophe95",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Yanaka_Ginza_2.jpg"
+      }
+    ],
+    "yasaka": [
+      {
+        "file": "yasaka.jpg",
+        "author": "Kanchi1979",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:JP-Kyoto-Gion-Yasaka-Shrine-Main-Gate-Night.JPG"
+      },
+      {
+        "file": "yasaka-2.jpg",
+        "author": "Jason Zhang",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Yasaka-jinja,_nishi-r%C5%8Dmon_light_trails.jpg"
+      },
+      {
+        "file": "yasaka-3.jpg",
+        "author": "Kanchi1979",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:JP-Kyoto-Gion-Yasaka-Shrine-Main-Gate.JPG"
+      }
     ]
   }
 }

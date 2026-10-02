@@ -147,13 +147,14 @@ if (!isNum(trip.fxDefault) || trip.fxDefault <= 0) err("trip", "fxDefault invali
 load("practical").forEach((p, i) => { if (!isStr(p.title) || !Array.isArray(p.items)) err(`practical[${i}]`, "title / items"); });
 load("places-meta");
 const photos = load("photos");
-const photoExists = (slug) => fs.existsSync(path.join(ROOT, "img/activities", slug + ".jpg"));
 photos.rules.forEach((r, i) => {
   try { new RegExp(r.match); } catch (e) { err(`photos.rules[${i}]`, `motif invalide ${r.match}`); }
-  if (!photoExists(r.slug)) warn(`photos « ${r.match} »`, `img/activities/${r.slug}.jpg absente (pas de photo affichée)`);
+  if (!photos.places[r.slug]) warn(`photos « ${r.match} »`, `aucune photo pour « ${r.slug} »`);
 });
-Object.entries(photos.related).forEach(([slug, list]) => list.forEach((r) => {
-  if (!photoExists(r)) warn(`photos.related.${slug}`, `img/activities/${r}.jpg absente`);
+Object.entries(photos.places).forEach(([slug, list]) => list.forEach((ph, i) => {
+  const w = `photos.places.${slug}[${i}]`;
+  if (!fs.existsSync(path.join(ROOT, "img/activities", ph.file || ""))) err(w, `img/activities/${ph.file} introuvable`);
+  if (!isStr(ph.author) || !isStr(ph.license)) err(w, "auteur / licence manquants (crédit obligatoire)");
 }));
 
 if (warnings.length) console.warn(`⚠ ${warnings.length} avertissement(s) :\n  - ` + warnings.join("\n  - "));

@@ -60,3 +60,15 @@ test("photo d’une activité d’après son titre", () => {
   assert.equal(photoSlug({ title: "xyz", slug: "custom" }), "custom");
   assert.equal(photoSlug({ title: "Lieu inconnu" }), null);
 });
+
+test("photos d’une activité : fichiers locaux avec crédit", async () => {
+  const { photosFor } = await import("../src/domain/photos.js");
+  const fs = await import("node:fs");
+  const list = photosFor({ title: "Kiyomizu-dera" });
+  assert.ok(list.length >= 2 && list.length <= 4);
+  list.forEach((p) => {
+    assert.ok(fs.existsSync(new URL("../" + p.src.replace("./", ""), import.meta.url)), p.src);
+    assert.ok(p.credit.author && p.credit.license);
+  });
+  DAYS.forEach((d) => ideasOf(d).forEach((a) => assert.ok(photosFor(a).length > 0, a.title)));
+});
