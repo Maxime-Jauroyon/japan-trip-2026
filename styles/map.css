@@ -257,98 +257,149 @@
 .route-vehicle.route-active { filter: drop-shadow(0 0 6px rgba(255, 255, 255, .35)) drop-shadow(0 3px 6px rgba(0, 0, 0, .45)); }
 #stage.mode-city .route-vehicle { display: none; }
 
-/* —— Bulles de quartiers (vue ville, dézoomée) —— */
-/* (MapLibre écrit l’opacité inline sur l’élément marqueur → on règle l’enfant) */
-.zone-hub {
-  border: 0; background: transparent; padding: 0;
-  cursor: pointer;
-  pointer-events: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.zone-hub .zone-hub-chip { opacity: var(--hub-opacity, 0); }
-#map.lod-0 .zone-hub,
-#map.hubs-live .zone-hub { pointer-events: auto; }
-#map.lod-0 .zone-hub.dim,
-#map.hubs-live .zone-hub.dim { display: none; }
-.zone-hub-chip {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 9px 14px 9px 10px;
-  border-radius: 999px;
-  background: var(--glass-strong);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  color: var(--cream);
-  white-space: nowrap;
-  box-shadow: var(--shadow-md);
-  transform: scale(var(--hub-scale, 1));
-  transition: filter .15s ease, opacity .2s ease;
-}
-.zone-hub.on .zone-hub-chip { box-shadow: 0 0 0 2px rgba(var(--gold-rgb), .7), var(--shadow-md); }
-.zone-hub:hover .zone-hub-chip { filter: brightness(1.08); }
-.zone-hub-dot {
-  width: 14px; height: 14px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(var(--fg-rgb), .14);
-}
-.zone-hub-label { font-size: 14px; font-weight: 650; letter-spacing: .01em; }
-.zone-hub-count {
-  min-width: 1.5em; height: 1.5em;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: rgba(var(--gold-rgb), .2);
-  color: var(--gold-2);
-  font-size: 12px; font-weight: 800;
-  display: inline-grid; place-items: center;
-}
-
-/* —— Pins (vue ville, zoomée) —— */
+/* —— Pins des lieux (vue ville) ——
+   MapLibre écrit l’opacité inline sur l’élément marqueur → l’état visuel se règle sur les enfants. */
 .pin {
   border: 0; background: transparent; padding: 0;
   cursor: pointer;
-  pointer-events: none;
   -webkit-tap-highlight-color: transparent;
 }
-.pin .badge { opacity: 0; }
-#map.pins-live .pin,
-#map.lod-2 .pin { pointer-events: auto; }
-#map.pins-live .pin .badge,
-#map.lod-2 .pin .badge { opacity: 1; }
-#map.pins-live .pin.dim .badge,
-#map.lod-2 .pin.dim .badge { opacity: .3; }
-#map .pin.pin-hotel { pointer-events: auto; z-index: 4; }
-#map .pin.pin-hotel .badge { opacity: 1; }
-#map .pin.pin-hotel.dim .badge { opacity: .4; }
+.pin.clustered { visibility: hidden; pointer-events: none; }
+#map.pins-static .pin .badge,
+#map.pins-static .pin-step { animation: none; }
 .pin.pin-stop { z-index: 3; }
+.pin.pin-hotel { z-index: 4; }
 .pin.on { z-index: 5; }
-.pin.selected { z-index: 9; pointer-events: auto; }
-#map .pin.selected .badge { opacity: 1; }
+.pin.selected { z-index: 9; }
 .pin .badge {
   --k: 1;
+  position: relative;
   display: block;
   width: 44px; height: 52px;
   transform-origin: 50% 100%;
-  transform: scale(calc(var(--pin-scale, 1) * var(--k)));
+  transform: scale(var(--k));
   transition: transform .18s ease, opacity .2s ease;
+  animation: pinIn .35s cubic-bezier(.34, 1.5, .64, 1) backwards;
 }
-.pin.on .badge { --k: 1.14; }
-.pin.selected .badge { --k: 1.32; }
-.pin:hover .badge { --k: 1.18; }
+.pin.on .badge { --k: 1.1; animation-delay: calc(var(--step-i, 0) * 90ms); }
+.pin.selected .badge { --k: 1.3; }
+.pin:hover .badge { --k: 1.16; }
 .pin .badge svg {
   width: 100%; height: 100%;
   display: block;
   shape-rendering: geometricPrecision;
   filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .38));
 }
-.pin.selected .badge svg {
-  animation: pinGlow 1.4s ease-in-out infinite;
+.pin.selected .badge svg { animation: pinGlow 1.4s ease-in-out infinite; }
+@keyframes pinIn {
+  from { transform: translateY(-10px) scale(.5); opacity: 0; }
 }
 @keyframes pinGlow {
   0%, 100% { filter: drop-shadow(0 0 2px rgba(255, 250, 240, .95)) drop-shadow(0 3px 6px rgba(196, 92, 38, .45)); }
   50% { filter: drop-shadow(0 0 4px rgba(255, 250, 240, 1)) drop-shadow(0 4px 14px rgba(196, 92, 38, .75)); }
 }
 
+/* Numéro d’étape (jour sélectionné) */
+.pin-step {
+  position: absolute;
+  top: -4px; right: -6px;
+  min-width: 22px; height: 22px;
+  padding: 0 5px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ef7a4d, #d4483b);
+  color: #fff;
+  font: 800 12px/1 -apple-system, "Segoe UI", sans-serif;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
+  animation: pinIn .35s cubic-bezier(.34, 1.5, .64, 1) calc(var(--step-i, 0) * 90ms + 120ms) backwards;
+}
+
+/* Lieux hors du jour sélectionné : petits points discrets, toujours touchables */
+.pin.ghost { padding: 8px; }
+.pin-dot {
+  display: block;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--c);
+  border: 2px solid rgba(255, 255, 255, .85);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+  opacity: .7;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.pin.ghost:hover .pin-dot { transform: scale(1.5); opacity: 1; }
+
+/* Regroupement de lieux proches : pastille avec le nombre */
+.pin-cluster {
+  border: 0; background: transparent; padding: 0;
+  cursor: pointer;
+  z-index: 6;
+  -webkit-tap-highlight-color: transparent;
+}
+.pin-cluster-bubble {
+  display: grid; place-items: center;
+  gap: 2px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(var(--gold-rgb), .85);
+  box-shadow: 0 0 0 5px rgba(var(--gold-rgb), .16), var(--shadow-md);
+  color: var(--cream);
+  transition: transform .18s ease;
+  animation: pinIn .3s cubic-bezier(.34, 1.5, .64, 1) backwards;
+}
+.pin-cluster:hover .pin-cluster-bubble { transform: scale(1.1); }
+.pin-cluster-bubble b { font: 800 16px/1 -apple-system, "Segoe UI", sans-serif; margin-top: 4px; }
+.pin-cluster-dots { display: flex; gap: 3px; margin-bottom: 4px; }
+.pin-cluster-dots i { width: 6px; height: 6px; border-radius: 50%; display: block; }
+
+/* —— Itinéraire du jour —— */
+.route-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 9px 4px 7px;
+  border-radius: 999px;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+  color: var(--cream);
+  font: 700 11.5px/1 -apple-system, "Segoe UI", sans-serif;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: chipIn .4s ease calc(.5s + var(--chip-i, 0) * 120ms) backwards;
+}
+.route-chip.is-hidden { visibility: hidden; }
+.route-chip svg { width: 15px; height: 15px; color: var(--gold-2); }
+.route-chip.transit svg { color: var(--blue-ink); }
+@keyframes chipIn { from { opacity: 0; transform: scale(.7); } }
+#stage.mode-country .day-summary,
+.day-summary[hidden] { display: none; }
+.day-summary {
+  position: absolute; left: 50%; top: 62px; z-index: 24;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 6px;
+  max-width: calc(100% - 32px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  color: var(--muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: chipIn .35s ease backwards;
+}
+.day-summary strong { color: var(--gold-2); }
+.day-summary .sep { opacity: .5; }
+
 @media (prefers-reduced-motion: reduce) {
-  .city-mark .mark-float, .city-mark .mark-halo, .pin.selected .badge svg { animation: none; }
+  .city-mark .mark-float, .city-mark .mark-halo, .pin.selected .badge svg,
+  .pin .badge, .pin-step, .pin-cluster-bubble, .route-chip, .day-summary { animation: none; }
 }

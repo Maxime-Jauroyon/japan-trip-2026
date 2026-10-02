@@ -4,7 +4,6 @@ import { LEGS } from "../core/data.js";
 import { prefersReducedMotion } from "../core/env.js";
 import { legRouteParts, legVehicleKind } from "../domain/legs.js";
 import { routePartCoords, toWorld } from "./geo.js";
-import { MAP_FONT_BOLD } from "./map-style.js";
 import { map, mapMode, mapStyleReady, mapStyleTheme } from "./map-view.js";
 import { routeVehicleSvg } from "../shared/icons.js";
 
@@ -68,33 +67,12 @@ export function addTripLayers(){
   const theme = mapStyleTheme;
   if (!ROUTE_DATA) ROUTE_DATA = buildRouteData();
   map.addSource("routes", { type: "geojson", data: ROUTE_DATA });
-  map.addSource("zones", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
   const lineW = (base) => ["interpolate", ["linear"], ["zoom"], 4, base, 8, base * 1.6, 12, base * 2.2];
   /* Une seule interpolation de zoom par expression : l’état (actif / survol) va dans les sorties */
   const lineWState = (base, on) => ["interpolate", ["linear"], ["zoom"],
     4, ["case", ["any", FS_ACTIVE, FS_HOVER], on, base],
     8, ["case", ["any", FS_ACTIVE, FS_HOVER], on * 1.6, base * 1.6],
     12, ["case", ["any", FS_ACTIVE, FS_HOVER], on * 2.2, base * 2.2]];
-  map.addLayer({
-    id: "zone-fill", type: "fill", source: "zones",
-    paint: { "fill-color": ["get", "color"], "fill-opacity": 0 }
-  });
-  map.addLayer({
-    id: "zone-line", type: "line", source: "zones",
-    paint: { "line-color": ["get", "color"], "line-width": ["case", ["get", "on"], 3, 2], "line-opacity": 0 }
-  });
-  map.addLayer({
-    id: "zone-label", type: "symbol", source: "zones",
-    layout: {
-      "text-field": ["get", "name"], "text-font": MAP_FONT_BOLD,
-      "text-size": ["case", ["get", "on"], 19, 17], "text-allow-overlap": true
-    },
-    paint: {
-      "text-color": theme === "light" ? "#1f2833" : "#f4efe6",
-      "text-halo-color": theme === "light" ? "rgba(247,244,238,.9)" : "rgba(10,14,20,.8)",
-      "text-halo-width": 2, "text-opacity": 0
-    }
-  });
   map.addLayer({
     id: "route-casing", type: "line", source: "routes",
     layout: { "line-cap": "round", "line-join": "round" },

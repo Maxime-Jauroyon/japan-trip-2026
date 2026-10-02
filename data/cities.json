@@ -101,63 +101,7 @@
         "label": {
           "side": "right",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "asakusa",
-            "name": "Asakusa",
-            "color": "#c45c4a",
-            "west": 139.755,
-            "south": 35.705,
-            "east": 139.815,
-            "north": 35.735
-          },
-          {
-            "id": "akihabara",
-            "name": "Akihabara",
-            "color": "#4a7ab8",
-            "west": 139.75,
-            "south": 35.665,
-            "east": 139.79,
-            "north": 35.705
-          },
-          {
-            "id": "shinjuku",
-            "name": "Shinjuku",
-            "color": "#6b5b95",
-            "west": 139.685,
-            "south": 35.68,
-            "east": 139.72,
-            "north": 35.705
-          },
-          {
-            "id": "shibuya",
-            "name": "Shibuya",
-            "color": "#d4a017",
-            "west": 139.688,
-            "south": 35.655,
-            "east": 139.715,
-            "north": 35.68
-          },
-          {
-            "id": "odaiba",
-            "name": "Odaiba",
-            "color": "#2a9d8f",
-            "west": 139.74,
-            "south": 35.615,
-            "east": 139.81,
-            "north": 35.665
-          },
-          {
-            "id": "ikebukuro",
-            "name": "Ikebukuro",
-            "color": "#b85a8a",
-            "west": 139.7,
-            "south": 35.72,
-            "east": 139.73,
-            "north": 35.74
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 17,
@@ -216,54 +160,7 @@
         "label": {
           "side": "left",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "kawaguchi",
-            "name": "Kawaguchi",
-            "color": "#3d7ea6",
-            "west": 138.74,
-            "south": 35.49,
-            "east": 138.82,
-            "north": 35.54
-          },
-          {
-            "id": "chureito",
-            "name": "Chūrei-tō",
-            "color": "#c45c4a",
-            "west": 138.785,
-            "south": 35.48,
-            "east": 138.83,
-            "north": 35.52
-          },
-          {
-            "id": "fujiq",
-            "name": "Fuji-Q",
-            "color": "#6b5b95",
-            "west": 138.76,
-            "south": 35.475,
-            "east": 138.8,
-            "north": 35.5
-          },
-          {
-            "id": "oshino",
-            "name": "Oshino",
-            "color": "#6b8e4e",
-            "west": 138.81,
-            "south": 35.44,
-            "east": 138.86,
-            "north": 35.48
-          },
-          {
-            "id": "saiko",
-            "name": "Saiko",
-            "color": "#2a9d8f",
-            "west": 138.66,
-            "south": 35.48,
-            "east": 138.72,
-            "north": 35.52
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 12,
@@ -324,36 +221,7 @@
         "label": {
           "side": "left",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "centre",
-            "name": "Kenrokuen",
-            "color": "#c45c4a",
-            "west": 136.652,
-            "south": 36.556,
-            "east": 136.672,
-            "north": 36.572
-          },
-          {
-            "id": "higashi",
-            "name": "Higashi",
-            "color": "#d4a017",
-            "west": 136.654,
-            "south": 36.568,
-            "east": 136.68,
-            "north": 36.58
-          },
-          {
-            "id": "station",
-            "name": "Gare",
-            "color": "#4a7ab8",
-            "west": 136.64,
-            "south": 36.55,
-            "east": 136.655,
-            "north": 36.575
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 16,
@@ -400,19 +268,7 @@
         "label": {
           "side": "left",
           "minZoom": 8.2
-        },
-        "zones": [
-          {
-            "id": "ogimachi",
-            "name": "Ogimachi",
-            "color": "#6b8e4e",
-            "west": 136.895,
-            "south": 36.25,
-            "east": 136.915,
-            "north": 36.27,
-            "alwaysShowHub": true
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 11,
@@ -473,27 +329,7 @@
         "label": {
           "side": "right",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "sanmachi",
-            "name": "Sanmachi",
-            "color": "#c45c4a",
-            "west": 137.248,
-            "south": 36.138,
-            "east": 137.265,
-            "north": 36.155
-          },
-          {
-            "id": "miyagawa",
-            "name": "Gare",
-            "color": "#4a7ab8",
-            "west": 137.245,
-            "south": 36.13,
-            "east": 137.265,
-            "north": 36.15
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 13,
@@ -552,63 +388,7 @@
         "label": {
           "side": "left",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "higashiyama",
-            "name": "Gion",
-            "color": "#c45c4a",
-            "west": 135.768,
-            "south": 34.99,
-            "east": 135.795,
-            "north": 35.015
-          },
-          {
-            "id": "north",
-            "name": "Nord",
-            "color": "#6b8e4e",
-            "west": 135.715,
-            "south": 35.015,
-            "east": 135.81,
-            "north": 35.05
-          },
-          {
-            "id": "arashiyama",
-            "name": "Arashiyama",
-            "color": "#2a9d8f",
-            "west": 135.66,
-            "south": 35.005,
-            "east": 135.69,
-            "north": 35.03
-          },
-          {
-            "id": "fushimi",
-            "name": "Fushimi",
-            "color": "#d4a017",
-            "west": 135.765,
-            "south": 34.96,
-            "east": 135.79,
-            "north": 34.985
-          },
-          {
-            "id": "centre",
-            "name": "Centre",
-            "color": "#4a7ab8",
-            "west": 135.74,
-            "south": 34.995,
-            "east": 135.775,
-            "north": 35.02
-          },
-          {
-            "id": "daigo",
-            "name": "Daigo",
-            "color": "#3d7ea6",
-            "west": 135.81,
-            "south": 34.945,
-            "east": 135.835,
-            "north": 34.96
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 17,
@@ -667,27 +447,7 @@
         "label": {
           "side": "right",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "parc",
-            "name": "Parc",
-            "color": "#6b8e4e",
-            "west": 135.83,
-            "south": 34.678,
-            "east": 135.855,
-            "north": 34.7
-          },
-          {
-            "id": "centre",
-            "name": "Centre",
-            "color": "#c45c4a",
-            "west": 135.82,
-            "south": 34.675,
-            "east": 135.84,
-            "north": 34.69
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 17,
@@ -746,45 +506,7 @@
         "label": {
           "side": "left",
           "minZoom": 0
-        },
-        "zones": [
-          {
-            "id": "namba",
-            "name": "Namba",
-            "color": "#c45c4a",
-            "west": 135.49,
-            "south": 34.655,
-            "east": 135.515,
-            "north": 34.68
-          },
-          {
-            "id": "castle",
-            "name": "Château",
-            "color": "#4a7ab8",
-            "west": 135.515,
-            "south": 34.675,
-            "east": 135.54,
-            "north": 34.7
-          },
-          {
-            "id": "usj",
-            "name": "USJ",
-            "color": "#6b5b95",
-            "west": 135.42,
-            "south": 34.655,
-            "east": 135.445,
-            "north": 34.68
-          },
-          {
-            "id": "shinsekai",
-            "name": "Shinsekai",
-            "color": "#d4a017",
-            "west": 135.495,
-            "south": 34.645,
-            "east": 135.515,
-            "north": 34.67
-          }
-        ]
+        }
       },
       "climate": {
         "hi": 18,

@@ -39,6 +39,17 @@ function sampleCubic(p0, c1, c2, p1, n, skipFirst){
   return out;
 }
 
+/** Segment légèrement courbé de a vers b (bombé à gauche du sens de marche) :
+    { coords: [[lng, lat]…], mid: [lng, lat] } — pour les itinéraires du jour. */
+export function bowedSegment(a, b, bow = 0.14, n = 24){
+  const p = toWorld(a), q = toWorld(b);
+  const dx = q.x - p.x, dy = q.y - p.y;
+  const len = Math.hypot(dx, dy) || 1e-12;
+  const c = { x: (p.x + q.x) / 2 + (dy / len) * len * bow, y: (p.y + q.y) / 2 - (dx / len) * len * bow };
+  const pts = sampleQuad(p, c, q, n);
+  return { coords: pts.map(fromWorld), mid: fromWorld(pts[Math.floor(n / 2)]) };
+}
+
 /** Même tracé que l’ancienne carte (arc / Catmull-Rom), en coordonnées géographiques. */
 export function routePartCoords(spec){
   const a = spec.from, b = spec.to;

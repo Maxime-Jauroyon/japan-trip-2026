@@ -9,7 +9,8 @@ import { hint, mapEl, panel, stageEl } from "../core/elements.js";
 import { hooks } from "../core/hooks.js";
 import { state } from "../core/state.js";
 import { legEndPoint } from "../domain/legs.js";
-import { clearCityMarkers, currentMapDay, layoutCityZones, refreshCityMapView, renderCityPins, resetCityLod, scheduleCityMapRefresh, setZonesData, updateCityLod } from "./city.js";
+import { clearCityMarkers, refreshCityMapView, renderCityPins, scheduleCityMapRefresh, updateClusters } from "./city.js";
+import { addDayRouteLayers, updateDayRouteChips } from "./day-route.js";
 import { buildCountry, setActiveCity, syncCountryLabels } from "./country.js";
 import { boundsOfCoords } from "./geo.js";
 import { buildMapStyle } from "./map-style.js";
@@ -18,10 +19,12 @@ import { addTripLayers, applyRouteHighlight, legGeoCoords, setRouteHover, setRou
 
 function onMapStyleLoad(){
   setMapStyleReady(true);
-  try { addTripLayers(); } catch (e) { console.warn("trip layers", e); }
+  try {
+    addTripLayers();
+    addDayRouteLayers();
+  } catch (e) { console.warn("trip layers", e); }
   applyMapModeToStyle();
   applyRouteHighlight();
-  if (state.currentCity) layoutCityZones(currentMapDay);
 }
 
 function applyTerrain(){
@@ -46,7 +49,6 @@ function setMapMode(mode){
   const country = mode === "country";
   if (country) {
     clearCityMarkers();
-    setZonesData([]);
     map.setMaxBounds(JAPAN_MAX_BOUNDS);
     map.setMinZoom(3.6);
     map.dragRotate.enable();
@@ -94,7 +96,6 @@ export function showCity(id, dayN){
   setActiveCity(id);
   setMapMode("city");
   const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
-  resetCityLod();
   renderCityPins(id, day || null);
   scheduleCityMapRefresh();
 }
@@ -164,7 +165,10 @@ export function initMap(){
   }), "bottom-left");
   map.on("style.load", onMapStyleLoad);
   map.on("move", () => {
-    if (mapMode === "city") updateCityLod();
+    if (mapMode === "city") {
+      updateClusters();
+      updateDayRouteChips();
+    }
     else syncCountryLabels();
   });
   map.on("rotate", syncMapControls);

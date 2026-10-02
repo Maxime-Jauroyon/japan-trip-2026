@@ -4,7 +4,7 @@ import { ACT_META, CITIES, DAYS, LEGS, MAP_BOUNDS } from "../core/data.js";
 import { parseWhenSort } from "../core/dates.js";
 import { journeyById, legCityId } from "./legs.js";
 import { photoSlug } from "./photos.js";
-import { inBounds, pointInZone, zoneForPoint } from "./places.js";
+import { inBounds } from "./places.js";
 
 export function daysForCity(id){
   // Include any day that belongs to the city OR has an arrive/depart leg for it
@@ -128,27 +128,6 @@ export function stopsOnMap(cityId){
     });
   });
   return [...byKey.values()];
-}
-
-export function countPlacesInZone(cityId, zone){
-  return placesOnMap(cityId).filter(a => pointInZone(a.lat, a.lng, zone)).length;
-}
-
-export function dayZoneIds(cityId, day){
-  const ids = new Set();
-  if (!day) return ids;
-  ideasOf(day).forEach(a => {
-    if (a.lat == null) return;
-    const z = zoneForPoint(cityId, a.lat, a.lng);
-    if (z) ids.add(z.id);
-  });
-  const stay = stayForDay(cityId, day);
-  const h = stay && stay.hotel;
-  if (h && h.lat != null) {
-    const z = zoneForPoint(cityId, h.lat, h.lng);
-    if (z) ids.add(z.id);
-  }
-  return ids;
 }
 
 /** Jours rattachés à chaque séjour. Une ville à plusieurs séjours donne leurs plages de jours

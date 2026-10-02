@@ -74,14 +74,6 @@ export function iconSvg(kind, accent){
   return `<svg viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">${shell}${glyphs[kind] || glyphs.pin}</svg>`;
 }
 
-export function lightenHex(hex, amount){
-  const n = String(hex || "").replace("#", "");
-  if (n.length !== 6) return hex;
-  const ch = (i) => parseInt(n.slice(i, i + 2), 16);
-  const L = (c) => Math.min(255, Math.round(c + (255 - c) * amount));
-  return "#" + [L(ch(0)), L(ch(2)), L(ch(4))].map(x => x.toString(16).padStart(2, "0")).join("");
-}
-
 export function hotelIconSvg(){
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/><path d="M3 12h18"/></svg>`;
 }

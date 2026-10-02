@@ -1,6 +1,6 @@
-/* Lieux : emprises des villes, quartiers (zones), ville d’un point. */
+/* Lieux : emprises des villes, ville d’un point. */
 
-import { CITY_ZONES, MAP_BOUNDS, ORDER } from "../core/data.js";
+import { MAP_BOUNDS, ORDER } from "../core/data.js";
 
 /** Ville dont l’emprise contient le lieu (sinon `fallback`). */
 export function cityIdForAct(act, fallback){
@@ -13,23 +13,6 @@ export function cityIdForAct(act, fallback){
 
 export function inBounds(b, lat, lng){
   return lng >= b.west && lng <= b.east && lat >= b.south && lat <= b.north;
-}
-
-/* —— Zones de quartier —— */
-export function pointInZone(lat, lng, z){
-  return lng >= z.west && lng <= z.east && lat >= z.south && lat <= z.north;
-}
-
-export function zonesForCity(id){
-  return CITY_ZONES[id] || [];
-}
-
-export function zoneForPoint(cityId, lat, lng){
-  return zonesForCity(cityId).find(z => pointInZone(lat, lng, z)) || null;
-}
-
-export function zoneCenter(z){
-  return { lat: (z.south + z.north) / 2, lng: (z.west + z.east) / 2 };
 }
 
 export function cityIdForCoords(lat, lng){

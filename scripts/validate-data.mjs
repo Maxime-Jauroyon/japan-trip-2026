@@ -55,12 +55,6 @@ cities.forEach((c) => {
   if (!b || !(b.west < b.east && b.south < b.north)) err(w, "map.bounds invalide");
   else if (!inside(b, c)) err(w, "le centre de la ville est hors de map.bounds");
   if (!c.map || !c.map.label || !["left", "right"].includes(c.map.label.side)) err(w, "map.label.side doit valoir left ou right");
-  (c.map && c.map.zones || []).forEach((z, i) => {
-    const wz = `${w} zone ${z.id || i}`;
-    if (!isStr(z.id) || !isStr(z.name)) err(wz, "id / name manquant");
-    if (!/^#[0-9a-f]{6}$/i.test(z.color || "")) err(wz, `couleur invalide ${z.color}`);
-    if (!(z.west < z.east && z.south < z.north)) err(wz, "emprise invalide");
-  });
   if (c.climate && !(isNum(c.climate.hi) && isNum(c.climate.lo) && c.climate.lo <= c.climate.hi)) err(w, "climate hi/lo invalide");
   (c.stays || []).forEach((s, i) => {
     const ws = `${w} séjour ${s.id || i}`;

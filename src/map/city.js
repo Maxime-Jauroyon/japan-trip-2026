@@ -1,267 +1,210 @@
-/* Vue ville : zones de quartiers, bulles, pins (niveaux de détail selon le zoom), cadrages. */
+/* Vue ville : pins des lieux (regroupés quand ils se chevauchent), étapes du jour, cadrages. */
 
-import { DAYS, LEGS } from "../core/data.js";
-import { esc } from "../core/dom.js";
+import { DAYS } from "../core/data.js";
 import { hint, mapEl, panel } from "../core/elements.js";
 import { isMobileUi } from "../core/env.js";
 import { hooks } from "../core/hooks.js";
 import { state } from "../core/state.js";
 import { pinKind, stopPinKind } from "../domain/classify.js";
-import { pointInZone, zoneCenter, zoneForPoint, zonesForCity } from "../domain/places.js";
-import { countPlacesInZone, dayPinPoints, dayZoneIds, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stopsOnMap } from "../domain/trip.js";
-import { boundsOfCoords, smoothstep } from "./geo.js";
-import { cameraForGeoBounds, cameraMove, cityCoverZoom, cityZoomInfo, map, mapMode, mapStyleReady, mapViewportInsets } from "./map-view.js";
-import { iconSvg, lightenHex } from "../shared/icons.js";
-
-let currentCityLod = -1;
+import { dayItinerary } from "../domain/itinerary.js";
+import { dayPinPoints, hotelsOnMap, placesOnMap, stayForDay, stopsOnMap } from "../domain/trip.js";
+import { iconSvg } from "../shared/icons.js";
+import { clearDayRoute, showDayRoute } from "./day-route.js";
+import { boundsOfCoords, toWorld } from "./geo.js";
+import { cameraForGeoBounds, cameraMove, cityCoverZoom, cityZoomInfo, map, mapMode, mapViewportInsets } from "./map-view.js";
 
 export let currentMapDay = null;
 
+/** Marqueurs des lieux : { marker, el, kind, lat, lng, x, y, clusterable, color, pinKind } */
 let pinMarkers = [];
+let clusterMarkers = [];
+let lastClusterZoom = null;
+let lastViewKey = null;
 
-let hubMarkers = [];
-
-/** Couleurs réservées — hors palette des zones (rouge, bleu, violet, or, teal, vert). */
+/* Couleur des pins selon le type de lieu (cf. domain/classify.js → pinKind). */
+const KIND_COLORS = {
+  torii: "#d4483b", castle: "#7b5ea7", play: "#e0892e", nature: "#3f9a62", market: "#c08a2c",
+  food: "#cf6a34", town: "#8a6a4a", gundam: "#4a6fb5", pin: "#a85a32"
+};
 const PIN_COLOR_HOTEL = "#c97b84";
-
-const PIN_COLOR_HOTEL_SEL = "#e8a8b0";
-
 const PIN_COLOR_STOP = "#6e7c85";
+/** Deux pins plus proches que ça (px écran) sont regroupés en une pastille. */
+const CLUSTER_RADIUS_PX = 46;
 
-const PIN_COLOR_STOP_SEL = "#9aa4ad";
-
-const PIN_COLOR_ACT_FALLBACK = "#a85a32";
-
-function activityPinColor(cityId, lat, lng, selected){
-  const z = zoneForPoint(cityId, lat, lng);
-  const base = z ? z.color : PIN_COLOR_ACT_FALLBACK;
-  return selected ? lightenHex(base, 0.22) : base;
-}
-
-/* Seuils LOD (rapport au zoom « cover ») : bulles → zones → pins */
-function lodThresholds(){
-  const mobile = isMobileUi();
-  return {
-    pinStart: mobile ? 3.15 : 2.28,
-    zoneIn0: mobile ? 1.05 : 1.12,
-    zoneIn1: mobile ? 1.32 : 1.45
-  };
-}
-
-export function setZonesData(features){
-  if (!map || !mapStyleReady) return;
-  const src = map.getSource("zones");
-  if (src) src.setData({ type: "FeatureCollection", features });
-}
-
-export function layoutCityZones(day){
-  if (!state.currentCity) return;
-  const zones = zonesForCity(state.currentCity);
-  const onZones = dayZoneIds(state.currentCity, day);
-  const filterDay = !!(day && onZones.size);
-  const features = zones.filter(z => !filterDay || onZones.has(z.id)).map(z => ({
-    type: "Feature",
-    properties: { id: z.id, name: z.name, color: z.color, on: filterDay },
-    geometry: {
-      type: "Polygon",
-      coordinates: [[[z.west, z.south], [z.east, z.south], [z.east, z.north], [z.west, z.north], [z.west, z.south]]]
-    }
-  }));
-  setZonesData(features);
-  if (!map || !mapStyleReady || !map.getLayer("zone-fill")) return;
-  const base = cityCoverZoom();
-  const t = lodThresholds();
-  const zAt = r => base + Math.log2(r);
-  const stops = (val) => ["interpolate", ["linear"], ["zoom"],
-    zAt(t.zoneIn0), 0, zAt(t.zoneIn1), val, zAt(t.pinStart - 0.4), val, zAt(t.pinStart + 0.12), 0];
-  map.setPaintProperty("zone-fill", "fill-opacity", stops(["case", ["get", "on"], 0.38, 0.24]));
-  map.setPaintProperty("zone-line", "line-opacity", stops(["case", ["get", "on"], 0.9, 0.55]));
-  map.setPaintProperty("zone-label", "text-opacity", stops(1));
-}
+const keyOf = (p) => p.lat.toFixed(4) + "," + p.lng.toFixed(4);
 
 export function clearCityMarkers(){
-  pinMarkers.forEach(m => m.remove());
-  hubMarkers.forEach(m => m.remove());
+  pinMarkers.forEach(p => p.marker.remove());
+  clusterMarkers.forEach(m => m.remove());
   pinMarkers = [];
-  hubMarkers = [];
+  clusterMarkers = [];
+  lastClusterZoom = null;
+  lastViewKey = null;
+  clearDayRoute();
 }
 
-function addCityMarker(el, lat, lng, anchor, list){
+function addPin(el, item){
   if (!map) return;
-  const m = new maplibregl.Marker({ element: el, anchor }).setLngLat([lng, lat]).addTo(map);
-  list.push(m);
+  const marker = new maplibregl.Marker({ element: el, anchor: item.ghost ? "center" : "bottom" })
+    .setLngLat([item.lng, item.lat]).addTo(map);
+  const w = toWorld(item);
+  pinMarkers.push(Object.assign(item, { marker, el, x: w.x, y: w.y }));
 }
 
-function renderCityHubs(id, day){
-  hubMarkers.forEach(m => m.remove());
-  hubMarkers = [];
-  const onZones = dayZoneIds(id, day);
-  const filterDay = !!(day && onZones.size);
-  zonesForCity(id).forEach(z => {
-    const n = countPlacesInZone(id, z);
-    if (!n && !z.alwaysShowHub) return;
-    const c = zoneCenter(z);
-    const on = !filterDay || onZones.has(z.id);
-    const btn = document.createElement("button");
-    btn.type = "button";
-    let cls = "zone-hub";
-    if (filterDay) cls += on ? " on" : " dim";
-    btn.className = cls;
-    btn.dataset.zone = z.id;
-    btn.title = z.name;
-    btn.setAttribute("aria-label", z.name);
-    const dayCount = filterDay && on
-      ? ideasOf(day).filter(a => a.lat != null && pointInZone(a.lat, a.lng, z)).length
-      : n;
-    btn.innerHTML =
-      `<span class="zone-hub-chip">` +
-      `<span class="zone-hub-dot" style="background:${esc(z.color)}"></span>` +
-      `<span class="zone-hub-label">${esc(z.name)}</span>` +
-      (dayCount ? `<span class="zone-hub-count">${dayCount}</span>` : "") +
-      `</span>`;
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      cameraMove({ center: [c.lng, c.lat], zoom: cityCoverZoom() + Math.log2(2.7), padding: mapViewportInsets() });
-    });
-    addCityMarker(btn, c.lat, c.lng, "center", hubMarkers);
+function pinButton(cls, title, html, onClick){
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = cls;
+  btn.title = title;
+  btn.setAttribute("aria-label", title);
+  btn.innerHTML = html;
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    onClick();
   });
+  return btn;
 }
 
-/** Force le recalcul du niveau de détail (changement de ville). */
-export function resetCityLod(){ currentCityLod = -1; }
+/* —— Regroupement des pins proches (vue ville sans jour sélectionné) —— */
+function clusterGroups(zoom){
+  const scale = 512 * Math.pow(2, zoom);
+  const items = pinMarkers.filter(p => p.clusterable);
+  const used = new Set();
+  const groups = [];
+  items.forEach(p => {
+    if (used.has(p)) return;
+    const group = [p];
+    used.add(p);
+    items.forEach(q => {
+      if (used.has(q)) return;
+      if (Math.hypot((q.x - p.x) * scale, (q.y - p.y) * scale) < CLUSTER_RADIUS_PX) {
+        group.push(q);
+        used.add(q);
+      }
+    });
+    groups.push(group);
+  });
+  return groups;
+}
 
-export function updateCityLod(force){
+function clusterElement(group){
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "pin-cluster";
+  const names = group.map(p => p.title);
+  btn.title = names.join(" · ");
+  btn.setAttribute("aria-label", `${group.length} lieux : ${names.join(", ")}`);
+  const dots = [...new Set(group.map(p => p.color))].slice(0, 3)
+    .map(c => `<i style="background:${c}"></i>`).join("");
+  btn.innerHTML = `<span class="pin-cluster-bubble"><b>${group.length}</b><span class="pin-cluster-dots">${dots}</span></span>`;
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const b = boundsOfCoords(group.map(p => [p.lng, p.lat]));
+    const pad = mapViewportInsets();
+    const extra = { top: pad.top + 70, right: pad.right + 70, bottom: pad.bottom + 70, left: pad.left + 70 };
+    const cam = cameraForGeoBounds(b, extra, 18);
+    cameraMove({ center: cam.center, zoom: Math.max(cam.zoom, map.getZoom() + 1.2), padding: pad });
+  });
+  return btn;
+}
+
+/** Recalcule les regroupements (seulement si le zoom a changé : le déplacement ne change rien). */
+export function updateClusters(force){
   if (!map || !state.currentCity || mapMode !== "city") return;
-  const base = cityCoverZoom();
-  const ratio = Math.max(1, Math.pow(2, map.getZoom() - base));
-  const t = lodThresholds();
-  /* Taille bonne à l’apparition ; en zoomant plus, le scale baisse pour que
-     la taille à l’écran reste lisible sans masquer la carte. */
-  const pinScale = Math.max(0.82, Math.min(1, Math.pow(ratio / t.pinStart, -0.15)));
-  const hubScale = Math.max(0.88, Math.min(1.12, 1.12 / Math.pow(ratio, 0.4)));
-  const hubOp = 1 - smoothstep(t.zoneIn0, t.zoneIn1, ratio);
-  const zoneFade = smoothstep(t.pinStart - 0.4, t.pinStart + 0.12, ratio);
-  const zoneOp = smoothstep(t.zoneIn0, t.zoneIn1, ratio) * (1 - zoneFade);
-  let pinOp = ratio >= t.pinStart ? 1 : 0;
-  if (hubOp < 0.12 && zoneOp < 0.12) pinOp = 1;
-  mapEl.style.setProperty("--pin-scale", pinScale.toFixed(3));
-  mapEl.style.setProperty("--hub-scale", hubScale.toFixed(3));
-  mapEl.style.setProperty("--hub-opacity", hubOp.toFixed(3));
-  mapEl.style.setProperty("--pin-opacity", String(pinOp));
-  mapEl.classList.toggle("day-filter", !!(currentMapDay && dayZoneIds(state.currentCity, currentMapDay).size));
-  mapEl.classList.toggle("pins-live", pinOp >= 1);
-  mapEl.classList.toggle("hubs-live", hubOp >= 0.35);
-
-  const lod = pinOp >= 1 ? 2 : zoneOp >= 0.4 ? 1 : 0;
-  if (!force && lod === currentCityLod) return;
-  currentCityLod = lod;
-  mapEl.classList.remove("lod-0", "lod-1", "lod-2");
-  mapEl.classList.add("lod-" + lod);
-  if (hint) {
-    hint.textContent = lod === 0
-      ? "Quartiers · zoomer pour les détails"
-      : lod === 1
-        ? "Quartiers · zoomer pour les pins"
-        : "Glisser · pincer · toucher un pin";
-  }
+  const zoom = map.getZoom();
+  if (!force && lastClusterZoom != null && Math.abs(zoom - lastClusterZoom) < 0.08) return;
+  lastClusterZoom = zoom;
+  clusterMarkers.forEach(m => m.remove());
+  clusterMarkers = [];
+  pinMarkers.forEach(p => p.el.classList.remove("clustered"));
+  if (currentMapDay) return;
+  clusterGroups(zoom).forEach(group => {
+    if (group.length < 2) return;
+    group.forEach(p => p.el.classList.add("clustered"));
+    const lng = group.reduce((s, p) => s + p.lng, 0) / group.length;
+    const lat = group.reduce((s, p) => s + p.lat, 0) / group.length;
+    clusterMarkers.push(new maplibregl.Marker({ element: clusterElement(group), anchor: "center" }).setLngLat([lng, lat]).addTo(map));
+  });
 }
 
+/**
+ * Pins de la ville. Sans jour : tous les lieux, regroupés quand ils se chevauchent.
+ * Avec un jour : étapes numérotées + itinéraire animé ; les autres lieux deviennent de petits points.
+ * `selected` : lieu mis en avant (fiche ouverte).
+ */
 export function renderCityPins(id, day, selected){
+  /* Même ville + même jour (ex. clic sur un pin) : pas de nouvelle animation d’apparition */
+  const viewKey = id + ":" + (day ? day.n : "");
+  mapEl.classList.toggle("pins-static", viewKey === lastViewKey);
+  lastViewKey = viewKey;
   currentMapDay = day || null;
-  pinMarkers.forEach(m => m.remove());
+  pinMarkers.forEach(p => p.marker.remove());
   pinMarkers = [];
-  const places = placesOnMap(id);
-  const hotels = hotelsOnMap(id);
-  const stops = stopsOnMap(id);
-  const dayKeys = new Set();
-  const dayStopKeys = new Set();
-  if (day){
-    ideasOf(day).forEach(a => {
-      if (a.lat == null) return;
-      dayKeys.add(a.lat.toFixed(4) + "," + a.lng.toFixed(4));
-    });
-    (day.moves || []).forEach(m => {
-      if (!m.leg) return;
-      const leg = LEGS.find(l => l.id === m.leg);
-      if (!leg) return;
-      [leg.fromStop, leg.toStop].forEach(s => {
-        if (s && s.lat != null) dayStopKeys.add(s.lat.toFixed(4) + "," + s.lng.toFixed(4));
-      });
-    });
-  }
-  const selKey = selected && selected.lat != null
-    ? selected.lat.toFixed(4) + "," + selected.lng.toFixed(4)
-    : null;
-  places.forEach(a => {
-    const key = a.lat.toFixed(4) + "," + a.lng.toFixed(4);
-    const onDay = !day || dayKeys.has(key);
+  const itinerary = day ? dayItinerary(id, day) : [];
+  const stepOf = new Map(itinerary.filter(s => s.kind === "activity").map(s => [keyOf(s), s.step]));
+  const routeKeys = new Set(itinerary.map(keyOf));
+  const selKey = selected && selected.lat != null ? keyOf(selected) : null;
+
+  placesOnMap(id).forEach(a => {
+    const key = keyOf(a);
     const isSel = selKey === key;
+    const step = stepOf.get(key);
+    const ghost = !!day && step == null && !isSel;
     const kind = pinKind(a.title);
-    const accent = activityPinColor(id, a.lat, a.lng, isSel);
-    const btn = document.createElement("button");
-    btn.type = "button";
-    let cls = "pin";
-    if (day) cls += onDay ? " on" : " dim";
+    const color = KIND_COLORS[kind] || KIND_COLORS.pin;
+    let cls = "pin pin-activity";
+    if (ghost) cls += " ghost";
+    if (step != null) cls += " on";
     if (isSel) cls += " selected";
-    // Autres activités du même jour : visibles, sans surbrillance
-    else if (selKey && !isSel && (!day || !onDay)) cls += " dim";
-    btn.className = cls;
-    btn.title = a.title;
-    btn.setAttribute("aria-label", a.title);
-    btn.innerHTML = `<span class="badge">${iconSvg(kind, accent)}</span>`;
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      hooks.openActivityDetail(a);
-    });
-    addCityMarker(btn, a.lat, a.lng, "bottom", pinMarkers);
+    const html = ghost
+      ? `<span class="pin-dot" style="--c:${color}"></span>`
+      : `<span class="badge">${iconSvg(kind, color)}</span>` + (step != null ? `<span class="pin-step">${step}</span>` : "");
+    const el = pinButton(cls, a.title, html, () => hooks.openActivityDetail(a));
+    if (step != null) el.style.setProperty("--step-i", String(step));
+    addPin(el, { kind: "activity", lat: a.lat, lng: a.lng, title: a.title, color, ghost, clusterable: !day && !isSel });
   });
-  stops.forEach(stop => {
-    const key = stop.lat.toFixed(4) + "," + stop.lng.toFixed(4);
-    const onDay = !day || dayStopKeys.has(key);
+
+  stopsOnMap(id).forEach(stop => {
+    const key = keyOf(stop);
     const isSel = selKey === key;
-    const accent = isSel ? PIN_COLOR_STOP_SEL : PIN_COLOR_STOP;
-    const btn = document.createElement("button");
-    btn.type = "button";
+    const ghost = !!day && !routeKeys.has(key) && !isSel;
     let cls = "pin pin-stop";
-    if (day) cls += onDay ? " on" : " dim";
+    if (ghost) cls += " ghost";
+    else if (day) cls += " on";
     if (isSel) cls += " selected";
-    else if (selKey && !isSel && day && !onDay) cls += " dim";
-    btn.className = cls;
-    btn.title = stop.name + " (" + stop.kind + ")";
-    btn.setAttribute("aria-label", stop.kind + " · " + stop.name);
-    btn.innerHTML = `<span class="badge">${iconSvg(stopPinKind(stop), accent)}</span>`;
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      hooks.openStopDetail(stop);
-    });
-    addCityMarker(btn, stop.lat, stop.lng, "bottom", pinMarkers);
+    const label = stop.name + " (" + stop.kind + ")";
+    const html = ghost
+      ? `<span class="pin-dot" style="--c:${PIN_COLOR_STOP}"></span>`
+      : `<span class="badge">${iconSvg(stopPinKind(stop), PIN_COLOR_STOP)}</span>`;
+    addPin(pinButton(cls, label, html, () => hooks.openStopDetail(stop)),
+      { kind: "stop", lat: stop.lat, lng: stop.lng, title: stop.name, color: PIN_COLOR_STOP, ghost, clusterable: !day && !isSel });
   });
-  hotels.forEach(stay => {
+
+  const activeStay = day ? stayForDay(id, day) : null;
+  hotelsOnMap(id).forEach(stay => {
     const h = stay.hotel;
-    const key = h.lat.toFixed(4) + "," + h.lng.toFixed(4);
-    const isSel = selKey === key;
-    const activeStay = day ? stayForDay(id, day) : null;
-    const onStay = !day || (activeStay && activeStay.id === stay.id);
-    const accent = isSel ? PIN_COLOR_HOTEL_SEL : PIN_COLOR_HOTEL;
-    const btn = document.createElement("button");
-    btn.type = "button";
+    const isSel = selKey === keyOf(h);
+    const ghost = !!day && !(activeStay && activeStay.id === stay.id) && !isSel;
     let cls = "pin pin-hotel";
-    if (day) cls += onStay ? " on" : " dim";
+    if (ghost) cls += " ghost";
+    else if (day) cls += " on";
     if (isSel) cls += " selected";
-    btn.className = cls;
-    btn.dataset.stay = stay.id;
-    btn.title = h.name + " (hôtel)";
-    btn.setAttribute("aria-label", "Hôtel · " + h.name);
-    btn.innerHTML = `<span class="badge">${iconSvg("bag", accent)}</span>`;
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      hooks.openHotelDetail(stay);
-    });
-    addCityMarker(btn, h.lat, h.lng, "bottom", pinMarkers);
+    const html = ghost
+      ? `<span class="pin-dot" style="--c:${PIN_COLOR_HOTEL}"></span>`
+      : `<span class="badge">${iconSvg("bag", PIN_COLOR_HOTEL)}</span>`;
+    const el = pinButton(cls, h.name + " (hôtel)", html, () => hooks.openHotelDetail(stay));
+    el.dataset.stay = stay.id;
+    addPin(el, { kind: "hotel", lat: h.lat, lng: h.lng, title: h.name, color: PIN_COLOR_HOTEL, ghost, clusterable: false });
   });
-  renderCityHubs(id, day || null);
-  layoutCityZones(day || null);
-  updateCityLod(true);
+
+  mapEl.classList.toggle("day-mode", !!day);
+  showDayRoute(id, day, itinerary);
+  updateClusters(true);
+  if (hint) {
+    hint.textContent = day
+      ? "Jour " + day.n + " · étapes numérotées dans l’ordre · toucher un pin pour le détail"
+      : "Toucher un pin · les pastilles regroupent les lieux proches";
+  }
 }
 
 export function highlightPin(act, opts){
@@ -299,8 +242,7 @@ export function refreshCityMapView(opts){
   opts = opts || {};
   const info = cityZoomInfo(state.currentCity);
   map.setMinZoom(Math.max(3.6, info.contain - 0.4));
-  updateCityLod(true);
-  layoutCityZones(currentMapDay);
+  updateClusters(true);
   if (state.lastFocusAct && state.lastFocusAct.lat != null) {
     cameraMove({ center: [state.lastFocusAct.lng, state.lastFocusAct.lat], padding: mapViewportInsets(), pitch: 0, bearing: 0 }, opts.instant);
     return;
@@ -330,7 +272,8 @@ export function scheduleCityMapRefresh(){
 
 /** Caméra cadrée sur le programme du jour (activités + hôtel). */
 function dayCamera(cityId, day){
-  const pts = dayPinPoints(cityId, day);
+  const route = dayItinerary(cityId, day);
+  const pts = route.length ? route : dayPinPoints(cityId, day);
   const info = cityZoomInfo(cityId);
   const mobile = isMobileUi();
   const pad = mapViewportInsets();

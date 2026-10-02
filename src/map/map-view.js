@@ -108,17 +108,19 @@ export function mapViewportInsets(){
     left: Math.min(p.left, W * 0.3), right: Math.min(p.right, W * 0.7)
   });
   if (mobile) {
-    const top = state.currentCity ? 64 : 72;
+    // + place pour le résumé du jour (pastille sous le nom de la ville)
+    const top = (state.currentCity ? 64 : 72) + (mapEl.classList.contains("day-mode") ? 44 : 0);
     if (!open) return clampPad({ top, right: 24, bottom: 36, left: 24 });
     const h = panel.offsetHeight || Math.round(H * 0.55);
     return clampPad({ top, right: 18, bottom: h + 18, left: 18 });
   }
   const left = 214;
+  const topDesk = 56 + (mapEl.classList.contains("day-mode") ? 50 : 0);
   if (open) {
     const pw = panel.offsetWidth || 400;
-    return clampPad({ top: 56, right: pw + 36, bottom: 44, left });
+    return clampPad({ top: topDesk, right: pw + 36, bottom: 44, left });
   }
-  return clampPad({ top: 56, right: 72, bottom: 56, left });
+  return clampPad({ top: topDesk, right: 72, bottom: 56, left });
 }
 
 export function fitGeoBounds(b, maxZoom){

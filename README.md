@@ -24,7 +24,7 @@ index.html            page unique (structure HTML, aucun contenu de voyage)
 sw.js                 service worker : cache hors ligne de l’app
 data/                 ← CONTENU DU VOYAGE (JSON)
   trip.json             titre, dates du voyage, voyageurs, taux ¥/€ par défaut
-  cities.json           villes : hôtels/séjours (+ plages de jours), emprise de carte, quartiers, étiquette, climat
+  cities.json           villes : hôtels/séjours (+ plages de jours), emprise de carte, étiquette, climat
   days.json             programme jour par jour (déplacements, idées, consignes)
   legs.json             trajets (horaires, statut, réservations, tracé sur la carte)
   journeys.json         trajets en plusieurs étapes (ex. Fuji → Tokyo → Kanazawa)
@@ -58,6 +58,9 @@ tests/                tests unitaires (node:test)
 
 Repères :
 - **Coordonnées** : `lat` / `lng` en degrés décimaux. Une idée sans coordonnées n’a pas de pin.
+- **Itinéraire du jour** (carte ville) : l’ordre des idées dans `days.json` est l’ordre de passage —
+  départ de l’hôtel (ou de la gare le jour d’arrivée), retour à l’hôtel (ou à la gare le jour du
+  départ). Les durées affichées sont des estimations (à pied ≤ 2 km, sinon transports).
 - **Références** : un trajet pointe une ville par `{ "city": "tokyo" }` ou un point précis par
   `{ "id": "tokyo", "lat": …, "lng": … }` ; un jour référence ses trajets par `"leg": "<id>"`.
 - **Statuts** : `paid`, `reserved`, `placeholder`.

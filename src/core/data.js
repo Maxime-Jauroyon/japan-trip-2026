@@ -6,7 +6,6 @@ export let CITIES = {};
 export let ORDER = [];
 export let MAP_BOUNDS = {};
 export let JAPAN_BOUNDS = null;
-export let CITY_ZONES = {};
 export let CITY_CLIMATE = {};
 export let MARK_LABELS = {};
 export let DAYS = [];
@@ -36,14 +35,12 @@ export function hydrate(raw) {
   CITIES = {};
   ORDER = [];
   MAP_BOUNDS = {};
-  CITY_ZONES = {};
   CITY_CLIMATE = {};
   MARK_LABELS = {};
   cityList.forEach(c => {
     CITIES[c.id] = c;
     ORDER.push(c.id);
     MAP_BOUNDS[c.id] = c.map.bounds;
-    if (c.map.zones && c.map.zones.length) CITY_ZONES[c.id] = c.map.zones;
     if (c.climate) CITY_CLIMATE[c.id] = c.climate;
     MARK_LABELS[c.id] = { side: c.map.label.side, zoom: c.map.label.minZoom || 0 };
   });

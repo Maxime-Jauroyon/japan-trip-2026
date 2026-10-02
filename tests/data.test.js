@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
-import { CITIES, CITY_ZONES, JOURNEYS, LEGS, MAP_BOUNDS, MARK_LABELS, ORDER } from "../src/core/data.js";
+import { CITIES, JOURNEYS, LEGS, MAP_BOUNDS, MARK_LABELS, ORDER } from "../src/core/data.js";
 import { loadTripData, ROOT } from "./helpers.js";
 
 const raw = loadTripData();
@@ -23,9 +23,8 @@ test("les références { city } des trajets pointent vers l’objet ville", () =
   assert.equal(depart.from, CITIES.tokyo);
 });
 
-test("index des journeys et zones", () => {
+test("index des journeys", () => {
   assert.ok(JOURNEYS["fuji-kana"]);
-  assert.ok(CITY_ZONES.tokyo.length > 0);
 });
 
 test("scripts/validate-data.mjs accepte les données", () => {
