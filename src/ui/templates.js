@@ -7,7 +7,7 @@ import { bookingOpenStatus } from "../domain/bookings.js";
 import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/legs.js";
 import { hotelPhotos } from "../domain/photos.js";
 import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
-import { hotelIconSvg, iconSvg, mapsIconSvg } from "../shared/icons.js";
+import { hotelIconSvg, mapsIconSvg, placeGlyphSvg } from "../shared/icons.js";
 
 /** Logo UI (panneau trajet) — Shinkansen reconnaissable. */
 function modeLogoSvg(mode){
@@ -271,11 +271,11 @@ function photoCreditHtml(credit){
 export function renderPhotoGallery(photos, kind){
   const list = photos.map(p => (typeof p === "string" ? { src: p } : p));
   if (!list.length){
-    return `<div class="detail-hero"><div class="ph">${iconSvg(kind, "#c4a574")}</div></div>`;
+    return `<div class="detail-hero"><div class="ph">${placeGlyphSvg(kind)}</div></div>`;
   }
   const onErr = `onerror="var box=this.closest('.shot,.detail-hero');if(!box)return;this.remove();if(!box.querySelector('img'))box.style.display='none'"`;
   const hero = `<div class="detail-hero"><img src="${esc(list[0].src)}" alt="" loading="lazy" ${onErr}/>` +
-    `<div class="ph" style="display:none">${iconSvg(kind, "#c4a574")}</div>${photoCreditHtml(list[0].credit)}</div>`;
+    `<div class="ph" style="display:none">${placeGlyphSvg(kind)}</div>${photoCreditHtml(list[0].credit)}</div>`;
   const rest = list.slice(1);
   if (!rest.length) return hero;
   const shots = rest.map((p, i) =>

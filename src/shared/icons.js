@@ -51,27 +51,27 @@ export function routeVehicleSvg(kind){
   return `<g class="vehicle-shape vehicle-train"><path d="M-13 4h22l3-5.5a2 2 0 00-1.8-2.8H-11.2A2 2 0 00-13-1.5L-13 4z" fill="#f4f8fb" stroke="#2f6f95" stroke-width="1.2"/><rect x="-9" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="-2" y="-1" width="5" height="3" rx=".5" fill="#7eb3d1"/><rect x="5" y="-1" width="4" height="3" rx=".5" fill="#7eb3d1"/><path d="M10-1.5l3 2.5" stroke="#c45c26" stroke-width="1.4" stroke-linecap="round"/></g>`;
 }
 
-export function iconSvg(kind, accent){
-  const fill = accent || "#8a4f36";
-  const paper = "#fffaf3";
-  const shell = `<path d="M18 1.5c-7.2 0-13 5.7-13 12.7 0 9.4 11.2 25 13 25s13-15.6 13-25C31 7.2 25.2 1.5 18 1.5z" fill="${fill}" stroke="#fff" stroke-width="1.8"/>
-    <circle cx="18" cy="14" r="9.2" fill="${paper}"/>`;
-  const glyphs = {
-    torii: `<path d="M10 20V11h2v2h12v-2h2v9h-2v-5H12v5h-2zM9 9h18v2H9V9zm3-2h12l1 2H11l1-2z" fill="${fill}"/>`,
-    castle: `<path d="M11 22v-8l3-2 4 3 4-3 3 2v8H11zm3-10V9h2v3h-2zm6 0V9h2v3h-2z" fill="${fill}"/>`,
-    play: `<path d="M13 10l10 4-10 4V10zm2 8h6v2h-6v-2z" fill="${fill}"/>`,
-    nature: `<path d="M18 8c-4 0-7 4-7 7 0 2 1 3.5 2.5 4.5L12 24h12l-1.5-4.5C26 18.5 27 17 27 15c0-3-3-7-9-7zm0 3c1.8 0 3.2 1 3.2 2.4S19.8 16 18 16s-3.2-1-3.2-2.6S16.2 11 18 11z" fill="${fill}"/>`,
-    market: `<path d="M10 14l2-5h12l2 5v8H10v-8zm3 2h10v4H13v-4z" fill="${fill}"/>`,
-    food: `<path d="M12 22c0-5 2-8 6-9v-2c-2 0-3-1-3-2.5S14.5 6 17 6s4 1 4 2.5S19.5 11 17.5 11v2c4 1 6 4 6 9H12z" fill="${fill}"/>`,
-    town: `<path d="M10 22V12l8-6 8 6v10H10zm5-3h3v-4h-3v4zm7 0h3v-4h-3v4z" fill="${fill}"/>`,
-    gundam: `<path d="M14 10h8v3h-2v2h4v7h-3v-4h-6v4h-3v-7h4v-2h-2v-3zm2 1v1h4v-1h-4z" fill="${fill}"/>`,
-    bag: `<path d="M13 12h10v10H13V12zm3-3h4v2h-4V9z" fill="${fill}"/>`,
-    train: `<path d="M12 9h12c1.2 0 2 .8 2 2v7H10v-7c0-1.2.8-2 2-2zm2 2v2h8v-2h-8zm-1 5.5a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4zm10 0a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4zM11 20l-2 3h3l1.2-3H11zm10.8 0l1.2 3h3l-2-3h-2.2z" fill="${fill}"/>`,
-    plane: `<path d="M18 7l2 6h6l-2 2-4-.8L18 22l-2-1.2L14 14.2l-4 .8-2-2h6L18 7z" fill="${fill}"/>`,
-    bus: `<path d="M11 8h14c1.2 0 2 1 2 2.2V20h-2.2a1.8 1.8 0 01-3.6 0h-4.4a1.8 1.8 0 01-3.6 0H11V10.2C11 9 11.8 8 13 8zm2 3v3h4v-3h-4zm6 0v3h4v-3h-4z" fill="${fill}"/>`,
-    pin: `<circle cx="18" cy="14" r="3.5" fill="${fill}"/>`
-  };
-  return `<svg viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">${shell}${glyphs[kind] || glyphs.pin}</svg>`;
+/* Glyphes des lieux : traits blancs (currentColor) sur la tête colorée des pins, grille 24 px. */
+const PLACE_GLYPHS = {
+  torii: `<path d="M3 6.5c3 .8 6 1.2 9 1.2s6-.4 9-1.2M5 10.5h14M7 7.8V20M17 7.8V20M12 8v2.5"/>`,
+  castle: `<path d="M4 20h16M6 20v-5.5h12V20M8 14.5v-3h8v3M10 11.5V8.5h4v3M4 14.5l2-2h12l2 2M7 11.5l1.5-1.5h7l1.5 1.5M12 5.5v3M10.5 20v-2.5h3V20"/>`,
+  play: `<path d="M12 3.5l2.4 5 5.4.6-4 3.8 1.1 5.4L12 15.6l-4.9 2.7 1.1-5.4-4-3.8 5.4-.6z"/>`,
+  nature: `<path d="M12 21v-5M12 3.5c-3.3 0-5.6 2.6-5.6 5.6 0 1.2.4 2.3 1 3.1-.6.5-1 1.2-1 2 0 1.6 1.4 2.6 3.2 2.6h4.8c1.8 0 3.2-1 3.2-2.6 0-.8-.4-1.5-1-2 .6-.8 1-1.9 1-3.1 0-3-2.3-5.6-5.6-5.6z"/>`,
+  market: `<path d="M4 9.5 5.6 4h12.8L20 9.5M4 9.5c0 1.4 1.1 2.5 2.7 2.5s2.6-1.1 2.6-2.5c0 1.4 1.2 2.5 2.7 2.5s2.7-1.1 2.7-2.5c0 1.4 1.1 2.5 2.6 2.5S20 10.9 20 9.5M5.6 12v8h12.8v-8M10 20v-4.5h4V20"/>`,
+  food: `<path d="M3.5 11.5h17a8.5 8.5 0 0 1-17 0zM8.5 20.5h7M13.5 3.5l4.5 6M17 3l3 5.5"/>`,
+  town: `<path d="M3 20h18M4.5 20v-7.5L10 8l5.5 4.5V20M15.5 13l2.8-2.2 2.7 2.2V20M8.5 20v-4h3v4"/>`,
+  gundam: `<rect x="6" y="8.5" width="12" height="9.5" rx="2"/><path d="M12 4.5v4M9.5 13h.01M14.5 13h.01M9.5 15.8h5M4 12v3M20 12v3M8 4.5l4 2 4-2"/>`,
+  hotel: `<path d="M3 18.5V6.5M3 13.5h18v5M21 18.5v-2M6.5 13.5V11a1.5 1.5 0 0 1 1.5-1.5h2.5v4M12 13.5v-4h5.5a3.5 3.5 0 0 1 3.5 3.5v.5"/>`,
+  train: `<rect x="5.5" y="3" width="13" height="14" rx="3"/><path d="M5.5 10h13M8.5 20.5l2-3.5M15.5 20.5l-2-3.5M9 13.5h.01M15 13.5h.01"/>`,
+  plane: `<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>`,
+  bus: `<rect x="4.5" y="3.5" width="15" height="14" rx="3"/><path d="M4.5 10.5h15M8 17.5v2.5M16 17.5v2.5M8 14h.01M16 14h.01"/>`,
+  pin: `<circle cx="12" cy="11" r="3.5"/>`
+};
+
+/** Glyphe d’un type de lieu (cf. domain/classify.js) — `bag` = hôtel. */
+export function placeGlyphSvg(kind){
+  const g = PLACE_GLYPHS[kind === "bag" ? "hotel" : kind] || PLACE_GLYPHS.pin;
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${g}</svg>`;
 }
 
 export function hotelIconSvg(){

@@ -711,7 +711,7 @@ button.stat.stop-jump .jump-hint {
   display: grid; place-items: center;
   color: var(--gold-2);
 }
-.detail-hero .ph svg { width: 48px; height: 56px; opacity: .85; }
+.detail-hero .ph svg { width: 44px; height: 44px; opacity: .7; }
 .photo-gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;

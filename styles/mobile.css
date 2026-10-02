@@ -140,7 +140,7 @@
   .city-mark .mark-halo { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
   .city-mark .label { left: 46px; font-size: 12px; padding: 4px 9px 5px; }
   .city-mark.label-left .label { right: 46px; }
-  .pin .badge { width: 40px; height: 47px; }
+  .pin .badge { --size: 36px; }
   .pin-cluster-bubble { width: 42px; height: 42px; }
   .route-chip { font-size: 11px; padding: 3px 8px 3px 6px; }
   .route-chip svg { width: 13px; height: 13px; }

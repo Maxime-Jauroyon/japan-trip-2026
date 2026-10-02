@@ -8,7 +8,8 @@ import { state } from "../core/state.js";
 import { pinKind, stopPinKind } from "../domain/classify.js";
 import { dayItinerary } from "../domain/itinerary.js";
 import { dayPinPoints, hotelsOnMap, placesOnMap, stayForDay, stopsOnMap } from "../domain/trip.js";
-import { iconSvg } from "../shared/icons.js";
+import { esc } from "../core/dom.js";
+import { placeGlyphSvg } from "../shared/icons.js";
 import { clearDayRoute, showDayRoute } from "./day-route.js";
 import { boundsOfCoords, toWorld } from "./geo.js";
 import { cameraForGeoBounds, cameraMove, cityCoverZoom, cityZoomInfo, map, mapMode, mapViewportInsets } from "./map-view.js";
@@ -23,11 +24,20 @@ let lastViewKey = null;
 
 /* Couleur des pins selon le type de lieu (cf. domain/classify.js → pinKind). */
 const KIND_COLORS = {
-  torii: "#d4483b", castle: "#7b5ea7", play: "#e0892e", nature: "#3f9a62", market: "#c08a2c",
-  food: "#cf6a34", town: "#8a6a4a", gundam: "#4a6fb5", pin: "#a85a32"
+  torii: "#e0483a", castle: "#7c5cc4", play: "#f08a24", nature: "#2f9e6a", market: "#d19a1f",
+  food: "#e46a35", town: "#9a6b4a", gundam: "#3f6fd0", pin: "#b0603a"
 };
-const PIN_COLOR_HOTEL = "#c97b84";
-const PIN_COLOR_STOP = "#6e7c85";
+const PIN_COLOR_HOTEL = "#d0587e";
+const PIN_COLOR_STOP = "#4f6b86";
+
+/** Pin : tête colorée (ronde = lieu, carrée = hôtel / gare) + pointe + ombre au sol, nom au survol. */
+function pinBadgeHtml(kind, color, label, opts){
+  const o = opts || {};
+  return `<span class="badge${o.square ? " square" : ""}" style="--c:${color}">` +
+    `<span class="pin-head">${placeGlyphSvg(kind)}</span><span class="pin-tail"></span></span>` +
+    (o.step != null ? `<span class="pin-step">${o.step}</span>` : "") +
+    `<span class="pin-label">${esc(label)}</span>`;
+}
 /** Deux pins plus proches que ça (px écran) sont regroupés en une pastille. */
 const CLUSTER_RADIUS_PX = 46;
 
@@ -158,7 +168,7 @@ export function renderCityPins(id, day, selected){
     if (isSel) cls += " selected";
     const html = ghost
       ? `<span class="pin-dot" style="--c:${color}"></span>`
-      : `<span class="badge">${iconSvg(kind, color)}</span>` + (step != null ? `<span class="pin-step">${step}</span>` : "");
+      : pinBadgeHtml(kind, color, a.title, { step });
     const el = pinButton(cls, a.title, html, () => hooks.openActivityDetail(a));
     if (step != null) el.style.setProperty("--step-i", String(step));
     addPin(el, { kind: "activity", lat: a.lat, lng: a.lng, title: a.title, color, ghost, clusterable: !day && !isSel });
@@ -175,7 +185,7 @@ export function renderCityPins(id, day, selected){
     const label = stop.name + " (" + stop.kind + ")";
     const html = ghost
       ? `<span class="pin-dot" style="--c:${PIN_COLOR_STOP}"></span>`
-      : `<span class="badge">${iconSvg(stopPinKind(stop), PIN_COLOR_STOP)}</span>`;
+      : pinBadgeHtml(stopPinKind(stop), PIN_COLOR_STOP, stop.name, { square: true });
     addPin(pinButton(cls, label, html, () => hooks.openStopDetail(stop)),
       { kind: "stop", lat: stop.lat, lng: stop.lng, title: stop.name, color: PIN_COLOR_STOP, ghost, clusterable: !day && !isSel });
   });
@@ -191,7 +201,7 @@ export function renderCityPins(id, day, selected){
     if (isSel) cls += " selected";
     const html = ghost
       ? `<span class="pin-dot" style="--c:${PIN_COLOR_HOTEL}"></span>`
-      : `<span class="badge">${iconSvg("bag", PIN_COLOR_HOTEL)}</span>`;
+      : pinBadgeHtml("hotel", PIN_COLOR_HOTEL, h.name, { square: true });
     const el = pinButton(cls, h.name + " (hôtel)", html, () => hooks.openHotelDetail(stay));
     el.dataset.stay = stay.id;
     addPin(el, { kind: "hotel", lat: h.lat, lng: h.lng, title: h.name, color: PIN_COLOR_HOTEL, ghost, clusterable: false });
