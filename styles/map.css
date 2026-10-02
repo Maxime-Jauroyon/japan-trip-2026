@@ -245,7 +245,7 @@
 .city-mark.leg-to .map-logo { border-color: #e2583e; box-shadow: 0 6px 18px rgba(0,0,0,.38), 0 0 0 5px rgba(226,88,62,.35); }
 .city-mark.leg-via .map-logo { border-style: dashed; }
 
-/* —— Véhicules animés sur les trajets : pastille du mode (cf. .mode-badge), toujours droite —— */
+/* —— Pastille fixe du mode au milieu de chaque trajet (cf. .mode-badge) —— */
 .route-vehicle {
   pointer-events: none;
   transition: opacity .25s ease;
@@ -259,16 +259,18 @@
     radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .35), transparent 58%),
     linear-gradient(160deg, color-mix(in srgb, var(--mode-c) 85%, #fff), var(--mode-c) 55%, color-mix(in srgb, var(--mode-c) 78%, #000));
   border: 2px solid #fff;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+  /* anneau de la couleur du trait : la pastille « tient » sur la ligne */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mode-c) 38%, transparent), 0 3px 8px rgba(0, 0, 0, .4);
 }
 .vehicle-badge svg { width: 15px; height: 15px; }
-.route-vehicle.route-dim { opacity: .12; }
-.route-vehicle.is-hidden { opacity: 0; }
+/* MapLibre écrit l’opacité en ligne sur le marqueur : on agit sur la pastille */
+.route-vehicle.route-dim .vehicle-badge { opacity: .12; }
+.route-vehicle.is-hidden .vehicle-badge { opacity: 0; }
 .route-vehicle.route-active .vehicle-badge {
   transform: scale(1.18);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--mode-c) 35%, transparent), 0 4px 10px rgba(0, 0, 0, .45);
 }
-.vehicle-badge { transition: transform .25s ease, box-shadow .25s ease; }
+.vehicle-badge { transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease; }
 #stage.mode-city .route-vehicle { display: none; }
 
 /* Légende des trajets (vue Japon) */

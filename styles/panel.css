@@ -556,23 +556,6 @@ button.stat.stop-jump .jump-hint {
 }
 .mode-stat .mode-badge { --badge: 26px; }
 .mode-stat .mode-name { font-weight: 600; }
-.mode-stat .mode-logo { margin-top: 8px; }
-.mode-logo {
-  width: 72px;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.25));
-}
-.mode-logo-shinkansen {
-  animation: skPulse 2.4s ease-in-out infinite;
-}
-@keyframes skPulse {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(2px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mode-logo-shinkansen { animation: none; }
-}
 
 .detail-sheet .pill-row,
 .overlay-body > .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
