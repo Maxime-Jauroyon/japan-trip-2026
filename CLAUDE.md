@@ -30,7 +30,14 @@ npm run serve            # test manuel → http://localhost:8000
 Les tuiles OpenFreeMap peuvent être bloquées dans un bac à sable : la carte affiche alors
 seulement le relief, les trajets et les marqueurs.
 
-## Publier
+## Publier — à chaque changement terminé, sans demander
 
-`npm run version:bump` (version + précache du service worker) avant chaque mise en ligne,
-sinon les iPhones peuvent garder l’ancienne version en cache.
+Le propriétaire teste directement sur son iPhone (GitHub Pages sert `main`). Donc, à la fin de
+chaque changement :
+
+1. `npm run check` (doit être vert) ;
+2. `npm run version:bump` (version + précache du service worker — sinon les iPhones gardent
+   l’ancienne version en cache) ;
+3. commit + push de la branche de travail, ouvrir la PR vers `main` et **la merger tout de suite**,
+   sans attendre de validation ;
+4. une PR mergée ne reçoit plus de commits : repartir de `main` à jour pour le changement suivant.
