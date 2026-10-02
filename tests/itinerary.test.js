@@ -45,3 +45,17 @@ test("tronçon courbé : commence et finit sur les étapes", () => {
   assert.ok(Math.abs(seg.coords[0][0] - a.lng) < 1e-9 && Math.abs(seg.coords.at(-1)[1] - b.lat) < 1e-9);
   assert.equal(seg.mid.length, 2);
 });
+
+test("ordre des idées optimisé : aucun autre ordre ne gagne 5 min de trajet ou plus", () => {
+  const cost = (a, b) => { const km = distanceKm(a, b) * 1.3; return km <= 2.2 ? km / 4.5 * 60 : 10 + km / 24 * 60; };
+  const perms = (a) => a.length <= 1 ? [a] : a.flatMap((x, i) => perms([...a.slice(0, i), ...a.slice(i + 1)]).map((p) => [x, ...p]));
+  DAYS.forEach((d) => [d.city, d.extraCity].filter(Boolean).forEach((c) => {
+    const it = dayItinerary(c, d);
+    const acts = it.filter((s) => s.kind === "activity");
+    if (acts.length < 2) return;
+    const start = it[0].kind !== "activity" ? it[0] : null, end = it.at(-1).kind !== "activity" ? it.at(-1) : null;
+    const total = (p) => [start, ...p, end].filter(Boolean).reduce((t, s, i, all) => (i ? t + cost(all[i - 1], s) : 0), 0);
+    const best = Math.min(...perms(acts).map(total));
+    assert.ok(total(acts) - best < 5, `J${d.n} ${c} : ${Math.round(total(acts))} min, optimum ${Math.round(best)} min`);
+  }));
+});

@@ -298,7 +298,7 @@ function dayCamera(cityId, day){
   const maxZoom = info.cover + Math.log2(mobile ? 3.4 : 2.7);
   const extra = { top: pad.top + 40, right: pad.right + 40, bottom: pad.bottom + 40, left: pad.left + 40 };
   const cam = cameraForGeoBounds(b, extra, maxZoom);
-  return Object.assign(base, { center: cam.center, zoom: Math.max(cam.zoom, info.cover + Math.log2(1.2)) });
+  return Object.assign(base, { center: cam.center, zoom: Math.max(cam.zoom, info.cover - 0.6) /* journée étendue (ex. tour des lacs) : tout doit tenir */ });
 }
 
 function focusDayMap(cityId, day){
