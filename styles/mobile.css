@@ -223,8 +223,8 @@
 
   /* Popups fixed = viewport : remonter au-dessus de la tab bar */
   .ios-install,
-  .booking-alert,
-  .reminder-alert {
+  .todo-alert {
     bottom: calc(12px + var(--tabbar-h));
   }
+  .tab-badge { position: absolute; top: 4px; right: calc(50% - 22px); margin: 0; }
 }

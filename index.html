@@ -32,17 +32,17 @@
   <link rel="icon" href="./img/logo.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./img/logo.svg" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=169" />
-  <link rel="stylesheet" href="./styles/base.css?v=169" />
-  <link rel="stylesheet" href="./styles/views.css?v=169" />
-  <link rel="stylesheet" href="./styles/panel.css?v=169" />
-  <link rel="stylesheet" href="./styles/components.css?v=169" />
-  <link rel="stylesheet" href="./styles/print.css?v=169" />
-  <link rel="stylesheet" href="./styles/map.css?v=169" />
-  <link rel="stylesheet" href="./styles/settings.css?v=169" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=169" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=169" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=169" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=170" />
+  <link rel="stylesheet" href="./styles/base.css?v=170" />
+  <link rel="stylesheet" href="./styles/views.css?v=170" />
+  <link rel="stylesheet" href="./styles/panel.css?v=170" />
+  <link rel="stylesheet" href="./styles/components.css?v=170" />
+  <link rel="stylesheet" href="./styles/print.css?v=170" />
+  <link rel="stylesheet" href="./styles/map.css?v=170" />
+  <link rel="stylesheet" href="./styles/settings.css?v=170" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=170" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=170" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=170" />
 </head>
 <body>
   <div class="app tab-map">
@@ -107,16 +107,10 @@
           <p class="lead">Checklist et budget. Les cases cochées sont mémorisées sur cet appareil.</p>
           <p class="lead travelers" id="prep-travelers"></p>
 
-          <div class="info-sec prep-bookings-sec" id="prep-bookings-sec">
-            <h3><span class="booking-dot" aria-hidden="true"></span> À réserver maintenant</h3>
-            <p class="lead prep-bookings-lead" id="prep-bookings-lead">Trajets dont la réservation est ouverte.</p>
-            <div class="prep-bookings-list" id="prep-bookings"></div>
-          </div>
-
-          <div class="info-sec prep-reminders-sec" id="prep-reminders-sec" hidden>
-            <h3>Rappels billets</h3>
-            <p class="lead prep-bookings-lead">Actions à faire à date fixe (ex. récupérer les billets).</p>
-            <div class="prep-reminders-list" id="prep-reminders"></div>
+          <div class="info-sec prep-todo-sec" id="prep-todo-sec">
+            <h3><span class="todo-alert-dot" aria-hidden="true"></span> À faire</h3>
+            <p class="lead prep-todo-lead" id="prep-todo-lead"></p>
+            <div id="prep-todo"></div>
           </div>
 
           <div class="info-sec">
@@ -250,18 +244,14 @@
       <button type="button" class="btn-secondary" id="ios-install-dismiss">Compris</button>
     </div>
   </div>
-  <div class="booking-alert" id="booking-alert" hidden role="dialog" aria-labelledby="booking-alert-title">
-    <div class="booking-alert-inner">
-      <p id="booking-alert-title"><span class="booking-dot" aria-hidden="true"></span> <strong>Réservations ouvertes</strong></p>
-      <ul class="booking-alert-list" id="booking-alert-list"></ul>
-      <button type="button" class="btn-secondary" id="booking-alert-dismiss">Compris</button>
-    </div>
-  </div>
-  <div class="reminder-alert" id="reminder-alert" hidden role="dialog" aria-labelledby="reminder-alert-title">
-    <div class="reminder-alert-inner">
-      <p id="reminder-alert-title"><strong>Rappel billets</strong></p>
-      <ul class="booking-alert-list" id="reminder-alert-list"></ul>
-      <button type="button" class="btn-secondary" id="reminder-alert-dismiss">Compris</button>
+  <div class="todo-alert" id="todo-alert" hidden role="dialog" aria-labelledby="todo-alert-title">
+    <div class="todo-alert-inner">
+      <div class="todo-alert-head">
+        <p id="todo-alert-title"><span class="todo-alert-dot" aria-hidden="true"></span><strong>À faire</strong> <span class="todo-alert-count" id="todo-alert-count"></span></p>
+        <button type="button" class="todo-later" id="todo-alert-later" title="Masquer jusqu’à demain">Plus tard</button>
+      </div>
+      <ul class="todo-list" id="todo-alert-list"></ul>
+      <button type="button" class="todo-all" id="todo-alert-all">Tout voir dans Préparatifs →</button>
     </div>
   </div>
 
@@ -269,6 +259,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=169"></script>
+  <script type="module" src="./src/main.js?v=170"></script>
 </body>
 </html>

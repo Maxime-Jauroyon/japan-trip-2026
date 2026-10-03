@@ -1,11 +1,11 @@
-/* Onglet Préparatifs : réservations ouvertes, rappels, checklist, budget, infos pratiques. */
+/* Onglet Préparatifs : à faire (réservations, billets), checklist, budget, infos pratiques. */
 
-import { loadChecks, prepCheckState, saveChecks } from "../../core/checklist-store.js";
+import { TODOS_CHANGED, loadChecks, notifyTodosChanged, prepCheckState, saveChecks } from "../../core/checklist-store.js";
 import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, PREP_CHECKS, TRAVELERS } from "../../core/data.js";
 import { formatBookingDateFr } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { collectBookableAlerts, collectPrepReminders } from "../../domain/bookings.js";
-import { renderReminderAlert } from "../alerts.js";
+import { collectPrepReminders } from "../../domain/bookings.js";
+import { bindTodoList, currentTodos, todoItemHtml } from "../alerts.js";
 
 export function renderPrep(){
   const box = document.getElementById("prep-checklist");
@@ -27,6 +27,7 @@ export function renderPrep(){
       saveChecks(st);
       const lab = box.querySelector(`label[for="${inp.id}"]`);
       if (lab) lab.classList.toggle("done", inp.checked);
+      notifyTodosChanged();
     });
   });
   const rows = PREP_BUDGET.map(b =>
@@ -36,77 +37,51 @@ export function renderPrep(){
     ? PREP_BUDGET_TOTAL
     : { label:"Total / pers.", amount:"—" };
   bud.innerHTML = rows + `<div class="total"><span>${esc(tot.label)}</span><span>${esc(tot.amount)}</span></div>`;
-  renderPrepBookings();
-  renderPrepReminders();
+  renderPrepTodos();
   renderPracticalInfo();
 }
 
-function renderPrepBookings(){
-  const box = document.getElementById("prep-bookings");
-  const lead = document.getElementById("prep-bookings-lead");
-  const sec = document.getElementById("prep-bookings-sec");
+const TODO_GROUPS = [
+  ["late", "En retard"],
+  ["now", "À faire maintenant"],
+  ["soon", "Dans les 14 prochains jours"]
+];
+
+/** Section « À faire » : groupée par urgence ; les rappels plus lointains restent discrets en dessous. */
+function renderPrepTodos(){
+  const box = document.getElementById("prep-todo");
+  const lead = document.getElementById("prep-todo-lead");
+  const sec = document.getElementById("prep-todo-sec");
   if (!box || !sec) return;
-  const alerts = collectBookableAlerts();
-  sec.classList.toggle("has-bookable", alerts.length > 0);
-  if (!alerts.length) {
-    if (lead) lead.textContent = "Rien d’ouvert pour l’instant — cette section s’allumera dès qu’un trajet devient réservable.";
-    box.innerHTML = `<p class="prep-bookings-empty">Aucun trajet à réserver maintenant.</p>`;
-    return;
-  }
+  const todos = currentTodos();
+  const urgent = todos.filter(t => t.urgency !== "soon").length;
+  sec.classList.toggle("has-urgent", urgent > 0);
+  sec.classList.toggle("has-late", todos.some(t => t.urgency === "late"));
   if (lead) {
-    lead.textContent = alerts.length === 1
-      ? "1 trajet est réservable — à faire avant d’oublier."
-      : alerts.length + " trajets sont réservables — à faire avant d’oublier.";
+    lead.textContent = urgent
+      ? `${urgent} chose${urgent > 1 ? "s" : ""} à faire maintenant — « Fait ✓ » quand c’est réservé.`
+      : "Rien d’urgent. Les réservations et billets apparaîtront ici dès qu’ils ouvrent.";
   }
-  box.innerHTML = alerts.map(a =>
-    `<a class="prep-booking-card" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">` +
-    `<span class="prep-booking-status"><span class="booking-dot" aria-hidden="true"></span>Réservable</span>` +
-    `<strong>${esc(a.legTitle)}</strong>` +
-    `<span class="prep-booking-meta">${esc(a.label)} · ${esc(a.site)}</span>` +
-    `<span class="prep-booking-go">Ouvrir le site →</span></a>`
-  ).join("");
+  const groups = TODO_GROUPS.map(([key, title]) => {
+    const items = todos.filter(t => t.urgency === key);
+    return items.length
+      ? `<h4 class="todo-group ${key}">${title}</h4><ul class="todo-list">${items.map(t => todoItemHtml(t, { full: true })).join("")}</ul>`
+      : "";
+  }).join("");
+  const later = collectPrepReminders(prepCheckState()).filter(r => r.days != null && r.days > 14);
+  const laterHtml = later.length
+    ? `<h4 class="todo-group later">Plus tard</h4><ul class="todo-later-list">` +
+      later.map(r => `<li><span>${esc(r.label)}</span><span class="meta">${esc(formatBookingDateFr(r.due))}</span></li>`).join("") +
+      `</ul>`
+    : "";
+  box.innerHTML = (groups || `<p class="prep-bookings-empty">Tout est à jour ✓</p>`) + laterHtml;
+  bindTodoList(box, todos);
 }
 
-function renderPrepReminders(){
-  const box = document.getElementById("prep-reminders");
-  const sec = document.getElementById("prep-reminders-sec");
-  if (!box || !sec) return;
-  const list = collectPrepReminders(prepCheckState());
-  if (!list.length) {
-    sec.hidden = true;
-    return;
-  }
-  sec.hidden = false;
-  const anyActive = list.some(r => r.active);
-  sec.classList.toggle("has-due", anyActive);
-  box.innerHTML = list.map(r => {
-    const when = r.due ? formatBookingDateFr(r.due) : "";
-    const badge = r.active
-      ? `<span class="prep-reminder-badge due">À faire maintenant</span>`
-      : r.days != null
-        ? `<span class="prep-reminder-badge">Dans ${r.days} j · ${esc(when)}</span>`
-        : "";
-    const linkList = (r.links && r.links.length)
-      ? r.links
-      : (r.url ? [{ label: r.urlLabel || "Ouvrir le guide →", url: r.url }] : []);
-    const linksHtml = linkList.map(l =>
-      `<a class="prep-reminder-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a>`
-    ).join("");
-    return `<div class="prep-reminder-card${r.active ? " due" : ""}">` +
-      `${badge}<strong>${esc(r.label)}</strong>` +
-      `<span class="prep-booking-meta">${esc(r.meta)}</span>` +
-      (linksHtml ? `<div class="prep-reminder-links">${linksHtml}</div>` : "") +
-      `<label class="prep-reminder-check"><input type="checkbox" data-check="${esc(r.id)}"/> Marquer comme fait</label>` +
-      `</div>`;
-  }).join("");
-  box.querySelectorAll("input[data-check]").forEach(inp => {
-    inp.addEventListener("change", () => {
-      const st = loadChecks();
-      st[inp.dataset.check] = inp.checked;
-      saveChecks(st);
-      renderPrep();
-      renderReminderAlert();
-    });
+/** Re-rendu de l’onglet quand une tâche change ailleurs (carte « À faire »). */
+export function initPrepView(){
+  document.addEventListener(TODOS_CHANGED, () => {
+    if (document.getElementById("view-prep")?.classList.contains("active")) renderPrep();
   });
 }
 

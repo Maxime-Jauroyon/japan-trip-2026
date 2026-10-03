@@ -8,7 +8,7 @@ import { initMap } from "./map/controller.js";
 import { showMapFallback } from "./map/map-view.js";
 import { registerTileProtocol } from "./map/offline-tiles.js";
 import { registerServiceWorker, bindForceRefresh } from "./pwa/sw-register.js";
-import { initBookingAlert, initIOSInstallHint, initReminderAlert } from "./ui/alerts.js";
+import { initIOSInstallHint, initTodoAlerts } from "./ui/alerts.js";
 import { initAppShell, initTouchUi } from "./ui/app-shell.js";
 import { initCityList } from "./ui/city-list.js";
 import { initMapControls } from "./ui/map-controls.js";
@@ -16,6 +16,7 @@ import { openActivityDetail, openCity, openHotelDetail, openStopDetail } from ".
 import { openJourney, openLeg } from "./ui/panels/leg-panel.js";
 import { initTabs, setAppTab } from "./ui/tabs.js";
 import { initTheme } from "./ui/theme.js";
+import { initPrepView } from "./ui/views/prep-view.js";
 import { bindSettings } from "./ui/views/settings-view.js";
 
 async function main() {
@@ -39,8 +40,8 @@ async function main() {
   initTabs();
   initAppShell();
   initIOSInstallHint();
-  initBookingAlert();
-  initReminderAlert();
+  initPrepView();
+  initTodoAlerts();
 }
 
 main();

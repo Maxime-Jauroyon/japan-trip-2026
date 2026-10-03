@@ -1,5 +1,6 @@
 /* Onglets de l’app (Carte, Préparatifs, Sur place, Réglages). */
 
+import { renderTodoAlerts } from "./alerts.js";
 import { state } from "../core/state.js";
 import { map } from "../map/map-view.js";
 import { syncSheetMapInset } from "./panels/panel.js";
@@ -26,6 +27,7 @@ export function setAppTab(tab){
   if (tab === "prep") renderPrep();
   if (tab === "onsite") renderOnsite();
   if (tab === "settings") renderSettings();
+  renderTodoAlerts(); // la carte « À faire » se cache sur Préparatifs (même liste en tête)
   if (tab === "map") {
     requestAnimationFrame(() => {
       if (!map) return;
