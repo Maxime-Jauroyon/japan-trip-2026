@@ -19,7 +19,7 @@ import { fmtClock, sunTimes } from "../../domain/sun.js";
 import { fillCityForecast } from "../views/weather.js";
 import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
-import { actLinksHtml, contextPhraseHtml, copyFieldHtml, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
+import { actLinksHtml, contextPhraseHtml, copyFieldHtml, imgRetryAttr, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
 
 export function openActivityDetail(act, opts){
   if (!state.panelContext || state.panelContext.type !== "city") return;
@@ -152,7 +152,7 @@ function itineraryHtml(stops, d){
       const kind = pinKind(a.title);
       const photo = photosFor(a)[0];
       const thumb = photo
-        ? `<span class="itin-thumb"><img src="${esc(thumbOf(photo.src))}" alt="" loading="lazy" onerror="this.parentNode.remove()"/></span>`
+        ? `<span class="itin-thumb"><img src="${esc(thumbOf(photo.src))}" alt="" decoding="async" ${imgRetryAttr("this.parentNode.remove()")}/></span>`
         : "";
       return seg + `<li class="itin-stop is-act" data-stop="${i}" role="button" tabindex="0">` +
         `<span class="itin-mark" style="--c:${PLACE_COLORS[kind] || PLACE_COLORS.pin}">${s.step}</span>` +

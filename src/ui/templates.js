@@ -31,12 +31,20 @@ export function statusLabel(s){
   return "À réserver";
 }
 
+/**
+ * Attribut onerror d’une image : 1er échec → nouvel essai dans 1,5 s (réseau lent, cache occupé),
+ * 2e échec → `giveUp` (code JS en ligne : retirer l’image, afficher le pictogramme…).
+ */
+export function imgRetryAttr(giveUp){
+  return `onerror="if(!this.dataset.retry){this.dataset.retry=1;var i=this;setTimeout(function(){i.src=i.src.split('?')[0]+'?r=1'},1500);return}${giveUp}"`;
+}
+
 export function renderHotelCard(stay){
   const h = stay.hotel || {};
   const thumbs = hotelPhotos(h);
-  const onErr = `onerror="this.remove();var t=this.parentElement;if(!t)return;t.classList.remove('has-photo');var ph=t.querySelector('.ph');if(ph)ph.style.display='grid'"`;
+  const onErr = imgRetryAttr("var t=this.parentElement;this.remove();if(!t)return;t.classList.remove('has-photo');var ph=t.querySelector('.ph');if(ph)ph.style.display='grid'");
   const thumb = thumbs[0]
-    ? `<div class="thumb has-photo"><img src="${esc(thumbOf(thumbs[0]))}" alt="" loading="lazy" ${onErr}/><div class="ph" style="display:none">${hotelIconSvg()}</div></div>`
+    ? `<div class="thumb has-photo"><img src="${esc(thumbOf(thumbs[0]))}" alt="" decoding="async" ${onErr}/><div class="ph" style="display:none">${hotelIconSvg()}</div></div>`
     : `<div class="thumb"><div class="ph">${hotelIconSvg()}</div></div>`;
   return `<button type="button" class="hotel-card" data-stay="${esc(stay.id)}">
     ${thumb}
@@ -256,8 +264,9 @@ export function renderPhotoGallery(photos, kind){
   if (!list.length){
     return `<div class="detail-hero"><div class="ph">${placeGlyphSvg(kind)}</div></div>`;
   }
-  const onErr = `onerror="var box=this.closest('.shot,.detail-hero');if(!box)return;this.remove();if(!box.querySelector('img'))box.style.display='none'"`;
-  const hero = `<div class="detail-hero"><img src="${esc(list[0].src)}" alt="" loading="lazy" ${onErr}/>` +
+  const onErr = imgRetryAttr("var box=this.closest('.shot,.detail-hero');if(!box)return;this.remove();if(!box.querySelector('img'))box.style.display='none'");
+  // Photo principale chargée tout de suite (en « lazy », le navigateur attendait la fin des animations de carte)
+  const hero = `<div class="detail-hero"><img src="${esc(list[0].src)}" alt="" fetchpriority="high" decoding="async" ${onErr}/>` +
     `<div class="ph" style="display:none">${placeGlyphSvg(kind)}</div>${photoCreditHtml(list[0].credit)}</div>`;
   const rest = list.slice(1);
   if (!rest.length) return hero;

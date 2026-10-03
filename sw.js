@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v187";
+const CACHE = "japan-trip-2026-v188";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -1078,8 +1078,14 @@ function fetchWithTimeout(req, ms) {
   ]);
 }
 
+/* Toujours chercher dans UN cache précis : caches.match() parcourrait aussi le cache des tuiles
+   (des dizaines de milliers d’entrées sur ordinateur) — chaque image prenait alors 50 ms et plus. */
+async function fromAppCache(req) {
+  return (await caches.open(CACHE)).match(req, { ignoreSearch: true });
+}
+
 async function fallbackPage() {
-  return (await caches.match("./index.html")) || (await caches.match("./")) || Response.error();
+  return (await fromAppCache("./index.html")) || (await fromAppCache("./")) || Response.error();
 }
 
 /** Réseau d’abord (avec délai max), copie en cache, sinon version en cache. */
@@ -1092,7 +1098,7 @@ async function networkFirst(req, isPage) {
     }
     return res;
   } catch (_) {
-    const cached = await caches.match(req, { ignoreSearch: true });
+    const cached = await fromAppCache(req);
     if (cached) return cached;
     return isPage ? fallbackPage() : Response.error();
   }
@@ -1100,17 +1106,20 @@ async function networkFirst(req, isPage) {
 
 /** Cache d’abord, réseau sinon (et mise en cache — photos dans IMG_CACHE). */
 async function cacheFirst(req) {
-  const cached = await caches.match(req, { ignoreSearch: true });
+  const url = new URL(req.url);
+  const img = isImage(url.pathname);
+  // Images : recherche exacte dans IMG_CACHE (sans la query, ex. ?r=1 d’une nouvelle tentative)
+  const key = img ? url.origin + url.pathname : req;
+  const cache = await caches.open(img ? IMG_CACHE : CACHE);
+  const cached = await cache.match(key, img ? undefined : { ignoreSearch: true });
   if (cached) return cached;
   try {
     const res = await fetch(req);
-    if (res && res.ok) {
-      const cache = await caches.open(isImage(new URL(req.url).pathname) ? IMG_CACHE : CACHE);
-      cache.put(req, res.clone());
-    }
+    if (res && res.ok) cache.put(key, res.clone()).catch(() => {});
     return res;
   } catch (_) {
-    return fallbackPage();
+    // Une image ne doit jamais recevoir la page HTML (l’image serait retirée pour de bon)
+    return img ? Response.error() : fallbackPage();
   }
 }
 
