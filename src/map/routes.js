@@ -4,8 +4,7 @@ import { LEGS } from "../core/data.js";
 import { legRouteParts, legVehicleKind } from "../domain/legs.js";
 import { routePartCoords, toWorld } from "./geo.js";
 import { map, mapMode, mapStyleReady, mapStyleTheme } from "./map-view.js";
-import { TRANSPORT_COLORS as ROUTE_COLORS, TRANSPORT_LABELS, transportIconSvg } from "../shared/icons.js";
-import { mapEl } from "../core/elements.js";
+import { TRANSPORT_COLORS as ROUTE_COLORS, transportIconSvg } from "../shared/icons.js";
 
 let routeBadges = [];
 let badgeZoomBound = false;
@@ -239,23 +238,4 @@ export function legGeoCoords(leg){
     });
   }
   return coords;
-}
-
-/** Légende des couleurs de trajets (vue Japon), limitée aux modes présents dans le voyage. */
-export function renderRouteLegend(){
-  if (!mapEl) return;
-  if (!ROUTE_DATA) ROUTE_DATA = buildRouteData();
-  let el = document.getElementById("route-legend");
-  if (!el) {
-    el = document.createElement("div");
-    el.id = "route-legend";
-    el.className = "route-legend";
-    el.setAttribute("aria-label", "Légende des trajets");
-    mapEl.parentElement.appendChild(el);
-  }
-  const kinds = ["plane", "shinkansen", "train", "bus"]
-    .filter(k => ROUTE_DATA.features.some(f => f.properties.vehicle === k));
-  el.innerHTML = kinds.map(k =>
-    `<span class="route-legend-item" style="--mode-c:${ROUTE_COLORS[k]}"><i class="vehicle-badge">${transportIconSvg(k)}</i>${TRANSPORT_LABELS[k]}</span>`
-  ).join("");
 }
