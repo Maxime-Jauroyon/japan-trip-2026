@@ -972,3 +972,4 @@ button.stat.stop-jump .jump-hint {
 .dc-meta:empty { display: none; }
 .dc-wx { font-size: 12px; font-weight: 700; color: var(--cream); }
 .dc-meta .closed-pill { margin-top: 0; font-size: 10.5px; }
+.itin-dist { display: block; margin-top: 3px; font-size: 11.5px; font-weight: 700; color: var(--blue-ink); }

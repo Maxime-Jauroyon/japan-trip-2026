@@ -11,6 +11,7 @@ import { fillCityPanel } from "../panels/city-panel.js";
 import { phraseCardHtml } from "../phrase-show.js";
 import { mapsDirectionsUrl } from "../templates.js";
 import { initFxConverter } from "./fx-converter.js";
+import { renderNextStop } from "./next-stop.js";
 import { renderOnsiteWeather } from "./weather.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 
@@ -104,6 +105,7 @@ export function renderOnsite(){
   today.innerHTML = todayCardHtml();
   const day = findTripDayByISO(japanTodayISO()) || (japanTodayISO() < TRIP.startDate ? DAYS[0] : null);
   if (day) renderOnsiteWeather(day);
+  renderNextStop();
   document.getElementById("onsite-open-day")?.addEventListener("click", () => openMapForDay(day));
   const sos = document.getElementById("onsite-sos");
   if (sos) sos.innerHTML = sosHtml();

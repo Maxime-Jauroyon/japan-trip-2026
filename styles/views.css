@@ -287,3 +287,37 @@
 .app.tab-prep #view-map,
 .app.tab-onsite #view-map,
 .app.tab-settings #view-map { display: none; }
+
+/* —— Et maintenant ? (prochaine étape du jour) —— */
+.next-card .next-count { font-size: 12px; font-weight: 700; color: var(--muted); }
+.next-main { display: flex; align-items: center; gap: 12px; }
+.next-main .itin-mark { flex: 0 0 auto; }
+.next-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.next-text .kicker { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-2); }
+.next-text strong { font: 700 19px/1.2 Georgia, "Times New Roman", serif; color: var(--cream); }
+.next-how { font-size: 13px; color: var(--muted); }
+.next-finished { margin: 0; font-size: 15px; color: var(--cream); }
+.next-card .today-actions { margin-top: 12px; }
+.next-steps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.next-step {
+  display: inline-flex; align-items: center; gap: 6px;
+  max-width: 100%;
+  padding: 5px 10px 5px 5px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--cream);
+  font: inherit; font-size: 12.5px; font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.next-step b {
+  flex: 0 0 auto;
+  display: grid; place-items: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  font-size: 11px;
+  background: rgba(var(--fg-rgb), .1);
+}
+.next-step.current { border-color: var(--gold); background: rgba(var(--gold-rgb), .12); }
+.next-step.done { color: var(--muted); text-decoration: line-through; }
+.next-step.done b { background: var(--ok); color: var(--bg); }

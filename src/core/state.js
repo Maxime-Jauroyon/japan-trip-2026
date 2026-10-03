@@ -8,5 +8,7 @@ export const state = {
   /** Jour affiché dans le panneau ville (n°) ou null (aperçu) — la carte le suit. */
   selectedDay: null,
   /** Dernier lieu mis en avant (pin sélectionné) — garde la caméra dessus. */
-  lastFocusAct: null
+  lastFocusAct: null,
+  /** Ma position (bouton 📍) : { lat, lng, acc, at } ou null. */
+  userPos: null
 };

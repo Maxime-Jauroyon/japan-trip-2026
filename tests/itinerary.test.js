@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DAYS, MAP_BOUNDS } from "../src/core/data.js";
-import { distanceKm, dayItinerary, itinerarySummary, segmentEstimate } from "../src/domain/itinerary.js";
+import { distanceKm, dayItinerary, formatDistance, formatMinutes, itinerarySummary, nextStop, segmentEstimate } from "../src/domain/itinerary.js";
 import { inBounds } from "../src/domain/places.js";
 import { bowedSegment } from "../src/map/geo.js";
 import { loadTripData } from "./helpers.js";
@@ -58,4 +58,22 @@ test("ordre des idées optimisé : aucun autre ordre ne gagne 5 min de trajet ou
     const best = Math.min(...perms(acts).map(total));
     assert.ok(total(acts) - best < 5, `J${d.n} ${c} : ${Math.round(total(acts))} min, optimum ${Math.round(best)} min`);
   }));
+});
+
+test("prochaine étape du jour et formats", () => {
+  const stops = [
+    { kind: "hotel", title: "Hôtel" },
+    { kind: "activity", title: "A" },
+    { kind: "activity", title: "B" },
+    { kind: "hotel", title: "Hôtel" }
+  ];
+  assert.equal(nextStop(stops, new Set()).stop.title, "A");
+  assert.equal(nextStop(stops, new Set()).from.title, "Hôtel");
+  const n = nextStop(stops, new Set(["A"]));
+  assert.equal(n.stop.title, "B");
+  assert.equal(n.from.title, "A");
+  assert.equal(nextStop(stops, new Set(["A", "B"])), null);
+  assert.equal(formatDistance(0.83), "850 m");
+  assert.equal(formatDistance(3.24), "3,2 km");
+  assert.equal(formatMinutes(65), "1 h 05");
 });

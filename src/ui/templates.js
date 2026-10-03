@@ -49,11 +49,11 @@ export function renderHotelCard(stay){
   </button>`;
 }
 
-export function mapsDirectionsUrl(act){
+export function mapsDirectionsUrl(act, mode = "walking"){
   if (!act || act.lat == null || act.lng == null) return null;
   const dest = `${act.lat},${act.lng}`;
   // origin omis → Google Maps utilise la position actuelle sur le téléphone
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=walking`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=${mode}`;
 }
 
 export function mapsLinkHtml(act, kind){
