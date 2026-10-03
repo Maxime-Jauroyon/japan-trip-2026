@@ -14,6 +14,7 @@ import { initCityList } from "./ui/city-list.js";
 import { initMapControls } from "./ui/map-controls.js";
 import { initMyPosition } from "./ui/my-position.js";
 import { initPhraseShow } from "./ui/phrase-show.js";
+import { initSearch } from "./ui/search.js";
 import { openActivityDetail, openCity, openHotelDetail, openStopDetail } from "./ui/panels/city-panel.js";
 import { openJourney, openLeg } from "./ui/panels/leg-panel.js";
 import { initTabs, setAppTab } from "./ui/tabs.js";
@@ -46,6 +47,7 @@ async function main() {
   initPrepView();
   initTodoAlerts();
   initPhraseShow();
+  initSearch();
   // Photos complètes en tâche de fond, une fois la page affichée (les vignettes sont déjà là)
   const later = () => setTimeout(requestPhotoPrecache, 4000);
   if (document.readyState === "complete") later();
