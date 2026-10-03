@@ -12,6 +12,7 @@ import { initIOSInstallHint, initTodoAlerts } from "./ui/alerts.js";
 import { initAppShell, initTouchUi } from "./ui/app-shell.js";
 import { initCityList } from "./ui/city-list.js";
 import { initMapControls } from "./ui/map-controls.js";
+import { initPhraseShow } from "./ui/phrase-show.js";
 import { openActivityDetail, openCity, openHotelDetail, openStopDetail } from "./ui/panels/city-panel.js";
 import { openJourney, openLeg } from "./ui/panels/leg-panel.js";
 import { initTabs, setAppTab } from "./ui/tabs.js";
@@ -42,6 +43,7 @@ async function main() {
   initIOSInstallHint();
   initPrepView();
   initTodoAlerts();
+  initPhraseShow();
 }
 
 main();

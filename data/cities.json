@@ -119,6 +119,7 @@
         {
           "id": "fuji-1",
           "label": "Séjour lac",
+          "phrases": "ryokan",
           "from": "12 nov",
           "to": "14 nov",
           "nights": "2 nuits",

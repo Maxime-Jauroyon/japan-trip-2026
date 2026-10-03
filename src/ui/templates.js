@@ -6,6 +6,7 @@ import { esc } from "../core/dom.js";
 import { bookingOpenStatus } from "../domain/bookings.js";
 import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/legs.js";
 import { hotelPhotos } from "../domain/photos.js";
+import { phraseCardHtml } from "./phrase-show.js";
 import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
 import { hotelIconSvg, mapsIconSvg, modeBadgeHtml, placeGlyphSvg } from "../shared/icons.js";
 
@@ -289,11 +290,11 @@ export function bindCopyButtons(root){
   });
 }
 
+/** Phrases utiles d’un type de lieu (cf. data/phrases.json → context), tappables pour les montrer. */
 export function contextPhraseHtml(key){
-  const list = CONTEXT_PHRASES[key] || [];
-  if (!list.length) return "";
-  return `<div class="context-phrases"><h4>Phrases utiles</h4>` +
-    list.map(p =>
-      `<div class="phrase-sm"><div class="fr">${esc(p.fr)}</div><div class="jp">${esc(p.jp)}</div><div class="ro">${esc(p.ro)}</div></div>`
-    ).join("") + `</div>`;
+  const ctx = CONTEXT_PHRASES[key];
+  if (!ctx || !ctx.phrases || !ctx.phrases.length) return "";
+  return `<div class="context-phrases"><h4>Phrases utiles · ${esc(ctx.label)}</h4>` +
+    `<p class="phrase-tip">Touchez une phrase pour la montrer en grand.</p>` +
+    ctx.phrases.map(p => phraseCardHtml(p, true)).join("") + `</div>`;
 }

@@ -16,7 +16,9 @@ export let FX_DEFAULT = 0;
 export let PREP_CHECKS = [];
 export let PREP_BUDGET = [];
 export let PREP_BUDGET_TOTAL = null;
-export let PHRASES = [];
+/** Phrases de l’onglet Sur place : [{ title, phrases: [{ fr, jp, ro, note? }] }]. */
+export let ONSITE_PHRASES = [];
+/** Phrases par type de lieu : { clé: { label, phrases } } (cf. domain/classify.js). */
 export let CONTEXT_PHRASES = {};
 export let ACT_META = {};
 export let TRIP = null;
@@ -59,7 +61,7 @@ export function hydrate(raw) {
   PREP_CHECKS = raw.prep.checks;
   PREP_BUDGET = raw.prep.budget;
   PREP_BUDGET_TOTAL = raw.prep.budgetTotal;
-  PHRASES = raw.phrases.common;
+  ONSITE_PHRASES = raw.phrases.onsite;
   CONTEXT_PHRASES = raw.phrases.context;
   ACT_META = raw["places-meta"];
   PRACTICAL_INFO = raw.practical;
