@@ -265,3 +265,17 @@ export function actMetaFor(act){
   const slug = photoSlug(act);
   return (slug && ACT_META[slug]) || { hours: "Horaires variables", duration: "1–2 h" };
 }
+
+/** Dates des séjours d’une ville, pour l’étiquette de la carte : « 18–22 nov », « 8–12 nov · 27–29 nov », « 17 nov ». */
+export function cityStayDates(city){
+  const parse = (s) => {
+    const m = String(s || "").match(/^(\d{1,2})\s+(.+)$/);
+    return m ? { d: m[1], mo: m[2].trim() } : null;
+  };
+  return ((city && city.stays) || []).map(st => {
+    const a = parse(st.from), b = parse(st.to);
+    if (!a) return "";
+    if (!b || (a.d === b.d && a.mo === b.mo)) return `${a.d} ${a.mo}`;
+    return a.mo === b.mo ? `${a.d}–${b.d} ${b.mo}` : `${a.d} ${a.mo}–${b.d} ${b.mo}`;
+  }).filter(Boolean).join(" · ");
+}

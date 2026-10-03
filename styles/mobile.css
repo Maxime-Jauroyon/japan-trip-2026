@@ -135,11 +135,11 @@
   .map-ctrl-zoom { display: none !important; }
   .home-btn { width: 44px; height: 44px; }
 
-  .city-mark .map-logo { width: 40px; height: 40px; }
-  .city-mark .map-logo svg { width: 27px; height: 27px; }
-  .city-mark .mark-halo { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
-  .city-mark .label { left: 46px; font-size: 12px; padding: 4px 9px 5px; }
-  .city-mark.label-left .label { right: 46px; }
+  .city-mark { --head: 34px; }
+  .city-mark .label { padding: 3px 8px 4px; }
+  .city-mark .label b { font-size: 12px; }
+  .city-mark .label small { font-size: 9.5px; }
+  .cm-step { min-width: 18px; height: 18px; font-size: 10px; top: -5px; right: -6px; }
   .pin .badge { --size: 36px; }
   .pin-cluster-bubble { width: 42px; height: 42px; }
   .route-chip { font-size: 11px; padding: 3px 8px 3px 6px; }
