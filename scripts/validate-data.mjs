@@ -118,6 +118,8 @@ days.forEach((d, i) => {
     if (m.leg && !legIds.has(m.leg)) err(`${w} déplacement ${k}`, `trajet inconnu « ${m.leg} »`);
     if (m.journey && !journeyIds.has(m.journey)) err(`${w} déplacement ${k}`, `journey inconnu « ${m.journey} »`);
   });
+  if (d.reminders != null && !Array.isArray(d.reminders)) err(w, "reminders doit être une liste");
+  (d.reminders || []).forEach((r, k) => { if (!isStr(r.title)) err(`${w} reminders[${k}]`, "title manquant"); });
   ["ideas", "ideasAfter"].forEach((key) => (d[key] || []).forEach((a, k) => {
     const wa = `${w} ${key}[${k}] « ${a.title} »`;
     if (!isStr(a.title)) err(wa, "titre manquant");

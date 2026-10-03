@@ -104,3 +104,9 @@ test("phrases utiles adaptées à chaque lieu", async () => {
   // Chaque lieu du voyage tombe sur un contexte qui existe
   DAYS.flatMap(ideasOf).forEach((a) => assert.ok(CONTEXT_PHRASES[phraseContextForAct(a)], a.title));
 });
+
+test("vols internationaux : arrivée le 1er jour, départ le dernier", () => {
+  const tokyo = daysForCity("tokyo");
+  assert.equal(tokyo.find((d) => d.n === 1).moves[0].role, "arrivée");
+  assert.equal(tokyo.find((d) => d.n === 22).moves[0].role, "départ");
+});

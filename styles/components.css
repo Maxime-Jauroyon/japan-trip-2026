@@ -266,6 +266,9 @@
 .tl-item.tl-hotel::before { border-color: #d4b896; }
 .tl-item.tl-locker::before { border-color: #c4a574; }
 .tl-item.tl-idea::before { border-color: var(--ok); }
+.tl-item.tl-reminder::before { border-color: #e0921c; background: #e0921c; }
+.tl-item.tl-reminder { padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(224, 146, 28, .5); background: rgba(224, 146, 28, .1); }
+.tl-item.tl-reminder .tl-time { color: #e0921c; font-weight: 700; }
 .tl-time {
   display: flex; align-items: center; gap: 7px;
   font-size: 11px;

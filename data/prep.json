@@ -130,6 +130,13 @@
       "id": "docs",
       "label": "Passeports + copies numériques",
       "meta": "Dans le cloud + hors ligne"
+    },
+    {
+      "id": "detaxe-depart",
+      "label": "Détaxe : passer à la douane à Haneda avant l’embarquement",
+      "meta": "Jour 22 · dim. 29 nov · vol HND 09:05 · passeports + achats non utilisés + reçus, au comptoir de la douane avant le contrôle de sécurité",
+      "remindFrom": "2026-11-28",
+      "done": false
     }
   ],
   "budget": [
