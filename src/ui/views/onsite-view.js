@@ -12,6 +12,7 @@ import { phraseCardHtml } from "../phrase-show.js";
 import { mapsDirectionsUrl } from "../templates.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderOnsiteWeather } from "./weather.js";
+import { fmtClock, sunTimes } from "../../domain/sun.js";
 
 /** Ouvre la carte de la ville du jour, panneau sur ce jour. */
 export function openMapForDay(day){
@@ -31,6 +32,12 @@ function showAddressBtn(h){
     `<span aria-hidden="true">🪪</span> Montrer l’adresse</button>`;
 }
 
+/** « Nuit à 16 h 49 » : en novembre le soleil se couche tôt, à garder en tête pour les visites en plein air. */
+function sunLineHtml(city, iso){
+  const sun = city ? sunTimes(city.lat, city.lng, iso) : null;
+  return sun ? `<p class="today-sun">🌅 ${fmtClock(sun.rise)} · 🌇 coucher du soleil à <strong>${fmtClock(sun.set)}</strong></p>` : "";
+}
+
 function todayCardHtml(){
   const iso = japanTodayISO();
   const day = findTripDayByISO(iso);
@@ -43,6 +50,7 @@ function todayCardHtml(){
       `<div class="kicker">Aujourd’hui · Jour ${day.n}</div>` +
       `<h3>${esc(day.dow)} ${esc(day.date.replace(/\s\d{4}$/, ""))} · ${esc(city ? city.name : day.city)}</h3>` +
       (h ? `<p class="today-hotel"><span>Ce soir</span> <strong>${esc(h.name)}</strong></p>` : "") +
+      sunLineHtml(city, iso) +
       `<div id="onsite-weather" class="weather-line" hidden></div>` +
       `<div class="today-actions">` +
       `<button type="button" class="today-act primary" id="onsite-open-day">Voir le programme</button>` +

@@ -1,6 +1,6 @@
 /* Panneau ville : en-tête, bande des jours, aperçu (hôtels + jours) ou programme du jour ; fiches activité, hôtel, gare. */
 
-import { CITIES, LEGS } from "../../core/data.js";
+import { CITIES, DAYS, LEGS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { panel } from "../../core/elements.js";
@@ -10,11 +10,13 @@ import { phraseContextForAct, pinKind, stopPhraseContext } from "../../domain/cl
 import { hotelPhotos, photosFor, thumbOf } from "../../domain/photos.js";
 import { dayItinerary, itinerarySummary, segmentEstimate } from "../../domain/itinerary.js";
 import { cityIdForAct } from "../../domain/places.js";
-import { cityStayDates, daysForCity, defaultCityDay, ideasForCity, ideasOf, stayGroups, stopEntryOnCity } from "../../domain/trip.js";
+import { actMetaFor, cityStayDates, closureFor, daysForCity, defaultCityDay, ideasForCity, ideasOf, stayGroups, stopEntryOnCity } from "../../domain/trip.js";
 import { highlightPin } from "../../map/city.js";
 import { showCity } from "../../map/controller.js";
 import { clearLegEnds } from "../../map/country.js";
 import { PLACE_COLORS, TRANSPORT_COLORS, cityIconSvg, placeGlyphSvg, transportIconSvg } from "../../shared/icons.js";
+import { fmtClock, sunTimes } from "../../domain/sun.js";
+import { fillCityForecast } from "../views/weather.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
 import { actLinksHtml, contextPhraseHtml, copyFieldHtml, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
 
@@ -31,11 +33,19 @@ export function openActivityDetail(act, opts){
     gallery +
     mapsLinkHtml(act, "detail") +
     `<p class="desc">${esc(act.desc || "")}</p>` +
+    closedNoteHtml(act) +
     notesListHtml(act.notes) +
     actLinksHtml(act.links) +
     contextPhraseHtml(phraseContextForAct(act))
   );
   highlightPin(act, opts);
+}
+
+/** Avertissement de fermeture dans la fiche, pour le jour affiché. */
+function closedNoteHtml(act){
+  const d = state.selectedDay != null ? DAYS.find(x => x.n === state.selectedDay) : null;
+  const cl = closureOf(act, d);
+  return cl ? `<div class="closed-note${cl.partial ? " partial" : ""}" role="note"><strong>⚠︎ ${esc(cl.label)}</strong><p>${esc(cl.note)}</p></div>` : "";
 }
 
 /** En-tête de fiche (type + nom), placé avant les photos : lisible même sheet à mi-hauteur. */
@@ -111,6 +121,9 @@ const monthOf = (d) => (String(d.date || "").match(/^\d+\s+(\S+)/) || ["", ""])[
 const fmtMin = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`);
 const fmtKm = (km) => (km < 10 ? km.toFixed(1).replace(".", ",") : String(Math.round(km))) + " km";
 const isToday = (d) => dayToISO(d) === japanTodayISO();
+/** Fermeture du lieu ce jour-là (places-meta.json → closed), ou null. */
+const closureOf = (act, d) => (d ? closureFor(actMetaFor(act).closed, dayToISO(d), TRIP.holidays || []) : null);
+const closedPillHtml = (cl) => cl ? `<span class="closed-pill${cl.partial ? " partial" : ""}">⚠︎ ${esc(cl.label)}</span>` : "";
 
 function dayStripHtml(days, sel){
   const chip = (n, top, bottom, extra) =>
@@ -123,7 +136,7 @@ function dayStripHtml(days, sel){
 }
 
 /** Étapes de la journée (ordre de passage), avec le temps de trajet entre deux étapes. */
-function itineraryHtml(stops){
+function itineraryHtml(stops, d){
   return `<ol class="itin">` + stops.map((s, i) => {
     let seg = "";
     if (i > 0) {
@@ -142,7 +155,8 @@ function itineraryHtml(stops){
       return seg + `<li class="itin-stop is-act" data-stop="${i}" role="button" tabindex="0">` +
         `<span class="itin-mark" style="--c:${PLACE_COLORS[kind] || PLACE_COLORS.pin}">${s.step}</span>` +
         `<span class="itin-main"><strong>${esc(a.title)}</strong>` +
-        (a.desc ? `<span class="itin-desc">${esc(a.desc)}</span>` : "") + `</span>` +
+        (a.desc ? `<span class="itin-desc">${esc(a.desc)}</span>` : "") +
+        closedPillHtml(closureOf(a, d)) + `</span>` +
         thumb + mapsLinkHtml(a, "list") + `</li>`;
     }
     const hotel = s.kind === "hotel";
@@ -151,6 +165,14 @@ function itineraryHtml(stops){
       `<span class="itin-mark square" style="--c:${hotel ? PLACE_COLORS.hotel : PLACE_COLORS.stop}">${placeGlyphSvg(hotel ? "hotel" : "train")}</span>` +
       `<span class="itin-main"><em>${role} · ${hotel ? "hôtel" : "gare"}</em><strong>${esc(s.title)}</strong></span></li>`;
   }).join("") + `</ol>`;
+}
+
+/** Ligne météo (remplie après coup) + lever / coucher du soleil. */
+function dayExtrasHtml(c, d){
+  const iso = dayToISO(d);
+  const sun = iso ? sunTimes(c.lat, c.lng, iso) : null;
+  return `<p class="day-extras"><span class="day-wx" data-wx="${esc(iso || "")}" hidden></span>` +
+    (sun ? `<span class="day-sun" title="Lever et coucher du soleil">🌅 ${fmtClock(sun.rise)} · 🌇 ${fmtClock(sun.set)}</span>` : "") + `</p>`;
 }
 
 function dayViewHtml(c, d){
@@ -165,13 +187,14 @@ function dayViewHtml(c, d){
   if (stops.length > 1) facts.push(`≈ ${fmtKm(sum.km)}`, `${fmtMin(sum.minutes)} de trajets`);
   let body = `<div class="day-head"><h3>${esc(d.dow)} ${esc(dayNum(d))} ${esc(monthOf(d))}` +
     `${isToday(d) ? ` <span class="today-pill">Aujourd’hui</span>` : ""}</h3>` +
-    `<p>Jour ${d.n}${facts.length ? " · " + facts.join(" · ") : ""}</p></div>`;
+    `<p>Jour ${d.n}${facts.length ? " · " + facts.join(" · ") : ""}</p>` +
+    dayExtrasHtml(c, d) + `</div>`;
   (d.reminders || []).forEach(r => {
     body += `<div class="day-reminder" role="note"><strong>⚠︎ ${esc(r.title)}</strong>${r.desc ? `<p>${esc(r.desc)}</p>` : ""}</div>`;
   });
   if (moves.length) body += `<h4 class="sec-title">Trajets</h4>${renderMoves(moves, c.id)}`;
   if (locker) body += `<h4 class="sec-title">Bagages</h4>${locker}`;
-  if (stops.length > 1 || sum.activities) body += `<h4 class="sec-title">Programme</h4>${itineraryHtml(stops)}`;
+  if (stops.length > 1 || sum.activities) body += `<h4 class="sec-title">Programme</h4>${itineraryHtml(stops, d)}`;
   if (others.length) {
     body += `<h4 class="sec-title">Autres idées</h4><div class="idea-list">` + others.map((a, i) =>
       `<div class="idea" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${mapsLinkHtml(a, "list")}</div>`
@@ -194,13 +217,16 @@ function overviewHtml(c, days){
     const ideas = acts.length ? acts.map(s => s.title) : ideasForCity(ideasOf(d), c.id).map(a => a.title);
     const moves = d.moves || [];
     const first = moves.find(m => m.leg || m.mode);
+    const closures = (acts.length ? acts.map(s => s.ref) : ideasForCity(ideasOf(d), c.id)).map(a => closureOf(a, d)).filter(Boolean);
     const line = ideas.length
       ? `${ideas.length} étape${ideas.length > 1 ? "s" : ""} · ${ideas.slice(0, 2).join(", ")}${ideas.length > 2 ? "…" : ""}`
       : (first ? first.title : "Journée libre");
     return `<button type="button" class="day-card${isToday(d) ? " today" : ""}" data-day="${d.n}">` +
       `<span class="dc-num"><b>J${d.n}</b><span>${esc(shortDow(d))}</span></span>` +
       `<span class="dc-main"><strong>${esc(d.dow)} ${esc(dayNum(d))} ${esc(monthOf(d))}${isToday(d) ? ` <span class="today-pill">Aujourd’hui</span>` : ""}</strong>` +
-      `<span>${esc(line)}</span></span>` +
+      `<span>${esc(line)}</span>` +
+      `<span class="dc-meta"><span class="dc-wx" data-wx="${esc(dayToISO(d) || "")}" hidden></span>` +
+      (closures.length ? closedPillHtml(closures[0]) : "") + `</span></span>` +
       (first ? modeBadgeFor(first.transfer ? "Correspondance" : (LEGS.find(l => l.id === first.leg)?.mode || first.mode), "dc-badge") : "") +
       `<span class="dc-go" aria-hidden="true">›</span></button>`;
   }).join("");
@@ -255,6 +281,7 @@ function renderView(dir){
   if (body) body.scrollTop = 0;
 
   bindMoves(listEl, c.id);
+  fillCityForecast(listEl, c.id);
   listEl.querySelectorAll(".hotel-card[data-stay]").forEach(n => n.addEventListener("click", () => {
     const stay = (c.stays || []).find(s => s.id === n.dataset.stay);
     if (stay) openHotelDetail(stay);

@@ -179,6 +179,8 @@
 .today-card p { color: var(--muted); font-size: 14px; margin: 0; }
 .today-card .today-hotel span { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
 .today-card .today-hotel strong { color: var(--cream); }
+.today-card .today-sun { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+.today-card .today-sun strong { color: var(--cream); }
 .weather-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-top: 8px; font-size: 13px; }
 .weather-line[hidden] { display: none; }
 .weather-line .wx-temps { font-weight: 800; font-size: 16px; color: var(--cream); }

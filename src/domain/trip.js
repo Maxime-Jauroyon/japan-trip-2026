@@ -293,6 +293,30 @@ export function cityNights(city){
   }, 0);
 }
 
+const DOW_FR = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+const isoDow = (iso) => new Date(iso + "T12:00:00Z").getUTCDay();
+const prevISO = (iso) => new Date(Date.parse(iso + "T12:00:00Z") - 86400000).toISOString().slice(0, 10);
+
+/**
+ * Fermeture d’un lieu le jour `iso` (places-meta.json → closed) :
+ *   { days: [1], note, partial?, holidayShift? } — 0 = dimanche.
+ * holidayShift : règle des musées japonais — ouvert un jour férié, fermé le lendemain à la place.
+ * Retourne { label, note, partial } ou null si ouvert.
+ */
+export function closureFor(closed, iso, holidays = []){
+  if (!closed || !Array.isArray(closed.days) || !iso) return null;
+  const dow = isoDow(iso);
+  const hol = new Set(holidays);
+  let shut = closed.days.includes(dow);
+  if (closed.holidayShift) {
+    if (hol.has(iso)) shut = false;
+    else if (hol.has(prevISO(iso)) && closed.days.includes(isoDow(prevISO(iso)))) shut = true;
+  }
+  if (!shut) return null;
+  const label = closed.partial ? `En partie fermé le ${DOW_FR[dow]}` : `Fermé le ${DOW_FR[dow]}`;
+  return { label, note: closed.note || "", partial: !!closed.partial };
+}
+
 /**
  * Jour à afficher en ouvrant le panneau d’une ville : le jour demandé s’il est dans la ville,
  * sinon aujourd’hui (pendant le voyage), sinon null (aperçu).
