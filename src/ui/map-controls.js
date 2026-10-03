@@ -2,7 +2,7 @@
 
 import { onMapContainerResize } from "../map/controller.js";
 import { COUNTRY_PITCH, map, mapMode } from "../map/map-view.js";
-import { closePanel } from "./panels/panel.js";
+import { closeDetailSheet, closePanel } from "./panels/panel.js";
 
 /** Boutons flottants de la carte, Échap, redimensionnement, reprise d’animation. */
 export function initMapControls() {
@@ -19,7 +19,7 @@ export function initMapControls() {
     map.easeTo({ pitch: flat ? COUNTRY_PITCH : 0, bearing: flat ? map.getBearing() : 0, duration: 700 });
   };
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closePanel(true);
+    if (e.key === "Escape" && !closeDetailSheet()) closePanel(true);
   });
   let resizeTimer = 0;
   window.addEventListener("resize", () => {

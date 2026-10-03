@@ -92,6 +92,13 @@ export function cityIconSvg(id){
   return cityArt(id);
 }
 
+/* Couleur des pins selon le type de lieu (cf. domain/classify.js → pinKind) — carte et panneau. */
+export const PLACE_COLORS = {
+  torii: "#e0483a", castle: "#7c5cc4", play: "#f08a24", nature: "#2f9e6a", market: "#d19a1f",
+  food: "#e46a35", town: "#9a6b4a", gundam: "#3f6fd0", pin: "#b0603a",
+  hotel: "#d0587e", stop: "#4f6b86"
+};
+
 /* Glyphes des lieux : traits blancs (currentColor) sur la tête colorée des pins, grille 24 px. */
 const PLACE_GLYPHS = {
   torii: `<path d="M3 6.5c3 .8 6 1.2 9 1.2s6-.4 9-1.2M5 10.5h14M7 7.8V20M17 7.8V20M12 8v2.5"/>`,

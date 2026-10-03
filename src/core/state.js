@@ -5,6 +5,8 @@ export const state = {
   currentCity: null,
   /** Contenu du panneau : { type: "city" | "leg" | "journey", … } ou null. */
   panelContext: null,
+  /** Jour affiché dans le panneau ville (n°) ou null (aperçu) — la carte le suit. */
+  selectedDay: null,
   /** Dernier lieu mis en avant (pin sélectionné) — garde la caméra dessus. */
   lastFocusAct: null
 };

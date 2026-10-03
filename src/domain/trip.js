@@ -1,7 +1,7 @@
 /* Programme du voyage : jours par ville, déplacements, idées, hôtels, arrêts, points du jour. Fonctions pures. */
 
 import { ACT_META, CITIES, DAYS, LEGS, MAP_BOUNDS } from "../core/data.js";
-import { parseWhenSort } from "../core/dates.js";
+import { dayToISO, parseWhenSort } from "../core/dates.js";
 import { journeyById, legCityId } from "./legs.js";
 import { photoSlug } from "./photos.js";
 import { inBounds } from "./places.js";
@@ -278,4 +278,15 @@ export function cityStayDates(city){
     if (!b || (a.d === b.d && a.mo === b.mo)) return `${a.d} ${a.mo}`;
     return a.mo === b.mo ? `${a.d}–${b.d} ${b.mo}` : `${a.d} ${a.mo}–${b.d} ${b.mo}`;
   }).filter(Boolean).join(" · ");
+}
+
+/**
+ * Jour à afficher en ouvrant le panneau d’une ville : le jour demandé s’il est dans la ville,
+ * sinon aujourd’hui (pendant le voyage), sinon null (aperçu).
+ */
+export function defaultCityDay(days, todayISO, requestedN){
+  const list = days || [];
+  if (requestedN != null && list.some(d => d.n === requestedN)) return requestedN;
+  const today = list.find(d => dayToISO(d) === todayISO);
+  return today ? today.n : null;
 }

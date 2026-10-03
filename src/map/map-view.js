@@ -111,7 +111,9 @@ export function mapViewportInsets(){
     // + place pour le résumé du jour (pastille sous le nom de la ville)
     const top = (state.currentCity ? 64 : 72) + (mapEl.classList.contains("day-mode") ? 44 : 0);
     if (!open) return clampPad({ top, right: 24, bottom: 36, left: 24 });
-    const h = panel.offsetHeight || Math.round(H * 0.55);
+    // Partie visible du bottom sheet (il translate : sa hauteur ne dit rien)
+    const r = panel.getBoundingClientRect(), m = mapEl.getBoundingClientRect();
+    const h = r.height ? Math.max(0, m.bottom - r.top) : Math.round(H * 0.5);
     return clampPad({ top, right: 18, bottom: h + 18, left: 18 });
   }
   const left = 214;

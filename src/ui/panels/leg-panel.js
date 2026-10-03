@@ -39,7 +39,8 @@ export function openJourney(journeyId, focusLegId){
   panel.classList.add("panel-leg", "panel-journey");
   panel.innerHTML =
     sheetGrabHtml() +
-    `<div class="overlay-head"><div class="head-text"><h2>${esc(j.title)}</h2><span class="jp-name">${esc(j.subtitle || "")}${j.meta ? " · " + esc(j.meta) : ""}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+    `<div class="panel-top">` + `<div class="overlay-head"><div class="head-text"><h2>${esc(j.title)}</h2><span class="jp-name">${esc(j.subtitle || "")}${j.meta ? " · " + esc(j.meta) : ""}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+    `</div>` +
     `<div class="overlay-body">` +
     `<span class="sheet-kind trajet">Trajet · ${legs.length} étapes</span>` +
     destLine +
@@ -111,7 +112,8 @@ export function openLeg(id, opts){
   panel.classList.add("panel-leg");
   panel.innerHTML =
     sheetGrabHtml() +
-    `<div class="overlay-head">${modeBadgeFor(leg.mode, "head-badge")}<div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+    `<div class="panel-top">` + `<div class="overlay-head">${modeBadgeFor(leg.mode, "head-badge")}<div class="head-text"><h2>${esc(leg.title)}</h2><span class="jp-name">${esc(leg.subtitle)}</span></div><button class="close" type="button" aria-label="Fermer">×</button></div>` +
+    `</div>` +
     `<div class="overlay-body">` +
     journeyBack +
     `<span class="sheet-kind trajet">Étape</span>` +

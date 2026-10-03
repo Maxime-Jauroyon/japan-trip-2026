@@ -78,13 +78,6 @@ export function actLinksHtml(links){
   ).join("") + `</div>`;
 }
 
-export function renderIdeas(list, offset){
-  offset = offset || 0;
-  return (list || []).map((a, i) =>
-    `<div class="act" data-act-idx="${offset + i}" role="button" tabindex="0"><span class="dot"></span><div class="act-title">${esc(a.title)}</div>${mapsLinkHtml(a, "list")}</div>`
-  ).join("");
-}
-
 export function renderLuggageLocker(day){
   if (!day) return "";
   const stay = stayForDay(day.city, day);

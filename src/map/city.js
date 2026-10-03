@@ -9,7 +9,7 @@ import { pinKind, stopPinKind } from "../domain/classify.js";
 import { dayItinerary } from "../domain/itinerary.js";
 import { dayPinPoints, hotelsOnMap, placesOnMap, stayForDay, stopsOnMap } from "../domain/trip.js";
 import { esc } from "../core/dom.js";
-import { placeGlyphSvg } from "../shared/icons.js";
+import { PLACE_COLORS, placeGlyphSvg } from "../shared/icons.js";
 import { clearDayRoute, showDayRoute } from "./day-route.js";
 import { boundsOfCoords, toWorld } from "./geo.js";
 import { cameraForGeoBounds, cameraMove, cityCoverZoom, cityZoomInfo, map, mapMode, mapViewportInsets } from "./map-view.js";
@@ -23,12 +23,9 @@ let lastClusterZoom = null;
 let lastViewKey = null;
 
 /* Couleur des pins selon le type de lieu (cf. domain/classify.js → pinKind). */
-const KIND_COLORS = {
-  torii: "#e0483a", castle: "#7c5cc4", play: "#f08a24", nature: "#2f9e6a", market: "#d19a1f",
-  food: "#e46a35", town: "#9a6b4a", gundam: "#3f6fd0", pin: "#b0603a"
-};
-const PIN_COLOR_HOTEL = "#d0587e";
-const PIN_COLOR_STOP = "#4f6b86";
+const KIND_COLORS = PLACE_COLORS;
+const PIN_COLOR_HOTEL = PLACE_COLORS.hotel;
+const PIN_COLOR_STOP = PLACE_COLORS.stop;
 
 /** Pin : tête colorée (ronde = lieu, carrée = hôtel / gare) + pointe + ombre au sol, nom au survol. */
 function pinBadgeHtml(kind, color, label, opts){
@@ -220,21 +217,16 @@ export function renderCityPins(id, day, selected){
 export function highlightPin(act, opts){
   if (!state.currentCity || !act || act.lat == null) return;
   state.lastFocusAct = act;
-  const dayEl = panel.querySelector("details.day[open]");
-  const dayN = dayEl ? Number(dayEl.dataset.dayN) : null;
-  const day = dayN != null ? DAYS.find(d => d.n === dayN) : null;
-  renderCityPins(state.currentCity, day || null, act);
+  renderCityPins(state.currentCity, openDayInPanel(), act);
   if (opts && opts.zoom) {
     const zoom = cityCoverZoom() + Math.log2(isMobileUi() ? 3.3 : 2.8);
     cameraMove({ center: [act.lng, act.lat], zoom: Math.max(map.getZoom(), zoom), padding: mapViewportInsets() });
   }
 }
 
+/** Jour affiché dans le panneau ville (state.selectedDay), sinon null. */
 function openDayInPanel(){
-  const dayEl = panel.querySelector("details.day[open]");
-  if (!dayEl) return null;
-  const dayN = Number(dayEl.dataset.dayN);
-  return DAYS.find(d => d.n === dayN) || null;
+  return state.selectedDay != null ? DAYS.find(d => d.n === state.selectedDay) || null : null;
 }
 
 /** Vue d’ensemble de la ville, ajustée à la zone visible (hors panneau / liste). */
