@@ -1,10 +1,14 @@
 /* Service worker — cache hors ligne (1re visite en Wi‑Fi, puis utilisable sans réseau dans Safari).
    - Code, styles, données : réseau d’abord (mises à jour immédiates), cache si hors ligne / lent.
-   - Librairie MapLibre et images : cache d’abord.
+   - Librairie MapLibre et images : cache d’abord ; les images vivent dans IMG_CACHE, conservé entre
+     les versions (seules les photos nouvelles sont téléchargées).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v176";
+const CACHE = "japan-trip-2026-v177";
 const TILE_CACHE = "japan-tiles-v1";
+/** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
+const IMG_CACHE = "japan-img-v1";
+const isImage = (url) => url.includes("/img/");
 const NETWORK_TIMEOUT_MS = 4000;
 
 // <precache> — généré par scripts/gen-precache.mjs, ne pas éditer à la main
@@ -307,22 +311,44 @@ async function putFresh(cache, url) {
   if (res && res.ok) await cache.put(url, res.clone());
 }
 
+/** Exécute `task` sur chaque élément, `n` à la fois (une erreur isolée n’arrête rien). */
+async function eachParallel(list, n, task) {
+  let i = 0;
+  const worker = async () => {
+    while (i < list.length) {
+      const item = list[i++];
+      try { await task(item); } catch (_) { /* un échec isolé n’empêche pas l’installation */ }
+    }
+  };
+  await Promise.all(Array.from({ length: n }, worker));
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
-    for (const url of ASSETS) {
-      try { await putFresh(cache, url); } catch (_) { /* un échec isolé n’empêche pas l’installation */ }
-    }
+    const imgCache = await caches.open(IMG_CACHE);
+    const app = ASSETS.filter((u) => !isImage(u));
+    const imgs = ASSETS.filter(isImage);
+    await eachParallel(app, 6, (url) => putFresh(cache, url));
+    // Photos : uniquement celles qui manquent (déjà là = rien à télécharger)
+    await eachParallel(imgs, 6, async (url) => {
+      if (!(await imgCache.match(url))) await putFresh(imgCache, url);
+    });
     await self.skipWaiting();
   })());
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k !== TILE_CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k !== CACHE && k !== TILE_CACHE && k !== IMG_CACHE).map((k) => caches.delete(k)));
+    // Ménage : photos retirées du site
+    const wanted = new Set(ASSETS.filter(isImage).map((u) => new URL(u, self.location).href));
+    const imgCache = await caches.open(IMG_CACHE);
+    const stored = await imgCache.keys();
+    await Promise.all(stored.filter((r) => !wanted.has(r.url.split("?")[0])).map((r) => imgCache.delete(r)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener("message", (event) => {
@@ -356,14 +382,14 @@ async function networkFirst(req, isPage) {
   }
 }
 
-/** Cache d’abord, réseau sinon (et mise en cache). */
+/** Cache d’abord, réseau sinon (et mise en cache — photos dans IMG_CACHE). */
 async function cacheFirst(req) {
   const cached = await caches.match(req, { ignoreSearch: true });
   if (cached) return cached;
   try {
     const res = await fetch(req);
     if (res && res.ok) {
-      const cache = await caches.open(CACHE);
+      const cache = await caches.open(isImage(new URL(req.url).pathname) ? IMG_CACHE : CACHE);
       cache.put(req, res.clone());
     }
     return res;
