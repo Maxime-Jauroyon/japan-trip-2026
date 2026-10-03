@@ -747,6 +747,12 @@
         "leg": "depart"
       }
     ],
+    "reminders": [
+      {
+        "title": "Détaxe à l’aéroport — avant l’embarquement",
+        "desc": "Passer au comptoir de la douane (税関 · tax refund) à Haneda T3 avant le contrôle de sécurité, avec les passeports, les achats non utilisés et les reçus. Prévoir 30 min de plus avant le vol de 09:05 ; le remboursement arrive ensuite (magasin ou carte bancaire)."
+      }
+    ],
     "ideas": []
   }
 ]

@@ -32,7 +32,7 @@
       "phrases": [
         { "fr": "Combien ça coûte ?", "jp": "いくらですか？", "ro": "Ikura desu ka?" },
         { "fr": "Puis-je payer par carte ?", "jp": "カードで払えますか？", "ro": "Kādo de haraemasu ka?" },
-        { "fr": "Détaxe possible ? (passeport)", "jp": "免税できますか？", "ro": "Menzei dekimasu ka?", "note": "Dès 5 000 ¥ d’achats dans un même magasin, avec le passeport." },
+        { "fr": "Enregistrement détaxe, s’il vous plaît (passeport)", "jp": "免税の手続きをお願いします", "ro": "Menzei no tetsuzuki o onegai shimasu", "note": "Depuis nov. 2026 : on paie la taxe, le magasin enregistre l’achat sur le passeport (dès 5 000 ¥), remboursement après le contrôle douane à l’aéroport au départ. Garder achats et reçus avec soi." },
         { "fr": "Pas besoin de sac", "jp": "袋はいりません", "ro": "Fukuro wa irimasen" },
         { "fr": "Un reçu, s’il vous plaît", "jp": "レシートをください", "ro": "Reshīto o kudasai" }
       ]
@@ -152,7 +152,7 @@
       "phrases": [
         { "fr": "Combien ça coûte ?", "jp": "いくらですか？", "ro": "Ikura desu ka?" },
         { "fr": "Puis-je payer par carte ?", "jp": "カードで払えますか？", "ro": "Kādo de haraemasu ka?" },
-        { "fr": "Détaxe possible ? (passeport)", "jp": "免税できますか？", "ro": "Menzei dekimasu ka?" },
+        { "fr": "Enregistrement détaxe, s’il vous plaît (passeport)", "jp": "免税の手続きをお願いします", "ro": "Menzei no tetsuzuki o onegai shimasu", "note": "Remboursement au départ, après la douane à l’aéroport." },
         { "fr": "Avez-vous une autre taille ?", "jp": "他のサイズはありますか？", "ro": "Hoka no saizu wa arimasu ka?" },
         { "fr": "Je regarde seulement, merci", "jp": "見ているだけです", "ro": "Mite iru dake desu" },
         { "fr": "Pas besoin de sac", "jp": "袋はいりません", "ro": "Fukuro wa irimasen" }

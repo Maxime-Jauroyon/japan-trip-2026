@@ -164,6 +164,9 @@ function dayViewHtml(c, d){
   let body = `<div class="day-head"><h3>${esc(d.dow)} ${esc(dayNum(d))} ${esc(monthOf(d))}` +
     `${isToday(d) ? ` <span class="today-pill">Aujourd’hui</span>` : ""}</h3>` +
     `<p>Jour ${d.n}${facts.length ? " · " + facts.join(" · ") : ""}</p></div>`;
+  (d.reminders || []).forEach(r => {
+    body += `<div class="day-reminder" role="note"><strong>⚠︎ ${esc(r.title)}</strong>${r.desc ? `<p>${esc(r.desc)}</p>` : ""}</div>`;
+  });
   if (moves.length) body += `<h4 class="sec-title">Trajets</h4>${renderMoves(moves, c.id)}`;
   if (locker) body += `<h4 class="sec-title">Bagages</h4>${locker}`;
   if (stops.length > 1 || sum.activities) body += `<h4 class="sec-title">Programme</h4>${itineraryHtml(stops)}`;
@@ -172,7 +175,7 @@ function dayViewHtml(c, d){
       `<div class="idea" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${mapsLinkHtml(a, "list")}</div>`
     ).join("") + `</div>`;
   }
-  if (!moves.length && !locker && stops.length <= 1 && !others.length) {
+  if (!moves.length && !locker && stops.length <= 1 && !others.length && !(d.reminders || []).length) {
     body += `<p class="empty-day">Rien de prévu ce jour-là pour ${esc(c.name)}.</p>`;
   }
   return { html: body, stops, others };

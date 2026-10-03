@@ -107,6 +107,11 @@ function renderDayTimeline(day){
     });
   }
 
+  // Rappels du jour (ex. détaxe à l’aéroport) : tout en haut de la frise
+  (day.reminders || []).forEach((r, i) => {
+    items.push({ sort: -1000 + i, cls: "tl-reminder", time: "À ne pas oublier", title: r.title, desc: r.desc || "", tags: [] });
+  });
+
   (day.ideas || []).forEach((a, i) => {
     const meta = actMetaFor(a);
     let sort;

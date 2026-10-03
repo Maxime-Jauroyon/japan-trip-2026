@@ -3,7 +3,7 @@
    - Librairie MapLibre et images : cache d’abord.
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v175";
+const CACHE = "japan-trip-2026-v176";
 const TILE_CACHE = "japan-tiles-v1";
 const NETWORK_TIMEOUT_MS = 4000;
 

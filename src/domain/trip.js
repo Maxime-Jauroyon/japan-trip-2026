@@ -29,8 +29,13 @@ function withMoveRoles(moves, cityId){
     const leg = m.leg ? LEGS.find(l => l.id === m.leg) : null;
     let role = "";
     if (leg){
-      if (legCityId(leg.to) === cityId) role = "arrivée";
-      else if (legCityId(leg.from) === cityId) role = "départ";
+      const toHere = legCityId(leg.to) === cityId, fromHere = legCityId(leg.from) === cityId;
+      // Vol international (ex. Tokyo ↔ Paris) : les deux extrémités pointent la ville ; l’arrêt à l’étranger
+      // (sans coordonnées, ex. CDG) dit si l’on part ou si l’on arrive.
+      const abroad = (s) => s && (s.lat == null || s.lng == null);
+      if (toHere && fromHere) role = abroad(leg.toStop) ? "départ" : "arrivée";
+      else if (toHere) role = "arrivée";
+      else if (fromHere) role = "départ";
     }
     return Object.assign({}, m, { role });
   });

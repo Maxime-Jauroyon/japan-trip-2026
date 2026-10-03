@@ -823,6 +823,15 @@ button.stat.stop-jump .jump-hint {
   font: 700 10px/1.4 -apple-system, "Segoe UI", sans-serif; letter-spacing: .04em;
   color: #fff; background: var(--accent);
 }
+.day-reminder {
+  margin: 14px 0 4px; padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(224, 146, 28, .55);
+  border-left: 4px solid #e0921c;
+  background: rgba(224, 146, 28, .1);
+}
+.day-reminder strong { display: block; font-size: 14.5px; color: var(--cream); }
+.day-reminder p { margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--muted); }
 .empty-day { margin-top: 16px; color: var(--muted); font-size: 14px; }
 
 /* Programme : étapes numérotées (= pins) reliées, temps de trajet entre deux étapes */
