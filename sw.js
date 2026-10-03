@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v185";
+const CACHE = "japan-trip-2026-v186";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -481,6 +481,7 @@ const ASSETS = [
   "./src/core/state.js",
   "./src/domain/bookings.js",
   "./src/domain/classify.js",
+  "./src/domain/expenses.js",
   "./src/domain/itinerary.js",
   "./src/domain/legs.js",
   "./src/domain/photos.js",
@@ -513,6 +514,7 @@ const ASSETS = [
   "./src/ui/tabs.js",
   "./src/ui/templates.js",
   "./src/ui/theme.js",
+  "./src/ui/views/expenses.js",
   "./src/ui/views/fx-converter.js",
   "./src/ui/views/next-stop.js",
   "./src/ui/views/onsite-view.js",
