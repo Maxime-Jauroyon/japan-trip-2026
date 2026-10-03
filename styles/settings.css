@@ -69,6 +69,7 @@
 .offline-maps-status { margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
 .offline-maps-status.ready { color: var(--cream); }
 .offline-maps-status small { color: var(--muted); }
+.offline-maps-note { margin: -6px 0 12px; font-size: 12px; color: var(--muted); }
 .ok-dot {
   display: inline-block;
   width: 9px; height: 9px;

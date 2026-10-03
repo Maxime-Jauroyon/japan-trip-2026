@@ -3,9 +3,10 @@
    Contrôleur de la carte (API publique pour l’UI) : création, thème, relief,
    passage Japon 3D ↔ ville 2D, cadrage des trajets. Seul module à piloter les autres modules carte. */
 
-import { MAP_RELIEF_KEY } from "../config.js";
+import { APP_VERSION, MAP_RELIEF_KEY } from "../config.js";
 import { CITIES, DAYS, LEGS } from "../core/data.js";
 import { hint, mapEl, panel, stageEl } from "../core/elements.js";
+import { isMobileUi } from "../core/env.js";
 import { hooks } from "../core/hooks.js";
 import { state } from "../core/state.js";
 import { legEndPoint } from "../domain/legs.js";
@@ -14,6 +15,7 @@ import { addDayRouteLayers, updateDayRouteChips } from "./day-route.js";
 import { buildCountry, setActiveCity, syncCountryLabels } from "./country.js";
 import { boundsOfCoords } from "./geo.js";
 import { buildMapStyle } from "./map-style.js";
+import { warmJapanTiles } from "./offline-tiles.js";
 import { COUNTRY_PITCH, JAPAN_MAX_BOUNDS, cameraMove, fitGeoBounds, fitJapanHome, map, mapMode, mapReliefEnabled, mapStyleReady, mapStyleTheme, mapViewportInsets, resolvedTheme, setMapInstance, setMapModeValue, setMapStyleReady, setMapStyleTheme, showMapFallback, syncMapControls } from "./map-view.js";
 import { addTripLayers, applyRouteHighlight, legGeoCoords, setRouteHover, setRoutesVisible, hideRouteBadges, showRouteBadges } from "./routes.js";
 
@@ -164,6 +166,8 @@ export function initMap(){
     customAttribution: '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> · Relief <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener">Terrain Tiles</a>'
   }), "bottom-left");
   map.on("style.load", onMapStyleLoad);
+  // Ordinateur : une fois la carte affichée, mettre la vue Japon en cache en tâche de fond
+  map.once("idle", () => setTimeout(() => { if (!isMobileUi()) warmJapanTiles(APP_VERSION); }, 2000));
   map.on("move", () => {
     if (mapMode === "city") {
       updateClusters();
