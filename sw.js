@@ -1,14 +1,17 @@
 /* Service worker — cache hors ligne (1re visite en Wi‑Fi, puis utilisable sans réseau dans Safari).
    - Code, styles, données : réseau d’abord (mises à jour immédiates), cache si hors ligne / lent.
    - Librairie MapLibre et images : cache d’abord ; les images vivent dans IMG_CACHE, conservé entre
-     les versions (seules les photos nouvelles sont téléchargées).
+     les versions. Installation = vignettes seulement ; photos complètes en tâche de fond quand la page
+     envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v177";
+const CACHE = "japan-trip-2026-v178";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
 const isImage = (url) => url.includes("/img/");
+/** Photo complète (≈ 230 Ko) : préchargée en tâche de fond, pas à l’installation. Les vignettes (thumb/) si. */
+const isFullPhoto = (url) => /\/img\/(activities|hotels)\/[^/]+$/.test(url);
 const NETWORK_TIMEOUT_MS = 4000;
 
 // <precache> — généré par scripts/gen-precache.mjs, ne pas éditer à la main
@@ -188,6 +191,189 @@ const ASSETS = [
   "./img/activities/teamlab-3.jpg",
   "./img/activities/teamlab.jpg",
   "./img/activities/teramachi.jpg",
+  "./img/activities/thumb/akihabara-2.jpg",
+  "./img/activities/thumb/akihabara-3.jpg",
+  "./img/activities/thumb/akihabara.jpg",
+  "./img/activities/thumb/animate.jpg",
+  "./img/activities/thumb/arashiyama-2.jpg",
+  "./img/activities/thumb/arashiyama-3.jpg",
+  "./img/activities/thumb/arashiyama.jpg",
+  "./img/activities/thumb/character-street-2.jpg",
+  "./img/activities/thumb/character-street-3.jpg",
+  "./img/activities/thumb/character-street.jpg",
+  "./img/activities/thumb/chureito-2.jpg",
+  "./img/activities/thumb/chureito-3.jpg",
+  "./img/activities/thumb/chureito.jpg",
+  "./img/activities/thumb/daigo-2.jpg",
+  "./img/activities/thumb/daigo-3.jpg",
+  "./img/activities/thumb/daigo.jpg",
+  "./img/activities/thumb/denden-2.jpg",
+  "./img/activities/thumb/denden.jpg",
+  "./img/activities/thumb/dotonbori-2.jpg",
+  "./img/activities/thumb/dotonbori-3.jpg",
+  "./img/activities/thumb/dotonbori.jpg",
+  "./img/activities/thumb/fujiq-2.jpg",
+  "./img/activities/thumb/fujiq-3.jpg",
+  "./img/activities/thumb/fujiq.jpg",
+  "./img/activities/thumb/fushimi-2.jpg",
+  "./img/activities/thumb/fushimi-3.jpg",
+  "./img/activities/thumb/fushimi.jpg",
+  "./img/activities/thumb/ginza-2.jpg",
+  "./img/activities/thumb/ginza-3.jpg",
+  "./img/activities/thumb/ginza.jpg",
+  "./img/activities/thumb/gold-leaf-2.jpg",
+  "./img/activities/thumb/gold-leaf.jpg",
+  "./img/activities/thumb/harajuku-2.jpg",
+  "./img/activities/thumb/harajuku-3.jpg",
+  "./img/activities/thumb/harajuku.jpg",
+  "./img/activities/thumb/higashi-chaya-2.jpg",
+  "./img/activities/thumb/higashi-chaya-3.jpg",
+  "./img/activities/thumb/higashi-chaya.jpg",
+  "./img/activities/thumb/hozenji-2.jpg",
+  "./img/activities/thumb/hozenji-3.jpg",
+  "./img/activities/thumb/hozenji.jpg",
+  "./img/activities/thumb/imperial-2.jpg",
+  "./img/activities/thumb/imperial-3.jpg",
+  "./img/activities/thumb/imperial.jpg",
+  "./img/activities/thumb/itchiku-2.jpg",
+  "./img/activities/thumb/itchiku-3.jpg",
+  "./img/activities/thumb/itchiku.jpg",
+  "./img/activities/thumb/jinya-2.jpg",
+  "./img/activities/thumb/jinya-3.jpg",
+  "./img/activities/thumb/jinya.jpg",
+  "./img/activities/thumb/kanazawa-castle-2.jpg",
+  "./img/activities/thumb/kanazawa-castle-3.jpg",
+  "./img/activities/thumb/kanazawa-castle.jpg",
+  "./img/activities/thumb/kanazawa-museum-2.jpg",
+  "./img/activities/thumb/kanazawa-museum-3.jpg",
+  "./img/activities/thumb/kanazawa-museum.jpg",
+  "./img/activities/thumb/kasuga-2.jpg",
+  "./img/activities/thumb/kasuga-3.jpg",
+  "./img/activities/thumb/kasuga.jpg",
+  "./img/activities/thumb/kawaguchi-2.jpg",
+  "./img/activities/thumb/kawaguchi-3.jpg",
+  "./img/activities/thumb/kawaguchi.jpg",
+  "./img/activities/thumb/kenrokuen-2.jpg",
+  "./img/activities/thumb/kenrokuen-3.jpg",
+  "./img/activities/thumb/kenrokuen.jpg",
+  "./img/activities/thumb/kinkakuji-2.jpg",
+  "./img/activities/thumb/kinkakuji-3.jpg",
+  "./img/activities/thumb/kinkakuji.jpg",
+  "./img/activities/thumb/kiyomizu-2.jpg",
+  "./img/activities/thumb/kiyomizu-3.jpg",
+  "./img/activities/thumb/kiyomizu.jpg",
+  "./img/activities/thumb/kofukuji-2.jpg",
+  "./img/activities/thumb/kofukuji-3.jpg",
+  "./img/activities/thumb/kofukuji.jpg",
+  "./img/activities/thumb/kuromon-2.jpg",
+  "./img/activities/thumb/kuromon-3.jpg",
+  "./img/activities/thumb/kuromon.jpg",
+  "./img/activities/thumb/meiji-2.jpg",
+  "./img/activities/thumb/meiji-3.jpg",
+  "./img/activities/thumb/meiji.jpg",
+  "./img/activities/thumb/miyagawa-2.jpg",
+  "./img/activities/thumb/miyagawa-3.jpg",
+  "./img/activities/thumb/miyagawa.jpg",
+  "./img/activities/thumb/momiji.jpg",
+  "./img/activities/thumb/music-forest-2.jpg",
+  "./img/activities/thumb/music-forest-3.jpg",
+  "./img/activities/thumb/music-forest.jpg",
+  "./img/activities/thumb/myoryuji.jpg",
+  "./img/activities/thumb/nagamachi-2.jpg",
+  "./img/activities/thumb/nagamachi-3.jpg",
+  "./img/activities/thumb/nagamachi.jpg",
+  "./img/activities/thumb/namba-yasaka-2.jpg",
+  "./img/activities/thumb/namba-yasaka-3.jpg",
+  "./img/activities/thumb/namba-yasaka.jpg",
+  "./img/activities/thumb/nara-park-2.jpg",
+  "./img/activities/thumb/nara-park-3.jpg",
+  "./img/activities/thumb/nara-park.jpg",
+  "./img/activities/thumb/nijo-2.jpg",
+  "./img/activities/thumb/nijo-3.jpg",
+  "./img/activities/thumb/nijo.jpg",
+  "./img/activities/thumb/nishi-chaya-2.jpg",
+  "./img/activities/thumb/nishi-chaya-3.jpg",
+  "./img/activities/thumb/nishi-chaya.jpg",
+  "./img/activities/thumb/nishiki-2.jpg",
+  "./img/activities/thumb/nishiki-3.jpg",
+  "./img/activities/thumb/nishiki.jpg",
+  "./img/activities/thumb/odaiba-2.jpg",
+  "./img/activities/thumb/odaiba-3.jpg",
+  "./img/activities/thumb/odaiba.jpg",
+  "./img/activities/thumb/omicho-2.jpg",
+  "./img/activities/thumb/omicho-3.jpg",
+  "./img/activities/thumb/omicho.jpg",
+  "./img/activities/thumb/osaka-castle-2.jpg",
+  "./img/activities/thumb/osaka-castle-3.jpg",
+  "./img/activities/thumb/osaka-castle.jpg",
+  "./img/activities/thumb/oshino-2.jpg",
+  "./img/activities/thumb/oshino-3.jpg",
+  "./img/activities/thumb/oshino.jpg",
+  "./img/activities/thumb/oyama-2.jpg",
+  "./img/activities/thumb/oyama-3.jpg",
+  "./img/activities/thumb/oyama.jpg",
+  "./img/activities/thumb/philosopher-2.jpg",
+  "./img/activities/thumb/philosopher-3.jpg",
+  "./img/activities/thumb/philosopher.jpg",
+  "./img/activities/thumb/pontocho-2.jpg",
+  "./img/activities/thumb/pontocho-3.jpg",
+  "./img/activities/thumb/pontocho.jpg",
+  "./img/activities/thumb/ropeway-2.jpg",
+  "./img/activities/thumb/ropeway-3.jpg",
+  "./img/activities/thumb/ropeway.jpg",
+  "./img/activities/thumb/saiko-2.jpg",
+  "./img/activities/thumb/saiko-3.jpg",
+  "./img/activities/thumb/saiko.jpg",
+  "./img/activities/thumb/sanmachi-2.jpg",
+  "./img/activities/thumb/sanmachi.jpg",
+  "./img/activities/thumb/sensoji-2.jpg",
+  "./img/activities/thumb/sensoji-3.jpg",
+  "./img/activities/thumb/sensoji.jpg",
+  "./img/activities/thumb/shibuya-2.jpg",
+  "./img/activities/thumb/shibuya-3.jpg",
+  "./img/activities/thumb/shibuya.jpg",
+  "./img/activities/thumb/shinjuku-2.jpg",
+  "./img/activities/thumb/shinjuku-3.jpg",
+  "./img/activities/thumb/shinjuku.jpg",
+  "./img/activities/thumb/shinsaibashi-2.jpg",
+  "./img/activities/thumb/shinsaibashi-3.jpg",
+  "./img/activities/thumb/shinsaibashi.jpg",
+  "./img/activities/thumb/shinsekai-2.jpg",
+  "./img/activities/thumb/shinsekai.jpg",
+  "./img/activities/thumb/shirakawa-2.jpg",
+  "./img/activities/thumb/shirakawa-3.jpg",
+  "./img/activities/thumb/shirakawa.jpg",
+  "./img/activities/thumb/sumida-2.jpg",
+  "./img/activities/thumb/sumida-3.jpg",
+  "./img/activities/thumb/sumida.jpg",
+  "./img/activities/thumb/tea-2.jpg",
+  "./img/activities/thumb/tea-3.jpg",
+  "./img/activities/thumb/tea.jpg",
+  "./img/activities/thumb/teamlab-2.jpg",
+  "./img/activities/thumb/teamlab-3.jpg",
+  "./img/activities/thumb/teamlab.jpg",
+  "./img/activities/thumb/teramachi.jpg",
+  "./img/activities/thumb/todaiji-2.jpg",
+  "./img/activities/thumb/todaiji-3.jpg",
+  "./img/activities/thumb/todaiji.jpg",
+  "./img/activities/thumb/tokyo-tower-2.jpg",
+  "./img/activities/thumb/tokyo-tower-3.jpg",
+  "./img/activities/thumb/tokyo-tower.jpg",
+  "./img/activities/thumb/ueno-2.jpg",
+  "./img/activities/thumb/ueno-3.jpg",
+  "./img/activities/thumb/ueno.jpg",
+  "./img/activities/thumb/usj-2.jpg",
+  "./img/activities/thumb/usj-3.jpg",
+  "./img/activities/thumb/usj.jpg",
+  "./img/activities/thumb/wagashi-2.jpg",
+  "./img/activities/thumb/wagashi-3.jpg",
+  "./img/activities/thumb/wagashi.jpg",
+  "./img/activities/thumb/yanaka-2.jpg",
+  "./img/activities/thumb/yanaka-3.jpg",
+  "./img/activities/thumb/yanaka.jpg",
+  "./img/activities/thumb/yasaka-2.jpg",
+  "./img/activities/thumb/yasaka-3.jpg",
+  "./img/activities/thumb/yasaka.jpg",
   "./img/activities/todaiji-2.jpg",
   "./img/activities/todaiji-3.jpg",
   "./img/activities/todaiji.jpg",
@@ -243,6 +429,40 @@ const ASSETS = [
   "./img/hotels/royal-park-haneda-3.jpg",
   "./img/hotels/royal-park-haneda-4.jpg",
   "./img/hotels/royal-park-haneda.jpg",
+  "./img/hotels/thumb/agora-kyoto-2.jpg",
+  "./img/hotels/thumb/agora-kyoto-3.jpg",
+  "./img/hotels/thumb/agora-kyoto-4.jpg",
+  "./img/hotels/thumb/agora-kyoto.jpg",
+  "./img/hotels/thumb/deer-park-nara-2.jpg",
+  "./img/hotels/thumb/deer-park-nara-3.jpg",
+  "./img/hotels/thumb/deer-park-nara-4.jpg",
+  "./img/hotels/thumb/deer-park-nara.jpg",
+  "./img/hotels/thumb/garner-osaka-2.jpg",
+  "./img/hotels/thumb/garner-osaka-3.jpg",
+  "./img/hotels/thumb/garner-osaka-4.jpg",
+  "./img/hotels/thumb/garner-osaka.jpg",
+  "./img/hotels/thumb/henn-na-kanazawa-2.jpg",
+  "./img/hotels/thumb/henn-na-kanazawa-3.jpg",
+  "./img/hotels/thumb/henn-na-kanazawa-4.jpg",
+  "./img/hotels/thumb/henn-na-kanazawa.jpg",
+  "./img/hotels/thumb/homenest-akihabara-2.jpg",
+  "./img/hotels/thumb/homenest-akihabara-3.jpg",
+  "./img/hotels/thumb/homenest-akihabara-4.jpg",
+  "./img/hotels/thumb/homenest-akihabara-5.jpg",
+  "./img/hotels/thumb/homenest-akihabara-6.jpg",
+  "./img/hotels/thumb/homenest-akihabara.jpg",
+  "./img/hotels/thumb/kawaguchiko-2.jpg",
+  "./img/hotels/thumb/kawaguchiko-3.jpg",
+  "./img/hotels/thumb/kawaguchiko-4.jpg",
+  "./img/hotels/thumb/kawaguchiko.jpg",
+  "./img/hotels/thumb/mercure-takayama-2.jpg",
+  "./img/hotels/thumb/mercure-takayama-3.jpg",
+  "./img/hotels/thumb/mercure-takayama-4.jpg",
+  "./img/hotels/thumb/mercure-takayama.jpg",
+  "./img/hotels/thumb/royal-park-haneda-2.jpg",
+  "./img/hotels/thumb/royal-park-haneda-3.jpg",
+  "./img/hotels/thumb/royal-park-haneda-4.jpg",
+  "./img/hotels/thumb/royal-park-haneda.jpg",
   "./img/logo.svg",
   "./lib/maplibre/maplibre-gl.css",
   "./lib/maplibre/maplibre-gl.js",
@@ -327,16 +547,23 @@ self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
     const imgCache = await caches.open(IMG_CACHE);
-    const app = ASSETS.filter((u) => !isImage(u));
-    const imgs = ASSETS.filter(isImage);
-    await eachParallel(app, 6, (url) => putFresh(cache, url));
-    // Photos : uniquement celles qui manquent (déjà là = rien à télécharger)
-    await eachParallel(imgs, 6, async (url) => {
+    // Code, données, vignettes et logo seulement (≈ 3 Mo d’images) : la mise à jour ne les attend pas
+    await eachParallel(ASSETS.filter((u) => !isImage(u)), 6, (url) => putFresh(cache, url));
+    await eachParallel(ASSETS.filter((u) => isImage(u) && !isFullPhoto(u)), 6, async (url) => {
       if (!(await imgCache.match(url))) await putFresh(imgCache, url);
     });
     await self.skipWaiting();
   })());
 });
+
+/** Photos complètes manquantes, 2 à la fois (laisse la bande passante à ce qui s’affiche). */
+async function precacheFullPhotos() {
+  const imgCache = await caches.open(IMG_CACHE);
+  await eachParallel(ASSETS.filter(isFullPhoto), 2, async (url) => {
+    if (!(await imgCache.match(url))) await putFresh(imgCache, url);
+  });
+}
+let photosRun = null;
 
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
@@ -353,6 +580,10 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+  if (event.data && event.data.type === "PRECACHE_IMAGES") {
+    if (!photosRun) photosRun = precacheFullPhotos().finally(() => { photosRun = null; });
+    event.waitUntil(photosRun);
+  }
 });
 
 function fetchWithTimeout(req, ms) {

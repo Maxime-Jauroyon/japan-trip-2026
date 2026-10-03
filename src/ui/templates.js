@@ -5,7 +5,7 @@ import { parseHotelTimeSort } from "../core/dates.js";
 import { esc } from "../core/dom.js";
 import { bookingOpenStatus } from "../domain/bookings.js";
 import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/legs.js";
-import { hotelPhotos } from "../domain/photos.js";
+import { hotelPhotos, thumbOf } from "../domain/photos.js";
 import { phraseCardHtml } from "./phrase-show.js";
 import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
 import { hotelIconSvg, mapsIconSvg, modeBadgeHtml, placeGlyphSvg } from "../shared/icons.js";
@@ -36,7 +36,7 @@ export function renderHotelCard(stay){
   const thumbs = hotelPhotos(h);
   const onErr = `onerror="this.remove();var t=this.parentElement;if(!t)return;t.classList.remove('has-photo');var ph=t.querySelector('.ph');if(ph)ph.style.display='grid'"`;
   const thumb = thumbs[0]
-    ? `<div class="thumb has-photo"><img src="${esc(thumbs[0])}" alt="" loading="lazy" ${onErr}/><div class="ph" style="display:none">${hotelIconSvg()}</div></div>`
+    ? `<div class="thumb has-photo"><img src="${esc(thumbOf(thumbs[0]))}" alt="" loading="lazy" ${onErr}/><div class="ph" style="display:none">${hotelIconSvg()}</div></div>`
     : `<div class="thumb"><div class="ph">${hotelIconSvg()}</div></div>`;
   return `<button type="button" class="hotel-card" data-stay="${esc(stay.id)}">
     ${thumb}

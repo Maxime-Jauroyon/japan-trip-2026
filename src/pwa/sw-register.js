@@ -37,6 +37,19 @@ function withTimeout(promise, ms) {
   ]);
 }
 
+/**
+ * Demande au service worker de précharger les photos complètes en tâche de fond
+ * (à appeler quand la page est au repos). Sans effet si aucun service worker ne contrôle la page.
+ */
+export function requestPhotoPrecache(){
+  const sw = navigator.serviceWorker;
+  const conn = navigator.connection;
+  if (!sw || (conn && conn.saveData)) return;
+  const send = () => sw.controller && sw.controller.postMessage({ type: "PRECACHE_IMAGES" });
+  if (sw.controller) send();
+  else sw.addEventListener("controllerchange", send, { once: true });
+}
+
 /** Vide les caches de l’app (sauf les cartes hors ligne) puis recharge. */
 async function forceRefreshApp() {
   try {

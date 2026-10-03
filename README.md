@@ -68,6 +68,7 @@ Repères :
 - **Photos** : `photos.json` → `places.<lieu>` liste les fichiers de `img/activities/` avec auteur et
   licence (affichés sous chaque photo, obligatoire en Creative Commons). Le lieu d’une idée vient de
   son `"slug"` ou du premier motif de `rules` qui correspond au titre (mettre les motifs précis en premier).
+  Après avoir ajouté ou remplacé une photo : `npm run thumbs` (vignettes légères des listes, ImageMagick requis).
 
 ## Publier une nouvelle version
 
