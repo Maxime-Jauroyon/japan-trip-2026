@@ -72,19 +72,17 @@ export async function renderOnsiteWeather(day){
   const box = document.getElementById("onsite-weather");
   if (!box || !day) { if (box) box.hidden = true; return; }
   box.hidden = false;
-  box.innerHTML = `<div class="wx-title">Météo · …</div><div class="wx-note">Chargement</div>`;
+  box.innerHTML = `<span class="wx-note">Météo…</span>`;
   const wx = await getWeatherForDay(day);
   if (!wx) { box.hidden = true; return; }
   const cityName = CITIES[day.city] ? CITIES[day.city].name : day.city;
   if (wx.type === "forecast") {
     box.innerHTML =
-      `<div class="wx-title">Prévisions · ${esc(cityName)} · ${esc(day.date)}</div>` +
-      `<div class="wx-temps">${wx.min}° – ${wx.max}°C · ${esc(wx.label)}</div>` +
-      (wx.rain != null ? `<div class="wx-note">Pluie : ${wx.rain}%</div>` : "");
+      `<span class="wx-temps">${wx.min}° – ${wx.max}°C</span>` +
+      `<span class="wx-note">${esc(wx.label)}${wx.rain != null ? ` · pluie ${wx.rain}%` : ""} · ${esc(cityName)}</span>`;
   } else {
     box.innerHTML =
-      `<div class="wx-title">Climat type · ${esc(TRIP.climateMonth)} · ${esc(cityName)}</div>` +
-      `<div class="wx-temps">${wx.min}° – ${wx.max}°C</div>` +
-      `<div class="wx-note">${esc(wx.note)}</div>`;
+      `<span class="wx-temps">${wx.min}° – ${wx.max}°C</span>` +
+      `<span class="wx-note">Climat type en ${esc(TRIP.climateMonth)} · ${esc(cityName)}</span>`;
   }
 }

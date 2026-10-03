@@ -32,17 +32,17 @@
   <link rel="icon" href="./img/logo.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./img/logo.svg" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=178" />
-  <link rel="stylesheet" href="./styles/base.css?v=178" />
-  <link rel="stylesheet" href="./styles/views.css?v=178" />
-  <link rel="stylesheet" href="./styles/panel.css?v=178" />
-  <link rel="stylesheet" href="./styles/components.css?v=178" />
-  <link rel="stylesheet" href="./styles/print.css?v=178" />
-  <link rel="stylesheet" href="./styles/map.css?v=178" />
-  <link rel="stylesheet" href="./styles/settings.css?v=178" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=178" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=178" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=178" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=179" />
+  <link rel="stylesheet" href="./styles/base.css?v=179" />
+  <link rel="stylesheet" href="./styles/views.css?v=179" />
+  <link rel="stylesheet" href="./styles/panel.css?v=179" />
+  <link rel="stylesheet" href="./styles/components.css?v=179" />
+  <link rel="stylesheet" href="./styles/print.css?v=179" />
+  <link rel="stylesheet" href="./styles/map.css?v=179" />
+  <link rel="stylesheet" href="./styles/settings.css?v=179" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=179" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=179" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=179" />
 </head>
 <body>
   <div class="app tab-map">
@@ -103,75 +103,67 @@
 
       <section id="view-prep" class="info-view" aria-label="Préparatifs">
         <div class="info-wrap">
-          <h2>Préparatifs</h2>
-          <p class="lead">Checklist et budget. Les cases cochées sont mémorisées sur cet appareil.</p>
-          <p class="lead travelers" id="prep-travelers"></p>
+          <div class="view-head">
+            <h2>Préparatifs</h2>
+            <div class="prep-progress" id="prep-progress"></div>
+          </div>
+          <nav class="seg-tabs" id="prep-tabs" role="tablist" aria-label="Sections des préparatifs">
+            <button type="button" role="tab" data-pane="todo">À faire<span class="seg-count" id="prep-count-todo"></span></button>
+            <button type="button" role="tab" data-pane="checklist">Checklist<span class="seg-count" id="prep-count-checklist"></span></button>
+            <button type="button" role="tab" data-pane="budget">Budget</button>
+            <button type="button" role="tab" data-pane="infos">Infos</button>
+          </nav>
 
-          <div class="info-sec prep-todo-sec" id="prep-todo-sec">
-            <h3><span class="todo-alert-dot" aria-hidden="true"></span> À faire</h3>
+          <div class="prep-pane prep-todo-sec" data-pane="todo" id="prep-todo-sec">
             <p class="lead prep-todo-lead" id="prep-todo-lead"></p>
             <div id="prep-todo"></div>
           </div>
-
-          <div class="info-sec">
-            <h3>Checklist</h3>
+          <div class="prep-pane" data-pane="checklist" hidden>
             <ul class="check-list" id="prep-checklist"></ul>
+            <details class="check-done" id="prep-checklist-done-box">
+              <summary>Fait <span id="prep-done-count"></span></summary>
+              <ul class="check-list" id="prep-checklist-done"></ul>
+            </details>
           </div>
-
-          <div class="info-sec">
-            <h3>Budget</h3>
-            <div class="budget-grid" id="prep-budget"></div>
+          <div class="prep-pane" data-pane="budget" hidden>
+            <div class="budget-hero" id="prep-budget-hero"></div>
+            <div class="budget-list" id="prep-budget"></div>
+            <p class="lead travelers" id="prep-travelers"></p>
           </div>
-
-          <div class="info-sec">
-            <h3>Infos pratiques</h3>
+          <div class="prep-pane" data-pane="infos" hidden>
             <div class="practical-grid" id="prep-practical"></div>
           </div>
-
         </div>
       </section>
 
       <section id="view-onsite" class="info-view" aria-label="Sur place">
         <div class="info-wrap">
-          <h2>Sur place</h2>
-          <p class="lead">Programme du jour, convertisseur ¥/€ et phrases utiles.</p>
+          <div class="view-head"><h2>Sur place</h2></div>
 
-          <div class="info-sec">
-            <h3>Aujourd’hui</h3>
-            <div id="onsite-today"></div>
-            <div id="onsite-weather" class="weather-box" hidden></div>
-            <div class="onsite-actions">
-              <button type="button" class="btn-secondary" id="onsite-map-btn" hidden>Voir sur la carte</button>
+          <div id="onsite-today"></div>
+
+          <div class="tool-card fx" id="onsite-fx">
+            <div class="tool-head"><h3>Convertisseur</h3>
+              <label class="fx-rate"><input type="number" id="fx-rate" inputmode="decimal" min="1" step="0.1" aria-label="Yens pour 1 euro" /><span>¥ = 1 €</span></label>
             </div>
-            <div class="day-pick" id="onsite-day-pick" hidden></div>
-            <div id="onsite-day-body"></div>
+            <div class="fx-main">
+              <label class="fx-field"><span>Yens</span><input type="number" id="fx-yen" inputmode="decimal" min="0" step="1" placeholder="0" /></label>
+              <span class="fx-eq" aria-hidden="true">=</span>
+              <label class="fx-field"><span>Euros</span><input type="number" id="fx-eur" inputmode="decimal" min="0" step="0.01" placeholder="0" /></label>
+            </div>
+            <div class="fx-quick" id="fx-quick" aria-label="Montants rapides"></div>
           </div>
 
-          <div class="info-sec">
-            <h3>Convertisseur ¥ ↔ €</h3>
-            <p class="fx-hint">Taux indicatif, modifiable. Mémorisé sur cet appareil (hors ligne).</p>
-            <div class="fx">
-              <label class="fx-rate">
-                <span>¥ pour 1 €</span>
-                <input type="number" id="fx-rate" inputmode="decimal" min="1" step="0.1" />
-              </label>
-              <div class="fx-grid">
-                <label>
-                  <span>Yen</span>
-                  <input type="number" id="fx-yen" inputmode="decimal" min="0" step="1" placeholder="0" />
-                </label>
-                <label>
-                  <span>Euro</span>
-                  <input type="number" id="fx-eur" inputmode="decimal" min="0" step="0.01" placeholder="0" />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-sec">
-            <h3>Phrases utiles</h3>
-            <p class="lead phrase-lead">Touchez une phrase pour l’afficher en grand et la montrer.</p>
+          <div class="tool-card">
+            <div class="tool-head"><h3>Phrases utiles</h3></div>
+            <p class="phrase-lead">Touchez une phrase pour l’afficher en grand et la montrer.</p>
+            <div class="phrase-jump" id="phrase-jump"></div>
             <div class="phrase-groups" id="onsite-phrases"></div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-head"><h3>Urgences</h3></div>
+            <div class="sos-grid" id="onsite-sos"></div>
           </div>
         </div>
       </section>
@@ -261,6 +253,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=178"></script>
+  <script type="module" src="./src/main.js?v=179"></script>
 </body>
 </html>

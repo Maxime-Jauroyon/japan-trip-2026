@@ -1,7 +1,10 @@
-/* Convertisseur ¥ ↔ € (taux mémorisé). */
+/* Convertisseur ¥ ↔ € (taux mémorisé, montants rapides). */
 
 import { FX_KEY } from "../../config.js";
 import { FX_DEFAULT } from "../../core/data.js";
+
+/** Montants proposés en un toucher (prix courants : distributeur, repas, ticket…). */
+const QUICK_YEN = [500, 1000, 3000, 5000, 10000];
 
 function loadFxRate(){
   try {
@@ -54,5 +57,16 @@ export function initFxConverter(){
     else syncFromYen();
   });
   yenEl.addEventListener("input", () => { last = "yen"; syncFromYen(); });
+  // Montants rapides : un toucher = prix courant converti
+  const quick = document.getElementById("fx-quick");
+  if (quick) {
+    quick.innerHTML = QUICK_YEN.map(y => `<button type="button" data-yen="${y}">${y.toLocaleString("fr-FR")} ¥</button>`).join("");
+    quick.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      yenEl.value = b.dataset.yen;
+      last = "yen";
+      syncFromYen();
+      quick.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+    }));
+  }
   eurEl.addEventListener("input", () => { last = "eur"; syncFromEur(); });
 }

@@ -1,277 +1,103 @@
-/* Onglet Sur place : programme du jour, choix du jour, frise, bouton carte. */
+/* Onglet Sur place : boîte à outils du jour — carte « Aujourd’hui » (hôtel, programme, adresse),
+   convertisseur ¥/€, phrases utiles, numéros d’urgence. Le programme détaillé est dans la carte. */
 
 import { CITIES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
-import { findTripDayByISO, japanTodayISO, parseHotelTimeSort, parseWhenSort } from "../../core/dates.js";
+import { findTripDayByISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { hooks } from "../../core/hooks.js";
-import { actMetaFor, daysForCity, groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, isLastDayOfStay, luggageBeforeCheckInHint, moveSortRange, stayForDay } from "../../domain/trip.js";
+import { daysForCity, stayForDay } from "../../domain/trip.js";
 import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
 import { phraseCardHtml } from "../phrase-show.js";
-import { mapsLinkHtml, modeBadgeFor } from "../templates.js";
+import { mapsDirectionsUrl } from "../templates.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderOnsiteWeather } from "./weather.js";
 
-let onsiteSelectedDayN = null;
-
+/** Ouvre la carte de la ville du jour, panneau sur ce jour. */
 export function openMapForDay(day){
   if (!day || !CITIES[day.city]) return;
   hooks.setAppTab("map");
-  const id = day.city;
   clearLegEnds();
-  fillCityPanel(CITIES[id], daysForCity(id), day.n);
+  fillCityPanel(CITIES[day.city], daysForCity(day.city), day.n);
 }
 
-export function getOnsiteSelectedDay(){
-  if (onsiteSelectedDayN != null) return DAYS.find(d => d.n === onsiteSelectedDayN) || null;
+const daysUntil = (iso) => Math.ceil((Date.parse(iso + "T00:00:00+09:00") - Date.now()) / 86400000);
+
+/** Bouton « Montrer l’adresse » : la carte de phrase (mode Montrer) avec l’adresse de l’hôtel. */
+function showAddressBtn(h){
+  return `<button type="button" class="today-act" data-phrase>` +
+    `<span class="jp" hidden>${esc(h.address)}</span><span class="ro" hidden>${esc(h.name)}</span>` +
+    `<span class="fr" hidden>À montrer au chauffeur de taxi</span>` +
+    `<span aria-hidden="true">🪪</span> Montrer l’adresse</button>`;
+}
+
+function todayCardHtml(){
   const iso = japanTodayISO();
-  return findTripDayByISO(iso);
+  const day = findTripDayByISO(iso);
+  if (day) {
+    const city = CITIES[day.city];
+    const stay = stayForDay(day.city, day);
+    const h = stay && stay.hotel && stay.hotel.name && stay.hotel.name !== "—" ? stay.hotel : null;
+    const maps = h ? mapsDirectionsUrl(h) : null;
+    return `<div class="today-card live">` +
+      `<div class="kicker">Aujourd’hui · Jour ${day.n}</div>` +
+      `<h3>${esc(day.dow)} ${esc(day.date.replace(/\s\d{4}$/, ""))} · ${esc(city ? city.name : day.city)}</h3>` +
+      (h ? `<p class="today-hotel"><span>Ce soir</span> <strong>${esc(h.name)}</strong></p>` : "") +
+      `<div id="onsite-weather" class="weather-line" hidden></div>` +
+      `<div class="today-actions">` +
+      `<button type="button" class="today-act primary" id="onsite-open-day">Voir le programme</button>` +
+      (maps ? `<a class="today-act" href="${esc(maps)}" target="_blank" rel="noopener noreferrer">Aller à l’hôtel ↗</a>` : "") +
+      (h && h.address ? showAddressBtn(h) : "") +
+      `</div></div>`;
+  }
+  if (iso < TRIP.startDate) {
+    const n = daysUntil(TRIP.startDate);
+    return `<div class="today-card"><div class="kicker">Avant le départ</div>` +
+      `<h3>J-${n}</h3><p>Départ le ${esc(TRIP.startLabel)} · ${esc(TRIP.datesLabel)}</p>` +
+      `<div id="onsite-weather" class="weather-line" hidden></div>` +
+      `<div class="today-actions"><button type="button" class="today-act primary" id="onsite-open-day">Voir le jour 1</button></div></div>`;
+  }
+  return `<div class="today-card"><div class="kicker">Après le voyage</div><h3>お疲れさまでした !</h3>` +
+    `<p>Le voyage est terminé — la carte garde tout le programme.</p></div>`;
 }
 
-function syncOnsiteMapBtn(day){
-  const btn = document.getElementById("onsite-map-btn");
-  if (!btn) return;
-  if (day && CITIES[day.city]) {
-    btn.hidden = false;
-    btn.textContent = "Voir sur la carte · " + CITIES[day.city].name;
-  } else btn.hidden = true;
+function sosHtml(){
+  return (TRIP.emergency || []).map(e =>
+    `<a class="sos" href="tel:${esc(e.number)}"><strong>${esc(e.display || e.number)}</strong>` +
+    `<span>${esc(e.label)}</span>${e.note ? `<small>${esc(e.note)}</small>` : ""}</a>`
+  ).join("");
 }
 
-function renderDayTimeline(day){
-  if (!day) return "";
-  const cityId = day.city;
-  const city = CITIES[cityId];
-  const items = [];
-  const stay = stayForDay(cityId, day);
-  const h = stay && stay.hotel;
-  const moves = day.moves || [];
-  const moveRange = moveSortRange(moves);
-  const firstStay = h && h.name && h.name !== "—" && isFirstDayOfStay(cityId, day);
-  const lastStay = h && h.name && h.name !== "—" && isLastDayOfStay(cityId, day);
-  const checkInSort = firstStay ? parseHotelTimeSort(h.checkIn, 16 * 60) : null;
-  const earlyArrival = firstStay && isEarlyArrivalBeforeCheckIn(moveRange, checkInSort);
-
-  if (lastStay && !firstStay) {
-    const checkOutSort = parseHotelTimeSort(h.checkOut, 10 * 60);
-    const beforeDepart = moveRange.min < Infinity && moveRange.min > 60
-      ? moveRange.min - 45
-      : checkOutSort;
-    items.push({
-      sort: Math.min(checkOutSort, beforeDepart),
-      cls: "tl-hotel",
-      time: h.checkOut ? "Check-out · " + h.checkOut.split("·")[0].trim() : "Fin de séjour",
-      title: h.name,
-      desc: h.checkOut ? h.checkOut : "",
-      tags: ["Valise"]
-    });
+function renderPhrases(){
+  const box = document.getElementById("onsite-phrases");
+  const jump = document.getElementById("phrase-jump");
+  if (!box) return;
+  // Groupes par situation : le premier (au restaurant) ouvert, les autres repliés
+  box.innerHTML = ONSITE_PHRASES.map((g, i) =>
+    `<details class="phrase-group" id="phrase-group-${i}"${i === 0 ? " open" : ""}><summary>${esc(g.title)}<span>${g.phrases.length}</span></summary>` +
+    `<div class="phrase-grid">${g.phrases.map(p => phraseCardHtml(p)).join("")}</div></details>`
+  ).join("");
+  if (jump) {
+    jump.innerHTML = ONSITE_PHRASES.map((g, i) =>
+      `<button type="button" data-group="${i}">${esc(g.title.split(" — ")[0])}</button>`).join("");
+    jump.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+      const d = document.getElementById("phrase-group-" + b.dataset.group);
+      if (!d) return;
+      box.querySelectorAll("details").forEach(x => { x.open = x === d; });
+      d.scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
   }
-
-  groupMovesByJourney(moves).forEach(g => {
-    if (g.id) {
-      items.push({
-        sort: parseWhenSort(g.moves[0] && g.moves[0].when),
-        cls: "tl-journey",
-        time: g.meta || (g.moves[0] && g.moves[0].when) || "Trajet",
-        title: g.title,
-        desc: g.dest ? "Destination · " + g.dest : "",
-        tags: ["Trajet"],
-        journeyId: g.id,
-        moves: g.moves
-      });
-      return;
-    }
-    g.moves.forEach(m => {
-      items.push({
-        sort: parseWhenSort(m.when),
-        cls: "tl-move",
-        time: m.when || "Trajet",
-        title: m.title,
-        desc: m.dummy || "",
-        mode: m.transfer ? "Correspondance" : (m.mode || ""),
-        tags: [m.mode || "Trajet"]
-      });
-    });
-  });
-
-  if (earlyArrival) {
-    const locker = day.luggageLocker || {};
-    const lockerAct = locker.lat != null && locker.lng != null ? locker : null;
-    items.push({
-      sort: moveRange.max + 10,
-      cls: "tl-locker",
-      time: locker.when || "Après arrivée · avant check-in",
-      title: locker.title || "Consigne bagages",
-      desc: locker.desc || "À renseigner quand une consigne sera trouvée.",
-      tags: ["Valise"],
-      act: lockerAct
-    });
-  }
-
-  // Rappels du jour (ex. détaxe à l’aéroport) : tout en haut de la frise
-  (day.reminders || []).forEach((r, i) => {
-    items.push({ sort: -1000 + i, cls: "tl-reminder", time: "À ne pas oublier", title: r.title, desc: r.desc || "", tags: [] });
-  });
-
-  (day.ideas || []).forEach((a, i) => {
-    const meta = actMetaFor(a);
-    let sort;
-    if (firstStay && checkInSort != null) {
-      const gap = earlyArrival ? 40 : 25;
-      const afterArrival = (moveRange.max > 0 ? moveRange.max : 8 * 60) + gap;
-      sort = Math.min(afterArrival + i * 35, checkInSort - 15);
-    } else {
-      sort = 10 * 60 + i * 45;
-    }
-    items.push({
-      sort,
-      cls: "tl-idea",
-      time: meta.duration + " · " + meta.hours,
-      title: a.title,
-      desc: a.desc || "",
-      tags: ["Idée"],
-      act: a
-    });
-  });
-
-  if (firstStay) {
-    const afterArrival = moveRange.max > 0 ? moveRange.max + 20 : 0;
-    const sort = Math.max(checkInSort, afterArrival);
-    let desc = [h.checkIn, h.area].filter(Boolean).join(" · ");
-    if (earlyArrival) {
-      desc = (desc ? desc + " — " : "") + luggageBeforeCheckInHint();
-    }
-    items.push({
-      sort,
-      cls: "tl-hotel",
-      time: h.checkIn ? "Check-in · " + h.checkIn : "Hébergement",
-      title: h.name,
-      desc,
-      tags: [stay.label || "Séjour"]
-    });
-  }
-
-  (day.ideasAfter || []).forEach((a, i) => {
-    const meta = actMetaFor(a);
-    let sort;
-    if (firstStay && checkInSort != null) {
-      sort = Math.max(checkInSort, moveRange.max) + 50 + i * 40;
-    } else {
-      sort = 14 * 60 + i * 45;
-    }
-    items.push({
-      sort,
-      cls: "tl-idea",
-      time: meta.duration + " · " + meta.hours,
-      title: a.title,
-      desc: a.desc || "",
-      tags: ["Idée"],
-      act: a
-    });
-  });
-
-  items.sort((a, b) => a.sort - b.sort);
-  if (!items.length) {
-    return `<p class="lead">Rien de prévu ce jour-là${city ? " · " + esc(city.name) : ""}.</p>`;
-  }
-
-  return `<div class="day-timeline">` + items.map(it => {
-    const map = it.act ? mapsLinkHtml(it.act, "detail") : "";
-    const tags = (it.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("");
-    if (it.cls === "tl-journey") {
-      const steps = (it.moves || []).map(m =>
-        `<div class="tl-journey-step">${modeBadgeFor(m.transfer ? "Correspondance" : m.mode, "tl-step-badge")}${m.role ? `<span class="tl-step-role">${esc(m.role)}</span>` : ""}<span>${esc(m.title)}</span></div>`
-      ).join("");
-      return `<div class="tl-item tl-journey"${it.journeyId ? ` data-journey="${esc(it.journeyId)}"` : ""}>` +
-        `<div class="tl-time">${esc(it.time)}</div>` +
-        `<div class="tl-title">${esc(it.title)}</div>` +
-        (tags ? `<div class="tl-tags">${tags}</div>` : "") +
-        (it.desc ? `<div class="tl-desc tl-journey-dest">${esc(it.desc)}</div>` : "") +
-        `<div class="tl-journey-steps">${steps}</div>` +
-        `</div>`;
-    }
-    return `<div class="tl-item ${it.cls}">` +
-      `<div class="tl-time">${it.cls === "tl-move" ? modeBadgeFor(it.mode, "tl-badge") : ""}${esc(it.time)}</div>` +
-      `<div class="tl-title">${esc(it.title)}</div>` +
-      (tags ? `<div class="tl-tags">${tags}</div>` : "") +
-      (it.desc ? `<div class="tl-desc">${esc(it.desc)}</div>` : "") +
-      map +
-      `</div>`;
-  }).join("") + `</div>`;
-}
-
-function renderOnsiteDay(day){
-  const body = document.getElementById("onsite-day-body");
-  if (!body || !day) { if (body) body.innerHTML = ""; return; }
-  body.innerHTML = renderDayTimeline(day);
-  renderOnsiteWeather(day);
-  syncOnsiteMapBtn(day);
-}
-
-function onsiteHotelLine(day){
-  const stay = stayForDay(day.city, day);
-  const h = stay && stay.hotel;
-  if (!h || !h.name || h.name === "—") return "";
-  return `<p class="today-hotel"><strong>${esc(h.name)}</strong>` +
-    (h.checkIn ? `<br><span>${esc(h.checkIn)}</span>` : "") +
-    `</p>`;
 }
 
 export function renderOnsite(){
-  const todayBox = document.getElementById("onsite-today");
-  const pick = document.getElementById("onsite-day-pick");
-  const phrases = document.getElementById("onsite-phrases");
-  if (!todayBox || !pick || !phrases) return;
+  const today = document.getElementById("onsite-today");
+  if (!today) return;
   initFxConverter();
-  const iso = japanTodayISO();
-  const match = findTripDayByISO(iso);
-  const start = TRIP.startDate, end = TRIP.endDate;
-  if (match){
-    onsiteSelectedDayN = match.n;
-    const city = CITIES[match.city];
-    todayBox.innerHTML =
-      `<div class="today-card"><div class="kicker">Aujourd’hui (heure Japon)</div>` +
-      `<h3>Jour ${match.n} · ${esc(match.dow)} ${esc(match.date)}</h3>` +
-      `<p>${esc(city ? city.name : match.city)}${match.extraCity ? " → " + esc(CITIES[match.extraCity].name) : ""}</p>` +
-      onsiteHotelLine(match) +
-      `</div>`;
-    renderOnsiteDay(match);
-    pick.hidden = true;
-  } else if (iso < start){
-    onsiteSelectedDayN = null;
-    const daysLeft = Math.ceil((Date.parse(start + "T00:00:00+09:00") - Date.now()) / 86400000);
-    todayBox.innerHTML = `<div class="today-card"><div class="kicker">Avant le départ</div><h3>Encore ≈ ${daysLeft} jour${daysLeft > 1 ? "s" : ""}</h3><p>Le voyage commence le ${esc(TRIP.startLabel)}. Choisis un jour ci-dessous pour prévisualiser.</p></div>`;
-    pick.hidden = false;
-  } else if (iso > end){
-    onsiteSelectedDayN = null;
-    todayBox.innerHTML = `<div class="today-card"><div class="kicker">Après le voyage</div><h3>Trip terminé</h3><p>Tu peux quand même refeuilleter chaque jour.</p></div>`;
-    pick.hidden = false;
-  } else {
-    onsiteSelectedDayN = null;
-    todayBox.innerHTML = `<div class="today-card"><div class="kicker">Pendant le voyage</div><h3>Jour hors programme ?</h3><p>Choisis un jour ci-dessous.</p></div>`;
-    pick.hidden = false;
-  }
-  pick.innerHTML = DAYS.map(d =>
-    `<button type="button" data-day="${d.n}"${match && match.n === d.n ? " class=\"on\"" : ""}>J${d.n}</button>`
-  ).join("");
-  pick.querySelectorAll("button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      pick.querySelectorAll("button").forEach(b => b.classList.remove("on"));
-      btn.classList.add("on");
-      const day = DAYS.find(d => d.n === Number(btn.dataset.day));
-      onsiteSelectedDayN = day ? day.n : null;
-      renderOnsiteDay(day);
-    });
-  });
-  if (!match){
-    const first = DAYS[0];
-    onsiteSelectedDayN = first.n;
-    const b0 = pick.querySelector("button");
-    if (b0) b0.classList.add("on");
-    renderOnsiteDay(first);
-  }
-  // Groupes par situation : le premier (au restaurant) ouvert, les autres repliés
-  phrases.innerHTML = ONSITE_PHRASES.map((g, i) =>
-    `<details class="phrase-group"${i === 0 ? " open" : ""}><summary>${esc(g.title)}<span>${g.phrases.length}</span></summary>` +
-    `<div class="phrase-grid">${g.phrases.map(p => phraseCardHtml(p)).join("")}</div></details>`
-  ).join("");
+  today.innerHTML = todayCardHtml();
+  const day = findTripDayByISO(japanTodayISO()) || (japanTodayISO() < TRIP.startDate ? DAYS[0] : null);
+  if (day) renderOnsiteWeather(day);
+  document.getElementById("onsite-open-day")?.addEventListener("click", () => openMapForDay(day));
+  const sos = document.getElementById("onsite-sos");
+  if (sos) sos.innerHTML = sosHtml();
+  renderPhrases();
 }

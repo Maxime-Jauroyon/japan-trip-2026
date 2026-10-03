@@ -1,44 +1,109 @@
-/* Onglet Préparatifs : à faire (réservations, billets), checklist, budget, infos pratiques. */
+/* Onglet Préparatifs : progression + une section à la fois — à faire, checklist, budget, infos pratiques. */
 
 import { TODOS_CHANGED, loadChecks, notifyTodosChanged, prepCheckState, saveChecks } from "../../core/checklist-store.js";
-import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, PREP_CHECKS, TRAVELERS } from "../../core/data.js";
-import { formatBookingDateFr } from "../../core/dates.js";
+import { PREP_PANE_KEY } from "../../config.js";
+import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, PREP_CHECKS, TRAVELERS, TRIP } from "../../core/data.js";
+import { formatBookingDateFr, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { collectPrepReminders } from "../../domain/bookings.js";
 import { bindTodoList, currentTodos, todoItemHtml } from "../alerts.js";
 
-export function renderPrep(){
+const PANES = ["todo", "checklist", "budget", "infos"];
+let pane = null;
+
+const isOn = (state, item) => (Object.prototype.hasOwnProperty.call(state, item.id) ? !!state[item.id] : !!item.done);
+
+/** Onglet affiché : mémorisé, sinon « À faire » s’il y a de l’urgent, sinon la checklist. */
+function initialPane(hasUrgent){
+  try {
+    const saved = localStorage.getItem(PREP_PANE_KEY);
+    if (PANES.includes(saved)) return saved;
+  } catch (_) { /* ignore */ }
+  return hasUrgent ? "todo" : "checklist";
+}
+
+function showPane(name, save){
+  pane = name;
+  document.querySelectorAll("#view-prep .prep-pane").forEach(p => { p.hidden = p.dataset.pane !== name; });
+  document.querySelectorAll("#prep-tabs [data-pane]").forEach(b => {
+    const on = b.dataset.pane === name;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-selected", String(on));
+  });
+  if (save) { try { localStorage.setItem(PREP_PANE_KEY, name); } catch (_) { /* ignore */ } }
+}
+
+function checkItemHtml(item, on){
+  return `<li class="${on ? "done" : ""}"><label class="check-row">` +
+    `<input type="checkbox" data-check="${esc(item.id)}"${on ? " checked" : ""}/><span class="check-box" aria-hidden="true"></span>` +
+    `<span class="check-text"><strong>${esc(item.label)}</strong>${item.meta ? `<span class="meta">${esc(item.meta)}</span>` : ""}</span>` +
+    `</label></li>`;
+}
+
+function renderProgress(done, total){
+  const box = document.getElementById("prep-progress");
+  if (!box) return;
+  const iso = japanTodayISO();
+  const left = Math.ceil((Date.parse(TRIP.startDate + "T00:00:00+09:00") - Date.now()) / 86400000);
+  const when = iso < TRIP.startDate ? `J-${left}` : iso <= TRIP.endDate ? "En voyage" : "Terminé";
+  const pct = total ? Math.round(done / total * 100) : 0;
+  box.innerHTML = `<span class="pp-when">${when}</span>` +
+    `<span class="pp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct}%"></i></span>` +
+    `<span class="pp-count">${done} / ${total} faits</span>`;
+}
+
+function renderChecklist(){
   const box = document.getElementById("prep-checklist");
-  const bud = document.getElementById("prep-budget");
-  const who = document.getElementById("prep-travelers");
-  if (!box || !bud) return;
-  if (who && TRAVELERS.length) {
-    who.textContent = "Voyageurs : " + TRAVELERS.join(" & ");
-  }
+  const doneBox = document.getElementById("prep-checklist-done");
+  if (!box || !doneBox) return;
   const state = prepCheckState();
-  box.innerHTML = PREP_CHECKS.map(item => {
-    const on = Object.prototype.hasOwnProperty.call(state, item.id) ? !!state[item.id] : !!item.done;
-    return `<li><input type="checkbox" id="ck-${item.id}" data-check="${item.id}"${on ? " checked" : ""}/><label for="ck-${item.id}" class="${on ? "done" : ""}">${esc(item.label)}<span class="meta">${esc(item.meta)}</span></label></li>`;
-  }).join("");
-  box.querySelectorAll("input[data-check]").forEach(inp => {
+  const todo = PREP_CHECKS.filter(i => !isOn(state, i)), done = PREP_CHECKS.filter(i => isOn(state, i));
+  box.innerHTML = todo.length ? todo.map(i => checkItemHtml(i, false)).join("") : `<li class="check-all">Tout est prêt ✓</li>`;
+  doneBox.innerHTML = done.map(i => checkItemHtml(i, true)).join("");
+  document.getElementById("prep-done-count").textContent = `(${done.length})`;
+  document.getElementById("prep-checklist-done-box").hidden = !done.length;
+  document.getElementById("prep-count-checklist").textContent = todo.length ? String(todo.length) : "✓";
+  renderProgress(done.length, PREP_CHECKS.length);
+  document.querySelectorAll("#view-prep input[data-check]").forEach(inp => {
     inp.addEventListener("change", () => {
+      const li = inp.closest("li");
+      if (li) li.classList.add("ticking");
       const st = loadChecks();
       st[inp.dataset.check] = inp.checked;
       saveChecks(st);
-      const lab = box.querySelector(`label[for="${inp.id}"]`);
-      if (lab) lab.classList.toggle("done", inp.checked);
-      notifyTodosChanged();
+      // petite pause pour voir la case se cocher, puis la ligne change de groupe
+      setTimeout(() => { renderChecklist(); notifyTodosChanged(); }, 260);
     });
   });
-  const rows = PREP_BUDGET.map(b =>
-    `<div class="${b.done ? "" : "muted"}">${esc(b.label)}<span class="meta" style="display:block;font-size:12px;font-weight:400">${esc(b.note)}</span></div><div class="amt">${esc(b.amount)}</div>`
+}
+
+function renderBudget(){
+  const hero = document.getElementById("prep-budget-hero");
+  const list = document.getElementById("prep-budget");
+  const who = document.getElementById("prep-travelers");
+  if (!hero || !list) return;
+  const tot = PREP_BUDGET_TOTAL || { label: "Total / pers.", amount: "—" };
+  hero.innerHTML = `<span class="bh-label">${esc(tot.label)}</span><strong>${esc(tot.amount)}</strong>` +
+    (tot.note ? `<span class="bh-note">${esc(tot.note)}</span>` : "");
+  list.innerHTML = PREP_BUDGET.map(b =>
+    `<div class="budget-row${b.done ? " paid" : ""}"><div class="br-main"><strong>${esc(b.label)}</strong>` +
+    (b.note ? `<span>${esc(b.note)}</span>` : "") + `</div><div class="br-amt">${esc(b.amount)}</div></div>`
   ).join("");
-  const tot = PREP_BUDGET_TOTAL
-    ? PREP_BUDGET_TOTAL
-    : { label:"Total / pers.", amount:"—" };
-  bud.innerHTML = rows + `<div class="total"><span>${esc(tot.label)}</span><span>${esc(tot.amount)}</span></div>`;
-  renderPrepTodos();
+  if (who && TRAVELERS.length) who.textContent = "Voyageurs : " + TRAVELERS.join(" & ");
+}
+
+export function renderPrep(){
+  if (!document.getElementById("prep-checklist")) return;
+  renderChecklist();
+  renderBudget();
+  const urgent = renderPrepTodos();
   renderPracticalInfo();
+  const tabs = document.getElementById("prep-tabs");
+  if (tabs && !tabs.dataset.bound) {
+    tabs.dataset.bound = "1";
+    tabs.querySelectorAll("[data-pane]").forEach(b => b.addEventListener("click", () => showPane(b.dataset.pane, true)));
+  }
+  showPane(pane || initialPane(urgent > 0), false);
 }
 
 const TODO_GROUPS = [
@@ -76,6 +141,12 @@ function renderPrepTodos(){
     : "";
   box.innerHTML = (groups || `<p class="prep-bookings-empty">Tout est à jour ✓</p>`) + laterHtml;
   bindTodoList(box, todos);
+  const count = document.getElementById("prep-count-todo");
+  if (count) {
+    count.textContent = urgent ? String(urgent) : "";
+    count.classList.toggle("late", todos.some(t => t.urgency === "late"));
+  }
+  return urgent;
 }
 
 /** Re-rendu de l’onglet quand une tâche change ailleurs (carte « À faire »). */
@@ -88,9 +159,10 @@ export function initPrepView(){
 function renderPracticalInfo(){
   const box = document.getElementById("prep-practical");
   if (!box) return;
+  // Cartes repliables : on ouvre celle dont on a besoin
   box.innerHTML = PRACTICAL_INFO.map(sec =>
-    `<article class="practical-card"><h4>${esc(sec.title)}</h4><ul>` +
+    `<details class="practical-card"><summary><h4>${esc(sec.title)}</h4><span>${sec.items.length}</span></summary><ul>` +
     sec.items.map(it => `<li>${esc(it)}</li>`).join("") +
-    `</ul></article>`
+    `</ul></details>`
   ).join("");
 }
