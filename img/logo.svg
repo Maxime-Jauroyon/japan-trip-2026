@@ -1,15 +1,29 @@
-<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="logo-disc" cx="32%" cy="26%" r="72%">
-      <stop offset="0%" stop-color="#fffef9"/>
-      <stop offset="58%" stop-color="#f3ebe0"/>
-      <stop offset="100%" stop-color="#e0d4c4"/>
-    </radialGradient>
+    <linearGradient id="lg-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26315a"/>
+      <stop offset="1" stop-color="#121a33"/>
+    </linearGradient>
+    <linearGradient id="lg-sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0563f"/>
+      <stop offset="1" stop-color="#c8322a"/>
+    </linearGradient>
+    <linearGradient id="lg-mt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f6496"/>
+      <stop offset="1" stop-color="#2b3a66"/>
+    </linearGradient>
+    <clipPath id="lg-clip"><rect data-corner="1" width="512" height="512" rx="114"/></clipPath>
   </defs>
-  <circle cx="22" cy="22" r="19.5" fill="url(#logo-disc)" stroke="#c4a574" stroke-width="1.8"/>
-  <path d="M22 9.5 12.5 31h19L22 9.5z" fill="#5a4638"/>
-  <path d="M22 11.2 14.8 28.8h14.4L22 11.2z" fill="#fff" fill-opacity=".9"/>
-  <path d="M8.5 29.5c4.2-5.8 8.8-8.2 13.5-8.2s9.3 2.4 13.5 8.2" stroke="#c45c26" stroke-width="1.65" stroke-linecap="round" stroke-dasharray="4.5 3.2"/>
-  <path d="M33.2 27.8 36.8 26.2v3.4l-1.8.9-1.8-.7v-2.1z" fill="#c45c26"/>
-  <circle cx="36.2" cy="27.8" r=".85" fill="#fff" fill-opacity=".85"/>
+  <g clip-path="url(#lg-clip)">
+    <rect width="512" height="512" fill="url(#lg-sky)"/>
+    <g fill="#f6f1e7"><circle cx="86" cy="96" r="5" opacity=".7"/><circle cx="430" cy="78" r="4" opacity=".55"/><circle cx="452" cy="196" r="3.5" opacity=".45"/><circle cx="58" cy="236" r="3" opacity=".4"/></g>
+    <circle cx="256" cy="214" r="132" fill="url(#lg-sun)"/>
+    <path d="M18 452 196 262c20-12 40-16 60-16s40 4 60 16l178 190v60H18z" fill="url(#lg-mt)"/>
+    <path d="M196 262c20-12 40-16 60-16s40 4 60 16l44 47-24 13-22-17-24 20-26-21-24 20-24-19-22 17-24-13z" fill="#f6f1e7"/>
+    <path d="M0 470c90-34 170-30 256-14s170 18 256-12v68H0z" fill="#182244"/>
+    <path d="M126 426c60-24 120-24 176-8s70 4 96-6" fill="none" stroke="#e6c27a" stroke-width="13" stroke-linecap="round" stroke-dasharray="1 28"/>
+    <circle cx="96" cy="438" r="17" fill="#e6c27a"/>
+    <circle cx="428" cy="404" r="17" fill="#e6c27a"/>
+    <circle cx="428" cy="404" r="7" fill="#182244"/>
+  </g>
 </svg>

@@ -21,7 +21,7 @@ function walk(dir) {
 const files = DIRS.flatMap((d) => walk(path.join(ROOT, d)))
   .map((p) => "./" + path.relative(ROOT, p).split(path.sep).join("/"))
   .sort();
-const assets = ["./", "./index.html", "./sw.js", ...files];
+const assets = ["./", "./index.html", "./manifest.webmanifest", "./sw.js", ...files];
 
 const swPath = path.join(ROOT, "sw.js");
 const sw = fs.readFileSync(swPath, "utf8");

@@ -21,9 +21,9 @@
     z-index: 45;
   }
   header h1.brand { gap: 8px; flex: 1 1 auto; min-width: 0; }
-  .brand-mark { width: 32px; height: 32px; }
-  .brand-title { font-size: 14px; }
-  .brand-sub { font-size: 9px; letter-spacing: 0.06em; }
+  .brand-mark { width: 32px; height: 32px; border-radius: 8px; }
+  .brand-title { font-size: 15px; }
+  .brand-sub { font-size: 9.5px; letter-spacing: 0.05em; }
 
   .tabs {
     grid-area: tabs;
@@ -59,13 +59,7 @@
     background: rgba(var(--gold-rgb), .16);
   }
 
-  .offline-status {
-    font-size: 9px;
-    padding: 3px 6px;
-    max-width: 42vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .offline-status.offline { font-size: 10.5px; }
   .info-view { padding: 14px 14px 36px; }
   .seg-tabs { margin: 0 -14px 14px; padding: 8px 14px; top: -14px; }
   .seg-tabs button { padding: 8px 12px; font-size: 13.5px; }
@@ -84,15 +78,23 @@
   .tabs button {
     flex-direction: column;
     justify-content: center;
-    gap: 3px;
+    gap: 2px;
     font-size: 10.5px !important;
     letter-spacing: .01em;
     padding: 5px 2px !important;
     border-radius: 12px !important;
     min-height: 48px !important;
   }
-  .tabs button svg { width: 22px; height: 22px; }
-  .tabs button.active { background: rgba(var(--gold-rgb), .14) !important; box-shadow: none; }
+  .tabs button svg {
+    width: 22px; height: 22px;
+    box-sizing: content-box;
+    padding: 3px 14px;
+    border-radius: 999px;
+    transition: background .2s ease;
+  }
+  /* Onglet actif : pilule dorée derrière l’icône */
+  .tabs button.active { background: transparent !important; box-shadow: none; color: var(--gold-2); }
+  .tabs button.active svg { background: rgba(var(--gold-rgb), .2); }
 
   /* Villes : rangée de pastilles défilante au-dessus de la carte */
   #city-list {
@@ -110,22 +112,35 @@
     -webkit-overflow-scrolling: touch;
   }
   #city-list::-webkit-scrollbar { display: none; }
+  #city-list .cl-head { display: none; }
   #city-list button {
     flex: 0 0 auto;
     width: auto;
     margin: 0;
-    padding: 5px 12px 5px 5px;
+    gap: 8px;
+    padding: 4px 13px 4px 4px;
     border-radius: 999px;
     background: var(--glass-strong);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     box-shadow: var(--shadow-sm);
-    font-size: 13px;
-    font-weight: 600;
   }
-  #city-list button .ico { flex-basis: 26px; height: 26px; border-radius: 50%; }
-  #city-list button .ico svg { width: 19px; height: 19px; }
+  #city-list button::before { display: none; }
+  #city-list button .ico { flex-basis: 34px; height: 34px; }
+  #city-list button .ico svg { width: 25px; height: 25px; }
+  #city-list .cl-step { left: -3px; top: -3px; min-width: 15px; height: 15px; font-size: 9px; }
+  #city-list .cl-text strong { font-size: 13px; }
+  #city-list .cl-text small { font-size: 10.5px; }
+  #city-list .cl-side { display: none; }
+  #city-list button.is-today { border-color: var(--accent); }
+  #city-list button.is-today .ico::after {
+    content: "";
+    position: absolute; right: -2px; top: -2px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 2px var(--panel);
+  }
   .app.city-mode #city-list { display: none; }
   .app.leg-mode #city-list { display: none; }
   /* Sheet ouvert : ⌂ en haut à gauche (sinon caché sous le sheet) */

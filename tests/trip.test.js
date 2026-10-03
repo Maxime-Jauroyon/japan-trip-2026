@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CITIES, DAYS, MAP_BOUNDS, ORDER } from "../src/core/data.js";
 import { cityIdForAct, cityIdForCoords, inBounds } from "../src/domain/places.js";
-import { cityStayDates, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
+import { cityNights, cityStayDates, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
 import { dayToISO, findTripDayByISO } from "../src/core/dates.js";
 import { photoSlug } from "../src/domain/photos.js";
 import { loadTripData } from "./helpers.js";
@@ -83,6 +83,12 @@ test("dates de séjour pour l’étiquette de la carte", () => {
   assert.equal(cityStayDates(CITIES.tokyo), "8–12 nov · 27–29 nov");
   assert.equal(cityStayDates(CITIES.shirakawa), "17 nov");
   assert.equal(cityStayDates({ stays: [{ from: "30 oct", to: "2 nov" }] }), "30 oct–2 nov");
+});
+
+test("nuits par ville (somme des séjours)", () => {
+  assert.equal(cityNights(CITIES.kyoto), 4);
+  assert.equal(cityNights(CITIES.shirakawa), 0);
+  assert.equal(cityNights({ stays: [{ nights: "2 nuits" }, { nights: "1 nuit" }] }), 3);
 });
 
 test("jour ouvert par défaut dans le panneau ville", () => {

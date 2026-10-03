@@ -285,6 +285,14 @@ export function cityStayDates(city){
   }).filter(Boolean).join(" · ");
 }
 
+/** Nombre total de nuits dans une ville (somme des séjours ; « Sans nuit » = 0). */
+export function cityNights(city){
+  return ((city && city.stays) || []).reduce((n, st) => {
+    const m = String(st.nights || "").match(/\d+/);
+    return n + (m ? Number(m[0]) : 0);
+  }, 0);
+}
+
 /**
  * Jour à afficher en ouvrant le panneau d’une ville : le jour demandé s’il est dans la ville,
  * sinon aujourd’hui (pendant le voyage), sinon null (aperçu).

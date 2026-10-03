@@ -30,47 +30,33 @@
     })();
   </script>
   <link rel="icon" href="./img/logo.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./img/logo.svg" />
+  <link rel="icon" href="./img/icon-192.png" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="./img/icon-180.png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=179" />
-  <link rel="stylesheet" href="./styles/base.css?v=179" />
-  <link rel="stylesheet" href="./styles/views.css?v=179" />
-  <link rel="stylesheet" href="./styles/panel.css?v=179" />
-  <link rel="stylesheet" href="./styles/components.css?v=179" />
-  <link rel="stylesheet" href="./styles/print.css?v=179" />
-  <link rel="stylesheet" href="./styles/map.css?v=179" />
-  <link rel="stylesheet" href="./styles/settings.css?v=179" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=179" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=179" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=179" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=180" />
+  <link rel="stylesheet" href="./styles/base.css?v=180" />
+  <link rel="stylesheet" href="./styles/views.css?v=180" />
+  <link rel="stylesheet" href="./styles/panel.css?v=180" />
+  <link rel="stylesheet" href="./styles/components.css?v=180" />
+  <link rel="stylesheet" href="./styles/print.css?v=180" />
+  <link rel="stylesheet" href="./styles/map.css?v=180" />
+  <link rel="stylesheet" href="./styles/settings.css?v=180" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=180" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=180" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=180" />
 </head>
 <body>
   <div class="app tab-map">
     <header>
       <h1 class="brand">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="logo-disc" cx="32%" cy="26%" r="72%">
-                <stop offset="0%" stop-color="#fffef9"/>
-                <stop offset="58%" stop-color="#f3ebe0"/>
-                <stop offset="100%" stop-color="#e0d4c4"/>
-              </radialGradient>
-            </defs>
-            <circle cx="22" cy="22" r="19.5" fill="url(#logo-disc)" stroke="#c4a574" stroke-width="1.8"/>
-            <path d="M22 9.5 12.5 31h19L22 9.5z" fill="#5a4638"/>
-            <path d="M22 11.2 14.8 28.8h14.4L22 11.2z" fill="#fff" fill-opacity=".9"/>
-            <path d="M8.5 29.5c4.2-5.8 8.8-8.2 13.5-8.2s9.3 2.4 13.5 8.2" stroke="#c45c26" stroke-width="1.65" stroke-linecap="round" stroke-dasharray="4.5 3.2"/>
-            <path d="M33.2 27.8 36.8 26.2v3.4l-1.8.9-1.8-.7v-2.1z" fill="#c45c26"/>
-            <circle cx="36.2" cy="27.8" r=".85" fill="#fff" fill-opacity=".85"/>
-          </svg>
-        </span>
+        <img class="brand-mark" src="./img/logo.svg" alt="" width="38" height="38" />
         <span class="brand-text">
-          <span class="brand-title">Voyage au Japon</span>
+          <span class="brand-title">Japon 2026</span>
           <span class="brand-sub">8–29 nov 2026</span>
         </span>
       </h1>
-      <span class="offline-status" id="offline-status" aria-live="polite"></span>
+      <span class="offline-status" id="offline-status" role="status" aria-live="polite"></span>
     </header>
     <nav class="tabs" id="app-tabs" aria-label="Sections">
       <button type="button" data-tab="map" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="1.7"/></svg><span>Carte</span></button>
@@ -170,11 +156,10 @@
 
       <section id="view-settings" class="info-view" aria-label="Réglages">
         <div class="info-wrap">
-          <h2>Réglages</h2>
-          <p class="lead">Apparence, carte et mode hors ligne. Mémorisés sur cet appareil.</p>
+          <div class="view-head"><h2>Réglages</h2></div>
 
-          <div class="info-sec">
-            <h3>Apparence</h3>
+          <div class="tool-card">
+            <div class="tool-head"><h3>Apparence</h3></div>
             <div class="segmented" id="theme-picker" role="radiogroup" aria-label="Thème">
               <button type="button" role="radio" data-theme-choice="auto"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></svg><span>Auto</span></button>
               <button type="button" role="radio" data-theme-choice="light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Clair</span></button>
@@ -183,20 +168,19 @@
             <p class="setting-hint">« Auto » suit le mode clair / sombre de l’iPhone.</p>
           </div>
 
-          <div class="info-sec">
-            <h3>Carte</h3>
+          <div class="tool-card">
+            <div class="tool-head"><h3>Carte</h3></div>
             <label class="switch-row">
               <span class="switch-text"><strong>Relief 3D</strong><small>Montagnes en relief sur la carte du Japon (le Fuji, les Alpes japonaises…). Désactiver pour économiser la batterie.</small></span>
               <input type="checkbox" id="relief-toggle" class="switch" />
             </label>
           </div>
 
-          <div class="info-sec">
-            <h3>Cartes hors ligne</h3>
-            <p class="lead">Télécharge le Japon et les 8 villes du voyage pour naviguer sans réseau (environ 60 à 120 Mo, idéalement en Wi‑Fi).</p>
+          <div class="tool-card">
+            <div class="tool-head"><h3>Cartes hors ligne</h3></div>
+            <p class="setting-text">Le Japon et les 8 villes du voyage, pour naviguer sans réseau (60 à 120 Mo, idéalement en Wi‑Fi). À faire sur chaque appareil.</p>
             <div class="offline-card">
               <p class="offline-maps-status" id="offline-maps-status">…</p>
-              <p class="offline-maps-note">À faire sur chaque appareil : le cache est propre au navigateur.</p>
               <div class="progress" id="offline-maps-progress" hidden><span></span></div>
               <div class="offline-actions">
                 <button type="button" class="btn-primary" id="offline-maps-download">Télécharger les cartes hors ligne</button>
@@ -205,27 +189,32 @@
             </div>
           </div>
 
-          <div class="info-sec">
-            <h3>Application</h3>
-            <p class="lead" style="margin-bottom:12px">Si une mise à jour n’apparaît pas : vider le cache de l’app (les cartes hors ligne sont conservées).</p>
-            <button type="button" class="btn-secondary" id="force-refresh" title="Vider le cache et recharger">Rafraîchir l’application</button>
-          </div>
-          <div class="info-sec">
-            <h3>Sur iPhone (Safari)</h3>
-            <p class="lead" style="margin-bottom:10px">Pas de bouton « Installer » sur iOS — ajoute l’app manuellement :</p>
+          <div class="tool-card">
+            <div class="tool-head"><h3>Installer sur iPhone</h3></div>
             <ol class="ios-steps">
               <li>Ouvre ce site dans <strong>Safari</strong> (pas Chrome).</li>
               <li>Touche <strong>Partager</strong> <span class="ios-share" aria-hidden="true">↑</span> en bas.</li>
               <li>Choisis <strong>Sur l’écran d’accueil</strong> → <strong>Ajouter</strong>.</li>
-              <li>Lance <strong>Japon 2026</strong> depuis l’icône : mode plein écran + cache offline.</li>
+              <li>Lance <strong>Japon 2026</strong> depuis l’icône : plein écran + hors ligne.</li>
             </ol>
           </div>
 
-          <div class="info-sec">
-            <h3>Export</h3>
-            <p class="lead" style="margin-bottom:12px">Imprimer ou enregistrer en PDF depuis le navigateur (Ctrl+P / ⌘P).</p>
+          <div class="tool-card">
+            <div class="tool-head"><h3>Export</h3></div>
+            <p class="setting-text">Tout le voyage en PDF ou sur papier (Ctrl+P / ⌘P).</p>
             <button type="button" class="btn-secondary" id="print-trip">Imprimer / PDF du voyage</button>
           </div>
+
+          <footer class="about">
+            <img class="about-logo" src="./img/logo.svg" alt="" width="64" height="64" />
+            <div class="about-text">
+              <strong>Japon 2026</strong>
+              <span class="about-dates" id="about-dates"></span>
+              <span class="about-status" id="about-status"></span>
+            </div>
+            <button type="button" class="btn-secondary" id="force-refresh" title="Vider le cache et recharger">Rafraîchir l’application</button>
+            <p class="about-note">Une mise à jour n’apparaît pas ? Rafraîchir vide le cache de l’app (les cartes hors ligne sont gardées).</p>
+          </footer>
         </div>
       </section>
     </main>
@@ -253,6 +242,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=179"></script>
+  <script type="module" src="./src/main.js?v=180"></script>
 </body>
 </html>

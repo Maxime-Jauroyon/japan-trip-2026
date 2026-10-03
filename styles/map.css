@@ -58,30 +58,90 @@
 
 #city-list {
   position: absolute; left: 14px; top: 14px; z-index: 25;
-  width: 184px; max-height: calc(100% - 28px); overflow: auto;
-  padding: 6px;
+  width: 252px; max-height: calc(100% - 28px); overflow: auto;
+  padding: 10px 8px 8px;
   border-radius: var(--radius);
+  scrollbar-width: thin;
 }
+/* En-tête de la frise */
+.cl-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  padding: 0 6px 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.cl-head span {
+  font: 600 15px/1.2 Georgia, "Times New Roman", serif;
+  color: var(--cream);
+}
+.cl-head b {
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--gold);
+}
+/* Une étape : médaillon (n° en coin) relié au suivant par un pointillé */
 #city-list button {
+  position: relative;
   display: flex; align-items: center; gap: 10px; width: 100%;
   text-align: left; border: 0; background: transparent;
-  color: var(--cream); padding: 7px 8px; margin: 0 0 2px; cursor: pointer;
+  color: var(--cream); padding: 6px 6px; margin: 0; cursor: pointer;
   font: inherit; font-size: 13.5px;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: background .15s ease;
 }
+#city-list button::before {
+  content: "";
+  position: absolute; left: 24px; top: 0; bottom: 0; width: 0;
+  border-left: 2px dotted rgba(var(--gold-rgb), .45);
+  z-index: 0;
+}
+#city-list .cl-head + button::before { top: 50%; }
+#city-list button:last-child::before { bottom: 50%; }
 #city-list button:hover { background: rgba(var(--fg-rgb), .06); }
 #city-list button .ico {
-  flex: 0 0 28px; height: 28px;
+  position: relative; z-index: 1;
+  flex: 0 0 38px; height: 38px;
   display: grid; place-items: center;
-  color: var(--gold-2);
-  border-radius: 8px;
-  background: rgba(var(--gold-rgb), .1);
+  border-radius: 50%;
+  background: var(--panel);
+  box-shadow: 0 0 0 1.5px rgba(var(--gold-rgb), .55), var(--shadow-sm);
 }
-#city-list button .ico svg { width: 22px; height: 22px; display: block; }
+#city-list button .ico svg { width: 28px; height: 28px; display: block; }
+.cl-step {
+  position: absolute; left: -4px; top: -3px;
+  min-width: 16px; height: 16px; padding: 0 3px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  font: 800 9.5px/1 system-ui, sans-serif; font-style: normal;
+  color: var(--bg);
+  background: var(--gold);
+  box-shadow: 0 0 0 2px var(--panel);
+}
+.cl-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; }
+.cl-text strong { font-size: 14px; font-weight: 650; line-height: 1.2; }
+.cl-text small {
+  font-size: 11.5px; color: var(--muted); line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cl-side {
+  flex: 0 0 auto;
+  font-size: 10.5px; font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
 #city-list button.active {
   background: rgba(var(--gold-rgb), .16);
   box-shadow: inset 0 0 0 1px rgba(var(--gold-rgb), .45);
+}
+#city-list button.active .ico { box-shadow: 0 0 0 2px var(--gold-2), var(--shadow-sm); }
+/* Ville du jour (pendant le voyage) */
+#city-list button.is-today .ico { box-shadow: 0 0 0 2px var(--accent), 0 0 0 6px rgba(var(--fg-rgb), .06), var(--shadow-sm); }
+#city-list button.is-today .cl-side {
+  color: #fff;
+  background: var(--accent);
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-weight: 700;
 }
 
 .map-ctrl {
