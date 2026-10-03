@@ -13,7 +13,8 @@
     "version:bump": "node scripts/bump-version.mjs",
     "architecture": "node scripts/check-architecture.mjs",
     "thumbs": "node scripts/make-thumbs.mjs",
-    "icons": "node scripts/make-icons.mjs"
+    "icons": "node scripts/make-icons.mjs",
+    "photos": "node scripts/compress-photos.mjs"
   },
   "engines": {
     "node": ">=20"
