@@ -1,19 +1,39 @@
-/* Coquille de l’app : pastille en ligne / hors ligne, mode app iOS, classe tactile. */
+/* Coquille de l’app : en-tête (sous-titre selon la date), pastille réseau, mode app iOS, classe tactile. */
 
 import { APP_VERSION } from "../config.js";
-import { TRIP } from "../core/data.js";
+import { CITIES, TRIP } from "../core/data.js";
+import { daysUntilISO, findTripDayByISO, japanTodayISO } from "../core/dates.js";
 import { isStandaloneApp } from "../core/env.js";
 import { state } from "../core/state.js";
 import { refreshCityMapView } from "../map/city.js";
 import { fitJapanHome } from "../map/map-view.js";
 
+/** En-tête : simple point vert en ligne, « Hors ligne » seulement sans réseau. Version : Réglages › À propos. */
 export function updateOfflineStatus(){
-  const el = document.getElementById("offline-status");
-  if (!el) return;
   const online = navigator.onLine;
-  el.textContent = (online ? "En ligne" : "Hors ligne") + " · cache " + APP_VERSION;
-  el.classList.toggle("online", online);
-  el.classList.toggle("offline", !online);
+  const el = document.getElementById("offline-status");
+  if (el) {
+    el.textContent = online ? "" : "Hors ligne";
+    el.title = online ? `En ligne · version ${APP_VERSION}` : "Hors ligne : l’app tourne sur son cache";
+    el.setAttribute("aria-label", online ? "En ligne" : "Hors ligne");
+    el.classList.toggle("online", online);
+    el.classList.toggle("offline", !online);
+  }
+  const about = document.getElementById("about-status");
+  if (about) about.textContent = `Version ${APP_VERSION} · ${online ? "en ligne" : "hors ligne (cache)"}`;
+}
+
+/** Sous-titre vivant : « 8–29 nov · J-36 », « Jour 13 · Kyoto », puis « Terminé ». */
+function brandSubtitle(){
+  const iso = japanTodayISO();
+  const day = findTripDayByISO(iso);
+  if (day) {
+    const city = CITIES[day.city];
+    return `Jour ${day.n} · ${city ? city.name : day.city}`;
+  }
+  const short = TRIP.datesLabel.replace(/\s\d{4}$/, "");
+  if (iso < TRIP.startDate) return `${short} · J-${daysUntilISO(TRIP.startDate)}`;
+  return `${TRIP.datesLabel} · terminé`;
 }
 
 function markStandaloneMode(){
@@ -47,7 +67,12 @@ export function initAppShell() {
   const title = document.querySelector(".brand-title");
   const sub = document.querySelector(".brand-sub");
   if (title) title.textContent = TRIP.title;
-  if (sub) sub.textContent = TRIP.datesLabel;
+  const aboutDates = document.getElementById("about-dates");
+  if (aboutDates) aboutDates.textContent = `${TRIP.datesLabelLong} · ${(TRIP.travelers || []).join(" & ")}`;
+  const syncSub = () => { if (sub) sub.textContent = brandSubtitle(); };
+  syncSub();
+  // L’app reste ouverte des jours sur iPhone : remettre le sous-titre à jour au retour
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) syncSub(); });
   updateOfflineStatus();
   markStandaloneMode();
   window.addEventListener("online", updateOfflineStatus);
