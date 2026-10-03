@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CITIES, DAYS, MAP_BOUNDS, ORDER } from "../src/core/data.js";
 import { cityIdForAct, cityIdForCoords, inBounds } from "../src/domain/places.js";
-import { cityNights, cityStayDates, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
+import { cityNights, cityStayDates, closureFor, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
 import { dayToISO, findTripDayByISO } from "../src/core/dates.js";
 import { photoSlug } from "../src/domain/photos.js";
 import { loadTripData } from "./helpers.js";
@@ -89,6 +89,19 @@ test("nuits par ville (somme des séjours)", () => {
   assert.equal(cityNights(CITIES.kyoto), 4);
   assert.equal(cityNights(CITIES.shirakawa), 0);
   assert.equal(cityNights({ stays: [{ nights: "2 nuits" }, { nights: "1 nuit" }] }), 3);
+});
+
+test("jours de fermeture (règle du lundi férié)", () => {
+  const museum = { days: [1], holidayShift: true, note: "Fermé le lundi" };
+  assert.equal(closureFor(museum, "2026-11-09").label, "Fermé le lundi");           // lundi
+  assert.equal(closureFor(museum, "2026-11-10"), null);                            // mardi
+  const hol = ["2026-11-23"];
+  assert.equal(closureFor(museum, "2026-11-23", hol), null);                       // lundi férié : ouvert
+  assert.equal(closureFor(museum, "2026-11-24", hol).label, "Fermé le mardi");      // fermé le lendemain
+  const market = { days: [0, 3], partial: true, note: "x" };
+  const sun = closureFor(market, "2026-11-15");
+  assert.ok(sun.partial && /En partie fermé le dimanche/.test(sun.label));
+  assert.equal(closureFor(null, "2026-11-15"), null);
 });
 
 test("jour ouvert par défaut dans le panneau ville", () => {

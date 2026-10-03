@@ -940,3 +940,35 @@ button.stat.stop-jump .jump-hint {
 @media (prefers-reduced-motion: reduce) {
   .city-panel.slide-l, .city-panel.slide-r, .detail-sheet.show { animation: none; }
 }
+
+/* —— Fermetures, météo, soleil —— */
+.closed-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 700; font-style: normal;
+  color: var(--accent);
+  background: rgba(var(--fg-rgb), .06);
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.closed-pill.partial { color: var(--gold-2); }
+.closed-note {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--accent);
+  background: rgba(var(--fg-rgb), .04);
+}
+.closed-note.partial { border-color: rgba(var(--gold-rgb), .6); }
+.closed-note strong { color: var(--accent); font-size: 13.5px; }
+.closed-note.partial strong { color: var(--gold-2); }
+.closed-note p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.day-extras { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
+.day-wx { font-weight: 700; color: var(--cream); }
+.dc-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.dc-meta:empty { display: none; }
+.dc-wx { font-size: 12px; font-weight: 700; color: var(--cream); }
+.dc-meta .closed-pill { margin-top: 0; font-size: 10.5px; }

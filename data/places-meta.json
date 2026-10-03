@@ -21,7 +21,15 @@
   },
   "ueno": {
     "hours": "Parc libre · musées ~9h30–17h",
-    "duration": "2–3 h"
+    "duration": "2–3 h",
+    "closed": {
+      "days": [
+        1
+      ],
+      "holidayShift": true,
+      "partial": true,
+      "note": "Le musée national de Tokyo et la plupart des musées d’Ueno ferment le lundi (le parc reste ouvert)."
+    }
   },
   "yanaka": {
     "hours": "Jour",
@@ -125,7 +133,15 @@
   },
   "nishiki": {
     "hours": "~9h–18h (variable)",
-    "duration": "1 h"
+    "duration": "1 h",
+    "closed": {
+      "days": [
+        0,
+        3
+      ],
+      "partial": true,
+      "note": "Pas de jour de fermeture commun, mais beaucoup de boutiques ferment le mercredi, certaines le dimanche."
+    }
   },
   "nara-park": {
     "hours": "Parc libre",
@@ -166,5 +182,29 @@
   "kuromon": {
     "hours": "~9h–18h",
     "duration": "1 h"
+  },
+  "omicho": {
+    "hours": "Étals ~9h–17h",
+    "duration": "1–1,5 h",
+    "closed": {
+      "days": [
+        0,
+        3
+      ],
+      "partial": true,
+      "note": "Beaucoup d’étals ferment le dimanche et le mercredi (et les jours fériés)."
+    }
+  },
+  "imperial": {
+    "hours": "9h–16h en novembre",
+    "duration": "1–1,5 h",
+    "closed": {
+      "days": [
+        1,
+        5
+      ],
+      "holidayShift": true,
+      "note": "Jardins fermés le lundi et le vendredi (ouverts un jour férié, fermés le lendemain)."
+    }
   }
 }

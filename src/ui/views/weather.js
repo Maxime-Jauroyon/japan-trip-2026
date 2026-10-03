@@ -4,6 +4,7 @@ import { WEATHER_CACHE_KEY } from "../../config.js";
 import { CITIES, CITY_CLIMATE, TRIP } from "../../core/data.js";
 import { dayToISO, daysUntilISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
+import { daysForCity } from "../../domain/trip.js";
 
 const WX_LABELS = {
   0:"Ensoleillé", 1:"Plutôt clair", 2:"Nuageux", 3:"Couvert",
@@ -85,4 +86,58 @@ export async function renderOnsiteWeather(day){
       `<span class="wx-temps">${wx.min}° – ${wx.max}°C</span>` +
       `<span class="wx-note">Climat type en ${esc(TRIP.climateMonth)} · ${esc(cityName)}</span>`;
   }
+}
+
+const WX_ICONS = [[0, "☀️"], [2, "🌤️"], [3, "☁️"], [48, "🌫️"], [67, "🌧️"], [77, "🌨️"], [82, "🌦️"], [99, "⛈️"]];
+const wxIcon = (code) => (WX_ICONS.find(([max]) => code <= max) || [0, "🌤️"])[1];
+const forecastRuns = {};
+
+/**
+ * Prévisions des jours du voyage dans une ville (fenêtre Open-Meteo : aujourd’hui → J+15),
+ * un seul appel par ville et par jour, gardé en cache local. Retourne { iso: { min, max, label, icon, rain } }.
+ */
+export async function getCityForecast(cityId){
+  const city = CITIES[cityId];
+  const today = japanTodayISO();
+  const isos = daysForCity(cityId).map(dayToISO).filter(iso => iso && daysUntilISO(iso) >= 0 && daysUntilISO(iso) <= 15).sort();
+  if (!city || !isos.length) return {};
+  const key = "f|" + cityId;
+  const cache = loadWeatherCache();
+  if (cache[key] && cache[key].date === today) return cache[key].data;
+  if (!navigator.onLine) return (cache[key] && cache[key].data) || {};
+  if (!forecastRuns[key]) forecastRuns[key] = (async () => {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=" + city.lat + "&longitude=" + city.lng +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+      "&timezone=Asia%2FTokyo&start_date=" + isos[0] + "&end_date=" + isos[isos.length - 1];
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("weather");
+    const d = (await res.json()).daily || {};
+    const data = {};
+    (d.time || []).forEach((iso, i) => {
+      const code = d.weather_code[i];
+      data[iso] = {
+        min: Math.round(d.temperature_2m_min[i]), max: Math.round(d.temperature_2m_max[i]),
+        label: WX_LABELS[code] || "Variable", icon: wxIcon(code),
+        rain: d.precipitation_probability_max ? d.precipitation_probability_max[i] : null
+      };
+    });
+    const c = loadWeatherCache();
+    c[key] = { date: today, data };
+    saveWeatherCache(c);
+    return data;
+  })().finally(() => { delete forecastRuns[key]; });
+  try { return await forecastRuns[key]; } catch (_) { return (cache[key] && cache[key].data) || {}; }
+}
+
+/** Remplit les emplacements [data-wx="AAAA-MM-JJ"] d’un panneau ville avec la prévision du jour. */
+export async function fillCityForecast(root, cityId){
+  if (!root || !root.querySelector("[data-wx]")) return;
+  const fc = await getCityForecast(cityId);
+  root.querySelectorAll("[data-wx]").forEach(el => {
+    const wx = fc[el.dataset.wx];
+    if (!wx) return;
+    el.textContent = `${wx.icon} ${wx.max}°/${wx.min}°`;
+    el.title = wx.label + (wx.rain != null ? ` · pluie ${wx.rain} %` : "");
+    el.hidden = false;
+  });
 }

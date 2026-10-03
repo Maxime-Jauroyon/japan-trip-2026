@@ -172,7 +172,15 @@ if (!ISO.test(trip.startDate || "") || !ISO.test(trip.endDate || "") || trip.sta
 if (!Array.isArray(trip.travelers) || !trip.travelers.length) err("trip", "travelers vide");
 if (!isNum(trip.fxDefault) || trip.fxDefault <= 0) err("trip", "fxDefault invalide");
 load("practical").forEach((p, i) => { if (!isStr(p.title) || !Array.isArray(p.items)) err(`practical[${i}]`, "title / items"); });
-load("places-meta");
+(trip.holidays || []).forEach((h, i) => { if (!ISO.test(h)) err(`trip.holidays[${i}]`, "date AAAA-MM-JJ attendue"); });
+Object.entries(load("places-meta")).forEach(([slug, m]) => {
+  if (!m.closed) return;
+  const c = m.closed;
+  if (!Array.isArray(c.days) || !c.days.length || c.days.some((d) => !Number.isInteger(d) || d < 0 || d > 6)) {
+    err(`places-meta.${slug}.closed`, "days : jours 0 (dimanche) à 6 attendus");
+  }
+  if (!isStr(c.note)) err(`places-meta.${slug}.closed`, "note manquante");
+});
 const photos = load("photos");
 photos.rules.forEach((r, i) => {
   try { new RegExp(r.match); } catch (e) { err(`photos.rules[${i}]`, `motif invalide ${r.match}`); }
