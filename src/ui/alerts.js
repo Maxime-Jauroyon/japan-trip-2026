@@ -1,11 +1,12 @@
-/* Bandeaux bas d’écran : installation iPhone, réservations ouvertes, rappels billets. */
+/* Bandeaux bas d’écran : installation iPhone, carte « À faire » (réservations ouvertes + rappels billets). */
 
-import { BOOKING_ALERT_KEY, IOS_INSTALL_KEY, REMINDER_ALERT_KEY } from "../config.js";
-import { prepCheckState } from "../core/checklist-store.js";
+import { IOS_INSTALL_KEY, TODO_SNOOZE_KEY } from "../config.js";
+import { TODOS_CHANGED, loadDoneBookings, markBookingDone, notifyTodosChanged, prepCheckState, setCheck } from "../core/checklist-store.js";
+import { todayLocalDate } from "../core/dates.js";
 import { esc } from "../core/dom.js";
 import { isIOSDevice, isIOSInstalledPWA } from "../core/env.js";
 import { hooks } from "../core/hooks.js";
-import { collectBookableAlerts, collectPrepReminders } from "../domain/bookings.js";
+import { collectTodos, todoDueLabel } from "../domain/bookings.js";
 
 export function initIOSInstallHint(){
   const box = document.getElementById("ios-install");
@@ -30,149 +31,129 @@ export function initIOSInstallHint(){
   });
 }
 
-function loadDismissedBookingAlerts(){
-  try {
-    const raw = localStorage.getItem(BOOKING_ALERT_KEY);
-    if (!raw) return new Set();
-    const arr = JSON.parse(raw);
-    return new Set(Array.isArray(arr) ? arr : []);
-  } catch (_) {
-    return new Set();
-  }
-}
+/* —— Carte « À faire » : réservations ouvertes + rappels billets ——
+   Rien ne disparaît sans être fait : « Plus tard » masque la carte jusqu’au lendemain seulement. */
 
-function saveDismissedBookingAlerts(set){
-  try { localStorage.setItem(BOOKING_ALERT_KEY, JSON.stringify([...set])); } catch (_) { /* ignore */ }
-}
-
+/** Empile les bandeaux visibles (installation iPhone, puis « À faire » au-dessus), d’après leur hauteur réelle. */
 function syncBottomBanners(){
-  const layers = [
-    { el: document.getElementById("ios-install"), est: 132 },
-    { el: document.getElementById("booking-alert"), est: 150 },
-    { el: document.getElementById("reminder-alert"), est: 150 }
-  ];
-  let bottom = 12;
-  layers.forEach(({ el, est }) => {
-    if (!el) return;
-    if (el.hidden) {
-      el.style.bottom = "";
-      el.classList.remove("above-ios");
-      return;
-    }
-    el.style.bottom = `calc(${bottom}px + env(safe-area-inset-bottom))`;
-    bottom += est;
-  });
+  const ios = document.getElementById("ios-install");
+  const todo = document.getElementById("todo-alert");
+  if (!todo) return;
+  todo.style.bottom = ios && !ios.hidden
+    ? `calc(${ios.offsetHeight + 20}px + var(--tabbar-h, 0px) + env(safe-area-inset-bottom))`
+    : "";
 }
 
-function renderBookingAlert(){
-  const box = document.getElementById("booking-alert");
-  const list = document.getElementById("booking-alert-list");
-  const btn = document.getElementById("booking-alert-dismiss");
-  if (!box || !list || !btn) return;
+/** Pastille d’échéance : « En retard · depuis 9 j », « À faire · aujourd’hui », « Dans 10 j · 13 oct. 2026 ». */
+function pillText(t){
+  if (t.urgency !== "now") return todoDueLabel(t);
+  return t.days == null || t.days === 0 ? "À faire · aujourd’hui" : `À faire · depuis ${-t.days} j`;
+}
 
-  const dismissed = loadDismissedBookingAlerts();
-  const alerts = collectBookableAlerts().filter(a => !dismissed.has(a.id));
-  if (!alerts.length) {
+function todayISO(){
+  const d = todayLocalDate();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function snoozedToday(){
+  try { return localStorage.getItem(TODO_SNOOZE_KEY) === todayISO(); } catch (_) { return false; }
+}
+
+/** Tâches en cours (en retard / à faire maintenant / bientôt). */
+export function currentTodos(){
+  return collectTodos(prepCheckState(), loadDoneBookings());
+}
+
+/** Marque une tâche comme faite (case cochée ou réservation faite sur l’appareil). */
+export function completeTodo(todo){
+  if (todo.kind === "reminder") setCheck(todo.id, true);
+  else markBookingDone(todo.id);
+  notifyTodosChanged();
+}
+
+export function todoItemHtml(t, opts = {}){
+  const link = t.links[0];
+  const open = link
+    ? `<a class="todo-btn todo-open" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(opts.full ? link.label : "Ouvrir")} ↗</a>`
+    : (t.legId ? `<button type="button" class="todo-btn todo-open" data-leg="${esc(t.legId)}">Voir le trajet</button>` : "");
+  const more = opts.full ? t.links.slice(1).map(l =>
+    `<a class="todo-btn todo-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)} ↗</a>`).join("") : "";
+  const leg = opts.full && t.legId && link ? `<button type="button" class="todo-btn todo-link" data-leg="${esc(t.legId)}">Voir le trajet</button>` : "";
+  return `<li class="todo-item ${t.urgency}" data-todo="${esc(t.id)}">` +
+    `<span class="todo-pill ${t.urgency}">${esc(pillText(t))}</span>` +
+    `<strong class="todo-title">${esc(t.title)}</strong>` +
+    (t.meta ? `<span class="todo-meta">${esc(t.meta)}</span>` : "") +
+    `<span class="todo-actions">${open}${more}${leg}<button type="button" class="todo-btn todo-done" data-done="${esc(t.id)}">Fait ✓</button></span>` +
+    `</li>`;
+}
+
+/** Branche « Fait » et « Voir le trajet » sur une liste rendue par todoItemHtml. */
+export function bindTodoList(root, todos){
+  root.querySelectorAll("[data-done]").forEach(btn => btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const t = todos.find(x => x.id === btn.dataset.done);
+    if (t) completeTodo(t);
+  }));
+  root.querySelectorAll("[data-leg]").forEach(btn => btn.addEventListener("click", () => {
+    hooks.setAppTab("map");
+    hooks.openLeg(btn.dataset.leg);
+  }));
+}
+
+function renderTabBadge(todos){
+  const tab = document.querySelector('#app-tabs button[data-tab="prep"]');
+  if (!tab) return;
+  const urgent = todos.filter(t => t.urgency !== "soon");
+  let badge = tab.querySelector(".tab-badge");
+  if (!urgent.length) { if (badge) badge.remove(); return; }
+  if (!badge) {
+    badge = document.createElement("span");
+    badge.className = "tab-badge";
+    tab.appendChild(badge);
+  }
+  badge.textContent = String(urgent.length);
+  badge.classList.toggle("late", urgent.some(t => t.urgency === "late"));
+  badge.setAttribute("aria-label", `${urgent.length} chose${urgent.length > 1 ? "s" : ""} à faire`);
+}
+
+const MAX_IN_CARD = 3;
+
+export function renderTodoAlerts(){
+  const todos = currentTodos();
+  renderTabBadge(todos);
+  const box = document.getElementById("todo-alert");
+  const list = document.getElementById("todo-alert-list");
+  if (!box || !list) return;
+  const urgent = todos.filter(t => t.urgency !== "soon");
+  const onPrep = document.getElementById("view-prep")?.classList.contains("active");
+  if (!urgent.length || snoozedToday() || onPrep) {
     box.hidden = true;
     syncBottomBanners();
     return;
   }
-
-  list.innerHTML = alerts.map(a =>
-    `<li><button type="button" class="booking-alert-item" data-leg-id="${esc(a.legId)}" data-url="${esc(a.url)}">` +
-    `<span><strong>${esc(a.legTitle)}</strong><span>${esc(a.label)} · ${esc(a.site)}</span></span>` +
-    `<span class="booking-alert-go" aria-hidden="true">Voir →</span></button></li>`
-  ).join("");
-
-  list.querySelectorAll(".booking-alert-item").forEach(el => {
-    el.addEventListener("click", () => {
-      const legId = el.dataset.legId;
-      const url = el.dataset.url;
-      if (legId) hooks.openLeg(legId);
-      if (url) window.open(url, "_blank", "noopener,noreferrer");
-    });
-  });
-
+  document.getElementById("todo-alert-count").textContent = `· ${urgent.length}`;
+  box.classList.toggle("has-late", urgent.some(t => t.urgency === "late"));
+  list.innerHTML = urgent.slice(0, MAX_IN_CARD).map(t => todoItemHtml(t)).join("");
+  bindTodoList(list, urgent);
+  const all = document.getElementById("todo-alert-all");
+  all.textContent = urgent.length > MAX_IN_CARD
+    ? `+ ${urgent.length - MAX_IN_CARD} autre${urgent.length - MAX_IN_CARD > 1 ? "s" : ""} · tout voir dans Préparatifs →`
+    : "Tout voir dans Préparatifs →";
   box.hidden = false;
   syncBottomBanners();
+}
 
-  if (btn._bookingBound) return;
-  btn._bookingBound = true;
-  btn.addEventListener("click", () => {
-    const dismissedNow = loadDismissedBookingAlerts();
-    collectBookableAlerts().forEach(a => dismissedNow.add(a.id));
-    saveDismissedBookingAlerts(dismissedNow);
-    box.hidden = true;
-    syncBottomBanners();
+export function initTodoAlerts(){
+  document.getElementById("todo-alert-later")?.addEventListener("click", () => {
+    try { localStorage.setItem(TODO_SNOOZE_KEY, todayISO()); } catch (_) { /* ignore */ }
+    renderTodoAlerts();
   });
-}
-
-export function initBookingAlert(){
-  renderBookingAlert();
-}
-
-function loadDismissedReminderAlerts(){
-  try {
-    const raw = localStorage.getItem(REMINDER_ALERT_KEY);
-    if (!raw) return new Set();
-    const arr = JSON.parse(raw);
-    return new Set(Array.isArray(arr) ? arr : []);
-  } catch (_) {
-    return new Set();
-  }
-}
-
-function saveDismissedReminderAlerts(set){
-  try { localStorage.setItem(REMINDER_ALERT_KEY, JSON.stringify([...set])); } catch (_) { /* ignore */ }
-}
-
-function collectDueReminderAlerts(){
-  return collectPrepReminders(prepCheckState()).filter(r => r.active);
-}
-
-export function renderReminderAlert(){
-  const box = document.getElementById("reminder-alert");
-  const list = document.getElementById("reminder-alert-list");
-  const btn = document.getElementById("reminder-alert-dismiss");
-  if (!box || !list || !btn) return;
-
-  const dismissed = loadDismissedReminderAlerts();
-  const alerts = collectDueReminderAlerts().filter(a => !dismissed.has(a.id));
-  if (!alerts.length) {
-    box.hidden = true;
-    syncBottomBanners();
-    return;
-  }
-
-  list.innerHTML = alerts.map(a => {
-    const firstUrl = (a.links && a.links[0] && a.links[0].url) || a.url || "";
-    return `<li><button type="button" class="reminder-alert-item" data-url="${esc(firstUrl)}" data-check-id="${esc(a.id)}">` +
-    `<span><strong>${esc(a.label)}</strong><span>${esc(a.meta)}</span></span>` +
-    `<span class="reminder-alert-go" aria-hidden="true">Préparatifs →</span></button></li>`;
-  }).join("");
-
-  list.querySelectorAll(".reminder-alert-item").forEach(el => {
-    el.addEventListener("click", () => {
-      hooks.setAppTab("prep");
-      const sec = document.getElementById("prep-reminders-sec");
-      if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  });
-
-  box.hidden = false;
-  syncBottomBanners();
-
-  if (btn._reminderBound) return;
-  btn._reminderBound = true;
-  btn.addEventListener("click", () => {
-    const dismissedNow = loadDismissedReminderAlerts();
-    collectDueReminderAlerts().forEach(a => dismissedNow.add(a.id));
-    saveDismissedReminderAlerts(dismissedNow);
-    box.hidden = true;
-    syncBottomBanners();
-  });
-}
-
-export function initReminderAlert(){
-  renderReminderAlert();
+  document.getElementById("todo-alert-all")?.addEventListener("click", () => hooks.setAppTab("prep"));
+  document.addEventListener(TODOS_CHANGED, renderTodoAlerts);
+  // Retour au premier plan / changement de jour : les échéances avancent
+  let lastDay = todayISO();
+  const refresh = () => { lastDay = todayISO(); renderTodoAlerts(); };
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+  setInterval(() => { if (todayISO() !== lastDay) refresh(); }, 60 * 1000);
+  renderTodoAlerts();
 }

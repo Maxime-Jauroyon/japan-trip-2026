@@ -5,6 +5,5 @@
 :root[data-theme="light"] .route-vehicle { filter: drop-shadow(0 2px 3px rgba(70, 52, 30, .35)); }
 :root[data-theme="light"] .brand-mark { filter: drop-shadow(0 2px 6px rgba(70, 52, 30, .25)); }
 :root[data-theme="light"] .status.paid { background: rgba(47, 154, 120, .14); }
-:root[data-theme="light"] .booking-alert-inner,
-:root[data-theme="light"] .ios-install-inner,
-:root[data-theme="light"] .reminder-alert-inner { box-shadow: var(--shadow-lg); }
+:root[data-theme="light"] .todo-alert-inner,
+:root[data-theme="light"] .ios-install-inner { box-shadow: var(--shadow-lg); }
