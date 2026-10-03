@@ -8,7 +8,7 @@ import { hooks } from "../../core/hooks.js";
 import { state } from "../../core/state.js";
 import { phraseContextForAct, pinKind, stopPhraseContext } from "../../domain/classify.js";
 import { hotelPhotos, photosFor, thumbOf } from "../../domain/photos.js";
-import { dayItinerary, itinerarySummary, segmentEstimate } from "../../domain/itinerary.js";
+import { dayItinerary, formatKm, formatMinutes, itinerarySummary, segmentEstimate } from "../../domain/itinerary.js";
 import { cityIdForAct } from "../../domain/places.js";
 import { actMetaFor, cityStayDates, closureFor, daysForCity, defaultCityDay, ideasForCity, ideasOf, stayGroups, stopEntryOnCity } from "../../domain/trip.js";
 import { highlightPin } from "../../map/city.js";
@@ -17,6 +17,7 @@ import { clearLegEnds } from "../../map/country.js";
 import { PLACE_COLORS, TRANSPORT_COLORS, cityIconSvg, placeGlyphSvg, transportIconSvg } from "../../shared/icons.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 import { fillCityForecast } from "../views/weather.js";
+import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
 import { actLinksHtml, contextPhraseHtml, copyFieldHtml, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
 
@@ -118,8 +119,9 @@ let view = null;   // { city, days }
 const shortDow = (d) => (d.dow || "").slice(0, 3).toLowerCase();
 const dayNum = (d) => (String(d.date || "").match(/^\d+/) || [""])[0];
 const monthOf = (d) => (String(d.date || "").match(/^\d+\s+(\S+)/) || ["", ""])[1];
-const fmtMin = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`);
-const fmtKm = (km) => (km < 10 ? km.toFixed(1).replace(".", ",") : String(Math.round(km))) + " km";
+let posBound = false;
+const fmtMin = formatMinutes;
+const fmtKm = formatKm;
 const isToday = (d) => dayToISO(d) === japanTodayISO();
 /** Fermeture du lieu ce jour-là (places-meta.json → closed), ou null. */
 const closureOf = (act, d) => (d ? closureFor(actMetaFor(act).closed, dayToISO(d), TRIP.holidays || []) : null);
@@ -156,7 +158,8 @@ function itineraryHtml(stops, d){
         `<span class="itin-mark" style="--c:${PLACE_COLORS[kind] || PLACE_COLORS.pin}">${s.step}</span>` +
         `<span class="itin-main"><strong>${esc(a.title)}</strong>` +
         (a.desc ? `<span class="itin-desc">${esc(a.desc)}</span>` : "") +
-        closedPillHtml(closureOf(a, d)) + `</span>` +
+        closedPillHtml(closureOf(a, d)) +
+        `<span class="itin-dist" data-dist-lat="${a.lat}" data-dist-lng="${a.lng}" hidden></span>` + `</span>` +
         thumb + mapsLinkHtml(a, "list") + `</li>`;
     }
     const hotel = s.kind === "hotel";
@@ -282,6 +285,11 @@ function renderView(dir){
 
   bindMoves(listEl, c.id);
   fillCityForecast(listEl, c.id);
+  fillDistances(listEl);
+  if (!posBound) {
+    posBound = true;
+    document.addEventListener(USER_POS_CHANGED, () => fillDistances(panel));
+  }
   listEl.querySelectorAll(".hotel-card[data-stay]").forEach(n => n.addEventListener("click", () => {
     const stay = (c.stays || []).find(s => s.id === n.dataset.stay);
     if (stay) openHotelDetail(stay);

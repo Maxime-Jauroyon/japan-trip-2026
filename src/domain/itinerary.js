@@ -84,3 +84,30 @@ export function itinerarySummary(stops) {
   }
   return { activities: stops.filter((s) => s.kind === "activity").length, km, minutes };
 }
+
+/** « 25 min », « 1 h 05 ». */
+export function formatMinutes(m) {
+  return m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`;
+}
+
+/** « 2,3 km », « 12 km ». */
+export function formatKm(km) {
+  return (km < 10 ? km.toFixed(1).replace(".", ",") : String(Math.round(km))) + " km";
+}
+
+/** Distance courte lisible : « 850 m », « 3,2 km ». */
+export function formatDistance(km) {
+  return km < 1 ? `${Math.max(50, Math.round(km * 1000 / 50) * 50)} m` : formatKm(km);
+}
+
+/**
+ * Prochaine étape du jour : première activité pas encore faite (titres dans `done`).
+ * Retourne { index, stop, from } — `from` = étape précédente (point de départ par défaut) — ou null si tout est fait.
+ */
+export function nextStop(stops, done) {
+  const isDone = (s) => done && done.has(s.title);
+  const i = stops.findIndex((s) => s.kind === "activity" && !isDone(s));
+  if (i < 0) return null;
+  const prevDone = stops.slice(0, i).reverse().find((s) => s.kind !== "activity" || isDone(s));
+  return { index: i, stop: stops[i], from: prevDone || stops[i - 1] || null };
+}

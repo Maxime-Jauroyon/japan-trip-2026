@@ -34,17 +34,17 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=184" />
-  <link rel="stylesheet" href="./styles/base.css?v=184" />
-  <link rel="stylesheet" href="./styles/views.css?v=184" />
-  <link rel="stylesheet" href="./styles/panel.css?v=184" />
-  <link rel="stylesheet" href="./styles/components.css?v=184" />
-  <link rel="stylesheet" href="./styles/print.css?v=184" />
-  <link rel="stylesheet" href="./styles/map.css?v=184" />
-  <link rel="stylesheet" href="./styles/settings.css?v=184" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=184" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=184" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=184" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=185" />
+  <link rel="stylesheet" href="./styles/base.css?v=185" />
+  <link rel="stylesheet" href="./styles/views.css?v=185" />
+  <link rel="stylesheet" href="./styles/panel.css?v=185" />
+  <link rel="stylesheet" href="./styles/components.css?v=185" />
+  <link rel="stylesheet" href="./styles/print.css?v=185" />
+  <link rel="stylesheet" href="./styles/map.css?v=185" />
+  <link rel="stylesheet" href="./styles/settings.css?v=185" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=185" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=185" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=185" />
 </head>
 <body>
   <div class="app tab-map">
@@ -81,6 +81,9 @@
         <div class="map-ctrl-group">
           <button type="button" id="z-north" title="Nord en haut" aria-label="Remettre le nord en haut"><svg class="compass-needle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l3.2 9H8.8L12 3z" fill="#e2583e"/><path d="M12 21l-3.2-9h6.4L12 21z" fill="currentColor" opacity=".55"/></svg></button>
           <button type="button" id="z-3d" class="btn-3d" title="Vue à plat">2D</button>
+        </div>
+        <div class="map-ctrl-group">
+          <button type="button" id="z-locate" class="btn-locate" title="Ma position" aria-label="Ma position" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle class="locate-dot" cx="12" cy="12" r="2.6" fill="currentColor"/></svg></button>
         </div>
       </div>
       <button type="button" class="home-btn" id="z-home" title="Vue Japon" aria-label="Retour à la carte du Japon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5M6.5 10v9h4v-5h3v5h4v-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -127,6 +130,7 @@
           <div class="view-head"><h2>Sur place</h2></div>
 
           <div id="onsite-today"></div>
+          <div class="tool-card next-card" id="onsite-next" hidden></div>
 
           <div class="tool-card fx" id="onsite-fx">
             <div class="tool-head"><h3>Convertisseur</h3>
@@ -242,6 +246,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=184"></script>
+  <script type="module" src="./src/main.js?v=185"></script>
 </body>
 </html>
