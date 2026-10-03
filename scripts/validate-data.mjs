@@ -162,6 +162,9 @@ phraseRefs.forEach(([where, key]) => {
   if (!phrases.context || !phrases.context[key]) err(where, `contexte de phrases inconnu « ${key} »`);
 });
 const trip = load("trip");
+(trip.emergency || []).forEach((e, i) => {
+  if (!isStr(e.label) || !/^\+?[0-9]{3,15}$/.test(e.number || "")) err(`trip.emergency[${i}]`, "label + number (chiffres, + autorisé) attendus");
+});
 ["title", "shortTitle", "datesLabel", "datesLabelLong", "startLabel", "climateMonth"].forEach((k) => {
   if (!isStr(trip[k])) err("trip", `${k} manquant`);
 });

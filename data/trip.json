@@ -11,5 +11,29 @@
     "Léo",
     "Maxime"
   ],
-  "fxDefault": 185
+  "fxDefault": 185,
+  "emergency": [
+    {
+      "label": "Police",
+      "number": "110",
+      "note": "Vol, agression, objet perdu"
+    },
+    {
+      "label": "Ambulance / pompiers",
+      "number": "119",
+      "note": "Dire « kyūkyū » (救急) pour l’ambulance"
+    },
+    {
+      "label": "Ambassade de France",
+      "number": "+81357986000",
+      "display": "03-5798-6000",
+      "note": "Tokyo · urgences consulaires 24 h/24"
+    },
+    {
+      "label": "Japan Visitor Hotline",
+      "number": "+815038162787",
+      "display": "050-3816-2787",
+      "note": "JNTO · en anglais, 24 h/24"
+    }
+  ]
 }

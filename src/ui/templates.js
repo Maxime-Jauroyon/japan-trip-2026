@@ -49,7 +49,7 @@ export function renderHotelCard(stay){
   </button>`;
 }
 
-function mapsDirectionsUrl(act){
+export function mapsDirectionsUrl(act){
   if (!act || act.lat == null || act.lng == null) return null;
   const dest = `${act.lat},${act.lng}`;
   // origin omis → Google Maps utilise la position actuelle sur le téléphone

@@ -441,35 +441,6 @@ button.stat.stop-jump .jump-hint {
   cursor: pointer;
 }
 .journey-back:hover { background: rgba(var(--gold-rgb), .14); }
-.tl-item.tl-journey {
-  padding: 12px;
-  background: var(--panel-2);
-  border: 1px solid rgba(var(--fg-rgb), .08);
-  border-radius: 6px;
-}
-.tl-journey-steps {
-  margin-top: 10px;
-  padding-left: 12px;
-  border-left: 2px solid rgba(var(--gold-rgb), .35);
-}
-.tl-journey-step {
-  font-size: 13px;
-  line-height: 1.45;
-  margin-top: 6px;
-  color: var(--cream);
-}
-.tl-journey-step:first-child { margin-top: 0; }
-.tl-journey-step { display: flex; align-items: center; gap: 8px; }
-.tl-step-badge { --badge: 22px; }
-.tl-step-role {
-  display: inline-block;
-  margin-right: 6px;
-  font-size: 10px;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: var(--gold-2);
-}
-.tl-journey-dest { color: var(--gold-2); }
 
 .hotel-card {
   display: grid;

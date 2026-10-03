@@ -67,6 +67,9 @@
     text-overflow: ellipsis;
   }
   .info-view { padding: 14px 14px 36px; }
+  .seg-tabs { margin: 0 -14px 14px; padding: 8px 14px; top: -14px; }
+  .seg-tabs button { padding: 8px 12px; font-size: 13.5px; }
+  .fx-field input { font-size: 21px; }
 
   /* Barre d’onglets : icône + libellé */
   .tabs {

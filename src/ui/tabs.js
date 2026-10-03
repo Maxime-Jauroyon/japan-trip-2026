@@ -4,7 +4,7 @@ import { renderTodoAlerts } from "./alerts.js";
 import { state } from "../core/state.js";
 import { map } from "../map/map-view.js";
 import { syncSheetMapInset } from "./panels/panel.js";
-import { getOnsiteSelectedDay, openMapForDay, renderOnsite } from "./views/onsite-view.js";
+import { renderOnsite } from "./views/onsite-view.js";
 import { renderPrep } from "./views/prep-view.js";
 import { printTrip } from "./views/print.js";
 import { renderSettings } from "./views/settings-view.js";
@@ -37,14 +37,10 @@ export function setAppTab(tab){
   }
 }
 
-/** Onglets + boutons transverses (impression, « Voir sur la carte »). */
+/** Onglets + boutons transverses (impression). */
 export function initTabs() {
   document.getElementById("app-tabs")?.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => setAppTab(btn.dataset.tab));
   });
   document.getElementById("print-trip")?.addEventListener("click", printTrip);
-  document.getElementById("onsite-map-btn")?.addEventListener("click", () => {
-    const day = getOnsiteSelectedDay();
-    if (day) openMapForDay(day);
-  });
 }
