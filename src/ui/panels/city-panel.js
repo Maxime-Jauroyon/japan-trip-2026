@@ -27,9 +27,8 @@ export function openActivityDetail(act, opts){
   const kind = pinKind(act.title);
   const gallery = renderPhotoGallery(photosFor(act), kind);
   showDetailSheet(
+    detailHeadHtml("activity", "Activité", act.title) +
     gallery +
-    `<span class="sheet-kind activity">Activité</span>` +
-    `<h3>${esc(act.title)}</h3>` +
     mapsLinkHtml(act, "detail") +
     `<p class="desc">${esc(act.desc || "")}</p>` +
     notesListHtml(act.notes) +
@@ -39,15 +38,20 @@ export function openActivityDetail(act, opts){
   highlightPin(act, opts);
 }
 
+/** En-tête de fiche (type + nom), placé avant les photos : lisible même sheet à mi-hauteur. */
+function detailHeadHtml(kind, label, name, jp){
+  return `<div class="detail-head"><span class="sheet-kind ${kind}">${esc(label)}</span>` +
+    `<h3>${esc(name)}</h3>${jp ? `<p class="jp-name">${esc(jp)}</p>` : ""}</div>`;
+}
+
 export function openHotelDetail(stay){
   if (!state.panelContext || state.panelContext.type !== "city") return;
   const h = stay.hotel || {};
   const mapAct = (h.lat != null && h.lng != null) ? { lat: h.lat, lng: h.lng, title: h.name } : null;
   const photos = hotelPhotos(h);
   showDetailSheet(
+    detailHeadHtml("hotel", "Hôtel", h.name || "Hôtel à définir") +
     renderPhotoGallery(photos, "town") +
-    `<span class="sheet-kind hotel">Hôtel</span>` +
-    `<h3>${esc(h.name || "Hôtel à définir")}</h3>` +
     (mapAct ? mapsLinkHtml(mapAct, "detail") : "") +
     `<p class="desc">${esc(h.desc || "")}</p>` +
     `<div class="pill-row"><span class="status ${statusClass(h.status)}">${statusLabel(h.status)}</span></div>` +
@@ -80,9 +84,7 @@ export function openStopDetail(stop, opts){
       `</button>`;
   }).join("");
   showDetailSheet(
-    `<span class="sheet-kind stop">Trajet</span>` +
-    `<h3>${esc(stop.name)}</h3>` +
-    (stop.jp ? `<p class="jp-name">${esc(stop.jp)}</p>` : "") +
+    detailHeadHtml("stop", "Trajet", stop.name, stop.jp) +
     mapsLinkHtml(mapAct, "detail") +
     `<dl class="detail-kv">` +
     `<dt>Type</dt><dd>${esc(stop.kind || "Arrêt")}</dd>` +
