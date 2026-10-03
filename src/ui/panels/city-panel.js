@@ -62,7 +62,7 @@ export function openHotelDetail(stay){
     `<dt>Prix</dt><dd>${esc(h.price || "—")}</dd>` +
     `</dl>` +
     notesListHtml(h.notes) +
-    contextPhraseHtml("hotel")
+    contextPhraseHtml(stay.phrases || "hotel")
   );
   if (mapAct) highlightPin(mapAct);
 }

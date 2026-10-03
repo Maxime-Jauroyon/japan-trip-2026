@@ -92,3 +92,15 @@ test("jour ouvert par défaut dans le panneau ville", () => {
   assert.equal(defaultCityDay(kyoto, "2026-10-03", null), null);  // hors voyage → aperçu
   assert.equal(defaultCityDay(kyoto, "2026-10-03", 2), null);     // jour d’une autre ville
 });
+
+test("phrases utiles adaptées à chaque lieu", async () => {
+  const { phraseContextForAct } = await import("../src/domain/classify.js");
+  const { CONTEXT_PHRASES } = await import("../src/core/data.js");
+  const idea = (title) => DAYS.flatMap(ideasOf).find((a) => a.title === title);
+  assert.equal(phraseContextForAct(idea("Universal Studios Japan")), "park");
+  assert.equal(phraseContextForAct(idea("Marché Nishiki")), "market");
+  assert.equal(phraseContextForAct(idea("Cérémonie du thé")), "culture");
+  assert.equal(phraseContextForAct(idea("Fushimi Inari")), "temple");
+  // Chaque lieu du voyage tombe sur un contexte qui existe
+  DAYS.flatMap(ideasOf).forEach((a) => assert.ok(CONTEXT_PHRASES[phraseContextForAct(a)], a.title));
+});

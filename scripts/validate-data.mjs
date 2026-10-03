@@ -38,6 +38,7 @@ function checkCoord(p, where, optional = false) {
   if (!isNum(p.lng) || p.lng < 120 || p.lng > 155) err(where, `longitude invalide ${p.lng}`);
   return true;
 }
+const phraseRefs = [];   // [où, contexte] — vérifiés une fois phrases.json chargé
 const inside = (b, p) => p.lng >= b.west && p.lng <= b.east && p.lat >= b.south && p.lat <= b.north;
 
 // —— Villes ——
@@ -58,6 +59,7 @@ cities.forEach((c) => {
   if (c.climate && !(isNum(c.climate.hi) && isNum(c.climate.lo) && c.climate.lo <= c.climate.hi)) err(w, "climate hi/lo invalide");
   (c.stays || []).forEach((s, i) => {
     const ws = `${w} séjour ${s.id || i}`;
+    if (s.phrases) phraseRefs.push([ws, s.phrases]);
     if (!isStr(s.id)) err(ws, "id manquant");
     else if (stayIds.has(s.id)) err(ws, "id de séjour en double");
     stayIds.add(s.id);
@@ -119,6 +121,7 @@ days.forEach((d, i) => {
   ["ideas", "ideasAfter"].forEach((key) => (d[key] || []).forEach((a, k) => {
     const wa = `${w} ${key}[${k}] « ${a.title} »`;
     if (!isStr(a.title)) err(wa, "titre manquant");
+    if (a.phrases) phraseRefs.push([wa, a.phrases]);
     if ((a.lat != null || a.lng != null) && checkCoord(a, wa)) {
       // Un pin mal géocodé tombe souvent dans une autre région : il doit être dans l’emprise d’une ville
       if (!cities.some((c) => c.map && c.map.bounds && inside(c.map.bounds, a))) err(wa, "coordonnées hors de toute ville du voyage");
@@ -138,8 +141,20 @@ prep.checks.forEach((c) => {
   if (c.remindFrom && !ISO.test(c.remindFrom)) err(`prep ${c.id}`, `remindFrom doit être AAAA-MM-JJ (${c.remindFrom})`);
 });
 const phrases = load("phrases");
-[...phrases.common, ...Object.values(phrases.context).flat()].forEach((p, i) => {
-  if (!isStr(p.fr) || !isStr(p.jp) || !isStr(p.ro)) err(`phrase ${i}`, "fr / jp / ro manquant");
+const checkPhrase = (where) => (p, i) => {
+  if (!isStr(p.fr) || !isStr(p.jp) || !isStr(p.ro)) err(`${where} phrase ${i}`, "fr / jp / ro manquant");
+};
+(phrases.onsite || []).forEach((g, k) => {
+  if (!isStr(g.title) || !Array.isArray(g.phrases) || !g.phrases.length) err(`phrases.onsite[${k}]`, "title + phrases attendus");
+  else g.phrases.forEach(checkPhrase(`phrases.onsite « ${g.title} »`));
+});
+Object.entries(phrases.context || {}).forEach(([key, c]) => {
+  if (!isStr(c.label) || !Array.isArray(c.phrases) || !c.phrases.length) err(`phrases.context.${key}`, "label + phrases attendus");
+  else c.phrases.forEach(checkPhrase(`phrases.context.${key}`));
+});
+// Contexte imposé sur un lieu / un séjour (« phrases »: "park") : doit exister
+phraseRefs.forEach(([where, key]) => {
+  if (!phrases.context || !phrases.context[key]) err(where, `contexte de phrases inconnu « ${key} »`);
 });
 const trip = load("trip");
 ["title", "shortTitle", "datesLabel", "datesLabelLong", "startLabel", "climateMonth"].forEach((k) => {

@@ -34,10 +34,15 @@ export function stopPhraseContext(stop){
   return "train";
 }
 
+/** Contexte des phrases utiles d’un lieu : champ « phrases » des données, sinon d’après le titre. */
 export function phraseContextForAct(act){
+  if (act.phrases) return act.phrases;
   const t = (act.title || "").toLowerCase();
+  if (/parc d’attractions|parc à thème|theme park/.test(t)) return "park";
+  if (/marché|marche|market|nishiki|kuromon|omicho|ōmichō/.test(t)) return "market";
   if (/temple|sanctuaire|jinja|dera|shrine|todai|fushimi|meiji|senso|kasuga|kinkaku|kiyomizu|pagode|inari|nijo|kōfuku|kofuku/.test(t)) return "temple";
-  if (/marché|marche|market|nishiki|kuromon|omicho|ōmichō|magasin|boutique|shopping|donki|animate|pokemon/.test(t)) return "shop";
-  if (/déjeuner|dejeuner|dîner|diner|restaurant|ramen|sushi|wagashi|thé|tea|izakaya|takoyaki|okonomiyaki|street food/.test(t)) return "restaurant";
+  if (/magasin|boutique|shopping|donki|animate|pokemon/.test(t)) return "shop";
+  if (/cérémonie|ceremonie|atelier|wagashi|feuille d’or/.test(t)) return "culture";
+  if (/déjeuner|dejeuner|dîner|diner|restaurant|ramen|sushi|izakaya|takoyaki|okonomiyaki|street food/.test(t)) return "restaurant";
   return "visit";
 }

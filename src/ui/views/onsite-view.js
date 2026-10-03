@@ -1,12 +1,13 @@
 /* Onglet Sur place : programme du jour, choix du jour, frise, bouton carte. */
 
-import { CITIES, DAYS, PHRASES, TRIP } from "../../core/data.js";
+import { CITIES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
 import { findTripDayByISO, japanTodayISO, parseHotelTimeSort, parseWhenSort } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { hooks } from "../../core/hooks.js";
 import { actMetaFor, daysForCity, groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, isLastDayOfStay, luggageBeforeCheckInHint, moveSortRange, stayForDay } from "../../domain/trip.js";
 import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
+import { phraseCardHtml } from "../phrase-show.js";
 import { mapsLinkHtml, modeBadgeFor } from "../templates.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderOnsiteWeather } from "./weather.js";
@@ -263,7 +264,9 @@ export function renderOnsite(){
     if (b0) b0.classList.add("on");
     renderOnsiteDay(first);
   }
-  phrases.innerHTML = PHRASES.map(p =>
-    `<div class="phrase"><div class="fr">${esc(p.fr)}</div><div class="jp">${esc(p.jp)}</div><div class="ro">${esc(p.ro)}</div></div>`
+  // Groupes par situation : le premier (au restaurant) ouvert, les autres repliés
+  phrases.innerHTML = ONSITE_PHRASES.map((g, i) =>
+    `<details class="phrase-group"${i === 0 ? " open" : ""}><summary>${esc(g.title)}<span>${g.phrases.length}</span></summary>` +
+    `<div class="phrase-grid">${g.phrases.map(p => phraseCardHtml(p)).join("")}</div></details>`
   ).join("");
 }

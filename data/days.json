@@ -21,6 +21,7 @@
     "ideas": [
       {
         "title": "Akihabara — arcades / anime",
+        "phrases": "shop",
         "lat": 35.6984,
         "lng": 139.7731,
         "desc": "Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit."
@@ -33,6 +34,7 @@
       },
       {
         "title": "Tokyo Character Street",
+        "phrases": "shop",
         "lat": 35.6806,
         "lng": 139.7684,
         "desc": "Galerie souterraine sous Tokyo Station, pleine de boutiques anime, Pokemon et personnages — parfait pour le premier jour."
@@ -79,6 +81,7 @@
     "ideas": [
       {
         "title": "Harajuku / Omotesandō",
+        "phrases": "shop",
         "lat": 35.6714,
         "lng": 139.7048,
         "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
@@ -105,6 +108,7 @@
     "ideas": [
       {
         "title": "teamLab Planets",
+        "phrases": "park",
         "lat": 35.649,
         "lng": 139.7898,
         "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance."
@@ -164,6 +168,7 @@
       },
       {
         "title": "Musée Itchiku Kubota",
+        "phrases": "visit",
         "lat": 35.5274,
         "lng": 138.7598,
         "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac."
@@ -196,6 +201,7 @@
     "ideas": [
       {
         "title": "Fuji-Q Highland",
+        "phrases": "park",
         "lat": 35.4874,
         "lng": 138.7806,
         "slug": "fujiq",
@@ -377,6 +383,7 @@
       },
       {
         "title": "Sanmachi Suji",
+        "phrases": "shop",
         "lat": 36.1415,
         "lng": 137.2595,
         "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir."
@@ -392,6 +399,7 @@
     "ideas": [
       {
         "title": "Marché Miyagawa",
+        "phrases": "market",
         "lat": 36.1456,
         "lng": 137.2581,
         "desc": "Marché matinal au bord de la rivière : produits locaux, pickles et spécialités Hida avant le départ."
@@ -415,6 +423,7 @@
     "ideasAfter": [
       {
         "title": "Ruelle Pontochō au crépuscule",
+        "phrases": "restaurant",
         "lat": 35.0039,
         "lng": 135.7714,
         "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto."
@@ -573,6 +582,7 @@
     "ideasAfter": [
       {
         "title": "Dotonbori",
+        "phrases": "restaurant",
         "lat": 34.6687,
         "lng": 135.5013,
         "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée."
@@ -587,6 +597,7 @@
     "ideas": [
       {
         "title": "Universal Studios Japan",
+        "phrases": "park",
         "lat": 34.6654,
         "lng": 135.4323,
         "desc": "Journée parc — Harry Potter, Super Nintendo World, attractions. Arriver tôt et planifier le parcours.",
@@ -622,18 +633,21 @@
       },
       {
         "title": "Den Den Town",
+        "phrases": "shop",
         "lat": 34.66,
         "lng": 135.5058,
         "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba."
       },
       {
         "title": "Shinsekai",
+        "phrases": "restaurant",
         "lat": 34.6525,
         "lng": 135.5063,
         "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school."
       },
       {
         "title": "Dotonbori",
+        "phrases": "restaurant",
         "lat": 34.6687,
         "lng": 135.5013,
         "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico."
@@ -654,12 +668,14 @@
       },
       {
         "title": "Shinsaibashi",
+        "phrases": "shop",
         "lat": 34.6751,
         "lng": 135.501,
         "desc": "Galerie marchande couverte qui mène à Dotonbori — mode, grands magasins, flânerie."
       },
       {
         "title": "Hozenji Yokocho",
+        "phrases": "restaurant",
         "lat": 34.6683,
         "lng": 135.5027,
         "desc": "Petite ruelle au sanctuaire moussu près de Dotonbori — contraste calme avec les néons."
@@ -698,6 +714,7 @@
     "ideas": [
       {
         "title": "Ginza / Itoya",
+        "phrases": "shop",
         "lat": 35.6729,
         "lng": 139.7672,
         "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs."
