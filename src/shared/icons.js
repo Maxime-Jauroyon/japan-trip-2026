@@ -1,35 +1,95 @@
 /* Générateurs SVG inline : logos des villes, pins, véhicules, icônes. Aucune dépendance. */
 
-export function cityMapLogoSvg(id){
-  const ink = "#1e2834";
-  const o = `stroke="${ink}" stroke-width=".9" stroke-linejoin="round"`;
-  const icons = {
-    tokyo: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 3 17 7h-2L16 3z" fill="#e85d4a" ${o}/><path d="M13.2 7h5.6v2.4h-5.6z" fill="#e85d4a" ${o}/><path d="M14 9.4h4v8.6h-4z" fill="#d44a38" ${o}/><rect x="13.8" y="11.2" width="4.4" height="1.3" fill="#fff" opacity=".85"/><rect x="13.8" y="14.2" width="4.4" height="1.3" fill="#fff" opacity=".85"/><path d="M12.2 18h7.6v1.8H12.2z" fill="#e85d4a" ${o}/><path d="M10.5 19.8h10.8L23 26H9l1.5-6.2z" fill="#c94a38" ${o}/></svg>`,
-    fuji: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 5 5 26.5h22L16 5z" fill="#5b8fd4" ${o}/><path d="M16 5 10.4 16h11.2L16 5z" fill="#f4f8fc" ${o}/></svg>`,
-    kanazawa: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 26.5V17.5l9-6.5 9 6.5V26.5H7z" fill="#8a98a6" ${o}/><path d="M8.5 25V18.5l7.5-5.2 7.5 5.2V25H8.5z" fill="#f5f7fa" ${o}/><path d="M6.5 17.8 16 10.5 25.5 17.8" fill="#6b5344" ${o}/><path d="M8 17.2 16 11.2l8 6" fill="#9a7a52" ${o}/><path d="M12.5 25v-4.5h7V25h-7z" fill="#6b5344" ${o}/></svg>`,
-    shirakawa: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 3.5 2.5 17.5h27L16 3.5z" fill="#6b5344" ${o}/><path d="M16 5.5 5.5 16h21L16 5.5z" fill="#9a7a52" ${o}/><path d="M8.5 17v9.5h15V17" fill="#ebe0cc" ${o}/><path d="M8.5 17h15" stroke="${ink}" stroke-width=".65" opacity=".35"/><rect x="11.5" y="20" width="3" height="3" fill="#5a4638" ${o}/><rect x="17.5" y="20" width="3" height="3" fill="#5a4638" ${o}/></svg>`,
-    takayama: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 26.5V16.5L16 8.5 27.5 16.5v10H4.5z" fill="#6b5344" ${o}/><path d="M6 25V17.5l10-6.5 10 6.5V25H6z" fill="#e8dcc8" ${o}/><path d="M5 16.5 16 9.5 27 16.5" fill="#8a6a4a" ${o}/><path d="M9.5 25v-5h4v5h-4zm9 0v-5h4v5h-4z" fill="#5a4638" ${o}/><rect x="14.2" y="13.5" width="3.6" height="4.8" rx=".3" fill="#e85d4a" ${o}/></svg>`,
-    kyoto: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 26.5V20.5l6-3.5 6 3.5v6H10z" fill="#c49a20" ${o}/><path d="M11.5 20.5V16l4.5-2.5 4.5 2.5v4.5H11.5z" fill="#e8c547" ${o}/><path d="M13 16V12.5l3-1.8 3 1.8V16H13z" fill="#ffe890" ${o}/><path d="M15.2 10.8 16 9l.8 1.8H15.2z" fill="#c49a20" ${o}/><path d="M7 26.8h18" stroke="#5b8fd4" stroke-width="1.8" stroke-linecap="round" opacity=".45"/></svg>`,
-    nara: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 26.5V20.5c0-1.2 5.2-2.2 11.5-2.2s11.5 1 11.5 2.2v6H4.5z" fill="#8a6a4a" ${o}/><path d="M6 25.5V21c0-.8 4.5-1.5 10-1.5s10 .7 10 1.5v4.5H6z" fill="#c45c26" ${o}/><path d="M8 21.2c2.5-.6 5.2-.9 8-.9s5.5.3 8 .9" stroke="${ink}" stroke-width=".65" opacity=".3"/><path d="M13.5 14.5V21M18.5 14.5V21" stroke="#6b5344" stroke-width="1.4" stroke-linecap="round"/><path d="M12 14.5h8l-1-3.5h-6l-1 3.5z" fill="#6b5344" ${o}/></svg>`,
-    osaka: `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 26.5h19v-2.2H6.5z" fill="#8a929a" ${o}/><path d="M7.5 24.3h17v2.2H7.5z" fill="#a8aeb4" ${o}/><path d="M8 24.3V21.8h16v2.5H8z" fill="#f5f7fa" ${o}/><path d="M6.2 21.8q9.8-2.8 19.6 0L24.5 23.8H7.5L6.2 21.8z" fill="#3d8a62" ${o}/><path d="M10 21.8V18.8h12v3H10z" fill="#f5f7fa" ${o}/><path d="M8.8 18.8q7.2-2.2 14.4 0L22.5 20.5H9.5L8.8 18.8z" fill="#4a9a72" ${o}/><path d="M12 18.8V16.2h8v2.6H12z" fill="#f5f7fa" ${o}/><path d="M11.2 16.2q4.8-1.8 9.6 0L20.5 17.6H11.5L11.2 16.2z" fill="#5aaa82" ${o}/><path d="M15.2 13.8h1.6v2.4h-1.6z" fill="#f5f7fa" ${o}/><path d="M14.5 13.8q1.5-1.4 3 0L17 15h-2l-.5-1.2z" fill="#6bbc92" ${o}/><circle cx="16" cy="12.8" r="1.1" fill="#d4af37" ${o}/></svg>`
-  };
-  return icons[id] || icons.tokyo;
+/* —— Illustrations des villes : un monument emblématique par étape (grille 32 px, contour encre) ——
+   Tokyo Tower · Fuji et soleil · lanterne Kotoji (Kenroku-en) · maison gasshō · pont Nakabashi ·
+   torii de Fushimi Inari · daim de Nara · château d’Osaka. */
+const CITY_INK = "#1e2834";
+const CITY_ART = (o) => ({
+  tokyo:
+    `<path d="M5 28.2h22" stroke="${CITY_INK}" stroke-width="1.2" stroke-linecap="round"/>` +
+    `<path d="M9.4 28 14.6 11.4h2.8L22.6 28h-3.7Q16 21.4 13.1 28z" fill="#e8553f" ${o}/>` +
+    `<path d="M11.2 23.4h2.4M18.4 23.4h2.4M13.6 14.6h4.8" stroke="#fff" stroke-width="1.1"/>` +
+    `<path d="M12 17h8l.6 2.1h-9.2z" fill="#fff" ${o}/>` +
+    `<path d="M14.1 10h3.8l.4 1.7h-4.6z" fill="#fff" ${o}/>` +
+    `<path d="M15.1 10 16 2.4l.9 7.6z" fill="#e8553f" ${o}/>`,
+  fuji:
+    `<circle cx="23.6" cy="8.6" r="3.6" fill="#e8553f" ${o}/>` +
+    `<path d="M2.8 25.6 12.4 11.4Q16 9.4 19.6 11.4L29.2 25.6z" fill="#4f7fc4" ${o}/>` +
+    `<path d="M12.4 11.4Q16 9.4 19.6 11.4L22.3 15.3 19.9 14.2 18 15.9 16 14.4 14 15.9 12.1 14.2 9.7 15.3z" fill="#fff" ${o}/>` +
+    `<path d="M3 25.6h26" stroke="${CITY_INK}" stroke-width="1.1"/>` +
+    `<path d="M6.5 28.4q2.2-1.1 4.4 0t4.4 0 4.4 0 4.4 0" stroke="#5fa8d3" stroke-width="1.3" stroke-linecap="round"/>`,
+  kanazawa:
+    `<path d="M3 27.6h26" stroke="#5fa8d3" stroke-width="1.5" stroke-linecap="round"/>` +
+    `<path d="M18.6 27.4q.4-3.6 3.6-4.2 3.4-.2 4.4 4.2z" fill="#8a7a66" ${o}/>` +
+    `<path d="M11.4 19.6 9.4 27.4M20.8 19.6l1.6 4" stroke="#5d6a74" stroke-width="2.3" stroke-linecap="round"/>` +
+    `<path d="M9 18h14v1.8H9z" fill="#8a96a0" ${o}/>` +
+    `<rect x="12" y="12.8" width="8" height="5.2" fill="#cfd5da" ${o}/>` +
+    `<rect x="14.4" y="14" width="3.2" height="2.6" fill="#ffd66b"/>` +
+    `<path d="M4.6 12.2Q16 5.6 27.4 12.2L25.4 13.6H6.6z" fill="#6f7d88" ${o}/>` +
+    `<circle cx="16" cy="6.9" r="1.5" fill="#6f7d88" ${o}/>`,
+  shirakawa:
+    `<path d="M3 27.6h26" stroke="${CITY_INK}" stroke-width="1.1" stroke-linecap="round"/>` +
+    `<rect x="7" y="21.6" width="18" height="6" fill="#efe3cc" ${o}/>` +
+    `<path d="M10 21.6v6M16 21.6v6M22 21.6v6" stroke="#6b4a2c" stroke-width=".9"/>` +
+    `<path d="M16 3.6 4.4 22.2h23.2z" fill="#b38552" ${o}/>` +
+    `<path d="M16 3.6 13.8 7.2h4.4z" fill="#fff" opacity=".85"/>` +
+    `<path d="M10.6 15.2h10.8M8 19.2h16" stroke="#7a5532" stroke-width=".9"/>` +
+    `<rect x="14.6" y="9.6" width="2.8" height="2.4" fill="#fff1cf" ${o}/>` +
+    `<rect x="12.8" y="15.9" width="6.4" height="2.3" fill="#fff1cf" ${o}/>`,
+  takayama:
+    `<path d="M3 15.4 9.2 8.4l4.2 3.4 5-5.4 6.2 5.6 4.4 3.4z" fill="#c9d6bb" ${o}/>` +
+    `<path d="M16.4 8.6l2-2.2 2.1 1.9z" fill="#fff"/>` +
+    `<path d="M3.4 25.2q3.1-1.4 6.2 0t6.2 0 6.2 0 6.2 0" stroke="#5fa8d3" stroke-width="1.4" stroke-linecap="round"/>` +
+    `<path d="M9.2 17.4v7M22.8 17.4v7" stroke="#6b5344" stroke-width="1.8"/>` +
+    `<path d="M3 16.8Q16 10.2 29 16.8V20Q16 13.4 3 20z" fill="#d8432f" ${o}/>` +
+    `<path d="M3 14.2Q16 7.6 29 14.2" stroke="#d8432f" stroke-width="1.5"/>` +
+    `<path d="M7 15.6v-2.4M11.5 13.7v-2.5M16 12.9v-2.4M20.5 13.7v-2.5M25 15.6v-2.4" stroke="#d8432f" stroke-width="1.3"/>`,
+  kyoto:
+    `<path d="M5 28.2h22" stroke="${CITY_INK}" stroke-width="1.1" stroke-linecap="round"/>` +
+    `<rect x="9" y="10.2" width="2.8" height="17.6" fill="#e0472f" ${o}/>` +
+    `<rect x="20.2" y="10.2" width="2.8" height="17.6" fill="#e0472f" ${o}/>` +
+    `<rect x="8.8" y="25.8" width="3.2" height="2.2" fill="${CITY_INK}"/>` +
+    `<rect x="20" y="25.8" width="3.2" height="2.2" fill="${CITY_INK}"/>` +
+    `<rect x="6.6" y="14.2" width="18.8" height="2.2" fill="#e0472f" ${o}/>` +
+    `<rect x="14.8" y="10.4" width="2.4" height="3.8" fill="#2c2c2c"/>` +
+    `<path d="M3.6 8.6Q16 5.8 28.4 8.6L27.6 11.2Q16 8.8 4.4 11.2z" fill="#e0472f" ${o}/>` +
+    `<path d="M3.6 8.6Q16 5.8 28.4 8.6L28.1 9.6Q16 6.9 3.9 9.6z" fill="${CITY_INK}"/>`,
+  nara:
+    `<path d="M12.2 9.6 9.6 4.6M10.8 7l-2.6-.5M19.8 9.6l2.6-5M21.2 7l2.6-.5" stroke="#8a6a4a" stroke-width="1.6" stroke-linecap="round"/>` +
+    `<path d="M10.8 12.2Q5.6 10.6 6.3 13.8 8.6 15.2 11.6 14.2z" fill="#c98b52" ${o}/>` +
+    `<path d="M21.2 12.2Q26.4 10.6 25.7 13.8 23.4 15.2 20.4 14.2z" fill="#c98b52" ${o}/>` +
+    `<path d="M11 10.4Q16 7.8 21 10.4 21.9 16.6 18.6 23.2 16 25.8 13.4 23.2 10.1 16.6 11 10.4z" fill="#c98b52" ${o}/>` +
+    `<ellipse cx="16" cy="22.6" rx="2.7" ry="2" fill="#f3e3cc" ${o}/>` +
+    `<ellipse cx="16" cy="21.7" rx="1.2" ry=".85" fill="${CITY_INK}"/>` +
+    `<circle cx="13.6" cy="15.6" r=".95" fill="${CITY_INK}"/><circle cx="18.4" cy="15.6" r=".95" fill="${CITY_INK}"/>` +
+    `<circle cx="14.6" cy="12" r=".6" fill="#f3e3cc"/><circle cx="17.5" cy="12.6" r=".6" fill="#f3e3cc"/>`,
+  osaka:
+    `<path d="M5.6 28.2 7.4 22h17.2l1.8 6.2z" fill="#8a929a" ${o}/>` +
+    `<path d="M8.4 25.2h15.2" stroke="#6c747c" stroke-width=".8"/>` +
+    `<rect x="9" y="17" width="14" height="5" fill="#f5f7fa" ${o}/>` +
+    `<path d="M9.4 19.4h13.2" stroke="#e3b23c" stroke-width=".9"/>` +
+    `<path d="M11.4 20.4h1.6M15.2 20.4h1.6M19 20.4h1.6" stroke="${CITY_INK}" stroke-width="1"/>` +
+    `<path d="M6.8 17.6Q16 15.6 25.2 17.6L22.8 15.2H9.2z" fill="#3f8f7a" ${o}/>` +
+    `<rect x="11" y="11.6" width="10" height="3.6" fill="#f5f7fa" ${o}/>` +
+    `<path d="M9 12.2Q16 10.4 23 12.2L21 10.2H11z" fill="#3f8f7a" ${o}/>` +
+    `<rect x="13" y="7.4" width="6" height="2.8" fill="#f5f7fa" ${o}/>` +
+    `<path d="M11.2 8Q16 6.4 20.8 8L19.2 5.8h-6.4z" fill="#3f8f7a" ${o}/>` +
+    `<circle cx="12.6" cy="5.7" r=".9" fill="#e3b23c"/><circle cx="19.4" cy="5.7" r=".9" fill="#e3b23c"/>`
+});
+
+function cityArt(id){
+  const art = CITY_ART(`stroke="${CITY_INK}" stroke-width=".9" stroke-linejoin="round"`);
+  return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${art[id] || art.tokyo}</svg>`;
 }
 
+/** Illustration de la ville dans le pin de la carte Japon. */
+export function cityMapLogoSvg(id){
+  return cityArt(id);
+}
+
+/** Même illustration dans la liste des villes (cohérence carte ↔ liste). */
 export function cityIconSvg(id){
-  const s = "currentColor";
-  const g = `<ellipse cx="12" cy="21.2" rx="6" ry=".9" fill="${s}" opacity=".11"/>`;
-  const icons = {
-    tokyo: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 2.2l.85 2.9h3.05L12.75 7.3l.95 2.85L12 8.6l-1.7 1.55.95-2.85-2.85-2.2h3.05L12 2.2z" fill="#e85d4a"/><path d="M10.4 20.8V8.2h3.2v12.6h-3.2z" fill="${s}"/><path d="M7.8 20.8V11.2H5.8v9.6H3.8V9.6L7.5 8v12.8h.3zm8.4 0V8L19.5 6.2V20.8h-2v-9.8h-2v9.8h-2z" fill="${s}"/><rect x="11.1" y="5.2" width="1.8" height="2.4" rx=".3" fill="${s}"/></svg>`,
-    fuji: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 3.2L3.8 20h16.4L12 3.2z" fill="${s}" opacity=".14"/><path d="M12 4.8L5.8 19.2h12.4L12 4.8z" fill="${s}"/><path d="M12 5.2l2 3.6H10L12 5.2z" fill="#fff" opacity=".92"/><path d="M7.2 19.2c1.7-2.1 3.1-3.1 4.8-3.1s3.1 1 4.8 3.1" stroke="${s}" stroke-width=".75" opacity=".35"/></svg>`,
-    kanazawa: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M4.2 19.2V10.2l3.8-2.6 3.8 2.6 3.8-2.6 3.8 2.6v9H4.2z" fill="${s}" opacity=".13"/><path d="M5.2 18.2V11.2l3.3-2.2L12 11.2l3.5-2.2 3.3 2.2v7H5.2z" fill="${s}"/><rect x="7.2" y="12.2" width="1.8" height="5.2" fill="${s}"/><rect x="15" y="12.2" width="1.8" height="5.2" fill="${s}"/><path d="M10.4 8.6h3.2l.55 1.55h-4.3l.55-1.55z" fill="#c4a574"/></svg>`,
-    shirakawa: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 2.8L3.2 13.8h17.6L12 2.8z" fill="${s}"/><path d="M12 4.2L5.8 13.2h12.4L12 4.2z" fill="#8a6a4a" opacity=".38"/><path d="M7.2 13.2v6.8h9.6v-6.8" fill="${s}" opacity=".18"/><rect x="9.1" y="15.2" width="2.1" height="2.1" fill="${s}"/><rect x="12.8" y="15.2" width="2.1" height="2.1" fill="${s}"/></svg>`,
-    takayama: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M3.2 19.2V12.2l8.8-6.8 8.8 6.8v7H3.2z" fill="${s}" opacity=".13"/><path d="M4.2 18.2V12.8l7.8-5.8 7.8 5.8v5.4H4.2z" fill="${s}"/><path d="M7.2 18.2v-3.8h2.8v3.8H7.2zm7.2 0v-3.8h2.8v3.8h-2.8z" fill="#6b5344"/><rect x="10.4" y="9.2" width="3.2" height="2.1" rx=".3" fill="#c4a574"/></svg>`,
-    kyoto: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M8.2 20.2V10.2l7.8-4.8 7.8 4.8v10H8.2z" fill="#c4a574" opacity=".22"/><path d="M9.2 19.2V11.2l5.8-3.6 5.8 3.6v8H9.2z" fill="#d4af37"/><path d="M12 7.4l5.8 3.6V19.2H6.2V11l5.8-3.6z" fill="#e8c547" opacity=".88"/><path d="M12 7.4v11.8" stroke="#8a6a20" stroke-width=".55" opacity=".45"/></svg>`,
-    nara: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M12 2.6 9 5.4h6L12 2.6z" fill="${s}"/><rect x="11.1" y="5.4" width="1.8" height="1.5" fill="${s}" opacity=".45"/><path d="M12 6.9 8.2 9.8h7.6L12 6.9z" fill="${s}"/><rect x="10.8" y="9.8" width="2.4" height="1.6" fill="${s}" opacity=".45"/><path d="M12 11.4 7.4 14.6h9.2L12 11.4z" fill="${s}"/><rect x="10.5" y="14.6" width="3" height="1.8" fill="${s}" opacity=".45"/><path d="M12 16.4 6.8 19.8h10.4L12 16.4z" fill="${s}"/><rect x="10.2" y="19.8" width="3.6" height="1.4" fill="${s}" opacity=".35"/><path d="M5.2 21.2h13.6v1H5.2z" fill="${s}" opacity=".18"/><path d="M12 2.6v18.6" stroke="${s}" stroke-width=".45" opacity=".22"/></svg>`,
-    osaka: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">${g}<path d="M6.2 20.2V11.2l5.8-5.6 5.8 5.6v9H6.2z" fill="${s}" opacity=".13"/><path d="M7.2 19.2V12.2l4.8-4.4 4.8 4.4v7H7.2z" fill="${s}"/><path d="M9.6 19.2v-3.8h2.1v3.8H9.6zm3.2 0v-3.8h2.1v3.8h-2.1zm3.2 0v-3.8h2.1v3.8H16z" fill="#fff" opacity=".32"/><path d="M12 8.8c1.4 0 2.4 1 2.4 2.3s-1 2.3-2.4 2.3-2.4-1-2.4-2.3 1-2.3 2.4-2.3z" fill="#c45c26"/><path d="M12 6.8v1.2" stroke="#c45c26" stroke-width="1.1" stroke-linecap="round"/></svg>`
-  };
-  return icons[id] || icons.tokyo;
+  return cityArt(id);
 }
 
 /* Glyphes des lieux : traits blancs (currentColor) sur la tête colorée des pins, grille 24 px. */

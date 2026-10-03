@@ -8,7 +8,7 @@ import { hooks } from "../core/hooks.js";
 import { legEndPoint } from "../domain/legs.js";
 import { cityStayDates } from "../domain/trip.js";
 import { map } from "./map-view.js";
-import { buildRouteBadges, renderRouteLegend } from "./routes.js";
+import { buildRouteBadges } from "./routes.js";
 import { cityMapLogoSvg } from "../shared/icons.js";
 
 let countryMarks = [];   // { id, marker, el, label, nights, side, minZoom }
@@ -50,7 +50,6 @@ export function buildCountry(){
     });
   });
   buildRouteBadges();
-  renderRouteLegend();
   syncCountryLabels();
 }
 

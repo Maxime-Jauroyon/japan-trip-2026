@@ -297,26 +297,6 @@
 .vehicle-badge { transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease; }
 #stage.mode-city .route-vehicle { display: none; }
 
-/* Légende des trajets (vue Japon) */
-.route-legend {
-  position: absolute; left: 14px; bottom: 44px; z-index: 15;
-  display: flex; flex-wrap: wrap; gap: 4px 12px;
-  max-width: calc(100% - 28px);
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: var(--glass);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-sm);
-  font: 600 11px/1 -apple-system, "Segoe UI", sans-serif;
-  color: var(--cream);
-  pointer-events: none;
-}
-.route-legend:empty, #stage.mode-city .route-legend, .app.leg-mode .route-legend { display: none; }
-.route-legend-item { display: inline-flex; align-items: center; gap: 6px; }
-.route-legend .vehicle-badge { width: 18px; height: 18px; border-width: 1.5px; box-shadow: none; }
-.route-legend .vehicle-badge svg { width: 11px; height: 11px; }
 
 /* —— Pins des lieux (vue ville) ——
    MapLibre écrit l’opacité inline sur l’élément marqueur → l’état visuel se règle sur les enfants. */
