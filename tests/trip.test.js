@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CITIES, DAYS, MAP_BOUNDS, ORDER } from "../src/core/data.js";
 import { cityIdForAct, cityIdForCoords, inBounds } from "../src/domain/places.js";
-import { cityStayDates, dayPinPoints, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
+import { cityStayDates, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
 import { dayToISO, findTripDayByISO } from "../src/core/dates.js";
 import { photoSlug } from "../src/domain/photos.js";
 import { loadTripData } from "./helpers.js";
@@ -83,4 +83,12 @@ test("dates de séjour pour l’étiquette de la carte", () => {
   assert.equal(cityStayDates(CITIES.tokyo), "8–12 nov · 27–29 nov");
   assert.equal(cityStayDates(CITIES.shirakawa), "17 nov");
   assert.equal(cityStayDates({ stays: [{ from: "30 oct", to: "2 nov" }] }), "30 oct–2 nov");
+});
+
+test("jour ouvert par défaut dans le panneau ville", () => {
+  const kyoto = daysForCity("kyoto");
+  assert.equal(defaultCityDay(kyoto, "2026-10-03", 13), 13);      // demandé
+  assert.equal(defaultCityDay(kyoto, "2026-11-20", null), 13);    // aujourd’hui (20 nov = J13)
+  assert.equal(defaultCityDay(kyoto, "2026-10-03", null), null);  // hors voyage → aperçu
+  assert.equal(defaultCityDay(kyoto, "2026-10-03", 2), null);     // jour d’une autre ville
 });

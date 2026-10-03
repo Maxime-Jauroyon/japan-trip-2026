@@ -3,11 +3,8 @@
 import { CITIES, DAYS, PHRASES, TRIP } from "../../core/data.js";
 import { findTripDayByISO, japanTodayISO, parseHotelTimeSort, parseWhenSort } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { panel } from "../../core/elements.js";
 import { hooks } from "../../core/hooks.js";
 import { actMetaFor, daysForCity, groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, isLastDayOfStay, luggageBeforeCheckInHint, moveSortRange, stayForDay } from "../../domain/trip.js";
-import { scheduleCityMapRefresh } from "../../map/city.js";
-import { showCity } from "../../map/controller.js";
 import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
 import { mapsLinkHtml, modeBadgeFor } from "../templates.js";
@@ -21,14 +18,7 @@ export function openMapForDay(day){
   hooks.setAppTab("map");
   const id = day.city;
   clearLegEnds();
-  showCity(id, day.n);
   fillCityPanel(CITIES[id], daysForCity(id), day.n);
-  requestAnimationFrame(() => {
-    panel.querySelectorAll("details.day").forEach(el => {
-      el.open = Number(el.dataset.dayN) === day.n;
-    });
-    scheduleCityMapRefresh();
-  });
 }
 
 export function getOnsiteSelectedDay(){
