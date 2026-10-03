@@ -221,7 +221,8 @@
     -webkit-overflow-scrolling: touch;
   }
   .detail-bar { margin: -4px -14px 12px; top: -4px; }
-  .detail-content > .detail-hero:first-child { margin: -12px -14px 14px; }
+  .detail-head h3 { font-size: 20px; }
+  .detail-head + .detail-hero { aspect-ratio: 16 / 9; }
   .itin-stop { min-height: 60px; }
 
   .hint { display: none; }
