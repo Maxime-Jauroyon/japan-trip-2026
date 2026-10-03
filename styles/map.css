@@ -149,52 +149,84 @@
   padding: 8px 16px;
 }
 
-/* —— Marqueurs villes (Japon 3D) —— */
+/* —— Pins des villes (vue Japon) : pointe sur la ville, n° d’étape, nom + dates —— */
 .city-mark {
+  --head: 42px;
+  /* pas de position ici : .maplibregl-marker est déjà en absolu (sinon le pin se décale) */
+  display: block;
+  width: var(--head); height: calc(var(--head) + 12px);
   border: 0; background: transparent; cursor: pointer;
   padding: 0;
   color: var(--ink);
   -webkit-tap-highlight-color: transparent;
 }
 #stage.mode-city .city-mark { display: none; }
-.city-mark .mark-float {
-  position: relative;
-  display: block;
-  animation: cityPop .55s cubic-bezier(.34, 1.4, .64, 1) calc(var(--mark-i, 0) * 60ms) backwards,
-    cityFloat 3.4s ease-in-out calc(.6s + var(--mark-i, 0) * .12s) infinite;
+.city-mark { z-index: 2; }
+.city-mark.label-on, .city-mark.active { z-index: 3; }
+.cm-pin {
+  position: absolute; inset: 0;
+  transform-origin: 50% 100%;
+  transition: transform .2s cubic-bezier(.34, 1.4, .64, 1), opacity .2s ease;
+  animation: pinIn .45s cubic-bezier(.34, 1.5, .64, 1) calc(var(--mark-i, 0) * 70ms) backwards;
 }
-.city-mark .map-logo {
-  position: relative;
+.cm-head {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  width: var(--head); height: var(--head);
   display: grid; place-items: center;
-  width: 50px; height: 50px;
   border-radius: 50%;
-  background: radial-gradient(circle at 32% 26%, #fffef9 0%, #f4ece0 60%, #e4d8c8 100%);
-  border: 2px solid rgba(var(--gold-rgb), .95);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .38), 0 0 0 4px rgba(var(--gold-rgb), .16);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  background: radial-gradient(circle at 32% 26%, #fffef9 0%, #f4ece0 60%, #e2d5c2 100%);
+  border: 2.5px solid #fff;
+  box-shadow: 0 0 0 2px rgba(var(--gold-rgb), .9), 0 6px 14px rgba(0, 0, 0, .38);
+  transition: box-shadow .2s ease;
 }
-.city-mark .map-logo svg { width: 34px; height: 34px; display: block; overflow: visible; }
-.city-mark .mark-halo {
-  position: absolute; left: 50%; top: 50%;
-  width: 50px; height: 50px;
-  margin: -25px 0 0 -25px;
+.cm-head svg { width: 70%; height: 70%; display: block; overflow: visible; }
+.cm-tail { position: absolute; left: 50%; bottom: 0; width: 0; height: 0; }
+.cm-tail::before {
+  content: ""; position: absolute; left: -8.25px; bottom: 2px;
+  width: 14px; height: 14px;
+  background: #e2d5c2;
+  border-right: 2.5px solid #fff; border-bottom: 2.5px solid #fff;
+  border-bottom-right-radius: 3px;
+  transform: rotate(45deg);
+  box-shadow: 3px 3px 0 -0.5px rgba(var(--gold-rgb), .9);
+}
+.cm-tail::after {
+  content: ""; position: absolute; left: -9px; bottom: -3px;
+  width: 18px; height: 6px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, .4), transparent);
+}
+.cm-step {
+  position: absolute; z-index: 2; top: -5px; right: -7px;
+  min-width: 20px; height: 20px; padding: 0 4px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #d9b77e, #b08a4c);
+  color: #fff;
+  font: 800 11px/1 -apple-system, "Segoe UI", sans-serif;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .35);
+}
+/* Mode compact (ville trop proche d’une autre à cette échelle) : point numéroté sur la ville */
+.cm-dot {
+  position: absolute; left: 50%; bottom: -9px;
+  width: 18px; height: 18px; margin-left: -9px;
+  display: none; place-items: center;
   border-radius: 50%;
-  border: 2px solid rgba(var(--gold-rgb), .55);
-  opacity: 0;
-  pointer-events: none;
-  animation: pinRing 3.2s ease-out calc(var(--mark-i, 0) * .4s) infinite;
+  background: linear-gradient(180deg, #d9b77e, #b08a4c);
+  color: #fff; font: 800 10px/1 -apple-system, "Segoe UI", sans-serif;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .4);
 }
-.city-mark:hover .map-logo,
-.city-mark.active .map-logo {
-  transform: scale(1.12);
-  border-color: var(--accent);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, .42), 0 0 0 5px rgba(196, 92, 38, .25);
-}
+.city-mark.is-compact .cm-pin { opacity: 0; transform: scale(.3); pointer-events: none; }
+.city-mark.is-compact .cm-dot { display: grid; }
+.city-mark.is-compact .label { opacity: 0 !important; }
+.city-mark:hover .cm-pin, .city-mark.active .cm-pin { transform: scale(1.12); }
+.city-mark.active .cm-head { box-shadow: 0 0 0 2px var(--accent), 0 0 0 7px rgba(196, 92, 38, .25), 0 8px 18px rgba(0, 0, 0, .42); }
 .city-mark .label {
   position: absolute;
-  left: 58px; top: 50%;
-  display: flex; flex-direction: column;
-  padding: 5px 11px 6px;
+  left: calc(var(--head) + 6px); top: calc(var(--head) / 2);
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 4px 10px 5px;
   border-radius: 10px;
   white-space: nowrap;
   background: var(--glass-strong);
@@ -202,48 +234,40 @@
   backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   color: var(--cream);
-  font: 600 13px/1.2 Georgia, "Times New Roman", serif;
   box-shadow: var(--shadow-sm);
   pointer-events: none;
+  text-align: left;
   opacity: 0;
   transform: translateY(-50%) translateX(-6px);
   transition: opacity .2s ease, transform .2s ease;
 }
-.city-mark .label small {
-  font: 500 10px/1.2 -apple-system, "Hiragino Sans", sans-serif;
-  letter-spacing: .12em;
-  color: var(--gold-2);
+.city-mark .label b { font: 600 13px/1.15 Georgia, "Times New Roman", serif; }
+.city-mark .label small { font: 600 10.5px/1.2 -apple-system, "Segoe UI", sans-serif; color: var(--gold-2); }
+.city-mark.label-left .label { left: auto; right: calc(var(--head) + 6px); transform: translateY(-50%) translateX(6px); text-align: right; }
+.city-mark.label-on .label, .city-mark.active:not(.is-compact) .label { opacity: 1; transform: translateY(-50%) translateX(0); }
+/* Ville du jour (pendant le voyage) : seul halo animé */
+.city-mark.is-today .cm-head::after {
+  content: ""; position: absolute; inset: -6px;
+  border-radius: 50%; border: 2px solid var(--accent);
+  animation: pinRing 2.4s ease-out infinite;
 }
-.city-mark.label-left .label { left: auto; right: 58px; transform: translateY(-50%) translateX(6px); }
-.city-mark:hover .label,
-.city-mark.active .label,
-.city-mark.label-on .label {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
-@keyframes cityPop {
-  0% { transform: translateY(14px) scale(.4); opacity: 0; }
-  100% { transform: none; opacity: 1; }
-}
-@keyframes cityFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
+.city-mark.is-today .label small { color: var(--accent); }
 @keyframes pinRing {
-  0% { opacity: .75; transform: scale(.95); }
-  70%, 100% { opacity: 0; transform: scale(1.7); }
+  0% { opacity: .8; transform: scale(.95); }
+  70%, 100% { opacity: 0; transform: scale(1.6); }
 }
 
-/* Mode trajet : villes concernées en évidence */
+/* Mode trajet : villes concernées en évidence (MapLibre écrit l’opacité en ligne : on agit sur les enfants) */
 .app.leg-mode .city-mark:not(.leg-related) { pointer-events: none; }
-.app.leg-mode .city-mark:not(.leg-related) .mark-float { opacity: .35; }
-.app.leg-mode .city-mark:not(.leg-related) .map-logo { transform: scale(.8); }
-.app.leg-mode .city-mark .mark-halo { animation: none; opacity: 0; }
-.app.leg-mode .city-mark:not(.leg-related) .label { opacity: 0 !important; }
-.app.leg-mode .city-mark.leg-related .label { opacity: 1; transform: translateY(-50%) translateX(0); }
-.city-mark.leg-from .map-logo { border-color: #4f98c7; box-shadow: 0 6px 18px rgba(0,0,0,.38), 0 0 0 5px rgba(79,152,199,.35); }
-.city-mark.leg-to .map-logo { border-color: #e2583e; box-shadow: 0 6px 18px rgba(0,0,0,.38), 0 0 0 5px rgba(226,88,62,.35); }
-.city-mark.leg-via .map-logo { border-style: dashed; }
+.app.leg-mode .city-mark:not(.leg-related) .cm-pin,
+.app.leg-mode .city-mark:not(.leg-related) .cm-dot { opacity: .3; }
+.app.leg-mode .city-mark:not(.leg-related) .cm-pin { transform: scale(.8); }
+.app.leg-mode .city-mark.is-compact:not(.leg-related) .cm-pin { opacity: 0; }
+.city-mark.leg-from .cm-head { box-shadow: 0 0 0 2.5px #4f98c7, 0 0 0 7px rgba(79, 152, 199, .3), 0 6px 14px rgba(0, 0, 0, .38); }
+.city-mark.leg-to .cm-head { box-shadow: 0 0 0 2.5px #e2583e, 0 0 0 7px rgba(226, 88, 62, .3), 0 6px 14px rgba(0, 0, 0, .38); }
+.city-mark.leg-from .cm-step { background: #4f98c7; }
+.city-mark.leg-to .cm-step { background: #e2583e; }
+.city-mark.leg-via .cm-head { box-shadow: 0 0 0 2px rgba(var(--gold-rgb), .9), 0 0 0 6px rgba(var(--gold-rgb), .25), 0 6px 14px rgba(0, 0, 0, .38); }
 
 /* —— Pastille fixe du mode au milieu de chaque trajet (cf. .mode-badge) —— */
 .route-vehicle {
@@ -505,6 +529,6 @@
 .day-summary .sep { opacity: .5; }
 
 @media (prefers-reduced-motion: reduce) {
-  .city-mark .mark-float, .city-mark .mark-halo, .pin.selected .badge svg,
+  .cm-pin, .city-mark.is-today .cm-head::after, .pin.selected .badge svg,
   .pin .badge, .pin-step, .pin-cluster-bubble, .route-chip, .day-summary, .pin.selected .pin-head { animation: none; }
 }
