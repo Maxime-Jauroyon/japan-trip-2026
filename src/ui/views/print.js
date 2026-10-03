@@ -3,6 +3,7 @@
 import { CITIES, DAYS, TRAVELERS, TRIP } from "../../core/data.js";
 import { esc } from "../../core/dom.js";
 import { stayForDay } from "../../domain/trip.js";
+import { expensesPrintHtml } from "./expenses.js";
 
 function buildPrintHtml(){
   const who = (TRAVELERS.join(" & ") || "Voyageurs");
@@ -32,7 +33,7 @@ function buildPrintHtml(){
       html += `<h3>${esc(a.title)}</h3><p>${esc(a.desc || "")}</p>`;
     });
   });
-  return html;
+  return html + expensesPrintHtml();
 }
 
 export function printTrip(){

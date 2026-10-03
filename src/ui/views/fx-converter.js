@@ -6,7 +6,7 @@ import { FX_DEFAULT } from "../../core/data.js";
 /** Montants proposés en un toucher (prix courants : distributeur, repas, ticket…). */
 const QUICK_YEN = [500, 1000, 3000, 5000, 10000];
 
-function loadFxRate(){
+export function loadFxRate(){
   try {
     const n = Number(localStorage.getItem(FX_KEY));
     if (Number.isFinite(n) && n > 0) return n;

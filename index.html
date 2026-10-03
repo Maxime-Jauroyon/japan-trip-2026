@@ -34,17 +34,17 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=185" />
-  <link rel="stylesheet" href="./styles/base.css?v=185" />
-  <link rel="stylesheet" href="./styles/views.css?v=185" />
-  <link rel="stylesheet" href="./styles/panel.css?v=185" />
-  <link rel="stylesheet" href="./styles/components.css?v=185" />
-  <link rel="stylesheet" href="./styles/print.css?v=185" />
-  <link rel="stylesheet" href="./styles/map.css?v=185" />
-  <link rel="stylesheet" href="./styles/settings.css?v=185" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=185" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=185" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=185" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=186" />
+  <link rel="stylesheet" href="./styles/base.css?v=186" />
+  <link rel="stylesheet" href="./styles/views.css?v=186" />
+  <link rel="stylesheet" href="./styles/panel.css?v=186" />
+  <link rel="stylesheet" href="./styles/components.css?v=186" />
+  <link rel="stylesheet" href="./styles/print.css?v=186" />
+  <link rel="stylesheet" href="./styles/map.css?v=186" />
+  <link rel="stylesheet" href="./styles/settings.css?v=186" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=186" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=186" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=186" />
 </head>
 <body>
   <div class="app tab-map">
@@ -142,6 +142,19 @@
               <label class="fx-field"><span>Euros</span><input type="number" id="fx-eur" inputmode="decimal" min="0" step="0.01" placeholder="0" /></label>
             </div>
             <div class="fx-quick" id="fx-quick" aria-label="Montants rapides"></div>
+          </div>
+
+          <div class="tool-card exp" id="onsite-exp">
+            <div class="tool-head"><h3>Dépenses</h3></div>
+            <form class="exp-form" id="exp-form" autocomplete="off">
+              <div class="exp-input-row">
+                <label class="exp-amount"><input type="number" id="exp-amount" inputmode="numeric" min="1" step="1" placeholder="Montant" aria-label="Montant en yens" /><span>¥</span></label>
+                <button type="submit" class="btn-primary">Ajouter</button>
+              </div>
+              <div class="exp-cats" id="exp-cats" role="radiogroup" aria-label="Catégorie"></div>
+              <input type="text" class="exp-note" id="exp-note" maxlength="40" placeholder="Note (facultatif) — ex. ramen Ichiran" aria-label="Note" />
+            </form>
+            <div id="exp-body"></div>
           </div>
 
           <div class="tool-card">
@@ -246,6 +259,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=185"></script>
+  <script type="module" src="./src/main.js?v=186"></script>
 </body>
 </html>
