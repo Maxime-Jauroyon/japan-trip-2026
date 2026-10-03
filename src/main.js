@@ -7,7 +7,7 @@ import { setHooks } from "./core/hooks.js";
 import { initMap } from "./map/controller.js";
 import { showMapFallback } from "./map/map-view.js";
 import { registerTileProtocol } from "./map/offline-tiles.js";
-import { registerServiceWorker, bindForceRefresh } from "./pwa/sw-register.js";
+import { bindForceRefresh, registerServiceWorker, requestPhotoPrecache } from "./pwa/sw-register.js";
 import { initIOSInstallHint, initTodoAlerts } from "./ui/alerts.js";
 import { initAppShell, initTouchUi } from "./ui/app-shell.js";
 import { initCityList } from "./ui/city-list.js";
@@ -44,6 +44,10 @@ async function main() {
   initPrepView();
   initTodoAlerts();
   initPhraseShow();
+  // Photos complètes en tâche de fond, une fois la page affichée (les vignettes sont déjà là)
+  const later = () => setTimeout(requestPhotoPrecache, 4000);
+  if (document.readyState === "complete") later();
+  else window.addEventListener("load", later, { once: true });
 }
 
 main();

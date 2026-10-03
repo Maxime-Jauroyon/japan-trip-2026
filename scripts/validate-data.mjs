@@ -38,6 +38,8 @@ function checkCoord(p, where, optional = false) {
   if (!isNum(p.lng) || p.lng < 120 || p.lng > 155) err(where, `longitude invalide ${p.lng}`);
   return true;
 }
+/** Vignette d’une photo (cf. scripts/make-thumbs.mjs et thumbOf dans src/domain/photos.js). */
+const thumbPath = (p) => p.replace(/^\.\//, "").replace(/\/([^/]+?)\.(jpe?g|png|webp)$/i, "/thumb/$1.jpg");
 const phraseRefs = [];   // [où, contexte] — vérifiés une fois phrases.json chargé
 const inside = (b, p) => p.lng >= b.west && p.lng <= b.east && p.lat >= b.south && p.lat <= b.north;
 
@@ -71,6 +73,7 @@ cities.forEach((c) => {
     if (h.lat != null && checkCoord(h, ws + " hôtel") && b && !inside(b, h)) err(ws, "hôtel hors de l’emprise de la ville");
     (h.photos || []).forEach((ph) => {
       if (!fs.existsSync(path.join(ROOT, ph))) err(ws, `photo introuvable ${ph}`);
+      else if (!fs.existsSync(path.join(ROOT, thumbPath(ph)))) err(ws, `vignette manquante pour ${ph} (npm run thumbs)`);
     });
   });
 });
@@ -175,6 +178,7 @@ photos.rules.forEach((r, i) => {
 Object.entries(photos.places).forEach(([slug, list]) => list.forEach((ph, i) => {
   const w = `photos.places.${slug}[${i}]`;
   if (!fs.existsSync(path.join(ROOT, "img/activities", ph.file || ""))) err(w, `img/activities/${ph.file} introuvable`);
+  else if (!fs.existsSync(path.join(ROOT, thumbPath("img/activities/" + ph.file)))) err(w, `vignette manquante pour ${ph.file} (npm run thumbs)`);
   if (!isStr(ph.author) || !isStr(ph.license)) err(w, "auteur / licence manquants (crédit obligatoire)");
 }));
 

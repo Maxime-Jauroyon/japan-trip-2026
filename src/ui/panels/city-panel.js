@@ -7,7 +7,7 @@ import { panel } from "../../core/elements.js";
 import { hooks } from "../../core/hooks.js";
 import { state } from "../../core/state.js";
 import { phraseContextForAct, pinKind, stopPhraseContext } from "../../domain/classify.js";
-import { hotelPhotos, photosFor } from "../../domain/photos.js";
+import { hotelPhotos, photosFor, thumbOf } from "../../domain/photos.js";
 import { dayItinerary, itinerarySummary, segmentEstimate } from "../../domain/itinerary.js";
 import { cityIdForAct } from "../../domain/places.js";
 import { cityStayDates, daysForCity, defaultCityDay, ideasForCity, ideasOf, stayGroups, stopEntryOnCity } from "../../domain/trip.js";
@@ -135,7 +135,7 @@ function itineraryHtml(stops){
       const kind = pinKind(a.title);
       const photo = photosFor(a)[0];
       const thumb = photo
-        ? `<span class="itin-thumb"><img src="${esc(photo.src)}" alt="" loading="lazy" onerror="this.parentNode.remove()"/></span>`
+        ? `<span class="itin-thumb"><img src="${esc(thumbOf(photo.src))}" alt="" loading="lazy" onerror="this.parentNode.remove()"/></span>`
         : "";
       return seg + `<li class="itin-stop is-act" data-stop="${i}" role="button" tabindex="0">` +
         `<span class="itin-mark" style="--c:${PLACE_COLORS[kind] || PLACE_COLORS.pin}">${s.step}</span>` +

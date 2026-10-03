@@ -48,3 +48,9 @@ export function photosFor(act){
   (slug && PLACE_PHOTOS[slug] || []).forEach(p => out.push(placePhoto(p)));
   return out.slice(0, 4);
 }
+
+/** Vignette légère d’une photo locale (img/…/x.jpg → img/…/thumb/x.jpg, cf. npm run thumbs). */
+export function thumbOf(src){
+  const m = String(src || "").match(/^(.*\/img\/(?:activities|hotels))\/([^/]+?)\.(jpe?g|png|webp)$/i);
+  return m ? `${m[1]}/thumb/${m[2]}.jpg` : src;
+}
