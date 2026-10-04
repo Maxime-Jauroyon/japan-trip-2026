@@ -95,7 +95,7 @@
         {
           "site": "Highway Bus",
           "label": "Bus Shinjuku → Kawaguchiko · 12 nov 2026",
-          "openFrom": "2026-09-12",
+          "openFrom": "2026-10-12",
           "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112"
         }
       ]
@@ -154,7 +154,7 @@
         {
           "site": "Highway Bus",
           "label": "Bus Kawaguchiko → Shinjuku · 14 nov 2026",
-          "openFrom": "2026-09-14",
+          "openFrom": "2026-10-14",
           "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114"
         }
       ]
