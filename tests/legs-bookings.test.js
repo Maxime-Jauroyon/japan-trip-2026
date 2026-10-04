@@ -50,19 +50,22 @@ test("icônes de pins", () => {
   assert.equal(stopPinKind({ kind: "Gare / terminal bus", name: "Shinjuku" }), "bus");
 });
 
-test("à faire : urgence et tri (au 3 oct 2026)", () => {
+test("à faire : urgence et tri", () => {
   const today = new Date(2026, 9, 3);
   const todos = collectTodos({}, new Set(), today);
-  const usj = todos.find((t) => t.id === "usj-tickets");
-  assert.equal(usj.urgency, "late");
-  assert.equal(todoDueLabel(usj), "En retard · depuis 9 j");
+  // tâche cochée dans les données (billets USJ achetés) : jamais dans les alertes
+  assert.ok(!todos.some((t) => t.id === "usj-tickets"));
   assert.equal(todos.find((t) => t.id === "fujiq-tickets").urgency, "soon");
+  // passé la date de rappel : en retard
+  const late = collectTodos({}, new Set(), new Date(2026, 9, 22)).find((t) => t.id === "fujiq-tickets");
+  assert.equal(late.urgency, "late");
+  assert.equal(todoDueLabel(late), "En retard · depuis 9 j");
   // trié : retards d’abord
   const rank = { late: 0, now: 1, soon: 2 };
   for (let i = 1; i < todos.length; i++) assert.ok(rank[todos[i - 1].urgency] <= rank[todos[i].urgency]);
   // fait = disparaît (case cochée, réservation marquée)
-  assert.ok(!collectTodos({ "usj-tickets": true }, new Set(), today).some((t) => t.id === "usj-tickets"));
+  assert.ok(!collectTodos({ "fujiq-tickets": true }, new Set(), today).some((t) => t.id === "fujiq-tickets"));
   assert.ok(!collectTodos({}, new Set(["tokyo-fuji:0"]), today).some((t) => t.id === "tokyo-fuji:0"));
   // le jour même : « now », pas « late »
-  assert.equal(collectTodos({}, new Set(), new Date(2026, 8, 24)).find((t) => t.id === "usj-tickets").urgency, "now");
+  assert.equal(collectTodos({}, new Set(), new Date(2026, 9, 13)).find((t) => t.id === "fujiq-tickets").urgency, "now");
 });

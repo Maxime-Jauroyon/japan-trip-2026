@@ -94,14 +94,9 @@
     {
       "id": "usj-tickets",
       "label": "Billets Universal Studios Japan",
-      "meta": "Jour 17 · 24 nov 2026 · ouverture ~2 mois avant (dès le 24 sept) · Studio Pass + Express Pass si besoin",
-      "remindFrom": "2026-09-24",
-      "done": false,
+      "meta": "Achetés · 291 € pour 2 (≈ 145,50 € / pers.) · billets dans l’app officielle USJ · Jour 17 · 24 nov",
+      "done": true,
       "links": [
-        {
-          "label": "Guide YouTube · réserver USJ",
-          "url": "https://youtu.be/z3XQLNuE_t8"
-        },
         {
           "label": "App Store · app officielle USJ",
           "url": "https://apps.apple.com/app/universal-studios-japan/id532097000"
@@ -111,7 +106,7 @@
     {
       "id": "idees",
       "label": "Idées & billets d’activités",
-      "meta": "Fuji-Q (13 nov) · USJ (rappel 24 sept) · teamLab, observatoires…"
+      "meta": "Fuji-Q (13 nov) · USJ ✓ · teamLab, observatoires…"
     },
     {
       "id": "assurance",
@@ -183,8 +178,8 @@
     },
     {
       "label": "Activités / tickets",
-      "amount": "À définir / pers.",
-      "note": "Fuji-Q One Day Pass + horreur sur place · USJ · teamLab…",
+      "amount": "145,50 € / pers. + reste",
+      "note": "USJ payé (291 € pour 2) · Fuji-Q One Day Pass + horreur sur place · teamLab…",
       "done": false
     },
     {
@@ -196,7 +191,7 @@
   ],
   "budgetTotal": {
     "label": "Déjà engagé / pers.",
-    "amount": "≈ 3 735 €",
-    "note": "Vols + tous les hôtels (hors taxes séjour / trajets / activités / nourriture)"
+    "amount": "≈ 3 880 €",
+    "note": "Vols + tous les hôtels + USJ (hors taxes séjour / trajets / autres activités / nourriture)"
   }
 }
