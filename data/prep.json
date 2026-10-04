@@ -19,6 +19,23 @@
       "done": true
     },
     {
+      "id": "vjw",
+      "label": "Visit Japan Web (immigration + douane)",
+      "meta": "À remplir avant le vol (au plus tard ~6 h avant l’atterrissage à Haneda) · un compte chacun · passeport + vol + 1re adresse (HomeNest Hotel Akihabara) · à l’arrivée : montrer les QR codes immigration et douane",
+      "remindFrom": "2026-11-01",
+      "done": false,
+      "links": [
+        {
+          "label": "Visit Japan Web (officiel)",
+          "url": "https://www.vjw.digital.go.jp/"
+        },
+        {
+          "label": "Guide pas à pas",
+          "url": "https://vjw-lp.digital.go.jp/en/"
+        }
+      ]
+    },
+    {
       "id": "taxes",
       "label": "Taxes de séjour / onsen",
       "meta": "Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)",
