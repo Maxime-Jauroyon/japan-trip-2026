@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { LEGS } from "../src/core/data.js";
-import { bookingOpenStatus, collectPrepReminders, collectTodos, todoDueLabel } from "../src/domain/bookings.js";
+import { bookingOpenStatus, collectDoneTodos, collectPrepReminders, collectTodos, todoDueLabel } from "../src/domain/bookings.js";
 import { pinKind, stopPinKind } from "../src/domain/classify.js";
 import { legEndPoint, legRouteParts, legsInJourney, legVehicleKind } from "../src/domain/legs.js";
 import { loadTripData } from "./helpers.js";
@@ -68,4 +68,20 @@ test("à faire : urgence et tri", () => {
   assert.ok(!collectTodos({}, new Set(["tokyo-fuji:0"]), new Date(2026, 9, 20)).some((t) => t.id === "tokyo-fuji:0"));
   // le jour même : « now », pas « late »
   assert.equal(collectTodos({}, new Set(), new Date(2026, 10, 10)).find((t) => t.id === "fujiq-horror").urgency, "now");
+});
+
+test("faits : remettre à faire", () => {
+  const today = new Date(2026, 9, 20);
+  // réservation marquée faite sur l’appareil + rappel coché → listés dans « Faits »
+  const done = collectDoneTodos({ "vjw": true }, new Set(["tokyo-fuji:0"]));
+  assert.ok(done.some((d) => d.id === "tokyo-fuji:0" && d.kind === "booking"));
+  assert.ok(done.some((d) => d.id === "vjw" && d.kind === "reminder"));
+  // pas encore fait : pas dans « Faits »
+  assert.ok(collectDoneTodos({}, new Set()).some((d) => d.id === "fujiq-horror") === false);
+  // décoché = revient dans les alertes
+  const nov1 = new Date(2026, 10, 1);
+  assert.ok(!collectTodos({ "vjw": true }, new Set(), nov1).some((t) => t.id === "vjw"));
+  assert.ok(collectTodos({ "vjw": false }, new Set(), nov1).some((t) => t.id === "vjw"));
+  assert.ok(!collectTodos({}, new Set(["tokyo-fuji:0"]), today).some((t) => t.id === "tokyo-fuji:0"));
+  assert.ok(collectTodos({}, new Set(), today).some((t) => t.id === "tokyo-fuji:0"));
 });
