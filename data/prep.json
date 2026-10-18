@@ -56,17 +56,12 @@
     {
       "id": "fujiq-tickets",
       "label": "Billets Fuji-Q Highland (One Day Pass)",
-      "meta": "Jour 6 · ven. 13 nov 2026 · ワンデイパス achetable dès maintenant (en ligne/guichet) · ~¥6 000–7 900 / adulte",
-      "remindFrom": "2026-10-13",
-      "done": false,
+      "meta": "Achetés · 85,50 € pour 2 (≈ 42,75 € / pers.) · One Day Pass · Jour 6 · ven. 13 nov",
+      "done": true,
       "links": [
         {
           "label": "Tarifs & billets officiels",
           "url": "https://www.fujiq.jp/en/ticket/"
-        },
-        {
-          "label": "Acheter One Day Pass",
-          "url": "https://www.fujiq.jp/ticket/"
         },
         {
           "label": "App Store · Q-chan",
@@ -106,7 +101,7 @@
     {
       "id": "idees",
       "label": "Idées & billets d’activités",
-      "meta": "Fuji-Q (13 nov) · USJ ✓ · teamLab, observatoires…"
+      "meta": "Fuji-Q ✓ · USJ ✓ · teamLab, observatoires…"
     },
     {
       "id": "assurance",
@@ -178,8 +173,8 @@
     },
     {
       "label": "Activités / tickets",
-      "amount": "145,50 € / pers. + reste",
-      "note": "USJ payé (291 € pour 2) · Fuji-Q One Day Pass + horreur sur place · teamLab…",
+      "amount": "≈ 188 € / pers. + reste",
+      "note": "USJ payé (291 € pour 2) · Fuji-Q One Day Pass payé (85,50 € pour 2) · horreur sur place · teamLab…",
       "done": false
     },
     {
@@ -191,7 +186,7 @@
   ],
   "budgetTotal": {
     "label": "Déjà engagé / pers.",
-    "amount": "≈ 3 880 €",
-    "note": "Vols + tous les hôtels + USJ (hors taxes séjour / trajets / autres activités / nourriture)"
+    "amount": "≈ 3 925 €",
+    "note": "Vols + tous les hôtels + USJ + Fuji-Q (hors taxes séjour / trajets / autres activités / nourriture)"
   }
 }
