@@ -134,9 +134,9 @@
     "city": "fuji",
     "moves": [
       {
-        "when": "~7:00–9:00",
+        "when": "09:05–10:50",
         "title": "Tokyo → Fujikawaguchiko",
-        "dummy": "Bus Shinjuku → Kawaguchiko",
+        "dummy": "Highway Bus · réservé",
         "mode": "Bus",
         "leg": "tokyo-fuji"
       }
@@ -235,8 +235,8 @@
       {
         "journey": "fuji-kana",
         "journeyTitle": "Fujikawaguchiko → Kanazawa",
-        "journeyMeta": "~9:00 → ~15:30",
-        "when": "~9:00–11:00",
+        "journeyMeta": "08:10 → ~14:00",
+        "when": "08:10–09:55",
         "title": "Fujikawaguchiko → Shinjuku",
         "dummy": "Highway Bus · réservé",
         "mode": "Bus",
@@ -245,18 +245,18 @@
       },
       {
         "journey": "fuji-kana",
-        "when": "~11:00–12:00",
+        "when": "~10:00–10:45",
         "title": "Shinjuku → Tokyo Station",
-        "dummy": "JR / métro · ~15–25 min + marge",
+        "dummy": "JR Chūō rapide ~15 min + couloirs · ~45 min avec les bagages",
         "mode": "Correspondance",
         "transfer": true,
         "role": "↔ Transfert"
       },
       {
         "journey": "fuji-kana",
-        "when": "~12:30–15:30",
+        "when": "~11:00–14:00",
         "title": "Tokyo → Kanazawa",
-        "dummy": "Shinkansen Hokuriku · à réserver",
+        "dummy": "Shinkansen Hokuriku · à réserver · viser ~11:00–11:30",
         "mode": "Shinkansen",
         "leg": "tokyo-kana",
         "role": "② Train"

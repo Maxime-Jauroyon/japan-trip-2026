@@ -49,9 +49,9 @@
     "title": "Tokyo → Fujikawaguchiko",
     "subtitle": "12 nov · Jour 5",
     "mode": "Bus",
-    "depart": "~7:00",
-    "arrive": "~9:00",
-    "duration": "~2 h",
+    "depart": "09:05",
+    "arrive": "10:50",
+    "duration": "1 h 45",
     "operator": "Highway bus Shinjuku → Kawaguchiko (Keio / Fujikyu)",
     "seat": "—",
     "ref": "—",
@@ -88,7 +88,7 @@
       "Suggestion la plus simple avec bagages : bus direct depuis Shinjuku.",
       "Alternative rail : JR Chuo → Ōtsuki puis Fujikyu Railway → Kawaguchiko."
     ],
-    "tips": "Réserver le bus à l'avance en haute saison ; départ matin.",
+    "tips": "Réservé · départ Shinjuku Expressway Bus Terminal (Busta, 4e étage) 09:05 · arrivée Kawaguchiko 10:50.",
     "bookings": {
       "note": "Sur le formulaire : Departing=Shinjuku Expressway Bus Terminal · Arriving=Kawaguchiko Sta.",
       "links": [
@@ -108,9 +108,9 @@
     "title": "Fujikawaguchiko → Shinjuku",
     "subtitle": "14 nov · Jour 7 · ① Bus",
     "mode": "Bus",
-    "depart": "~9:00",
-    "arrive": "~11:00",
-    "duration": "~2 h",
+    "depart": "08:10",
+    "arrive": "09:55",
+    "duration": "1 h 45",
     "operator": "Highway bus Kawaguchiko → Shinjuku (Keio / Fujikyu)",
     "seat": "—",
     "ref": "—",
@@ -148,7 +148,7 @@
       "Ensuite : transfert vers Tokyo Station pour le shinkansen (étape 2).",
       "Pas de liaison directe Fuji → Kanazawa."
     ],
-    "tips": "Départ matin recommandé — laisser ~1 h à Tokyo pour le transfert + un repas léger.",
+    "tips": "Réservé · check-out vers 7:45 (l’hôtel accepte jusqu’à 10:00) · le samedi matin la Chūō Expressway peut ralentir : garder ~1 h de marge avant le shinkansen.",
     "bookings": {
       "note": "Sur le formulaire : Departing=Kawaguchiko Sta. · Arriving=Shinjuku Expressway Bus Terminal.",
       "links": [
@@ -168,8 +168,8 @@
     "title": "Tokyo → Kanazawa",
     "subtitle": "14 nov · Jour 7 · ② Shinkansen",
     "mode": "Shinkansen",
-    "depart": "~12:30",
-    "arrive": "~15:30",
+    "depart": "~11:00–11:30",
+    "arrive": "~13:30–14:30",
     "duration": "~2 h 30–3 h",
     "operator": "Hokuriku Shinkansen (Kagayaki / Hakutaka)",
     "seat": "—",
@@ -224,11 +224,11 @@
       "lng": 136.648
     },
     "details": [
-      "Après le bus : JR / métro Shinjuku → Tokyo Station (~15–25 min).",
+      "Après le bus (arrivée 09:55) : JR Chūō rapide Shinjuku → Tokyo (~15 min) puis quais Hokuriku Shinkansen (n° 20–23) · compter ~45 min avec les valises.",
       "Shinkansen Hokuriku : Kagayaki (plus rapide) ou Hakutaka.",
       "Réserver les places assises dès l’ouverture (J−30)."
     ],
-    "tips": "Viser un départ vers 12:30 pour arriver en début d’après-midi à Kanazawa.",
+    "tips": "Viser un départ ~11:00–11:30 : bus à Shinjuku 09:55, puis ~45 min avec les bagages jusqu’aux quais du shinkansen (JR Chūō rapide ~15 min + couloirs de Tokyo Station). Billet JR East (Eki-net) : changement d’horaire gratuit avant le départ si le bus a du retard.",
     "bookings": {
       "note": "Départ Tokyo Station · arrivée Kanazawa Station.",
       "links": [
