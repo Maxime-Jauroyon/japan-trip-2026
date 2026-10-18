@@ -55,9 +55,9 @@
     "operator": "Highway bus Shinjuku → Kawaguchiko (Keio / Fujikyu)",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
-    "price": "—",
+    "status": "paid",
+    "payment": "Payé · 49 € pour les 2 bus aller-retour (2 pers.)",
+    "price": "49 € A/R (2 pers.)",
     "from": {
       "id": "tokyo",
       "lat": 35.6884,
@@ -96,7 +96,8 @@
           "site": "Highway Bus",
           "label": "Bus Shinjuku → Kawaguchiko · 12 nov 2026",
           "openFrom": "2026-10-12",
-          "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112"
+          "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112",
+          "reserved": true
         }
       ]
     }
@@ -113,9 +114,9 @@
     "operator": "Highway bus Kawaguchiko → Shinjuku (Keio / Fujikyu)",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
-    "price": "—",
+    "status": "paid",
+    "payment": "Payé · 49 € pour les 2 bus aller-retour (2 pers.)",
+    "price": "49 € A/R (2 pers.)",
     "from": {
       "id": "fuji",
       "lat": 35.4983,
@@ -155,7 +156,8 @@
           "site": "Highway Bus",
           "label": "Bus Kawaguchiko → Shinjuku · 14 nov 2026",
           "openFrom": "2026-10-14",
-          "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114"
+          "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114",
+          "reserved": true
         }
       ]
     }

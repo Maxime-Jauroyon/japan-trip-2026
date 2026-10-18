@@ -238,7 +238,7 @@
         "journeyMeta": "~9:00 → ~15:30",
         "when": "~9:00–11:00",
         "title": "Fujikawaguchiko → Shinjuku",
-        "dummy": "Highway Bus · à réserver",
+        "dummy": "Highway Bus · réservé",
         "mode": "Bus",
         "leg": "fuji-tokyo",
         "role": "① Bus"
