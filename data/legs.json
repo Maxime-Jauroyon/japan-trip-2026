@@ -234,18 +234,19 @@
       "note": "Départ Tokyo Station · arrivée Kanazawa Station.",
       "links": [
         {
-          "site": "JR West",
-          "label": "Shinkansen Tokyo → Kanazawa · 14 nov 2026",
-          "openFrom": "2026-10-14",
-          "openTime": "10:00",
-          "url": "https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Tokyo&arrival=Kanazawa&date=2026-11-14"
-        },
-        {
           "site": "JR East",
-          "label": "Alternative · Hokuriku Shinkansen · 14 nov",
+          "label": "Shinkansen Tokyo → Kanazawa · 14 nov 2026 (recommandé)",
           "openFrom": "2026-10-14",
           "openTime": "10:00",
           "url": "https://www.eki-net.com/en/jreast-train-reservation/Top/Index"
+        },
+        {
+          "site": "JR West",
+          "label": "Alternative · JR West (retrait limité à Tokyo)",
+          "openFrom": "2026-10-14",
+          "openTime": "10:00",
+          "url": "https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Tokyo&arrival=Kanazawa&date=2026-11-14",
+          "optional": true
         }
       ]
     }
