@@ -527,7 +527,7 @@
       {
         "when": "~16:15–17:15",
         "title": "Kyoto → Nara",
-        "dummy": "Kintetsu → Kintetsu-Nara",
+        "dummy": "Kintetsu Limited Express · à réserver",
         "mode": "Train",
         "leg": "kyo-nara"
       }
@@ -569,7 +569,7 @@
       {
         "when": "~16:15–17:00",
         "title": "Nara → Osaka",
-        "dummy": "Kintetsu → Osaka-Namba",
+        "dummy": "Kintetsu Limited Express · à réserver",
         "mode": "Train",
         "leg": "nara-osa"
       }
