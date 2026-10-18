@@ -1,12 +1,12 @@
 /* Onglet Préparatifs : progression + une section à la fois — à faire, checklist, budget, infos pratiques. */
 
-import { TODOS_CHANGED, loadChecks, notifyTodosChanged, prepCheckState, saveChecks } from "../../core/checklist-store.js";
+import { TODOS_CHANGED, loadChecks, loadDoneBookings, notifyTodosChanged, prepCheckState, saveChecks } from "../../core/checklist-store.js";
 import { PREP_PANE_KEY } from "../../config.js";
 import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, PREP_CHECKS, TRAVELERS, TRIP } from "../../core/data.js";
 import { formatBookingDateFr, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { collectPrepReminders } from "../../domain/bookings.js";
-import { bindTodoList, currentTodos, todoItemHtml } from "../alerts.js";
+import { collectDoneTodos, collectPrepReminders } from "../../domain/bookings.js";
+import { bindTodoList, currentTodos, todoItemHtml, uncompleteTodo } from "../alerts.js";
 
 const PANES = ["todo", "checklist", "budget", "infos"];
 let pane = null;
@@ -139,8 +139,20 @@ function renderPrepTodos(){
       later.map(r => `<li><span>${esc(r.label)}</span><span class="meta">${esc(formatBookingDateFr(r.due))}</span></li>`).join("") +
       `</ul>`
     : "";
-  box.innerHTML = (groups || `<p class="prep-bookings-empty">Tout est à jour ✓</p>`) + laterHtml;
+  // Faits : tout ce qui a été coché peut être remis « à faire »
+  const doneList = collectDoneTodos(prepCheckState(), loadDoneBookings());
+  const doneHtml = doneList.length
+    ? `<details class="todo-done-box"><summary>Faits <span>(${doneList.length})</span></summary><ul class="todo-done-list">` +
+      doneList.map(d => `<li><span class="tdl-text"><strong>${esc(d.title)}</strong>${d.meta ? `<span class="meta">${esc(d.meta)}</span>` : ""}</span>` +
+        `<button type="button" class="todo-btn todo-undo" data-undo="${esc(d.id)}">↺ Remettre</button></li>`).join("") +
+      `</ul></details>`
+    : "";
+  box.innerHTML = (groups || `<p class="prep-bookings-empty">Tout est à jour ✓</p>`) + laterHtml + doneHtml;
   bindTodoList(box, todos);
+  box.querySelectorAll("[data-undo]").forEach(b => b.addEventListener("click", () => {
+    const d = doneList.find(x => x.id === b.dataset.undo);
+    if (d) uncompleteTodo(d);
+  }));
   const count = document.getElementById("prep-count-todo");
   if (count) {
     count.textContent = urgent ? String(urgent) : "";

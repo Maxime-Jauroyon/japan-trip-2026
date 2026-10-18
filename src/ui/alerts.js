@@ -1,7 +1,7 @@
 /* Bandeaux bas d’écran : installation iPhone, carte « À faire » (réservations ouvertes + rappels billets). */
 
 import { IOS_INSTALL_KEY, TODO_SNOOZE_KEY } from "../config.js";
-import { TODOS_CHANGED, loadDoneBookings, markBookingDone, notifyTodosChanged, prepCheckState, setCheck } from "../core/checklist-store.js";
+import { TODOS_CHANGED, loadDoneBookings, markBookingDone, notifyTodosChanged, prepCheckState, setCheck, unmarkBookingDone } from "../core/checklist-store.js";
 import { todayLocalDate } from "../core/dates.js";
 import { esc } from "../core/dom.js";
 import { isIOSDevice, isIOSInstalledPWA } from "../core/env.js";
@@ -69,6 +69,31 @@ export function completeTodo(todo){
   if (todo.kind === "reminder") setCheck(todo.id, true);
   else markBookingDone(todo.id);
   notifyTodosChanged();
+  showUndo(todo);
+}
+
+/** Remet une tâche « à faire » (annule « Fait ✓ »). */
+export function uncompleteTodo(todo){
+  if (todo.kind === "reminder") setCheck(todo.id, false);
+  else unmarkBookingDone(todo.id);
+  notifyTodosChanged();
+}
+
+/** Bandeau « Marqué fait · Annuler » quelques secondes après « Fait ✓ » (un toucher de travers se rattrape). */
+function showUndo(todo){
+  let box = document.getElementById("undo-toast");
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "undo-toast";
+    box.className = "undo-toast";
+    box.setAttribute("role", "status");
+    document.body.appendChild(box);
+  }
+  box.innerHTML = `<span>✓ <strong>${esc(todo.title)}</strong> marqué fait</span><button type="button">Annuler</button>`;
+  box.querySelector("button").onclick = () => { uncompleteTodo(todo); box.classList.remove("show"); };
+  box.classList.add("show");
+  clearTimeout(showUndo.t);
+  showUndo.t = setTimeout(() => box.classList.remove("show"), 7000);
 }
 
 export function todoItemHtml(t, opts = {}){

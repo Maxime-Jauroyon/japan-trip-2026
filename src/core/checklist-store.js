@@ -38,6 +38,13 @@ export function markBookingDone(id){
   try { localStorage.setItem(TODO_DONE_KEY, JSON.stringify([...set])); } catch (_) {}
 }
 
+/** Annule « Fait ✓ » sur une réservation (elle revient dans les alertes si elle est encore à faire). */
+export function unmarkBookingDone(id){
+  const set = loadDoneBookings();
+  set.delete(id);
+  try { localStorage.setItem(TODO_DONE_KEY, JSON.stringify([...set])); } catch (_) {}
+}
+
 /** Coche (ou décoche) une case de la checklist. */
 export function setCheck(id, on){
   const st = loadChecks();

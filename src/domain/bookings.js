@@ -129,6 +129,26 @@ export function collectTodos(checks, doneBookings, today = todayLocalDate()){
     (a.due ? a.due.getTime() : 0) - (b.due ? b.due.getTime() : 0));
 }
 
+/**
+ * Tâches marquées faites qu’on peut remettre « à faire » : réservations cochées sur l’appareil
+ * et rappels à date (checklist avec remindFrom) cochés. Élément : { id, kind, title, meta }.
+ */
+export function collectDoneTodos(checks, doneBookings){
+  const state = checks || {};
+  const done = doneBookings || new Set();
+  const out = [];
+  LEGS.forEach(leg => (leg.bookings?.links || []).forEach((link, i) => {
+    const id = leg.id + ":" + i;
+    if (!done.has(id)) return;
+    out.push({ id, kind: "booking", title: leg.title || (leg.from + " → " + leg.to), meta: [link.label, link.site].filter(Boolean).join(" · ") });
+  }));
+  PREP_CHECKS.filter(item => item.remindFrom).forEach(item => {
+    const on = Object.prototype.hasOwnProperty.call(state, item.id) ? !!state[item.id] : !!item.done;
+    if (on) out.push({ id: item.id, kind: "reminder", title: item.label, meta: item.meta || "" });
+  });
+  return out;
+}
+
 /** Libellé court de l’échéance : « En retard · depuis 9 j », « Aujourd’hui », « Dans 10 j · 13 oct. 2026 ». */
 export function todoDueLabel(t){
   if (t.days == null) return "À faire";
