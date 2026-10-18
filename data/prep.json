@@ -36,6 +36,13 @@
       ]
     },
     {
+      "id": "shinkansen-kana-retrait",
+      "label": "Retirer les billets shinkansen Tokyo → Kanazawa",
+      "meta": "Réservés sur JR East · 14 nov 11:24 → 14:17 · billets papier à retirer à une machine verte JR East (Akihabara, Tokyo, Shinjuku… ou Haneda T3) entre le 8 et le 13 nov · carte bancaire physique du paiement + n° de réservation",
+      "remindFrom": "2026-11-08",
+      "done": false
+    },
+    {
       "id": "taxes",
       "label": "Taxes de séjour / onsen",
       "meta": "Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)",
@@ -167,8 +174,8 @@
     },
     {
       "label": "Trajets JP",
-      "amount": "207,72 € + reste",
-      "note": "Payés : Osaka→Tokyo Nozomi 90 par Léo (158,72 €, QR Apple Wallet) · bus Tokyo ↔ Fuji A/R (49 €) · reste Hokuriku / Nohi / Hida…",
+      "amount": "372,67 € + reste",
+      "note": "Payés : Osaka→Tokyo Nozomi 90 par Léo (158,72 €) · bus Tokyo ↔ Fuji A/R (49 €) · shinkansen Tokyo→Kanazawa (164,95 €) · reste Nohi / Hida…",
       "done": false
     },
     {

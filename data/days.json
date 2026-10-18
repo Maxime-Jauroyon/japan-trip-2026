@@ -125,6 +125,12 @@
         "lng": 139.7454,
         "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique."
       }
+    ],
+    "reminders": [
+      {
+        "title": "Billets shinkansen de samedi : retirés ?",
+        "desc": "Tokyo 11:24 → Kanazawa (14 nov) : retirer les billets papier aujourd’hui au plus tard, à une machine verte JR East (ex. JR Akihabara) — carte bancaire physique du paiement + n° de réservation."
+      }
     ]
   },
   {
@@ -235,7 +241,7 @@
       {
         "journey": "fuji-kana",
         "journeyTitle": "Fujikawaguchiko → Kanazawa",
-        "journeyMeta": "08:10 → ~14:00",
+        "journeyMeta": "08:10 → 14:17",
         "when": "08:10–09:55",
         "title": "Fujikawaguchiko → Shinjuku",
         "dummy": "Highway Bus · réservé",
@@ -254,9 +260,9 @@
       },
       {
         "journey": "fuji-kana",
-        "when": "~11:00–14:00",
+        "when": "11:24–14:17",
         "title": "Tokyo → Kanazawa",
-        "dummy": "Shinkansen Hokuriku · à réserver · viser ~11:00–11:30",
+        "dummy": "Shinkansen Hokuriku · réservé (JR East)",
         "mode": "Shinkansen",
         "leg": "tokyo-kana",
         "role": "② Train"
