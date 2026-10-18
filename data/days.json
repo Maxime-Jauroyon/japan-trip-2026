@@ -207,8 +207,7 @@
         "slug": "fujiq",
         "desc": "Journée parc d’attractions au pied du Fuji — coasters (Fujiyama, Eejanaika, Takabisha…), Thomas Land et maison de l’horreur à part.",
         "notes": [
-          "Entrée au parc gratuite ; pour les manèges il faut un One Day Pass (ワンデイパス) — rides illimités (sauf exceptions).",
-          "One Day Pass adulte ~¥6 000–7 900 selon le jour (tarif saisonnier) · en ligne ou au guichet · pas de remboursement après achat.",
+          "One Day Pass acheté (85,50 € pour 2) — manèges illimités (sauf exceptions).",
           "Maison de l’horreur « Super Scary Labyrinth of Fear » (戦慄迷宮) : non incluse dans le One Day Pass — ticket horodaté à part.",
           "Horreur : payer sur place (bornes près de l’attraction / info) ou via l’app dès J−3 à 18h JST · ~¥3 000–4 000 / groupe avec One Day Pass (jusqu’à 3–4 pers.).",
           "App officielle « Q-chan » : files d’attente, carte, achat One Day Pass / priorités / tickets horodatés.",
@@ -218,10 +217,6 @@
           {
             "label": "Tarifs & billets officiels (EN/JP)",
             "url": "https://www.fujiq.jp/en/ticket/"
-          },
-          {
-            "label": "Acheter One Day Pass (site officiel)",
-            "url": "https://www.fujiq.jp/ticket/"
           },
           {
             "label": "App Store · Q-chan (Fuji-Q)",
