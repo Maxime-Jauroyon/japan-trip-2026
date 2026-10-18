@@ -168,15 +168,15 @@
     "title": "Tokyo → Kanazawa",
     "subtitle": "14 nov · Jour 7 · ② Shinkansen",
     "mode": "Shinkansen",
-    "depart": "~11:00–11:30",
-    "arrive": "~13:30–14:30",
-    "duration": "~2 h 30–3 h",
+    "depart": "11:24",
+    "arrive": "14:17",
+    "duration": "2 h 53",
     "operator": "Hokuriku Shinkansen (Kagayaki / Hakutaka)",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
-    "price": "—",
+    "status": "paid",
+    "payment": "Payé · 164,95 € (total, 2 pers.) · JR East · billets papier à retirer",
+    "price": "164,95 € (2 pers.)",
     "from": {
       "id": "tokyo",
       "lat": 35.6812,
@@ -229,16 +229,17 @@
       "Réserver les places assises dès l’ouverture (J−30).",
       "Billets à retirer AVANT le 14 nov (pas le matin du transfert) : machine verte « réservation » d’une gare JR East — p. ex. JR Akihabara près de l’hôtel, Tokyo, Shinjuku — ou au JR EAST Travel Service Center de Haneda T3 (gare du monorail, 2e ét., 6:45–20:00). Il faut la carte bancaire physique du paiement + le n° de réservation (ou le QR code)."
     ],
-    "tips": "Viser un départ ~11:00–11:30 : bus à Shinjuku 09:55, puis ~45 min avec les bagages jusqu’aux quais du shinkansen (JR Chūō rapide ~15 min + couloirs de Tokyo Station). Billet JR East (Eki-net) : changement d’horaire gratuit avant le départ si le bus a du retard.",
+    "tips": "Réservé : départ Tokyo 11:24 → Kanazawa 14:17. Billets papier à retirer AVANT le 14 nov aux machines vertes JR East (carte bancaire physique du paiement + n° de réservation). Le 14 : bus à Shinjuku 09:55, ~45 min de transfert → ~40 min de marge.",
     "bookings": {
       "note": "Départ Tokyo Station · arrivée Kanazawa Station.",
       "links": [
         {
           "site": "JR East",
-          "label": "Shinkansen Tokyo → Kanazawa · 14 nov 2026 (recommandé)",
+          "label": "Shinkansen Tokyo 11:24 → Kanazawa 14:17 · 14 nov (réservé)",
           "openFrom": "2026-10-14",
           "openTime": "10:00",
-          "url": "https://www.eki-net.com/en/jreast-train-reservation/Top/Index"
+          "url": "https://www.eki-net.com/en/jreast-train-reservation/Top/Index",
+          "reserved": true
         },
         {
           "site": "JR West",
