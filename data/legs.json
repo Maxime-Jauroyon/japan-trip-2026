@@ -521,12 +521,11 @@
     ],
     "tips": "Idéal pour arriver et enchaîner le parc avant la nuit.",
     "bookings": {
-      "note": "Train local / express : pas de résa nécessaire. Limited Express Kintetsu optionnel.",
+      "note": "Siège réservé en Limited Express (+~¥520) ; sinon trains express sans réservation (Suica/ICOCA).",
       "links": [
         {
           "site": "Kintetsu",
-          "label": "Limited Express Kyoto → Kintetsu-Nara (optionnel)",
-          "optional": true,
+          "label": "Limited Express Kyoto → Kintetsu-Nara · 22 nov (siège réservé)",
           "openFrom": "2026-10-22",
           "openTime": "10:30",
           "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
@@ -587,12 +586,11 @@
     ],
     "tips": "Soirée street food à Dotonbori.",
     "bookings": {
-      "note": "Train direct Namba : pas de résa nécessaire.",
+      "note": "Siège réservé en Limited Express (+~¥520) ; sinon trains express sans réservation (Suica/ICOCA).",
       "links": [
         {
           "site": "Kintetsu",
-          "label": "Limited Express Kintetsu-Nara → Osaka-Namba (optionnel)",
-          "optional": true,
+          "label": "Limited Express Kintetsu-Nara → Osaka-Namba · 23 nov (siège réservé)",
           "openFrom": "2026-10-23",
           "openTime": "10:30",
           "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
