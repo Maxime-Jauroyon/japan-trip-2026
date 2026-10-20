@@ -257,15 +257,15 @@
     "title": "Kanazawa → Shirakawa-go",
     "subtitle": "17 nov · Jour 10",
     "mode": "Bus",
-    "depart": "~8:50",
-    "arrive": "~10:05",
-    "duration": "~1 h 15",
+    "depart": "11:10",
+    "arrive": "12:25",
+    "duration": "1 h 15",
     "operator": "Nohi Bus (Kanazawa ↔ Shirakawa-go)",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
-    "price": "—",
+    "status": "paid",
+    "payment": "Payé · 31,72 € (2 pers.) · billet = e-mail de confirmation à montrer au chauffeur (imprimé)",
+    "price": "31,72 € (2 pers.)",
     "from": {
       "id": "kanazawa",
       "lat": 36.5783,
@@ -308,14 +308,15 @@
       "Bus réservation recommandée (places limitées).",
       "Visite à la journée — nuit à Takayama."
     ],
-    "tips": "Garder le billet retour / correspondance Takayama du même jour.",
+    "tips": "Check-out de l’hôtel vers 10:15 pour être à la gare de Kanazawa (East Exit, quai bus) en avance · montrer la confirmation imprimée au chauffeur.",
     "bookings": {
       "links": [
         {
           "site": "Japan Bus Online",
-          "label": "Bus Kanazawa → Shirakawa-go · 17 nov 2026",
+          "label": "Bus Kanazawa 11:10 → Shirakawa-go 12:25 · 17 nov (réservé)",
           "openFrom": "2026-10-17",
-          "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117"
+          "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117",
+          "reserved": true
         }
       ]
     }
@@ -325,15 +326,15 @@
     "title": "Shirakawa-go → Takayama",
     "subtitle": "17 nov · Jour 10",
     "mode": "Bus",
-    "depart": "~14:00",
-    "arrive": "~14:50",
-    "duration": "~50 min",
+    "depart": "16:35",
+    "arrive": "17:25",
+    "duration": "50 min",
     "operator": "Nohi Bus",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
-    "price": "—",
+    "status": "paid",
+    "payment": "Payé · 31,72 € (2 pers.) · billet = e-mail de confirmation à montrer au chauffeur (imprimé)",
+    "price": "31,72 € (2 pers.)",
     "from": {
       "id": "shirakawa",
       "lat": 36.262,
@@ -375,15 +376,16 @@
     "details": [
       "Arrivée à côté de la gare JR Takayama et de la vieille ville."
     ],
-    "tips": "Check-in ryokan puis balade Sanmachi.",
+    "tips": "Environ 4 h à Shirakawa-go · nuit tombée vers 16:40 en novembre : finir la visite / le point de vue avant · confirmation imprimée à montrer au chauffeur.",
     "bookings": {
       "note": "Sur Japan Bus Online : ouvrir le sens Kanazawa→Takayama, choisir un bus vers Takayama, puis arrêts boarding=Shirakawa-go / alighting=Takayama Nohi Bus Center.",
       "links": [
         {
           "site": "Japan Bus Online",
-          "label": "Bus Shirakawa-go → Takayama · 17 nov 2026",
+          "label": "Bus Shirakawa-go 16:35 → Takayama 17:25 · 17 nov (réservé)",
           "openFrom": "2026-10-17",
-          "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117"
+          "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117",
+          "reserved": true
         }
       ]
     }

@@ -43,6 +43,13 @@
       "done": false
     },
     {
+      "id": "bus-shirakawa-print",
+      "label": "Imprimer les confirmations des bus Shirakawa-go (×2)",
+      "meta": "Kanazawa 11:10 → Shirakawa-go · Shirakawa-go 16:35 → Takayama · 17 nov · à montrer au chauffeur",
+      "remindFrom": "2026-11-01",
+      "done": false
+    },
+    {
       "id": "taxes",
       "label": "Taxes de séjour / onsen",
       "meta": "Souvent hors Booking · cash ou carte au check-in (Kanazawa, Takayama…)",
@@ -174,8 +181,8 @@
     },
     {
       "label": "Trajets JP",
-      "amount": "372,67 € + reste",
-      "note": "Payés : Osaka→Tokyo Nozomi 90 par Léo (158,72 €) · bus Tokyo ↔ Fuji A/R (49 €) · shinkansen Tokyo→Kanazawa (164,95 €) · reste Nohi / Hida…",
+      "amount": "436,11 € + reste",
+      "note": "Payés : Osaka→Tokyo Nozomi 90 par Léo (158,72 €) · bus Tokyo ↔ Fuji A/R (49 €) · shinkansen Tokyo→Kanazawa (164,95 €) · bus Shirakawa-go ×2 (63,44 €) · reste Hida / Kintetsu…",
       "done": false
     },
     {

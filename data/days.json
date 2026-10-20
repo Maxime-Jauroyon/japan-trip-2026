@@ -361,16 +361,16 @@
     "extraCity": "takayama",
     "moves": [
       {
-        "when": "~8:50–10:05",
+        "when": "11:10–12:25",
         "title": "Kanazawa → Shirakawa-go",
-        "dummy": "Nohi Bus · Kanazawa Station",
+        "dummy": "Nohi Bus · réservé (confirmation imprimée)",
         "mode": "Bus",
         "leg": "kana-shira"
       },
       {
-        "when": "~14:00–14:50",
+        "when": "16:35–17:25",
         "title": "Shirakawa-go → Takayama",
-        "dummy": "Nohi Bus · Bus Center",
+        "dummy": "Nohi Bus · réservé (confirmation imprimée)",
         "mode": "Bus",
         "leg": "shira-taka"
       }
@@ -388,6 +388,12 @@
         "lat": 36.1415,
         "lng": 137.2595,
         "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir."
+      }
+    ],
+    "reminders": [
+      {
+        "title": "Bus : montrer les confirmations imprimées au chauffeur (2 trajets)",
+        "desc": "Kanazawa 11:10 → Shirakawa-go 12:25 puis Shirakawa-go 16:35 → Takayama 17:25 · le billet = l’e-mail de confirmation (31,72 € pour 2 chacun)."
       }
     ]
   },
