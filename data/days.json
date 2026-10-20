@@ -351,6 +351,12 @@
         "lng": 136.6562,
         "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir."
       }
+    ],
+    "reminders": [
+      {
+        "title": "Retirer les billets Takayama → Kyoto (18 nov)",
+        "desc": "Machine verte de la gare de Kanazawa (JR West) — carte bancaire physique de Maxime + code à 4 chiffres + n° de réservation. Plus simple ici que le jour du départ."
+      }
     ]
   },
   {
@@ -420,9 +426,9 @@
     ],
     "moves": [
       {
-        "when": "~13:30–16:30",
+        "when": "15:34–19:17",
         "title": "Takayama → Kyoto",
-        "dummy": "Hida + shinkansen · Kyoto Station",
+        "dummy": "Train JR · réservé (billets papier)",
         "mode": "Train",
         "leg": "taka-kyo"
       }
@@ -434,6 +440,12 @@
         "lat": 35.0039,
         "lng": 135.7714,
         "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto."
+      }
+    ],
+    "reminders": [
+      {
+        "title": "Train de 15:34 : billets retirés ?",
+        "desc": "Si ce n’est pas fait à Kanazawa : machine verte de la gare de Takayama AVANT le départ — carte bancaire physique de Maxime + code à 4 chiffres + n° de réservation."
       }
     ]
   },

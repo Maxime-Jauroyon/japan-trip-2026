@@ -38,7 +38,7 @@
     {
       "id": "shinkansen-kana-retrait",
       "label": "Retirer les billets shinkansen Tokyo → Kanazawa",
-      "meta": "Réservés sur JR East · 14 nov 11:24 → 14:17 · billets papier à retirer à une machine verte JR East (Akihabara, Tokyo, Shinjuku… ou Haneda T3) entre le 8 et le 13 nov · carte bancaire physique du paiement + n° de réservation",
+      "meta": "Réservés sur JR East · 14 nov 11:24 → 14:17 · billets papier à retirer à une machine verte JR East (Akihabara, Tokyo, Shinjuku… ou Haneda T3) entre le 8 et le 13 nov · carte bancaire physique de LÉO (qui a payé) + n° de réservation",
       "remindFrom": "2026-11-08",
       "done": false
     },
@@ -47,6 +47,13 @@
       "label": "Imprimer les confirmations des bus Shirakawa-go (×2)",
       "meta": "Kanazawa 11:10 → Shirakawa-go · Shirakawa-go 16:35 → Takayama · 17 nov · à montrer au chauffeur",
       "remindFrom": "2026-11-01",
+      "done": false
+    },
+    {
+      "id": "train-kyoto-retrait",
+      "label": "Retirer les billets train Takayama → Kyoto",
+      "meta": "Réservés sur JR West · 18 nov 15:34 → 19:17 · machine verte de la gare de Kanazawa (14–17 nov) ou de Takayama avant le départ — pas à Tokyo · carte bancaire physique de MAXIME + code à 4 chiffres + n° de réservation",
+      "remindFrom": "2026-11-14",
       "done": false
     },
     {
@@ -181,8 +188,8 @@
     },
     {
       "label": "Trajets JP",
-      "amount": "436,11 € + reste",
-      "note": "Payés : Osaka→Tokyo Nozomi 90 par Léo (158,72 €) · bus Tokyo ↔ Fuji A/R (49 €) · shinkansen Tokyo→Kanazawa (164,95 €) · bus Shirakawa-go ×2 (63,44 €) · reste Hida / Kintetsu…",
+      "amount": "518,35 € + reste",
+      "note": "Payés : Osaka→Tokyo Nozomi 90 par Léo (158,72 €) · bus Tokyo ↔ Fuji A/R (49 €) · shinkansen Tokyo→Kanazawa (164,95 €) · bus Shirakawa-go ×2 (63,44 €) · Takayama→Kyoto (82,24 €) · reste Kintetsu…",
       "done": false
     },
     {
