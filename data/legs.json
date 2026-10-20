@@ -175,7 +175,7 @@
     "seat": "—",
     "ref": "—",
     "status": "paid",
-    "payment": "Payé · 164,95 € (total, 2 pers.) · JR East · billets papier à retirer",
+    "payment": "Payé · 164,95 € (total, 2 pers.) · JR East · billets papier à retirer avec la carte bancaire physique de Léo",
     "price": "164,95 € (2 pers.)",
     "from": {
       "id": "tokyo",
@@ -227,9 +227,9 @@
       "Après le bus (arrivée 09:55) : JR Chūō rapide Shinjuku → Tokyo (~15 min) puis quais Hokuriku Shinkansen (n° 20–23) · compter ~45 min avec les valises.",
       "Shinkansen Hokuriku : Kagayaki (plus rapide) ou Hakutaka.",
       "Réserver les places assises dès l’ouverture (J−30).",
-      "Billets à retirer AVANT le 14 nov (pas le matin du transfert) : machine verte « réservation » d’une gare JR East — p. ex. JR Akihabara près de l’hôtel, Tokyo, Shinjuku — ou au JR EAST Travel Service Center de Haneda T3 (gare du monorail, 2e ét., 6:45–20:00). Il faut la carte bancaire physique du paiement + le n° de réservation (ou le QR code)."
+      "Billets à retirer AVANT le 14 nov (pas le matin du transfert) : machine verte « réservation » d’une gare JR East — p. ex. JR Akihabara près de l’hôtel, Tokyo, Shinjuku — ou au JR EAST Travel Service Center de Haneda T3 (gare du monorail, 2e ét., 6:45–20:00). Il faut la carte bancaire physique de Léo (qui a payé) + le n° de réservation (ou le QR code)."
     ],
-    "tips": "Réservé : départ Tokyo 11:24 → Kanazawa 14:17. Billets papier à retirer AVANT le 14 nov aux machines vertes JR East (carte bancaire physique du paiement + n° de réservation). Le 14 : bus à Shinjuku 09:55, ~45 min de transfert → ~40 min de marge.",
+    "tips": "Réservé : départ Tokyo 11:24 → Kanazawa 14:17. Billets papier à retirer AVANT le 14 nov aux machines vertes JR East (carte bancaire physique de Léo + n° de réservation). Le 14 : bus à Shinjuku 09:55, ~45 min de transfert → ~40 min de marge.",
     "bookings": {
       "note": "Départ Tokyo Station · arrivée Kanazawa Station.",
       "links": [
@@ -395,15 +395,15 @@
     "title": "Takayama → Kyoto",
     "subtitle": "18 nov · Jour 11",
     "mode": "Train",
-    "depart": "~13:30",
-    "arrive": "~16:30",
-    "duration": "~3 h",
+    "depart": "15:34",
+    "arrive": "19:17",
+    "duration": "3 h 43",
     "operator": "Hida (Wide View) → Nagoya + shinkansen → Kyoto",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
-    "price": "—",
+    "status": "paid",
+    "payment": "Payé par Maxime · 82,24 € · JR West · billets papier à retirer (carte de Maxime + code à 4 chiffres)",
+    "price": "82,24 €",
     "from": {
       "id": "takayama",
       "lat": 36.1406,
@@ -447,25 +447,18 @@
       "lng": 135.7588
     },
     "details": [
-      "Classique : Limited Express Hida Takayama → Nagoya, puis Tokaido Shinkansen Nagoya → Kyoto.",
-      "Réserver les places Hida (paysage + places assises)."
+      "Classique : Limited Express Hida Takayama → Nagoya, puis Tokaido Shinkansen Nagoya → Kyoto."
     ],
-    "tips": "L'heure de départ à Takayama est le vrai rendez-vous.",
+    "tips": "Réservé : Takayama 15:34 → Kyoto 19:17 (détail des trains et correspondance sur la confirmation JR West). Billets à retirer à une machine verte JR West / JR Central (gare de Kanazawa du 14 au 17 nov, ou gare de Takayama le 18 avant le départ — pas à Tokyo) avec la carte bancaire physique de Maxime + son code à 4 chiffres + le n° de réservation (5 chiffres, commence par 4).",
     "bookings": {
       "links": [
         {
           "site": "JR West",
-          "label": "Train Takayama → Kyoto · 18 nov 2026 (Hida + Shinkansen)",
+          "label": "Train Takayama 15:34 → Kyoto 19:17 · 18 nov (réservé)",
           "openFrom": "2026-10-18",
           "openTime": "10:00",
-          "url": "https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Takayama&arrival=Kyoto&date=2026-11-18"
-        },
-        {
-          "site": "e5489",
-          "label": "Alternative · réservation JR West (EN)",
-          "openFrom": "2026-10-18",
-          "openTime": "10:00",
-          "url": "https://e5489.jr-odekake.net/e5489/ibpc/CBTrainEntryExternalPC?LANG=en"
+          "url": "https://www.westjr.co.jp/travel-information/en/tickets-passes/route-search/?departure=Takayama&arrival=Kyoto&date=2026-11-18",
+          "reserved": true
         }
       ]
     }
