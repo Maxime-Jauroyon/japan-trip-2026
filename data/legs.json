@@ -767,7 +767,6 @@
     },
     "ticket": {
       "kind": "qr",
-      "who": "Léo",
       "headline": "QR Ticket dans Apple Wallet (SmartEX)",
       "steps": [
         "Les billets sont des QR Tickets dans Apple Wallet : rien à imprimer ni à retirer",

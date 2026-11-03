@@ -34,17 +34,17 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=207" />
-  <link rel="stylesheet" href="./styles/base.css?v=207" />
-  <link rel="stylesheet" href="./styles/views.css?v=207" />
-  <link rel="stylesheet" href="./styles/panel.css?v=207" />
-  <link rel="stylesheet" href="./styles/components.css?v=207" />
-  <link rel="stylesheet" href="./styles/print.css?v=207" />
-  <link rel="stylesheet" href="./styles/map.css?v=207" />
-  <link rel="stylesheet" href="./styles/settings.css?v=207" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=207" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=207" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=207" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=208" />
+  <link rel="stylesheet" href="./styles/base.css?v=208" />
+  <link rel="stylesheet" href="./styles/views.css?v=208" />
+  <link rel="stylesheet" href="./styles/panel.css?v=208" />
+  <link rel="stylesheet" href="./styles/components.css?v=208" />
+  <link rel="stylesheet" href="./styles/print.css?v=208" />
+  <link rel="stylesheet" href="./styles/map.css?v=208" />
+  <link rel="stylesheet" href="./styles/settings.css?v=208" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=208" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=208" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=208" />
 </head>
 <body>
   <div class="app tab-map">
@@ -122,10 +122,20 @@
         <div class="info-wrap">
           <div class="view-head"><h2>Sur place</h2></div>
 
+          <nav class="seg-tabs" id="onsite-tabs" role="tablist" aria-label="Sections de Sur place">
+            <button type="button" role="tab" data-pane="today">Aujourd’hui</button>
+            <button type="button" role="tab" data-pane="money">Argent</button>
+            <button type="button" role="tab" data-pane="phrases">Phrases</button>
+            <button type="button" role="tab" data-pane="sos">Urgences</button>
+          </nav>
+
+          <div class="prep-pane" data-pane="today">
           <div id="onsite-today"></div>
           <div class="tool-card next-card" id="onsite-next" hidden></div>
           <div class="tool-card tickets-card" id="onsite-tickets" hidden></div>
+          </div>
 
+          <div class="prep-pane" data-pane="money" hidden>
           <div class="tool-card fx" id="onsite-fx">
             <div class="tool-head"><h3>Convertisseur</h3>
               <label class="fx-rate"><input type="number" id="fx-rate" inputmode="decimal" min="1" step="0.1" aria-label="Yens pour 1 euro" /><span>¥ = 1 €</span></label>
@@ -150,7 +160,9 @@
             </form>
             <div id="exp-body"></div>
           </div>
+          </div>
 
+          <div class="prep-pane" data-pane="phrases" hidden>
           <div class="tool-card">
             <div class="tool-head"><h3>Phrases utiles</h3></div>
             <p class="phrase-lead">Touchez une phrase pour l’afficher en grand et la montrer.</p>
@@ -158,9 +170,13 @@
             <div class="phrase-groups" id="onsite-phrases"></div>
           </div>
 
+          </div>
+
+          <div class="prep-pane" data-pane="sos" hidden>
           <div class="tool-card">
             <div class="tool-head"><h3>Urgences</h3></div>
             <div class="sos-grid" id="onsite-sos"></div>
+          </div>
           </div>
         </div>
       </section>
@@ -253,6 +269,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=207"></script>
+  <script type="module" src="./src/main.js?v=208"></script>
 </body>
 </html>
