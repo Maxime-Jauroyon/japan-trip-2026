@@ -1,6 +1,7 @@
 /* Onglet Sur place : boîte à outils du jour — carte « Aujourd’hui » (hôtel, programme, adresse),
-   convertisseur ¥/€, phrases utiles, numéros d’urgence. Le programme détaillé est dans la carte. */
+   convertisseur ¥/€, phrases utiles, numéros d’urgence, rangés en sous-onglets (Aujourd’hui · Argent · Phrases · Urgences). Le programme détaillé est dans la carte. */
 
+import { ONSITE_PANE_KEY } from "../../config.js";
 import { CITIES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
 import { findTripDayByISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
@@ -100,6 +101,28 @@ function renderPhrases(){
   }
 }
 
+const PANES = ["today", "money", "phrases", "sos"];
+let pane = null;
+
+function showPane(name, save){
+  pane = name;
+  document.querySelectorAll("#view-onsite .prep-pane").forEach(p => { p.hidden = p.dataset.pane !== name; });
+  document.querySelectorAll("#onsite-tabs [data-pane]").forEach(b => {
+    const on = b.dataset.pane === name;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-selected", String(on));
+  });
+  if (save) { try { localStorage.setItem(ONSITE_PANE_KEY, name); } catch (_) { /* ignore */ } }
+}
+
+function initialPane(){
+  try {
+    const saved = localStorage.getItem(ONSITE_PANE_KEY);
+    if (PANES.includes(saved)) return saved;
+  } catch (_) { /* ignore */ }
+  return "today";
+}
+
 export function renderOnsite(){
   const today = document.getElementById("onsite-today");
   if (!today) return;
@@ -114,4 +137,13 @@ export function renderOnsite(){
   const sos = document.getElementById("onsite-sos");
   if (sos) sos.innerHTML = sosHtml();
   renderPhrases();
+  const tabs = document.getElementById("onsite-tabs");
+  if (tabs && !tabs.dataset.bound) {
+    tabs.dataset.bound = "1";
+    tabs.querySelectorAll("[data-pane]").forEach(b => b.addEventListener("click", () => {
+      showPane(b.dataset.pane, true);
+      document.getElementById("view-onsite")?.scrollTo?.({ top: 0 });
+    }));
+  }
+  showPane(pane || initialPane(), false);
 }

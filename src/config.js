@@ -1,7 +1,7 @@
 /* Configuration de l’app (pas de contenu de voyage) : version, clés de stockage local, cache des tuiles. */
 
 /** Version affichée — garder en sync avec sw.js (scripts/bump-version.mjs). */
-export const APP_VERSION = "v207";
+export const APP_VERSION = "v208";
 
 /* Clés localStorage (préfixe japan-trip-, suffixe -vN pour migrer un format). */
 export const CHECK_KEY = "japan-trip-check-v1";
@@ -16,6 +16,7 @@ export const TODO_SNOOZE_KEY = "japan-trip-todo-snooze-v2";
 export const TODO_DONE_KEY = "japan-trip-todo-done-v2";
 /** Section ouverte dans Préparatifs (todo, budget, infos). */
 export const PREP_PANE_KEY = "japan-trip-prep-pane-v1";
+export const ONSITE_PANE_KEY = "japan-trip-onsite-pane-v1";
 export const OFFLINE_MAPS_KEY = "japan-trip-offline-maps-v1";
 /** Version pour laquelle la vue Japon a été pré-chargée en tâche de fond (ordinateur). */
 /** Étapes du jour cochées « Fait » (carte « Et maintenant ? ») : { "AAAA-MM-JJ": [titres] }. */
