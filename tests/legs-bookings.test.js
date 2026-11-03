@@ -82,6 +82,18 @@ test("faits : remettre à faire", () => {
   const nov1 = new Date(2026, 10, 1);
   assert.ok(!collectTodos({ "cash-arrivee": true }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
   assert.ok(collectTodos({ "cash-arrivee": false }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
-  assert.ok(!collectTodos({}, new Set(["nara-osa:0"]), today).some((t) => t.id === "nara-osa:0"));
-  assert.ok(collectTodos({}, new Set(), today).some((t) => t.id === "nara-osa:0"));
+  // toutes les réservations sont faites dans les données : on en « dé-réserve » une le temps du test
+  const leg = LEGS.find((l) => l.id === "nara-osa");
+  const link = leg.bookings.links[0];
+  const saved = { status: leg.status, reserved: link.reserved };
+  try {
+    leg.status = "placeholder";
+    delete link.reserved;
+    assert.ok(collectTodos({}, new Set(), today).some((t) => t.id === "nara-osa:0"));
+    assert.ok(!collectTodos({}, new Set(["nara-osa:0"]), today).some((t) => t.id === "nara-osa:0"));
+  } finally {
+    leg.status = saved.status;
+    link.reserved = saved.reserved;
+  }
+  assert.ok(!collectTodos({}, new Set(), today).some((t) => t.id === "nara-osa:0"));
 });

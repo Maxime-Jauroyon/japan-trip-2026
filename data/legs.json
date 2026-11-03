@@ -536,14 +536,14 @@
     "title": "Nara → Osaka",
     "subtitle": "23 nov · Jour 16",
     "mode": "Train",
-    "depart": "~16:15",
-    "arrive": "~17:00",
-    "duration": "~35–45 min",
+    "depart": "16:08",
+    "arrive": "16:43",
+    "duration": "35 min",
     "operator": "Kintetsu vers Osaka-Namba",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
+    "status": "paid",
+    "payment": "Réservé · e-ticket Kintetsu (Limited Express) à afficher depuis le téléphone",
     "price": "—",
     "from": {
       "id": "nara",
@@ -580,18 +580,21 @@
       "lng": 135.499
     },
     "details": [
+      "Limited Express direct Kintetsu-Nara (A28) → Osaka-Namba (A01) : 16:08 → 16:43.",
+      "Même système que Kyoto → Nara : l’e-ticket s’affiche depuis le téléphone, pas de capture d’écran — e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket (internet nécessaire).",
       "Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."
     ],
-    "tips": "Soirée street food à Dotonbori.",
+    "tips": "Réservé : Kintetsu-Nara (A28) 16:08 → Osaka-Namba (A01) 16:43 · arrivée directe à Namba / Dotonbori pour la soirée street food. Même système que Kyoto → Nara : l’e-ticket s’affiche depuis le téléphone, pas de capture d’écran — e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket (internet nécessaire).",
     "bookings": {
       "note": "Siège réservé en Limited Express (+~¥520) ; sinon trains express sans réservation (Suica/ICOCA).",
       "links": [
         {
           "site": "Kintetsu",
-          "label": "Limited Express Kintetsu-Nara → Osaka-Namba · 23 nov (siège réservé)",
+          "label": "Limited Express Kintetsu-Nara (A28) 16:08 → Osaka-Namba (A01) 16:43 · 23 nov (réservé)",
           "openFrom": "2026-10-23",
           "openTime": "10:30",
-          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
+          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/",
+          "reserved": true
         }
       ]
     }

@@ -597,9 +597,9 @@
     ],
     "moves": [
       {
-        "when": "~16:15–17:00",
+        "when": "16:08–16:43",
         "title": "Nara → Osaka",
-        "dummy": "Kintetsu Limited Express · à réserver",
+        "dummy": "Kintetsu Limited Express · réservé (e-ticket sur téléphone)",
         "mode": "Train",
         "leg": "nara-osa"
       }
@@ -611,6 +611,12 @@
         "lat": 34.6687,
         "lng": 135.5013,
         "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée."
+      }
+    ],
+    "reminders": [
+      {
+        "title": "E-ticket Kintetsu à afficher depuis le téléphone (16:08)",
+        "desc": "Même procédure que la veille : pas de capture d’écran, e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → afficher l’e-ticket. Être à la gare Kintetsu-Nara vers 15:50."
       }
     ]
   },
