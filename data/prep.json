@@ -58,13 +58,15 @@
       "label": "Vols A/R",
       "amount": "≈ 2 200 € / pers.",
       "note": "Payés · Léo & Maxime · Air France · CDG ↔ HND",
-      "done": true
+      "done": true,
+      "locked": true
     },
     {
       "label": "Hôtels (partagés)",
       "amount": "≈ 1 535 € / pers.",
       "note": "Total ≈ 3 070 € ÷ 2 · tous les séjours inclus",
-      "done": true
+      "done": true,
+      "locked": true
     },
     {
       "label": "Taxes séjour / onsen",
