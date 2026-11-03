@@ -127,6 +127,12 @@
 .br-main span { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
 .br-amt { flex: 0 0 auto; font-weight: 700; text-align: right; color: var(--muted); }
 .budget-row.paid .br-amt { color: var(--cream); }
+.br-lock { color: var(--gold-2) !important; font-weight: 700; }
+.br-live { color: var(--cream) !important; }
+.br-live b { color: var(--gold-2); }
+.br-live.none { color: var(--muted) !important; font-style: italic; }
+.bh-spent { font-size: 13px; color: var(--cream); }
+.bh-spent b { color: var(--gold-2); }
 .budget-row.paid .br-main strong::after { content: " ✓"; color: var(--ok); }
 
 /* —— Sur place : carte du jour + outils —— */

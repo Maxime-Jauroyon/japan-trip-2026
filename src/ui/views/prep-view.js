@@ -6,7 +6,10 @@ import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, TRAVELERS, TRIP } from 
 import { formatBookingDateFr, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { collectDoneTodos, collectPrepReminders } from "../../domain/bookings.js";
+import { expenseTotals, formatEur, formatYen, liveSpent } from "../../domain/expenses.js";
 import { bindTodoList, currentTodos, todoItemHtml, uncompleteTodo } from "../alerts.js";
+import { EXPENSES_CHANGED, loadExpenses } from "./expenses.js";
+import { loadFxRate } from "./fx-converter.js";
 
 const PANES = ["todo", "budget", "infos"];
 let pane = null;
@@ -46,13 +49,23 @@ function renderBudget(){
   const list = document.getElementById("prep-budget");
   const who = document.getElementById("prep-travelers");
   if (!hero || !list) return;
+  const expenses = loadExpenses();
+  const fx = loadFxRate();
+  const spent = expenseTotals(expenses, japanTodayISO()).totalYen;
   const tot = PREP_BUDGET_TOTAL || { label: "Total / pers.", amount: "—" };
   hero.innerHTML = `<span class="bh-label">${esc(tot.label)}</span><strong>${esc(tot.amount)}</strong>` +
-    (tot.note ? `<span class="bh-note">${esc(tot.note)}</span>` : "");
-  list.innerHTML = PREP_BUDGET.map(b =>
-    `<div class="budget-row${b.done ? " paid" : ""}"><div class="br-main"><strong>${esc(b.label)}</strong>` +
-    (b.note ? `<span>${esc(b.note)}</span>` : "") + `</div><div class="br-amt">${esc(b.amount)}</div></div>`
-  ).join("");
+    (tot.note ? `<span class="bh-note">${esc(tot.note)}</span>` : "") +
+    (spent ? `<span class="bh-spent">Dépensé sur place : <b>${formatYen(spent)}</b> ≈ ${formatEur(spent, fx)}</span>` : "");
+  list.innerHTML = PREP_BUDGET.map(b => {
+    const live = Array.isArray(b.live) ? liveSpent(expenses, b.live) : null;
+    const liveLine = live == null ? ""
+      : live ? `<span class="br-live">Saisi dans Sur place : <b>${formatYen(live)}</b> ≈ ${formatEur(live, fx)}</span>`
+      : `<span class="br-live none">Rien de saisi pour l’instant (Sur place › Dépenses)</span>`;
+    return `<div class="budget-row${b.done ? " paid" : ""}${b.locked ? " locked" : ""}"><div class="br-main"><strong>${esc(b.label)}</strong>` +
+      (b.locked ? `<span class="br-lock">🔒 Définitif</span>` : "") +
+      (b.note ? `<span>${esc(b.note)}</span>` : "") + liveLine +
+      `</div><div class="br-amt">${esc(b.amount)}</div></div>`;
+  }).join("");
   if (who && TRAVELERS.length) who.textContent = "Voyageurs : " + TRAVELERS.join(" & ");
 }
 
@@ -127,6 +140,8 @@ function renderPrepTodos(){
 
 /** Re-rendu de l’onglet quand une tâche change ailleurs (carte « À faire »). */
 export function initPrepView(){
+  // Une dépense saisie dans Sur place met à jour le budget
+  document.addEventListener(EXPENSES_CHANGED, renderBudget);
   document.addEventListener(TODOS_CHANGED, () => {
     if (document.getElementById("view-prep")?.classList.contains("active")) renderPrep();
   });

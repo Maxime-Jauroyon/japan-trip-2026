@@ -1,5 +1,14 @@
 /* Dépenses sur place : totaux (fonctions pures). Une dépense = { id, iso, yen, cat, note? }. */
 
+/** Catégories de dépenses (ids) — les libellés et icônes sont dans l’interface. */
+export const EXPENSE_CAT_IDS = ["food", "transport", "activity", "shop", "other"];
+
+/** Total en yens des dépenses des catégories `cats` (alimente les lignes « vivantes » du budget). */
+export function liveSpent(list, cats){
+  const set = new Set(cats || []);
+  return (list || []).filter((e) => e && Number.isFinite(e.yen) && e.yen > 0 && set.has(e.cat)).reduce((s, e) => s + e.yen, 0);
+}
+
 /**
  * Totaux pour le jour `todayIso` et pour tout le voyage.
  * Retourne { todayYen, todayList, totalYen, byCat: { cat: yen }, days, avgYen }.

@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { EXPENSE_CAT_IDS } from "../src/domain/expenses.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const load = (name) => JSON.parse(fs.readFileSync(path.join(ROOT, "data", name + ".json"), "utf8"));
@@ -144,6 +145,13 @@ const prep = load("prep");
 checkUnique(prep.checks, "prep.checks");
 prep.checks.forEach((c) => {
   if (c.remindFrom && !ISO.test(c.remindFrom)) err(`prep ${c.id}`, `remindFrom doit être AAAA-MM-JJ (${c.remindFrom})`);
+});
+(prep.budget || []).forEach((b, i) => {
+  const w = `prep.budget[${i}] (${b.label})`;
+  if (b.locked != null && typeof b.locked !== "boolean") err(w, "locked doit être un booléen");
+  if (b.live != null && (!Array.isArray(b.live) || !b.live.length || b.live.some((c) => !EXPENSE_CAT_IDS.includes(c)))) {
+    err(w, `live : catégories parmi ${EXPENSE_CAT_IDS.join(", ")}`);
+  }
 });
 const phrases = load("phrases");
 const checkPhrase = (where) => (p, i) => {
