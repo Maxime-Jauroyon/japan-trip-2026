@@ -22,10 +22,10 @@
   },
   {
     "id": "jr",
-    "title": "Trains & JR Pass",
+    "title": "Trains & bus",
     "items": [
-      "Shinkansen et trains limités : réserver sièges quand possible (Hokuriku, etc.).",
-      "Bus Fuji, Shirakawa, Takayama : réserver à l’avance en novembre.",
+      "Billets papier réservés sur JR East (Tokyo → Kanazawa) et JR West (Takayama → Kyoto) : à retirer aux machines vertes avant le trajet (voir « À faire »).",
+      "Bus Fuji et Shirakawa-go déjà réservés : garder les confirmations sous la main (celles de Shirakawa-go sont à montrer au chauffeur).",
       "Bagages : shinkansen avec grandes valises → sièges « baggage area » si dispo."
     ]
   },
@@ -51,8 +51,20 @@
     "id": "cash",
     "title": "Cash & cartes",
     "items": [
+      "Retirer du cash dès l’arrivée à Haneda T3 (distributeur 7-Eleven ou Japan Post) — prévenir la banque avant le départ.",
       "Beaucoup de lieux acceptent la carte ; petits temples, marchés, taxis parfois cash only.",
-      "Retrait ATM 7-Eleven / poste (JP Bank) — prévenir la banque avant le départ."
+      "Taux en ce moment ≈ 185 ¥ pour 1 € (réglable dans le convertisseur de Sur place)."
+    ]
+  },
+  {
+    "id": "meteo",
+    "title": "Météo & feuillages 2026 (maj 3 nov)",
+    "items": [
+      "Moyennes de novembre 2015–2025 (8–29 nov), max / min : Tokyo 16°/8° · lac Kawaguchi 13°/5° · Kanazawa 15°/7° · Shirakawa-go 13°/4° · Takayama 13°/3° · Kyoto 16°/6° · Nara 16°/7° · Osaka 16°/8°.",
+      "Jours de pluie en novembre : environ 1 sur 4 à Kyoto, Nara et Osaka, 1 sur 3 à Tokyo et au lac Kawaguchi, 1 sur 2 à Kanazawa, Shirakawa-go et Takayama.",
+      "Tendance 2026 (Japan Weather Association) : novembre plus doux que la normale, avec de possibles longues périodes nuageuses ou pluvieuses et quelques coups de froid brefs.",
+      "Feuillages (prévision Japan Meteorological Corporation, révisée le 1er oct) : rouge vers le 28 nov à Tokyo, le 30 nov à Kanazawa, le 11 déc à Kyoto (ginkgo vers le 27 nov) — Kyoto est en retard sur la moyenne. Les momiji du lac Kawaguchi sont de saison début-mi novembre.",
+      "Dans l’app, la météo réelle (Open-Meteo) remplace ces moyennes pour chaque jour à moins de 15 jours."
     ]
   }
 ]
