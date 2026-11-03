@@ -435,3 +435,61 @@ html.search-open body { overflow: hidden; }
   flex: 0 0 auto; border: 0; border-radius: 9px; padding: 8px 12px;
   background: var(--gold); color: var(--bg); font: inherit; font-weight: 700; cursor: pointer;
 }
+
+/* —— Billets : pastille + bloc « Sur place » + liste « Mes billets » —— */
+.ticket-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-bottom: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px; font-weight: 700; line-height: 1.3;
+  color: var(--tk, var(--gold-2));
+  background: color-mix(in srgb, var(--tk, var(--gold-2)) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tk, var(--gold-2)) 55%, transparent);
+}
+.ticket-pill.print { --tk: #d98a3d; }
+.ticket-pill.pickup { --tk: #4fb286; }
+.ticket-pill.qr { --tk: #6aa7e0; }
+.ticket-pill.eticket { --tk: #a98be0; }
+.ticket-pill.boarding { --tk: #8d9aa8; }
+.ticket-card {
+  --tk: var(--gold-2);
+  margin: 0 0 14px;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--tk) 60%, transparent);
+  background: color-mix(in srgb, var(--tk) 10%, transparent);
+}
+.ticket-card.print { --tk: #d98a3d; }
+.ticket-card.pickup { --tk: #4fb286; }
+.ticket-card.qr { --tk: #6aa7e0; }
+.ticket-card.eticket { --tk: #a98be0; }
+.ticket-card.boarding { --tk: #8d9aa8; }
+.tc-kicker { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--tk); margin-bottom: 6px; }
+.tc-head { display: flex; align-items: flex-start; gap: 10px; }
+.tc-head strong { font: 700 17px/1.3 Georgia, "Times New Roman", serif; color: var(--cream); }
+.tc-ico { font-size: 22px; line-height: 1.2; }
+.tc-steps { margin: 10px 0 0; padding-left: 22px; font-size: 14px; line-height: 1.5; color: var(--cream); }
+.tc-steps li + li { margin-top: 6px; }
+.tc-steps li::marker { color: var(--tk, var(--gold-2)); font-weight: 800; }
+.tk-count { font-size: 12px; font-weight: 700; color: var(--muted); }
+.tk-lead { margin: -2px 0 12px; font-size: 13px; color: var(--muted); }
+.tk-list { display: flex; flex-direction: column; gap: 8px; }
+.tk-item {
+  border: 1px solid var(--line); border-radius: 14px; background: rgba(var(--fg-rgb), .02);
+  overflow: hidden;
+}
+.tk-item summary { list-style: none; display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; cursor: pointer; }
+.tk-item summary::-webkit-details-marker { display: none; }
+.tk-when { flex: 0 0 64px; display: flex; flex-direction: column; font-size: 13px; color: var(--cream); }
+.tk-when small { font-size: 11px; color: var(--muted); }
+.tk-main { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.tk-main strong { font-size: 14.5px; }
+.tk-main .ticket-pill { margin-bottom: 0; }
+.tk-body { padding: 0 12px 12px 88px; }
+.tk-head { margin: 0; font-weight: 700; color: var(--cream); font-size: 14px; }
+.tk-body .tc-steps { padding-left: 18px; margin-top: 8px; font-size: 13.5px; }
+.tk-body .today-act { margin-top: 10px; }
+.tk-item.next { border-color: var(--gold); background: rgba(var(--gold-rgb), .08); }
+.tk-item.past { opacity: .55; }
+@media (max-width: 420px) { .tk-body { padding-left: 12px; } }

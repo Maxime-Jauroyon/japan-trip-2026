@@ -6,6 +6,7 @@ import { esc } from "../core/dom.js";
 import { bookingOpenStatus } from "../domain/bookings.js";
 import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/legs.js";
 import { hotelPhotos, thumbOf } from "../domain/photos.js";
+import { TICKET_KINDS, validTicket } from "../domain/tickets.js";
 import { phraseCardHtml } from "./phrase-show.js";
 import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
 import { hotelIconSvg, mapsIconSvg, modeBadgeHtml, placeGlyphSvg } from "../shared/icons.js";
@@ -121,14 +122,32 @@ function moveStationBtnHtml(cityId, stop, role){
     `</button>`;
 }
 
+/** Pastille « comment montrer le billet » : imprimée, à retirer, QR code, e-ticket, carte d’embarquement. */
+export function ticketPillHtml(leg, cls = ""){
+  if (!leg || !validTicket(leg.ticket)) return "";
+  const k = TICKET_KINDS[leg.ticket.kind];
+  return `<span class="ticket-pill ${esc(leg.ticket.kind)} ${cls}"><span aria-hidden="true">${k.icon}</span>${esc(k.label)}${leg.ticket.who ? ` · carte de ${esc(leg.ticket.who)}` : ""}</span>`;
+}
+
+/** Bloc « Sur place » en tête d’une fiche trajet : la méthode, étape par étape. */
+export function ticketCardHtml(leg){
+  if (!leg || !validTicket(leg.ticket)) return "";
+  const t = leg.ticket, k = TICKET_KINDS[t.kind];
+  return `<section class="ticket-card ${esc(t.kind)}" aria-label="Comment montrer le billet">` +
+    `<div class="tc-kicker">Sur place · ${esc(k.label)}${t.who ? ` · carte de ${esc(t.who)}` : ""}</div>` +
+    `<div class="tc-head"><span class="tc-ico" aria-hidden="true">${k.icon}</span><strong>${esc(t.headline)}</strong></div>` +
+    `<ol class="tc-steps">${t.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol></section>`;
+}
+
 export function renderMoveCard(m, cityId){
   const leg = m.leg ? LEGS.find(l => l.id === m.leg) : null;
   const mode = (leg && leg.mode) || m.mode || "";
   const when = leg
     ? `${leg.depart || "—"} → ${leg.arrive || "—"}`
     : (m.when || "");
+  const payment = leg ? (leg.payment || "") : "";
   const ticket = leg
-    ? `${statusLabel(leg.status)} · ${leg.payment || ""}`
+    ? (payment.toLowerCase().startsWith(statusLabel(leg.status).toLowerCase()) ? payment : `${statusLabel(leg.status)} · ${payment}`)
     : (m.dummy || "");
   const role = m.role ? `<span class="badge-tag" style="margin-bottom:6px">${esc(m.role)}</span>` : "";
   const stops = leg && (leg.fromStop || leg.toStop)
@@ -145,7 +164,7 @@ export function renderMoveCard(m, cityId){
   const duration = leg && leg.duration ? ` · ${esc(leg.duration)}` : "";
   return `<div class="${cls}"${m.leg ? ` data-leg="${m.leg}"` : ""}>` +
     modeBadgeHtml(kind, "move-badge") +
-    `<div class="move-body">${role}<div class="when">${esc(mode)} · ${esc(when)}${duration}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div>${stationActions}</div>` +
+    `<div class="move-body">${ticketPillHtml(leg)}${role}<div class="when">${esc(mode)} · ${esc(when)}${duration}</div><div class="title">${esc(m.title)}</div>${stops}<div class="dummy">${esc(ticket)}</div>${stationActions}</div>` +
     `</div>`;
 }
 
