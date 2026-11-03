@@ -13,6 +13,7 @@ import { mapsDirectionsUrl } from "../templates.js";
 import { renderExpenses } from "./expenses.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderNextStop } from "./next-stop.js";
+import { renderTickets } from "./tickets.js";
 import { renderOnsiteWeather } from "./weather.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 
@@ -108,6 +109,7 @@ export function renderOnsite(){
   const day = findTripDayByISO(japanTodayISO()) || (japanTodayISO() < TRIP.startDate ? DAYS[0] : null);
   if (day) renderOnsiteWeather(day);
   renderNextStop();
+  renderTickets();
   document.getElementById("onsite-open-day")?.addEventListener("click", () => openMapForDay(day));
   const sos = document.getElementById("onsite-sos");
   if (sos) sos.innerHTML = sosHtml();

@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { EXPENSE_CAT_IDS } from "../src/domain/expenses.js";
+import { validTicket } from "../src/domain/tickets.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const load = (name) => JSON.parse(fs.readFileSync(path.join(ROOT, "data", name + ".json"), "utf8"));
@@ -91,6 +92,8 @@ const endpoint = (p, where) => {
   checkCoord(p, where);
 };
 legs.forEach((l) => {
+  if (l.status === "paid" && !validTicket(l.ticket)) err(`legs ${l.id}`, "ticket manquant ou invalide (kind connu, headline, steps) : comment montrer le billet sur place ?");
+  else if (l.ticket && !validTicket(l.ticket)) err(`legs ${l.id}`, "ticket invalide (kind connu, headline, steps)");
   const w = `trajet ${l.id}`;
   ["title", "mode"].forEach((k) => { if (!isStr(l[k])) err(w, `${k} manquant`); });
   if (!STATUSES.has(l.status)) err(w, `statut inconnu ${l.status}`);

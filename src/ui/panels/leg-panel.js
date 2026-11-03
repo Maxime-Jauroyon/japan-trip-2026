@@ -13,7 +13,7 @@ import { focusJourneyOverview, focusLegEnd, focusLegOverview, showCountry } from
 import { renderJourneyEnds, renderLegEnds, setActiveCity, setLegMode } from "../../map/country.js";
 import { setJourneyHighlight, setRouteHighlight } from "../../map/routes.js";
 import { bindSheetGrab, closePanel, setSheetState, sheetGrabHtml } from "./panel.js";
-import { bindCopyButtons, contextPhraseHtml, legBookingsHtml, legEndsToolbarHtml, modeBadgeFor, modeStatHtml, renderMoveCard, statusClass, statusLabel, stopBlockHtml } from "../templates.js";
+import { bindCopyButtons, contextPhraseHtml, legBookingsHtml, legEndsToolbarHtml, modeBadgeFor, modeStatHtml, renderMoveCard, statusClass, statusLabel, stopBlockHtml, ticketCardHtml } from "../templates.js";
 
 /** Ligne clé / valeur, omise quand la valeur est vide (« — »). */
 const kvRow = (label, value) => (value && value !== "—" ? `<dt>${esc(label)}</dt><dd>${esc(value)}</dd>` : "");
@@ -116,6 +116,7 @@ export function openLeg(id, opts){
     `</div>` +
     `<div class="overlay-body">` +
     journeyBack +
+    ticketCardHtml(leg) +
     `<span class="sheet-kind trajet">Étape</span>` +
     legEndsToolbarHtml(leg) +
     `<div class="pill-row"><span class="status ${statusClass(leg.status)}">${statusLabel(leg.status)}</span></div>` +

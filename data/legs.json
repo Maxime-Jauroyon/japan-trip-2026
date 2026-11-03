@@ -42,7 +42,15 @@
       "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
       "Après HND : vers HomeNest Akihabara (Torigoe) — check-in à partir de 16:00."
     ],
-    "tips": "Atterrissage tôt à Haneda — bagages puis dépôt / balade avant check-in 16:00."
+    "tips": "Atterrissage tôt à Haneda — bagages puis dépôt / balade avant check-in 16:00.",
+    "ticket": {
+      "kind": "boarding",
+      "headline": "Passeports + carte d’embarquement Air France",
+      "steps": [
+        "À Paris-CDG (7 nov, 09:45) : passeports + carte d’embarquement (téléphone ou imprimée)",
+        "À Haneda (8 nov, 06:50) : immigration, bagages, puis retrait de cash (voir « À faire »)"
+      ]
+    }
   },
   {
     "id": "tokyo-fuji",
@@ -99,6 +107,15 @@
           "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=001&offStationCd=051&useDate=20261112",
           "reserved": true
         }
+      ]
+    },
+    "ticket": {
+      "kind": "qr",
+      "headline": "QR code / e-mail de confirmation Highway Bus",
+      "steps": [
+        "Retrouver l’e-mail de confirmation Highway Bus et son QR code (une capture d’écran suffit)",
+        "Être au Shinjuku Expressway Bus Terminal (Busta) 20 min avant le départ de 09:05",
+        "Montrer le QR code ou l’e-mail avant de monter"
       ]
     }
   },
@@ -159,6 +176,15 @@
           "url": "https://www.highwaybus.com/gp/inbound/inbPlanList?lang=EN&lineId=110&onStationCd=051&offStationCd=001&useDate=20261114",
           "reserved": true
         }
+      ]
+    },
+    "ticket": {
+      "kind": "qr",
+      "headline": "QR code / e-mail de confirmation Highway Bus",
+      "steps": [
+        "Retrouver l’e-mail de confirmation Highway Bus et son QR code (une capture d’écran suffit)",
+        "Être à la gare de Kawaguchiko 15 min avant le départ de 08:10",
+        "Montrer le QR code ou l’e-mail avant de monter"
       ]
     }
   },
@@ -250,6 +276,16 @@
           "optional": true
         }
       ]
+    },
+    "ticket": {
+      "kind": "pickup",
+      "who": "Léo",
+      "headline": "Billets papier à retirer aux machines vertes JR East",
+      "steps": [
+        "Avant le 14 nov : machine verte « réservation » d’une gare JR East (Akihabara, Tokyo, Shinjuku…) ou JR EAST Travel Service Center de Haneda T3",
+        "Prendre la carte bancaire physique de Léo + le n° de réservation",
+        "Le 14 nov : passer le portique avec les 2 billets ensemble (billet de base + express)"
+      ]
     }
   },
   {
@@ -319,6 +355,15 @@
           "reserved": true
         }
       ]
+    },
+    "ticket": {
+      "kind": "print",
+      "headline": "Confirmation imprimée à montrer au chauffeur",
+      "steps": [
+        "Imprimer l’e-mail de confirmation du bus (une feuille par trajet)",
+        "Être à la gare de Kanazawa (quais des bus) ~20 min avant le départ de 11:10",
+        "Montrer la feuille imprimée au chauffeur en montant"
+      ]
     }
   },
   {
@@ -387,6 +432,15 @@
           "url": "https://japanbusonline.com/en/Detail/11900040002/1/4162019/4212032/20261117",
           "reserved": true
         }
+      ]
+    },
+    "ticket": {
+      "kind": "print",
+      "headline": "Confirmation imprimée à montrer au chauffeur",
+      "steps": [
+        "Confirmation imprimée du bus retour (une feuille par trajet)",
+        "Être à l’arrêt de Shirakawa-go ~15 min avant le départ de 16:35 (nuit tombée vers 16:40)",
+        "Montrer la feuille imprimée au chauffeur en montant"
       ]
     }
   },
@@ -461,6 +515,16 @@
           "reserved": true
         }
       ]
+    },
+    "ticket": {
+      "kind": "pickup",
+      "who": "Maxime",
+      "headline": "Billets papier à retirer aux machines vertes JR West",
+      "steps": [
+        "Avant le départ de 15:34 : machine verte d’une gare JR West — Kanazawa (14–17 nov, le plus simple) ou Takayama le 18",
+        "Prendre la carte bancaire physique de Maxime + son code à 4 chiffres + le n° de réservation (5 chiffres, commence par 4)",
+        "Passer les portiques avec les billets papier"
+      ]
     }
   },
   {
@@ -529,6 +593,15 @@
           "reserved": true
         }
       ]
+    },
+    "ticket": {
+      "kind": "eticket",
+      "headline": "E-ticket Kintetsu à afficher depuis le téléphone",
+      "steps": [
+        "Pas de capture d’écran : elle n’est pas acceptée par le personnel",
+        "Retrouver l’e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos demandées",
+        "Afficher l’e-ticket sur le téléphone (internet nécessaire) — tester la veille"
+      ]
     }
   },
   {
@@ -596,6 +669,15 @@
           "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/",
           "reserved": true
         }
+      ]
+    },
+    "ticket": {
+      "kind": "eticket",
+      "headline": "E-ticket Kintetsu à afficher depuis le téléphone",
+      "steps": [
+        "Pas de capture d’écran : elle n’est pas acceptée par le personnel",
+        "Retrouver l’e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos demandées",
+        "Afficher l’e-ticket sur le téléphone (internet nécessaire) — tester la veille"
       ]
     }
   },
@@ -682,6 +764,16 @@
           "url": "https://smart-ex.jp/en/reservation/reserve_smart/sp/"
         }
       ]
+    },
+    "ticket": {
+      "kind": "qr",
+      "who": "Léo",
+      "headline": "QR Ticket dans Apple Wallet (SmartEX)",
+      "steps": [
+        "Les billets sont des QR Tickets dans Apple Wallet : rien à imprimer ni à retirer",
+        "Présenter le QR code au lecteur du portique à Shin-Osaka (Nozomi 90, 11:30)",
+        "Garder une capture d’écran de chaque QR code en secours"
+      ]
     }
   },
   {
@@ -727,6 +819,14 @@
       "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
       "Hôtel Royal Park dans le Terminal 3 — check-out puis portes d’embarquement à pied."
     ],
-    "tips": "Check-out tôt — viser les contrôles / portes vers 6h30–7h (vol 09:05)."
+    "tips": "Check-out tôt — viser les contrôles / portes vers 6h30–7h (vol 09:05).",
+    "ticket": {
+      "kind": "boarding",
+      "headline": "Passeports + carte d’embarquement Air France",
+      "steps": [
+        "Passeports + carte d’embarquement (téléphone ou imprimée), contrôles vers 6:30–7:00 pour le vol de 09:05",
+        "Détaxe : comptoir de la douane à Haneda T3 AVANT le contrôle de sécurité (voir le rappel du jour)"
+      ]
+    }
   }
 ]
