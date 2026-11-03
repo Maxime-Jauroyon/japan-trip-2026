@@ -104,9 +104,9 @@
         }
       },
       "climate": {
-        "hi": 17,
-        "lo": 9,
-        "note": "Frais le matin · veste + parapluie pluie fine possible"
+        "hi": 16,
+        "lo": 8,
+        "note": "Frais le matin, doux l’après-midi · veste + parapluie (1 jour sur 3 pluvieux) · feuillages rouges attendus vers le 28 nov"
       }
     },
     {
@@ -164,9 +164,9 @@
         }
       },
       "climate": {
-        "hi": 12,
-        "lo": 3,
-        "note": "Froid en altitude · ciel variable · vue Fuji selon météo"
+        "hi": 13,
+        "lo": 5,
+        "note": "Froid en altitude, nuits proches de 4° · ciel variable, vue du Fuji selon la météo · momiji du lac Kawaguchi encore de saison début novembre"
       }
     },
     {
@@ -225,9 +225,9 @@
         }
       },
       "climate": {
-        "hi": 16,
-        "lo": 8,
-        "note": "Humide côté mer du Japon · pluie plus fréquente"
+        "hi": 15,
+        "lo": 7,
+        "note": "Humide côté mer du Japon · plus d’un jour sur deux pluvieux : parapluie dans le sac · momiji vers le 30 nov"
       }
     },
     {
@@ -272,9 +272,9 @@
         }
       },
       "climate": {
-        "hi": 11,
-        "lo": 2,
-        "note": "Montagne · possible pluie / neige légère en soirée"
+        "hi": 13,
+        "lo": 4,
+        "note": "Montagne : matin frais, pluie ou neige légère possible · bien se couvrir pour la fin d’après-midi"
       }
     },
     {
@@ -334,8 +334,8 @@
       },
       "climate": {
         "hi": 13,
-        "lo": 1,
-        "note": "Nuits froides · matinée marché bien couvert"
+        "lo": 3,
+        "note": "Nuits froides (jusqu’à ~3°, gel possible) · matinée de marché bien couvert · 1 jour sur 2 environ de pluie ou de nuages"
       }
     },
     {
@@ -392,9 +392,9 @@
         }
       },
       "climate": {
-        "hi": 17,
-        "lo": 7,
-        "note": "Automne · couleurs momiji · soirées fraîches"
+        "hi": 16,
+        "lo": 6,
+        "note": "Automne frais, soirées fraîches · momiji en retard cette année : pic prévu vers le 11 déc, feuillages partiels du 18 au 22 nov (ginkgo vers le 27)"
       }
     },
     {
@@ -451,9 +451,9 @@
         }
       },
       "climate": {
-        "hi": 17,
+        "hi": 16,
         "lo": 7,
-        "note": "Similaire Kyoto · parc venté le matin"
+        "note": "Similaire à Kyoto, parc venté le matin · feuillages encore partiels"
       }
     },
     {
@@ -510,9 +510,9 @@
         }
       },
       "climate": {
-        "hi": 18,
-        "lo": 9,
-        "note": "Un peu plus doux · averses possibles"
+        "hi": 16,
+        "lo": 8,
+        "note": "Un peu plus doux · averses possibles (1 jour sur 4 pluvieux)"
       }
     }
   ]

@@ -73,15 +73,15 @@ test("à faire : urgence et tri", () => {
 test("faits : remettre à faire", () => {
   const today = new Date(2026, 9, 20);
   // réservation marquée faite sur l’appareil + rappel coché → listés dans « Faits »
-  const done = collectDoneTodos({ "vjw": true }, new Set(["kyo-nara:0"]));
+  const done = collectDoneTodos({ "cash-arrivee": true }, new Set(["kyo-nara:0"]));
   assert.ok(done.some((d) => d.id === "kyo-nara:0" && d.kind === "booking"));
-  assert.ok(done.some((d) => d.id === "vjw" && d.kind === "reminder"));
+  assert.ok(done.some((d) => d.id === "cash-arrivee" && d.kind === "reminder"));
   // pas encore fait : pas dans « Faits »
   assert.ok(collectDoneTodos({}, new Set()).some((d) => d.id === "fujiq-horror") === false);
   // décoché = revient dans les alertes
   const nov1 = new Date(2026, 10, 1);
-  assert.ok(!collectTodos({ "vjw": true }, new Set(), nov1).some((t) => t.id === "vjw"));
-  assert.ok(collectTodos({ "vjw": false }, new Set(), nov1).some((t) => t.id === "vjw"));
+  assert.ok(!collectTodos({ "cash-arrivee": true }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
+  assert.ok(collectTodos({ "cash-arrivee": false }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
   assert.ok(!collectTodos({}, new Set(["kyo-nara:0"]), today).some((t) => t.id === "kyo-nara:0"));
   assert.ok(collectTodos({}, new Set(), today).some((t) => t.id === "kyo-nara:0"));
 });

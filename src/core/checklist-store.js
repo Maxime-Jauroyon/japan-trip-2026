@@ -1,4 +1,4 @@
-/* Cases cochées des préparatifs (localStorage, par appareil). */
+/* Rappels « à faire » cochés et réservations marquées faites (localStorage, par appareil). */
 
 import { CHECK_KEY, TODO_DONE_KEY } from "../config.js";
 import { PREP_CHECKS } from "./data.js";
@@ -45,7 +45,7 @@ export function unmarkBookingDone(id){
   try { localStorage.setItem(TODO_DONE_KEY, JSON.stringify([...set])); } catch (_) {}
 }
 
-/** Coche (ou décoche) une case de la checklist. */
+/** Coche (ou décoche) un rappel « à faire ». */
 export function setCheck(id, on){
   const st = loadChecks();
   st[id] = !!on;

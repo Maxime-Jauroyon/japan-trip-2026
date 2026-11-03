@@ -34,17 +34,17 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=201" />
-  <link rel="stylesheet" href="./styles/base.css?v=201" />
-  <link rel="stylesheet" href="./styles/views.css?v=201" />
-  <link rel="stylesheet" href="./styles/panel.css?v=201" />
-  <link rel="stylesheet" href="./styles/components.css?v=201" />
-  <link rel="stylesheet" href="./styles/print.css?v=201" />
-  <link rel="stylesheet" href="./styles/map.css?v=201" />
-  <link rel="stylesheet" href="./styles/settings.css?v=201" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=201" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=201" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=201" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=202" />
+  <link rel="stylesheet" href="./styles/base.css?v=202" />
+  <link rel="stylesheet" href="./styles/views.css?v=202" />
+  <link rel="stylesheet" href="./styles/panel.css?v=202" />
+  <link rel="stylesheet" href="./styles/components.css?v=202" />
+  <link rel="stylesheet" href="./styles/print.css?v=202" />
+  <link rel="stylesheet" href="./styles/map.css?v=202" />
+  <link rel="stylesheet" href="./styles/settings.css?v=202" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=202" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=202" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=202" />
 </head>
 <body>
   <div class="app tab-map">
@@ -99,7 +99,6 @@
           </div>
           <nav class="seg-tabs" id="prep-tabs" role="tablist" aria-label="Sections des préparatifs">
             <button type="button" role="tab" data-pane="todo">À faire<span class="seg-count" id="prep-count-todo"></span></button>
-            <button type="button" role="tab" data-pane="checklist">Checklist<span class="seg-count" id="prep-count-checklist"></span></button>
             <button type="button" role="tab" data-pane="budget">Budget</button>
             <button type="button" role="tab" data-pane="infos">Infos</button>
           </nav>
@@ -107,13 +106,6 @@
           <div class="prep-pane prep-todo-sec" data-pane="todo" id="prep-todo-sec">
             <p class="lead prep-todo-lead" id="prep-todo-lead"></p>
             <div id="prep-todo"></div>
-          </div>
-          <div class="prep-pane" data-pane="checklist" hidden>
-            <ul class="check-list" id="prep-checklist"></ul>
-            <details class="check-done" id="prep-checklist-done-box">
-              <summary>Fait <span id="prep-done-count"></span></summary>
-              <ul class="check-list" id="prep-checklist-done"></ul>
-            </details>
           </div>
           <div class="prep-pane" data-pane="budget" hidden>
             <div class="budget-hero" id="prep-budget-hero"></div>
@@ -260,6 +252,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=201"></script>
+  <script type="module" src="./src/main.js?v=202"></script>
 </body>
 </html>

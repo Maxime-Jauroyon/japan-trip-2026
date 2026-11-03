@@ -131,7 +131,7 @@ export function collectTodos(checks, doneBookings, today = todayLocalDate()){
 
 /**
  * Tâches marquées faites qu’on peut remettre « à faire » : réservations cochées sur l’appareil
- * et rappels à date (checklist avec remindFrom) cochés. Élément : { id, kind, title, meta }.
+ * et rappels à date (prep.json avec remindFrom) cochés. Élément : { id, kind, title, meta }.
  */
 export function collectDoneTodos(checks, doneBookings){
   const state = checks || {};

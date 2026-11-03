@@ -1,25 +1,23 @@
-/* Onglet Préparatifs : progression + une section à la fois — à faire, checklist, budget, infos pratiques. */
+/* Onglet Préparatifs : compte à rebours + une section à la fois — à faire, budget, infos pratiques. */
 
-import { TODOS_CHANGED, loadChecks, loadDoneBookings, notifyTodosChanged, prepCheckState, saveChecks } from "../../core/checklist-store.js";
+import { TODOS_CHANGED, loadDoneBookings, prepCheckState } from "../../core/checklist-store.js";
 import { PREP_PANE_KEY } from "../../config.js";
-import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, PREP_CHECKS, TRAVELERS, TRIP } from "../../core/data.js";
+import { PRACTICAL_INFO, PREP_BUDGET, PREP_BUDGET_TOTAL, TRAVELERS, TRIP } from "../../core/data.js";
 import { formatBookingDateFr, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { collectDoneTodos, collectPrepReminders } from "../../domain/bookings.js";
 import { bindTodoList, currentTodos, todoItemHtml, uncompleteTodo } from "../alerts.js";
 
-const PANES = ["todo", "checklist", "budget", "infos"];
+const PANES = ["todo", "budget", "infos"];
 let pane = null;
 
-const isOn = (state, item) => (Object.prototype.hasOwnProperty.call(state, item.id) ? !!state[item.id] : !!item.done);
-
-/** Onglet affiché : mémorisé, sinon « À faire » s’il y a de l’urgent, sinon la checklist. */
-function initialPane(hasUrgent){
+/** Onglet affiché : le dernier ouvert, sinon « À faire ». */
+function initialPane(){
   try {
     const saved = localStorage.getItem(PREP_PANE_KEY);
     if (PANES.includes(saved)) return saved;
   } catch (_) { /* ignore */ }
-  return hasUrgent ? "todo" : "checklist";
+  return "todo";
 }
 
 function showPane(name, save){
@@ -33,48 +31,14 @@ function showPane(name, save){
   if (save) { try { localStorage.setItem(PREP_PANE_KEY, name); } catch (_) { /* ignore */ } }
 }
 
-function checkItemHtml(item, on){
-  return `<li class="${on ? "done" : ""}"><label class="check-row">` +
-    `<input type="checkbox" data-check="${esc(item.id)}"${on ? " checked" : ""}/><span class="check-box" aria-hidden="true"></span>` +
-    `<span class="check-text"><strong>${esc(item.label)}</strong>${item.meta ? `<span class="meta">${esc(item.meta)}</span>` : ""}</span>` +
-    `</label></li>`;
-}
-
-function renderProgress(done, total){
+/** « J-5 » avant le départ, « En voyage » / « Terminé » ensuite. */
+function renderCountdown(){
   const box = document.getElementById("prep-progress");
   if (!box) return;
   const iso = japanTodayISO();
   const left = Math.ceil((Date.parse(TRIP.startDate + "T00:00:00+09:00") - Date.now()) / 86400000);
   const when = iso < TRIP.startDate ? `J-${left}` : iso <= TRIP.endDate ? "En voyage" : "Terminé";
-  const pct = total ? Math.round(done / total * 100) : 0;
-  box.innerHTML = `<span class="pp-when">${when}</span>` +
-    `<span class="pp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct}%"></i></span>` +
-    `<span class="pp-count">${done} / ${total} faits</span>`;
-}
-
-function renderChecklist(){
-  const box = document.getElementById("prep-checklist");
-  const doneBox = document.getElementById("prep-checklist-done");
-  if (!box || !doneBox) return;
-  const state = prepCheckState();
-  const todo = PREP_CHECKS.filter(i => !isOn(state, i)), done = PREP_CHECKS.filter(i => isOn(state, i));
-  box.innerHTML = todo.length ? todo.map(i => checkItemHtml(i, false)).join("") : `<li class="check-all">Tout est prêt ✓</li>`;
-  doneBox.innerHTML = done.map(i => checkItemHtml(i, true)).join("");
-  document.getElementById("prep-done-count").textContent = `(${done.length})`;
-  document.getElementById("prep-checklist-done-box").hidden = !done.length;
-  document.getElementById("prep-count-checklist").textContent = todo.length ? String(todo.length) : "✓";
-  renderProgress(done.length, PREP_CHECKS.length);
-  document.querySelectorAll("#view-prep input[data-check]").forEach(inp => {
-    inp.addEventListener("change", () => {
-      const li = inp.closest("li");
-      if (li) li.classList.add("ticking");
-      const st = loadChecks();
-      st[inp.dataset.check] = inp.checked;
-      saveChecks(st);
-      // petite pause pour voir la case se cocher, puis la ligne change de groupe
-      setTimeout(() => { renderChecklist(); notifyTodosChanged(); }, 260);
-    });
-  });
+  box.innerHTML = `<span class="pp-when">${when}</span><span class="pp-count">${esc(TRIP.datesLabel)}</span>`;
 }
 
 function renderBudget(){
@@ -93,8 +57,8 @@ function renderBudget(){
 }
 
 export function renderPrep(){
-  if (!document.getElementById("prep-checklist")) return;
-  renderChecklist();
+  if (!document.getElementById("prep-todo")) return;
+  renderCountdown();
   renderBudget();
   const urgent = renderPrepTodos();
   renderPracticalInfo();
@@ -103,7 +67,7 @@ export function renderPrep(){
     tabs.dataset.bound = "1";
     tabs.querySelectorAll("[data-pane]").forEach(b => b.addEventListener("click", () => showPane(b.dataset.pane, true)));
   }
-  showPane(pane || initialPane(urgent > 0), false);
+  showPane(pane || initialPane(), false);
 }
 
 const TODO_GROUPS = [

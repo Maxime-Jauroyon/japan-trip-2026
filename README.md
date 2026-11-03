@@ -28,7 +28,7 @@ data/                 ← CONTENU DU VOYAGE (JSON)
   days.json             programme jour par jour (déplacements, idées, consignes)
   legs.json             trajets (horaires, statut, réservations, tracé sur la carte)
   journeys.json         trajets en plusieurs étapes (ex. Fuji → Tokyo → Kanazawa)
-  prep.json             checklist, budget, rappels billets
+  prep.json             rappels « à faire » (billets, retraits), budget
   phrases.json          phrases utiles (générales + par contexte)
   places-meta.json      horaires / durées des activités
   practical.json        infos pratiques
