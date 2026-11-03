@@ -18,12 +18,16 @@ const catOf = (id) => EXPENSE_CATS.find(c => c.id === id) || EXPENSE_CATS[EXPENS
 
 let currentCat = "food";
 
+/** Émis sur `document` quand une dépense est ajoutée ou supprimée (le budget de Préparatifs se met à jour). */
+export const EXPENSES_CHANGED = "japan-trip:expenses-changed";
+
 export function loadExpenses(){
   try { const v = JSON.parse(localStorage.getItem(EXPENSES_KEY) || "[]"); return Array.isArray(v) ? v : []; } catch (_) { return []; }
 }
 
 function saveExpenses(list){
   try { localStorage.setItem(EXPENSES_KEY, JSON.stringify(list)); } catch (_) { /* quota */ }
+  document.dispatchEvent(new CustomEvent(EXPENSES_CHANGED));
 }
 
 function loadBudget(){
