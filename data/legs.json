@@ -468,14 +468,14 @@
     "title": "Kyoto → Nara",
     "subtitle": "22 nov · Jour 15",
     "mode": "Train",
-    "depart": "~16:15",
-    "arrive": "~17:15",
-    "duration": "~45–50 min",
+    "depart": "14:55",
+    "arrive": "15:28",
+    "duration": "33 min",
     "operator": "Kintetsu (direct)",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
+    "status": "paid",
+    "payment": "Réservé · e-ticket Kintetsu (Limited Express) à afficher depuis le téléphone",
     "price": "—",
     "from": {
       "id": "kyoto",
@@ -512,19 +512,21 @@
       "lng": 135.8274
     },
     "details": [
-      "Kintetsu-Nara est plus près du parc / Todai-ji que JR Nara.",
-      "Alternative : JR Nara Line (un peu plus long à pied ensuite)."
+      "Limited Express direct Kyoto → Kintetsu-Nara : 14:55 → 15:28.",
+      "E-ticket Kintetsu : une capture d’écran de la confirmation n’est PAS acceptée par le personnel. Il faut retrouver l’e-mail de confirmation Kintetsu, ouvrir le lien, aller à l’écran d’accueil et choisir « Review/refund/change of purchased ticket(s) », saisir les infos demandées (n° de réservation, etc.), puis afficher l’e-ticket sur le téléphone. Connexion internet nécessaire (eSIM) : tester la veille.",
+      "Kintetsu-Nara est plus près du parc / Todai-ji que JR Nara."
     ],
-    "tips": "Idéal pour arriver et enchaîner le parc avant la nuit.",
+    "tips": "Réservé : Kyoto 14:55 → Kintetsu-Nara 15:28 · il reste environ 1 h 15 de jour à Nara (coucher du soleil vers 16:50) : parc et Tōdai-ji d’abord. E-ticket Kintetsu : une capture d’écran de la confirmation n’est PAS acceptée par le personnel. Il faut retrouver l’e-mail de confirmation Kintetsu, ouvrir le lien, aller à l’écran d’accueil et choisir « Review/refund/change of purchased ticket(s) », saisir les infos demandées (n° de réservation, etc.), puis afficher l’e-ticket sur le téléphone. Connexion internet nécessaire (eSIM) : tester la veille.",
     "bookings": {
       "note": "Siège réservé en Limited Express (+~¥520) ; sinon trains express sans réservation (Suica/ICOCA).",
       "links": [
         {
           "site": "Kintetsu",
-          "label": "Limited Express Kyoto → Kintetsu-Nara · 22 nov (siège réservé)",
+          "label": "Limited Express Kyoto 14:55 → Kintetsu-Nara 15:28 · 22 nov (réservé)",
           "openFrom": "2026-10-22",
           "openTime": "10:30",
-          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
+          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/",
+          "reserved": true
         }
       ]
     }
@@ -534,14 +536,14 @@
     "title": "Nara → Osaka",
     "subtitle": "23 nov · Jour 16",
     "mode": "Train",
-    "depart": "~16:15",
-    "arrive": "~17:00",
-    "duration": "~35–45 min",
+    "depart": "16:08",
+    "arrive": "16:43",
+    "duration": "35 min",
     "operator": "Kintetsu vers Osaka-Namba",
     "seat": "—",
     "ref": "—",
-    "status": "placeholder",
-    "payment": "Pas encore réservé",
+    "status": "paid",
+    "payment": "Réservé · e-ticket Kintetsu (Limited Express) à afficher depuis le téléphone",
     "price": "—",
     "from": {
       "id": "nara",
@@ -578,18 +580,21 @@
       "lng": 135.499
     },
     "details": [
+      "Limited Express direct Kintetsu-Nara (A28) → Osaka-Namba (A01) : 16:08 → 16:43.",
+      "Même système que Kyoto → Nara : l’e-ticket s’affiche depuis le téléphone, pas de capture d’écran — e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket (internet nécessaire).",
       "Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."
     ],
-    "tips": "Soirée street food à Dotonbori.",
+    "tips": "Réservé : Kintetsu-Nara (A28) 16:08 → Osaka-Namba (A01) 16:43 · arrivée directe à Namba / Dotonbori pour la soirée street food. Même système que Kyoto → Nara : l’e-ticket s’affiche depuis le téléphone, pas de capture d’écran — e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket (internet nécessaire).",
     "bookings": {
       "note": "Siège réservé en Limited Express (+~¥520) ; sinon trains express sans réservation (Suica/ICOCA).",
       "links": [
         {
           "site": "Kintetsu",
-          "label": "Limited Express Kintetsu-Nara → Osaka-Namba · 23 nov (siège réservé)",
+          "label": "Limited Express Kintetsu-Nara (A28) 16:08 → Osaka-Namba (A01) 16:43 · 23 nov (réservé)",
           "openFrom": "2026-10-23",
           "openTime": "10:30",
-          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/"
+          "url": "https://www.ticket.kintetsu.co.jp/vs/en/e-ticket/",
+          "reserved": true
         }
       ]
     }

@@ -65,7 +65,7 @@ test("à faire : urgence et tri", () => {
   for (let i = 1; i < todos.length; i++) assert.ok(rank[todos[i - 1].urgency] <= rank[todos[i].urgency]);
   // fait = disparaît (case cochée, réservation marquée)
   assert.ok(!collectTodos({ "fujiq-horror": true }, new Set(), today).some((t) => t.id === "fujiq-horror"));
-  assert.ok(!collectTodos({}, new Set(["kyo-nara:0"]), new Date(2026, 9, 20)).some((t) => t.id === "kyo-nara:0"));
+  assert.ok(!collectTodos({}, new Set(["nara-osa:0"]), new Date(2026, 9, 20)).some((t) => t.id === "nara-osa:0"));
   // le jour même : « now », pas « late »
   assert.equal(collectTodos({}, new Set(), new Date(2026, 10, 10)).find((t) => t.id === "fujiq-horror").urgency, "now");
 });
@@ -73,8 +73,8 @@ test("à faire : urgence et tri", () => {
 test("faits : remettre à faire", () => {
   const today = new Date(2026, 9, 20);
   // réservation marquée faite sur l’appareil + rappel coché → listés dans « Faits »
-  const done = collectDoneTodos({ "cash-arrivee": true }, new Set(["kyo-nara:0"]));
-  assert.ok(done.some((d) => d.id === "kyo-nara:0" && d.kind === "booking"));
+  const done = collectDoneTodos({ "cash-arrivee": true }, new Set(["nara-osa:0"]));
+  assert.ok(done.some((d) => d.id === "nara-osa:0" && d.kind === "booking"));
   assert.ok(done.some((d) => d.id === "cash-arrivee" && d.kind === "reminder"));
   // pas encore fait : pas dans « Faits »
   assert.ok(collectDoneTodos({}, new Set()).some((d) => d.id === "fujiq-horror") === false);
@@ -82,6 +82,18 @@ test("faits : remettre à faire", () => {
   const nov1 = new Date(2026, 10, 1);
   assert.ok(!collectTodos({ "cash-arrivee": true }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
   assert.ok(collectTodos({ "cash-arrivee": false }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
-  assert.ok(!collectTodos({}, new Set(["kyo-nara:0"]), today).some((t) => t.id === "kyo-nara:0"));
-  assert.ok(collectTodos({}, new Set(), today).some((t) => t.id === "kyo-nara:0"));
+  // toutes les réservations sont faites dans les données : on en « dé-réserve » une le temps du test
+  const leg = LEGS.find((l) => l.id === "nara-osa");
+  const link = leg.bookings.links[0];
+  const saved = { status: leg.status, reserved: link.reserved };
+  try {
+    leg.status = "placeholder";
+    delete link.reserved;
+    assert.ok(collectTodos({}, new Set(), today).some((t) => t.id === "nara-osa:0"));
+    assert.ok(!collectTodos({}, new Set(["nara-osa:0"]), today).some((t) => t.id === "nara-osa:0"));
+  } finally {
+    leg.status = saved.status;
+    link.reserved = saved.reserved;
+  }
+  assert.ok(!collectTodos({}, new Set(), today).some((t) => t.id === "nara-osa:0"));
 });
