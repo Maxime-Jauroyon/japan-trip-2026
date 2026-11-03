@@ -3,6 +3,7 @@
 
 import { EXPENSE_BUDGET_KEY, EXPENSES_KEY } from "../../config.js";
 import { japanTodayISO } from "../../core/dates.js";
+import { TRIP } from "../../core/data.js";
 import { esc } from "../../core/dom.js";
 import { expenseTotals, formatEur, formatYen } from "../../domain/expenses.js";
 import { loadFxRate } from "./fx-converter.js";
@@ -17,6 +18,21 @@ export const EXPENSE_CATS = [
 const catOf = (id) => EXPENSE_CATS.find(c => c.id === id) || EXPENSE_CATS[EXPENSE_CATS.length - 1];
 
 let currentCat = "food";
+/** Jour affiché et visé par la saisie (par défaut aujourd’hui ; « Hier » pour noter après coup). */
+let viewIso = null;
+
+const shiftIso = (iso, n) => {
+  const d = new Date(iso + "T12:00:00Z");
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+
+function dayLabel(iso, today){
+  const long = new Date(iso + "T12:00:00Z").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+  if (iso === today) return `Aujourd’hui · ${long}`;
+  if (iso === shiftIso(today, -1)) return `Hier · ${long}`;
+  return long;
+}
 
 /** Émis sur `document` quand une dépense est ajoutée ou supprimée (le budget de Préparatifs se met à jour). */
 export const EXPENSES_CHANGED = "japan-trip:expenses-changed";
@@ -55,12 +71,28 @@ function render(){
   const body = document.getElementById("exp-body");
   if (!body) return;
   const fx = loadFxRate();
-  const t = expenseTotals(loadExpenses(), japanTodayISO());
+  const today = japanTodayISO();
+  if (!viewIso || viewIso > today) viewIso = today;
+  const isToday = viewIso === today;
+  const first = TRIP.startDate || "2000-01-01";
+  const dayBar = document.getElementById("exp-day");
+  if (dayBar) {
+    dayBar.innerHTML =
+      `<button type="button" class="exp-day-step" data-step="-1" aria-label="Jour précédent"${viewIso <= first ? " disabled" : ""}>‹</button>` +
+      `<span class="exp-day-label${isToday ? "" : " past"}">${esc(dayLabel(viewIso, today))}</span>` +
+      `<button type="button" class="exp-day-step" data-step="1" aria-label="Jour suivant"${isToday ? " disabled" : ""}>›</button>` +
+      (isToday ? "" : `<button type="button" class="exp-day-now" data-step="today">Aujourd’hui</button>`);
+    dayBar.querySelectorAll("[data-step]").forEach(b => b.addEventListener("click", () => {
+      viewIso = b.dataset.step === "today" ? today : shiftIso(viewIso, Number(b.dataset.step));
+      render();
+    }));
+  }
+  const t = expenseTotals(loadExpenses(), viewIso);
   const budget = loadBudget();
   const pct = budget ? Math.min(100, Math.round(100 * t.todayYen / budget)) : 0;
   const over = budget && t.todayYen > budget;
   let html = `<div class="exp-today">` +
-    `<div class="exp-today-num"><strong>${formatYen(t.todayYen)}</strong><span>≈ ${formatEur(t.todayYen, fx)} aujourd’hui</span></div>` +
+    `<div class="exp-today-num"><strong>${formatYen(t.todayYen)}</strong><span>≈ ${formatEur(t.todayYen, fx)} ${isToday ? "aujourd’hui" : "ce jour-là"}</span></div>` +
     (budget
       ? `<div class="exp-budget${over ? " over" : ""}"><div class="pp-bar"><i style="width:${pct}%"></i></div>` +
         `<button type="button" class="exp-budget-btn" id="exp-budget-btn">${over ? "Budget dépassé" : `Reste ${formatYen(budget - t.todayYen)}`} · budget ${formatYen(budget)} / jour</button></div>`
@@ -118,7 +150,7 @@ export function renderExpenses(){
       const yen = Math.round(Number(amount.value));
       if (!Number.isFinite(yen) || yen <= 0) { amount.focus(); return; }
       const list = loadExpenses();
-      list.push({ id: Date.now(), iso: japanTodayISO(), yen, cat: currentCat, note: (note.value || "").trim().slice(0, 40) || undefined });
+      list.push({ id: Date.now(), iso: viewIso || japanTodayISO(), yen, cat: currentCat, note: (note.value || "").trim().slice(0, 40) || undefined });
       saveExpenses(list);
       amount.value = "";
       note.value = "";
