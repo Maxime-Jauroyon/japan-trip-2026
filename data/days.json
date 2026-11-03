@@ -549,11 +549,17 @@
     ],
     "moves": [
       {
-        "when": "~16:15–17:15",
+        "when": "14:55–15:28",
         "title": "Kyoto → Nara",
-        "dummy": "Kintetsu Limited Express · à réserver",
+        "dummy": "Kintetsu Limited Express · réservé (e-ticket sur téléphone)",
         "mode": "Train",
         "leg": "kyo-nara"
+      }
+    ],
+    "reminders": [
+      {
+        "title": "E-ticket Kintetsu à afficher depuis le téléphone (14:55)",
+        "desc": "Pas de capture d’écran : ouvrir l’e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket. Prévoir d’être à la gare de Kyoto vers 14:35."
       }
     ]
   },

@@ -22,6 +22,13 @@
       "done": false
     },
     {
+      "id": "kintetsu-eticket",
+      "label": "Kintetsu : retrouver le mail du e-ticket et tester l’affichage",
+      "meta": "Kyoto 14:55 → Kintetsu-Nara 15:28 · 22 nov · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
+      "remindFrom": "2026-11-20",
+      "done": false
+    },
+    {
       "id": "fujiq-horror",
       "label": "Fuji-Q · maison de l’horreur (ticket à part)",
       "meta": "Ven. 13 nov · 戦慄迷宮 non incluse dans le pass · ticket horodaté dès mar. 10 nov 18h JST (app) ou sur place le jour J",
