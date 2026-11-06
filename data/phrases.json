@@ -9,8 +9,6 @@
         { "fr": "Ceci, s’il vous plaît (en montrant)", "jp": "これをください", "ro": "Kore o kudasai" },
         { "fr": "Deux de ceci, s’il vous plaît", "jp": "これを二つください", "ro": "Kore o futatsu kudasai" },
         { "fr": "Qu’est-ce que vous recommandez ?", "jp": "おすすめは何ですか？", "ro": "Osusume wa nan desu ka?" },
-        { "fr": "Je ne mange pas de porc", "jp": "豚肉が食べられません", "ro": "Butaniku ga taberaremasen" },
-        { "fr": "Est-ce qu’il y a du porc dedans ?", "jp": "豚肉は入っていますか？", "ro": "Butaniku wa haitte imasu ka?", "note": "Attention : bouillons de ramen souvent au porc (tonkotsu)." },
         { "fr": "De l’eau, s’il vous plaît", "jp": "お水をください", "ro": "O-mizu o kudasai" },
         { "fr": "L’addition, s’il vous plaît", "jp": "お会計お願いします", "ro": "O-kaikei onegai shimasu", "note": "Souvent on paie à la caisse en sortant ; pas de pourboire." },
         { "fr": "C’était délicieux, merci pour le repas", "jp": "ごちそうさまでした", "ro": "Gochisōsama deshita", "note": "En partant — très apprécié." }
@@ -131,7 +129,6 @@
         { "fr": "Avez-vous un menu en anglais ?", "jp": "英語のメニューはありますか？", "ro": "Eigo no menyū wa arimasu ka?" },
         { "fr": "Ceci, s’il vous plaît (en montrant)", "jp": "これをください", "ro": "Kore o kudasai" },
         { "fr": "Qu’est-ce que vous recommandez ?", "jp": "おすすめは何ですか？", "ro": "Osusume wa nan desu ka?" },
-        { "fr": "Je ne mange pas de porc", "jp": "豚肉が食べられません", "ro": "Butaniku ga taberaremasen" },
         { "fr": "L’addition, s’il vous plaît", "jp": "お会計お願いします", "ro": "O-kaikei onegai shimasu" },
         { "fr": "C’était délicieux, merci", "jp": "ごちそうさまでした", "ro": "Gochisōsama deshita" }
       ]
@@ -143,7 +140,6 @@
         { "fr": "Un, s’il vous plaît", "jp": "一つください", "ro": "Hitotsu kudasai" },
         { "fr": "Peut-on goûter ?", "jp": "試食できますか？", "ro": "Shishoku dekimasu ka?" },
         { "fr": "Peut-on manger ici ?", "jp": "ここで食べてもいいですか？", "ro": "Koko de tabete mo ii desu ka?", "note": "On ne mange pas en marchant : on reste près du stand." },
-        { "fr": "Y a-t-il du porc dedans ?", "jp": "豚肉は入っていますか？", "ro": "Butaniku wa haitte imasu ka?" },
         { "fr": "Combien ça coûte ?", "jp": "いくらですか？", "ro": "Ikura desu ka?" }
       ]
     },

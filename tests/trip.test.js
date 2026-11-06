@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CITIES, DAYS, MAP_BOUNDS, ORDER } from "../src/core/data.js";
 import { cityIdForAct, cityIdForCoords, inBounds } from "../src/domain/places.js";
-import { cityNights, cityStayDates, closureFor, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap } from "../src/domain/trip.js";
+import { cityNights, cityStayDates, closureFor, dayPinPoints, defaultCityDay, daysForCity, hotelsOnMap, ideasOf, placesOnMap, stayForDay, stayGroups, stopsOnMap, wakeForNextDay } from "../src/domain/trip.js";
 import { dayToISO, findTripDayByISO } from "../src/core/dates.js";
 import { photoSlug } from "../src/domain/photos.js";
 import { loadTripData } from "./helpers.js";
@@ -128,4 +128,11 @@ test("vols internationaux : arrivée le 1er jour, départ le dernier", () => {
   const tokyo = daysForCity("tokyo");
   assert.equal(tokyo.find((d) => d.n === 1).moves[0].role, "arrivée");
   assert.equal(tokyo.find((d) => d.n === 22).moves[0].role, "départ");
+});
+
+test("alarme du lendemain : celle du jour suivant, rien le dernier jour", () => {
+  assert.equal(wakeForNextDay(DAYS, 4).time, "06:45"); // jour 5 : bus 09:05
+  assert.equal(wakeForNextDay(DAYS, 21).time, "05:30"); // jour 22 : vol
+  assert.equal(wakeForNextDay(DAYS, DAYS.length), null);
+  DAYS.forEach((d) => assert.match(d.wake.time, /^\d\d:\d\d$/));
 });

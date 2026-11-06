@@ -39,7 +39,11 @@
         "lng": 139.7684,
         "desc": "Galerie souterraine sous Tokyo Station, pleine de boutiques anime, Pokemon et personnages — parfait pour le premier jour."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 2,
@@ -77,7 +81,11 @@
         "title": "Goshuin : acheter le carnet (goshuinchō) au premier temple",
         "desc": "Au Sensō-ji, premier temple du séjour : prendre le carnet à tampons (御朱印帳), puis faire tamponner et calligraphier un goshuin dans chaque temple ou sanctuaire (environ ¥300–500, en cash, parfois notés à l’avance sur papier)."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 3,
@@ -104,7 +112,11 @@
         "lng": 139.7006,
         "desc": "Le scramble mythique, Hachikō, puis Pokemon et culture jeune autour de la gare."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 4,
@@ -137,7 +149,11 @@
         "title": "Billets shinkansen de samedi : retirés ?",
         "desc": "Tokyo 11:24 → Kanazawa (14 nov) : retirer les billets papier aujourd’hui au plus tard, à une machine verte JR East (ex. JR Akihabara) — carte bancaire physique du paiement + n° de réservation."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 5,
@@ -203,7 +219,11 @@
         "lng": 138.7705,
         "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin."
       }
-    ]
+    ],
+    "wake": {
+      "time": "06:45",
+      "why": "Bus Shinjuku 09:05 · départ de l’hôtel vers 07:45"
+    }
   },
   {
     "n": 6,
@@ -236,7 +256,11 @@
           }
         ]
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 7,
@@ -293,7 +317,11 @@
         "lng": 136.659,
         "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc."
       }
-    ]
+    ],
+    "wake": {
+      "time": "06:45",
+      "why": "Bus 08:10 · check-out vers 07:45 (shinkansen 11:24 à Tokyo)"
+    }
   },
   {
     "n": 8,
@@ -325,7 +353,11 @@
         "lng": 136.6584,
         "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 9,
@@ -363,7 +395,11 @@
         "title": "Retirer les billets Takayama → Kyoto (18 nov)",
         "desc": "Machine verte de la gare de Kanazawa (JR West) — carte bancaire physique de Maxime + code à 4 chiffres + n° de réservation. Plus simple ici que le jour du départ."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 10,
@@ -407,7 +443,11 @@
         "title": "Bus : montrer les confirmations imprimées au chauffeur (2 trajets)",
         "desc": "Kanazawa 11:10 → Shirakawa-go 12:25 puis Shirakawa-go 16:35 → Takayama 17:25 · le billet = l’e-mail de confirmation (31,72 € pour 2 chacun)."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Check-out vers 10:15 · bus Kanazawa → Shirakawa-go 11:10"
+    }
   },
   {
     "n": 11,
@@ -453,7 +493,11 @@
         "title": "Train de 15:34 : billets retirés ?",
         "desc": "Si ce n’est pas fait à Kanazawa : machine verte de la gare de Takayama AVANT le départ — carte bancaire physique de Maxime + code à 4 chiffres + n° de réservation."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre à Takayama · train pour Kyoto 15:34"
+    }
   },
   {
     "n": 12,
@@ -485,7 +529,11 @@
         "title": "Stop à BSC Sukajan Gallery",
         "desc": "Faire un détour par la boutique de sukajan (vestes brodées souvenir du Japon) pendant la journée à Kyoto."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 13,
@@ -511,7 +559,11 @@
         "lng": 135.755,
         "desc": "Façonner des pâtisseries japonaises à la main, puis matcha pour le vrai rituel de salon de thé."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 14,
@@ -537,7 +589,11 @@
         "lng": 135.7956,
         "desc": "Promenade le long du canal entre Ginkaku-ji et Nanzen-ji — pic des momiji attendu vers le 11 déc cette année : couleurs partielles le 21 nov."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 15,
@@ -573,7 +629,11 @@
         "title": "E-ticket Kintetsu à afficher depuis le téléphone (14:55)",
         "desc": "Pas de capture d’écran : ouvrir l’e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket. Prévoir d’être à la gare de Kyoto vers 14:35."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre à Kyoto · train Kintetsu 14:55"
+    }
   },
   {
     "n": 16,
@@ -630,7 +690,11 @@
         "title": "E-ticket Kintetsu à afficher depuis le téléphone (16:08)",
         "desc": "Même procédure que la veille : pas de capture d’écran, e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → afficher l’e-ticket. Être à la gare Kintetsu-Nara vers 15:50."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre à Nara · train Kintetsu 16:08"
+    }
   },
   {
     "n": 17,
@@ -656,7 +720,11 @@
           }
         ]
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 18,
@@ -691,7 +759,11 @@
         "lng": 135.5013,
         "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 19,
@@ -719,7 +791,11 @@
         "lng": 135.5027,
         "desc": "Petite ruelle au sanctuaire moussu près de Dotonbori — contraste calme avec les néons."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 20,
@@ -743,7 +819,11 @@
         "mode": "Shinkansen",
         "leg": "osa-tokyo"
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Départ de l’hôtel vers 09:45 · Nozomi 90 à 11:30"
+    }
   },
   {
     "n": 21,
@@ -770,7 +850,11 @@
         "lng": 139.7148,
         "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs."
       }
-    ]
+    ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    }
   },
   {
     "n": 22,
@@ -792,6 +876,10 @@
         "desc": "Passer au comptoir de la douane (税関 · tax refund) à Haneda T3 avant le contrôle de sécurité, avec les passeports, les achats non utilisés et les reçus. Prévoir 30 min de plus avant le vol de 09:05 ; le remboursement arrive ensuite (magasin ou carte bancaire)."
       }
     ],
-    "ideas": []
+    "ideas": [],
+    "wake": {
+      "time": "05:30",
+      "why": "Vol HND 09:05 · aux portes vers 06:30–07:00"
+    }
   }
 ]
