@@ -2,10 +2,11 @@
    convertisseur ¥/€, phrases utiles, numéros d’urgence, rangés en sous-onglets (Aujourd’hui · Argent · Phrases · Urgences). Le programme détaillé est dans la carte. */
 
 import { ONSITE_PANE_KEY } from "../../config.js";
-import { CITIES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
-import { findTripDayByISO, japanTodayISO } from "../../core/dates.js";
+import { CITIES, DAILY_PHRASES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
+import { findTripDayByISO, japanNowHM, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { hooks } from "../../core/hooks.js";
+import { periodAt } from "../../domain/phrases.js";
 import { daysForCity, stayForDay, wakeForNextDay } from "../../domain/trip.js";
 import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
@@ -87,7 +88,20 @@ function sosHtml(){
   ).join("");
 }
 
+/** Les basiques d’abord : oui / non / merci… et bonjour / au revoir selon l’heure au Japon. */
+function renderQuickPhrases(){
+  const box = document.getElementById("phrase-quick");
+  if (!box) return;
+  const per = periodAt(DAILY_PHRASES.periods, japanNowHM());
+  const cards = [];
+  if (per) cards.push(per.hello, per.bye);
+  cards.push(...DAILY_PHRASES.basics);
+  box.innerHTML = (per ? `<p class="phrase-now"><span aria-hidden="true">${esc(per.icon || "")}</span> Au Japon : <strong>${esc(per.label)}</strong></p>` : "") +
+    `<div class="phrase-grid quick">${cards.map(p => phraseCardHtml(p)).join("")}</div>`;
+}
+
 function renderPhrases(){
+  renderQuickPhrases();
   const box = document.getElementById("onsite-phrases");
   const jump = document.getElementById("phrase-jump");
   if (!box) return;

@@ -169,6 +169,16 @@ Object.entries(phrases.context || {}).forEach(([key, c]) => {
   if (!isStr(c.label) || !Array.isArray(c.phrases) || !c.phrases.length) err(`phrases.context.${key}`, "label + phrases attendus");
   else c.phrases.forEach(checkPhrase(`phrases.context.${key}`));
 });
+const daily = phrases.daily || { basics: [], periods: [] };
+(daily.basics || []).forEach(checkPhrase("phrases.daily.basics"));
+(daily.periods || []).forEach((per, k) => {
+  const w = `phrases.daily.periods[${k}]`;
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(per.from || "")) err(w, "from : HH:MM attendu");
+  if (k && per.from <= daily.periods[k - 1].from) err(w, "périodes à ranger par heure croissante");
+  if (!isStr(per.label)) err(w, "label manquant");
+  checkPhrase(`${w}.hello`)(per.hello || {}, 0);
+  checkPhrase(`${w}.bye`)(per.bye || {}, 0);
+});
 // Contexte imposé sur un lieu / un séjour (« phrases »: "park") : doit exister
 phraseRefs.forEach(([where, key]) => {
   if (!phrases.context || !phrases.context[key]) err(where, `contexte de phrases inconnu « ${key} »`);

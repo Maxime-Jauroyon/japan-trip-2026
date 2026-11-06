@@ -19,6 +19,15 @@ export function formatBookingDateFr(d){
   return d.toLocaleDateString("fr-FR", { day:"numeric", month:"short", year:"numeric" });
 }
 
+/** Heure au Japon « HH:MM » (pour choisir bonjour / bonsoir). */
+export function japanNowHM(){
+  try {
+    return new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
+  } catch (_) {
+    return new Date().toTimeString().slice(0, 5);
+  }
+}
+
 export function japanTodayISO(){
   try {
     return new Intl.DateTimeFormat("en-CA", {

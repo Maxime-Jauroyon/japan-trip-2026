@@ -1,7 +1,7 @@
 /* Recherche (loupe de l’en-tête) : villes, lieux du programme, hôtels, gares et phrases.
    Toucher un résultat ouvre la carte au bon endroit ; une phrase s’affiche en grand (mode Montrer). */
 
-import { CITIES, CONTEXT_PHRASES, DAYS, ONSITE_PHRASES, ORDER } from "../core/data.js";
+import { CITIES, CONTEXT_PHRASES, DAILY_PHRASES, DAYS, ONSITE_PHRASES, ORDER } from "../core/data.js";
 import { esc } from "../core/dom.js";
 import { hooks } from "../core/hooks.js";
 import { pinKind } from "../domain/classify.js";
@@ -55,6 +55,8 @@ function buildIndex(){
     seenPhrase.add(p.fr);
     items.push({ type: "phrase", title: p.fr, sub: group, keywords: `${p.ro} ${p.note || ""}`, phrase: p });
   };
+  (DAILY_PHRASES.basics || []).forEach(p => addPhrase(p, "Les basiques"));
+  (DAILY_PHRASES.periods || []).forEach(per => { addPhrase(per.hello, "Les basiques"); addPhrase(per.bye, "Les basiques"); });
   ONSITE_PHRASES.forEach(g => g.phrases.forEach(p => addPhrase(p, g.title)));
   Object.values(CONTEXT_PHRASES || {}).forEach(g => g.phrases.forEach(p => addPhrase(p, g.label)));
   return items;
