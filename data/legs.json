@@ -7,7 +7,7 @@
     "depart": "CDG · sam. 7 nov · 09:45",
     "arrive": "HND · dim. 8 nov · 06:50",
     "duration": "~13 h",
-    "operator": "Air France",
+    "operator": "Air France · AF282",
     "seat": "2 × standards côte à côte · rangée 36",
     "ref": "—",
     "status": "paid",
@@ -25,18 +25,19 @@
     "via": [],
     "fromStop": {
       "kind": "Aéroport",
-      "name": "Paris CDG",
+      "name": "Paris CDG · Terminal 2E",
       "jp": "パリ CDG"
     },
     "toStop": {
       "kind": "Aéroport",
-      "name": "Tokyo Haneda (HND)",
+      "name": "Tokyo Haneda (HND) · Terminal 3",
       "jp": "羽田空港",
       "lat": 35.545,
       "lng": 139.767
     },
     "details": [
       "Voyageurs : Léo & Maxime.",
+      "Vol AF282 · terminaux CDG 2E → Haneda T3 (à confirmer sur la carte d’embarquement).",
       "Bagages inclus par personne : 1 soute + 1 cabine + 1 petit sac.",
       "Repas et en-cas inclus à bord.",
       "Enregistrement AF : ouvert ~30 h avant le départ, jusqu’à 1 h avant.",
@@ -47,8 +48,8 @@
       "kind": "boarding",
       "headline": "Passeports + carte d’embarquement Air France",
       "steps": [
-        "À Paris-CDG (7 nov, 09:45) : passeports + carte d’embarquement (téléphone ou imprimée)",
-        "À Haneda (8 nov, 06:50) : immigration, bagages, puis retrait de cash (voir « À faire »)"
+        "À Paris-CDG Terminal 2E (7 nov, 09:45) : vol AF282, passeports + carte d’embarquement (téléphone ou imprimée)",
+        "À Haneda Terminal 3 (8 nov, 06:50) : immigration, bagages, puis retrait de cash (voir « À faire »)"
       ]
     }
   },
