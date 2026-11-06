@@ -6,7 +6,7 @@ import { CITIES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
 import { findTripDayByISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { hooks } from "../../core/hooks.js";
-import { daysForCity, stayForDay } from "../../domain/trip.js";
+import { daysForCity, stayForDay, wakeForNextDay } from "../../domain/trip.js";
 import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
 import { phraseCardHtml } from "../phrase-show.js";
@@ -42,6 +42,12 @@ function sunLineHtml(city, iso){
   return sun ? `<p class="today-sun">🌅 ${fmtClock(sun.rise)} · 🌇 coucher du soleil à <strong>${fmtClock(sun.set)}</strong></p>` : "";
 }
 
+/** « Demain : alarme à 06:45 » : l’heure pour se lever le lendemain (données : days.json › wake). */
+function wakeLineHtml(day){
+  const w = wakeForNextDay(DAYS, day.n);
+  return w ? `<p class="today-wake">⏰ Demain : alarme à <strong>${esc(w.time)}</strong>${w.why ? ` · ${esc(w.why)}` : ""}</p>` : "";
+}
+
 function todayCardHtml(){
   const iso = japanTodayISO();
   const day = findTripDayByISO(iso);
@@ -55,6 +61,7 @@ function todayCardHtml(){
       `<h3>${esc(day.dow)} ${esc(day.date.replace(/\s\d{4}$/, ""))} · ${esc(city ? city.name : day.city)}</h3>` +
       (h ? `<p class="today-hotel"><span>Ce soir</span> <strong>${esc(h.name)}</strong></p>` : "") +
       sunLineHtml(city, iso) +
+      wakeLineHtml(day) +
       `<div id="onsite-weather" class="weather-line" hidden></div>` +
       `<div class="today-actions">` +
       `<button type="button" class="today-act primary" id="onsite-open-day">Voir le programme</button>` +

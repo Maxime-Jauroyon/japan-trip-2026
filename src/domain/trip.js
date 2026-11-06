@@ -327,3 +327,9 @@ export function defaultCityDay(days, todayISO, requestedN){
   const today = list.find(d => dayToISO(d) === todayISO);
   return today ? today.n : null;
 }
+
+/** Alarme du lendemain : { time, why, dayN } d’après `wake` du jour suivant, ou null (dernier jour / non renseignée). */
+export function wakeForNextDay(days, n){
+  const next = (days || []).find((d) => d.n === n + 1);
+  return next && next.wake && next.wake.time ? { time: next.wake.time, why: next.wake.why || "", dayN: next.n } : null;
+}

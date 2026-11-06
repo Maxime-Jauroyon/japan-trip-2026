@@ -150,6 +150,8 @@
 .today-card .today-hotel strong { color: var(--cream); }
 .today-card .today-sun { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
 .today-card .today-sun strong { color: var(--cream); }
+.today-card .today-wake { margin: 6px 0 0; font-size: 14px; color: var(--gold); font-weight: 600; }
+.today-card .today-wake strong { color: var(--cream); }
 .weather-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-top: 8px; font-size: 13px; }
 .weather-line[hidden] { display: none; }
 .weather-line .wx-temps { font-weight: 800; font-size: 16px; color: var(--cream); }
