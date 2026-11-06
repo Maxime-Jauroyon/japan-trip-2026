@@ -20,6 +20,8 @@ export let PREP_BUDGET_TOTAL = null;
 export let ONSITE_PHRASES = [];
 /** Phrases par type de lieu : { clé: { label, phrases } } (cf. domain/classify.js). */
 export let CONTEXT_PHRASES = {};
+/** Basiques du haut de Phrases : { basics: [phrase], periods: [{ id, label, icon, from, hello, bye }] }. */
+export let DAILY_PHRASES = { basics: [], periods: [] };
 export let ACT_META = {};
 export let TRIP = null;
 export let PHOTO_RULES = [];
@@ -63,6 +65,7 @@ export function hydrate(raw) {
   PREP_BUDGET_TOTAL = raw.prep.budgetTotal;
   ONSITE_PHRASES = raw.phrases.onsite;
   CONTEXT_PHRASES = raw.phrases.context;
+  DAILY_PHRASES = raw.phrases.daily || DAILY_PHRASES;
   ACT_META = raw["places-meta"];
   PRACTICAL_INFO = raw.practical;
   /* Photos : motif (sur le titre en minuscules) → nom de fichier dans img/activities. */

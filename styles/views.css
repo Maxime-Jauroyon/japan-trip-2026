@@ -234,6 +234,11 @@
 .phrase .fr { font-size: 13px; color: var(--muted); }
 .phrase .jp { font-size: 19px; font-weight: 600; margin-top: 2px; }
 .phrase .ro { font-size: 12.5px; color: var(--gold-2); margin-top: 1px; }
+.phrase-grid.quick { grid-template-columns: 1fr 1fr; margin-bottom: 14px; }
+.phrase-grid.quick .phrase .jp { font-size: 19px; }
+.phrase-grid.quick .phrase .note { display: none; }
+.phrase-now { margin: 0 0 8px; font-size: 13.5px; color: var(--muted); }
+.phrase-now strong { color: var(--gold); }
 .phrase-lead { margin: 0 0 10px; font-size: 13px; color: var(--muted); }
 .phrase-groups { display: flex; flex-direction: column; gap: 10px; }
 .phrase-group {
