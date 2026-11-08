@@ -259,6 +259,14 @@
     {
       "match": "momiji",
       "slug": "momiji"
+    },
+    {
+      "match": "sunshine|ikebukuro",
+      "slug": "sunshine-city"
+    },
+    {
+      "match": "nakano",
+      "slug": "nakano-broadway"
     }
   ],
   "places": {
@@ -1671,6 +1679,38 @@
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:JP-Kyoto-Gion-Yasaka-Shrine-Main-Gate.JPG"
+      }
+    ],
+    "sunshine-city": [
+      {
+        "file": "sunshine-city.jpg",
+        "author": "Dick Thomas Johnson from Tokyo, Japan",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Sunshine_City_Atrium_201206.jpg"
+      },
+      {
+        "file": "sunshine-city-2.jpg",
+        "author": "Maplestrip",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Sunshine_City_Tokyo.jpg"
+      }
+    ],
+    "nakano-broadway": [
+      {
+        "file": "nakano-broadway.jpg",
+        "author": "Dick Thomas Johnson from Tokyo, Japan",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nakano_Broadway_(53147264156).jpg"
+      },
+      {
+        "file": "nakano-broadway-2.jpg",
+        "author": "番記者",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nakano_Broadway_2021130_①_01.jpg"
       }
     ]
   }

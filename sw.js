@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v221";
+const CACHE = "japan-trip-2026-v222";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -121,6 +121,8 @@ const ASSETS = [
   "./img/activities/nagamachi-2.jpg",
   "./img/activities/nagamachi-3.jpg",
   "./img/activities/nagamachi.jpg",
+  "./img/activities/nakano-broadway-2.jpg",
+  "./img/activities/nakano-broadway.jpg",
   "./img/activities/namba-yasaka-2.jpg",
   "./img/activities/namba-yasaka-3.jpg",
   "./img/activities/namba-yasaka.jpg",
@@ -185,6 +187,8 @@ const ASSETS = [
   "./img/activities/sumida-2.jpg",
   "./img/activities/sumida-3.jpg",
   "./img/activities/sumida.jpg",
+  "./img/activities/sunshine-city-2.jpg",
+  "./img/activities/sunshine-city.jpg",
   "./img/activities/tea-2.jpg",
   "./img/activities/tea-3.jpg",
   "./img/activities/tea.jpg",
@@ -283,6 +287,8 @@ const ASSETS = [
   "./img/activities/thumb/nagamachi-2.jpg",
   "./img/activities/thumb/nagamachi-3.jpg",
   "./img/activities/thumb/nagamachi.jpg",
+  "./img/activities/thumb/nakano-broadway-2.jpg",
+  "./img/activities/thumb/nakano-broadway.jpg",
   "./img/activities/thumb/namba-yasaka-2.jpg",
   "./img/activities/thumb/namba-yasaka-3.jpg",
   "./img/activities/thumb/namba-yasaka.jpg",
@@ -347,6 +353,8 @@ const ASSETS = [
   "./img/activities/thumb/sumida-2.jpg",
   "./img/activities/thumb/sumida-3.jpg",
   "./img/activities/thumb/sumida.jpg",
+  "./img/activities/thumb/sunshine-city-2.jpg",
+  "./img/activities/thumb/sunshine-city.jpg",
   "./img/activities/thumb/tea-2.jpg",
   "./img/activities/thumb/tea-3.jpg",
   "./img/activities/thumb/tea.jpg",
@@ -641,6 +649,8 @@ const IMG_HASH = {
   "./img/activities/nagamachi-2.jpg": "96e1b0f830",
   "./img/activities/nagamachi-3.jpg": "147f6f2a01",
   "./img/activities/nagamachi.jpg": "20a711d5d4",
+  "./img/activities/nakano-broadway-2.jpg": "9040eca843",
+  "./img/activities/nakano-broadway.jpg": "2f835a2731",
   "./img/activities/namba-yasaka-2.jpg": "2f067525e5",
   "./img/activities/namba-yasaka-3.jpg": "39b4848127",
   "./img/activities/namba-yasaka.jpg": "d610749dff",
@@ -705,6 +715,8 @@ const IMG_HASH = {
   "./img/activities/sumida-2.jpg": "d4079599dc",
   "./img/activities/sumida-3.jpg": "4d278fb996",
   "./img/activities/sumida.jpg": "2805aa703f",
+  "./img/activities/sunshine-city-2.jpg": "adc83b9d10",
+  "./img/activities/sunshine-city.jpg": "24e9f88bbf",
   "./img/activities/tea-2.jpg": "8cf32f4055",
   "./img/activities/tea-3.jpg": "3b92d218fa",
   "./img/activities/tea.jpg": "8c55dbf5b1",
@@ -803,6 +815,8 @@ const IMG_HASH = {
   "./img/activities/thumb/nagamachi-2.jpg": "ba59b32b46",
   "./img/activities/thumb/nagamachi-3.jpg": "9922d6a5c7",
   "./img/activities/thumb/nagamachi.jpg": "ca0ac7c2f3",
+  "./img/activities/thumb/nakano-broadway-2.jpg": "1a5fce6b88",
+  "./img/activities/thumb/nakano-broadway.jpg": "114284bbb7",
   "./img/activities/thumb/namba-yasaka-2.jpg": "6af703e4b0",
   "./img/activities/thumb/namba-yasaka-3.jpg": "01427e6430",
   "./img/activities/thumb/namba-yasaka.jpg": "a3f967c640",
@@ -867,6 +881,8 @@ const IMG_HASH = {
   "./img/activities/thumb/sumida-2.jpg": "1954592cb1",
   "./img/activities/thumb/sumida-3.jpg": "1b031e20cc",
   "./img/activities/thumb/sumida.jpg": "cd5b9aa8da",
+  "./img/activities/thumb/sunshine-city-2.jpg": "5e4d127816",
+  "./img/activities/thumb/sunshine-city.jpg": "e40cc9e0ff",
   "./img/activities/thumb/tea-2.jpg": "624fe492a7",
   "./img/activities/thumb/tea-3.jpg": "e7f06e34b3",
   "./img/activities/thumb/tea.jpg": "24c18297e2",
