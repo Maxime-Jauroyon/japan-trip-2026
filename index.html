@@ -34,17 +34,18 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=219" />
-  <link rel="stylesheet" href="./styles/base.css?v=219" />
-  <link rel="stylesheet" href="./styles/views.css?v=219" />
-  <link rel="stylesheet" href="./styles/panel.css?v=219" />
-  <link rel="stylesheet" href="./styles/components.css?v=219" />
-  <link rel="stylesheet" href="./styles/print.css?v=219" />
-  <link rel="stylesheet" href="./styles/map.css?v=219" />
-  <link rel="stylesheet" href="./styles/settings.css?v=219" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=219" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=219" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=219" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=220" />
+  <link rel="stylesheet" href="./styles/base.css?v=220" />
+  <link rel="stylesheet" href="./styles/views.css?v=220" />
+  <link rel="stylesheet" href="./styles/panel.css?v=220" />
+  <link rel="stylesheet" href="./styles/components.css?v=220" />
+  <link rel="stylesheet" href="./styles/print.css?v=220" />
+  <link rel="stylesheet" href="./styles/map.css?v=220" />
+  <link rel="stylesheet" href="./styles/settings.css?v=220" />
+  <link rel="stylesheet" href="./styles/voyage.css?v=220" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=220" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=220" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=220" />
 </head>
 <body>
   <div class="app tab-map">
@@ -63,6 +64,7 @@
       <button type="button" data-tab="map" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="1.7"/></svg><span>Carte</span></button>
       <button type="button" data-tab="prep"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9 4.5V3h6v1.5M8.5 10.5l1.6 1.6 3-3.2M8.5 16h7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Préparatifs</span></button>
       <button type="button" data-tab="onsite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Sur place</span></button>
+      <button type="button" data-tab="carnet"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="10" r="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m5 17 4.5-4.2 3 2.8 2.5-2.3L19 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Carnet</span></button>
       <button type="button" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>Réglages</span></button>
     </nav>
     <main>
@@ -188,6 +190,13 @@
         </div>
       </section>
 
+      <section id="view-carnet" class="info-view" aria-label="Carnet">
+        <div class="info-wrap">
+          <div class="view-head"><h2>Carnet</h2><button type="button" class="btn-secondary" id="carnet-share">Envoyer à la famille</button></div>
+          <div id="carnet-body"></div>
+        </div>
+      </section>
+
       <section id="view-settings" class="info-view" aria-label="Réglages">
         <div class="info-wrap">
           <div class="view-head"><h2>Réglages</h2></div>
@@ -208,13 +217,6 @@
               <span class="switch-text"><strong>Relief 3D</strong><small>Montagnes en relief sur la carte du Japon (le Fuji, les Alpes japonaises…). Désactiver pour économiser la batterie.</small></span>
               <input type="checkbox" id="relief-toggle" class="switch" />
             </label>
-          </div>
-
-          <div class="tool-card" id="family-share">
-            <div class="tool-head"><h3>Partager avec ma famille</h3></div>
-            <p class="setting-text">Une page à part, en lecture seule : le parcours, ce qu’on a fait et les photos. Rien d’autre (ni hôtels, ni prix). Aucun réglage pour eux : ils ouvrent le lien.</p>
-            <button type="button" class="btn-primary" id="family-share-btn">Envoyer le lien</button>
-            <p class="offline-maps-status" id="family-share-status" hidden></p>
           </div>
 
           <div class="tool-card" id="journal-settings">
@@ -304,6 +306,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=219"></script>
+  <script type="module" src="./src/main.js?v=220"></script>
 </body>
 </html>

@@ -12,23 +12,25 @@ const REFRESH_MS = 90000;
 
 const dayLabel = (d) => `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}`;
 
-function photoBtn(cfg, iso, p){
-  return `<button type="button" class="vy-thumb" data-full="${esc(publicPhotoUrl(cfg, iso, p.name))}" aria-label="${esc(p.title)}">` +
-    `<img src="${esc(publicPhotoUrl(cfg, iso, thumbName(p.name)))}" alt="${esc(p.title)}" loading="lazy" decoding="async" /></button>`;
-}
+/** Miniature pour la page famille : lue directement sur le dépôt public. */
+const publicPhotoBtn = (cfg) => (iso, p) =>
+  `<button type="button" class="vy-thumb" data-full="${esc(publicPhotoUrl(cfg, iso, p.name))}" aria-label="${esc(p.title)}">` +
+  `<img src="${esc(publicPhotoUrl(cfg, iso, thumbName(p.name)))}" alt="${esc(p.title)}" loading="lazy" decoding="async" /></button>`;
 
-function dayCardHtml(cfg, day, iso, items){
+/** Carte d’un jour (partagée avec l’onglet Carnet) ; `photoBtn(iso, { name, title, id })` fabrique une miniature. */
+export function dayCardHtml(photoBtn, day, iso, items){
   const city = CITIES[day.city];
-  const photos = items.flatMap(it => it.photos.map(name => ({ name, title: it.title })));
+  const photos = items.flatMap(it => it.photos.map(name => ({ name, title: it.title, id: it.id })));
   return `<article class="vy-day"><header><span class="vy-n">J${day.n}</span><div><h3>${esc(dayLabel(day))}</h3>` +
     `<p>${esc(city ? city.name : day.city)}${day.extraCity && CITIES[day.extraCity] ? " · " + esc(CITIES[day.extraCity].name) : ""}</p></div></header>` +
     `<ul class="vy-list">` + items.map(it =>
       `<li><span class="vy-time">${esc(it.time || "✓")}</span><span class="vy-what"><strong>${esc(it.title)}</strong>` +
       `${it.note ? `<small>${esc(it.note)}</small>` : ""}</span>${it.by ? `<span class="vy-by">${esc(it.by)}</span>` : ""}</li>`).join("") + `</ul>` +
-    (photos.length ? `<div class="vy-grid">${photos.map(p => photoBtn(cfg, iso, p)).join("")}</div>` : "") + `</article>`;
+    (photos.length ? `<div class="vy-grid">${photos.map(p => photoBtn(iso, p)).join("")}</div>` : "") + `</article>`;
 }
 
-function routeHtml(today){
+/** Parcours : les villes dans l’ordre ; celles déjà atteintes en couleur. */
+export function routeHtml(today){
   return `<ol class="vy-route" aria-label="Parcours">` + ORDER.map((id, i) => {
     const c = CITIES[id];
     const first = DAYS.find(d => d.city === id);
@@ -61,7 +63,7 @@ async function render(root){
     `<header class="vy-hero"><p class="vy-kicker">${esc(TRIP.datesLabelLong)}</p><h1>${esc(TRAVELERS.join(" & "))} au Japon</h1>` +
     `<p class="vy-stats">${nPlaces} moment${nPlaces > 1 ? "s" : ""} · ${nPhotos} photo${nPhotos > 1 ? "s" : ""}</p></header>` +
     routeHtml(today) +
-    (days.length ? days.slice().reverse().map(x => dayCardHtml(cfg, x.day, x.iso, x.items)).join("")
+    (days.length ? days.slice().reverse().map(x => dayCardHtml(publicPhotoBtn(cfg), x.day, x.iso, x.items)).join("")
       : `<p class="vy-empty">Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt.</p>`) +
     `<p class="vy-foot">Mis à jour à ${new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} · se rafraîchit tout seul</p>`;
   root.querySelectorAll("[data-full]").forEach(b => b.addEventListener("click", () => openLightbox(b.dataset.full)));

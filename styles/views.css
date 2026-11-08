@@ -262,6 +262,7 @@
 .phrase-group .phrase-grid { padding: 10px; }
 .app.tab-prep #view-map,
 .app.tab-onsite #view-map,
+.app.tab-carnet #view-map,
 .app.tab-settings #view-map { display: none; }
 
 /* —— Et maintenant ? (prochaine étape du jour) —— */
