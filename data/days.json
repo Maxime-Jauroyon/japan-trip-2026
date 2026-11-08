@@ -51,16 +51,16 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Ueno — parc & musées",
-        "lat": 35.7155,
-        "lng": 139.7745,
-        "desc": "Grand parc avec musées et étang. Feuillages encore verts début novembre (rouge attendu vers le 28 nov). Après-midi culturel tranquille."
-      },
-      {
         "title": "Sanctuaire Nezu + Yanaka",
         "lat": 35.7203,
         "lng": 139.7608,
         "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses. Premier sanctuaire de la journée : le bon endroit pour acheter le carnet goshuin."
+      },
+      {
+        "title": "Ueno — parc & musées",
+        "lat": 35.7155,
+        "lng": 139.7745,
+        "desc": "Grand parc avec musées et étang. Feuillages encore verts début novembre (rouge attendu vers le 28 nov). Après-midi culturel tranquille."
       },
       {
         "title": "Tokyo Character Street",
