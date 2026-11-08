@@ -29,9 +29,28 @@ export function mergeDay(a, b){
     const win = (y.at || 0) > (x.at || 0) ? y : x;
     const photos = [...new Set([...(x.photos || []), ...(y.photos || [])])];
     const gone = [...new Set([...(x.gone || []), ...(y.gone || [])])];   // photos retirées : retirées partout
-    out[id] = { ...win, ...(photos.length ? { photos } : {}), ...(gone.length ? { gone } : {}) };
+    const likes = mergeLikes(x.likes, y.likes);
+    out[id] = { ...win, ...(photos.length ? { photos } : {}), ...(gone.length ? { gone } : {}), ...(Object.keys(likes).length ? { likes } : {}) };
   });
   return { items: out };
+}
+
+/** ❤️ : { auteur: date } ; date > 0 = aimé, < 0 = retiré. Fusion : pour chaque auteur, l’action la plus récente. */
+function mergeLikes(a, b){
+  const out = { ...(a || {}) };
+  Object.entries(b || {}).forEach(([who, t]) => { if (Math.abs(t) > Math.abs(out[who] || 0)) out[who] = t; });
+  return out;
+}
+
+/** Auteurs qui ont aimé un item. */
+export const likedBy = (it) => Object.entries((it && it.likes) || {}).filter(([, t]) => t > 0).map(([who]) => who);
+
+/** Aime / n’aime plus un item (sans toucher à sa date de modification : ne réécrit pas le reste). */
+export function setLike(day, id, author, liked, now = Date.now()){
+  const items = { ...((day && day.items) || {}) };
+  if (!items[id]) return day || emptyDay();
+  items[id] = { ...items[id], likes: { ...(items[id].likes || {}), [author]: liked ? now : -now } };
+  return { items };
 }
 
 /** Deux jours identiques (même contenu) ? Sert à éviter un envoi inutile. */
@@ -113,7 +132,8 @@ export function sanitizeDay(raw){
   Object.entries(src).forEach(([id, it]) => {
     if (!it || typeof it !== "object" || typeof it.title !== "string" || !/^[px]:/.test(id)) return;
     const clean = (a) => (Array.isArray(a) ? a.filter((n) => typeof n === "string" && /^[\w.-]+\.jpg$/.test(n)) : undefined);
-    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone) };
+    const likes = it.likes && typeof it.likes === "object" ? Object.fromEntries(Object.entries(it.likes).filter(([, t]) => Number.isFinite(t))) : undefined;
+    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone), likes };
     Object.keys(items[id]).forEach((k) => { if (items[id][k] === undefined) delete items[id][k]; });
   });
   return { items };
@@ -126,6 +146,6 @@ export function sanitizeDay(raw){
 export function doneItems(day){
   return Object.values((day && day.items) || {})
     .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
-    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: livePhotos(it), at: it.at || 0 }))
+    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: livePhotos(it), likes: likedBy(it), at: it.at || 0 }))
     .sort((a, b) => String(a.time || "99:99").localeCompare(String(b.time || "99:99")) || a.at - b.at);
 }

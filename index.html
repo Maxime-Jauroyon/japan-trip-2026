@@ -34,18 +34,18 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=222" />
-  <link rel="stylesheet" href="./styles/base.css?v=222" />
-  <link rel="stylesheet" href="./styles/views.css?v=222" />
-  <link rel="stylesheet" href="./styles/panel.css?v=222" />
-  <link rel="stylesheet" href="./styles/components.css?v=222" />
-  <link rel="stylesheet" href="./styles/print.css?v=222" />
-  <link rel="stylesheet" href="./styles/map.css?v=222" />
-  <link rel="stylesheet" href="./styles/settings.css?v=222" />
-  <link rel="stylesheet" href="./styles/voyage.css?v=222" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=222" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=222" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=222" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=223" />
+  <link rel="stylesheet" href="./styles/base.css?v=223" />
+  <link rel="stylesheet" href="./styles/views.css?v=223" />
+  <link rel="stylesheet" href="./styles/panel.css?v=223" />
+  <link rel="stylesheet" href="./styles/components.css?v=223" />
+  <link rel="stylesheet" href="./styles/print.css?v=223" />
+  <link rel="stylesheet" href="./styles/map.css?v=223" />
+  <link rel="stylesheet" href="./styles/settings.css?v=223" />
+  <link rel="stylesheet" href="./styles/voyage.css?v=223" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=223" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=223" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=223" />
 </head>
 <body>
   <div class="app tab-map">
@@ -192,7 +192,8 @@
 
       <section id="view-carnet" class="info-view" aria-label="Carnet">
         <div class="info-wrap">
-          <div class="view-head"><h2>Carnet</h2><button type="button" class="btn-secondary" id="carnet-share">Envoyer à la famille</button></div>
+          <div class="view-head"><h2>Carnet</h2><button type="button" class="cn-refresh" id="carnet-refresh" aria-label="Actualiser" title="Actualiser">⟳</button><button type="button" class="btn-secondary" id="carnet-share">Envoyer à la famille</button></div>
+          <div class="cn-status" id="carnet-status"></div>
           <div id="carnet-body"></div>
         </div>
       </section>
@@ -306,6 +307,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=222"></script>
+  <script type="module" src="./src/main.js?v=223"></script>
 </body>
 </html>

@@ -5,11 +5,12 @@
 
 import { DAY_PROGRESS_KEY, JOURNAL_CFG_KEY, JOURNAL_KEY } from "../config.js";
 import { TRIP } from "../core/data.js";
-import { emptyDay, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, thumbName, upsertItem } from "../domain/journal.js";
+import { emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
 import { resizeImage } from "./photo-resize.js";
 
 export const JOURNAL_CHANGED = "japan-trip:journal-changed";
 export const JOURNAL_SYNC = "japan-trip:journal-sync";
+export const JOURNAL_PREFETCH = "japan-trip:journal-prefetch";
 
 const SYNC_EVERY_MS = 60000;
 const API = "https://api.github.com";
@@ -150,6 +151,14 @@ export async function addPhotos(iso, target, files){
   return names.length;
 }
 
+/** ❤️ sur un item (idée ou activité) pour l’auteur de ce téléphone. */
+export function toggleLike(iso, id){
+  const who = journalConfig().author || "Moi";
+  const it = journalDay(iso).items[id];
+  if (!it) return;
+  commit(iso, setLike(journalDay(iso), id, who, !likedBy(it).includes(who)));
+}
+
 /** Retire une photo (de tous les téléphones). */
 export function removePhoto(iso, id, name){
   const cur = journalDay(iso).items[id];
@@ -181,6 +190,35 @@ const blobToB64 = (blob) => new Promise((resolve, reject) => {
   r.onerror = () => reject(new Error("lecture de la photo"));
   r.readAsDataURL(blob);
 });
+
+/** Préchargement : { done, total } des photos du journal déjà gardées sur ce téléphone (pour la barre « prêtes hors ligne »). */
+export const prefetchStatus = { done: 0, total: 0, running: false };
+let prefetching = false;
+
+/** Télécharge sur le téléphone toutes les photos du journal (miniature + taille réduite), 3 à la fois. */
+export async function prefetchPhotos(){
+  if (prefetching || navigator.onLine === false) return;
+  prefetching = true;
+  const all = Object.entries(load().days).flatMap(([iso, d]) => Object.values(d.items || {}).flatMap(it => livePhotos(it).map(name => ({ iso, name }))));
+  prefetchStatus.total = all.length;
+  prefetchStatus.done = 0;
+  prefetchStatus.running = true;
+  emit(JOURNAL_PREFETCH);
+  const queue = all.slice();
+  const worker = async () => {
+    while (queue.length) {
+      const p = queue.shift();
+      await photoUrl(p.iso, thumbName(p.name), false).catch(() => "");
+      await photoUrl(p.iso, p.name, false).catch(() => "");
+      prefetchStatus.done++;
+      emit(JOURNAL_PREFETCH);
+    }
+  };
+  await Promise.all([worker(), worker(), worker()]);
+  prefetchStatus.running = false;
+  prefetching = false;
+  emit(JOURNAL_PREFETCH);
+}
 
 /** Envoie les photos en attente (taille réduite : ~300 Ko chacune). */
 async function uploadPhotos(){
@@ -316,6 +354,7 @@ export async function syncNow(){
       }
     }
     setStatus("ok");
+    prefetchPhotos();
   } catch (e) {
     setStatus("error", e && e.message ? e.message : "erreur réseau");
   } finally {
