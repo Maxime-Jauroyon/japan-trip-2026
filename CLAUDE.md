@@ -9,6 +9,13 @@ Carnet de voyage Japon (PWA statique, GitHub Pages). Lire `README.md` pour l’a
 - **Contenu du voyage = `data/*.json` uniquement.** Ne jamais coder en dur un lieu, une date,
   un hôtel, un prix dans `src/`. Nouveau type de donnée → nouveau champ JSON + `hydrate()` dans
   `src/core/data.js` + contrôle dans `scripts/validate-data.mjs`.
+- **Ne jamais effacer le passé.** Les jours déjà écoulés (avant « aujourd’hui » au Japon) sont une
+  archive : ne pas supprimer ni réécrire dans `data/*.json` leurs idées, étapes, horaires, rappels,
+  notes, météo / températures / feuillages constatés, ni le journal (`journal/` : statuts, activités
+  ajoutées, photos, ❤️). Réorganiser, déplacer ou corriger le programme **seulement à partir
+  d’aujourd’hui** (jours à venir) : un lieu non fait reste dans son jour d’origine (le journal dit
+  s’il a été fait) et se propose sur un jour futur. Corriger un jour passé seulement si Maxime le
+  demande explicitement.
 - **Couches** : `config/core/shared → domain → map → ui/pwa → main.js`, sans cycle
   (`npm run architecture`). La carte appelle l’UI via `core/hooks.js`.
 - **Pas d’effet de bord au chargement d’un module** (sauf `main.js`) : exposer une fonction
