@@ -1,0 +1,32 @@
+{
+ "items": {
+  "p:akihabara-arcades-anime": {
+   "id": "p:akihabara-arcades-anime",
+   "kind": "planned",
+   "title": "Akihabara — arcades / anime",
+   "status": "done",
+   "at": 1794133953161
+  },
+  "p:tokyo-character-street": {
+   "id": "p:tokyo-character-street",
+   "kind": "planned",
+   "title": "Tokyo Character Street",
+   "status": "todo",
+   "at": 1794135166714
+  },
+  "p:asakusa-de-nuit-kaminarimon-senso-ji": {
+   "id": "p:asakusa-de-nuit-kaminarimon-senso-ji",
+   "kind": "planned",
+   "title": "Asakusa de nuit — Kaminarimon & Sensō-ji",
+   "status": "done",
+   "at": 1794139275532
+  },
+  "p:sumida-de-nuit-pont-azuma-bashi-skytree": {
+   "id": "p:sumida-de-nuit-pont-azuma-bashi-skytree",
+   "kind": "planned",
+   "title": "Sumida de nuit — pont Azuma-bashi & Skytree",
+   "status": "done",
+   "at": 1794148074866
+  }
+ }
+}
