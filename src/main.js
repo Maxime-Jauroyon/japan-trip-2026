@@ -12,6 +12,7 @@ import { initIOSInstallHint, initTodoAlerts } from "./ui/alerts.js";
 import { initAppShell, initTouchUi } from "./ui/app-shell.js";
 import { initCityList } from "./ui/city-list.js";
 import { initMapControls } from "./ui/map-controls.js";
+import { initJournal } from "./ui/journal-init.js";
 import { initMyPosition } from "./ui/my-position.js";
 import { initPhraseShow } from "./ui/phrase-show.js";
 import { initSearch } from "./ui/search.js";
@@ -48,6 +49,7 @@ async function main() {
   initTodoAlerts();
   initPhraseShow();
   initSearch();
+  initJournal();
   // Photos complètes en tâche de fond, une fois la page affichée (les vignettes sont déjà là)
   const later = () => setTimeout(requestPhotoPrecache, 4000);
   if (document.readyState === "complete") later();

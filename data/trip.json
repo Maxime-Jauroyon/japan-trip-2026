@@ -39,5 +39,9 @@
   "holidays": [
     "2026-11-03",
     "2026-11-23"
-  ]
+  ],
+  "journal": {
+    "repo": "Maxime-Jauroyon/japan-trip-2026",
+    "branch": "journal"
+  }
 }

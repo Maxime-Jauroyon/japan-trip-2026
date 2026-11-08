@@ -34,17 +34,17 @@
   <link rel="apple-touch-icon" href="./img/icon-180.png" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./lib/maplibre/maplibre-gl.css?v=5.24.0" />
-  <link rel="stylesheet" href="./styles/tokens.css?v=212" />
-  <link rel="stylesheet" href="./styles/base.css?v=212" />
-  <link rel="stylesheet" href="./styles/views.css?v=212" />
-  <link rel="stylesheet" href="./styles/panel.css?v=212" />
-  <link rel="stylesheet" href="./styles/components.css?v=212" />
-  <link rel="stylesheet" href="./styles/print.css?v=212" />
-  <link rel="stylesheet" href="./styles/map.css?v=212" />
-  <link rel="stylesheet" href="./styles/settings.css?v=212" />
-  <link rel="stylesheet" href="./styles/theme-light.css?v=212" />
-  <link rel="stylesheet" href="./styles/mobile.css?v=212" />
-  <link rel="stylesheet" href="./styles/standalone.css?v=212" />
+  <link rel="stylesheet" href="./styles/tokens.css?v=213" />
+  <link rel="stylesheet" href="./styles/base.css?v=213" />
+  <link rel="stylesheet" href="./styles/views.css?v=213" />
+  <link rel="stylesheet" href="./styles/panel.css?v=213" />
+  <link rel="stylesheet" href="./styles/components.css?v=213" />
+  <link rel="stylesheet" href="./styles/print.css?v=213" />
+  <link rel="stylesheet" href="./styles/map.css?v=213" />
+  <link rel="stylesheet" href="./styles/settings.css?v=213" />
+  <link rel="stylesheet" href="./styles/theme-light.css?v=213" />
+  <link rel="stylesheet" href="./styles/mobile.css?v=213" />
+  <link rel="stylesheet" href="./styles/standalone.css?v=213" />
 </head>
 <body>
   <div class="app tab-map">
@@ -124,6 +124,7 @@
 
           <nav class="seg-tabs" id="onsite-tabs" role="tablist" aria-label="Sections de Sur place">
             <button type="button" role="tab" data-pane="today">Aujourd’hui</button>
+            <button type="button" role="tab" data-pane="journal">Journal</button>
             <button type="button" role="tab" data-pane="money">Argent</button>
             <button type="button" role="tab" data-pane="phrases">Phrases</button>
             <button type="button" role="tab" data-pane="sos">Urgences</button>
@@ -133,6 +134,10 @@
           <div id="onsite-today"></div>
           <div class="tool-card next-card" id="onsite-next" hidden></div>
           <div class="tool-card tickets-card" id="onsite-tickets" hidden></div>
+          </div>
+
+          <div class="prep-pane" data-pane="journal" hidden>
+            <div class="tool-card journal-card" id="onsite-journal"></div>
           </div>
 
           <div class="prep-pane" data-pane="money" hidden>
@@ -205,6 +210,27 @@
             </label>
           </div>
 
+          <div class="tool-card" id="journal-settings">
+            <div class="tool-head"><h3>Journal partagé</h3></div>
+            <p class="setting-text">Pour que Léo et Maxime voient les mêmes activités et photos : colle ici le jeton GitHub (à faire sur chaque téléphone).</p>
+            <div class="segmented" id="journal-author" role="radiogroup" aria-label="Qui es-tu ?"></div>
+            <label class="jr-field"><span>Jeton GitHub</span><input type="password" id="journal-token" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…" /></label>
+            <div class="offline-actions">
+              <button type="button" class="btn-primary" id="journal-test">Tester la connexion</button>
+              <button type="button" class="btn-secondary" id="journal-sync">Synchroniser</button>
+            </div>
+            <p class="offline-maps-status" id="journal-status">…</p>
+            <details class="journal-help"><summary>Comment créer le jeton ?</summary>
+              <ol class="ios-steps">
+                <li>Sur github.com : <strong>Settings → Developer settings → Fine-grained tokens → Generate new token</strong>.</li>
+                <li><strong>Repository access</strong> : « Only select repositories » → ce dépôt (japan-trip-2026).</li>
+                <li><strong>Permissions → Contents : Read and write</strong> (rien d’autre).</li>
+                <li>Durée : jusqu’à fin décembre 2026. Copie le jeton et colle-le ici (et sur le téléphone de l’autre).</li>
+              </ol>
+              <p class="setting-hint">Le jeton ne sert qu’à ce dépôt et reste sur le téléphone ; tu peux le révoquer à tout moment sur GitHub. Les activités et photos sont enregistrées sur la branche « journal » du dépôt.</p>
+            </details>
+          </div>
+
           <div class="tool-card">
             <div class="tool-head"><h3>Cartes hors ligne</h3></div>
             <p class="setting-text">Le Japon et les 8 villes du voyage, pour naviguer sans réseau (60 à 120 Mo, idéalement en Wi‑Fi). À faire sur chaque appareil.</p>
@@ -271,6 +297,6 @@
 
   <!-- MapLibre (global maplibregl, vendorisé) puis l’app en modules ES -->
   <script src="./lib/maplibre/maplibre-gl.js?v=5.24.0"></script>
-  <script type="module" src="./src/main.js?v=212"></script>
+  <script type="module" src="./src/main.js?v=213"></script>
 </body>
 </html>

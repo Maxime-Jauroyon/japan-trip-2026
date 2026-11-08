@@ -1,10 +1,13 @@
 /* Onglet Réglages : thème, relief 3D, cartes hors ligne. */
 
+import { TRAVELERS } from "../../core/data.js";
 import { esc } from "../../core/dom.js";
 import { setMapRelief } from "../../map/controller.js";
 import { mapReliefEnabled } from "../../map/map-view.js";
 import { cancelOfflineMaps, clearOfflineMaps, downloadOfflineMaps, offlineDownload, offlineMapsInfo, offlineStorageUsage } from "../../map/offline-tiles.js";
 import { updateOfflineStatus } from "../app-shell.js";
+import { journalConfig, journalReady, setJournalConfig, syncNow, testConnection } from "../../pwa/journal-store.js";
+import { syncLineText } from "../journal-widgets.js";
 import { applyThemePref, setThemePref } from "../theme.js";
 
 function formatBytes(n){
@@ -38,7 +41,25 @@ async function renderOfflineMapsStatus(){
   if (clearBtn) clearBtn.hidden = !info;
 }
 
+/** Carte « Journal partagé » : qui je suis, jeton, état de la synchro. */
+export function renderJournalSettings(){
+  const authors = document.getElementById("journal-author");
+  const token = document.getElementById("journal-token");
+  const status = document.getElementById("journal-status");
+  if (!authors || !token || !status) return;
+  const cfg = journalConfig();
+  authors.innerHTML = TRAVELERS.map(n =>
+    `<button type="button" role="radio" data-author="${esc(n)}" aria-checked="${cfg.author === n}"><span>${esc(n)}</span></button>`).join("");
+  authors.querySelectorAll("[data-author]").forEach(b => b.addEventListener("click", () => {
+    setJournalConfig({ author: b.dataset.author });
+    renderJournalSettings();
+  }));
+  if (document.activeElement !== token) token.value = cfg.token;
+  if (!status.dataset.test) status.textContent = syncLineText(journalReady());
+}
+
 export function renderSettings(){
+  renderJournalSettings();
   applyThemePref();
   const relief = document.getElementById("relief-toggle");
   if (relief) relief.checked = mapReliefEnabled();
@@ -47,6 +68,19 @@ export function renderSettings(){
 }
 
 export function bindSettings(){
+  const tokenEl = document.getElementById("journal-token");
+  const jStatus = document.getElementById("journal-status");
+  if (tokenEl) tokenEl.addEventListener("change", () => { jStatus.dataset.test = ""; setJournalConfig({ token: tokenEl.value.trim() }); renderJournalSettings(); });
+  document.getElementById("journal-test")?.addEventListener("click", async () => {
+    setJournalConfig({ token: tokenEl.value.trim() });
+    jStatus.dataset.test = "1";
+    jStatus.textContent = "Test…";
+    const r = await testConnection();
+    jStatus.textContent = r.message;
+    jStatus.classList.toggle("ready", r.ok);
+  });
+  document.getElementById("journal-sync")?.addEventListener("click", () => { jStatus.dataset.test = ""; syncNow(); });
+  document.addEventListener("japan-trip:journal-sync", () => { if (!jStatus.dataset.test) jStatus.textContent = syncLineText(journalReady()); });
   document.querySelectorAll("#theme-picker [data-theme-choice]").forEach(b => {
     b.addEventListener("click", () => setThemePref(b.dataset.themeChoice));
   });

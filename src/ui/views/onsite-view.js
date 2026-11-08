@@ -16,6 +16,7 @@ import { renderExpenses } from "./expenses.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderNextStop } from "./next-stop.js";
 import { renderTickets } from "./tickets.js";
+import { renderJournalView } from "./journal.js";
 import { renderOnsiteWeather } from "./weather.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 
@@ -122,7 +123,7 @@ function renderPhrases(){
   }
 }
 
-const PANES = ["today", "money", "phrases", "sos"];
+const PANES = ["today", "journal", "money", "phrases", "sos"];
 let pane = null;
 
 function showPane(name, save){
@@ -154,6 +155,7 @@ export function renderOnsite(){
   if (day) renderOnsiteWeather(day);
   renderNextStop();
   renderTickets();
+  renderJournalView();
   document.getElementById("onsite-open-day")?.addEventListener("click", () => openMapForDay(day));
   const sos = document.getElementById("onsite-sos");
   if (sos) sos.innerHTML = sosHtml();

@@ -1,30 +1,26 @@
 /* Carte « Et maintenant ? » (Sur place, pendant le voyage) : prochaine étape du jour, temps estimé
    depuis ma position (ou l’étape précédente), itinéraire en un geste, « Fait ✓ » pour passer à la suite. */
 
-import { DAY_PROGRESS_KEY } from "../../config.js";
 import { findTripDayByISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { state } from "../../core/state.js";
 import { pinKind } from "../../domain/classify.js";
 import { dayItinerary, formatMinutes, nextStop, segmentEstimate } from "../../domain/itinerary.js";
+import { plannedId } from "../../domain/journal.js";
+import { journalDay, setPlannedStatus } from "../../pwa/journal-store.js";
 import { PLACE_COLORS } from "../../shared/icons.js";
 import { USER_POS_CHANGED, distanceFromMe } from "../my-position.js";
 import { mapsDirectionsUrl } from "../templates.js";
 
 let bound = false;
 
-function loadProgress(){
-  try { return JSON.parse(localStorage.getItem(DAY_PROGRESS_KEY) || "{}") || {}; } catch (_) { return {}; }
-}
-
-function saveDone(iso, done){
-  const all = loadProgress();
-  // On ne garde que les 3 derniers jours renseignés
-  all[iso] = [...done];
-  const keep = Object.keys(all).sort().slice(-3);
-  const next = {};
-  keep.forEach(k => { next[k] = all[k]; });
-  try { localStorage.setItem(DAY_PROGRESS_KEY, JSON.stringify(next)); } catch (_) { /* quota */ }
+/** Titres des étapes déjà « passées » ce jour-là (faites ou écartées), d’après le journal partagé. */
+function doneTitles(iso, stops){
+  const jd = journalDay(iso);
+  return new Set(stops.filter(s => {
+    const it = jd.items[plannedId(s.title)];
+    return it && !it.deleted && (it.status === "done" || it.status === "skipped");
+  }).map(s => s.title));
 }
 
 /** Étapes du jour : ville principale (avec hôtel / gare) + activités de la ville secondaire. */
@@ -51,7 +47,7 @@ export function renderNextStop(){
   const stops = day ? stopsOfDay(day) : [];
   const acts = stops.filter(s => s.kind === "activity");
   if (!acts.length) { box.hidden = true; box.innerHTML = ""; return; }
-  const done = new Set(loadProgress()[iso] || []);
+  const done = doneTitles(iso, stops);
   const next = nextStop(stops, done);
   const nDone = acts.filter(s => done.has(s.title)).length;
   let main;
@@ -76,9 +72,7 @@ export function renderNextStop(){
       `<button type="button" class="next-step${done.has(s.title) ? " done" : ""}${next && next.stop === s ? " current" : ""}" data-toggle="${esc(s.title)}" aria-pressed="${done.has(s.title)}">` +
       `<b>${s.step}</b>${esc(s.title)}</button>`).join("") + `</div>`;
   const toggle = (title) => {
-    if (done.has(title)) done.delete(title); else done.add(title);
-    saveDone(iso, done);
-    renderNextStop();
+    setPlannedStatus(iso, title, done.has(title) ? "todo" : "done");
   };
   box.querySelector("[data-done]")?.addEventListener("click", e => toggle(e.currentTarget.dataset.done));
   box.querySelectorAll("[data-toggle]").forEach(b => b.addEventListener("click", () => toggle(b.dataset.toggle)));
