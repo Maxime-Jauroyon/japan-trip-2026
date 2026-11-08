@@ -7,15 +7,17 @@ import { esc } from "../../core/dom.js";
 import { doneItems } from "../../domain/journal.js";
 import { journalDays } from "../../pwa/journal-store.js";
 import { hydratePhotos } from "../journal-widgets.js";
-import { dayCardHtml, routeHtml } from "../voyage-page.js";
+import { bindCarousels, dayCardHtml, routeHtml } from "../voyage-page.js";
 
 /** Miniature qui s’ouvre dans la visionneuse du journal (avec « Supprimer »). */
 const localPhotoBtn = (iso, p) =>
-  `<button type="button" class="vy-thumb" data-jp-iso="${esc(iso)}" data-jp-id="${esc(p.id)}" data-jp-name="${esc(p.name)}" aria-label="${esc(p.title)}"><img data-jphoto alt="" decoding="async" /></button>`;
+  `<button type="button" class="vy-photo" data-jp-feed="1" data-jp-iso="${esc(iso)}" data-jp-id="${esc(p.id)}" data-jp-name="${esc(p.name)}" aria-label="${esc(p.title)}"><img data-jphoto alt="" decoding="async" /></button>`;
 
 export function renderCarnet(){
   const box = document.getElementById("carnet-body");
   if (!box) return;
+  const scroller = document.getElementById("view-carnet");
+  const top = scroller ? scroller.scrollTop : 0;
   const days = journalDays()
     .map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd) }))
     .filter(x => x.day && x.items.length);
@@ -27,6 +29,8 @@ export function renderCarnet(){
     (days.length ? days.slice().reverse().map(x => dayCardHtml(localPhotoBtn, x.day, x.iso, x.items)).join("")
       : `<p class="vy-empty">Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici, jour par jour.</p>`);
   hydratePhotos(box);
+  bindCarousels(box);
+  if (scroller) scroller.scrollTop = top;   // un envoi de photo ne fait pas remonter le fil
 }
 
 /** Bouton « Envoyer à la famille » (page voyage.html, lecture seule). */
