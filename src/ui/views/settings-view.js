@@ -68,16 +68,6 @@ export function renderSettings(){
 }
 
 export function bindSettings(){
-  document.getElementById("family-share-btn")?.addEventListener("click", async () => {
-    const url = new URL("voyage.html", location.href).href;
-    const note = document.getElementById("family-share-status");
-    try {
-      if (navigator.share) { await navigator.share({ title: "Notre voyage au Japon", text: "Notre voyage au Japon, en direct :", url }); return; }
-    } catch (e) { if (e && e.name === "AbortError") return; }
-    try { await navigator.clipboard.writeText(url); note.textContent = "Lien copié : " + url; }
-    catch (_) { note.textContent = "Lien : " + url; }
-    note.hidden = false;
-  });
   const tokenEl = document.getElementById("journal-token");
   const jStatus = document.getElementById("journal-status");
   if (tokenEl) tokenEl.addEventListener("change", () => { jStatus.dataset.test = ""; setJournalConfig({ token: tokenEl.value.trim() }); renderJournalSettings(); });
