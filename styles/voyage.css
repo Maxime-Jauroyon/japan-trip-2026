@@ -1,0 +1,36 @@
+/* Page famille (voyage.html) : lecture seule, mobile d’abord. Couleurs : variables de tokens.css. */
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--cream); font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.vy-wrap { max-width: 640px; margin: 0 auto; padding: calc(18px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom)); }
+.vy-hero { margin-bottom: 14px; }
+.vy-kicker { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+.vy-hero h1 { margin: 4px 0; font: 700 28px/1.15 Georgia, "Times New Roman", serif; }
+.vy-stats { margin: 0; color: var(--muted); font-size: 14px; }
+.vy-route { list-style: none; margin: 14px -16px 18px; padding: 4px 16px 8px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.vy-route::-webkit-scrollbar { display: none; }
+.vy-route li { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 12px 8px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); opacity: .55; }
+.vy-route li.reached { opacity: 1; border-color: var(--gold); }
+.vy-route b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--panel-2); font-size: 12px; }
+.vy-route li.reached b { background: var(--gold); color: var(--bg); }
+.vy-route strong { display: block; font-size: 14px; line-height: 1.1; }
+.vy-route small { display: block; font-size: 11.5px; color: var(--muted); }
+.vy-day { margin: 0 0 16px; padding: 14px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line); }
+.vy-day header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.vy-n { flex: 0 0 auto; min-width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: var(--gold); color: var(--bg); font-weight: 800; }
+.vy-day h3 { margin: 0; font-size: 17px; }
+.vy-day p { margin: 0; font-size: 13px; color: var(--muted); }
+.vy-list { list-style: none; margin: 0 0 10px; padding: 0; }
+.vy-list li { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.vy-list li:last-child { border-bottom: 0; }
+.vy-time { flex: 0 0 44px; font-size: 13px; font-weight: 700; color: var(--gold); }
+.vy-what { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.vy-what small { color: var(--muted); font-size: 12.5px; }
+.vy-by { font-size: 12px; color: var(--muted); }
+.vy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.vy-thumb { padding: 0; border: 0; border-radius: 12px; overflow: hidden; aspect-ratio: 1; background: var(--panel-2); cursor: pointer; }
+.vy-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vy-empty { text-align: center; color: var(--muted); padding: 40px 10px; }
+.vy-foot { text-align: center; font-size: 12px; color: var(--muted); }
+.vy-light { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: rgba(0, 0, 0, .92); }
+.vy-light[hidden] { display: none; }
+.vy-light img { max-width: 100%; max-height: 100dvh; object-fit: contain; }

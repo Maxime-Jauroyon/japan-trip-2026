@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, collectPhotos, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { applyJournal, collectPhotos, doneItems, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -63,4 +63,12 @@ test("photos : retirer une photo la retire partout, la miniature suit le nom", (
   assert.equal(thumbName("b.jpg"), "b.t.jpg");
   assert.deepEqual(collectPhotos([["2026-11-21", m]]), [{ iso: "2026-11-21", id, title: "Fushimi Inari", name: "b.jpg" }]);
   assert.deepEqual(sanitizeDay({ items: { "p:a": { title: "A", photos: ["ok.jpg", "../evil", 3] } } }).items["p:a"].photos, ["ok.jpg"]);
+});
+
+test("page famille : idées faites, ajouts et éléments avec photos ; pas les idées écartées", () => {
+  let day = upsertItem(emptyDay(), plannedId("A"), { kind: "planned", title: "A" }, { status: "done" }, 1);
+  day = upsertItem(day, plannedId("B"), { kind: "planned", title: "B" }, { status: "skipped" }, 2);
+  day = upsertItem(day, plannedId("C"), { kind: "planned", title: "C" }, { status: "todo", photos: ["c.jpg"] }, 3);
+  day = upsertItem(day, newExtraId(9, 0.1), { kind: "extra", title: "Ramen", time: "20:00" }, { status: "done" }, 4);
+  assert.deepEqual(doneItems(day).map((i) => i.title), ["Ramen", "A", "C"]);
 });

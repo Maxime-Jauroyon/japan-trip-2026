@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v218";
+const CACHE = "japan-trip-2026-v219";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -503,6 +503,7 @@ const ASSETS = [
   "./src/map/offline-tiles.js",
   "./src/map/routes.js",
   "./src/map/user-pos.js",
+  "./src/pwa/journal-public.js",
   "./src/pwa/journal-store.js",
   "./src/pwa/photo-resize.js",
   "./src/pwa/sw-register.js",
@@ -533,6 +534,7 @@ const ASSETS = [
   "./src/ui/views/settings-view.js",
   "./src/ui/views/tickets.js",
   "./src/ui/views/weather.js",
+  "./src/ui/voyage-page.js",
   "./styles/base.css",
   "./styles/components.css",
   "./styles/map.css",
@@ -543,7 +545,8 @@ const ASSETS = [
   "./styles/standalone.css",
   "./styles/theme-light.css",
   "./styles/tokens.css",
-  "./styles/views.css"
+  "./styles/views.css",
+  "./styles/voyage.css"
 ];
 const IMG_HASH = {
   "./img/activities/akihabara-2.jpg": "7dce22f718",

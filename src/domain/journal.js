@@ -118,3 +118,14 @@ export function sanitizeDay(raw){
   });
   return { items };
 }
+
+/**
+ * Ce qui s’est vraiment passé un jour, pour la page famille : idées faites + activités ajoutées + tout élément qui a des photos.
+ * [{ id, title, kind, time?, note?, by?, photos: [noms] }] — les extras par heure, puis les idées par date de saisie.
+ */
+export function doneItems(day){
+  return Object.values((day && day.items) || {})
+    .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
+    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: livePhotos(it), at: it.at || 0 }))
+    .sort((a, b) => String(a.time || "99:99").localeCompare(String(b.time || "99:99")) || a.at - b.at);
+}
