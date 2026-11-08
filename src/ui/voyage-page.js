@@ -4,7 +4,7 @@
 import { CITIES, DAYS, ORDER, TRIP, TRAVELERS, loadData } from "../core/data.js";
 import { dayToISO, japanTodayISO } from "../core/dates.js";
 import { esc } from "../core/dom.js";
-import { doneItems, thumbName } from "../domain/journal.js";
+import { doneItems } from "../domain/journal.js";
 import { cityStayDates } from "../domain/trip.js";
 import { loadPublicJournal, publicPhotoUrl } from "../pwa/journal-public.js";
 
@@ -12,21 +12,43 @@ const REFRESH_MS = 90000;
 
 const dayLabel = (d) => `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}`;
 
-/** Miniature pour la page famille : lue directement sur le dépôt public. */
+/** Photo pour la page famille : lue directement sur le dépôt public (taille réduite, chargée à la demande). */
 const publicPhotoBtn = (cfg) => (iso, p) =>
-  `<button type="button" class="vy-thumb" data-full="${esc(publicPhotoUrl(cfg, iso, p.name))}" aria-label="${esc(p.title)}">` +
-  `<img src="${esc(publicPhotoUrl(cfg, iso, thumbName(p.name)))}" alt="${esc(p.title)}" loading="lazy" decoding="async" /></button>`;
+  `<button type="button" class="vy-photo" data-full="${esc(publicPhotoUrl(cfg, iso, p.name))}" aria-label="${esc(p.title)}">` +
+  `<img src="${esc(publicPhotoUrl(cfg, iso, p.name))}" alt="${esc(p.title)}" loading="lazy" decoding="async" /></button>`;
 
-/** Carte d’un jour (partagée avec l’onglet Carnet) ; `photoBtn(iso, { name, title, id })` fabrique une miniature. */
+/** Une publication : auteur, titre, photos à faire défiler, légende. */
+function postHtml(photoBtn, iso, it){
+  const who = it.by || "";
+  const meta = [who, it.time].filter(Boolean).join(" · ");
+  return `<article class="vy-post${it.photos.length ? "" : " plain"}"><header><span class="vy-avatar" aria-hidden="true">${esc((who || "✓").slice(0, 1))}</span>` +
+    `<div><strong>${esc(it.title)}</strong>${meta ? `<small>${esc(meta)}</small>` : ""}</div></header>` +
+    (it.photos.length
+      ? `<div class="vy-media"><div class="vy-car" data-n="${it.photos.length}">${it.photos.map(name => `<div class="vy-slide">${photoBtn(iso, { name, title: it.title, id: it.id })}</div>`).join("")}</div>` +
+        (it.photos.length > 1 ? `<span class="vy-count" aria-hidden="true">1 / ${it.photos.length}</span>` : "") + `</div>`
+      : "") +
+    (it.note ? `<p class="vy-caption">${esc(it.note)}</p>` : "") + `</article>`;
+}
+
+/** Un jour du fil : bandeau du jour puis ses publications (partagé avec l’onglet Carnet). */
 export function dayCardHtml(photoBtn, day, iso, items){
   const city = CITIES[day.city];
-  const photos = items.flatMap(it => it.photos.map(name => ({ name, title: it.title, id: it.id })));
-  return `<article class="vy-day"><header><span class="vy-n">J${day.n}</span><div><h3>${esc(dayLabel(day))}</h3>` +
-    `<p>${esc(city ? city.name : day.city)}${day.extraCity && CITIES[day.extraCity] ? " · " + esc(CITIES[day.extraCity].name) : ""}</p></div></header>` +
-    `<ul class="vy-list">` + items.map(it =>
-      `<li><span class="vy-time">${esc(it.time || "✓")}</span><span class="vy-what"><strong>${esc(it.title)}</strong>` +
-      `${it.note ? `<small>${esc(it.note)}</small>` : ""}</span>${it.by ? `<span class="vy-by">${esc(it.by)}</span>` : ""}</li>`).join("") + `</ul>` +
-    (photos.length ? `<div class="vy-grid">${photos.map(p => photoBtn(iso, p)).join("")}</div>` : "") + `</article>`;
+  const extra = day.extraCity && CITIES[day.extraCity] ? " · " + CITIES[day.extraCity].name : "";
+  return `<section class="vy-daygroup"><h3 class="vy-dayhead"><span class="vy-n">J${day.n}</span>${esc(dayLabel(day))}` +
+    `<small>${esc((city ? city.name : day.city) + extra)}</small></h3>` +
+    items.slice().sort((a, b) => b.photos.length - a.photos.length).map(it => postHtml(photoBtn, iso, it)).join("") + `</section>`;
+}
+
+/** Compteur « 2 / 4 » qui suit le défilement des photos d’une publication. */
+export function bindCarousels(root){
+  root.querySelectorAll(".vy-car").forEach(car => {
+    const count = car.parentElement.querySelector(".vy-count");
+    if (!count) return;
+    car.addEventListener("scroll", () => {
+      const i = Math.round(car.scrollLeft / Math.max(1, car.clientWidth)) + 1;
+      count.textContent = `${Math.min(i, Number(car.dataset.n))} / ${car.dataset.n}`;
+    }, { passive: true });
+  });
 }
 
 /** Parcours : les villes dans l’ordre ; celles déjà atteintes en couleur. */
@@ -67,6 +89,7 @@ async function render(root){
       : `<p class="vy-empty">Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt.</p>`) +
     `<p class="vy-foot">Mis à jour à ${new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} · se rafraîchit tout seul</p>`;
   root.querySelectorAll("[data-full]").forEach(b => b.addEventListener("click", () => openLightbox(b.dataset.full)));
+  bindCarousels(root);
 }
 
 export async function initVoyagePage(){

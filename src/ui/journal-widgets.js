@@ -61,7 +61,7 @@ export function hydratePhotos(root){
   root.querySelectorAll("img[data-jphoto]").forEach(async img => {
     const b = img.closest("[data-jp-name]");
     if (!b) return;
-    const url = await photoUrl(b.dataset.jpIso, b.dataset.jpName, true);
+    const url = await photoUrl(b.dataset.jpIso, b.dataset.jpName, !b.dataset.jpFeed);   // fil du Carnet : taille réduite, pas la miniature
     if (url) img.src = url; else b.classList.add("missing");
   });
   root.querySelectorAll("[data-jp-name]").forEach(b => b.addEventListener("click", e => {
