@@ -63,6 +63,9 @@ Chaque téléphone colle un jeton GitHub à portée limitée dans Réglages › 
 2. `npm run validate` — vérifie identifiants, références (villes, trajets, jours), coordonnées, dates.
 3. Publier (voir plus bas).
 
+**Ne touchez pas aux jours passés** (idées, météo, notes, journal, photos) : ils servent de souvenir du
+voyage. On réorganise seulement à partir d’aujourd’hui.
+
 Repères :
 - **Coordonnées** : `lat` / `lng` en degrés décimaux. Une idée sans coordonnées n’a pas de pin.
 - **Itinéraire du jour** (carte ville) : l’ordre des idées dans `days.json` est l’ordre de passage —
