@@ -3,10 +3,10 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { applyJournal, dayScore } from "../../domain/journal.js";
+import { applyJournal, collectPhotos, dayScore } from "../../domain/journal.js";
 import { ideasOf } from "../../domain/trip.js";
-import { journalConfig, journalDay, journalReady } from "../../pwa/journal-store.js";
-import { addButtonHtml, bindJournalRows, bindStatusButtons, extrasListHtml, fixedPillHtml, statusButtonHtml, syncLineText } from "../journal-widgets.js";
+import { journalDay, journalDays, journalReady } from "../../pwa/journal-store.js";
+import { addButtonHtml, bindJournalRows, bindStatusButtons, cameraButtonHtml, extrasListHtml, fixedPillHtml, photoStripHtml, statusButtonHtml, syncLineText } from "../journal-widgets.js";
 
 let viewN = null;
 
@@ -21,6 +21,20 @@ const todayN = () => {
 export function renderJournalSync(){
   const el = document.getElementById("jr-sync-line");
   if (el) el.textContent = syncLineText(journalReady());
+}
+
+/** Souvenirs : toutes les photos du voyage, par jour. */
+function souvenirsHtml(){
+  const days = journalDays().filter(([, d]) => collectPhotos([[0, d]]).length);
+  if (!days.length) return "";
+  return `<h4 class="sec-title">Souvenirs</h4>` + days.map(([iso, d]) => {
+    const day = DAYS.find(x => dayToISO(x) === iso);
+    const shots = collectPhotos([[iso, d]]);
+    return `<section class="jr-memo"><h5>${day ? esc(`J${day.n} · ${day.dow} ${day.date.replace(/\s\d{4}$/, "")}`) : esc(iso)}</h5>` +
+      `<div class="jr-grid">` + shots.map(s =>
+        `<button type="button" class="jr-thumb" data-jp-iso="${esc(iso)}" data-jp-id="${esc(s.id)}" data-jp-name="${esc(s.name)}" aria-label="${esc(s.title)}"><img data-jphoto alt="" decoding="async" /></button>`).join("") +
+      `</div></section>`;
+  }).join("");
 }
 
 export function renderJournalView(){
@@ -41,8 +55,10 @@ export function renderJournalView(){
     `<p class="jr-lead">Touche le rond : à faire → ✓ fait → ✗ pas fait. Les idées ne sont que des suggestions.</p>` +
     (view.planned.length ? `<ul class="jr-plan-list">` + view.planned.map(p =>
       `<li class="jr-plan st-row-${p.status}"><span class="jr-plan-title">${esc(p.act.title)}${fixedPillHtml(p.fixed)}</span>` +
-      `${statusButtonHtml(iso, p.act.title, p.status, p.fixed)}</li>`).join("") + `</ul>` : `<p class="jr-lead">Aucune idée au programme ce jour-là.</p>`) +
+      `${cameraButtonHtml(iso, { title: p.act.title }, "")}${statusButtonHtml(iso, p.act.title, p.status, p.fixed)}` +
+      photoStripHtml(iso, p.id, p.photos) + `</li>`).join("") + `</ul>` : `<p class="jr-lead">Aucune idée au programme ce jour-là.</p>`) +
     `<h4 class="sec-title">Ajouté pendant le voyage</h4>` + extrasListHtml(iso, view.extras) + addButtonHtml(iso) +
+    souvenirsHtml() +
     `<p class="jr-sync" id="jr-sync-line"></p>`;
   renderJournalSync();
   bindStatusButtons(box);

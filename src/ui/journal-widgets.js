@@ -3,8 +3,9 @@
 
 import { esc } from "../core/dom.js";
 import { state } from "../core/state.js";
-import { STATUS_LABELS, nextStatus } from "../domain/journal.js";
-import { addExtra, journalDay, patchItem, removeItem, setPlannedStatus, syncStatus } from "../pwa/journal-store.js";
+import { STATUS_LABELS, livePhotos, nextStatus } from "../domain/journal.js";
+import { addExtra, addPhotos, journalDay, patchItem, photoUrl, removeItem, removePhoto, setPlannedStatus, syncStatus } from "../pwa/journal-store.js";
+import { pickPhotos } from "../pwa/photo-resize.js";
 
 const GLYPH = { todo: "○", done: "✓", skipped: "✗" };
 
@@ -27,14 +28,13 @@ export function bindStatusButtons(root){
 /** Pastille « Prévu » des activités à billets (parcs) : ce ne sont pas de simples idées. */
 export const fixedPillHtml = (fixed) => fixed ? `<span class="fixed-pill">🎟️ Prévu</span>` : "";
 
-/** Ligne d’une activité ajoutée sur place. */
+/** Ligne d’une activité ajoutée sur place (avec ses photos et un bouton 📷). */
 export function extraRowHtml(iso, it){
-  const photos = (it.photos || []).length;
   return `<li class="jr-extra" data-extra="${esc(it.id)}" data-iso="${esc(iso)}" role="button" tabindex="0">` +
     `<span class="jr-time">${esc(it.time || "·")}</span>` +
     `<span class="jr-main"><strong>${esc(it.title)}</strong>${it.note ? `<small>${esc(it.note)}</small>` : ""}</span>` +
-    `${photos ? `<span class="jr-photos">📷 ${photos}</span>` : ""}` +
-    `${it.by ? `<span class="jr-by">${esc(it.by)}</span>` : ""}</li>`;
+    `${it.by ? `<span class="jr-by">${esc(it.by)}</span>` : ""}${cameraButtonHtml(iso, { id: it.id }, "")}` +
+    photoStripHtml(iso, it.id, livePhotos(it)) + `</li>`;
 }
 
 export function extrasListHtml(iso, extras){
@@ -43,8 +43,69 @@ export function extrasListHtml(iso, extras){
 
 export const addButtonHtml = (iso) => `<button type="button" class="jr-add" data-add-iso="${esc(iso)}"><span aria-hidden="true">＋</span> Ajouter une activité</button>`;
 
+/* —— Photos —— */
+
+/** Bande de miniatures d’un item (remplies ensuite par hydratePhotos). */
+export function photoStripHtml(iso, id, names){
+  if (!names.length) return "";
+  return `<div class="jr-strip">` + names.map(n =>
+    `<button type="button" class="jr-thumb" data-jp-iso="${esc(iso)}" data-jp-id="${esc(id)}" data-jp-name="${esc(n)}" aria-label="Voir la photo"><img data-jphoto alt="" decoding="async" /></button>`).join("") + `</div>`;
+}
+
+/** Bouton « 📷 Photos » : `target` = idée du programme (title) ou activité ajoutée (id). */
+export const cameraButtonHtml = (iso, target, label = "Photos") =>
+  `<button type="button" class="jr-cam" data-add-photo data-iso="${esc(iso)}"${target.id ? ` data-id="${esc(target.id)}"` : ` data-title="${esc(target.title)}"`}><span aria-hidden="true">📷</span> ${esc(label)}</button>`;
+
+/** Charge les miniatures (cache de l’appareil, sinon dépôt) et branche l’ouverture en grand. */
+export function hydratePhotos(root){
+  root.querySelectorAll("img[data-jphoto]").forEach(async img => {
+    const b = img.closest("[data-jp-name]");
+    if (!b) return;
+    const url = await photoUrl(b.dataset.jpIso, b.dataset.jpName, true);
+    if (url) img.src = url; else b.classList.add("missing");
+  });
+  root.querySelectorAll("[data-jp-name]").forEach(b => b.addEventListener("click", e => {
+    e.stopPropagation();
+    openPhotoViewer(b.dataset.jpIso, b.dataset.jpId, b.dataset.jpName);
+  }));
+}
+
+/** Branche les boutons « Photos » d’un conteneur. */
+export function bindCameraButtons(root){
+  root.querySelectorAll("[data-add-photo]").forEach(b => b.addEventListener("click", async e => {
+    e.stopPropagation();
+    const files = await pickPhotos();
+    if (!files.length) return;
+    b.classList.add("busy");
+    await addPhotos(b.dataset.iso, b.dataset.id ? { id: b.dataset.id } : { title: b.dataset.title }, files);
+    b.classList.remove("busy");
+  }));
+}
+
+let viewer = null;
+
+export async function openPhotoViewer(iso, id, name){
+  if (!viewer) {
+    viewer = document.createElement("div");
+    viewer.className = "jr-viewer";
+    viewer.setAttribute("role", "dialog");
+    viewer.setAttribute("aria-label", "Photo");
+    document.body.appendChild(viewer);
+  }
+  viewer.innerHTML = `<img alt="" /><div class="jr-viewer-bar"><button type="button" class="jr-v-del">Supprimer</button><button type="button" class="jr-v-close">Fermer</button></div>`;
+  viewer.hidden = false;
+  const close = () => { viewer.hidden = true; };
+  viewer.querySelector(".jr-v-close").onclick = close;
+  viewer.onclick = (e) => { if (e.target === viewer || e.target.tagName === "IMG") close(); };
+  viewer.querySelector(".jr-v-del").onclick = () => { if (confirm("Supprimer cette photo pour tout le monde ?")) { removePhoto(iso, id, name); close(); } };
+  const url = await photoUrl(iso, name, false) || await photoUrl(iso, name, true);
+  if (url) viewer.querySelector("img").src = url;
+}
+
 /** Branche les lignes d’ajouts (modifier) et les boutons « Ajouter » d’un conteneur. */
 export function bindJournalRows(root){
+  hydratePhotos(root);
+  bindCameraButtons(root);
   root.querySelectorAll("[data-extra]").forEach(li => {
     const open = () => openJournalSheet({ iso: li.dataset.iso, id: li.dataset.extra });
     li.addEventListener("click", open);
@@ -92,18 +153,30 @@ export function openJournalSheet({ iso, id }){
     `<div class="jr-row"><label class="jr-field"><span>Heure</span><input type="time" id="jr-time" value="${esc(cur && cur.time ? cur.time : "")}" /></label>` +
     `<button type="button" class="jr-geo" id="jr-geo"${pos || geo ? "" : " disabled"}>${geo ? "📍 Position ajoutée ✓" : "📍 Ajouter ma position"}</button></div>` +
     `<label class="jr-field"><span>Note (facultatif)</span><textarea id="jr-note" rows="2" maxlength="300" placeholder="Un souvenir, un conseil…">${esc(cur && cur.note ? cur.note : "")}</textarea></label>` +
+    (cur ? photoStripHtml(iso, id, livePhotos(cur)) : "") +
+    `<button type="button" class="jr-cam wide" id="jr-photo-btn"><span aria-hidden="true">📷</span> <span id="jr-photo-label">${cur ? "Ajouter des photos" : "Ajouter des photos"}</span></button>` +
     `<div class="jr-actions">${cur ? `<button type="button" class="btn-secondary jr-del">Supprimer</button>` : ""}<button type="button" class="btn-primary jr-save">Enregistrer</button></div></div>`;
   sheet.hidden = false;
   document.documentElement.classList.add("jr-sheet-open");
   const $ = (s) => sheet.querySelector(s);
   $(".jr-close").onclick = closeSheet;
   sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
+  let pending = [];
+  hydratePhotos(sheet);
+  $("#jr-photo-btn").onclick = async () => {
+    const files = await pickPhotos();
+    if (!files.length) return;
+    if (cur) { await addPhotos(iso, { id }, files); $("#jr-photo-label").textContent = `${files.length} photo${files.length > 1 ? "s" : ""} ajoutée${files.length > 1 ? "s" : ""} ✓`; return; }
+    pending = pending.concat(files);
+    $("#jr-photo-label").textContent = `${pending.length} photo${pending.length > 1 ? "s" : ""} prête${pending.length > 1 ? "s" : ""} ✓`;
+  };
   $("#jr-geo").onclick = () => { if (pos) { geo = pos; $("#jr-geo").textContent = "📍 Position ajoutée ✓"; } };
   $(".jr-save").onclick = () => {
     const title = $("#jr-title").value.trim();
     if (!title) { $("#jr-title").focus(); return; }
     const fields = { title, time: $("#jr-time").value || undefined, note: $("#jr-note").value.trim() || undefined, lat: geo ? geo.lat : undefined, lng: geo ? geo.lng : undefined };
-    if (cur) patchItem(iso, id, fields); else addExtra(iso, fields);
+    if (cur) patchItem(iso, id, fields);
+    else { const nid = addExtra(iso, fields); if (pending.length) addPhotos(iso, { id: nid }, pending); }
     closeSheet();
   };
   const del = $(".jr-del");

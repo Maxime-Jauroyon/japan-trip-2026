@@ -17,9 +17,9 @@ import { clearLegEnds } from "../../map/country.js";
 import { PLACE_COLORS, TRANSPORT_COLORS, cityIconSvg, placeGlyphSvg, transportIconSvg } from "../../shared/icons.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 import { fillCityForecast } from "../views/weather.js";
-import { applyJournal, dayScore, plannedId, STATUS_LABELS, statusOfPlanned } from "../../domain/journal.js";
+import { applyJournal, dayScore, livePhotos, plannedId, STATUS_LABELS, statusOfPlanned } from "../../domain/journal.js";
 import { journalDay, patchPlanned, setPlannedStatus } from "../../pwa/journal-store.js";
-import { addButtonHtml, bindJournalRows, bindStatusButtons, extrasListHtml, fixedPillHtml, statusButtonHtml } from "../journal-widgets.js";
+import { addButtonHtml, bindCameraButtons, bindJournalRows, bindStatusButtons, cameraButtonHtml, extrasListHtml, fixedPillHtml, hydratePhotos, photoStripHtml, statusButtonHtml } from "../journal-widgets.js";
 import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
 import { actLinksHtml, contextPhraseHtml, copyFieldHtml, imgRetryAttr, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
@@ -63,7 +63,8 @@ function journalDetailHtml(act){
     `<button type="button" role="radio" data-jr-status="${k}" aria-checked="${k === st}">${STATUS_LABELS[k]}</button>`).join("");
   return `<div class="jr-detail"><h4 class="sec-title">Notre journal</h4>` +
     `<div class="jr-seg" role="radiogroup" aria-label="Statut">${opts}</div>` +
-    `<textarea class="jr-note" rows="2" maxlength="300" placeholder="Une note, un souvenir…" aria-label="Note">${esc(it && it.note ? it.note : "")}</textarea></div>`;
+    `<textarea class="jr-note" rows="2" maxlength="300" placeholder="Une note, un souvenir…" aria-label="Note">${esc(it && it.note ? it.note : "")}</textarea>` +
+    photoStripHtml(iso, plannedId(act.title), livePhotos(it)) + cameraButtonHtml(iso, { title: act.title }, "Ajouter des photos") + `</div>`;
 }
 
 function bindJournalDetail(act){
@@ -74,6 +75,8 @@ function bindJournalDetail(act){
     box.querySelectorAll("[data-jr-status]").forEach(x => x.setAttribute("aria-checked", String(x === b)));
     setPlannedStatus(iso, act.title, b.dataset.jrStatus);
   }));
+  hydratePhotos(box);
+  bindCameraButtons(box);
   const ta = box.querySelector(".jr-note");
   ta.addEventListener("blur", () => {
     const cur = journalDay(iso).items[plannedId(act.title)];

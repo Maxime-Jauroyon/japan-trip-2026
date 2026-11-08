@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, dayScore, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { applyJournal, collectPhotos, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -52,4 +52,15 @@ test("jour illisible : nettoyé sans planter", () => {
   const d = sanitizeDay({ items: { "p:a": { title: "A", status: "n’importe quoi", at: "7" }, bad: { title: "B" }, "x:1": 3 } });
   assert.deepEqual(Object.keys(d.items), ["p:a"]);
   assert.equal(d.items["p:a"].status, "todo");
+});
+
+test("photos : retirer une photo la retire partout, la miniature suit le nom", () => {
+  const id = plannedId("Fushimi Inari");
+  const a = upsertItem(emptyDay(), id, { kind: "planned", title: "Fushimi Inari" }, { photos: ["a.jpg", "b.jpg"] }, 1);
+  const b = upsertItem(a, id, {}, { gone: ["a.jpg"] }, 2);
+  const m = mergeDay(a, b);
+  assert.deepEqual(livePhotos(m.items[id]), ["b.jpg"]);
+  assert.equal(thumbName("b.jpg"), "b.t.jpg");
+  assert.deepEqual(collectPhotos([["2026-11-21", m]]), [{ iso: "2026-11-21", id, title: "Fushimi Inari", name: "b.jpg" }]);
+  assert.deepEqual(sanitizeDay({ items: { "p:a": { title: "A", photos: ["ok.jpg", "../evil", 3] } } }).items["p:a"].photos, ["ok.jpg"]);
 });

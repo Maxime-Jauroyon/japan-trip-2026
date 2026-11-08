@@ -28,7 +28,8 @@ export function mergeDay(a, b){
     if (!x || !y) { out[id] = x || y; return; }
     const win = (y.at || 0) > (x.at || 0) ? y : x;
     const photos = [...new Set([...(x.photos || []), ...(y.photos || [])])];
-    out[id] = { ...win, ...(photos.length ? { photos } : {}) };
+    const gone = [...new Set([...(x.gone || []), ...(y.gone || [])])];   // photos retirées : retirées partout
+    out[id] = { ...win, ...(photos.length ? { photos } : {}), ...(gone.length ? { gone } : {}) };
   });
   return { items: out };
 }
@@ -64,8 +65,23 @@ export function extrasOf(day){
     .sort((a, b) => String(a.time || "99:99").localeCompare(String(b.time || "99:99")) || (a.at || 0) - (b.at || 0));
 }
 
-/** Photos (noms de fichiers) d’un item, ou []. */
-export const photosOfItem = (day, id) => ((day && day.items && day.items[id] && !day.items[id].deleted && day.items[id].photos) || []).slice();
+/** Photos visibles d’un item (noms de fichiers, sans celles retirées). */
+export const livePhotos = (it) => (it && !it.deleted ? (it.photos || []).filter((n) => !(it.gone || []).includes(n)) : []);
+
+/** Photos (noms de fichiers) d’un item d’un jour, ou []. */
+export const photosOfItem = (day, id) => livePhotos(day && day.items && day.items[id]);
+
+/** Miniature associée à une photo (« x.jpg » → « x.t.jpg »). */
+export const thumbName = (name) => String(name).replace(/\.jpg$/, ".t.jpg");
+
+/** Toutes les photos de plusieurs jours : [{ iso, id, title, name }] dans l’ordre des jours. */
+export function collectPhotos(days){
+  const out = [];
+  (days || []).forEach(([iso, day]) => Object.values((day && day.items) || {}).forEach((it) => {
+    livePhotos(it).forEach((name) => out.push({ iso, id: it.id, title: it.title, name }));
+  }));
+  return out;
+}
 
 /**
  * Vue effective d’un jour : les idées du programme avec leur statut + les ajouts.
@@ -96,7 +112,9 @@ export function sanitizeDay(raw){
   const src = raw && typeof raw === "object" && raw.items && typeof raw.items === "object" ? raw.items : {};
   Object.entries(src).forEach(([id, it]) => {
     if (!it || typeof it !== "object" || typeof it.title !== "string" || !/^[px]:/.test(id)) return;
-    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0 };
+    const clean = (a) => (Array.isArray(a) ? a.filter((n) => typeof n === "string" && /^[\w.-]+\.jpg$/.test(n)) : undefined);
+    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone) };
+    Object.keys(items[id]).forEach((k) => { if (items[id][k] === undefined) delete items[id][k]; });
   });
   return { items };
 }
