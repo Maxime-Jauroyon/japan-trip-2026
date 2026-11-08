@@ -51,7 +51,7 @@ tests/                tests unitaires (node:test)
 
 ## Journal partagé (ce qu’on a vraiment fait)
 
-Statuts « fait / pas fait » des idées, activités ajoutées sur place (et, ensuite, photos) : saisis dans l’app,
+Statuts « fait / pas fait » des idées, activités ajoutées sur place et photos (réduites à ~300 Ko sur le téléphone, `journal/photos/`) : saisis dans l’app,
 enregistrés sur le téléphone puis synchronisés avec la branche **`journal`** de ce dépôt (`journal/days/AAAA-MM-JJ.json`)
 via l’API GitHub Contents (`src/pwa/journal-store.js`, fusion pure dans `src/domain/journal.js`).
 Chaque téléphone colle un jeton GitHub à portée limitée dans Réglages › Journal partagé. Dépôt/branche : `data/trip.json` › `journal`.

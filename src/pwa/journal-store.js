@@ -5,7 +5,8 @@
 
 import { DAY_PROGRESS_KEY, JOURNAL_CFG_KEY, JOURNAL_KEY } from "../config.js";
 import { TRIP } from "../core/data.js";
-import { emptyDay, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, upsertItem } from "../domain/journal.js";
+import { emptyDay, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, thumbName, upsertItem } from "../domain/journal.js";
+import { resizeImage } from "./photo-resize.js";
 
 export const JOURNAL_CHANGED = "japan-trip:journal-changed";
 export const JOURNAL_SYNC = "japan-trip:journal-sync";
@@ -13,7 +14,7 @@ export const JOURNAL_SYNC = "japan-trip:journal-sync";
 const SYNC_EVERY_MS = 60000;
 const API = "https://api.github.com";
 
-/** { days: { iso: jour }, shas: { iso: sha }, dirty: [iso] } */
+/** { days: { iso: jour }, shas: { iso: sha }, dirty: [iso], photos: [{ iso, name }] (photos à envoyer) } */
 let mem = null;
 let timer = null;
 let running = false;
@@ -29,6 +30,7 @@ function load(){
   mem.days = mem.days || {};
   mem.shas = mem.shas || {};
   mem.dirty = Array.isArray(mem.dirty) ? mem.dirty : [];
+  mem.photos = Array.isArray(mem.photos) ? mem.photos : [];
   return mem;
 }
 
@@ -99,6 +101,101 @@ export function patchItem(iso, id, patch){
 
 export function removeItem(iso, id){
   commit(iso, upsertItem(journalDay(iso), id, {}, { deleted: true, by: by() }));
+}
+
+/* —— Photos : réduites sur le téléphone, gardées dans le cache de l’appareil, envoyées au dépôt —— */
+
+const PHOTO_CACHE = "japan-journal-v1";
+const FULL_PX = 1600, THUMB_PX = 400;
+const blobs = new Map();          // secours si le cache du navigateur est indisponible
+const urls = new Map();           // clé → URL d’objet déjà créée
+const photoKey = (iso, name) => `https://journal.invalid/${iso}/${name}`;
+
+async function cachePut(iso, name, blob){
+  blobs.set(photoKey(iso, name), blob);
+  try { await (await caches.open(PHOTO_CACHE)).put(photoKey(iso, name), new Response(blob, { headers: { "Content-Type": "image/jpeg" } })); } catch (_) { /* pas de cache */ }
+}
+
+async function cacheGet(iso, name){
+  const k = photoKey(iso, name);
+  if (blobs.has(k)) return blobs.get(k);
+  try {
+    const res = await (await caches.open(PHOTO_CACHE)).match(k);
+    if (res) { const b = await res.blob(); blobs.set(k, b); return b; }
+  } catch (_) { /* pas de cache */ }
+  return null;
+}
+
+/**
+ * Ajoute des photos à une idée du programme (`target` = { title }) ou à une activité ajoutée (`target` = { id }).
+ * Retourne le nombre de photos ajoutées.
+ */
+export async function addPhotos(iso, target, files){
+  const names = [];
+  for (const file of files) {
+    try {
+      const [full, thumb] = [await resizeImage(file, FULL_PX, 0.82), await resizeImage(file, THUMB_PX, 0.7)];
+      const name = `${Date.now().toString(36)}${Math.floor(Math.random() * 46656).toString(36).padStart(3, "0")}.jpg`;
+      await cachePut(iso, name, full);
+      await cachePut(iso, thumbName(name), thumb);
+      load().photos.push({ iso, name });
+      names.push(name);
+    } catch (_) { /* photo illisible : ignorée */ }
+  }
+  if (!names.length) return 0;
+  const id = target.id || plannedId(target.title);
+  const cur = journalDay(iso).items[id];
+  const base = target.id ? {} : { kind: "planned", title: target.title, status: "todo" };
+  commit(iso, upsertItem(journalDay(iso), id, base, { photos: [...((cur && cur.photos) || []), ...names], by: by() }));
+  return names.length;
+}
+
+/** Retire une photo (de tous les téléphones). */
+export function removePhoto(iso, id, name){
+  const cur = journalDay(iso).items[id];
+  if (!cur) return;
+  commit(iso, upsertItem(journalDay(iso), id, {}, { gone: [...(cur.gone || []), name], by: by() }));
+}
+
+/** URL affichable d’une photo : cache de l’appareil, sinon téléchargement depuis le dépôt (puis mise en cache). */
+export async function photoUrl(iso, name, thumb){
+  const file = thumb ? thumbName(name) : name;
+  const k = photoKey(iso, file);
+  if (urls.has(k)) return urls.get(k);
+  let blob = await cacheGet(iso, file);
+  if (!blob && journalReady() && navigator.onLine !== false) {
+    try {
+      const res = await gh(`contents/journal/photos/${iso}/${file}?ref=${encodeURIComponent(repoCfg().branch)}`, { headers: { Accept: "application/vnd.github.raw+json" } });
+      if (res.ok) { blob = await res.blob(); if (blob.size) await cachePut(iso, file, blob); }
+    } catch (_) { /* réseau */ }
+  }
+  if (!blob || !blob.size) return "";
+  const url = URL.createObjectURL(blob);
+  urls.set(k, url);
+  return url;
+}
+
+const blobToB64 = (blob) => new Promise((resolve, reject) => {
+  const r = new FileReader();
+  r.onload = () => resolve(String(r.result).split(",")[1] || "");
+  r.onerror = () => reject(new Error("lecture de la photo"));
+  r.readAsDataURL(blob);
+});
+
+/** Envoie les photos en attente (taille réduite : ~300 Ko chacune). */
+async function uploadPhotos(){
+  const m = load();
+  for (const p of [...m.photos]) {
+    for (const file of [p.name, thumbName(p.name)]) {
+      const blob = await cacheGet(p.iso, file);
+      if (!blob) continue;
+      const res = await gh(`contents/journal/photos/${p.iso}/${file}`, { method: "PUT", body: JSON.stringify({
+        message: `Photo ${p.iso}${by() ? " · " + by() : ""}`, content: await blobToB64(blob), branch: repoCfg().branch }) });
+      if (!res.ok && res.status !== 422) throw new Error(res.status === 401 || res.status === 403 ? "jeton refusé" : `photo non envoyée (${res.status})`);
+    }
+    m.photos = m.photos.filter(x => x !== p);
+    save();
+  }
 }
 
 /** Anciennes coches « Fait » de « Et maintenant ? » (stockées par appareil) → journal partagé. */
@@ -207,7 +304,8 @@ export async function syncNow(){
   setStatus("syncing");
   try {
     const m = load();
-    if (m.dirty.length && !Object.keys(m.shas).length) await ensureBranch();
+    if ((m.dirty.length || m.photos.length) && !Object.keys(m.shas).length) await ensureBranch();
+    await uploadPhotos();
     let index = await remoteIndex();
     const isos = new Set([...m.dirty, ...Object.keys(index).filter(iso => index[iso] !== m.shas[iso])]);
     for (const iso of [...isos].sort()) {
