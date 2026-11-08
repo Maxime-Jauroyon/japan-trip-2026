@@ -27,19 +27,6 @@
         "desc": "Le quartier électrique : arcades, boutiques anime et gadgets. Idéal pour atterrir en douceur après le vol de nuit."
       },
       {
-        "title": "Shinjuku — skyline",
-        "lat": 35.6938,
-        "lng": 139.7036,
-        "desc": "Le cœur néon de Tokyo : gratte-ciel, grands magasins, et vue du soir depuis un observatoire ou un rooftop."
-      },
-      {
-        "title": "Tokyo Character Street",
-        "phrases": "shop",
-        "lat": 35.6806,
-        "lng": 139.7684,
-        "desc": "Galerie souterraine sous Tokyo Station, pleine de boutiques anime, Pokemon et personnages — parfait pour le premier jour."
-      },
-      {
         "title": "Asakusa de nuit — Kaminarimon & Sensō-ji",
         "lat": 35.7111,
         "lng": 139.7967,
@@ -86,6 +73,13 @@
         "lat": 35.7203,
         "lng": 139.7608,
         "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses."
+      },
+      {
+        "title": "Tokyo Character Street",
+        "phrases": "shop",
+        "lat": 35.6806,
+        "lng": 139.7684,
+        "desc": "Galerie souterraine sous Tokyo Station : boutiques anime, Pokemon et personnages, à l’abri de la pluie. À enchaîner avec les musées d’Ueno (≈ 10 min en JR)."
       }
     ],
     "reminders": [
@@ -823,6 +817,12 @@
         "lat": 34.6651,
         "lng": 135.5066,
         "desc": "Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord."
+      },
+      {
+        "title": "Shinjuku — skyline",
+        "lat": 35.6938,
+        "lng": 139.7036,
+        "desc": "Soirée libre après le retour d’Osaka : gratte-ciel et néons, vue de nuit depuis l’observatoire gratuit de la mairie ou un rooftop (horaires à vérifier ; à faire seulement s’il fait beau)."
       }
     ],
     "moves": [
