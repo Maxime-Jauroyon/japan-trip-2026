@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v212";
+const CACHE = "japan-trip-2026-v213";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -483,6 +483,7 @@ const ASSETS = [
   "./src/domain/classify.js",
   "./src/domain/expenses.js",
   "./src/domain/itinerary.js",
+  "./src/domain/journal.js",
   "./src/domain/legs.js",
   "./src/domain/photos.js",
   "./src/domain/phrases.js",
@@ -502,11 +503,14 @@ const ASSETS = [
   "./src/map/offline-tiles.js",
   "./src/map/routes.js",
   "./src/map/user-pos.js",
+  "./src/pwa/journal-store.js",
   "./src/pwa/sw-register.js",
   "./src/shared/icons.js",
   "./src/ui/alerts.js",
   "./src/ui/app-shell.js",
   "./src/ui/city-list.js",
+  "./src/ui/journal-init.js",
+  "./src/ui/journal-widgets.js",
   "./src/ui/map-controls.js",
   "./src/ui/my-position.js",
   "./src/ui/panels/city-panel.js",
@@ -520,6 +524,7 @@ const ASSETS = [
   "./src/ui/theme.js",
   "./src/ui/views/expenses.js",
   "./src/ui/views/fx-converter.js",
+  "./src/ui/views/journal.js",
   "./src/ui/views/next-stop.js",
   "./src/ui/views/onsite-view.js",
   "./src/ui/views/prep-view.js",

@@ -17,6 +17,9 @@ import { clearLegEnds } from "../../map/country.js";
 import { PLACE_COLORS, TRANSPORT_COLORS, cityIconSvg, placeGlyphSvg, transportIconSvg } from "../../shared/icons.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 import { fillCityForecast } from "../views/weather.js";
+import { applyJournal, dayScore, plannedId, STATUS_LABELS, statusOfPlanned } from "../../domain/journal.js";
+import { journalDay, patchPlanned, setPlannedStatus } from "../../pwa/journal-store.js";
+import { addButtonHtml, bindJournalRows, bindStatusButtons, extrasListHtml, fixedPillHtml, statusButtonHtml } from "../journal-widgets.js";
 import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
 import { actLinksHtml, contextPhraseHtml, copyFieldHtml, imgRetryAttr, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
@@ -37,9 +40,46 @@ export function openActivityDetail(act, opts){
     closedNoteHtml(act) +
     notesListHtml(act.notes) +
     actLinksHtml(act.links) +
+    journalDetailHtml(act) +
     contextPhraseHtml(phraseContextForAct(act))
   );
+  bindJournalDetail(act);
   highlightPin(act, opts);
+}
+
+/** « Notre journal » dans la fiche : statut + note, pour le jour affiché. */
+function selectedIso(){
+  const d = state.selectedDay != null ? DAYS.find(x => x.n === state.selectedDay) : null;
+  return d ? dayToISO(d) : null;
+}
+
+function journalDetailHtml(act){
+  const iso = selectedIso();
+  if (!iso) return "";
+  const jd = journalDay(iso);
+  const st = statusOfPlanned(jd, act.title);
+  const it = jd.items[plannedId(act.title)];
+  const opts = (act.fixed ? ["todo", "done"] : ["todo", "done", "skipped"]).map(k =>
+    `<button type="button" role="radio" data-jr-status="${k}" aria-checked="${k === st}">${STATUS_LABELS[k]}</button>`).join("");
+  return `<div class="jr-detail"><h4 class="sec-title">Notre journal</h4>` +
+    `<div class="jr-seg" role="radiogroup" aria-label="Statut">${opts}</div>` +
+    `<textarea class="jr-note" rows="2" maxlength="300" placeholder="Une note, un souvenir…" aria-label="Note">${esc(it && it.note ? it.note : "")}</textarea></div>`;
+}
+
+function bindJournalDetail(act){
+  const iso = selectedIso();
+  const box = panel.querySelector(".detail-sheet .jr-detail");
+  if (!iso || !box) return;
+  box.querySelectorAll("[data-jr-status]").forEach(b => b.addEventListener("click", () => {
+    box.querySelectorAll("[data-jr-status]").forEach(x => x.setAttribute("aria-checked", String(x === b)));
+    setPlannedStatus(iso, act.title, b.dataset.jrStatus);
+  }));
+  const ta = box.querySelector(".jr-note");
+  ta.addEventListener("blur", () => {
+    const cur = journalDay(iso).items[plannedId(act.title)];
+    const v = ta.value.trim();
+    if ((cur && cur.note || "") !== v) patchPlanned(iso, act.title, { note: v || undefined });
+  });
 }
 
 /** Avertissement de fermeture dans la fiche, pour le jour affiché. */
@@ -139,6 +179,8 @@ function dayStripHtml(days, sel){
 
 /** Étapes de la journée (ordre de passage), avec le temps de trajet entre deux étapes. */
 function itineraryHtml(stops, d){
+  const iso = dayToISO(d) || "";
+  const jd = journalDay(iso);
   return `<ol class="itin">` + stops.map((s, i) => {
     let seg = "";
     if (i > 0) {
@@ -154,13 +196,14 @@ function itineraryHtml(stops, d){
       const thumb = photo
         ? `<span class="itin-thumb"><img src="${esc(thumbOf(photo.src))}" alt="" decoding="async" ${imgRetryAttr("this.parentNode.remove()")}/></span>`
         : "";
-      return seg + `<li class="itin-stop is-act" data-stop="${i}" role="button" tabindex="0">` +
+      const st = statusOfPlanned(jd, a.title);
+      return seg + `<li class="itin-stop is-act st-row-${st}" data-stop="${i}" role="button" tabindex="0">` +
         `<span class="itin-mark" style="--c:${PLACE_COLORS[kind] || PLACE_COLORS.pin}">${s.step}</span>` +
         `<span class="itin-main"><strong>${esc(a.title)}</strong>` +
         (a.desc ? `<span class="itin-desc">${esc(a.desc)}</span>` : "") +
-        closedPillHtml(closureOf(a, d)) +
+        closedPillHtml(closureOf(a, d)) + fixedPillHtml(a.fixed) +
         `<span class="itin-dist" data-dist-lat="${a.lat}" data-dist-lng="${a.lng}" hidden></span>` + `</span>` +
-        thumb + mapsLinkHtml(a, "list") + `</li>`;
+        thumb + statusButtonHtml(iso, a.title, st, a.fixed) + mapsLinkHtml(a, "list") + `</li>`;
     }
     const hotel = s.kind === "hotel";
     const role = i === 0 ? "Départ" : "Arrivée";
@@ -186,6 +229,10 @@ function dayViewHtml(c, d){
   const moves = d.moves || [];
   const locker = renderLuggageLocker(d);
   const facts = [];
+  const iso = dayToISO(d) || "";
+  const jview = applyJournal(ideasOf(d), journalDay(iso));
+  const score = dayScore(jview);
+  if (score.done) facts.push(`✓ ${score.done} fait${score.done > 1 ? "s" : ""}`);
   if (sum.activities) facts.push(`${sum.activities} étape${sum.activities > 1 ? "s" : ""}`);
   if (stops.length > 1) facts.push(`≈ ${fmtKm(sum.km)}`, `${fmtMin(sum.minutes)} de trajets`);
   let body = `<div class="day-head"><h3>${esc(d.dow)} ${esc(dayNum(d))} ${esc(monthOf(d))}` +
@@ -199,9 +246,13 @@ function dayViewHtml(c, d){
   if (locker) body += `<h4 class="sec-title">Bagages</h4>${locker}`;
   if (stops.length > 1 || sum.activities) body += `<h4 class="sec-title">Programme</h4>${itineraryHtml(stops, d)}`;
   if (others.length) {
-    body += `<h4 class="sec-title">Autres idées</h4><div class="idea-list">` + others.map((a, i) =>
-      `<div class="idea" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${mapsLinkHtml(a, "list")}</div>`
-    ).join("") + `</div>`;
+    body += `<h4 class="sec-title">Autres idées</h4><div class="idea-list">` + others.map((a, i) => {
+      const st = statusOfPlanned(journalDay(iso), a.title);
+      return `<div class="idea st-row-${st}" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${fixedPillHtml(a.fixed)}${statusButtonHtml(iso, a.title, st, a.fixed)}${mapsLinkHtml(a, "list")}</div>`;
+    }).join("") + `</div>`;
+  }
+  if (iso) {
+    body += `<h4 class="sec-title">Ajouté pendant le voyage</h4>` + extrasListHtml(iso, jview.extras) + addButtonHtml(iso);
   }
   if (!moves.length && !locker && stops.length <= 1 && !others.length && !(d.reminders || []).length) {
     body += `<p class="empty-day">Rien de prévu ce jour-là pour ${esc(c.name)}.</p>`;
@@ -264,7 +315,7 @@ function activate(el, fn){
 }
 
 /** Affiche l’aperçu (n = null) ou un jour ; `dir` = sens du glissement (-1 / 1). */
-function renderView(dir){
+function renderView(dir, keepScroll){
   if (!view) return;
   const { city: c, days } = view;
   const listEl = panel.querySelector(".city-panel");
@@ -281,7 +332,9 @@ function renderView(dir){
   listEl.classList.remove("slide-l", "slide-r");
   if (dir) { void listEl.offsetWidth; listEl.classList.add(dir > 0 ? "slide-l" : "slide-r"); }
   const body = panel.querySelector(".overlay-body");
-  if (body) body.scrollTop = 0;
+  if (body && !keepScroll) body.scrollTop = 0;
+  bindStatusButtons(listEl);
+  bindJournalRows(listEl);
 
   bindMoves(listEl, c.id);
   fillCityForecast(listEl, c.id);
@@ -316,6 +369,15 @@ function renderView(dir){
       if (a) activate(n, () => openActivityDetail(a, { zoom: a.lat != null }));
     });
   }
+}
+
+/** Le journal a changé (autre téléphone, coche…) : redessine le jour affiché sans bouger le défilement. */
+export function refreshDayView(){
+  if (!view || !panel.classList.contains("open") || panel.classList.contains("has-detail")) return;
+  const body = panel.querySelector(".overlay-body");
+  const top = body ? body.scrollTop : 0;
+  renderView(0, true);
+  if (body) body.scrollTop = top;
 }
 
 function syncStrip(){

@@ -254,7 +254,8 @@
             "label": "App Store · Q-chan (Fuji-Q)",
             "url": "https://apps.apple.com/app/q-chan/id1483774385"
           }
-        ]
+        ],
+        "fixed": true
       }
     ],
     "wake": {
@@ -718,7 +719,8 @@
             "label": "App Store · app officielle USJ",
             "url": "https://apps.apple.com/app/universal-studios-japan/id532097000"
           }
-        ]
+        ],
+        "fixed": true
       }
     ],
     "wake": {
