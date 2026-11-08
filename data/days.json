@@ -51,23 +51,25 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Sanctuaire Nezu + Yanaka",
-        "lat": 35.7203,
-        "lng": 139.7608,
-        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses. Premier sanctuaire de la journée : le bon endroit pour acheter le carnet goshuin."
-      },
-      {
-        "title": "Ueno — parc & musées",
-        "lat": 35.7155,
-        "lng": 139.7745,
-        "desc": "Grand parc avec musées et étang. Feuillages encore verts début novembre (rouge attendu vers le 28 nov). Après-midi culturel tranquille."
-      },
-      {
-        "title": "Tokyo Character Street",
+        "title": "Tokyo Character Street + Ramen Street",
         "phrases": "shop",
         "lat": 35.6806,
         "lng": 139.7684,
-        "desc": "Galerie souterraine sous Tokyo Station : boutiques anime, Pokemon et personnages, à l’abri de la pluie. À enchaîner avec les musées d’Ueno (≈ 10 min en JR)."
+        "desc": "Galerie souterraine sous Tokyo Station : boutiques anime, Pokemon et personnages, puis Ramen Street pour déjeuner au sec. Lundi : la plupart des musées sont fermés, donc journée centres couverts."
+      },
+      {
+        "title": "Ikebukuro — Sunshine City & Pokémon Center Mega Tokyo",
+        "phrases": "shop",
+        "lat": 35.7294,
+        "lng": 139.7195,
+        "desc": "Grand centre commercial couvert : le plus grand Pokémon Center de Tokyo, boutiques, restos et aquarium sur le toit. Tout est à l’abri de la pluie (horaires à vérifier)."
+      },
+      {
+        "title": "Nakano Broadway",
+        "phrases": "shop",
+        "lat": 35.7076,
+        "lng": 139.6657,
+        "desc": "Galerie couverte sur 4 niveaux : Mandarake, figurines, jouets rétro, anime et manga. Ouvert le lundi, la plupart des boutiques à partir de midi environ."
       }
     ],
     "reminders": [
@@ -88,23 +90,16 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Harajuku / Omotesandō",
-        "phrases": "shop",
-        "lat": 35.6714,
-        "lng": 139.7048,
-        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
+        "title": "Ueno — Tokyo National Museum & musées",
+        "lat": 35.7188,
+        "lng": 139.7765,
+        "desc": "Mardi : musées ouverts (Tokyo National Museum 9 h 30–17 h, expo Hiroshige jusqu’au 20 déc.). Parfait un jour de pluie ; horaires à vérifier."
       },
       {
-        "title": "Sanctuaire Meiji",
-        "lat": 35.6764,
-        "lng": 139.6993,
-        "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier."
-      },
-      {
-        "title": "Shibuya — Hachikō, Pokemon",
+        "title": "Shibuya — Parco : Nintendo Tokyo & Pokémon Center",
         "lat": 35.6591,
         "lng": 139.7006,
-        "desc": "Le scramble mythique, Hachikō, puis Pokemon et culture jeune autour de la gare."
+        "desc": "Shibuya Parco regroupe Nintendo Tokyo, Pokémon Center et les boutiques jeux vidéo, le tout couvert. Le carrefour se regarde depuis Scramble Square ou Hikarie plutôt que sous la pluie."
       }
     ],
     "wake": {
@@ -807,6 +802,12 @@
         "desc": "Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord."
       },
       {
+        "title": "Sanctuaire Nezu + Yanaka",
+        "lat": 35.7203,
+        "lng": 139.7608,
+        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses."
+      },
+      {
         "title": "Shinjuku — skyline",
         "lat": 35.6938,
         "lng": 139.7036,
@@ -851,6 +852,19 @@
         "lat": 35.7308,
         "lng": 139.7148,
         "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs."
+      },
+      {
+        "title": "Harajuku / Omotesandō",
+        "phrases": "shop",
+        "lat": 35.6714,
+        "lng": 139.7048,
+        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
+      },
+      {
+        "title": "Sanctuaire Meiji",
+        "lat": 35.6764,
+        "lng": 139.6993,
+        "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier."
       }
     ],
     "wake": {
