@@ -51,28 +51,16 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Asakusa — Sensō-ji",
-        "lat": 35.7148,
-        "lng": 139.7967,
-        "desc": "Le plus vieux temple de Tokyo, via la rue commerçante Nakamise et la grande lanterne Kaminarimon."
-      },
-      {
-        "title": "Promenade Sumida",
-        "lat": 35.7106,
-        "lng": 139.8034,
-        "desc": "Balade le long de la Sumida : ponts, parcs, vues vers la Skytree et le vieux centre."
+        "title": "Sanctuaire Nezu + Yanaka",
+        "lat": 35.7203,
+        "lng": 139.7608,
+        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses. Premier sanctuaire de la journée : le bon endroit pour acheter le carnet goshuin."
       },
       {
         "title": "Ueno — parc & musées",
         "lat": 35.7155,
         "lng": 139.7745,
         "desc": "Grand parc avec musées et étang. Feuillages encore verts début novembre (rouge attendu vers le 28 nov). Après-midi culturel tranquille."
-      },
-      {
-        "title": "Sanctuaire Nezu + Yanaka",
-        "lat": 35.7203,
-        "lng": 139.7608,
-        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses."
       },
       {
         "title": "Tokyo Character Street",
@@ -84,8 +72,8 @@
     ],
     "reminders": [
       {
-        "title": "Goshuin : acheter le carnet (goshuinchō) au premier temple",
-        "desc": "Au Sensō-ji, premier temple du séjour : prendre le carnet à tampons (御朱印帳), puis faire tamponner et calligraphier un goshuin dans chaque temple ou sanctuaire (environ ¥300–500, en cash, parfois notés à l’avance sur papier)."
+        "title": "Goshuin : acheter le carnet (goshuinchō) au premier sanctuaire",
+        "desc": "Sensō-ji est déjà vu de nuit (bureau des goshuin fermé le soir) : prendre le carnet à tampons (御朱印帳) au sanctuaire Nezu, premier de la journée, puis faire tamponner un goshuin dans chaque temple ou sanctuaire (environ ¥300–500, en cash). Pour avoir aussi celui du Sensō-ji, repasser un matin (bureau ouvert en journée)."
       }
     ],
     "wake": {
