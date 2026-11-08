@@ -38,6 +38,18 @@
         "lat": 35.6806,
         "lng": 139.7684,
         "desc": "Galerie souterraine sous Tokyo Station, pleine de boutiques anime, Pokemon et personnages — parfait pour le premier jour."
+      },
+      {
+        "title": "Asakusa de nuit — Kaminarimon & Sensō-ji",
+        "lat": 35.7111,
+        "lng": 139.7967,
+        "desc": "Ce soir, après la sieste : temple et grande porte éclairés, presque sans foule (≈ 20 min à pied de l’hôtel). Dîner dans les ruelles autour de Kaminarimon, retour avant 22 h. Les boutiques de Nakamise sont fermées."
+      },
+      {
+        "title": "Sumida de nuit — pont Azuma-bashi & Skytree",
+        "lat": 35.7101,
+        "lng": 139.8,
+        "desc": "Balade plate et courte au bord de la rivière, avec la Skytree éclairée en face. Plan B plus léger, à enchaîner avec Asakusa (≈ 10 min à pied) ou à faire seul."
       }
     ],
     "wake": {
