@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, collectPhotos, doneItems, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { applyJournal, collectPhotos, doneItems, likedBy, setLike, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -71,4 +71,15 @@ test("page famille : idées faites, ajouts et éléments avec photos ; pas les i
   day = upsertItem(day, plannedId("C"), { kind: "planned", title: "C" }, { status: "todo", photos: ["c.jpg"] }, 3);
   day = upsertItem(day, newExtraId(9, 0.1), { kind: "extra", title: "Ramen", time: "20:00" }, { status: "done" }, 4);
   assert.deepEqual(doneItems(day).map((i) => i.title), ["Ramen", "A", "C"]);
+});
+
+test("❤️ : chacun aime / retire, la fusion garde l’action la plus récente de chaque personne", () => {
+  const id = newExtraId(1, 0.1);
+  const base = upsertItem(emptyDay(), id, { kind: "extra", title: "Ramen" }, { status: "done" }, 5);
+  const a = setLike(setLike(base, id, "Maxime", true, 10), id, "Maxime", false, 30);   // aimé puis retiré
+  const b = setLike(setLike(base, id, "Maxime", true, 20), id, "Léo", true, 25);
+  const m = mergeDay(a, b);
+  assert.deepEqual(likedBy(m.items[id]), ["Léo"]);
+  assert.equal(m.items[id].at, 5);   // un cœur ne réécrit pas le reste de l’item
+  assert.deepEqual(sanitizeDay({ items: { "x:1": { title: "A", likes: { Léo: 5, Bad: "x" } } } }).items["x:1"].likes, { Léo: 5 });
 });
