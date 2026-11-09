@@ -58,11 +58,11 @@
         "desc": "Galerie souterraine sous Tokyo Station : boutiques anime, Pokemon et personnages, puis Ramen Street pour déjeuner au sec. Lundi : la plupart des musées sont fermés, donc journée centres couverts."
       },
       {
-        "title": "Ikebukuro — Sunshine City & Pokémon Center Mega Tokyo",
-        "phrases": "shop",
-        "lat": 35.7294,
-        "lng": 139.7195,
-        "desc": "Grand centre commercial couvert : le plus grand Pokémon Center de Tokyo, boutiques, restos et aquarium sur le toit. Tout est à l’abri de la pluie (horaires à vérifier)."
+        "title": "Shinjuku — mairie de Tokyo, observatoire gratuit",
+        "phrases": "visit",
+        "lat": 35.6896,
+        "lng": 139.6921,
+        "desc": "Observatoire gratuit au 45ᵉ étage de la mairie de Tokyo (≈ 5 min en Chuo line depuis Nakano) : panorama sur la ville, à l’abri. Meilleur si la pluie se calme ; horaires à vérifier."
       },
       {
         "title": "Nakano Broadway",
@@ -70,6 +70,13 @@
         "lat": 35.7076,
         "lng": 139.6657,
         "desc": "Galerie couverte sur 4 niveaux : Mandarake, figurines, jouets rétro, anime et manga. Ouvert le lundi, la plupart des boutiques à partir de midi environ."
+      },
+      {
+        "title": "Ikebukuro — Sunshine City & Pokémon Center Mega Tokyo",
+        "phrases": "shop",
+        "lat": 35.7294,
+        "lng": 139.7195,
+        "desc": "Grand centre commercial couvert : le plus grand Pokémon Center de Tokyo, boutiques, restos et aquarium sur le toit. Tout est à l’abri de la pluie (horaires à vérifier)."
       }
     ],
     "reminders": [
