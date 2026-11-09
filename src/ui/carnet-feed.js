@@ -33,7 +33,7 @@ export function dayCardHtml(ctx, day, iso, items){
   const extra = day.extraCity && CITIES[day.extraCity] ? " · " + CITIES[day.extraCity].name : "";
   return `<section class="vy-daygroup" id="cn-day-${day.n}" data-day-label="${esc(`J${day.n} · ${dayLabel(day)}`)}"><h3 class="vy-dayhead"><span class="vy-n">J${day.n}</span>${esc(dayLabel(day))}` +
     `<small>${esc((city ? city.name : day.city) + extra)}</small></h3>` +
-    items.slice().sort((a, b) => b.photos.length - a.photos.length).map(it => postHtml(ctx, iso, it)).join("") + `</section>`;
+    items.map(it => postHtml(ctx, iso, it)).join("") + `</section>`;
 }
 
 /** Parcours façon « stories » : un rond par ville, anneau doré si on y est passé ; toucher = aller au premier jour de la ville. */
