@@ -46,7 +46,7 @@ export function renderCarnet(force){
   if (!box) return;
   const scroller = document.getElementById("view-carnet");
   const days = journalDays()
-    .map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd) }))
+    .map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd, iso) }))
     .filter(x => x.day && x.items.length);
   renderCarnetStatus();
   if (!days.length && syncStatus.state === "syncing") { box.innerHTML = SKELETON; lastSig = null; return; }   // premier chargement

@@ -81,7 +81,10 @@ const by = () => journalConfig().author || undefined;
 
 /** Change le statut d’une idée du programme (todo | done | skipped). */
 export function setPlannedStatus(iso, title, status){
-  commit(iso, upsertItem(journalDay(iso), plannedId(title), { kind: "planned", title }, { status, by: by() }));
+  const cur = journalDay(iso).items[plannedId(title)];
+  // doneAt = instant où l’idée passe à « fait » (sert à ranger le Carnet dans l’ordre vécu ; ne bouge plus ensuite)
+  const doneAt = status === "done" ? ((cur && cur.status === "done" && cur.doneAt) || Date.now()) : undefined;
+  commit(iso, upsertItem(journalDay(iso), plannedId(title), { kind: "planned", title }, { status, doneAt, by: by() }));
 }
 
 /** Change n’importe quel champ d’une idée du programme (note, photos…). */

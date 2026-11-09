@@ -52,7 +52,7 @@ function openLightbox(root, btn){
 const SKELETON = `<div class="cn-skel"><div class="sk sk-cover"></div><div class="sk-row"><i class="sk sk-dot"></i><i class="sk sk-dot"></i><i class="sk sk-dot"></i><i class="sk sk-dot"></i></div><div class="sk sk-post"></div></div>`;
 
 function paint(root){
-  const days = journal.map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd) })).filter(x => x.day && x.items.length);
+  const days = journal.map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd, iso) })).filter(x => x.day && x.items.length);
   root.innerHTML = carnetHtml({ days, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
     emptyText: "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt." }, { photoBtn, likeHtml }) +
     `<p class="vy-foot">Mis à jour à ${new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} · se rafraîchit tout seul</p>`;

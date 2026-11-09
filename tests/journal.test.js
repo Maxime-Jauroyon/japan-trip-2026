@@ -70,7 +70,7 @@ test("page famille : idées faites, ajouts et éléments avec photos ; pas les i
   day = upsertItem(day, plannedId("B"), { kind: "planned", title: "B" }, { status: "skipped" }, 2);
   day = upsertItem(day, plannedId("C"), { kind: "planned", title: "C" }, { status: "todo", photos: ["c.jpg"] }, 3);
   day = upsertItem(day, newExtraId(9, 0.1), { kind: "extra", title: "Ramen", time: "20:00" }, { status: "done" }, 4);
-  assert.deepEqual(doneItems(day).map((i) => i.title), ["Ramen", "A", "C"]);
+  assert.deepEqual(doneItems(day).map((i) => i.title).sort(), ["A", "C", "Ramen"]);
 });
 
 test("❤️ : chacun aime / retire, la fusion garde l’action la plus récente de chaque personne", () => {
@@ -82,4 +82,14 @@ test("❤️ : chacun aime / retire, la fusion garde l’action la plus récente
   assert.deepEqual(likedBy(m.items[id]), ["Léo"]);
   assert.equal(m.items[id].at, 5);   // un cœur ne réécrit pas le reste de l’item
   assert.deepEqual(sanitizeDay({ items: { "x:1": { title: "A", likes: { Léo: 5, Bad: "x" } } } }).items["x:1"].likes, { Léo: 5 });
+});
+
+test("Carnet : les moments se rangent dans l’ordre vécu, pas par nombre de photos", () => {
+  const iso = "2026-11-09";
+  const at = (hhmm) => Date.parse(`${iso}T${hhmm}:00+09:00`);
+  let day = upsertItem(emptyDay(), plannedId("Station"), { kind: "planned", title: "Station" }, { status: "done", doneAt: at("10:30"), photos: ["a.jpg", "b.jpg", "c.jpg"] }, at("23:00"));
+  day = upsertItem(day, plannedId("Nakano"), { kind: "planned", title: "Nakano" }, { status: "done", doneAt: at("15:56"), photos: ["d.jpg"] }, at("23:10"));
+  day = upsertItem(day, plannedId("Shinjuku"), { kind: "planned", title: "Shinjuku" }, { status: "done", doneAt: at("20:49"), photos: ["e.jpg", "f.jpg"] }, at("20:49"));
+  day = upsertItem(day, newExtraId(1, 0.2), { kind: "extra", title: "Ramen", time: "13:00" }, { status: "done" }, at("22:00"));
+  assert.deepEqual(doneItems(day, iso).map((i) => i.title), ["Station", "Ramen", "Nakano", "Shinjuku"]);
 });

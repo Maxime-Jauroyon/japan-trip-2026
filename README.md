@@ -67,6 +67,7 @@ Chaque téléphone colle un jeton GitHub à portée limitée dans Réglages › 
 voyage. On réorganise seulement à partir d’aujourd’hui.
 
 Repères :
+- **Ordre réel** : un jour déjà vécu peut porter `"ordreReel": true` — l’ordre de ses idées est celui réellement suivi, les tests ne le réoptimisent pas.
 - **Coordonnées** : `lat` / `lng` en degrés décimaux. Une idée sans coordonnées n’a pas de pin.
 - **Itinéraire du jour** (carte ville) : l’ordre des idées dans `days.json` est l’ordre de passage —
   départ de l’hôtel (ou de la gare le jour d’arrivée), retour à l’hôtel (ou à la gare le jour du
