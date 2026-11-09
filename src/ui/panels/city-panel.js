@@ -19,7 +19,7 @@ import { fmtClock, sunTimes } from "../../domain/sun.js";
 import { fillCityForecast } from "../views/weather.js";
 import { applyJournal, dayScore, livePhotos, plannedId, STATUS_LABELS, statusOfPlanned } from "../../domain/journal.js";
 import { journalDay, patchPlanned, setPlannedStatus } from "../../pwa/journal-store.js";
-import { addButtonHtml, bindCameraButtons, bindJournalRows, bindStatusButtons, cameraButtonHtml, extrasListHtml, fixedPillHtml, hydratePhotos, photoStripHtml, statusButtonHtml } from "../journal-widgets.js";
+import { bindCameraButtons, bindJournalRows, bindStatusButtons, cameraButtonHtml, fixedPillHtml, hydratePhotos, photoStripHtml, statusButtonHtml } from "../journal-widgets.js";
 import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
 import { actLinksHtml, contextPhraseHtml, copyFieldHtml, imgRetryAttr, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
@@ -253,9 +253,6 @@ function dayViewHtml(c, d){
       const st = statusOfPlanned(journalDay(iso), a.title);
       return `<div class="idea st-row-${st}" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${fixedPillHtml(a.fixed)}${statusButtonHtml(iso, a.title, st, a.fixed)}${mapsLinkHtml(a, "list")}</div>`;
     }).join("") + `</div>`;
-  }
-  if (iso) {
-    body += `<h4 class="sec-title">Ajouté pendant le voyage</h4>` + extrasListHtml(iso, jview.extras) + addButtonHtml(iso);
   }
   if (!moves.length && !locker && stops.length <= 1 && !others.length && !(d.reminders || []).length) {
     body += `<p class="empty-day">Rien de prévu ce jour-là pour ${esc(c.name)}.</p>`;

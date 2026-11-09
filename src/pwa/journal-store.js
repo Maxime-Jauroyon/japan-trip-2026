@@ -92,21 +92,6 @@ export function patchPlanned(iso, title, patch){
   commit(iso, upsertItem(journalDay(iso), plannedId(title), { kind: "planned", title, status: "todo" }, { ...patch, by: by() }));
 }
 
-/** Ajoute une activité non prévue ; retourne son id. */
-export function addExtra(iso, fields){
-  const id = newExtraId();
-  commit(iso, upsertItem(journalDay(iso), id, { kind: "extra", title: fields.title, status: "done" }, { ...fields, by: by() }));
-  return id;
-}
-
-export function patchItem(iso, id, patch){
-  commit(iso, upsertItem(journalDay(iso), id, {}, { ...patch, by: by() }));
-}
-
-export function removeItem(iso, id){
-  commit(iso, upsertItem(journalDay(iso), id, {}, { deleted: true, by: by() }));
-}
-
 /* —— Photos : réduites sur le téléphone, gardées dans le cache de l’appareil, envoyées au dépôt —— */
 
 const PHOTO_CACHE = "japan-journal-v1";
