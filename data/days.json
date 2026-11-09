@@ -100,25 +100,25 @@
         "title": "Ueno — Tokyo National Museum & sanctuaire Tōshō-gū",
         "lat": 35.7188,
         "lng": 139.7765,
-        "desc": "Mardi : musées ouverts (Tokyo National Museum 9 h 30–17 h, expo Hiroshige jusqu’au 20 déc.) ; le sanctuaire doré Ueno Tōshō-gū est à côté, dans le parc. Le sanctuaire se fait sous le parapluie, les musées au sec ; horaires à vérifier."
+        "desc": "Matin (la pluie est surtout attendue avant midi) : le Tokyo National Museum au sec dès 9 h 30 (expo Hiroshige jusqu’au 20 déc.), puis le sanctuaire doré Ueno Tōshō-gū dans le parc quand la pluie diminue. Horaires à vérifier."
       },
       {
         "title": "Ryōgoku — Edo-Tokyo Museum",
         "lat": 35.6967,
         "lng": 139.7959,
-        "desc": "Musée de l’histoire d’Edo et de Tokyo, rouvert en mars 2026 : maquettes, quartiers d’époque, au sec. Ouvert le mardi (9 h 30–17 h 30) ; expo temporaire terminée le 8 nov, exposition permanente à voir."
+        "desc": "Matin, au sec : musée de l’histoire d’Edo et de Tokyo, rouvert en mars 2026 (ouvert le mardi 9 h 30–17 h 30 ; exposition permanente, l’expo temporaire est finie). Idéal pour la pluie d’avant midi."
       },
       {
         "title": "Kanda Myōjin",
         "lat": 35.7019,
         "lng": 139.7678,
-        "desc": "Sanctuaire à quelques minutes de l’hôtel : porte rouge, ema (plaquettes de vœux) décorés d’anime, en partie couvert. Idéal pour commencer la matinée et prendre un goshuin."
+        "desc": "Quelques minutes de l’hôtel : porte rouge, ema (plaquettes de vœux) décorés d’anime, en partie couvert. À faire en début d’après-midi, quand la pluie baisse ; on y prend un goshuin."
       },
       {
         "title": "Sanctuaire Meiji",
         "lat": 35.6764,
         "lng": 139.6993,
-        "desc": "Sanctuaire shinto en forêt au milieu de la ville : sous la pluie, les arbres abritent en partie et il y a peu de monde. Allées calmes jusqu’à la cour de gravier ; un bon endroit pour le goshuin."
+        "desc": "Après-midi, quand la pluie a diminué : sanctuaire shinto en forêt au milieu de la ville, allées calmes jusqu’à la cour de gravier, très peu de monde. Les arbres abritent en partie ; bon endroit pour le goshuin."
       },
       {
         "title": "Shibuya — Parco : Nintendo Tokyo & Pokémon Center",
@@ -130,7 +130,7 @@
         "title": "Jardins Est du Palais impérial",
         "lat": 35.6862,
         "lng": 139.7574,
-        "desc": "Jardins gratuits sur l’ancien château d’Edo : douves, murs de pierre, tours de guet et pont Nijūbashi, à voir même sous le parapluie (fermé lundi et vendredi, à vérifier)."
+        "desc": "Jardins gratuits sur l’ancien château d’Edo : douves, murs de pierre, tours de guet et pont Nijūbashi. À faire dans la partie sèche de la journée, même sous le parapluie (fermé lundi et vendredi, à vérifier)."
       }
     ],
     "wake": {
