@@ -267,6 +267,18 @@
     {
       "match": "nakano",
       "slug": "nakano-broadway"
+    },
+    {
+      "match": "kanda",
+      "slug": "kanda-myojin"
+    },
+    {
+      "match": "edo-tokyo|ry[oō]goku",
+      "slug": "edo-tokyo-museum"
+    },
+    {
+      "match": "z[oō]j[oō]-?ji",
+      "slug": "zojo-ji"
     }
   ],
   "places": {
@@ -1711,6 +1723,54 @@
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nakano_Broadway_2021130_①_01.jpg"
+      }
+    ],
+    "kanda-myojin": [
+      {
+        "file": "kanda-myojin.jpg",
+        "author": "teien_off",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanda_shrine,_Chiyoda;_June_2008_(08).jpg"
+      },
+      {
+        "file": "kanda-myojin-2.jpg",
+        "author": "teien_off",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kanda_shrine,_Chiyoda;_June_2008_(12).jpg"
+      }
+    ],
+    "edo-tokyo-museum": [
+      {
+        "file": "edo-tokyo-museum.jpg",
+        "author": "Wiiii",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Edo-Tokyo_Museum.jpg"
+      },
+      {
+        "file": "edo-tokyo-museum-2.jpg",
+        "author": "Guilhem Vellut from Annecy, France",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Edo-Tokyo_Museum_@_Ryogoku_(9633801465).jpg"
+      }
+    ],
+    "zojo-ji": [
+      {
+        "file": "zojo-ji.jpg",
+        "author": "Syced",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Zōjō-ji_2.jpg"
+      },
+      {
+        "file": "zojo-ji-2.jpg",
+        "author": "Ymblanter",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Zōjō-ji_Sangedatsu-mon_gate_seen_from_the_main_temple.jpg"
       }
     ]
   }

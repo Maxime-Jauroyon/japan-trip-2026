@@ -97,16 +97,40 @@
     "city": "tokyo",
     "ideas": [
       {
-        "title": "Ueno — Tokyo National Museum & musées",
+        "title": "Ueno — Tokyo National Museum & sanctuaire Tōshō-gū",
         "lat": 35.7188,
         "lng": 139.7765,
-        "desc": "Mardi : musées ouverts (Tokyo National Museum 9 h 30–17 h, expo Hiroshige jusqu’au 20 déc.). Parfait un jour de pluie ; horaires à vérifier."
+        "desc": "Mardi : musées ouverts (Tokyo National Museum 9 h 30–17 h, expo Hiroshige jusqu’au 20 déc.) ; le sanctuaire doré Ueno Tōshō-gū est à côté, dans le parc. Le sanctuaire se fait sous le parapluie, les musées au sec ; horaires à vérifier."
+      },
+      {
+        "title": "Ryōgoku — Edo-Tokyo Museum",
+        "lat": 35.6967,
+        "lng": 139.7959,
+        "desc": "Musée de l’histoire d’Edo et de Tokyo, rouvert en mars 2026 : maquettes, quartiers d’époque, au sec. Ouvert le mardi (9 h 30–17 h 30) ; expo temporaire terminée le 8 nov, exposition permanente à voir."
+      },
+      {
+        "title": "Kanda Myōjin",
+        "lat": 35.7019,
+        "lng": 139.7678,
+        "desc": "Sanctuaire à quelques minutes de l’hôtel : porte rouge, ema (plaquettes de vœux) décorés d’anime, en partie couvert. Idéal pour commencer la matinée et prendre un goshuin."
+      },
+      {
+        "title": "Sanctuaire Meiji",
+        "lat": 35.6764,
+        "lng": 139.6993,
+        "desc": "Sanctuaire shinto en forêt au milieu de la ville : sous la pluie, les arbres abritent en partie et il y a peu de monde. Allées calmes jusqu’à la cour de gravier ; un bon endroit pour le goshuin."
       },
       {
         "title": "Shibuya — Parco : Nintendo Tokyo & Pokémon Center",
         "lat": 35.6591,
         "lng": 139.7006,
         "desc": "Shibuya Parco regroupe Nintendo Tokyo, Pokémon Center et les boutiques jeux vidéo, le tout couvert. Le carrefour se regarde depuis Scramble Square ou Hikarie plutôt que sous la pluie."
+      },
+      {
+        "title": "Jardins Est du Palais impérial",
+        "lat": 35.6862,
+        "lng": 139.7574,
+        "desc": "Jardins gratuits sur l’ancien château d’Edo : douves, murs de pierre, tours de guet et pont Nijūbashi, à voir même sous le parapluie (fermé lundi et vendredi, à vérifier)."
       }
     ],
     "wake": {
@@ -132,6 +156,12 @@
         "lat": 35.6251,
         "lng": 139.7753,
         "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie."
+      },
+      {
+        "title": "Zōjō-ji — grand temple",
+        "lat": 35.6574,
+        "lng": 139.7488,
+        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À faire avant la Tokyo Tower de nuit."
       },
       {
         "title": "Tokyo Tower de nuit",
@@ -849,12 +879,6 @@
         "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs."
       },
       {
-        "title": "Jardins Est du Palais impérial",
-        "lat": 35.6862,
-        "lng": 139.7574,
-        "desc": "Jardins gratuits sur l’ancien château — douves, pelouses, pause verte au centre de Tokyo."
-      },
-      {
         "title": "Animate",
         "lat": 35.7308,
         "lng": 139.7148,
@@ -866,12 +890,6 @@
         "lat": 35.6714,
         "lng": 139.7048,
         "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
-      },
-      {
-        "title": "Sanctuaire Meiji",
-        "lat": 35.6764,
-        "lng": 139.6993,
-        "desc": "Sanctuaire shinto en forêt au milieu de la ville. Allées calmes jusqu’à la cour de gravier."
       }
     ],
     "wake": {
