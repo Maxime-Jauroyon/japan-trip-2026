@@ -56,28 +56,44 @@ export function photoStripHtml(iso, id, names){
 export const cameraButtonHtml = (iso, target, label = "Photos") =>
   `<button type="button" class="jr-cam" data-add-photo data-iso="${esc(iso)}"${target.id ? ` data-id="${esc(target.id)}"` : ` data-title="${esc(target.title)}"`}><span aria-hidden="true">📷</span> ${esc(label)}</button>`;
 
-/** Charge les photos : miniature floue tout de suite (cache de l’appareil), puis la photo nette ; « Réessayer » si elle manque. */
+let observer = null;
+
+/** Charge une photo : miniature floue tout de suite (cache de l’appareil), puis la photo nette ; « Réessayer » si elle manque. */
+async function loadPhoto(b){
+  const img = b.querySelector("img[data-jphoto]");
+  if (!img) return;
+  const feed = !!b.dataset.jpFeed;
+  b.classList.remove("missing");
+  b.classList.add("loading");
+  const [iso, name] = [b.dataset.jpIso, b.dataset.jpName];
+  if (feed) {
+    const small = await photoUrl(iso, name, true);
+    if (small) { img.src = small; img.classList.add("blur"); }
+  }
+  const url = await photoUrl(iso, name, !feed);
+  if (!url) { b.classList.remove("loading"); if (!img.src) b.classList.add("missing"); return; }
+  const done = () => { img.classList.remove("blur"); b.classList.remove("loading"); };
+  if (feed && img.src && img.src !== url) {
+    const full = new Image();
+    full.onload = () => { img.src = url; done(); };
+    full.onerror = done;
+    full.src = url;
+  } else { img.onload = done; img.src = url; if (img.complete) done(); }
+}
+
+/** Branche les photos d’un conteneur : chargées seulement quand elles approchent de l’écran (IntersectionObserver). */
 export function hydratePhotos(root){
-  root.querySelectorAll("[data-jp-name]").forEach(async b => {
-    const img = b.querySelector("img[data-jphoto]");
-    if (!img) return;
-    const feed = !!b.dataset.jpFeed;
-    b.classList.remove("missing");
-    b.classList.add("loading");
-    const [iso, name] = [b.dataset.jpIso, b.dataset.jpName];
-    if (feed) {
-      const small = await photoUrl(iso, name, true);
-      if (small) { img.src = small; img.classList.add("blur"); }
-    }
-    const url = await photoUrl(iso, name, !feed);
-    if (!url) { b.classList.remove("loading"); if (!img.src) b.classList.add("missing"); return; }
-    const done = () => { img.classList.remove("blur"); b.classList.remove("loading"); };
-    if (feed && img.src && img.src !== url) {
-      const full = new Image();
-      full.onload = () => { img.src = url; done(); };
-      full.onerror = done;
-      full.src = url;
-    } else { img.onload = done; img.src = url; if (img.complete) done(); }
+  if (!observer && "IntersectionObserver" in window) {
+    observer = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      observer.unobserve(e.target);
+      loadPhoto(e.target);
+    }), { rootMargin: "500px 400px" });
+  }
+  root.querySelectorAll("[data-jp-name]").forEach(b => {
+    if (b.dataset.jpSeen && !b.classList.contains("missing")) return;
+    b.dataset.jpSeen = "1";
+    if (observer) observer.observe(b); else loadPhoto(b);
   });
   root.querySelectorAll("[data-jp-name]:not([data-jp-bound])").forEach(b => { b.dataset.jpBound = "1"; b.addEventListener("click", e => {
     e.stopPropagation();

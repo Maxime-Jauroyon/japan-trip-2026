@@ -12,18 +12,19 @@ export const feedState = { mode: "feed", filter: null };
 
 const dayLabel = (d) => `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}`;
 
-/** Une publication : auteur, titre, photos à faire défiler, légende, ❤️. */
+/** Une publication façon Instagram : auteur + titre, photos à faire défiler (points), ❤️, légende. */
 function postHtml(ctx, iso, it){
   const who = it.by || "";
   const meta = [who, it.time].filter(Boolean).join(" · ");
   const likes = ctx.likeHtml ? ctx.likeHtml(iso, it) : "";
-  return `<article class="vy-post${it.photos.length ? "" : " plain"}"><header><span class="vy-avatar" aria-hidden="true">${esc((who || "✓").slice(0, 1))}</span>` +
+  const n = it.photos.length;
+  return `<article class="vy-post${n ? "" : " plain"}" data-post="${esc(iso + "|" + it.id)}"><header><span class="vy-avatar" aria-hidden="true">${esc((who || "✓").slice(0, 1))}</span>` +
     `<div><strong>${esc(it.title)}</strong>${meta ? `<small>${esc(meta)}</small>` : ""}</div></header>` +
-    (it.photos.length
-      ? `<div class="vy-media"><div class="vy-car" data-n="${it.photos.length}">${it.photos.map(name => `<div class="vy-slide">${ctx.photoBtn(iso, { name, title: it.title, id: it.id })}</div>`).join("")}</div>` +
-        (it.photos.length > 1 ? `<span class="vy-count" aria-hidden="true">1 / ${it.photos.length}</span>` : "") + `</div>`
-      : "") +
-    (it.note ? `<p class="vy-caption">${esc(it.note)}</p>` : "") + (likes ? `<footer>${likes}</footer>` : "") + `</article>`;
+    (n ? `<div class="vy-media"><div class="vy-car" data-n="${n}">${it.photos.map(name => `<div class="vy-slide">${ctx.photoBtn(iso, { name, title: it.title, id: it.id })}</div>`).join("")}</div>` +
+      `<span class="vy-heart" aria-hidden="true">❤️</span></div>` +
+      (n > 1 ? `<div class="vy-dots" aria-hidden="true">${it.photos.map((_, k) => `<i${k ? "" : ' class="on"'}></i>`).join("")}</div>` : "") : "") +
+    (likes ? `<div class="vy-actions">${likes}</div>` : "") +
+    (it.note ? `<p class="vy-caption">${who ? `<b>${esc(who)}</b>` : ""}${esc(it.note)}</p>` : "") + `</article>`;
 }
 
 /** Un jour du fil : bandeau du jour puis ses publications. */
@@ -83,11 +84,11 @@ export function bindCarnet(root, again){
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }));
   root.querySelectorAll(".vy-car").forEach(car => {
-    const count = car.parentElement.querySelector(".vy-count");
-    if (!count) return;
+    const dots = car.closest(".vy-post").querySelectorAll(".vy-dots i");
+    if (dots.length < 2) return;
     car.addEventListener("scroll", () => {
-      const i = Math.round(car.scrollLeft / Math.max(1, car.clientWidth)) + 1;
-      count.textContent = `${Math.min(i, Number(car.dataset.n))} / ${car.dataset.n}`;
+      const i = Math.min(dots.length - 1, Math.round(car.scrollLeft / Math.max(1, car.clientWidth)));
+      dots.forEach((d, k) => d.classList.toggle("on", k === i));
     }, { passive: true });
   });
 }
