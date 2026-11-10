@@ -17,7 +17,7 @@ import { clearLegEnds } from "../../map/country.js";
 import { PLACE_COLORS, TRANSPORT_COLORS, cityIconSvg, placeGlyphSvg, transportIconSvg } from "../../shared/icons.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 import { fillCityForecast } from "../views/weather.js";
-import { applyJournal, dayScore, livePhotos, plannedId, STATUS_LABELS, statusOfPlanned } from "../../domain/journal.js";
+import { applyJournal, dayScore, orderedPhotos, plannedId, STATUS_LABELS, statusOfPlanned } from "../../domain/journal.js";
 import { journalDay, patchPlanned, setPlannedStatus } from "../../pwa/journal-store.js";
 import { bindCameraButtons, bindJournalRows, bindStatusButtons, cameraButtonHtml, fixedPillHtml, hydratePhotos, photoStripHtml, statusButtonHtml } from "../journal-widgets.js";
 import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
@@ -65,7 +65,7 @@ function journalDetailHtml(act){
   return `<div class="jr-detail"><h4 class="sec-title">Notre journal</h4>` +
     `<div class="jr-seg" role="radiogroup" aria-label="Statut">${opts}</div>` +
     `<textarea class="jr-note" rows="2" maxlength="300" placeholder="Une note, un souvenir…" aria-label="Note">${esc(it && it.note ? it.note : "")}</textarea>` +
-    photoStripHtml(iso, plannedId(act.title), livePhotos(it)) + cameraButtonHtml(iso, { title: act.title }, "Ajouter des photos") + `</div>`;
+    photoStripHtml(iso, plannedId(act.title), orderedPhotos(it)) + cameraButtonHtml(iso, { title: act.title }, "Ajouter des photos") + `</div>`;
 }
 
 function bindJournalDetail(act){

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { applyJournal, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -101,4 +101,17 @@ test("heures du Carnet : affichées seulement si elles sont réelles (fait à te
   const items = doneItems(day, iso);
   assert.deepEqual(items.map((i) => [i.title, i.timed]), [["Ancien", false], ["Ueno", true]]);
   assert.equal(clockJst(items[1].when), "11 h 09");
+});
+
+test("photo phare d’une activité en premier, couverture du carnet = le choix le plus récent", () => {
+  const id = plannedId("Meiji");
+  let d1 = upsertItem(emptyDay(), id, { kind: "planned", title: "Meiji" }, { status: "done", photos: ["a.jpg", "b.jpg", "c.jpg"], cover: "c.jpg", hero: { name: "b.jpg", at: 10 } }, 1);
+  assert.deepEqual(orderedPhotos(d1.items[id]), ["c.jpg", "a.jpg", "b.jpg"]);
+  assert.deepEqual(doneItems(d1, "2026-11-10")[0].photos, ["c.jpg", "a.jpg", "b.jpg"]);
+  const d2 = upsertItem(emptyDay(), plannedId("Ueno"), { kind: "planned", title: "Ueno" }, { status: "done", photos: ["u.jpg"], hero: { name: "u.jpg", at: 20 } }, 2);
+  assert.equal(heroPhoto([["2026-11-10", d1], ["2026-11-09", d2]]).name, "u.jpg");
+  d1 = upsertItem(d1, id, {}, { gone: ["c.jpg"] }, 3);   // photo phare supprimée : l’ordre normal revient
+  assert.deepEqual(orderedPhotos(d1.items[id]), ["a.jpg", "b.jpg"]);
+  assert.equal(heroPhoto([]), null);
+  assert.equal(sanitizeDay({ items: { "p:a": { title: "A", cover: "../x", hero: { name: "ok.jpg", at: "5" } } } }).items["p:a"].hero.at, 5);
 });

@@ -87,8 +87,28 @@ export function extrasOf(day){
 /** Photos visibles d’un item (noms de fichiers, sans celles retirées). */
 export const livePhotos = (it) => (it && !it.deleted ? (it.photos || []).filter((n) => !(it.gone || []).includes(n)) : []);
 
+/** Photos visibles, la photo phare (`cover`) en premier si elle existe encore. */
+export function orderedPhotos(it){
+  const list = livePhotos(it);
+  return it && it.cover && list.includes(it.cover) ? [it.cover, ...list.filter((n) => n !== it.cover)] : list;
+}
+
+/**
+ * Couverture du carnet choisie à la main : la photo dont le marqueur `hero` ({ name, at }) est le plus récent
+ * parmi tous les jours ([[iso, jour]]) et qui existe encore. Retourne { iso, id, name, title } ou null.
+ */
+export function heroPhoto(days){
+  let best = null;
+  (days || []).forEach(([iso, day]) => Object.values((day && day.items) || {}).forEach((it) => {
+    const h = it.hero;
+    if (!h || !h.name || !livePhotos(it).includes(h.name)) return;
+    if (!best || (h.at || 0) > best.at) best = { iso, id: it.id, name: h.name, title: it.title, at: h.at || 0 };
+  }));
+  return best ? { iso: best.iso, id: best.id, name: best.name, title: best.title } : null;
+}
+
 /** Photos (noms de fichiers) d’un item d’un jour, ou []. */
-export const photosOfItem = (day, id) => livePhotos(day && day.items && day.items[id]);
+export const photosOfItem = (day, id) => orderedPhotos(day && day.items && day.items[id]);
 
 /** Miniature associée à une photo (« x.jpg » → « x.t.jpg »). */
 export const thumbName = (name) => String(name).replace(/\.jpg$/, ".t.jpg");
@@ -133,7 +153,9 @@ export function sanitizeDay(raw){
     if (!it || typeof it !== "object" || typeof it.title !== "string" || !/^[px]:/.test(id)) return;
     const clean = (a) => (Array.isArray(a) ? a.filter((n) => typeof n === "string" && /^[\w.-]+\.jpg$/.test(n)) : undefined);
     const likes = it.likes && typeof it.likes === "object" ? Object.fromEntries(Object.entries(it.likes).filter(([, t]) => Number.isFinite(t))) : undefined;
-    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone), likes };
+    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone), likes,
+      cover: typeof it.cover === "string" && /^[\w.-]+\.jpg$/.test(it.cover) ? it.cover : undefined,
+      hero: it.hero && typeof it.hero === "object" && typeof it.hero.name === "string" && /^[\w.-]+\.jpg$/.test(it.hero.name) ? { name: it.hero.name, at: Number(it.hero.at) || 0 } : undefined };
     Object.keys(items[id]).forEach((k) => { if (items[id][k] === undefined) delete items[id][k]; });
   });
   return { items };
@@ -159,6 +181,6 @@ export function momentOf(it, iso){
 export function doneItems(day, iso){
   return Object.values((day && day.items) || {})
     .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
-    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: livePhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }))
+    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }))
     .sort((a, b) => a.when - b.when || a.at - b.at);
 }

@@ -5,7 +5,7 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { doneItems } from "../../domain/journal.js";
+import { doneItems, heroPhoto } from "../../domain/journal.js";
 import { JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
@@ -65,13 +65,14 @@ export function renderCarnet(force){
   renderCarnetStatus();
   if (!days.length && (syncStatus.state === "syncing" || (journalReadOnly() && syncStatus.state !== "public"))) { box.innerHTML = SKELETON; lastSig = null; return; }   // premier chargement
   model = days;
-  const sig = JSON.stringify([days, feedState.mode, feedState.filter, journalConfig().author, journalReadOnly(), japanTodayISO()]);
+  const hero = heroPhoto(journalDays());
+  const sig = JSON.stringify([days, hero, feedState.mode, feedState.filter, journalConfig().author, journalReadOnly(), japanTodayISO()]);
   if (!force && sig === lastSig && box.children.length) return;   // rien de nouveau : ne rien toucher
   lastSig = sig;
   const top = scroller ? scroller.scrollTop : 0;
   const slides = {};
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && c.scrollLeft) slides[p.dataset.post] = c.scrollLeft; });
-  box.innerHTML = carnetHtml({ days, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
+  box.innerHTML = carnetHtml({ days, hero, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
     emptyText: journalReadOnly() ? "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt."
       : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });
