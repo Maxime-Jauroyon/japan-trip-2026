@@ -1,15 +1,55 @@
 /* Service worker : cache le site pour Safari hors ligne (après une 1re ouverture en Wi‑Fi),
-   applique les mises à jour, et bouton « Rafraîchir l’application ». */
+   applique les mises à jour sans recharger la page pour rien, et bouton « Rafraîchir l’application ». */
 import { APP_VERSION, TILE_CACHE } from "../config.js";
 
-/** Enregistre sw.js ; une nouvelle version prend la main puis recharge la page. */
+const UPDATE_CHECK_MS = 10 * 60 * 1000;
+/** En dessous, la page vient de s’ouvrir : un rechargement silencieux ne dérange personne. */
+const QUIET_RELOAD_MS = 3000;
+
+/** Version (nom du cache) du service worker aux commandes, ou null s’il ne répond pas. */
+function controllerVersion(){
+  return new Promise((resolve) => {
+    const ctrl = navigator.serviceWorker.controller;
+    if (!ctrl) { resolve(null); return; }
+    const ch = new MessageChannel();
+    const timer = setTimeout(() => resolve(null), 2000);
+    ch.port1.onmessage = (e) => { clearTimeout(timer); resolve(e.data && e.data.version ? String(e.data.version) : null); };
+    try { ctrl.postMessage({ type: "GET_VERSION" }, [ch.port2]); } catch (_) { clearTimeout(timer); resolve(null); }
+  });
+}
+
+/** Bandeau discret « Nouvelle version prête » : un appui recharge, sinon elle s’appliquera au prochain lancement. */
+function showUpdateBanner(){
+  if (document.getElementById("update-banner")) return;
+  const el = document.createElement("div");
+  el.id = "update-banner";
+  el.className = "update-banner";
+  el.setAttribute("role", "status");
+  el.innerHTML = `<span>Nouvelle version prête</span><button type="button" class="ub-go">Mettre à jour</button><button type="button" class="ub-close" aria-label="Plus tard">×</button>`;
+  el.querySelector(".ub-go").addEventListener("click", () => location.reload());
+  el.querySelector(".ub-close").addEventListener("click", () => el.remove());
+  document.body.appendChild(el);
+}
+
+/**
+ * Enregistre sw.js. Quand un nouveau service worker prend la main, la page ne se recharge PAS si elle est déjà
+ * à la même version (cas normal : le code est servi « réseau d’abord »). Si elle est plus ancienne (ouverte hors
+ * ligne, ou restée en arrière-plan), on propose la mise à jour par un bandeau au lieu d’interrompre.
+ */
 export function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (refreshing) return;
-    refreshing = true;
-    location.reload();
+  const openedAt = Date.now();
+  let touched = false;
+  ["pointerdown", "keydown", "touchstart"].forEach(t => window.addEventListener(t, () => { touched = true; }, { once: true, passive: true, capture: true }));
+  let handling = false;
+  navigator.serviceWorker.addEventListener("controllerchange", async () => {
+    if (handling) return;
+    handling = true;
+    const version = await controllerVersion();
+    handling = false;
+    if (!version || version.endsWith("-" + APP_VERSION)) return;   // déjà à jour (ou version inconnue) : ne rien interrompre
+    if (!touched && Date.now() - openedAt < QUIET_RELOAD_MS) location.reload();
+    else showUpdateBanner();
   });
   const register = () => {
     navigator.serviceWorker.register("./sw.js?v=" + APP_VERSION.replace(/^v/, "")).then((reg) => {
@@ -23,6 +63,13 @@ export function registerServiceWorker() {
             sw.postMessage({ type: "SKIP_WAITING" });
           }
         });
+      });
+      // App restée ouverte : au retour au premier plan, regarder s’il y a une nouvelle version (au plus toutes les 10 min)
+      let lastCheck = Date.now();
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden || Date.now() - lastCheck < UPDATE_CHECK_MS) return;
+        lastCheck = Date.now();
+        reg.update().catch(() => {});
       });
     }).catch(() => {});
   };
