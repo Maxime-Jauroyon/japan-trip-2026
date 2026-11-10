@@ -493,3 +493,15 @@ html.search-open body { overflow: hidden; }
 .tk-item.next { border-color: var(--gold); background: rgba(var(--gold-rgb), .08); }
 .tk-item.past { opacity: .55; }
 @media (max-width: 420px) { .tk-body { padding-left: 12px; } }
+
+/* Bandeau « Nouvelle version prête » (au lieu d’un rechargement automatique) */
+.update-banner {
+  position: fixed; left: 50%; transform: translateX(-50%); z-index: 90;
+  top: calc(var(--header-h, 52px) + env(safe-area-inset-top) + 8px);   /* en haut : le bas est pris par la carte « À faire » */
+  display: flex; align-items: center; gap: 8px; max-width: calc(100vw - 24px);
+  padding: 6px 6px 6px 14px; border-radius: 999px;
+  background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: var(--shadow-md);
+  color: var(--cream); font-size: 13.5px; font-weight: 600; white-space: nowrap;
+}
+.update-banner .ub-go { min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: var(--gold); color: var(--bg); font: inherit; font-weight: 700; cursor: pointer; }
+.update-banner .ub-close { min-width: 36px; min-height: 36px; border: 0; background: none; color: var(--muted); font-size: 20px; cursor: pointer; }

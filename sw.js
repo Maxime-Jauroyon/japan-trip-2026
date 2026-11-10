@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v231";
+const CACHE = "japan-trip-2026-v232";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -1119,6 +1119,8 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+  // La page demande quelle version est aux commandes (pour ne se recharger que si elle est plus ancienne)
+  if (event.data && event.data.type === "GET_VERSION" && event.ports && event.ports[0]) event.ports[0].postMessage({ version: CACHE });
   if (event.data && event.data.type === "PRECACHE_IMAGES") {
     if (!photosRun) photosRun = precacheFullPhotos().finally(() => { photosRun = null; });
     event.waitUntil(photosRun);
