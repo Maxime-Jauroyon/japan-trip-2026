@@ -151,6 +151,19 @@ export function toggleLike(iso, id){
   commit(iso, setLike(journalDay(iso), id, who, !likedBy(it).includes(who)));
 }
 
+/** Photo phare d’une activité : affichée en premier (un second appui sur la même photo l’enlève). */
+export function setCoverPhoto(iso, id, name){
+  const cur = journalDay(iso).items[id];
+  if (!cur) return;
+  commit(iso, upsertItem(journalDay(iso), id, {}, { cover: cur.cover === name ? undefined : name, by: by() }));
+}
+
+/** Couverture du carnet : la dernière photo choisie, tous jours confondus, l’emporte. */
+export function setHeroPhoto(iso, id, name){
+  if (!journalDay(iso).items[id]) return;
+  commit(iso, upsertItem(journalDay(iso), id, {}, { hero: { name, at: Date.now() }, by: by() }));
+}
+
 /** Retire une photo (de tous les téléphones). */
 export function removePhoto(iso, id, name){
   const cur = journalDay(iso).items[id];

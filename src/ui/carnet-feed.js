@@ -65,7 +65,7 @@ export function carnetHtml(model, ctx){
   const photos = model.days.flatMap(photosOfDay);
   const nMoments = model.days.reduce((s, x) => s + x.items.length, 0);
   const nCities = new Set(model.days.map(x => x.day.city)).size;
-  const latest = photos[photos.length - 1];
+  const latest = model.hero || photos[photos.length - 1];   // couverture choisie à la main, sinon la dernière photo
   const stats = [[model.days.length, "jour"], [nMoments, "moment"], [photos.length, "photo"], [nCities, "ville"]];
   const cover = `<section class="cn-cover${latest ? "" : " empty"}">${latest ? ctx.photoBtn(latest.iso, latest, { cover: true }) : ""}` +
     `<div class="cn-cover-text"><p class="vy-kicker">${esc(model.datesLabel || "")}</p><h2>${esc(TRAVELERS.join(" & "))} au Japon</h2>` +
