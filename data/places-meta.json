@@ -32,8 +32,9 @@
     }
   },
   "yanaka": {
-    "hours": "Jour",
-    "duration": "2 h"
+    "hours": "Sanctuaire libre ; bureau ~9h–16h",
+    "duration": "2 h",
+    "closes": "16:00"
   },
   "meiji": {
     "hours": "Lever du soleil → coucher",
@@ -41,98 +42,117 @@
   },
   "harajuku": {
     "hours": "Magasins ~11h–20h",
-    "duration": "1,5–2 h"
+    "duration": "1,5–2 h",
+    "closes": "20:00"
   },
   "shibuya": {
     "hours": "Libre",
     "duration": "1,5–2 h"
   },
   "odaiba": {
-    "hours": "Gundam / centres ~10h–21h",
-    "duration": "2–3 h"
+    "hours": "Front de mer libre · centres ~11h–21h",
+    "duration": "2–3 h",
+    "closes": "21:00"
   },
   "teamlab": {
-    "hours": "Créneaux réservés",
-    "duration": "1,5–2 h"
+    "hours": "Créneaux réservés (dernier créneau en soirée)",
+    "duration": "1,5–2 h",
+    "closes": "21:00"
   },
   "tokyo-tower": {
     "hours": "~9h–23h",
-    "duration": "1–1,5 h"
+    "duration": "1–1,5 h",
+    "closes": "23:00"
   },
   "chureito": {
     "hours": "Jour · matin idéal",
-    "duration": "1–1,5 h"
+    "duration": "1–1,5 h",
+    "bestBefore": "11:00"
   },
   "ropeway": {
-    "hours": "~9h–16h/17h (saison)",
-    "duration": "1 h"
+    "hours": "~9h–17h (saison)",
+    "duration": "1 h",
+    "closes": "17:00"
   },
   "kawaguchi": {
     "hours": "Libre",
     "duration": "1–2 h"
   },
   "momiji": {
-    "hours": "Jour",
-    "duration": "1 h"
+    "hours": "Jour · avant le coucher du soleil",
+    "duration": "1 h",
+    "bestBefore": "16:30"
   },
   "oshino": {
     "hours": "Village ~9h–17h",
-    "duration": "1,5–2 h"
+    "duration": "1,5–2 h",
+    "closes": "17:00"
   },
   "kenrokuen": {
-    "hours": "~7h–18h (saison)",
-    "duration": "1,5–2 h"
+    "hours": "~7h–17h en novembre",
+    "duration": "1,5–2 h",
+    "closes": "17:00"
   },
   "kanazawa-castle": {
-    "hours": "Parc ~7h–18h",
-    "duration": "1–1,5 h"
+    "hours": "Parc ~7h–17h",
+    "duration": "1–1,5 h",
+    "closes": "17:00"
   },
   "higashi-chaya": {
-    "hours": "Jour / soir",
-    "duration": "1–2 h"
+    "hours": "Boutiques et maisons de thé ~10h–18h",
+    "duration": "1–2 h",
+    "closes": "18:00"
   },
   "shirakawa": {
-    "hours": "Village ~jour",
-    "duration": "2–3 h"
+    "hours": "Village ~9h–17h",
+    "duration": "2–3 h",
+    "closes": "17:00"
   },
   "sanmachi": {
-    "hours": "Jour",
-    "duration": "1,5–2 h"
+    "hours": "Boutiques ~9h–17h",
+    "duration": "1,5–2 h",
+    "closes": "17:00"
   },
   "kiyomizu": {
     "hours": "~6h–18h",
-    "duration": "1,5–2 h"
+    "duration": "1,5–2 h",
+    "closes": "18:00"
   },
   "arashiyama": {
-    "hours": "Bambous tôt le matin",
-    "duration": "2–3 h"
+    "hours": "Bambous libres · tôt le matin idéal",
+    "duration": "2–3 h",
+    "bestBefore": "09:00"
   },
   "kinkakuji": {
     "hours": "~9h–17h",
-    "duration": "1–1,5 h"
+    "duration": "1–1,5 h",
+    "closes": "17:00"
   },
   "wagashi": {
     "hours": "Sur réservation",
     "duration": "1,5 h"
   },
   "fushimi": {
-    "hours": "~7h–16h (montée libre)",
-    "duration": "2–3 h"
+    "hours": "Libre 24 h · lumière jusqu’à ~16h",
+    "duration": "2–3 h",
+    "bestBefore": "16:00"
   },
   "daigo": {
-    "hours": "~9h–17h",
-    "duration": "2 h"
+    "hours": "~9h–16h30",
+    "duration": "2 h",
+    "closes": "16:30"
   },
   "philosopher": {
     "hours": "Libre",
     "duration": "1–1,5 h"
   },
   "nijo": {
-    "hours": "~8h45–16h",
-    "duration": "1,5 h"
+    "hours": "~8h45–16h (dernière entrée)",
+    "duration": "1,5 h",
+    "closes": "16:00"
   },
   "nishiki": {
-    "hours": "~9h–18h (variable)",
+    "hours": "~9h–17h/18h (variable)",
     "duration": "1 h",
     "closed": {
       "days": [
@@ -141,7 +161,8 @@
       ],
       "partial": true,
       "note": "Pas de jour de fermeture commun, mais beaucoup de boutiques ferment le mercredi, certaines le dimanche."
-    }
+    },
+    "closes": "17:30"
   },
   "nara-park": {
     "hours": "Parc libre",
@@ -149,15 +170,18 @@
   },
   "kofukuji": {
     "hours": "~9h–17h",
-    "duration": "45 min–1 h"
+    "duration": "45 min–1 h",
+    "closes": "17:00"
   },
   "todaiji": {
     "hours": "~8h–16h30",
-    "duration": "1–1,5 h"
+    "duration": "1–1,5 h",
+    "closes": "16:30"
   },
   "kasuga": {
-    "hours": "~6h30–17h30",
-    "duration": "1 h"
+    "hours": "~6h30–17h",
+    "duration": "1 h",
+    "closes": "17:00"
   },
   "dotonbori": {
     "hours": "Soir idéal",
@@ -172,16 +196,19 @@
     "duration": "Journée"
   },
   "osaka-castle": {
-    "hours": "~9h–17h",
-    "duration": "1,5–2 h"
+    "hours": "~9h–17h (dernière entrée 16h30)",
+    "duration": "1,5–2 h",
+    "closes": "17:00"
   },
   "shinsaibashi": {
     "hours": "Magasins ~10h–20h",
-    "duration": "1–2 h"
+    "duration": "1–2 h",
+    "closes": "20:00"
   },
   "kuromon": {
-    "hours": "~9h–18h",
-    "duration": "1 h"
+    "hours": "Étals ~9h–17h (certains ferment plus tôt)",
+    "duration": "1 h",
+    "closes": "17:00"
   },
   "omicho": {
     "hours": "Étals ~9h–17h",
@@ -193,7 +220,8 @@
       ],
       "partial": true,
       "note": "Beaucoup d’étals ferment le dimanche et le mercredi (et les jours fériés)."
-    }
+    },
+    "closes": "17:00"
   },
   "imperial": {
     "hours": "9h–16h30 en novembre (dernière entrée 16h)",
@@ -205,6 +233,87 @@
       ],
       "holidayShift": true,
       "note": "Jardins fermés le lundi et le vendredi (ouverts un jour férié, fermés le lendemain)."
-    }
+    },
+    "closes": "16:30"
+  },
+  "zojo-ji": {
+    "duration": "1–2 h",
+    "hours": "Temple ~9h–17h",
+    "closes": "17:00"
+  },
+  "music-forest": {
+    "duration": "1–2 h",
+    "hours": "~10h–17h",
+    "closes": "17:00"
+  },
+  "itchiku": {
+    "duration": "1–2 h",
+    "hours": "~10h–16h30",
+    "closes": "16:30"
+  },
+  "saiko": {
+    "duration": "1–2 h",
+    "hours": "~9h–17h",
+    "closes": "17:00"
+  },
+  "oyama": {
+    "duration": "1–2 h",
+    "hours": "Sanctuaire libre ; bureau ~9h–16h30",
+    "closes": "16:30"
+  },
+  "nishi-chaya": {
+    "duration": "1–2 h",
+    "hours": "Maison de thé ~9h–17h30",
+    "closes": "17:30"
+  },
+  "kanazawa-museum": {
+    "duration": "1–2 h",
+    "hours": "~10h–18h",
+    "closes": "18:00"
+  },
+  "nagamachi": {
+    "duration": "1–2 h",
+    "hours": "Maisons de samouraïs ~9h–16h30",
+    "closes": "16:30"
+  },
+  "myoryuji": {
+    "duration": "1–2 h",
+    "hours": "Visites guidées ~9h–16h (réservation)",
+    "closes": "16:00"
+  },
+  "teramachi": {
+    "duration": "1–2 h",
+    "hours": "Temples ~9h–17h",
+    "closes": "17:00"
+  },
+  "gold-leaf": {
+    "duration": "1–2 h",
+    "hours": "Ateliers ~9h–17h (réservation)",
+    "closes": "17:00"
+  },
+  "miyagawa": {
+    "duration": "1–2 h",
+    "hours": "Marché ~6h–12h",
+    "closes": "12:00"
+  },
+  "jinya": {
+    "duration": "1–2 h",
+    "hours": "~8h45–16h30",
+    "closes": "16:30"
+  },
+  "denden": {
+    "duration": "1–2 h",
+    "hours": "Magasins ~10h–20h",
+    "closes": "20:00"
+  },
+  "ginza": {
+    "duration": "1–2 h",
+    "hours": "Itoya ~10h–20h",
+    "closes": "20:00"
+  },
+  "animate": {
+    "duration": "1–2 h",
+    "hours": "~10h–21h",
+    "closes": "21:00"
   }
 }

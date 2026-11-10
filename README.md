@@ -68,6 +68,7 @@ voyage. On réorganise seulement à partir d’aujourd’hui.
 
 Repères :
 - **Ordre fixe** : un jour peut porter `"ordreFixe": true` — l’ordre de ses idées est imposé (déjà vécu, ou commandé par les heures de fermeture) ; les tests ne le réoptimisent pas.
+- **Ordre par fermeture** : `"ordreFermeture": true` sur un jour = ses idées vont de ce qui ferme (ou est à faire avant) le plus tôt à ce qui ferme le plus tard ; l’heure vient de `places-meta.json` (`closes` = fermeture, `bestBefore` = « plutôt avant »). Un test vérifie l’ordre.
 - **Coordonnées** : `lat` / `lng` en degrés décimaux. Une idée sans coordonnées n’a pas de pin.
 - **Itinéraire du jour** (carte ville) : l’ordre des idées dans `days.json` est l’ordre de passage —
   départ de l’hôtel (ou de la gare le jour d’arrivée), retour à l’hôtel (ou à la gare le jour du
