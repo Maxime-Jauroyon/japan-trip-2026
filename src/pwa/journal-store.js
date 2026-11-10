@@ -4,8 +4,10 @@
    - Le jeton GitHub (limité à ce dépôt) est saisi dans Réglages et reste sur l’appareil. */
 
 import { DAY_PROGRESS_KEY, JOURNAL_CFG_KEY, JOURNAL_KEY } from "../config.js";
-import { TRIP } from "../core/data.js";
+import { DAYS, TRIP } from "../core/data.js";
+import { dayToISO, japanTodayISO } from "../core/dates.js";
 import { emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
+import { loadPublicJournal, publicPhotoUrl } from "./journal-public.js";
 import { resizeImage } from "./photo-resize.js";
 
 export const JOURNAL_CHANGED = "japan-trip:journal-changed";
@@ -56,6 +58,8 @@ export function setJournalConfig(patch){
 
 const repoCfg = () => (TRIP.journal || {});
 export const journalReady = () => !!(journalConfig().token && repoCfg().repo);
+/** Sans jeton : on regarde le carnet (lecture publique) mais on n’y écrit pas. */
+export const journalReadOnly = () => !journalReady();
 
 /* —— Lecture / écriture locales —— */
 
@@ -154,22 +158,43 @@ export function removePhoto(iso, id, name){
   commit(iso, upsertItem(journalDay(iso), id, {}, { gone: [...(cur.gone || []), name], by: by() }));
 }
 
-/** URL affichable d’une photo : cache de l’appareil, sinon téléchargement depuis le dépôt (puis mise en cache). */
-export async function photoUrl(iso, name, thumb){
-  const file = thumb ? thumbName(name) : name;
-  const k = photoKey(iso, file);
-  if (urls.has(k)) return urls.get(k);
-  let blob = await cacheGet(iso, file);
-  if (!blob && journalReady() && navigator.onLine !== false) {
-    try {
-      const res = await gh(`contents/journal/photos/${iso}/${file}?ref=${encodeURIComponent(repoCfg().branch)}`, { headers: { Accept: "application/vnd.github.raw+json" } });
-      if (res.ok) { blob = await res.blob(); if (blob.size) await cachePut(iso, file, blob); }
-    } catch (_) { /* réseau */ }
-  }
-  if (!blob || !blob.size) return "";
+function objectUrl(k, blob){
   const url = URL.createObjectURL(blob);
   urls.set(k, url);
   return url;
+}
+
+/** URL d’une photo si elle est déjà sur le téléphone (aucun appel réseau), sinon "". */
+export async function cachedPhotoUrl(iso, name, thumb){
+  const file = thumb ? thumbName(name) : name;
+  const k = photoKey(iso, file);
+  if (urls.has(k)) return urls.get(k);
+  const blob = await cacheGet(iso, file);
+  return blob && blob.size ? objectUrl(k, blob) : "";
+}
+
+/** Télécharge une photo du dépôt : par l’API avec le jeton, sinon par l’adresse publique (lecture seule). */
+async function downloadPhoto(iso, file){
+  try {
+    const res = journalReady()
+      ? await gh(`contents/journal/photos/${iso}/${file}?ref=${encodeURIComponent(repoCfg().branch)}`, { headers: { Accept: "application/vnd.github.raw+json" } })
+      : await fetch(publicPhotoUrl(repoCfg(), iso, file));
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return blob.size ? blob : null;
+  } catch (_) { return null; }
+}
+
+/** URL affichable d’une photo : cache de l’appareil d’abord ; sinon un seul téléchargement, puis elle y reste. */
+export async function photoUrl(iso, name, thumb){
+  const hit = await cachedPhotoUrl(iso, name, thumb);
+  if (hit) return hit;
+  if (!repoCfg().repo || navigator.onLine === false) return "";
+  const file = thumb ? thumbName(name) : name;
+  const blob = await downloadPhoto(iso, file);
+  if (!blob) return "";
+  await cachePut(iso, file, blob);
+  return objectUrl(photoKey(iso, file), blob);
 }
 
 const blobToB64 = (blob) => new Promise((resolve, reject) => {
@@ -179,33 +204,38 @@ const blobToB64 = (blob) => new Promise((resolve, reject) => {
   r.readAsDataURL(blob);
 });
 
-/** Préchargement : { done, total } des photos du journal déjà gardées sur ce téléphone (pour la barre « prêtes hors ligne »). */
-export const prefetchStatus = { done: 0, total: 0, running: false };
+/** Préchargement : `all` = photos du journal, `done` / `total` = téléchargements en cours (seulement les manquantes). */
+export const prefetchStatus = { all: 0, done: 0, total: 0, running: false };
 let prefetching = false;
 
-/** Télécharge sur le téléphone toutes les photos du journal (miniature + taille réduite), 3 à la fois. */
+/** Télécharge sur le téléphone les miniatures qui n’y sont pas encore (3 à la fois). Silencieux s’il ne manque rien. */
 export async function prefetchPhotos(){
   if (prefetching || navigator.onLine === false) return;
   prefetching = true;
-  const all = Object.entries(load().days).flatMap(([iso, d]) => Object.values(d.items || {}).flatMap(it => livePhotos(it).map(name => ({ iso, name }))));
-  prefetchStatus.total = all.length;
-  prefetchStatus.done = 0;
-  prefetchStatus.running = true;
-  emit(JOURNAL_PREFETCH);
-  const queue = all.slice();
-  const worker = async () => {
-    while (queue.length) {
-      const p = queue.shift();
-      await photoUrl(p.iso, thumbName(p.name), false).catch(() => "");
-      await photoUrl(p.iso, p.name, false).catch(() => "");
-      prefetchStatus.done++;
-      emit(JOURNAL_PREFETCH);
+  try {
+    const all = Object.entries(load().days).flatMap(([iso, d]) => Object.values(d.items || {}).flatMap(it => livePhotos(it).map(name => ({ iso, name }))));
+    const missing = [];
+    // Seules les miniatures (≈ 50 Ko) sont préchargées ; une grande photo est téléchargée la première fois qu’on la regarde, puis gardée.
+    for (const p of all) {
+      if (!(await cacheGet(p.iso, thumbName(p.name)))) missing.push({ ...p, thumb: true });
     }
-  };
-  await Promise.all([worker(), worker(), worker()]);
-  prefetchStatus.running = false;
-  prefetching = false;
-  emit(JOURNAL_PREFETCH);
+    const changed = prefetchStatus.all !== all.length;
+    prefetchStatus.all = all.length;
+    if (!missing.length) { if (changed) emit(JOURNAL_PREFETCH); return; }
+    Object.assign(prefetchStatus, { done: 0, total: missing.length, running: true });
+    emit(JOURNAL_PREFETCH);
+    const worker = async () => {
+      while (missing.length) {
+        const p = missing.shift();
+        await photoUrl(p.iso, p.name, p.thumb).catch(() => "");
+        prefetchStatus.done++;
+        emit(JOURNAL_PREFETCH);
+      }
+    };
+    await Promise.all([worker(), worker(), worker()]);
+    prefetchStatus.running = false;
+    emit(JOURNAL_PREFETCH);
+  } finally { prefetching = false; }
 }
 
 /** Envoie les photos en attente (taille réduite : ~300 Ko chacune). */
@@ -322,8 +352,26 @@ async function syncDay(iso, remoteSha){
 }
 
 /** Synchronise tout ce qui a changé (un seul appel réseau s’il n’y a rien de nouveau). */
+/** Sans jeton (famille) : lecture publique du journal, fusionnée dans le journal local. Au plus toutes les 3 minutes. */
+let lastPublic = 0;
+async function pullPublic(){
+  if (!repoCfg().repo || navigator.onLine === false || Date.now() - lastPublic < 180000) return;
+  lastPublic = Date.now();
+  const today = japanTodayISO();
+  const days = await loadPublicJournal(repoCfg(), DAYS.map(dayToISO).filter(iso => iso && iso <= today));
+  const m = load();
+  let changed = false;
+  days.forEach(([iso, remote]) => {
+    const merged = mergeDay(journalDay(iso), remote);
+    if (!sameDay(merged, journalDay(iso))) { m.days[iso] = merged; changed = true; }
+  });
+  if (changed) { save(); emit(JOURNAL_CHANGED); }
+  setStatus("public");
+  prefetchPhotos();
+}
+
 export async function syncNow(){
-  if (!journalReady()) { setStatus("nocfg"); return; }
+  if (!journalReady()) { setStatus("nocfg"); pullPublic().catch(() => {}); return; }
   if (navigator.onLine === false) { setStatus("offline"); return; }
   if (running) { again = true; return; }
   running = true;

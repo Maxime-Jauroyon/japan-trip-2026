@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, collectPhotos, doneItems, likedBy, setLike, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { applyJournal, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -92,4 +92,13 @@ test("Carnet : les moments se rangent dans l’ordre vécu, pas par nombre de ph
   day = upsertItem(day, plannedId("Shinjuku"), { kind: "planned", title: "Shinjuku" }, { status: "done", doneAt: at("20:49"), photos: ["e.jpg", "f.jpg"] }, at("20:49"));
   day = upsertItem(day, newExtraId(1, 0.2), { kind: "extra", title: "Ramen", time: "13:00" }, { status: "done" }, at("22:00"));
   assert.deepEqual(doneItems(day, iso).map((i) => i.title), ["Station", "Ramen", "Nakano", "Shinjuku"]);
+});
+
+test("heures du Carnet : affichées seulement si elles sont réelles (fait à tel instant ou heure saisie)", () => {
+  const iso = "2026-11-10";
+  let day = upsertItem(emptyDay(), plannedId("Ueno"), { kind: "planned", title: "Ueno" }, { status: "done", doneAt: Date.parse(`${iso}T11:09:00+09:00`) }, 1);
+  day = upsertItem(day, plannedId("Ancien"), { kind: "planned", title: "Ancien" }, { status: "done" }, 2);
+  const items = doneItems(day, iso);
+  assert.deepEqual(items.map((i) => [i.title, i.timed]), [["Ancien", false], ["Ueno", true]]);
+  assert.equal(clockJst(items[1].when), "11 h 09");
 });

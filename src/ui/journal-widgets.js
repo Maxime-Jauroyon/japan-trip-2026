@@ -3,7 +3,7 @@
 
 import { esc } from "../core/dom.js";
 import { STATUS_LABELS, likedBy, livePhotos, nextStatus } from "../domain/journal.js";
-import { JOURNAL_CHANGED, addPhotos, journalConfig, journalDay, photoUrl, removePhoto, setPlannedStatus, syncStatus, toggleLike } from "../pwa/journal-store.js";
+import { JOURNAL_CHANGED, addPhotos, cachedPhotoUrl, journalConfig, journalDay, journalReadOnly, photoUrl, removePhoto, setPlannedStatus, syncStatus, toggleLike } from "../pwa/journal-store.js";
 import { pickPhotos } from "../pwa/photo-resize.js";
 
 const GLYPH = { todo: "○", done: "✓", skipped: "✗" };
@@ -37,7 +37,7 @@ export function photoStripHtml(iso, id, names){
 }
 
 /** Bouton « 📷 Photos » d’une idée du programme (`target.title`). */
-export const cameraButtonHtml = (iso, target, label = "Photos") =>
+export const cameraButtonHtml = (iso, target, label = "Photos") => journalReadOnly() ? "" :
   `<button type="button" class="jr-cam" data-add-photo data-iso="${esc(iso)}" data-title="${esc(target.title)}"><span aria-hidden="true">📷</span> ${esc(label)}</button>`;
 
 let observer = null;
@@ -48,8 +48,11 @@ async function loadPhoto(b){
   if (!img) return;
   const feed = !!b.dataset.jpFeed;
   b.classList.remove("missing");
-  b.classList.add("loading");
   const [iso, name] = [b.dataset.jpIso, b.dataset.jpName];
+  // Déjà sur le téléphone : affichage immédiat, sans scintillement ni flou (rien n’est retéléchargé)
+  const hit = await cachedPhotoUrl(iso, name, !feed);
+  if (hit) { img.src = hit; return; }
+  b.classList.add("loading");
   if (feed) {
     const small = await photoUrl(iso, name, true);
     if (small) { img.src = small; img.classList.add("blur"); }
@@ -79,10 +82,10 @@ export function hydratePhotos(root){
     b.dataset.jpSeen = "1";
     if (observer) observer.observe(b); else loadPhoto(b);
   });
-  root.querySelectorAll("[data-jp-name]:not([data-jp-bound])").forEach(b => { b.dataset.jpBound = "1"; b.addEventListener("click", e => {
+  root.querySelectorAll("[data-jp-name]:not([data-jp-bound]):not([data-jp-story])").forEach(b => { b.dataset.jpBound = "1"; b.addEventListener("click", e => {
     e.stopPropagation();
     if (b.classList.contains("missing")) { b.classList.remove("missing"); hydratePhotos(b.parentElement || root); return; }
-    const all = [...root.querySelectorAll("[data-jp-name]:not([data-jp-cover])")];   // la couverture double une photo du fil
+    const all = [...root.querySelectorAll("[data-jp-name]:not([data-jp-cover]):not([data-jp-story])")];   // la couverture double une photo du fil
     const same = (el) => el.dataset.jpIso === b.dataset.jpIso && el.dataset.jpId === b.dataset.jpId && el.dataset.jpName === b.dataset.jpName;
     const label = (el) => (el.closest("[data-day-label]") || {}).dataset?.dayLabel || "";
     openPhotoViewer(all.map(el => ({ iso: el.dataset.jpIso, id: el.dataset.jpId, name: el.dataset.jpName, title: el.getAttribute("aria-label") || "", label: label(el) })), all.findIndex(same));
@@ -152,7 +155,7 @@ export function openPhotoViewer(list, index){
 
 function likeCurrent(onlyAdd){
   const p = vList[vIdx];
-  if (!p) return;
+  if (!p || journalReadOnly()) return;
   const it = journalDay(p.iso).items[p.id];
   const mine = likedBy(it).includes(authorName());
   if (!(onlyAdd && mine)) toggleLike(p.iso, p.id);
@@ -165,7 +168,6 @@ function paintLike(){
   const who = likedBy(it);
   const btn = viewer.querySelector(".jv-like");
   btn.textContent = `${who.includes(authorName()) ? "❤️" : "🤍"} ${who.length || ""}`.trim();
-  btn.title = who.join(", ");
 }
 
 async function showViewer(i){
@@ -174,7 +176,8 @@ async function showViewer(i){
   const p = vList[vIdx];
   viewer.querySelector(".jv-pos").textContent = vList.length > 1 ? `${vIdx + 1} / ${vList.length}` : "";
   viewer.querySelector(".jv-cap strong").textContent = p.title || "";
-  viewer.querySelector(".jv-cap small").textContent = [p.label, (journalDay(p.iso).items[p.id] || {}).by].filter(Boolean).join(" · ");
+  viewer.querySelector(".jv-cap small").textContent = p.label || "";
+  viewer.querySelector(".jr-viewer-bar").hidden = journalReadOnly();   // lecture seule : ni cœur ni suppression
   paintLike();
   const img = viewer.querySelector("img");
   img.removeAttribute("src");

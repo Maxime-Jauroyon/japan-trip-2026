@@ -139,6 +139,12 @@ export function sanitizeDay(raw){
   return { items };
 }
 
+/** « 14 h 52 » : heure au Japon d’un instant (ms). */
+export function clockJst(ms){
+  const d = new Date(ms + 9 * 3600000);
+  return `${d.getUTCHours()} h ${String(d.getUTCMinutes()).padStart(2, "0")}`;
+}
+
 /** Instant réel d’un moment : « fait » à tel instant (`doneAt`), sinon l’heure saisie (heure du Japon), sinon sa dernière modification. */
 export function momentOf(it, iso){
   if (it.doneAt) return it.doneAt;
@@ -153,6 +159,6 @@ export function momentOf(it, iso){
 export function doneItems(day, iso){
   return Object.values((day && day.items) || {})
     .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
-    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: livePhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso) }))
+    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: livePhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }))
     .sort((a, b) => a.when - b.when || a.at - b.at);
 }
