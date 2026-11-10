@@ -17,6 +17,24 @@
    "doneAt": 1794282696220,
    "by": "Maxime",
    "at": 1794282696220
+  },
+  "p:sanctuaire-meiji": {
+   "id": "p:sanctuaire-meiji",
+   "kind": "planned",
+   "title": "Sanctuaire Meiji",
+   "status": "done",
+   "doneAt": 1794289930104,
+   "by": "Maxime",
+   "at": 1794289930104
+  },
+  "p:shibuya-parco-nintendo-tokyo-pokemon-center": {
+   "id": "p:shibuya-parco-nintendo-tokyo-pokemon-center",
+   "kind": "planned",
+   "title": "Shibuya — Parco : Nintendo Tokyo & Pokémon Center",
+   "status": "done",
+   "doneAt": 1794289931185,
+   "by": "Maxime",
+   "at": 1794289931185
   }
  }
 }
