@@ -120,6 +120,10 @@ days.forEach((d, i) => {
   if (d.n !== i + 1) err(w, `numérotation attendue ${i + 1}`);
   if (!cityIds.has(d.city)) err(w, `ville inconnue « ${d.city} »`);
   if (d.extraCity && !cityIds.has(d.extraCity)) err(w, `extraCity inconnue « ${d.extraCity} »`);
+  [...(d.ideas || []), ...(d.ideasAfter || [])].forEach((a) => {
+    if (a.goshuin != null && !["oui", "non", "possible"].includes(a.goshuin)) err(`${w} « ${a.title} »`, "goshuin : oui, non ou possible attendu");
+    if (a.goshuinNote != null && !String(a.goshuinNote).trim()) err(`${w} « ${a.title} »`, "goshuinNote vide");
+  });
   if (d.ordreReel != null && typeof d.ordreReel !== "boolean") err(w, "ordreReel doit être un booléen");
   if (d.wake != null && (!/^([01]\d|2[0-3]):[0-5]\d$/.test(d.wake.time || "") || !String(d.wake.why || "").trim())) err(w, "wake : { time: \"HH:MM\", why } attendu");
   if (!/^\d{1,2} \w+ \d{4}$/u.test(d.date || "")) err(w, `date au format « 8 nov 2026 » attendue (${d.date})`);

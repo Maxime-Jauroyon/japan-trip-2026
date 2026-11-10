@@ -101,37 +101,38 @@
         "title": "Ueno — Tokyo National Museum & sanctuaire Tōshō-gū",
         "lat": 35.7188,
         "lng": 139.7765,
-        "desc": "Matin (la pluie est surtout attendue avant midi) : le Tokyo National Museum au sec dès 9 h 30 (expo Hiroshige jusqu’au 20 déc.), puis le sanctuaire doré Ueno Tōshō-gū dans le parc quand la pluie diminue. Horaires à vérifier."
+        "desc": "Matin (la pluie est surtout attendue avant midi) : le Tokyo National Museum au sec dès 9 h 30 (expo Hiroshige jusqu’au 20 déc.), puis le sanctuaire doré Ueno Tōshō-gū dans le parc quand la pluie diminue. Horaires à vérifier.",
+        "goshuin": "oui",
+        "goshuinNote": "Au sanctuaire Ueno Tōshō-gū (pas au musée)."
       },
       {
         "title": "Ryōgoku — Edo-Tokyo Museum",
         "lat": 35.6967,
         "lng": 139.7959,
-        "desc": "Matin, au sec : musée de l’histoire d’Edo et de Tokyo, rouvert en mars 2026 (ouvert le mardi 9 h 30–17 h 30 ; exposition permanente, l’expo temporaire est finie). Idéal pour la pluie d’avant midi."
-      },
-      {
-        "title": "Kanda Myōjin",
-        "lat": 35.7019,
-        "lng": 139.7678,
-        "desc": "Quelques minutes de l’hôtel : porte rouge, ema (plaquettes de vœux) décorés d’anime, en partie couvert. À faire en début d’après-midi, quand la pluie baisse ; on y prend un goshuin."
-      },
-      {
-        "title": "Sanctuaire Meiji",
-        "lat": 35.6764,
-        "lng": 139.6993,
-        "desc": "Après-midi, quand la pluie a diminué : sanctuaire shinto en forêt au milieu de la ville, allées calmes jusqu’à la cour de gravier, très peu de monde. Les arbres abritent en partie ; bon endroit pour le goshuin."
-      },
-      {
-        "title": "Shibuya — Parco : Nintendo Tokyo & Pokémon Center",
-        "lat": 35.6591,
-        "lng": 139.7006,
-        "desc": "Shibuya Parco regroupe Nintendo Tokyo, Pokémon Center et les boutiques jeux vidéo, le tout couvert. Le carrefour se regarde depuis Scramble Square ou Hikarie plutôt que sous la pluie."
+        "desc": "Matin, au sec : musée de l’histoire d’Edo et de Tokyo, rouvert en mars 2026 (ouvert le mardi 9 h 30–17 h 30 ; exposition permanente, l’expo temporaire est finie). Idéal pour la pluie d’avant midi.",
+        "goshuin": "non"
       },
       {
         "title": "Jardins Est du Palais impérial",
         "lat": 35.6862,
         "lng": 139.7574,
-        "desc": "Jardins gratuits sur l’ancien château d’Edo : douves, murs de pierre, tours de guet et pont Nijūbashi. À faire dans la partie sèche de la journée, même sous le parapluie (fermé lundi et vendredi, à vérifier)."
+        "desc": "Jardins gratuits sur l’ancien château d’Edo : douves, murs de pierre, tours de guet et pont Nijūbashi. À faire dans la partie sèche de la journée, même sous le parapluie (fermé lundi et vendredi, à vérifier).",
+        "goshuin": "non"
+      },
+      {
+        "title": "Sanctuaire Meiji",
+        "lat": 35.6764,
+        "lng": 139.6993,
+        "desc": "Début d’après-midi, quand la pluie a diminué (le sanctuaire ferme au coucher du soleil, vers 16 h 30) : sanctuaire shinto en forêt au milieu de la ville, allées calmes jusqu’à la cour de gravier, très peu de monde. Les arbres abritent en partie ; bon endroit pour le goshuin.",
+        "goshuin": "oui",
+        "goshuinNote": "Bureau des goshuin devant le Kagura-den ; ≈ ¥500."
+      },
+      {
+        "title": "Shibuya — Parco : Nintendo Tokyo & Pokémon Center",
+        "lat": 35.6591,
+        "lng": 139.7006,
+        "desc": "Shibuya Parco regroupe Nintendo Tokyo, Pokémon Center et les boutiques jeux vidéo, le tout couvert. Le carrefour se regarde depuis Scramble Square ou Hikarie plutôt que sous la pluie.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -156,25 +157,30 @@
         "phrases": "park",
         "lat": 35.649,
         "lng": 139.7898,
-        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance."
+        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance.",
+        "goshuin": "non"
       },
       {
         "title": "Odaiba — Gundam, front de mer",
         "lat": 35.6251,
         "lng": 139.7753,
-        "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie."
+        "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie.",
+        "goshuin": "non"
       },
       {
         "title": "Zōjō-ji — grand temple",
         "lat": 35.6574,
         "lng": 139.7488,
-        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À faire avant la Tokyo Tower de nuit."
+        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À faire avant la Tokyo Tower de nuit.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple."
       },
       {
         "title": "Tokyo Tower de nuit",
         "lat": 35.6586,
         "lng": 139.7454,
-        "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique."
+        "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique.",
+        "goshuin": "non"
       }
     ],
     "reminders": [
@@ -207,50 +213,59 @@
         "title": "Oshino Hakkai",
         "lat": 35.4598,
         "lng": 138.8338,
-        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks."
+        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks.",
+        "goshuin": "non"
       },
       {
         "title": "Pagode Chūrei-tō",
         "lat": 35.5013,
         "lng": 138.8014,
-        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair."
+        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Arakura Fuji Sengen, au pied de l’escalier."
       },
       {
         "title": "Music Forest + lac",
         "lat": 35.5218,
         "lng": 138.769,
-        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile."
+        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile.",
+        "goshuin": "non"
       },
       {
         "title": "Momiji Corridor",
         "lat": 35.5256,
         "lng": 138.7624,
-        "desc": "Allée d’érables au bord du lac, célèbre en automne. Pic habituel autour du 10 nov : de saison le 12."
+        "desc": "Allée d’érables au bord du lac, célèbre en automne. Pic habituel autour du 10 nov : de saison le 12.",
+        "goshuin": "non"
       },
       {
         "title": "Musée Itchiku Kubota",
         "phrases": "visit",
         "lat": 35.5274,
         "lng": 138.7598,
-        "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac."
+        "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac.",
+        "goshuin": "non"
       },
       {
         "title": "Saiko Iyashi-no-Sato",
         "lat": 35.504,
         "lng": 138.6612,
-        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme."
+        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme.",
+        "goshuin": "non"
       },
       {
         "title": "Lac Kawaguchi",
         "lat": 35.5233,
         "lng": 138.7465,
-        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets."
+        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
+        "goshuin": "non"
       },
       {
         "title": "Téléphérique panoramique",
         "lat": 35.504,
         "lng": 138.7705,
-        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin."
+        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -288,7 +303,8 @@
             "url": "https://apps.apple.com/app/q-chan/id1483774385"
           }
         ],
-        "fixed": true
+        "fixed": true,
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -337,19 +353,23 @@
         "title": "Higashi Chaya",
         "lat": 36.5733,
         "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle."
+        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle.",
+        "goshuin": "non"
       },
       {
         "title": "Kenroku-en",
         "lat": 36.5619,
         "lng": 136.6626,
-        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison."
+        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Kanazawa-jinja, à côté du jardin."
       },
       {
         "title": "Château de Kanazawa",
         "lat": 36.5653,
         "lng": 136.659,
-        "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc."
+        "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -367,25 +387,30 @@
         "title": "Sanctuaire Oyama",
         "lat": 36.566,
         "lng": 136.6555,
-        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château."
+        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire."
       },
       {
         "title": "Marché Ōmichō",
         "lat": 36.5717,
         "lng": 136.656,
-        "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles."
+        "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles.",
+        "goshuin": "non"
       },
       {
         "title": "Nishi Chaya",
         "lat": 36.557,
         "lng": 136.6475,
-        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré."
+        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré.",
+        "goshuin": "non"
       },
       {
         "title": "Musée du XXIe siècle",
         "lat": 36.5611,
         "lng": 136.6584,
-        "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes."
+        "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -403,25 +428,31 @@
         "title": "Nagamachi (quartier samouraï)",
         "lat": 36.5628,
         "lng": 136.65,
-        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable."
+        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable.",
+        "goshuin": "non"
       },
       {
         "title": "Myōryū-ji",
         "lat": 36.5551,
         "lng": 136.6486,
-        "desc": "Le « temple des ninjas » — visite guidée à réserver pour portes secrètes et pièges."
+        "desc": "Le « temple des ninjas » — visite guidée à réserver pour portes secrètes et pièges.",
+        "goshuin": "possible",
+        "goshuinNote": "Au temple (« Ninja-dera ») : à demander à l’accueil."
       },
       {
         "title": "Teramachi",
         "lat": 36.5542,
         "lng": 136.6502,
-        "desc": "Quartier des temples au sud du centre : ruelles calmes et nombreux petits temples bouddhistes."
+        "desc": "Quartier des temples au sud du centre : ruelles calmes et nombreux petits temples bouddhistes.",
+        "goshuin": "oui",
+        "goshuinNote": "Dans plusieurs temples du quartier."
       },
       {
         "title": "Atelier feuille d’or",
         "lat": 36.5604,
         "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir."
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir.",
+        "goshuin": "non"
       }
     ],
     "reminders": [
@@ -462,14 +493,17 @@
         "title": "Village de Shirakawa-go",
         "lat": 36.2578,
         "lng": 136.9063,
-        "desc": "Maisons gassho-zukuri UNESCO aux toits de chaume. Monter au belvédère pour la photo classique."
+        "desc": "Maisons gassho-zukuri UNESCO aux toits de chaume. Monter au belvédère pour la photo classique.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Hachiman du village : à demander."
       },
       {
         "title": "Sanmachi Suji",
         "phrases": "shop",
         "lat": 36.1415,
         "lng": 137.2595,
-        "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir."
+        "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir.",
+        "goshuin": "non"
       }
     ],
     "reminders": [
@@ -495,13 +529,15 @@
         "phrases": "market",
         "lat": 36.1456,
         "lng": 137.2581,
-        "desc": "Marché matinal au bord de la rivière : produits locaux, pickles et spécialités Hida avant le départ."
+        "desc": "Marché matinal au bord de la rivière : produits locaux, pickles et spécialités Hida avant le départ.",
+        "goshuin": "non"
       },
       {
         "title": "Takayama Jinya",
         "lat": 36.1397,
         "lng": 137.2577,
-        "desc": "Ancien bureau d’administration d’époque Edo, salles tatami et complexe administratif rare."
+        "desc": "Ancien bureau d’administration d’époque Edo, salles tatami et complexe administratif rare.",
+        "goshuin": "non"
       }
     ],
     "moves": [
@@ -519,7 +555,8 @@
         "phrases": "restaurant",
         "lat": 35.0039,
         "lng": 135.7714,
-        "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto."
+        "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto.",
+        "goshuin": "non"
       }
     ],
     "reminders": [
@@ -543,19 +580,24 @@
         "title": "Kiyomizu-dera",
         "lat": 34.9949,
         "lng": 135.785,
-        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville."
+        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple."
       },
       {
         "title": "Cérémonie du thé",
         "lat": 35,
         "lng": 135.7805,
-        "desc": "Expérience matcha calme vers Higashiyama — gestes et pâtisseries de saison."
+        "desc": "Expérience matcha calme vers Higashiyama — gestes et pâtisseries de saison.",
+        "goshuin": "non"
       },
       {
         "title": "Sanctuaire Yasaka",
         "lat": 35.0036,
         "lng": 135.7786,
-        "desc": "Sanctuaire vermillon au bord de Gion, vivant au crépuscule quand les lanternes s’allument."
+        "desc": "Sanctuaire vermillon au bord de Gion, vivant au crépuscule quand les lanternes s’allument.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire."
       }
     ],
     "reminders": [
@@ -579,19 +621,24 @@
         "title": "Forêt de bambous d’Arashiyama",
         "lat": 35.0173,
         "lng": 135.6722,
-        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde."
+        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Nonomiya, tout près."
       },
       {
         "title": "Kinkaku-ji",
         "lat": 35.0394,
         "lng": 135.7292,
-        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto."
+        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto.",
+        "goshuin": "oui",
+        "goshuinNote": "À l’accueil du temple."
       },
       {
         "title": "Atelier wagashi",
         "lat": 35.018,
         "lng": 135.755,
-        "desc": "Façonner des pâtisseries japonaises à la main, puis matcha pour le vrai rituel de salon de thé."
+        "desc": "Façonner des pâtisseries japonaises à la main, puis matcha pour le vrai rituel de salon de thé.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -609,19 +656,25 @@
         "title": "Fushimi Inari",
         "lat": 34.9671,
         "lng": 135.7727,
-        "desc": "Des milliers de torii vermillon montent la colline. Monter autant que l’on veut, puis redescendre."
+        "desc": "Des milliers de torii vermillon montent la colline. Monter autant que l’on veut, puis redescendre.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire, en bas."
       },
       {
         "title": "Daigo-ji",
         "lat": 34.9516,
         "lng": 135.821,
-        "desc": "Grand complexe de temples aux érables d’automne et pagode à cinq étages au sud-est de Kyoto. Momiji en retard cette année : couleurs partielles vers le 21 nov."
+        "desc": "Grand complexe de temples aux érables d’automne et pagode à cinq étages au sud-est de Kyoto. Momiji en retard cette année : couleurs partielles vers le 21 nov.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple."
       },
       {
         "title": "Chemin des Philosophes",
         "lat": 35.0265,
         "lng": 135.7956,
-        "desc": "Promenade le long du canal entre Ginkaku-ji et Nanzen-ji — pic des momiji attendu vers le 11 déc cette année : couleurs partielles le 21 nov."
+        "desc": "Promenade le long du canal entre Ginkaku-ji et Nanzen-ji — pic des momiji attendu vers le 11 déc cette année : couleurs partielles le 21 nov.",
+        "goshuin": "oui",
+        "goshuinNote": "Dans les temples du chemin (Ginkaku-ji, Nanzen-ji…)."
       }
     ],
     "wake": {
@@ -640,13 +693,15 @@
         "title": "Château Nijō",
         "lat": 35.0142,
         "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru."
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru.",
+        "goshuin": "non"
       },
       {
         "title": "Marché Nishiki",
         "lat": 35.005,
         "lng": 135.7649,
-        "desc": "Rue couverte gastronomique — « la cuisine de Kyoto » : pickles, fruits de mer, dégustations."
+        "desc": "Rue couverte gastronomique — « la cuisine de Kyoto » : pickles, fruits de mer, dégustations.",
+        "goshuin": "non"
       }
     ],
     "moves": [
@@ -680,25 +735,32 @@
         "title": "Kasuga Taisha",
         "lat": 34.6814,
         "lng": 135.8484,
-        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière."
+        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire."
       },
       {
         "title": "Parc de Nara",
         "lat": 34.6851,
         "lng": 135.843,
-        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs."
+        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs.",
+        "goshuin": "non"
       },
       {
         "title": "Tōdai-ji",
         "lat": 34.689,
         "lng": 135.8398,
-        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde."
+        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple."
       },
       {
         "title": "Kōfuku-ji",
         "lat": 34.6833,
         "lng": 135.831,
-        "desc": "Temple historique avec pagode à cinq étages dominant le parc."
+        "desc": "Temple historique avec pagode à cinq étages dominant le parc.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple."
       }
     ],
     "moves": [
@@ -716,7 +778,8 @@
         "phrases": "restaurant",
         "lat": 34.6687,
         "lng": 135.5013,
-        "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée."
+        "desc": "Rue néon d’Osaka — enseigne géantes, street food et énergie au bord du canal après la nuit tombée.",
+        "goshuin": "non"
       }
     ],
     "reminders": [
@@ -753,7 +816,8 @@
             "url": "https://apps.apple.com/app/universal-studios-japan/id532097000"
           }
         ],
-        "fixed": true
+        "fixed": true,
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -771,28 +835,33 @@
         "title": "Namba Yasaka",
         "lat": 34.6606,
         "lng": 135.4966,
-        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour."
+        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
       },
       {
         "title": "Den Den Town",
         "phrases": "shop",
         "lat": 34.66,
         "lng": 135.5058,
-        "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba."
+        "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba.",
+        "goshuin": "non"
       },
       {
         "title": "Shinsekai",
         "phrases": "restaurant",
         "lat": 34.6525,
         "lng": 135.5063,
-        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school."
+        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school.",
+        "goshuin": "non"
       },
       {
         "title": "Dotonbori",
         "phrases": "restaurant",
         "lat": 34.6687,
         "lng": 135.5013,
-        "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico."
+        "desc": "Retour street food le soir — takoyaki, okonomiyaki et l’enseigne Glico.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -810,21 +879,26 @@
         "title": "Château d’Osaka",
         "lat": 34.6873,
         "lng": 135.5262,
-        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte."
+        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Hōkoku, dans le parc du château."
       },
       {
         "title": "Shinsaibashi",
         "phrases": "shop",
         "lat": 34.6751,
         "lng": 135.501,
-        "desc": "Galerie marchande couverte qui mène à Dotonbori — mode, grands magasins, flânerie."
+        "desc": "Galerie marchande couverte qui mène à Dotonbori — mode, grands magasins, flânerie.",
+        "goshuin": "non"
       },
       {
         "title": "Hozenji Yokocho",
         "phrases": "restaurant",
         "lat": 34.6683,
         "lng": 135.5027,
-        "desc": "Petite ruelle au sanctuaire moussu près de Dotonbori — contraste calme avec les néons."
+        "desc": "Petite ruelle au sanctuaire moussu près de Dotonbori — contraste calme avec les néons.",
+        "goshuin": "oui",
+        "goshuinNote": "Au temple Hōzen-ji, au bout de la ruelle."
       }
     ],
     "wake": {
@@ -843,19 +917,23 @@
         "title": "Marché Kuromon",
         "lat": 34.6651,
         "lng": 135.5066,
-        "desc": "Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord."
+        "desc": "Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord.",
+        "goshuin": "non"
       },
       {
         "title": "Sanctuaire Nezu + Yanaka",
         "lat": 35.7203,
         "lng": 139.7608,
-        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses."
+        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses.",
+        "goshuin": "oui",
+        "goshuinNote": "Au sanctuaire Nezu."
       },
       {
         "title": "Shinjuku — skyline",
         "lat": 35.6938,
         "lng": 139.7036,
-        "desc": "Soirée libre après le retour d’Osaka : gratte-ciel et néons, vue de nuit depuis l’observatoire gratuit de la mairie ou un rooftop (horaires à vérifier ; à faire seulement s’il fait beau)."
+        "desc": "Soirée libre après le retour d’Osaka : gratte-ciel et néons, vue de nuit depuis l’observatoire gratuit de la mairie ou un rooftop (horaires à vérifier ; à faire seulement s’il fait beau).",
+        "goshuin": "non"
       }
     ],
     "moves": [
@@ -883,20 +961,23 @@
         "phrases": "shop",
         "lat": 35.6729,
         "lng": 139.7672,
-        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs."
+        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs.",
+        "goshuin": "non"
       },
       {
         "title": "Animate",
         "lat": 35.7308,
         "lng": 139.7148,
-        "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs."
+        "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs.",
+        "goshuin": "non"
       },
       {
         "title": "Harajuku / Omotesandō",
         "phrases": "shop",
         "lat": 35.6714,
         "lng": 139.7048,
-        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes."
+        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes.",
+        "goshuin": "non"
       }
     ],
     "wake": {
