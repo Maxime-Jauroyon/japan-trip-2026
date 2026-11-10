@@ -124,7 +124,7 @@ days.forEach((d, i) => {
     if (a.goshuin != null && !["oui", "non", "possible"].includes(a.goshuin)) err(`${w} « ${a.title} »`, "goshuin : oui, non ou possible attendu");
     if (a.goshuinNote != null && !String(a.goshuinNote).trim()) err(`${w} « ${a.title} »`, "goshuinNote vide");
   });
-  if (d.ordreReel != null && typeof d.ordreReel !== "boolean") err(w, "ordreReel doit être un booléen");
+  if (d.ordreFixe != null && typeof d.ordreFixe !== "boolean") err(w, "ordreFixe doit être un booléen");
   if (d.wake != null && (!/^([01]\d|2[0-3]):[0-5]\d$/.test(d.wake.time || "") || !String(d.wake.why || "").trim())) err(w, "wake : { time: \"HH:MM\", why } attendu");
   if (!/^\d{1,2} \w+ \d{4}$/u.test(d.date || "")) err(w, `date au format « 8 nov 2026 » attendue (${d.date})`);
   (d.moves || []).forEach((m, k) => {

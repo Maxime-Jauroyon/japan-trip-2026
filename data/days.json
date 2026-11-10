@@ -89,7 +89,7 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreReel": true
+    "ordreFixe": true
   },
   {
     "n": 3,
@@ -113,13 +113,6 @@
         "goshuin": "non"
       },
       {
-        "title": "Jardins Est du Palais impérial",
-        "lat": 35.6862,
-        "lng": 139.7574,
-        "desc": "Jardins gratuits sur l’ancien château d’Edo : douves, murs de pierre, tours de guet et pont Nijūbashi. À faire dans la partie sèche de la journée, même sous le parapluie (fermé lundi et vendredi, à vérifier).",
-        "goshuin": "non"
-      },
-      {
         "title": "Sanctuaire Meiji",
         "lat": 35.6764,
         "lng": 139.6993,
@@ -133,6 +126,32 @@
         "lng": 139.7006,
         "desc": "Shibuya Parco regroupe Nintendo Tokyo, Pokémon Center et les boutiques jeux vidéo, le tout couvert. Le carrefour se regarde depuis Scramble Square ou Hikarie plutôt que sous la pluie.",
         "goshuin": "non"
+      },
+      {
+        "title": "Sanctuaire Torigoe, de nuit",
+        "lat": 35.7064,
+        "lng": 139.7886,
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire, en journée (fermé le soir).",
+        "desc": "Sanctuaire du quartier, à quelques minutes de l’hôtel : accès libre le soir, calme, pour une courte balade après le repos (position approximative)."
+      },
+      {
+        "title": "Kuramae — cafés et bars calmes",
+        "lat": 35.704,
+        "lng": 139.7919,
+        "goshuin": "non",
+        "desc": "Quartier tranquille au bord de la Sumida : petits cafés, bars et dîner simple, à pied depuis l’hôtel (position approximative)."
+      },
+      {
+        "title": "Sento — bain public près de l’hôtel",
+        "goshuin": "non",
+        "desc": "Bain public pour se délasser après la journée de marche. Exemple cité : Tsuru no Yu (adresse à confirmer, probablement vers Asakusa ; horaires cités 15 h 30–24 h, fermé le samedi — à vérifier). Prendre une serviette, se laver avant d’entrer dans le bain. Pas de pin : chercher « sento » sur Google Maps depuis l’hôtel.",
+        "links": [
+          {
+            "label": "Chercher un sento sur Google Maps",
+            "url": "https://www.google.com/maps/search/?api=1&query=sento+public+bath+Taito+Tokyo"
+          }
+        ]
       }
     ],
     "wake": {
@@ -144,7 +163,8 @@
         "title": "Goshuin : carnet et tampon au sanctuaire Meiji",
         "desc": "Bureau des goshuin près du hall principal, devant le Kagura-den : environ 10 min de marche dans la forêt depuis l’entrée Harajuku (1-1 Yoyogikamizonocho, Shibuya). Carnet au design du sanctuaire (≈ ¥1 000, prix non officiel), tampon ≈ ¥500, en cash ; à faire l’après-midi, le bureau ferme avant la nuit (horaires à vérifier)."
       }
-    ]
+    ],
+    "ordreFixe": true
   },
   {
     "n": 4,
@@ -153,11 +173,26 @@
     "city": "tokyo",
     "ideas": [
       {
+        "title": "Jardins Est du Palais impérial",
+        "lat": 35.6862,
+        "lng": 139.7574,
+        "desc": "À faire en premier : les jardins ouvrent à 9 h et ferment à 16 h 30 (dernière entrée 16 h) ; fermés le lundi et le vendredi, parfois fermeture exceptionnelle (aujourd’hui fermés) : à vérifier. Douves, murs de pierre, tours de guet et pont Nijūbashi de l’ancien château d’Edo.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Zōjō-ji — grand temple",
+        "lat": 35.6574,
+        "lng": 139.7488,
+        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À visiter avant la fermeture du bureau et du temple (≈ 17 h), donc avant la Tokyo Tower de nuit.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple."
+      },
+      {
         "title": "teamLab Planets",
         "phrases": "park",
         "lat": 35.649,
         "lng": 139.7898,
-        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance.",
+        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance. Entrée sur créneau réservé : à choisir dans l’après-midi, après les lieux qui ferment tôt.",
         "goshuin": "non"
       },
       {
@@ -166,14 +201,6 @@
         "lng": 139.7753,
         "desc": "Île artificielle avec le Gundam grandeur nature, centres commerciaux et vues sur la baie.",
         "goshuin": "non"
-      },
-      {
-        "title": "Zōjō-ji — grand temple",
-        "lat": 35.6574,
-        "lng": 139.7488,
-        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À faire avant la Tokyo Tower de nuit.",
-        "goshuin": "oui",
-        "goshuinNote": "Au bureau du temple."
       },
       {
         "title": "Tokyo Tower de nuit",
@@ -192,7 +219,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFixe": true
   },
   {
     "n": 5,
