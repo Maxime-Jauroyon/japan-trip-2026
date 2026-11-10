@@ -278,6 +278,19 @@ function photoCreditHtml(credit){
 }
 
 /** Galerie : grande photo puis vignettes. `photos` : chemins ou { src, credit }. */
+/** Pastille « 御朱印 » dans les listes : goshuin disponible (oui) ou à demander (possible). Rien si « non » ou inconnu. */
+export function goshuinPillHtml(a){
+  if (!a || (a.goshuin !== "oui" && a.goshuin !== "possible")) return "";
+  return `<span class="gos-pill ${a.goshuin}" title="${a.goshuin === "oui" ? "Goshuin disponible" : "Goshuin possible : à demander"}">御朱印${a.goshuin === "possible" ? " ?" : ""}</span>`;
+}
+
+/** Ligne « Goshuin » de la fiche d’une activité (oui / non / possible, avec précision). */
+export function goshuinLineHtml(a){
+  if (!a || !a.goshuin) return "";
+  const label = { oui: "Oui, goshuin disponible", non: "Non, pas de goshuin ici", possible: "Possible : à demander sur place" }[a.goshuin];
+  return `<p class="gos-line ${a.goshuin}"><strong>御朱印 · ${esc(label)}</strong>${a.goshuinNote ? `<span>${esc(a.goshuinNote)}</span>` : ""}</p>`;
+}
+
 export function renderPhotoGallery(photos, kind){
   const list = photos.map(p => (typeof p === "string" ? { src: p } : p));
   if (!list.length){

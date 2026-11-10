@@ -22,7 +22,7 @@ import { journalDay, patchPlanned, setPlannedStatus } from "../../pwa/journal-st
 import { bindCameraButtons, bindJournalRows, bindStatusButtons, cameraButtonHtml, fixedPillHtml, hydratePhotos, photoStripHtml, statusButtonHtml } from "../journal-widgets.js";
 import { USER_POS_CHANGED, fillDistances } from "../my-position.js";
 import { bindSheetGrab, closeDetailSheet, closePanel, sheetGrabHtml, showDetailSheet } from "./panel.js";
-import { actLinksHtml, contextPhraseHtml, copyFieldHtml, imgRetryAttr, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
+import { actLinksHtml, contextPhraseHtml, copyFieldHtml, imgRetryAttr, mapsLinkHtml, modeBadgeFor, notesListHtml, renderHotelCard, renderLuggageLocker, goshuinLineHtml, goshuinPillHtml, renderMoves, renderPhotoGallery, statusClass, statusLabel } from "../templates.js";
 
 export function openActivityDetail(act, opts){
   if (!state.panelContext || state.panelContext.type !== "city") return;
@@ -38,6 +38,7 @@ export function openActivityDetail(act, opts){
     mapsLinkHtml(act, "detail") +
     `<p class="desc">${esc(act.desc || "")}</p>` +
     closedNoteHtml(act) +
+    goshuinLineHtml(act) +
     notesListHtml(act.notes) +
     actLinksHtml(act.links) +
     journalDetailHtml(act) +
@@ -204,7 +205,7 @@ function itineraryHtml(stops, d){
         `<span class="itin-mark" style="--c:${PLACE_COLORS[kind] || PLACE_COLORS.pin}">${s.step}</span>` +
         `<span class="itin-main"><strong>${esc(a.title)}</strong>` +
         (a.desc ? `<span class="itin-desc">${esc(a.desc)}</span>` : "") +
-        closedPillHtml(closureOf(a, d)) + fixedPillHtml(a.fixed) +
+        closedPillHtml(closureOf(a, d)) + fixedPillHtml(a.fixed) + goshuinPillHtml(a) +
         `<span class="itin-dist" data-dist-lat="${a.lat}" data-dist-lng="${a.lng}" hidden></span>` + `</span>` +
         thumb + statusButtonHtml(iso, a.title, st, a.fixed) + mapsLinkHtml(a, "list") + `</li>`;
     }
@@ -251,7 +252,7 @@ function dayViewHtml(c, d){
   if (others.length) {
     body += `<h4 class="sec-title">Autres idées</h4><div class="idea-list">` + others.map((a, i) => {
       const st = statusOfPlanned(journalDay(iso), a.title);
-      return `<div class="idea st-row-${st}" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${fixedPillHtml(a.fixed)}${statusButtonHtml(iso, a.title, st, a.fixed)}${mapsLinkHtml(a, "list")}</div>`;
+      return `<div class="idea st-row-${st}" data-other="${i}" role="button" tabindex="0"><span class="idea-dot"></span><span>${esc(a.title)}</span>${fixedPillHtml(a.fixed)}${goshuinPillHtml(a)}${statusButtonHtml(iso, a.title, st, a.fixed)}${mapsLinkHtml(a, "list")}</div>`;
     }).join("") + `</div>`;
   }
   if (!moves.length && !locker && stops.length <= 1 && !others.length && !(d.reminders || []).length) {
