@@ -6,7 +6,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { EXPENSE_CAT_IDS } from "../src/domain/expenses.js";
 import { validTicket } from "../src/domain/tickets.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -159,9 +158,6 @@ prep.checks.forEach((c) => {
 (prep.budget || []).forEach((b, i) => {
   const w = `prep.budget[${i}] (${b.label})`;
   if (b.locked != null && typeof b.locked !== "boolean") err(w, "locked doit être un booléen");
-  if (b.live != null && (!Array.isArray(b.live) || !b.live.length || b.live.some((c) => !EXPENSE_CAT_IDS.includes(c)))) {
-    err(w, `live : catégories parmi ${EXPENSE_CAT_IDS.join(", ")}`);
-  }
 });
 const phrases = load("phrases");
 const checkPhrase = (where) => (p, i) => {

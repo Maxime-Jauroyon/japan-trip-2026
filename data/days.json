@@ -126,32 +126,6 @@
         "lng": 139.7006,
         "desc": "Shibuya Parco regroupe Nintendo Tokyo, Pokémon Center et les boutiques jeux vidéo, le tout couvert. Le carrefour se regarde depuis Scramble Square ou Hikarie plutôt que sous la pluie.",
         "goshuin": "non"
-      },
-      {
-        "title": "Sanctuaire Torigoe, de nuit",
-        "lat": 35.7064,
-        "lng": 139.7886,
-        "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire, en journée (fermé le soir).",
-        "desc": "Sanctuaire du quartier, à quelques minutes de l’hôtel : accès libre le soir, calme, pour une courte balade après le repos (position approximative)."
-      },
-      {
-        "title": "Kuramae — cafés et bars calmes",
-        "lat": 35.704,
-        "lng": 139.7919,
-        "goshuin": "non",
-        "desc": "Quartier tranquille au bord de la Sumida : petits cafés, bars et dîner simple, à pied depuis l’hôtel (position approximative)."
-      },
-      {
-        "title": "Sento — bain public près de l’hôtel",
-        "goshuin": "non",
-        "desc": "Bain public pour se délasser après la journée de marche. Exemple cité : Tsuru no Yu (adresse à confirmer, probablement vers Asakusa ; horaires cités 15 h 30–24 h, fermé le samedi — à vérifier). Prendre une serviette, se laver avant d’entrer dans le bain. Pas de pin : chercher « sento » sur Google Maps depuis l’hôtel.",
-        "links": [
-          {
-            "label": "Chercher un sento sur Google Maps",
-            "url": "https://www.google.com/maps/search/?api=1&query=sento+public+bath+Taito+Tokyo"
-          }
-        ]
       }
     ],
     "wake": {

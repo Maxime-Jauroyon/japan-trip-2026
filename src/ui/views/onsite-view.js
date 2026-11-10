@@ -12,7 +12,6 @@ import { clearLegEnds } from "../../map/country.js";
 import { fillCityPanel } from "../panels/city-panel.js";
 import { phraseCardHtml } from "../phrase-show.js";
 import { mapsDirectionsUrl } from "../templates.js";
-import { renderExpenses } from "./expenses.js";
 import { initFxConverter } from "./fx-converter.js";
 import { renderNextStop } from "./next-stop.js";
 import { renderTickets } from "./tickets.js";
@@ -149,7 +148,6 @@ export function renderOnsite(){
   const today = document.getElementById("onsite-today");
   if (!today) return;
   initFxConverter();
-  renderExpenses();
   today.innerHTML = todayCardHtml();
   const day = findTripDayByISO(japanTodayISO()) || (japanTodayISO() < TRIP.startDate ? DAYS[0] : null);
   if (day) renderOnsiteWeather(day);
