@@ -1,7 +1,7 @@
 /* Configuration de l’app (pas de contenu de voyage) : version, clés de stockage local, cache des tuiles. */
 
 /** Version affichée — garder en sync avec sw.js (scripts/bump-version.mjs). */
-export const APP_VERSION = "v235";
+export const APP_VERSION = "v236";
 
 /* Clés localStorage (préfixe japan-trip-, suffixe -vN pour migrer un format). */
 export const CHECK_KEY = "japan-trip-check-v1";
@@ -21,9 +21,6 @@ export const OFFLINE_MAPS_KEY = "japan-trip-offline-maps-v1";
 /** Version pour laquelle la vue Japon a été pré-chargée en tâche de fond (ordinateur). */
 /** Étapes du jour cochées « Fait » (carte « Et maintenant ? ») : { "AAAA-MM-JJ": [titres] }. */
 export const DAY_PROGRESS_KEY = "japan-trip-day-progress-v1";
-/** Dépenses sur place : [{ id, iso, yen, cat, note }] et budget quotidien (¥). */
-export const EXPENSES_KEY = "japan-trip-expenses-v1";
-export const EXPENSE_BUDGET_KEY = "japan-trip-expense-budget-v1";
 /** Journal de voyage : jours saisis + synchro (cf. pwa/journal-store.js) et réglages (jeton, auteur). */
 export const JOURNAL_KEY = "japan-trip-journal-v1";
 export const JOURNAL_CFG_KEY = "japan-trip-journal-cfg-v1";

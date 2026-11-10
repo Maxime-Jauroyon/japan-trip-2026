@@ -85,30 +85,19 @@
       "label": "Transports sur place (Suica, métro…)",
       "amount": "Variable",
       "note": "Recharges Suica, métro, bus locaux, taxis",
-      "done": false,
-      "live": [
-        "transport"
-      ]
+      "done": false
     },
     {
       "label": "Activités / tickets",
       "amount": "≈ 188 € / pers. + reste",
       "note": "USJ payé (291 € pour 2) · Fuji-Q One Day Pass payé (85,50 € pour 2) · horreur sur place · teamLab…",
-      "done": false,
-      "live": [
-        "activity"
-      ]
+      "done": false
     },
     {
       "label": "Nourriture & divers",
       "amount": "Variable / pers.",
       "note": "Budget confort ~60–100 €/jour",
-      "done": false,
-      "live": [
-        "food",
-        "shop",
-        "other"
-      ]
+      "done": false
     }
   ],
   "budgetTotal": {
