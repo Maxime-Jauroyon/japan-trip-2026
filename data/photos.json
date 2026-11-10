@@ -279,6 +279,18 @@
     {
       "match": "z[oō]j[oō]-?ji",
       "slug": "zojo-ji"
+    },
+    {
+      "match": "torigoe",
+      "slug": "torigoe-jinja"
+    },
+    {
+      "match": "sento",
+      "slug": "sento"
+    },
+    {
+      "match": "kuramae",
+      "slug": "kuramae"
     }
   ],
   "places": {
@@ -1771,6 +1783,54 @@
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Zōjō-ji_Sangedatsu-mon_gate_seen_from_the_main_temple.jpg"
+      }
+    ],
+    "torigoe-jinja": [
+      {
+        "file": "torigoe-jinja.jpg",
+        "author": "Saxup",
+        "license": "Public domain",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0",
+        "source": "https://commons.wikimedia.org/wiki/File:TorigoeJinja.JPG"
+      },
+      {
+        "file": "torigoe-jinja-2.jpg",
+        "author": "Suz-b",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:TorigoeHachimanJinja_Shinjo.JPG"
+      }
+    ],
+    "sento": [
+      {
+        "file": "sento.jpg",
+        "author": "Kurihaya",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tatsuno-yu_Sento_Tokyo_1.jpg"
+      },
+      {
+        "file": "sento-2.jpg",
+        "author": "Nesnad",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shoes_boxes_at_a_Sento_-_Tokyo_area_-_Dec_22_2021.jpeg"
+      }
+    ],
+    "kuramae": [
+      {
+        "file": "kuramae.jpg",
+        "author": "Smanabu",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kuramae_Bridge_20050520.jpg"
+      },
+      {
+        "file": "kuramae-2.jpg",
+        "author": "Kamemaru2000",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kuramae_jinja_taito_2009.JPG"
       }
     ]
   }

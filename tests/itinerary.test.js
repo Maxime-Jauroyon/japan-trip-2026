@@ -46,10 +46,10 @@ test("tronçon courbé : commence et finit sur les étapes", () => {
   assert.equal(seg.mid.length, 2);
 });
 
-test("ordre des idées optimisé : aucun autre ordre ne gagne 5 min de trajet ou plus (sauf jours à ordre réel)", () => {
+test("ordre des idées optimisé : aucun autre ordre ne gagne 5 min de trajet ou plus (sauf jours à ordre fixe)", () => {
   const cost = (a, b) => { const km = distanceKm(a, b) * 1.3; return km <= 2.2 ? km / 4.5 * 60 : 10 + km / 24 * 60; };
   const perms = (a) => a.length <= 1 ? [a] : a.flatMap((x, i) => perms([...a.slice(0, i), ...a.slice(i + 1)]).map((p) => [x, ...p]));
-  DAYS.filter((d) => !d.ordreReel).forEach((d) => [d.city, d.extraCity].filter(Boolean).forEach((c) => {
+  DAYS.filter((d) => !d.ordreFixe).forEach((d) => [d.city, d.extraCity].filter(Boolean).forEach((c) => {
     const it = dayItinerary(c, d);
     const acts = it.filter((s) => s.kind === "activity");
     if (acts.length < 2) return;
