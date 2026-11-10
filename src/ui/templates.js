@@ -8,7 +8,7 @@ import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/l
 import { hotelPhotos, thumbOf } from "../domain/photos.js";
 import { TICKET_KINDS, validTicket } from "../domain/tickets.js";
 import { phraseCardHtml } from "./phrase-show.js";
-import { groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
+import { clockLabel, groupMovesByJourney, isEarlyArrivalBeforeCheckIn, isFirstDayOfStay, moveSortRange, stayForDay, stopEntryOnCity } from "../domain/trip.js";
 import { hotelIconSvg, mapsIconSvg, modeBadgeHtml, placeGlyphSvg } from "../shared/icons.js";
 
 export function modeStatHtml(mode){
@@ -278,6 +278,12 @@ function photoCreditHtml(credit){
 }
 
 /** Galerie : grande photo puis vignettes. `photos` : chemins ou { src, credit }. */
+/** Pastille d’échéance dans les listes : « ⏰ ferme 16 h 30 » ou « ⏰ avant 11 h » (rien si le lieu est libre). */
+export function deadlinePillHtml(dl){
+  if (!dl) return "";
+  return `<span class="dl-pill ${dl.kind}" title="${dl.kind === "closes" ? "Heure de fermeture (à vérifier)" : "À faire plutôt avant cette heure"}">⏰ ${dl.kind === "closes" ? "ferme" : "avant"} ${esc(clockLabel(dl.time))}</span>`;
+}
+
 /** Pastille « 御朱印 » dans les listes : goshuin disponible (oui) ou à demander (possible). Rien si « non » ou inconnu. */
 export function goshuinPillHtml(a){
   if (!a || (a.goshuin !== "oui" && a.goshuin !== "possible")) return "";

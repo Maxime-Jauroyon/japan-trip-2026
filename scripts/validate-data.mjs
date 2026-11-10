@@ -124,6 +124,7 @@ days.forEach((d, i) => {
     if (a.goshuin != null && !["oui", "non", "possible"].includes(a.goshuin)) err(`${w} « ${a.title} »`, "goshuin : oui, non ou possible attendu");
     if (a.goshuinNote != null && !String(a.goshuinNote).trim()) err(`${w} « ${a.title} »`, "goshuinNote vide");
   });
+  if (d.ordreFermeture != null && typeof d.ordreFermeture !== "boolean") err(w, "ordreFermeture doit être un booléen");
   if (d.ordreFixe != null && typeof d.ordreFixe !== "boolean") err(w, "ordreFixe doit être un booléen");
   if (d.wake != null && (!/^([01]\d|2[0-3]):[0-5]\d$/.test(d.wake.time || "") || !String(d.wake.why || "").trim())) err(w, "wake : { time: \"HH:MM\", why } attendu");
   if (!/^\d{1,2} \w+ \d{4}$/u.test(d.date || "")) err(w, `date au format « 8 nov 2026 » attendue (${d.date})`);
@@ -201,6 +202,8 @@ if (!isNum(trip.fxDefault) || trip.fxDefault <= 0) err("trip", "fxDefault invali
 load("practical").forEach((p, i) => { if (!isStr(p.title) || !Array.isArray(p.items)) err(`practical[${i}]`, "title / items"); });
 (trip.holidays || []).forEach((h, i) => { if (!ISO.test(h)) err(`trip.holidays[${i}]`, "date AAAA-MM-JJ attendue"); });
 Object.entries(load("places-meta")).forEach(([slug, m]) => {
+  ["closes", "bestBefore"].forEach((k) => { if (m[k] != null && !/^([01]\d|2[0-3]):[0-5]\d$/.test(m[k])) err(`places-meta.${slug}`, `${k} : HH:MM attendu`); });
+  if (m.closes != null && m.bestBefore != null) err(`places-meta.${slug}`, "closes et bestBefore ne vont pas ensemble");
   if (!m.closed) return;
   const c = m.closed;
   if (!Array.isArray(c.days) || !c.days.length || c.days.some((d) => !Number.isInteger(d) || d < 0 || d > 6)) {

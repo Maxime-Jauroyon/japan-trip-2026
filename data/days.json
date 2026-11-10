@@ -220,7 +220,8 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFixe": true
+    "ordreFixe": true,
+    "ordreFermeture": true
   },
   {
     "n": 5,
@@ -238,26 +239,12 @@
     ],
     "ideas": [
       {
-        "title": "Oshino Hakkai",
-        "lat": 35.4598,
-        "lng": 138.8338,
-        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks.",
-        "goshuin": "non"
-      },
-      {
         "title": "Pagode Chūrei-tō",
         "lat": 35.5013,
         "lng": 138.8014,
         "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair.",
         "goshuin": "possible",
         "goshuinNote": "Au sanctuaire Arakura Fuji Sengen, au pied de l’escalier."
-      },
-      {
-        "title": "Music Forest + lac",
-        "lat": 35.5218,
-        "lng": 138.769,
-        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile.",
-        "goshuin": "non"
       },
       {
         "title": "Momiji Corridor",
@@ -275,17 +262,24 @@
         "goshuin": "non"
       },
       {
+        "title": "Oshino Hakkai",
+        "lat": 35.4598,
+        "lng": 138.8338,
+        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Music Forest + lac",
+        "lat": 35.5218,
+        "lng": 138.769,
+        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile.",
+        "goshuin": "non"
+      },
+      {
         "title": "Saiko Iyashi-no-Sato",
         "lat": 35.504,
         "lng": 138.6612,
         "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Lac Kawaguchi",
-        "lat": 35.5233,
-        "lng": 138.7465,
-        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
         "goshuin": "non"
       },
       {
@@ -294,12 +288,20 @@
         "lng": 138.7705,
         "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin.",
         "goshuin": "non"
+      },
+      {
+        "title": "Lac Kawaguchi",
+        "lat": 35.5233,
+        "lng": 138.7465,
+        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
+        "goshuin": "non"
       }
     ],
     "wake": {
       "time": "06:45",
       "why": "Bus Shinjuku 09:05 · départ de l’hôtel vers 07:45"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 6,
@@ -378,13 +380,6 @@
     ],
     "ideas": [
       {
-        "title": "Higashi Chaya",
-        "lat": 36.5733,
-        "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle.",
-        "goshuin": "non"
-      },
-      {
         "title": "Kenroku-en",
         "lat": 36.5619,
         "lng": 136.6626,
@@ -398,12 +393,20 @@
         "lng": 136.659,
         "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc.",
         "goshuin": "non"
+      },
+      {
+        "title": "Higashi Chaya",
+        "lat": 36.5733,
+        "lng": 136.6667,
+        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle.",
+        "goshuin": "non"
       }
     ],
     "wake": {
       "time": "06:45",
       "why": "Bus 08:10 · check-out vers 07:45 (shinkansen 11:24 à Tokyo)"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 8,
@@ -444,7 +447,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 9,
@@ -453,19 +457,19 @@
     "city": "kanazawa",
     "ideas": [
       {
-        "title": "Nagamachi (quartier samouraï)",
-        "lat": 36.5628,
-        "lng": 136.65,
-        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable.",
-        "goshuin": "non"
-      },
-      {
         "title": "Myōryū-ji",
         "lat": 36.5551,
         "lng": 136.6486,
         "desc": "Le « temple des ninjas » — visite guidée à réserver pour portes secrètes et pièges.",
         "goshuin": "possible",
         "goshuinNote": "Au temple (« Ninja-dera ») : à demander à l’accueil."
+      },
+      {
+        "title": "Nagamachi (quartier samouraï)",
+        "lat": 36.5628,
+        "lng": 136.65,
+        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable.",
+        "goshuin": "non"
       },
       {
         "title": "Teramachi",
@@ -492,7 +496,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 10,
@@ -543,7 +548,8 @@
     "wake": {
       "time": "08:00",
       "why": "Check-out vers 10:15 · bus Kanazawa → Shirakawa-go 11:10"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 11,
@@ -596,7 +602,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre à Takayama · train pour Kyoto 15:34"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 12,
@@ -637,7 +644,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 13,
@@ -672,7 +680,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 14,
@@ -708,7 +717,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 15,
@@ -750,7 +760,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre à Kyoto · train Kintetsu 14:55"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 16,
@@ -760,21 +771,6 @@
     "extraCity": "osaka",
     "ideas": [
       {
-        "title": "Kasuga Taisha",
-        "lat": 34.6814,
-        "lng": 135.8484,
-        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière.",
-        "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire."
-      },
-      {
-        "title": "Parc de Nara",
-        "lat": 34.6851,
-        "lng": 135.843,
-        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs.",
-        "goshuin": "non"
-      },
-      {
         "title": "Tōdai-ji",
         "lat": 34.689,
         "lng": 135.8398,
@@ -783,12 +779,27 @@
         "goshuinNote": "Au bureau du temple."
       },
       {
+        "title": "Kasuga Taisha",
+        "lat": 34.6814,
+        "lng": 135.8484,
+        "desc": "Sanctuaire célèbre pour ses lanternes de pierre et de bronze dans une approche forestière.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire."
+      },
+      {
         "title": "Kōfuku-ji",
         "lat": 34.6833,
         "lng": 135.831,
         "desc": "Temple historique avec pagode à cinq étages dominant le parc.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du temple."
+      },
+      {
+        "title": "Parc de Nara",
+        "lat": 34.6851,
+        "lng": 135.843,
+        "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs.",
+        "goshuin": "non"
       }
     ],
     "moves": [
@@ -819,7 +830,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre à Nara · train Kintetsu 16:08"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 17,
@@ -860,20 +872,20 @@
     "city": "osaka",
     "ideas": [
       {
-        "title": "Namba Yasaka",
-        "lat": 34.6606,
-        "lng": 135.4966,
-        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour.",
-        "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
-      },
-      {
         "title": "Den Den Town",
         "phrases": "shop",
         "lat": 34.66,
         "lng": 135.5058,
         "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba.",
         "goshuin": "non"
+      },
+      {
+        "title": "Namba Yasaka",
+        "lat": 34.6606,
+        "lng": 135.4966,
+        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
       },
       {
         "title": "Shinsekai",
@@ -895,7 +907,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 19,
@@ -932,7 +945,8 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 20,
@@ -976,7 +990,8 @@
     "wake": {
       "time": "08:00",
       "why": "Départ de l’hôtel vers 09:45 · Nozomi 90 à 11:30"
-    }
+    },
+    "ordreFixe": true
   },
   {
     "n": 21,
@@ -993,25 +1008,26 @@
         "goshuin": "non"
       },
       {
-        "title": "Animate",
-        "lat": 35.7308,
-        "lng": 139.7148,
-        "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs.",
-        "goshuin": "non"
-      },
-      {
         "title": "Harajuku / Omotesandō",
         "phrases": "shop",
         "lat": 35.6714,
         "lng": 139.7048,
         "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes.",
         "goshuin": "non"
+      },
+      {
+        "title": "Animate",
+        "lat": 35.7308,
+        "lng": 139.7148,
+        "desc": "Grande librairie anime à Ikebukuro — étages de goodies, idéal pour les derniers souvenirs.",
+        "goshuin": "non"
       }
     ],
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ordreFermeture": true
   },
   {
     "n": 22,

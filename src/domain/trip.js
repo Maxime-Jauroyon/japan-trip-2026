@@ -333,3 +333,23 @@ export function wakeForNextDay(days, n){
   const next = (days || []).find((d) => d.n === n + 1);
   return next && next.wake && next.wake.time ? { time: next.wake.time, why: next.wake.why || "", dayN: next.n } : null;
 }
+
+/** « 16:30 » → minutes depuis minuit (null si absent ou mal formé). */
+export function hhmmToMinutes(s){
+  const m = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(String(s || ""));
+  return m ? Number(m[1]) * 60 + Number(m[2]) : null;
+}
+
+/**
+ * Échéance d’un lieu d’après places-meta : { kind: "closes" | "best", time: "16:30", minutes } ou null.
+ * « closes » = heure de fermeture ; « best » = à faire plutôt avant cette heure (matin, lumière…).
+ */
+export function deadlineOf(meta){
+  const closes = hhmmToMinutes(meta && meta.closes), best = hhmmToMinutes(meta && meta.bestBefore);
+  if (closes != null) return { kind: "closes", time: meta.closes, minutes: closes };
+  if (best != null) return { kind: "best", time: meta.bestBefore, minutes: best };
+  return null;
+}
+
+/** « 16:30 » → « 16 h 30 ». */
+export const clockLabel = (hhmm) => String(hhmm).replace(/^0/, "").replace(":", " h ").replace(/ h 00$/, " h");
