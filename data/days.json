@@ -137,7 +137,13 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "reminders": [
+      {
+        "title": "Goshuin : carnet et tampon au sanctuaire Meiji",
+        "desc": "Bureau des goshuin près du hall principal, devant le Kagura-den : environ 10 min de marche dans la forêt depuis l’entrée Harajuku (1-1 Yoyogikamizonocho, Shibuya). Carnet au design du sanctuaire (≈ ¥1 000, prix non officiel), tampon ≈ ¥500, en cash ; à faire l’après-midi, le bureau ferme avant la nuit (horaires à vérifier)."
+      }
+    ]
   },
   {
     "n": 4,
