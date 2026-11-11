@@ -1878,22 +1878,6 @@
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_12.jpg"
       }
-    ],
-    "batting-ikebukuro": [
-      {
-        "file": "sunshine-city.jpg",
-        "author": "Dick Thomas Johnson from Tokyo, Japan",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Sunshine_City_Atrium_201206.jpg"
-      },
-      {
-        "file": "sunshine-city-2.jpg",
-        "author": "Maplestrip",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Sunshine_City_Tokyo.jpg"
-      }
     ]
   }
 }
