@@ -4,28 +4,25 @@
    "id": "p:music-forest-lac",
    "kind": "planned",
    "title": "Music Forest + lac",
-   "status": "done",
-   "doneAt": 1794438255055,
+   "status": "skipped",
    "by": "Léo",
-   "at": 1794438255055
+   "at": 1794438402138
   },
   "p:musee-itchiku-kubota": {
    "id": "p:musee-itchiku-kubota",
    "kind": "planned",
    "title": "Musée Itchiku Kubota",
-   "status": "done",
-   "doneAt": 1794438256490,
+   "status": "skipped",
    "by": "Léo",
-   "at": 1794438256490
+   "at": 1794438402571
   },
   "p:saiko-iyashi-no-sato": {
    "id": "p:saiko-iyashi-no-sato",
    "kind": "planned",
    "title": "Saiko Iyashi-no-Sato",
-   "status": "done",
-   "doneAt": 1794438315821,
+   "status": "skipped",
    "by": "Léo",
-   "at": 1794438315821
+   "at": 1794438405200
   }
  }
 }
