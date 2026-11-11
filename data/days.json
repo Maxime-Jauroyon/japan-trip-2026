@@ -192,11 +192,19 @@
         "goshuin": "non"
       },
       {
-        "title": "Stadium Bar Akiba League — bar baseball",
-        "slug": "akiba-league",
-        "lat": 35.6986,
-        "lng": 139.7747,
-        "desc": "Grand sports bar au 2ᵉ étage du GATO Akihabara Building (1-24 Kanda-Sakumachō), à 1 min de la gare JR Akihabara. Ambiance stade, bière servie à table. Pas un rooftop : aucun bar baseball en terrasse n’a été confirmé. Horaires et tenue à vérifier avant d’y aller.",
+        "title": "Baseball — batting center Active AKIBA",
+        "slug": "batting-akiba",
+        "lat": 35.6984,
+        "lng": 139.7742,
+        "desc": "Batting center au 9ᵉ étage du Yodobashi Akiba, relié à la gare JR Akihabara (pas décrit comme un rooftop). Ouvert env. 10 h 30–23 h 55, dernière partie vers 22 h 55 ; environ 300 ¥ la série, payer en espèces. Horaires et prix à vérifier. Option facile juste après le maid café.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Baseball en hauteur — batting center de Q Plaza Ikebukuro",
+        "slug": "batting-ikebukuro",
+        "lat": 35.73,
+        "lng": 139.715,
+        "desc": "Batting center tout en haut de Q Plaza (Grandscape Ikebukuro, 1-30-3 Higashi-Ikebukuro, 14ᵉ étage) : le plus haut de Tokyo, boxes ouverts sur l’extérieur. Fermeture vers 23 h (horaires précis non confirmés, tél. 03-6709-0324). ~20 min de JR depuis Akihabara : à choisir à la place d’Active AKIBA, et seulement si on part du maid café avant 21 h. Position sur la carte approximative.",
         "goshuin": "non"
       }
     ],
