@@ -34,7 +34,7 @@ data/                 ← CONTENU DU VOYAGE (JSON)
   places-meta.json      horaires / durées des activités
   practical.json        infos pratiques
   photos.json           photos des lieux (Wikimedia Commons, avec auteur + licence) et motif titre → lieu
-  sounds.json           musiques de la story (motif titre → famille ; fichier de audio/, auteur + licence)
+  sounds.json           musiques de la story : motif titre → famille ; chaque famille = playlist de morceaux de audio/ (titre, auteur, licence)
 src/                  code (modules ES)
   main.js               point d’entrée : charge data/ puis démarre carte + interface
   config.js             version de l’app, clés localStorage
@@ -47,7 +47,7 @@ src/                  code (modules ES)
 styles/               CSS par thème (tokens → base → … → mobile → standalone)
 lib/maplibre/         MapLibre GL JS 5.24 (UMD, global `maplibregl`)
 img/                  photos des hôtels et activités, logo
-audio/                musiques japonaises (extraits mp3 ≈ 54 s bouclés, CC BY-SA, Jamendo) pour la story du Carnet
+audio/                musiques japonaises (extraits mp3 de 75 s, CC BY / CC BY-SA, Jamendo ; téléchargés au premier usage) pour la story du Carnet
 scripts/              outils Node (validation, précache, version, architecture)
 tests/                tests unitaires (node:test)
 ```

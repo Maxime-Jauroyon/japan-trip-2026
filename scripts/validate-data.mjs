@@ -222,8 +222,13 @@ Object.entries(photos.places).forEach(([slug, list]) => list.forEach((ph, i) => 
 const sounds = load("sounds");
 Object.entries(sounds.families).forEach(([id, f]) => {
   const w = `sounds.families.${id}`;
-  if (!fs.existsSync(path.join(ROOT, "audio", f.file || ""))) err(w, `audio/${f.file} introuvable`);
-  if (!isStr(f.author) || !isStr(f.license) || !isStr(f.source)) err(w, "auteur / licence / source manquants (crédit obligatoire)");
+  if (!Array.isArray(f.tracks) || f.tracks.length < 2) err(w, "au moins 2 morceaux attendus (playlist)");
+  (f.tracks || []).forEach((t, i) => {
+    const wt = `${w}.tracks[${i}]`;
+    if (!fs.existsSync(path.join(ROOT, "audio", t.file || ""))) err(wt, `audio/${t.file} introuvable`);
+    if (!isStr(t.title) || !isStr(t.author) || !isStr(t.license) || !isStr(t.source)) err(wt, "titre / auteur / licence / source manquants (crédit obligatoire)");
+    if (/NC|ND/i.test(t.license || "")) err(wt, "licence non commerciale ou sans modification : interdite (le morceau est coupé)");
+  });
   if (f.volume != null && !(f.volume > 0 && f.volume <= 1)) err(w, "volume : nombre entre 0 et 1 attendu");
 });
 sounds.rules.forEach((r, i) => {

@@ -7,57 +7,39 @@
 
 import { esc } from "../core/dom.js";
 import { isVideo } from "../domain/journal.js";
-import { soundFor } from "../domain/sounds.js";
+import { soundFamily } from "../domain/sounds.js";
+import { familiesAhead } from "../domain/music.js";
+import { musicEnabled, nextTrack, onMusicChange, preloadForTitles, resumeMusic, setMusicEnabled, setMusicFor, stopMusic, suspendMusic, unlockMusic } from "./music-player.js";
 import { SLIDE_MS, isLongPress, slideDuration, stepSlide, tapStep } from "../domain/story.js";
 
 const MAX_BARS = 14;
 const FAILSAFE_MS = 3500;       // si rien ne s’affiche (réseau), on démarre quand même le décompte
-const SOUND_KEY = "japan-trip-story-sound";
 
 let el = null, slides = [], idx = 0, resolveUrl = null, timer = null, failsafe = null, started = 0, slideMs = SLIDE_MS, left = SLIDE_MS, token = 0;
 let holding = false, ready = false, timerOn = false;
-let audio = null, family = null, fadeTimer = null;
+let unsubscribe = null;
 
-const soundOn = () => { try { return localStorage.getItem(SOUND_KEY) !== "off"; } catch (_) { return true; } };
-const setSoundOn = (on) => { try { localStorage.setItem(SOUND_KEY, on ? "on" : "off"); } catch (_) { /* pas de stockage */ } };
-
-/** Fondu du volume de la musique vers `to` en `ms` ; `then` à la fin. */
-function fadeAudio(to, ms, then){
-  clearInterval(fadeTimer);
-  if (!audio) { if (then) then(); return; }
-  const from = audio.volume, steps = Math.max(1, Math.round(ms / 50));
-  let k = 0;
-  fadeTimer = setInterval(() => {
-    k++;
-    audio.volume = Math.min(1, Math.max(0, from + (to - from) * (k / steps)));
-    if (k >= steps) { clearInterval(fadeTimer); if (then) then(); }
-  }, 50);
+/** Crédit de la musique en cours, en bas de la story. */
+function paintCredit(t){
+  const el_ = el && el.querySelector(".st-credit");
+  if (el_) el_.textContent = t ? `♪ ${t.title} — ${t.author}, ${t.license}` : "";
+  const next = el && el.querySelector(".st-music-next");
+  if (next) next.hidden = !t;
 }
 
-/** Met la musique de l’activité (fondu enchaîné si elle change) ; rien si le son est coupé. */
+/** Musique de la diapositive : fondu enchaîné si l’activité change de famille ; rien si le son est coupé. */
 function setAmbience(slide){
-  if (!audio) return;
-  const next = slide ? soundFor(slide.title) : null;
-  const credit = el.querySelector(".st-credit");
-  if (!soundOn() || !next) { fadeAudio(0, 300, () => audio.pause()); credit.textContent = ""; family = null; return; }
-  if (family && family.id === next.id && !audio.paused) return;
-  family = next;
-  credit.textContent = `♪ ${next.label} — ${next.author}, ${next.license}`;
-  const start = () => {
-    audio.src = next.file;
-    audio.loop = true;
-    audio.volume = 0;
-    audio.play().then(() => fadeAudio(next.volume, 600)).catch(() => { /* lecture refusée : l’histoire continue en silence */ });
-  };
-  if (audio.paused || !audio.src) start(); else fadeAudio(0, 350, start);
+  if (!slide) return;
+  setMusicFor(slide.title);
+  preloadForTitles(familiesAhead(slides, idx, (t) => soundFamily(t), 2).map((f) => slides.find((x) => soundFamily(x.title) === f).title));
 }
 
 function close(){
   clearTimeout(timer); clearTimeout(failsafe);
   token++; holding = false; timerOn = false; ready = false;
   if (el) { el.hidden = true; el.querySelector(".st-video").pause(); }
-  if (audio) fadeAudio(0, 250, () => audio.pause());
-  family = null;
+  stopMusic();
+  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
   document.documentElement.classList.remove("story-open");
 }
 
@@ -192,19 +174,21 @@ function build(){
   el.setAttribute("aria-label", "Revivre la journée");
   el.innerHTML = `<img class="st-img" alt="" /><video class="st-video" muted playsinline loop hidden></video><div class="st-top"><div class="st-bars"></div>` +
     `<div class="st-head"><div class="st-text"><strong class="st-title"></strong><small class="st-sub"></small></div>` +
-    `<span class="st-count"></span><button type="button" class="st-sound" aria-label="Couper ou remettre le son"></button>` +
+    `<span class="st-count"></span><button type="button" class="st-music-next" aria-label="Morceau suivant" title="Morceau suivant" hidden>⏭</button>` +
+    `<button type="button" class="st-sound" aria-label="Couper ou remettre le son"></button>` +
     `<button type="button" class="st-close" aria-label="Fermer">×</button></div></div>` +
     `<span class="st-pause" aria-hidden="true">⏸</span><span class="st-credit"></span>`;
   const sound = el.querySelector(".st-sound");
-  const paintSound = () => { sound.textContent = soundOn() ? "🔊" : "🔇"; };
+  const paintSound = () => { sound.textContent = musicEnabled() ? "🔊" : "🔇"; };
   paintSound();
-  sound.addEventListener("click", e => { e.stopPropagation(); setSoundOn(!soundOn()); paintSound(); family = null; setAmbience(slides[idx]); });
+  sound.addEventListener("click", e => { e.stopPropagation(); setMusicEnabled(!musicEnabled()); paintSound(); if (musicEnabled()) setAmbience(slides[idx]); else stopMusic(); });
+  el.querySelector(".st-music-next").addEventListener("click", e => { e.stopPropagation(); nextTrack(); });
   document.body.appendChild(el);
   el.querySelector(".st-close").addEventListener("click", e => { e.stopPropagation(); close(); });
   let downAt = 0, downX = 0, downY = 0;
   const hold = (on) => { holding = on; el.classList.toggle("paused", on); };
   el.addEventListener("pointerdown", e => {
-    if (e.target.closest(".st-close, .st-sound") || holding) return;   // un seul doigt à la fois
+    if (e.target.closest(".st-close, .st-sound, .st-music-next") || holding) return;   // un seul doigt à la fois
     downAt = Date.now(); downX = e.clientX; downY = e.clientY;
     hold(true);
     freezeTimer();
@@ -226,7 +210,7 @@ function build(){
   });
   document.addEventListener("visibilitychange", () => {
     if (!el || el.hidden) return;
-    if (document.hidden) { freezeTimer(); if (audio) audio.pause(); } else { startTimer(); if (audio && family && soundOn()) audio.play().catch(() => { /* ignoré */ }); }
+    if (document.hidden) { freezeTimer(); suspendMusic(); } else { startTimer(); resumeMusic(); }
   });
 }
 
@@ -238,12 +222,12 @@ export function openStory(list, start, resolve){
   resolveUrl = resolve;
   el.hidden = false;
   document.documentElement.classList.add("story-open");
-  // L’élément audio est créé et lancé ici, dans le geste de l’utilisateur (obligatoire sur iPhone pour pouvoir jouer ensuite)
-  if (!audio) audio = new Audio();
-  family = null;
+  // Le contexte audio est créé et réveillé ici, dans le geste de l’utilisateur (obligatoire sur iPhone pour pouvoir jouer ensuite)
+  unlockMusic();
+  if (unsubscribe) unsubscribe();
+  unsubscribe = onMusicChange(paintCredit);
   holding = false;
   el.classList.remove("paused");
-  setAmbience(list[start || 0]);
   goTo(start || 0);
 }
 

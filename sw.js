@@ -5,10 +5,12 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v247";
+const CACHE = "japan-trip-2026-v248";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
+/** Musiques de la story (≈ 11 Mo en tout) : téléchargées au premier usage, gardées d’une version à l’autre. */
+const AUDIO_CACHE = "japan-audio-v1";
 const isImage = (url) => url.includes("/img/");
 /** Photo complète (≈ 230 Ko) : préchargée en tâche de fond, pas à l’installation. Les vignettes (thumb/) si. */
 const isFullPhoto = (url) => /\/img\/(activities|hotels)\/[^/]+$/.test(url);
@@ -20,11 +22,6 @@ const ASSETS = [
   "./index.html",
   "./manifest.webmanifest",
   "./sw.js",
-  "./audio/arcade.mp3",
-  "./audio/eau.mp3",
-  "./audio/nature.mp3",
-  "./audio/temple.mp3",
-  "./audio/ville.mp3",
   "./data/cities.json",
   "./data/days.json",
   "./data/journeys.json",
@@ -522,6 +519,7 @@ const ASSETS = [
   "./src/domain/itinerary.js",
   "./src/domain/journal.js",
   "./src/domain/legs.js",
+  "./src/domain/music.js",
   "./src/domain/photos.js",
   "./src/domain/phrases.js",
   "./src/domain/places.js",
@@ -555,6 +553,7 @@ const ASSETS = [
   "./src/ui/journal-init.js",
   "./src/ui/journal-widgets.js",
   "./src/ui/map-controls.js",
+  "./src/ui/music-player.js",
   "./src/ui/my-position.js",
   "./src/ui/panels/city-panel.js",
   "./src/ui/panels/leg-panel.js",
@@ -1212,9 +1211,9 @@ async function cacheFirst(req) {
   }
 }
 
-/** Ambiances sonores : Safari lit un média par tranches (en-tête Range) → on répond en 206 depuis le cache. */
+/** Musiques : cache d’abord (puis réseau, mis en cache) ; Safari lit un média par tranches (en-tête Range) → réponse 206 au besoin. */
 async function audioResponse(req){
-  const cache = await caches.open(CACHE);
+  const cache = await caches.open(AUDIO_CACHE);
   let res = await cache.match(req.url);
   if (!res) {
     try { res = await fetch(req.url); if (res.ok) cache.put(req.url, res.clone()); } catch (_) { return Response.error(); }
