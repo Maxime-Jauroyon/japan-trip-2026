@@ -49,7 +49,7 @@ let model = [];
 function openDayStory(dayN){
   const x = model.find(d => d.day.n === dayN);
   if (!x) return;
-  openStory(storySlides(x), 0, async (s, thumb) => thumb ? photoUrl(s.iso, s.name, true) : ((await photoUrl(s.iso, s.name, false)) || (isVideo(s.name) ? "" : photoUrl(s.iso, s.name, true))));
+  openStory(storySlides(x), 0, (sl, o) => photoUrl(sl.iso, sl.name, !!o.thumb, { priority: o.priority, live: o.live }));
 }
 
 let lastSig = null;

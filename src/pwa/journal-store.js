@@ -8,6 +8,7 @@ import { DAYS, TRIP } from "../core/data.js";
 import { dayToISO, japanTodayISO } from "../core/dates.js";
 import { emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
 import { loadPublicJournal, publicPhotoUrl } from "./journal-public.js";
+import { createDedupe, createJobQueue } from "../shared/job-queue.js";
 import { resizeImage, compressVideo } from "./photo-resize.js";
 
 export const JOURNAL_CHANGED = "japan-trip:journal-changed";
@@ -216,16 +217,32 @@ async function downloadPhoto(iso, file){
   } catch (_) { return null; }
 }
 
-/** URL affichable d’une photo : cache de l’appareil d’abord ; sinon un seul téléchargement, puis elle y reste. */
-export async function photoUrl(iso, name, thumb){
+/* Téléchargements : 4 à la fois au plus, le plus urgent d’abord (ce qu’on regarde passe avant le préchargement), une même
+   photo jamais demandée deux fois en parallèle, et une demande devenue inutile (on a déjà tourné la page) n’est pas lancée. */
+const downloads = createJobQueue(4);
+const once = createDedupe();
+
+/**
+ * URL affichable d’une photo : cache de l’appareil d’abord ; sinon un seul téléchargement, puis elle y reste.
+ * `opts` : { priority (0 = arrière-plan, 5 = à l’écran, 10 = en plein écran), live: () => bool (false = abandonner) }.
+ * Rend "" si la photo est introuvable pour l’instant (à réessayer plus tard).
+ */
+export async function photoUrl(iso, name, thumb, opts = {}){
   const hit = await cachedPhotoUrl(iso, name, thumb);
   if (hit) return hit;
   if (!repoCfg().repo || navigator.onLine === false) return "";
   const file = thumb ? thumbName(name) : name;
-  const blob = await downloadPhoto(iso, file);
-  if (!blob) return "";
-  await cachePut(iso, file, blob);
-  return objectUrl(photoKey(iso, file), blobs.get(photoKey(iso, file)) || blob);
+  const start = () => once(photoKey(iso, file), () => downloads.run(async () => {
+    const arrived = await cachedPhotoUrl(iso, name, thumb);   // arrivée entre-temps (autre demande)
+    if (arrived) return arrived;
+    const blob = await downloadPhoto(iso, file);
+    if (!blob) return "";
+    await cachePut(iso, file, blob);
+    return objectUrl(photoKey(iso, file), blobs.get(photoKey(iso, file)) || blob);
+  }, { prio: opts.priority || 0, live: opts.live, fallback: null }));
+  let url = await start();
+  if (url === null && (!opts.live || opts.live())) url = await start();   // la demande qu’on a rejointe avait été abandonnée : on relance
+  return url || "";
 }
 
 const blobToB64 = (blob) => new Promise((resolve, reject) => {
