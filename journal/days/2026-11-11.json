@@ -53,6 +53,15 @@
    "doneAt": 1794384145134,
    "by": "Maxime",
    "at": 1794384145134
+  },
+  "p:maid-cafe-maidreamin-akihabara-head-store": {
+   "id": "p:maid-cafe-maidreamin-akihabara-head-store",
+   "kind": "planned",
+   "title": "Maid café — Maidreamin Akihabara (Head Store)",
+   "status": "done",
+   "doneAt": 1794393099017,
+   "by": "Maxime",
+   "at": 1794393099017
   }
  }
 }
