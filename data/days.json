@@ -222,18 +222,31 @@
     ],
     "ideas": [
       {
-        "title": "Pagode Chūrei-tō",
-        "lat": 35.5013,
-        "lng": 138.8014,
-        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair.",
-        "goshuin": "possible",
-        "goshuinNote": "Au sanctuaire Arakura Fuji Sengen, au pied de l’escalier."
+        "title": "Téléphérique panoramique",
+        "lat": 35.504,
+        "lng": 138.7705,
+        "desc": "À ~10–15 min à pied de la gare : bon premier arrêt une fois les valises déposées. Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse, vue sur tout le bassin et le Fuji.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Lac Kawaguchi",
+        "lat": 35.5233,
+        "lng": 138.7465,
+        "desc": "Promenade au bord du lac entre le téléphérique et le centre (reflets du Fuji, ~30 min), puis déjeuner près de la gare (houtō, nouilles locales).",
+        "goshuin": "non"
       },
       {
         "title": "Momiji Corridor",
         "lat": 35.5256,
         "lng": 138.7624,
-        "desc": "Allée d’érables au bord du lac, célèbre en automne. Pic habituel autour du 10 nov : de saison le 12.",
+        "desc": "Allée d’érables au bord du lac, célèbre en automne (pic habituel autour du 10 nov : de saison le 12). Rive nord : bus touristique depuis la gare (~20–25 min) — prévoir le retour à la gare pour 15 h.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Music Forest + lac",
+        "lat": 35.5218,
+        "lng": 138.769,
+        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau, rive nord (bus touristique depuis la gare). À grouper avec le Momiji Corridor ; retour à la gare avant 15 h.",
         "goshuin": "non"
       },
       {
@@ -241,42 +254,29 @@
         "phrases": "visit",
         "lat": 35.5274,
         "lng": 138.7598,
-        "desc": "Kimonos somptueux dans une galerie en colline, avec jardin japonais face au lac.",
+        "desc": "Kimonos somptueux dans une galerie en colline, jardin japonais face au lac, rive nord à côté du Momiji Corridor. Fermeture ~16 h 30 : à faire seulement s’il reste du temps avant le retour à la gare.",
         "goshuin": "non"
+      },
+      {
+        "title": "Pagode Chūrei-tō",
+        "lat": 35.5013,
+        "lng": 138.8014,
+        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Arakura Fuji Sengen, au pied de l’escalier."
       },
       {
         "title": "Oshino Hakkai",
         "lat": 35.4598,
         "lng": 138.8338,
-        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Music Forest + lac",
-        "lat": 35.5218,
-        "lng": 138.769,
-        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau — demi-journée facile.",
+        "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
         "goshuin": "non"
       },
       {
         "title": "Saiko Iyashi-no-Sato",
         "lat": 35.504,
         "lng": 138.6612,
-        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Téléphérique panoramique",
-        "lat": 35.504,
-        "lng": 138.7705,
-        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse. Vue rapide sur tout le bassin.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Lac Kawaguchi",
-        "lat": 35.5233,
-        "lng": 138.7465,
-        "desc": "Le plus grand des Cinq Lacs du Fuji — marche, vélo, ou simple contemplation des reflets.",
+        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
         "goshuin": "non"
       }
     ],
@@ -284,7 +284,18 @@
       "time": "06:45",
       "why": "Bus Shinjuku 09:05 · départ de l’hôtel vers 07:45"
     },
-    "ordreFermeture": true
+    "luggageLocker": {
+      "title": "Valises en consigne à la gare de Kawaguchiko",
+      "when": "10:50 → 15:00",
+      "desc": "Coin lockers dans le bâtiment Fujikan, juste en face de la gare (grands casiers à l’arrière, ≈ ¥800, une quinzaine seulement : s’en occuper en descendant du bus). Plan B : consigne avec personnel au même endroit (≈ 9 h–18 h, ¥500 ou ¥800 par bagage). Prix et horaires à vérifier sur place."
+    },
+    "ordreFixe": true,
+    "reminders": [
+      {
+        "title": "15 h : reprendre les valises et appeler l’hôtel",
+        "desc": "Retour à la gare vers 15 h, récupérer les valises, puis appeler le Kawaguchiko Hotel (+81 555 72 1313) pour demander la navette depuis la gare (check-in 15 h–21 h). Navette non confirmée dans les sources : sinon taxi (~10 min jusqu’à Funatsu)."
+      }
+    ]
   },
   {
     "n": 6,
