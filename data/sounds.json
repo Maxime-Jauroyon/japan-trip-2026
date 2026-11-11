@@ -20,49 +20,49 @@
   "fallback": "ville",
   "families": {
     "temple": {
-      "label": "Cloches de temple",
+      "label": "Morning in Gosford · shakuhachi (extrait)",
       "file": "temple.mp3",
       "volume": 0.55,
-      "author": "earthmonkey1",
-      "license": "CC0",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source": "https://freesound.org/people/earthmonkey1/sounds/514135/"
+      "author": "Fiffdimension",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1044908"
     },
     "arcade": {
-      "label": "Salle de jeux japonaise",
+      "label": "Cyber Shakuhachi (extrait)",
       "file": "arcade.mp3",
       "volume": 0.5,
-      "author": "tennysonmusic",
-      "license": "CC0",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source": "https://freesound.org/people/tennysonmusic/sounds/416489/"
+      "author": "michalko wawrzyn",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/312139"
     },
     "ville": {
-      "label": "Rue de Tokyo le soir",
+      "label": "Night in Tokyo (extrait)",
       "file": "ville.mp3",
       "volume": 0.5,
-      "author": "markystar",
-      "license": "CC0",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source": "https://freesound.org/people/markystar/sounds/75271/"
+      "author": "EIVISSA SALINAS feat. DJ HSERES",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/1076591"
     },
     "eau": {
-      "label": "Port et vagues",
+      "label": "Kyoto 京都 (extrait)",
       "file": "eau.mp3",
-      "volume": 0.5,
-      "author": "cribbler",
-      "license": "CC0",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "source": "https://freesound.org/people/cribbler/sounds/443018/"
+      "volume": 0.55,
+      "author": "Fatboy Steve",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/615155"
     },
     "nature": {
-      "label": "Jardin et oiseaux",
+      "label": "Koto (extrait)",
       "file": "nature.mp3",
-      "volume": 0.5,
-      "author": "klankbeeld",
-      "license": "CC BY 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
-      "source": "https://freesound.org/people/klankbeeld/sounds/342861/"
+      "volume": 0.55,
+      "author": "Transformation",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://www.jamendo.com/track/577739"
     }
   }
 }

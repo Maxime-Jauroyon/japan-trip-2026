@@ -1,5 +1,5 @@
 /* Lecteur « story » plein écran : les photos et vidéos d’une journée défilent toutes seules (3 s par photo), avec barres
-   de progression, zoom lent, légende et une ambiance sonore choisie selon l’activité (🔊 / 🔇). Les vidéos sont muettes.
+   de progression, zoom lent, légende et une musique japonaise choisie selon l’activité (🔊 / 🔇). Les vidéos sont muettes.
    Toucher à droite / à gauche = suivante / précédente ; rester appuyé = pause ; ✕ = fermer.
    `slides` = [{ title, sub, name, … }] ; `resolve(slide, thumb)` → Promise<url> (le média vient du cache du téléphone). */
 
@@ -18,7 +18,7 @@ let audio = null, family = null, fadeTimer = null;
 const soundOn = () => { try { return localStorage.getItem(SOUND_KEY) !== "off"; } catch (_) { return true; } };
 const setSoundOn = (on) => { try { localStorage.setItem(SOUND_KEY, on ? "on" : "off"); } catch (_) { /* pas de stockage */ } };
 
-/** Fondu du volume de l’ambiance vers `to` en `ms` ; `then` à la fin. */
+/** Fondu du volume de la musique vers `to` en `ms` ; `then` à la fin. */
 function fadeAudio(to, ms, then){
   clearInterval(fadeTimer);
   if (!audio) { if (then) then(); return; }
@@ -31,7 +31,7 @@ function fadeAudio(to, ms, then){
   }, 50);
 }
 
-/** Met l’ambiance de l’activité (fondu enchaîné si elle change) ; rien si le son est coupé. */
+/** Met la musique de l’activité (fondu enchaîné si elle change) ; rien si le son est coupé. */
 function setAmbience(slide){
   if (!audio) return;
   const next = slide ? soundFor(slide.title) : null;
