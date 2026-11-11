@@ -470,6 +470,8 @@ export async function testConnection(){
 
 /** Démarre le journal : charge, migre les anciennes coches, synchronise et surveille le retour au premier plan. */
 export function initJournalStore(){
+  // Demande au navigateur de ne pas vider le stockage de l’app (photos du journal) quand l’espace manque
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { /* refusé : tant pis */ }); } catch (_) { /* ignoré */ }
   load();
   migrateLegacyProgress();
   document.addEventListener("visibilitychange", () => { if (!document.hidden) syncNow(); });

@@ -1,6 +1,7 @@
 /* Service worker : cache le site pour Safari hors ligne (après une 1re ouverture en Wi‑Fi),
    applique les mises à jour sans recharger la page pour rien, et bouton « Rafraîchir l’application ». */
-import { APP_VERSION, TILE_CACHE } from "../config.js";
+import { APP_VERSION } from "../config.js";
+import { cachesToClear } from "../shared/cache-names.js";
 
 const UPDATE_CHECK_MS = 10 * 60 * 1000;
 /** En dessous, la page vient de s’ouvrir : un rechargement silencieux ne dérange personne. */
@@ -97,7 +98,7 @@ export function requestPhotoPrecache(){
   else sw.addEventListener("controllerchange", send, { once: true });
 }
 
-/** Vide les caches de l’app (sauf les cartes hors ligne) puis recharge. */
+/** Vide les caches du code de l’app puis recharge ; les photos du journal, les images, les musiques et les cartes sont gardées. */
 async function forceRefreshApp() {
   try {
     await withTimeout((async () => {
@@ -107,7 +108,7 @@ async function forceRefreshApp() {
       }
       if (window.caches) {
         const keys = await caches.keys();
-        await Promise.all(keys.filter((k) => k !== TILE_CACHE).map((k) => caches.delete(k)));
+        await Promise.all(cachesToClear(keys).map((k) => caches.delete(k)));
       }
     })(), 2500);
   } catch (_) { /* ignore */ }
