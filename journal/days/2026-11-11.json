@@ -26,6 +26,24 @@
    "doneAt": 1794362872463,
    "by": "Maxime",
    "at": 1794362872463
+  },
+  "p:tokyo-tower": {
+   "id": "p:tokyo-tower",
+   "kind": "planned",
+   "title": "Tokyo Tower",
+   "status": "done",
+   "doneAt": 1794376836402,
+   "by": "Maxime",
+   "at": 1794376836402
+  },
+  "p:odaiba-gundam-front-de-mer": {
+   "id": "p:odaiba-gundam-front-de-mer",
+   "kind": "planned",
+   "title": "Odaiba — Gundam, front de mer",
+   "status": "done",
+   "doneAt": 1794376837303,
+   "by": "Maxime",
+   "at": 1794376837303
   }
  }
 }
