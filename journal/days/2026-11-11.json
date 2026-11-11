@@ -42,7 +42,8 @@
    "status": "done",
    "doneAt": 1794362872463,
    "by": "Maxime",
-   "at": 1794362872463
+   "at": 1794406211984,
+   "deleted": true
   },
   "p:tokyo-tower": {
    "id": "p:tokyo-tower",
