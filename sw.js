@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v244";
+const CACHE = "japan-trip-2026-v245";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -1136,7 +1136,9 @@ let photosRun = null;
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((k) => k !== CACHE && k !== TILE_CACHE && k !== IMG_CACHE).map((k) => caches.delete(k)));
+    // Seules les anciennes versions du cache de l’app sont supprimées : les photos du journal (japan-journal-v1, écrites par la
+    // page), les tuiles et les images du site sont conservées d’une version à l’autre (sinon tout se retélécharge à chaque mise à jour).
+    await Promise.all(keys.filter((k) => k.startsWith("japan-trip-2026-") && k !== CACHE).map((k) => caches.delete(k)));
     // Ménage : photos retirées du site
     const wanted = new Set(ASSETS.filter(isImage).map((u) => new URL(u, self.location).href));
     const imgCache = await caches.open(IMG_CACHE);
