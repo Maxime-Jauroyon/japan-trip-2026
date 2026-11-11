@@ -26,10 +26,11 @@ export let ACT_META = {};
 export let TRIP = null;
 export let PHOTO_RULES = [];
 export let PLACE_PHOTOS = {};
+export let SOUNDS = { rules: [], families: {}, fallback: null };
 export let PRACTICAL_INFO = [];
 
 export const DATA_FILES = [
-  "trip", "cities", "days", "legs", "journeys", "prep", "phrases", "places-meta", "practical", "photos"
+  "trip", "cities", "days", "legs", "journeys", "prep", "phrases", "places-meta", "practical", "photos", "sounds"
 ];
 
 /** Construit les structures utilisées par l’app à partir du JSON brut
@@ -72,6 +73,12 @@ export function hydrate(raw) {
   PHOTO_RULES = raw.photos.rules.map(r => ({ re: new RegExp(r.match), slug: r.slug }));
   /* Photos par lieu : [{ file, author, license, licenseUrl, source }] (img/activities/<file>) */
   PLACE_PHOTOS = raw.photos.places;
+  /* Ambiances sonores de la story : motif (sur le titre en minuscules) → famille ; familles = fichiers de audio/ avec crédit. */
+  SOUNDS = {
+    rules: raw.sounds.rules.map(r => ({ re: new RegExp(r.match), family: r.family })),
+    families: raw.sounds.families,
+    fallback: raw.sounds.fallback || null
+  };
 }
 
 /** Charge tous les fichiers de /data (réseau d’abord, cache SW hors ligne). */

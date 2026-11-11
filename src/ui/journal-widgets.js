@@ -2,8 +2,8 @@
    Utilisées par le panneau d’un jour, la fiche d’une activité et Sur place › Journal. */
 
 import { esc } from "../core/dom.js";
-import { STATUS_LABELS, heroPhoto, likedBy, livePhotos, nextStatus } from "../domain/journal.js";
-import { JOURNAL_CHANGED, addPhotos, cachedPhotoUrl, journalConfig, journalDay, journalDays, journalReadOnly, photoUrl, removePhoto, setCoverPhoto, setHeroPhoto, setPlannedStatus, syncStatus, toggleLike } from "../pwa/journal-store.js";
+import { STATUS_LABELS, heroPhoto, isVideo, likedBy, livePhotos, nextStatus } from "../domain/journal.js";
+import { JOURNAL_CHANGED, addPhotos, cachedPhotoUrl, journalConfig, journalDay, journalDays, journalReadOnly, lastMediaNotice, photoUrl, removePhoto, setCoverPhoto, setHeroPhoto, setPlannedStatus, syncStatus, toggleLike } from "../pwa/journal-store.js";
 import { pickPhotos } from "../pwa/photo-resize.js";
 
 const GLYPH = { todo: "○", done: "✓", skipped: "✗" };
@@ -33,11 +33,11 @@ export const fixedPillHtml = (fixed) => fixed ? `<span class="fixed-pill">🎟�
 export function photoStripHtml(iso, id, names){
   if (!names.length) return "";
   return `<div class="jr-strip">` + names.map(n =>
-    `<button type="button" class="jr-thumb" data-jp-iso="${esc(iso)}" data-jp-id="${esc(id)}" data-jp-name="${esc(n)}" aria-label="Voir la photo"><img data-jphoto alt="" decoding="async" /></button>`).join("") + `</div>`;
+    `<button type="button" class="jr-thumb${isVideo(n) ? " is-video" : ""}" data-jp-iso="${esc(iso)}" data-jp-id="${esc(id)}" data-jp-name="${esc(n)}" aria-label="Voir la photo"><img data-jphoto alt="" decoding="async" /></button>`).join("") + `</div>`;
 }
 
 /** Bouton « 📷 Photos » d’une idée du programme (`target.title`). */
-export const cameraButtonHtml = (iso, target, label = "Photos") => journalReadOnly() ? "" :
+export const cameraButtonHtml = (iso, target, label = "Photos / vidéos") => journalReadOnly() ? "" :
   `<button type="button" class="jr-cam" data-add-photo data-iso="${esc(iso)}" data-title="${esc(target.title)}"><span aria-hidden="true">📷</span> ${esc(label)}</button>`;
 
 let observer = null;
@@ -46,9 +46,11 @@ let observer = null;
 async function loadPhoto(b){
   const img = b.querySelector("img[data-jphoto]");
   if (!img) return;
-  const feed = !!b.dataset.jpFeed;
-  b.classList.remove("missing");
   const [iso, name] = [b.dataset.jpIso, b.dataset.jpName];
+  const video = isVideo(name);
+  if (video) b.classList.add("is-video");
+  const feed = !!b.dataset.jpFeed && !video;   // une vidéo n’est jamais chargée dans une image : seulement sa miniature
+  b.classList.remove("missing");
   // Déjà sur le téléphone : affichage immédiat, sans scintillement ni flou (rien n’est retéléchargé)
   const hit = await cachedPhotoUrl(iso, name, !feed);
   if (hit) { img.src = hit; return; }
@@ -99,8 +101,14 @@ export function bindCameraButtons(root){
     const files = await pickPhotos();
     if (!files.length) return;
     b.classList.add("busy");
-    await addPhotos(b.dataset.iso, { title: b.dataset.title }, files);
+    const label = b.innerHTML;
+    const hasVideo = files.some(f => f.type && f.type.startsWith("video/"));
+    if (hasVideo) b.textContent = "Préparation de la vidéo…";
+    await addPhotos(b.dataset.iso, { title: b.dataset.title }, files, hasVideo ? (p) => { b.textContent = `Vidéo ${Math.round(p * 100)} %`; } : undefined);
+    b.innerHTML = label;
     b.classList.remove("busy");
+    const note = lastMediaNotice();
+    if (note) alert(note);
   }));
 }
 
@@ -120,7 +128,7 @@ export function openPhotoViewer(list, index){
     viewer.setAttribute("aria-label", "Photo");
     viewer.innerHTML =
       `<button type="button" class="jv-close" aria-label="Fermer">×</button><span class="jv-pos"></span>` +
-      `<div class="jv-stage"><img alt="" /><span class="jv-heart" aria-hidden="true">❤️</span></div>` +
+      `<div class="jv-stage"><img alt="" /><video class="jv-video" muted loop playsinline controls hidden></video><span class="jv-heart" aria-hidden="true">❤️</span></div>` +
       `<div class="jv-cap"><strong></strong><small></small></div>` +
       `<div class="jr-viewer-bar"><button type="button" class="jv-like"></button><button type="button" class="jv-star"></button>` +
       `<button type="button" class="jv-hero"></button><button type="button" class="jv-del" aria-label="Supprimer la photo">🗑</button></div>`;
@@ -136,17 +144,17 @@ export function openPhotoViewer(list, index){
       if (now - lastTap < 320) { likeCurrent(true); lastTap = 0; } else lastTap = now;
     });
     stage.addEventListener("dblclick", () => likeCurrent(true));
-    viewer.querySelector(".jv-close").onclick = () => { viewer.hidden = true; };
+    viewer.querySelector(".jv-close").onclick = closeViewer;
     viewer.querySelector(".jv-like").onclick = () => likeCurrent(false);
     viewer.querySelector(".jv-star").onclick = () => { const p = vList[vIdx]; if (p) setCoverPhoto(p.iso, p.id, p.name); };
     viewer.querySelector(".jv-hero").onclick = () => { const p = vList[vIdx]; if (p) setHeroPhoto(p.iso, p.id, p.name); };
     viewer.querySelector(".jv-del").onclick = () => {
       const p = vList[vIdx];
-      if (p && confirm("Supprimer cette photo pour tout le monde ?")) { removePhoto(p.iso, p.id, p.name); viewer.hidden = true; }
+      if (p && confirm("Supprimer cette photo pour tout le monde ?")) { removePhoto(p.iso, p.id, p.name); closeViewer(); }
     };
     document.addEventListener("keydown", e => {
       if (!viewer || viewer.hidden) return;
-      if (e.key === "Escape") viewer.hidden = true;
+      if (e.key === "Escape") closeViewer();
       if (e.key === "ArrowRight") showViewer(vIdx + 1);
       if (e.key === "ArrowLeft") showViewer(vIdx - 1);
     });
@@ -154,6 +162,12 @@ export function openPhotoViewer(list, index){
   }
   viewer.hidden = false;
   showViewer(vIdx);
+}
+
+function closeViewer(){
+  const vid = viewer.querySelector("video");
+  vid.pause(); vid.removeAttribute("src");
+  viewer.hidden = true;
 }
 
 function likeCurrent(onlyAdd){
@@ -187,17 +201,25 @@ async function showViewer(i){
   if (!vList.length) return;
   vIdx = (i + vList.length) % vList.length;
   const p = vList[vIdx];
+  viewer.querySelector("img").hidden = false;
   viewer.querySelector(".jv-pos").textContent = vList.length > 1 ? `${vIdx + 1} / ${vList.length}` : "";
   viewer.querySelector(".jv-cap strong").textContent = p.title || "";
   viewer.querySelector(".jv-cap small").textContent = p.label || "";
   viewer.querySelector(".jr-viewer-bar").hidden = journalReadOnly();   // lecture seule : ni cœur ni suppression
   paintLike();
-  const img = viewer.querySelector("img");
+  const img = viewer.querySelector("img"), vid = viewer.querySelector("video");
+  vid.pause(); vid.removeAttribute("src"); vid.hidden = true;
   img.removeAttribute("src");
   const [small, full] = [await photoUrl(p.iso, p.name, true), photoUrl(p.iso, p.name, false)];
   if (vList[vIdx] === p && small) img.src = small;
   const url = await full;
-  if (vList[vIdx] === p && url) img.src = url;
+  if (vList[vIdx] !== p || !url) return;
+  if (isVideo(p.name)) {
+    // Vidéo : toujours sans son, en boucle ; la miniature reste affichée jusqu’à ce qu’elle démarre
+    vid.muted = true; vid.poster = small || "";
+    vid.src = url; vid.hidden = false; img.hidden = true;
+    vid.play().catch(() => { /* lecture au toucher */ });
+  } else { img.hidden = false; img.src = url; }
 }
 
 /** Branche les photos et les boutons 📷 d’un conteneur. */

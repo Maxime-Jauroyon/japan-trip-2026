@@ -219,6 +219,19 @@ Object.entries(photos.places).forEach(([slug, list]) => list.forEach((ph, i) => 
   if (!isStr(ph.author) || !isStr(ph.license)) err(w, "auteur / licence manquants (crédit obligatoire)");
 }));
 
+const sounds = load("sounds");
+Object.entries(sounds.families).forEach(([id, f]) => {
+  const w = `sounds.families.${id}`;
+  if (!fs.existsSync(path.join(ROOT, "audio", f.file || ""))) err(w, `audio/${f.file} introuvable`);
+  if (!isStr(f.author) || !isStr(f.license) || !isStr(f.source)) err(w, "auteur / licence / source manquants (crédit obligatoire)");
+  if (f.volume != null && !(f.volume > 0 && f.volume <= 1)) err(w, "volume : nombre entre 0 et 1 attendu");
+});
+sounds.rules.forEach((r, i) => {
+  try { new RegExp(r.match); } catch (e) { err(`sounds.rules[${i}]`, `motif invalide ${r.match}`); }
+  if (!sounds.families[r.family]) err(`sounds.rules[${i}]`, `famille inconnue « ${r.family} »`);
+});
+if (!sounds.families[sounds.fallback]) err("sounds.fallback", "famille par défaut inconnue");
+
 if (warnings.length) console.warn(`⚠ ${warnings.length} avertissement(s) :\n  - ` + warnings.join("\n  - "));
 if (errors.length) {
   console.error(`✗ ${errors.length} erreur(s) dans data/ :\n  - ` + errors.join("\n  - "));

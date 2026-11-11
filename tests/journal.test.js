@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { applyJournal, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -114,4 +114,17 @@ test("photo phare d’une activité en premier, couverture du carnet = le choix 
   assert.deepEqual(orderedPhotos(d1.items[id]), ["a.jpg", "b.jpg"]);
   assert.equal(heroPhoto([]), null);
   assert.equal(sanitizeDay({ items: { "p:a": { title: "A", cover: "../x", hero: { name: "ok.jpg", at: "5" } } } }).items["p:a"].hero.at, 5);
+});
+
+test("vidéos : reconnues par l’extension, miniature .t.jpg, acceptées par sanitizeDay", () => {
+  assert.equal(isVideo("abc.mp4"), true);
+  assert.equal(isVideo("abc.webm"), true);
+  assert.equal(isVideo("abc.jpg"), false);
+  assert.equal(thumbName("abc.mp4"), "abc.t.jpg");
+  assert.equal(thumbName("abc.webm"), "abc.t.jpg");
+  assert.equal(thumbName("abc.jpg"), "abc.t.jpg");
+  const day = sanitizeDay({ items: { "p:x": { title: "X", photos: ["a.jpg", "b.mp4", "c.webm", "../d.mp4", "e.gif"], cover: "b.mp4" } } });
+  assert.deepEqual(day.items["p:x"].photos, ["a.jpg", "b.mp4", "c.webm"]);
+  assert.equal(day.items["p:x"].cover, "b.mp4");
+  assert.deepEqual(livePhotos({ photos: ["a.jpg", "b.mp4"], gone: ["a.jpg"] }), ["b.mp4"]);
 });

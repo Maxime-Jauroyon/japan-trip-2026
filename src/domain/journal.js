@@ -110,8 +110,14 @@ export function heroPhoto(days){
 /** Photos (noms de fichiers) d’un item d’un jour, ou []. */
 export const photosOfItem = (day, id) => orderedPhotos(day && day.items && day.items[id]);
 
-/** Miniature associée à une photo (« x.jpg » → « x.t.jpg »). */
-export const thumbName = (name) => String(name).replace(/\.jpg$/, ".t.jpg");
+/** Miniature associée à une photo ou à une vidéo (« x.jpg » / « x.mp4 » / « x.webm » → « x.t.jpg »). */
+export const thumbName = (name) => String(name).replace(/\.(jpg|mp4|webm)$/, ".t.jpg");
+
+/** Une « photo » du journal dont le nom finit par .mp4 ou .webm est une vidéo (sans son) ; sa miniature est l’image d’ouverture. */
+export const isVideo = (name) => /\.(mp4|webm)$/i.test(String(name || ""));
+
+/** Nom de fichier valide d’un média du journal (photo .jpg ou vidéo .mp4). */
+export const isMediaName = (n) => typeof n === "string" && /^[\w.-]+\.(jpg|mp4|webm)$/.test(n);
 
 /** Toutes les photos de plusieurs jours : [{ iso, id, title, name }] dans l’ordre des jours. */
 export function collectPhotos(days){
@@ -151,11 +157,11 @@ export function sanitizeDay(raw){
   const src = raw && typeof raw === "object" && raw.items && typeof raw.items === "object" ? raw.items : {};
   Object.entries(src).forEach(([id, it]) => {
     if (!it || typeof it !== "object" || typeof it.title !== "string" || !/^[px]:/.test(id)) return;
-    const clean = (a) => (Array.isArray(a) ? a.filter((n) => typeof n === "string" && /^[\w.-]+\.jpg$/.test(n)) : undefined);
+    const clean = (a) => (Array.isArray(a) ? a.filter(isMediaName) : undefined);
     const likes = it.likes && typeof it.likes === "object" ? Object.fromEntries(Object.entries(it.likes).filter(([, t]) => Number.isFinite(t))) : undefined;
     items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone), likes,
-      cover: typeof it.cover === "string" && /^[\w.-]+\.jpg$/.test(it.cover) ? it.cover : undefined,
-      hero: it.hero && typeof it.hero === "object" && typeof it.hero.name === "string" && /^[\w.-]+\.jpg$/.test(it.hero.name) ? { name: it.hero.name, at: Number(it.hero.at) || 0 } : undefined };
+      cover: isMediaName(it.cover) ? it.cover : undefined,
+      hero: it.hero && typeof it.hero === "object" && isMediaName(it.hero.name) ? { name: it.hero.name, at: Number(it.hero.at) || 0 } : undefined };
     Object.keys(items[id]).forEach((k) => { if (items[id][k] === undefined) delete items[id][k]; });
   });
   return { items };

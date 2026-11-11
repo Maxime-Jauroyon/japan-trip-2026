@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* Régénère la liste ASSETS de sw.js à partir des fichiers réellement présents :
-   page, code (src), styles, données (data), librairie (lib), images (img).
+   page, code (src), styles, données (data), librairie (lib), images (img), ambiances sonores (audio).
    Usage : node scripts/gen-precache.mjs */
 import crypto from "node:crypto";
 import fs from "node:fs";
@@ -8,8 +8,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const DIRS = ["src", "styles", "data", "lib", "img"];
-const EXT = /\.(js|css|json|png|jpe?g|webp|svg)$/i;
+const DIRS = ["src", "styles", "data", "lib", "img", "audio"];
+const EXT = /\.(js|css|json|png|jpe?g|webp|svg|mp3)$/i;
 
 function walk(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
