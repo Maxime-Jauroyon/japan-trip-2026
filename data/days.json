@@ -200,12 +200,6 @@
         "goshuin": "non"
       }
     ],
-    "reminders": [
-      {
-        "title": "Billets shinkansen de samedi : retirés ?",
-        "desc": "Tokyo 11:24 → Kanazawa (14 nov) : retirer les billets papier aujourd’hui au plus tard, à une machine verte JR East (ex. JR Akihabara) — carte bancaire physique du paiement + n° de réservation."
-      }
-    ],
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
@@ -329,7 +323,13 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "reminders": [
+      {
+        "title": "Fuji-Q · maison de l’horreur (ticket à part)",
+        "desc": "戦慄迷宮 non incluse dans le pass · ticket horodaté à payer sur place le jour J (bornes près de l’attraction) ou dans l’app Q-chan. Liens officiels dans la fiche Fuji-Q Highland."
+      }
+    ]
   },
   {
     "n": 7,
