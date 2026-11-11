@@ -17,6 +17,15 @@
    "doneAt": 1794360188821,
    "by": "Maxime",
    "at": 1794360188821
+  },
+  "p:tokyo-tower-de-nuit": {
+   "id": "p:tokyo-tower-de-nuit",
+   "kind": "planned",
+   "title": "Tokyo Tower de nuit",
+   "status": "done",
+   "doneAt": 1794362872463,
+   "by": "Maxime",
+   "at": 1794362872463
   }
  }
 }
