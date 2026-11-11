@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v241";
+const CACHE = "japan-trip-2026-v242";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -20,6 +20,11 @@ const ASSETS = [
   "./index.html",
   "./manifest.webmanifest",
   "./sw.js",
+  "./audio/arcade.mp3",
+  "./audio/eau.mp3",
+  "./audio/nature.mp3",
+  "./audio/temple.mp3",
+  "./audio/ville.mp3",
   "./data/cities.json",
   "./data/days.json",
   "./data/journeys.json",
@@ -29,6 +34,7 @@ const ASSETS = [
   "./data/places-meta.json",
   "./data/practical.json",
   "./data/prep.json",
+  "./data/sounds.json",
   "./data/trip.json",
   "./img/activities/akihabara-2.jpg",
   "./img/activities/akihabara-3.jpg",
@@ -520,6 +526,7 @@ const ASSETS = [
   "./src/domain/phrases.js",
   "./src/domain/places.js",
   "./src/domain/search.js",
+  "./src/domain/sounds.js",
   "./src/domain/sun.js",
   "./src/domain/tickets.js",
   "./src/domain/trip.js",
@@ -1201,6 +1208,24 @@ async function cacheFirst(req) {
   }
 }
 
+/** Ambiances sonores : Safari lit un média par tranches (en-tête Range) → on répond en 206 depuis le cache. */
+async function audioResponse(req){
+  const cache = await caches.open(CACHE);
+  let res = await cache.match(req.url);
+  if (!res) {
+    try { res = await fetch(req.url); if (res.ok) cache.put(req.url, res.clone()); } catch (_) { return Response.error(); }
+  }
+  const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.get("range") || "");
+  if (!range || !res.ok) return res;
+  const buf = await res.arrayBuffer();
+  const total = buf.byteLength;
+  const start = range[1] === "" ? Math.max(0, total - Number(range[2])) : Number(range[1]);
+  const end = range[1] === "" || range[2] === "" ? total - 1 : Math.min(Number(range[2]), total - 1);
+  if (start > end || start >= total) return new Response(null, { status: 416, headers: { "Content-Range": `bytes */${total}` } });
+  return new Response(buf.slice(start, end + 1), { status: 206, headers: { "Content-Type": "audio/mpeg", "Accept-Ranges": "bytes",
+    "Content-Range": `bytes ${start}-${end}/${total}`, "Content-Length": String(end - start + 1) } });
+}
+
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
@@ -1208,6 +1233,7 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin) return;
 
   const path = url.pathname;
+  if (path.includes("/audio/")) { event.respondWith(audioResponse(req)); return; }
   const isPage = req.mode === "navigate" || path.endsWith("/") || path.endsWith("/index.html");
   const isLib = path.includes("/lib/");
   const isApp = !isLib && (

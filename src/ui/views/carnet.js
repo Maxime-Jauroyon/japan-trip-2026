@@ -5,7 +5,7 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { doneItems, heroPhoto } from "../../domain/journal.js";
+import { doneItems, heroPhoto, isVideo } from "../../domain/journal.js";
 import { JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
@@ -17,7 +17,7 @@ const SKELETON = `<div class="cn-skel"><div class="sk sk-cover"></div><div class
 /** Photo du carnet. `opt.story` : simple vignette (dans le rond d’une story, lui-même un bouton → pas de bouton imbriqué). */
 function photoBtn(iso, p, opt = {}){
   const tag = opt.story ? "span" : "button";
-  return `<${tag}${opt.story ? "" : ' type="button"'} class="vy-photo${opt.thumb ? " sq" : ""}"${opt.thumb ? "" : ' data-jp-feed="1"'}${opt.cover ? ' data-jp-cover="1"' : ""}${opt.story ? ' data-jp-story="1"' : ""} ` +
+  return `<${tag}${opt.story ? "" : ' type="button"'} class="vy-photo${opt.thumb ? " sq" : ""}${isVideo(p.name) ? " is-video" : ""}"${opt.thumb ? "" : ' data-jp-feed="1"'}${opt.cover ? ' data-jp-cover="1"' : ""}${opt.story ? ' data-jp-story="1"' : ""} ` +
     `data-jp-iso="${esc(iso)}" data-jp-id="${esc(p.id)}" data-jp-name="${esc(p.name)}" aria-label="${esc(p.title)}"><img data-jphoto alt="" decoding="async" /></${tag}>`;
 }
 
@@ -49,7 +49,7 @@ let model = [];
 function openDayStory(dayN){
   const x = model.find(d => d.day.n === dayN);
   if (!x) return;
-  openStory(storySlides(x), 0, async s => (await photoUrl(s.iso, s.name, false)) || photoUrl(s.iso, s.name, true));
+  openStory(storySlides(x), 0, async (s, thumb) => thumb ? photoUrl(s.iso, s.name, true) : ((await photoUrl(s.iso, s.name, false)) || (isVideo(s.name) ? "" : photoUrl(s.iso, s.name, true))));
 }
 
 let lastSig = null;

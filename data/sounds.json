@@ -1,0 +1,68 @@
+{
+  "rules": [
+    {
+      "match": "sanctuaire|temple|sens[oō]-?ji|jing[uū]|jinja|-ji\\b|zōjō|zojo|tōshō|toshogu|meiji|fushimi|inari|kiyomizu|kinkaku|t[oō]dai|kasuga|kofuku|daigo|nezu|yanaka",
+      "family": "temple"
+    },
+    {
+      "match": "akihabara|animate|den den|pok[eé]mon|sunshine|ikebukuro|nakano|character street|batting|baseball|maid|universal|fuji-?q|highland",
+      "family": "arcade"
+    },
+    {
+      "match": "odaiba|teamlab|lac |kawaguchi|saiko|sumida|d[oō]tonbori|baie|\\bport\\b",
+      "family": "eau"
+    },
+    {
+      "match": "jardin|parc |garden|kenroku|arashiyama|bambou|ropeway|for[eê]t|oshino|ch[uū]reit[oō]|shirakawa|nara|cerfs",
+      "family": "nature"
+    }
+  ],
+  "fallback": "ville",
+  "families": {
+    "temple": {
+      "label": "Cloches de temple",
+      "file": "temple.mp3",
+      "volume": 0.55,
+      "author": "earthmonkey1",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://freesound.org/people/earthmonkey1/sounds/514135/"
+    },
+    "arcade": {
+      "label": "Salle de jeux japonaise",
+      "file": "arcade.mp3",
+      "volume": 0.5,
+      "author": "tennysonmusic",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://freesound.org/people/tennysonmusic/sounds/416489/"
+    },
+    "ville": {
+      "label": "Rue de Tokyo le soir",
+      "file": "ville.mp3",
+      "volume": 0.5,
+      "author": "markystar",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://freesound.org/people/markystar/sounds/75271/"
+    },
+    "eau": {
+      "label": "Port et vagues",
+      "file": "eau.mp3",
+      "volume": 0.5,
+      "author": "cribbler",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://freesound.org/people/cribbler/sounds/443018/"
+    },
+    "nature": {
+      "label": "Jardin et oiseaux",
+      "file": "nature.mp3",
+      "volume": 0.5,
+      "author": "klankbeeld",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "source": "https://freesound.org/people/klankbeeld/sounds/342861/"
+    }
+  }
+}

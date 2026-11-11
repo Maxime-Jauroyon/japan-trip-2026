@@ -8,7 +8,7 @@ import { DAYS, TRIP } from "../core/data.js";
 import { dayToISO, japanTodayISO } from "../core/dates.js";
 import { emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
 import { loadPublicJournal, publicPhotoUrl } from "./journal-public.js";
-import { resizeImage } from "./photo-resize.js";
+import { resizeImage, compressVideo } from "./photo-resize.js";
 
 export const JOURNAL_CHANGED = "japan-trip:journal-changed";
 export const JOURNAL_SYNC = "japan-trip:journal-sync";
@@ -104,9 +104,13 @@ const blobs = new Map();          // secours si le cache du navigateur est indis
 const urls = new Map();           // clé → URL d’objet déjà créée
 const photoKey = (iso, name) => `https://journal.invalid/${iso}/${name}`;
 
+/** Type MIME d’un média du journal d’après son nom (la lecture vidéo l’exige). */
+const mediaType = (name) => (/\.mp4$/.test(name) ? "video/mp4" : /\.webm$/.test(name) ? "video/webm" : "image/jpeg");
+
 async function cachePut(iso, name, blob){
-  blobs.set(photoKey(iso, name), blob);
-  try { await (await caches.open(PHOTO_CACHE)).put(photoKey(iso, name), new Response(blob, { headers: { "Content-Type": "image/jpeg" } })); } catch (_) { /* pas de cache */ }
+  const typed = blob.type === mediaType(name) ? blob : new Blob([blob], { type: mediaType(name) });
+  blobs.set(photoKey(iso, name), typed);
+  try { await (await caches.open(PHOTO_CACHE)).put(photoKey(iso, name), new Response(typed, { headers: { "Content-Type": mediaType(name) } })); } catch (_) { /* pas de cache */ }
 }
 
 async function cacheGet(iso, name){
@@ -119,21 +123,35 @@ async function cacheGet(iso, name){
   return null;
 }
 
+/** Dernier message d’erreur d’un ajout de vidéo ("" si tout s’est bien passé). */
+let mediaNotice = "";
+export const lastMediaNotice = () => mediaNotice;
+
 /**
- * Ajoute des photos à une idée du programme (`target` = { title }) ou à une activité ajoutée (`target` = { id }).
+ * Ajoute des photos ou des vidéos à une idée du programme (`target` = { title }) ou à une activité ajoutée (`target` = { id }).
  * Retourne le nombre de photos ajoutées.
  */
-export async function addPhotos(iso, target, files){
+export async function addPhotos(iso, target, files, onProgress){
   const names = [];
+  mediaNotice = "";
   for (const file of files) {
     try {
-      const [full, thumb] = [await resizeImage(file, FULL_PX, 0.82), await resizeImage(file, THUMB_PX, 0.7)];
-      const name = `${Date.now().toString(36)}${Math.floor(Math.random() * 46656).toString(36).padStart(3, "0")}.jpg`;
+      const stem = `${Date.now().toString(36)}${Math.floor(Math.random() * 46656).toString(36).padStart(3, "0")}`;
+      let name, full, thumb;
+      if (file.type && file.type.startsWith("video/")) {
+        // Vidéo : relue sans le son, réduite à 720 p et 20 s au plus ; la miniature est sa première image
+        const v = await compressVideo(file, onProgress);
+        name = `${stem}.${v.ext}`;
+        [full, thumb] = [v.blob, v.poster];
+      } else {
+        name = `${stem}.jpg`;
+        [full, thumb] = [await resizeImage(file, FULL_PX, 0.82), await resizeImage(file, THUMB_PX, 0.7)];
+      }
       await cachePut(iso, name, full);
       await cachePut(iso, thumbName(name), thumb);
       load().photos.push({ iso, name });
       names.push(name);
-    } catch (_) { /* photo illisible : ignorée */ }
+    } catch (e) { mediaNotice = file.type && file.type.startsWith("video/") ? `Vidéo non ajoutée : ${e.message}` : ""; /* média illisible : ignoré */ }
   }
   if (!names.length) return 0;
   const id = target.id || plannedId(target.title);
@@ -207,7 +225,7 @@ export async function photoUrl(iso, name, thumb){
   const blob = await downloadPhoto(iso, file);
   if (!blob) return "";
   await cachePut(iso, file, blob);
-  return objectUrl(photoKey(iso, file), blob);
+  return objectUrl(photoKey(iso, file), blobs.get(photoKey(iso, file)) || blob);
 }
 
 const blobToB64 = (blob) => new Promise((resolve, reject) => {
