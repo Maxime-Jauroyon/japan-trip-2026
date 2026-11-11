@@ -1,6 +1,14 @@
 {
   "rules": [
     {
+      "match": "mus[ée]e|museum|itchiku|edo-tokyo|galerie",
+      "family": "musee"
+    },
+    {
+      "match": "de nuit|skyline|observatoire|mairie de tokyo|rooftop",
+      "family": "nuit"
+    },
+    {
       "match": "sanctuaire|temple|sens[oō]-?ji|jing[uū]|jinja|-ji\\b|zōjō|zojo|tōshō|toshogu|meiji|fushimi|inari|kiyomizu|kinkaku|t[oō]dai|kasuga|kofuku|daigo|nezu|yanaka",
       "family": "temple"
     },
@@ -20,49 +28,217 @@
   "fallback": "ville",
   "families": {
     "temple": {
-      "label": "Morning in Gosford · shakuhachi (extrait)",
-      "file": "temple.mp3",
+      "label": "Temples et sanctuaires",
       "volume": 0.55,
-      "author": "Fiffdimension",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "source": "https://www.jamendo.com/track/1044908"
-    },
-    "arcade": {
-      "label": "Cyber Shakuhachi (extrait)",
-      "file": "arcade.mp3",
-      "volume": 0.5,
-      "author": "michalko wawrzyn",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "source": "https://www.jamendo.com/track/312139"
-    },
-    "ville": {
-      "label": "Night in Tokyo (extrait)",
-      "file": "ville.mp3",
-      "volume": 0.5,
-      "author": "EIVISSA SALINAS feat. DJ HSERES",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "source": "https://www.jamendo.com/track/1076591"
-    },
-    "eau": {
-      "label": "Kyoto 京都 (extrait)",
-      "file": "eau.mp3",
-      "volume": 0.55,
-      "author": "Fatboy Steve",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "source": "https://www.jamendo.com/track/615155"
+      "tracks": [
+        {
+          "file": "temple-1.mp3",
+          "title": "Morning in Gosford",
+          "author": "Fiffdimension",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/1044908",
+          "seconds": 75
+        },
+        {
+          "file": "temple-2.mp3",
+          "title": "Zen Zen Mindset",
+          "author": "Ambient Samurai (Ichiro Nakagawa)",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/589222",
+          "seconds": 75
+        },
+        {
+          "file": "temple-3.mp3",
+          "title": "Beautiful Japan Music",
+          "author": "CHASMA",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/1371456",
+          "seconds": 75
+        }
+      ]
     },
     "nature": {
-      "label": "Koto (extrait)",
-      "file": "nature.mp3",
+      "label": "Jardins et parcs",
       "volume": 0.55,
-      "author": "Transformation",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "source": "https://www.jamendo.com/track/577739"
+      "tracks": [
+        {
+          "file": "nature-1.mp3",
+          "title": "Koto",
+          "author": "Transformation",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/577739",
+          "seconds": 75
+        },
+        {
+          "file": "nature-2.mp3",
+          "title": "Kyoto (京都)",
+          "author": "Fatboy Steve",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/615155",
+          "seconds": 75
+        }
+      ]
+    },
+    "eau": {
+      "label": "Eau, baie et lacs",
+      "volume": 0.55,
+      "tracks": [
+        {
+          "file": "eau-1.mp3",
+          "title": "Head For the Sea Of Japan",
+          "author": "Ambient Samurai (Ichiro Nakagawa)",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/654983",
+          "seconds": 75
+        },
+        {
+          "file": "eau-2.mp3",
+          "title": "Rainy Japan",
+          "author": "Desperate Mars",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/1086876",
+          "seconds": 75
+        }
+      ]
+    },
+    "musee": {
+      "label": "Musées",
+      "volume": 0.6,
+      "tracks": [
+        {
+          "file": "musee-1.mp3",
+          "title": "Kyoto in My Dreams",
+          "author": "Helen Langfort",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/2327625",
+          "seconds": 75
+        },
+        {
+          "file": "musee-2.mp3",
+          "title": "Japan",
+          "author": "Yakov Golman",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/1559886",
+          "seconds": 75
+        },
+        {
+          "file": "musee-3.mp3",
+          "title": "Sakura Viol",
+          "author": "Efr",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/1540324",
+          "seconds": 74
+        }
+      ]
+    },
+    "ville": {
+      "label": "Ville de jour",
+      "volume": 0.5,
+      "tracks": [
+        {
+          "file": "ville-1.mp3",
+          "title": "Millions Of Japanese Tourist",
+          "author": "Mr.Ju",
+          "license": "CC BY-SA 2.5",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/ca/",
+          "source": "https://www.jamendo.com/track/168699",
+          "seconds": 75
+        },
+        {
+          "file": "ville-2.mp3",
+          "title": "Asian Lounge",
+          "author": "Mazelo Nostra",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/1540444",
+          "seconds": 75
+        },
+        {
+          "file": "ville-3.mp3",
+          "title": "Lofi House",
+          "author": "AstroShroom",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/1356703",
+          "seconds": 75
+        }
+      ]
+    },
+    "nuit": {
+      "label": "Ville de nuit",
+      "volume": 0.5,
+      "tracks": [
+        {
+          "file": "nuit-1.mp3",
+          "title": "Night in Tokyo",
+          "author": "EIVISSA SALINAS feat. DJ HSERES",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/1076591",
+          "seconds": 75
+        },
+        {
+          "file": "nuit-2.mp3",
+          "title": "tokyo",
+          "author": "Andreas Verhamme",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/454787",
+          "seconds": 75
+        },
+        {
+          "file": "nuit-3.mp3",
+          "title": "Japan Night",
+          "author": "Mario Raúl Triviño",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/880853",
+          "seconds": 75
+        }
+      ]
+    },
+    "arcade": {
+      "label": "Akihabara et salles de jeux",
+      "volume": 0.5,
+      "tracks": [
+        {
+          "file": "arcade-1.mp3",
+          "title": "CYBER SHAKUHACHI",
+          "author": "michalko wawrzyn",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/312139",
+          "seconds": 75
+        },
+        {
+          "file": "arcade-2.mp3",
+          "title": "Touch To The Clouds",
+          "author": "Kinetic Law",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "source": "https://www.jamendo.com/track/1057821",
+          "seconds": 75
+        },
+        {
+          "file": "arcade-3.mp3",
+          "title": "Arcade",
+          "author": "Andrey Avkhimovich",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "source": "https://www.jamendo.com/track/773633",
+          "seconds": 75
+        }
+      ]
     }
   }
 }

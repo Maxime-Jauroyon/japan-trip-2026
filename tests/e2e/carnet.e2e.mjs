@@ -31,7 +31,7 @@ const BASE = `http://localhost:${server.address().port}/`;
 const results = [];
 const check = (name, ok, detail = "") => { results.push(ok); console.log(`${ok ? "✓" : "✗"} ${name}${detail ? " — " + detail : ""}`); };
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ args: ["--autoplay-policy=no-user-gesture-required"] });
 const context = await browser.newContext({ viewport: { width: 390, height: 800 }, serviceWorkers: "block" });
 await context.addInitScript(() => {
   const R = Date, off = R.UTC(2026, 10, 11, 5, 0) - R.now();
@@ -118,6 +118,44 @@ check("appui long : la story reste en pause", held.cur === before && held.paused
 await page.waitForTimeout(3600);
 const resumed = await story();
 check("relâché : la story reprend", !resumed.paused && resumed.cur > before, `${before} → ${resumed.cur}`);
+
+// 2b. Musique : une famille par activité (arcade → temple → eau), fondu enchaîné à puissance égale, ⏭, 🔇, fermeture
+const music = () => page.evaluate(async () => (await import("/src/ui/music-player.js")).musicDebug());
+const slideNow = () => story().then((x) => x.cur);
+const until = async (fn, ms = 6000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const r = await fn(); if (r) return r; await page.waitForTimeout(100); } return null; };
+await page.evaluate(() => document.querySelector(".st-close")?.click());   // repartir d’une musique éteinte
+await until(async () => (await music()).voices.length === 0, 6000);
+await openStory();
+const m1 = await until(async () => { const m = await music(); return m.ctx === "running" && m.voices.some((v) => !v.dying) ? m : null; });
+check("musique : démarre avec la famille de la 1re activité (arcade)", !!m1 && m1.voices.find((v) => !v.dying).family === "arcade", JSON.stringify(m1 && m1.voices.map((v) => [v.family, v.file])));
+await until(async () => (await music()).voices.some((v) => !v.dying && v.gain >= 0.49), 6000);   // le fondu d’entrée est fini : le suivant part d’un volume plein
+for (let i = 0; i < 4; i++) { await tap(); await page.waitForTimeout(150); }   // 4 touchers : 1re photo de l’activité suivante (temple)
+await until(async () => (await music()).voices.length === 2, 5000);
+await page.waitForTimeout(1000);
+const mid = await music();
+const gains = mid.voices.map((v) => v.gain);
+const volume = 0.55;   // volume de la famille (arcade 0,5 / temple 0,55) : on vérifie surtout que les deux sont audibles et que la somme des puissances reste constante
+check("fondu : deux musiques en même temps pendant la transition (l’ancienne s’éteint, la nouvelle entre)", mid.voices.length === 2 && mid.voices.some((v) => v.dying) && mid.voices.some((v) => !v.dying && v.family === "temple"), JSON.stringify(mid.voices.map((v) => [v.family, v.dying, +v.gain.toFixed(2)])));
+const power = mid.voices.reduce((sum, v) => sum + (v.gain / (v.family === "temple" ? 0.55 : 0.5)) ** 2, 0);
+check("fondu : puissance totale à peu près constante (pas de creux)", power > 0.8 && power < 1.2, `somme des puissances = ${power.toFixed(2)}`);
+await until(async () => (await music()).voices.length === 1, 6000);
+const m3 = await music();
+check("après le fondu : une seule musique (temple)", m3.voices.length === 1 && m3.voices[0].family === "temple" && !m3.voices[0].dying, JSON.stringify(m3.voices.map((v) => [v.family, v.file])));
+const fileBefore = m3.voices[0].file;
+await page.evaluate(() => document.querySelector(".st-music-next").click());
+await until(async () => (await music()).voices.some((v) => !v.dying && v.file !== fileBefore), 6000);
+await page.waitForTimeout(2000);
+const m4 = await music();
+check("⏭ : passe au morceau suivant de la même famille", m4.voices.length === 1 && m4.voices[0].family === "temple" && m4.voices[0].file !== fileBefore, JSON.stringify(m4.voices.map((v) => v.file)));
+await page.evaluate(() => document.querySelector(".st-sound").click());
+await page.waitForTimeout(1500);
+check("🔇 : plus aucune musique", (await music()).voices.length === 0);
+await page.evaluate(() => document.querySelector(".st-sound").click());
+const m5 = await until(async () => { const m = await music(); return m.voices.some((v) => !v.dying) ? m : null; }, 8000);
+check("🔊 : la musique de l’activité revient", !!m5);
+await page.evaluate(() => document.querySelector(".st-close").click());
+await page.waitForTimeout(1500);
+check("fermeture : la musique s’efface", (await music()).voices.length === 0);
 
 // 3. Toucher bien au-delà de la dernière diapositive : fermeture propre, sans rester bloqué
 for (let i = 0; i < 20; i++) { await tap(); await page.waitForTimeout(40); }

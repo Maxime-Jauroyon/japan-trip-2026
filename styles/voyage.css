@@ -180,3 +180,5 @@ html.story-open, html.story-open body { overflow: hidden; }
 
 /* Story : photo pas encore arrivée (réseau) — l’histoire continue quand même */
 .st-player.gone::after { content: "Photo en route…"; position: absolute; left: 0; right: 0; top: 50%; text-align: center; color: rgba(255, 255, 255, .6); font-size: 15px; pointer-events: none; }
+.st-music-next { min-width: 44px; min-height: 44px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; font-size: 18px; cursor: pointer; }
+.st-music-next[hidden] { display: none; }
