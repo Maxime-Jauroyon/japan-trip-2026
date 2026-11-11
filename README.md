@@ -13,6 +13,7 @@ préparatifs, outils sur place. Site statique publié sur **GitHub Pages**, inst
 ```sh
 npm run serve        # → http://localhost:8000 (python3 -m http.server)
 npm run check        # données + architecture + tests unitaires
+npm run e2e          # Carnet dans un vrai navigateur (Playwright requis : PLAYWRIGHT_DIR=…/node_modules), réseau lent et capricieux
 ```
 
 Node ≥ 20 suffit pour les scripts et tests (aucune dépendance npm).

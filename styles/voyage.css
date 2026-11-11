@@ -90,7 +90,7 @@
 /* Photos : flou → net, chargement, absente */
 .vy-photo { display: block; width: 100%; aspect-ratio: 4 / 5; padding: 0; border: 0; background: var(--panel-2); cursor: pointer; overflow: hidden; }
 .vy-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .5s ease, opacity .3s ease; }
-.vy-photo img.blur { filter: blur(14px); transform: scale(1.04); }
+.vy-photo img.blur { filter: blur(7px); transform: scale(1.04); }
 .vy-photo img:not([src]) { opacity: 0; }
 .vy-photo.loading { background: linear-gradient(100deg, var(--panel-2) 30%, rgba(var(--fg-rgb), .09) 50%, var(--panel-2) 70%) 0 0 / 200% 100%; animation: cn-shimmer 1.3s linear infinite; }
 .vy-photo.missing, .jr-thumb.missing { position: relative; }
@@ -177,3 +177,6 @@ html.story-open, html.story-open body { overflow: hidden; }
 .st-video[hidden] { display: none; }
 .st-sound { min-width: 44px; min-height: 44px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); color: #fff; font-size: 20px; cursor: pointer; }
 .st-credit { position: absolute; left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom)); font-size: 10.5px; color: rgba(255, 255, 255, .55); text-align: center; pointer-events: none; }
+
+/* Story : photo pas encore arrivée (réseau) — l’histoire continue quand même */
+.st-player.gone::after { content: "Photo en route…"; position: absolute; left: 0; right: 0; top: 50%; text-align: center; color: rgba(255, 255, 255, .6); font-size: 15px; pointer-events: none; }

@@ -14,7 +14,8 @@
     "architecture": "node scripts/check-architecture.mjs",
     "thumbs": "node scripts/make-thumbs.mjs",
     "icons": "node scripts/make-icons.mjs",
-    "photos": "node scripts/compress-photos.mjs"
+    "photos": "node scripts/compress-photos.mjs",
+    "e2e": "node tests/e2e/carnet.e2e.mjs"
   },
   "engines": {
     "node": ">=20"

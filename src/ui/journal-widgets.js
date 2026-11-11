@@ -5,6 +5,7 @@ import { esc } from "../core/dom.js";
 import { STATUS_LABELS, heroPhoto, isVideo, likedBy, livePhotos, nextStatus } from "../domain/journal.js";
 import { JOURNAL_CHANGED, addPhotos, cachedPhotoUrl, journalConfig, journalDay, journalDays, journalReadOnly, lastMediaNotice, photoUrl, removePhoto, setCoverPhoto, setHeroPhoto, setPlannedStatus, syncStatus, toggleLike } from "../pwa/journal-store.js";
 import { pickPhotos } from "../pwa/photo-resize.js";
+import { retryDelay } from "../domain/story.js";
 
 const GLYPH = { todo: "○", done: "✓", skipped: "✗" };
 
@@ -40,9 +41,15 @@ export function photoStripHtml(iso, id, names){
 export const cameraButtonHtml = (iso, target, label = "Photos / vidéos") => journalReadOnly() ? "" :
   `<button type="button" class="jr-cam" data-add-photo data-iso="${esc(iso)}" data-title="${esc(target.title)}"><span aria-hidden="true">📷</span> ${esc(label)}</button>`;
 
-let observer = null;
+let observer = null, nearObserver = null, retryBound = false;
 
-/** Charge une photo : miniature floue tout de suite (cache de l’appareil), puis la photo nette ; « Réessayer » si elle manque. */
+const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
+
+/**
+ * Charge une photo : miniature floue tout de suite (cache de l’appareil), puis la photo nette. Si la photo nette ne vient pas
+ * (réseau, limite du serveur), on réessaie quelques fois (délais croissants) ; en dernier recours la miniature reste affichée
+ * NETTE (jamais floue pour toujours) et un appui relance. Priorité : plus haut quand la photo est à l’écran.
+ */
 async function loadPhoto(b){
   const img = b.querySelector("img[data-jphoto]");
   if (!img) return;
@@ -51,18 +58,33 @@ async function loadPhoto(b){
   if (video) b.classList.add("is-video");
   const feed = !!b.dataset.jpFeed && !video;   // une vidéo n’est jamais chargée dans une image : seulement sa miniature
   b.classList.remove("missing");
+  delete b.dataset.jpSoft;
+  const live = () => b.isConnected;            // Carnet redessiné entre-temps : inutile de continuer
+  const priority = () => (b.dataset.jpNear ? 6 : 1);
   // Déjà sur le téléphone : affichage immédiat, sans scintillement ni flou (rien n’est retéléchargé)
   const hit = await cachedPhotoUrl(iso, name, !feed);
-  if (hit) { img.src = hit; return; }
+  if (hit) { img.src = hit; img.classList.remove("blur"); b.classList.remove("loading"); return; }
   b.classList.add("loading");
   if (feed) {
-    const small = await photoUrl(iso, name, true);
-    if (small) { img.src = small; img.classList.add("blur"); }
+    const small = await photoUrl(iso, name, true, { priority: () => priority() + 1, live });
+    if (small && !img.getAttribute("src")) { img.src = small; img.classList.add("blur"); }
   }
-  const url = await photoUrl(iso, name, !feed);
-  if (!url) { b.classList.remove("loading"); if (!img.src) b.classList.add("missing"); return; }
+  let url = "";
+  for (let attempt = 0; live(); attempt++) {
+    url = await photoUrl(iso, name, !feed, { priority, live });
+    const wait = url ? null : retryDelay(attempt);
+    if (url || wait == null) break;
+    await sleep(wait);
+  }
+  b.classList.remove("loading");
+  if (!live()) return;
+  if (!url) {
+    img.classList.remove("blur");
+    if (img.getAttribute("src")) b.dataset.jpSoft = "1"; else b.classList.add("missing");
+    return;
+  }
   const done = () => { img.classList.remove("blur"); b.classList.remove("loading"); };
-  if (feed && img.src && img.src !== url) {
+  if (feed && img.getAttribute("src") && img.src !== url) {
     const full = new Image();
     full.onload = () => { img.src = url; done(); };
     full.onerror = done;
@@ -70,7 +92,7 @@ async function loadPhoto(b){
   } else { img.onload = done; img.src = url; if (img.complete) done(); }
 }
 
-/** Branche les photos d’un conteneur : chargées seulement quand elles approchent de l’écran (IntersectionObserver). */
+/** Branche les photos d’un conteneur : chargées quand elles approchent de l’écran, en priorité celles qui sont visibles. */
 export function hydratePhotos(root){
   if (!observer && "IntersectionObserver" in window) {
     observer = new IntersectionObserver(entries => entries.forEach(e => {
@@ -78,10 +100,19 @@ export function hydratePhotos(root){
       observer.unobserve(e.target);
       loadPhoto(e.target);
     }), { rootMargin: "500px 400px" });
+    nearObserver = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) e.target.dataset.jpNear = "1"; else delete e.target.dataset.jpNear;
+    }), { rootMargin: "0px" });
+  }
+  if (!retryBound) {
+    retryBound = true;
+    // Retour du réseau : on relance les photos qui n’avaient pas pu arriver
+    window.addEventListener("online", () => document.querySelectorAll(".vy-photo.missing, [data-jp-soft]").forEach(b => loadPhoto(b)));
   }
   root.querySelectorAll("[data-jp-name]").forEach(b => {
     if (b.dataset.jpSeen && !b.classList.contains("missing")) return;
     b.dataset.jpSeen = "1";
+    if (nearObserver) nearObserver.observe(b);
     if (observer) observer.observe(b); else loadPhoto(b);
   });
   root.querySelectorAll("[data-jp-name]:not([data-jp-bound]):not([data-jp-story])").forEach(b => { b.dataset.jpBound = "1"; b.addEventListener("click", e => {
@@ -210,16 +241,25 @@ async function showViewer(i){
   const img = viewer.querySelector("img"), vid = viewer.querySelector("video");
   vid.pause(); vid.removeAttribute("src"); vid.hidden = true;
   img.removeAttribute("src");
-  const [small, full] = [await photoUrl(p.iso, p.name, true), photoUrl(p.iso, p.name, false)];
-  if (vList[vIdx] === p && small) img.src = small;
-  const url = await full;
-  if (vList[vIdx] !== p || !url) return;
+  const live = () => vList[vIdx] === p && !viewer.hidden;   // on a déjà tourné la page : abandonner
+  const small = await photoUrl(p.iso, p.name, true, { priority: 11, live });
+  if (live() && small) img.src = small;
+  let url = "";
+  for (let attempt = 0; live(); attempt++) {
+    url = await photoUrl(p.iso, p.name, false, { priority: 10, live });
+    const wait = url ? null : retryDelay(attempt);
+    if (url || wait == null) break;
+    await sleep(wait);
+  }
+  if (!live() || !url) return;
   if (isVideo(p.name)) {
     // Vidéo : toujours sans son, en boucle ; la miniature reste affichée jusqu’à ce qu’elle démarre
     vid.muted = true; vid.poster = small || "";
     vid.src = url; vid.hidden = false; img.hidden = true;
     vid.play().catch(() => { /* lecture au toucher */ });
   } else { img.hidden = false; img.src = url; }
+  // Les voisines se préparent en douce pour que le balayage soit instantané
+  [vIdx + 1, vIdx - 1].forEach((k) => { const n = vList[(k + vList.length) % vList.length]; if (n && n !== p && !isVideo(n.name)) photoUrl(n.iso, n.name, false, { priority: 2 }); });
 }
 
 /** Branche les photos et les boutons 📷 d’un conteneur. */
