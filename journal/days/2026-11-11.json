@@ -8,6 +8,15 @@
    "doneAt": 1794358019884,
    "by": "Maxime",
    "at": 1794358019884
+  },
+  "p:zojo-ji-grand-temple": {
+   "id": "p:zojo-ji-grand-temple",
+   "kind": "planned",
+   "title": "Zōjō-ji — grand temple",
+   "status": "done",
+   "doneAt": 1794360188821,
+   "by": "Maxime",
+   "at": 1794360188821
   }
  }
 }
