@@ -157,16 +157,15 @@
         "title": "Zōjō-ji — grand temple",
         "lat": 35.6574,
         "lng": 139.7488,
-        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À visiter avant la fermeture du bureau et du temple (≈ 17 h), donc avant la Tokyo Tower de nuit.",
+        "desc": "Grand temple bouddhique au pied de la Tokyo Tower : portail Sangedatsu-mon, statues jizō et la tour orange en arrière-plan. À visiter avant la fermeture du bureau et du temple (≈ 17 h), avant la fermeture.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du temple."
       },
       {
-        "title": "teamLab Planets",
-        "phrases": "park",
-        "lat": 35.649,
-        "lng": 139.7898,
-        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance. Entrée sur créneau réservé : à choisir dans l’après-midi, après les lieux qui ferment tôt.",
+        "title": "Tokyo Tower",
+        "lat": 35.6586,
+        "lng": 139.7454,
+        "desc": "Faite de jour, juste à côté de Zōjō-ji. Observatoires pour le panorama ; on peut revenir au crépuscule quand la tour s’allume.",
         "goshuin": "non"
       },
       {
@@ -177,10 +176,27 @@
         "goshuin": "non"
       },
       {
-        "title": "Tokyo Tower de nuit",
-        "lat": 35.6586,
-        "lng": 139.7454,
-        "desc": "La tour orange s’allume après le crépuscule. Observatoires pour un panorama nostalgique.",
+        "title": "teamLab Planets",
+        "phrases": "park",
+        "lat": 35.649,
+        "lng": 139.7898,
+        "desc": "Salles d’art digital immersives — parfois pieds nus dans l’eau. Réserver des créneaux à l’avance. Entrée sur créneau réservé : à choisir dans l’après-midi, après les lieux qui ferment tôt.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Maid café — Maidreamin Akihabara (Head Store)",
+        "slug": "maid-cafe",
+        "lat": 35.7007,
+        "lng": 139.7715,
+        "desc": "Maison mère de la chaîne Maidreamin (Sumiyoshi Building, 6ᵉ étage, 3-16-17 Sotokanda) : cadre familial, tarifs fixes affichés, menus en anglais et personnel anglophone. Ouvert env. 11 h 30–23 h en semaine (dernière commande plus tôt) : à vérifier sur place. Autres succursales de la chaîne dans le quartier si c’est complet.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Stadium Bar Akiba League — bar baseball",
+        "slug": "akiba-league",
+        "lat": 35.6986,
+        "lng": 139.7747,
+        "desc": "Grand sports bar au 2ᵉ étage du GATO Akihabara Building (1-24 Kanda-Sakumachō), à 1 min de la gare JR Akihabara. Ambiance stade, bière servie à table. Pas un rooftop : aucun bar baseball en terrasse n’a été confirmé. Horaires et tenue à vérifier avant d’y aller.",
         "goshuin": "non"
       }
     ],
@@ -194,8 +210,7 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFixe": true,
-    "ordreFermeture": true
+    "ordreFixe": true
   },
   {
     "n": 5,
