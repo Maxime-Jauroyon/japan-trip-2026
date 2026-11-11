@@ -1,20 +1,6 @@
 {
   "checks": [
     {
-      "id": "cash-arrivee",
-      "label": "Retirer du cash à l’arrivée (8 nov)",
-      "meta": "Distributeur 7-Eleven ou Japan Post dès Haneda T3, carte Revolut ou BoursoBank · beaucoup de lieux restent cash only (temples, marchés, taxis, petits restos) · prévoir aussi des pièces de ¥100 pour les onsen et les consignes",
-      "remindFrom": "2026-11-08",
-      "done": false
-    },
-    {
-      "id": "shinkansen-kana-retrait",
-      "label": "Retirer les billets shinkansen Tokyo → Kanazawa",
-      "meta": "Réservés sur JR East · 14 nov 11:24 → 14:17 · billets papier à retirer à une machine verte JR East (Akihabara, Tokyo, Shinjuku… ou Haneda T3) entre le 8 et le 13 nov · carte bancaire physique de LÉO (qui a payé) + n° de réservation",
-      "remindFrom": "2026-11-08",
-      "done": false
-    },
-    {
       "id": "train-kyoto-retrait",
       "label": "Retirer les billets train Takayama → Kyoto",
       "meta": "Réservés sur JR West · 18 nov 15:34 → 19:17 · machine verte de la gare de Kanazawa (14–17 nov) ou de Takayama avant le départ — pas à Tokyo · carte bancaire physique de MAXIME + code à 4 chiffres + n° de réservation",
@@ -27,23 +13,6 @@
       "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
       "remindFrom": "2026-11-20",
       "done": false
-    },
-    {
-      "id": "fujiq-horror",
-      "label": "Fuji-Q · maison de l’horreur (ticket à part)",
-      "meta": "Ven. 13 nov · 戦慄迷宮 non incluse dans le pass · ticket horodaté dès mar. 10 nov 18h JST (app) ou sur place le jour J",
-      "remindFrom": "2026-11-10",
-      "done": false,
-      "links": [
-        {
-          "label": "Tarifs / tickets horodatés",
-          "url": "https://www.fujiq.jp/en/ticket/"
-        },
-        {
-          "label": "App Store · Q-chan",
-          "url": "https://apps.apple.com/app/q-chan/id1483774385"
-        }
-      ]
     },
     {
       "id": "detaxe-depart",

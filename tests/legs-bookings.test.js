@@ -55,33 +55,33 @@ test("à faire : urgence et tri", () => {
   const todos = collectTodos({}, new Set(), today);
   // tâches cochées dans les données (billets USJ et Fuji-Q achetés) : jamais dans les alertes
   assert.ok(!todos.some((t) => t.id === "usj-tickets" || t.id === "fujiq-tickets"));
-  assert.equal(todos.find((t) => t.id === "fujiq-horror").urgency, "soon");
+  assert.equal(todos.find((t) => t.id === "train-kyoto-retrait").urgency, "soon");
   // passé la date de rappel : en retard
-  const late = collectTodos({}, new Set(), new Date(2026, 10, 19)).find((t) => t.id === "fujiq-horror");
+  const late = collectTodos({}, new Set(), new Date(2026, 10, 19)).find((t) => t.id === "train-kyoto-retrait");
   assert.equal(late.urgency, "late");
-  assert.equal(todoDueLabel(late), "En retard · depuis 9 j");
+  assert.equal(todoDueLabel(late), "En retard · depuis 5 j");
   // trié : retards d’abord
   const rank = { late: 0, now: 1, soon: 2 };
   for (let i = 1; i < todos.length; i++) assert.ok(rank[todos[i - 1].urgency] <= rank[todos[i].urgency]);
   // fait = disparaît (case cochée, réservation marquée)
-  assert.ok(!collectTodos({ "fujiq-horror": true }, new Set(), today).some((t) => t.id === "fujiq-horror"));
+  assert.ok(!collectTodos({ "train-kyoto-retrait": true }, new Set(), today).some((t) => t.id === "train-kyoto-retrait"));
   assert.ok(!collectTodos({}, new Set(["nara-osa:0"]), new Date(2026, 9, 20)).some((t) => t.id === "nara-osa:0"));
   // le jour même : « now », pas « late »
-  assert.equal(collectTodos({}, new Set(), new Date(2026, 10, 10)).find((t) => t.id === "fujiq-horror").urgency, "now");
+  assert.equal(collectTodos({}, new Set(), new Date(2026, 10, 14)).find((t) => t.id === "train-kyoto-retrait").urgency, "now");
 });
 
 test("faits : remettre à faire", () => {
   const today = new Date(2026, 9, 20);
   // réservation marquée faite sur l’appareil + rappel coché → listés dans « Faits »
-  const done = collectDoneTodos({ "cash-arrivee": true }, new Set(["nara-osa:0"]));
+  const done = collectDoneTodos({ "kintetsu-eticket": true }, new Set(["nara-osa:0"]));
   assert.ok(done.some((d) => d.id === "nara-osa:0" && d.kind === "booking"));
-  assert.ok(done.some((d) => d.id === "cash-arrivee" && d.kind === "reminder"));
+  assert.ok(done.some((d) => d.id === "kintetsu-eticket" && d.kind === "reminder"));
   // pas encore fait : pas dans « Faits »
-  assert.ok(collectDoneTodos({}, new Set()).some((d) => d.id === "fujiq-horror") === false);
+  assert.ok(collectDoneTodos({}, new Set()).some((d) => d.id === "train-kyoto-retrait") === false);
   // décoché = revient dans les alertes
-  const nov1 = new Date(2026, 10, 1);
-  assert.ok(!collectTodos({ "cash-arrivee": true }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
-  assert.ok(collectTodos({ "cash-arrivee": false }, new Set(), nov1).some((t) => t.id === "cash-arrivee"));
+  const nov1 = new Date(2026, 10, 15);
+  assert.ok(!collectTodos({ "kintetsu-eticket": true }, new Set(), nov1).some((t) => t.id === "kintetsu-eticket"));
+  assert.ok(collectTodos({ "kintetsu-eticket": false }, new Set(), nov1).some((t) => t.id === "kintetsu-eticket"));
   // toutes les réservations sont faites dans les données : on en « dé-réserve » une le temps du test
   const leg = LEGS.find((l) => l.id === "nara-osa");
   const link = leg.bookings.links[0];
