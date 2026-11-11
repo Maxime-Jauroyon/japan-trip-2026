@@ -281,7 +281,7 @@ function photoCreditHtml(credit){
 /** Pastille d’échéance dans les listes : « ⏰ ferme 16 h 30 » ou « ⏰ avant 11 h » (rien si le lieu est libre). */
 export function deadlinePillHtml(dl){
   if (!dl) return "";
-  return `<span class="dl-pill ${dl.kind}" title="${dl.kind === "closes" ? "Heure de fermeture (à vérifier)" : "À faire plutôt avant cette heure"}">⏰ ${dl.kind === "closes" ? "ferme" : "avant"} ${esc(clockLabel(dl.time))}</span>`;
+  return `<span class="dl-pill ${dl.kind}" title="${dl.kind === "closes" ? "Heure de fermeture (à vérifier)" : "À faire plutôt avant cette heure"}">⏰ ${dl.kind === "closes" ? "ferme" : "plutôt avant"} ${esc(clockLabel(dl.time))}</span>`;
 }
 
 /** Pastille « 御朱印 » dans les listes : goshuin disponible (oui) ou à demander (possible). Rien si « non » ou inconnu. */

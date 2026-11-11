@@ -243,21 +243,6 @@
         "goshuin": "non"
       },
       {
-        "title": "Music Forest + lac",
-        "lat": 35.5218,
-        "lng": 138.769,
-        "desc": "Musée de boîtes à musique style européen et jardins au bord de l’eau, rive nord (bus touristique depuis la gare). À grouper avec le Momiji Corridor ; retour à la gare avant 15 h.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Musée Itchiku Kubota",
-        "phrases": "visit",
-        "lat": 35.5274,
-        "lng": 138.7598,
-        "desc": "Kimonos somptueux dans une galerie en colline, jardin japonais face au lac, rive nord à côté du Momiji Corridor. Fermeture ~16 h 30 : à faire seulement s’il reste du temps avant le retour à la gare.",
-        "goshuin": "non"
-      },
-      {
         "title": "Pagode Chūrei-tō",
         "lat": 35.5013,
         "lng": 138.8014,
@@ -270,13 +255,6 @@
         "lat": 35.4598,
         "lng": 138.8338,
         "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
-        "goshuin": "non"
-      },
-      {
-        "title": "Saiko Iyashi-no-Sato",
-        "lat": 35.504,
-        "lng": 138.6612,
-        "desc": "Village reconstruit au bord du lac Saiko : ateliers artisanaux et ambiance calme. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
         "goshuin": "non"
       }
     ],
