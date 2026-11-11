@@ -62,6 +62,15 @@
    "doneAt": 1794393099017,
    "by": "Maxime",
    "at": 1794393099017
+  },
+  "p:baseball-batting-center-active-akiba": {
+   "id": "p:baseball-batting-center-active-akiba",
+   "kind": "planned",
+   "title": "Baseball — batting center Active AKIBA",
+   "status": "done",
+   "doneAt": 1794396527312,
+   "by": "Maxime",
+   "at": 1794396527312
   }
  }
 }
