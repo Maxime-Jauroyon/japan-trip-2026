@@ -1832,6 +1832,52 @@
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Kuramae_jinja_taito_2009.JPG"
       }
+    ],
+    "maid-cafe": [
+      {
+        "file": "akihabara.jpg",
+        "author": "Hyppolyte de Saint-Rambert",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_9999_281.jpg"
+      },
+      {
+        "file": "akihabara-2.jpg",
+        "author": "BWard 1997",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_Street_-_31-5-2026.jpg"
+      },
+      {
+        "file": "akihabara-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_12.jpg"
+      }
+    ],
+    "akiba-league": [
+      {
+        "file": "akihabara.jpg",
+        "author": "Hyppolyte de Saint-Rambert",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_9999_281.jpg"
+      },
+      {
+        "file": "akihabara-2.jpg",
+        "author": "BWard 1997",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_Street_-_31-5-2026.jpg"
+      },
+      {
+        "file": "akihabara-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_12.jpg"
+      }
     ]
   }
 }

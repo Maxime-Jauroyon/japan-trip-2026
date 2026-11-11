@@ -315,5 +315,14 @@
     "duration": "1–2 h",
     "hours": "~10h–21h",
     "closes": "21:00"
+  },
+  "maid-cafe": {
+    "duration": "1–1,5 h",
+    "hours": "~11h30–23h (dernière commande plus tôt)",
+    "closes": "23:00"
+  },
+  "akiba-league": {
+    "duration": "1–2 h",
+    "hours": "Soirée (horaires à vérifier)"
   }
 }
