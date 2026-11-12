@@ -222,39 +222,17 @@
     ],
     "ideas": [
       {
-        "title": "Téléphérique panoramique",
-        "lat": 35.504,
-        "lng": 138.7705,
-        "desc": "À ~10–15 min à pied de la gare : bon premier arrêt une fois les valises déposées. Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse, vue sur tout le bassin et le Fuji.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Lac Kawaguchi",
-        "lat": 35.5233,
-        "lng": 138.7465,
-        "desc": "Promenade au bord du lac entre le téléphérique et le centre (reflets du Fuji, ~30 min), puis déjeuner près de la gare (houtō, nouilles locales).",
-        "goshuin": "non"
-      },
-      {
-        "title": "Momiji Corridor",
-        "lat": 35.5256,
-        "lng": 138.7624,
-        "desc": "Allée d’érables au bord du lac, célèbre en automne (pic habituel autour du 10 nov : de saison le 12). Rive nord : bus touristique depuis la gare (~20–25 min) — prévoir le retour à la gare pour 15 h.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Pagode Chūrei-tō",
-        "lat": 35.5013,
-        "lng": 138.8014,
-        "desc": "Pagode à cinq étages avec la vue classique sur le Fuji après une courte montée. Idéal le matin clair. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
-        "goshuin": "possible",
-        "goshuinNote": "Au sanctuaire Arakura Fuji Sengen, au pied de l’escalier."
-      },
-      {
         "title": "Oshino Hakkai",
         "lat": 35.4598,
         "lng": 138.8338,
         "desc": "Huit sources limpides alimentées par la fonte du Fuji, maisons de chaume et stands de snacks. Trop loin pour la balade autour de la gare : seulement si on a de l’énergie après le check-in (15 h).",
+        "goshuin": "non"
+      },
+      {
+        "title": "Téléphérique panoramique",
+        "lat": 35.504,
+        "lng": 138.7705,
+        "desc": "Cabine au-dessus du lac Kawaguchi jusqu’à une terrasse, vue sur tout le bassin et le Fuji. À ~10–15 min à pied de la gare.",
         "goshuin": "non"
       }
     ],
@@ -262,18 +240,7 @@
       "time": "06:45",
       "why": "Bus Shinjuku 09:05 · départ de l’hôtel vers 07:45"
     },
-    "luggageLocker": {
-      "title": "Valises en consigne à la gare de Kawaguchiko",
-      "when": "10:50 → 15:00",
-      "desc": "Coin lockers dans le bâtiment Fujikan, juste en face de la gare (grands casiers à l’arrière, ≈ ¥800, une quinzaine seulement : s’en occuper en descendant du bus). Plan B : consigne avec personnel au même endroit (≈ 9 h–18 h, ¥500 ou ¥800 par bagage). Prix et horaires à vérifier sur place."
-    },
-    "ordreFixe": true,
-    "reminders": [
-      {
-        "title": "15 h : reprendre les valises et appeler l’hôtel",
-        "desc": "Retour à la gare vers 15 h, récupérer les valises, puis appeler le Kawaguchiko Hotel (+81 555 72 1313) pour demander la navette depuis la gare (check-in 15 h–21 h). Navette non confirmée dans les sources : sinon taxi (~10 min jusqu’à Funatsu)."
-      }
-    ]
+    "ordreFixe": true
   },
   {
     "n": 6,
@@ -292,8 +259,10 @@
           "One Day Pass acheté (85,50 € pour 2) — manèges illimités (sauf exceptions).",
           "Maison de l’horreur « Super Scary Labyrinth of Fear » (戦慄迷宮) : non incluse dans le One Day Pass — ticket horodaté à part.",
           "Horreur : payer sur place (bornes près de l’attraction / info) ou via l’app dès J−3 à 18h JST · ~¥3 000–4 000 / groupe avec One Day Pass (jusqu’à 3–4 pers.).",
-          "App officielle « Q-chan » : files d’attente, carte, achat One Day Pass / priorités / tickets horodatés.",
-          "Accès : gare Fujikyu Highland (歩 ~5 min) ou bus depuis Kawaguchiko · arriver à l’ouverture."
+          "Accès : gare Fujikyu Highland (歩 ~5 min) ou bus depuis Kawaguchiko · arriver à l’ouverture.",
+          "Appli officielle « Qちゃん » (gratuite) : temps d’attente en direct, plan, billets. Si le lien japonais ne s’ouvre pas, chercher « 富士急ハイランド公式アプリ Qちゃん » dans l’App Store.",
+          "Le matin, vérifier quels manèges sont ouverts avant de choisir l’ordre (Do-Dodonpa fermé depuis 2024 ; Eejanaika et Fujiyama à confirmer). Noms à montrer au personnel : ええじゃないか (Eejanaika), 高飛車 (Takabisha), FUJIYAMA, 戦慄迷宮 (maison de l’horreur).",
+          "Billet Klook : à échanger contre un billet physique (distributeur à l’entrée ou guichet 1–2) avec le lien du voucher ouvert et internet ; arriver vers 8 h 30 pour l’ouverture à 9 h (à confirmer)."
         ],
         "links": [
           {
@@ -301,8 +270,8 @@
             "url": "https://www.fujiq.jp/en/ticket/"
           },
           {
-            "label": "App Store · Q-chan (Fuji-Q)",
-            "url": "https://apps.apple.com/app/q-chan/id1483774385"
+            "label": "App Store · Qちゃん (appli officielle Fuji-Q, App Store japonais)",
+            "url": "https://apps.apple.com/jp/app/id1546721438"
           }
         ],
         "fixed": true,
