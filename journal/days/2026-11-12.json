@@ -23,6 +23,15 @@
    "status": "skipped",
    "by": "Léo",
    "at": 1794438405200
+  },
+  "p:oshino-hakkai": {
+   "id": "p:oshino-hakkai",
+   "kind": "planned",
+   "title": "Oshino Hakkai",
+   "status": "done",
+   "doneAt": 1794468799036,
+   "by": "Maxime",
+   "at": 1794468799036
   }
  }
 }
