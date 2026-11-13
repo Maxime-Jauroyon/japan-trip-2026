@@ -226,3 +226,9 @@ html.sheet-open, html.sheet-open body { overflow: hidden; }
 .cn-help strong { display: block; margin-bottom: 6px; font-size: 16px; color: var(--cream); }
 .cn-help ul { margin: 0 0 12px; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14.5px; line-height: 1.35; }
 .cn-help button { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--gold); color: var(--bg); font: inherit; font-size: 14.5px; font-weight: 800; cursor: pointer; }
+
+/* Photos en haute qualité : ligne d’information + bouton « Tout télécharger » */
+.cn-hq { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel-2); font-size: 13.5px; color: var(--muted); }
+.cn-hq[hidden] { display: none; }
+.cn-hq span { flex: 1; min-width: 0; }
+.cn-hq button { flex: 0 0 auto; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 0; background: var(--gold); color: var(--bg); font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }

@@ -65,32 +65,37 @@ Object.entries(days).forEach(([iso, off]) => {
   files[iso + ".json"] = { sha: "s" + off, content: Buffer.from(JSON.stringify({ items })).toString("base64") };
 });
 const stats = { inflight: 0, peak: 0, fails: 0 }, tried = {};
-await page.route("https://api.github.com/**", async (r) => {
-  const path_ = new URL(r.request().url()).pathname.replace("/repos/Maxime-Jauroyon/japan-trip-2026", "");
-  const json = (o, s = 200) => r.fulfill({ status: s, contentType: "application/json", body: JSON.stringify(o) });
-  if (path_ === "") return json({ full_name: "x", default_branch: "main", permissions: { push: true } });
-  if (path_.startsWith("/git/ref/heads/journal")) return json({ object: { sha: "x" } });
-  if (path_ === "/contents/journal/days") return json(Object.keys(files).map((n) => ({ name: n, sha: files[n].sha })));
-  const day = /^\/contents\/journal\/days\/(.+\.json)$/.exec(path_);
-  if (day && r.request().method() === "PUT") {
-    const b = JSON.parse(r.request().postData());
-    files[day[1]] = { sha: "n" + Math.random(), content: b.content };
-    return json({ content: { sha: files[day[1]].sha } });
-  }
-  if (day) return files[day[1]] ? json({ sha: files[day[1]].sha, content: files[day[1]].content }) : json({}, 404);
-  const ph = /^\/contents\/journal\/photos\/([^/]+)\/(.+)$/.exec(path_);
-  if (ph) {
-    stats.inflight++; stats.peak = Math.max(stats.peak, stats.inflight);
-    await new Promise((ok) => setTimeout(ok, 250 + Math.random() * 500));
-    stats.inflight--;
-    const thumb = /\.t\.jpg$/.test(ph[2]), key = ph[1] + ph[2];
-    tried[key] = (tried[key] || 0) + 1;
-    if (!thumb && tried[key] === 1 && Math.random() < 0.2) { stats.fails++; return json({ message: "boom" }, 500); }
-    return r.fulfill({ status: 200, contentType: "image/jpeg", body: thumb ? THUMB : FULL });
-  }
-  return json({}, 404);
-});
-await page.route(/^https:\/\/(?!api\.github\.com)/, (r) => r.abort());
+const stats2 = { full: 0 };
+const installRoutes = async (pg) => {
+  await pg.route("https://api.github.com/**", async (r) => {
+    const path_ = new URL(r.request().url()).pathname.replace("/repos/Maxime-Jauroyon/japan-trip-2026", "");
+    const json = (o, s = 200) => r.fulfill({ status: s, contentType: "application/json", body: JSON.stringify(o) });
+    if (path_ === "") return json({ full_name: "x", default_branch: "main", permissions: { push: true } });
+    if (path_.startsWith("/git/ref/heads/journal")) return json({ object: { sha: "x" } });
+    if (path_ === "/contents/journal/days") return json(Object.keys(files).map((n) => ({ name: n, sha: files[n].sha })));
+    const day = /^\/contents\/journal\/days\/(.+\.json)$/.exec(path_);
+    if (day && r.request().method() === "PUT") {
+      const b = JSON.parse(r.request().postData());
+      files[day[1]] = { sha: "n" + Math.random(), content: b.content };
+      return json({ content: { sha: files[day[1]].sha } });
+    }
+    if (day) return files[day[1]] ? json({ sha: files[day[1]].sha, content: files[day[1]].content }) : json({}, 404);
+    const ph = /^\/contents\/journal\/photos\/([^/]+)\/(.+)$/.exec(path_);
+    if (ph) {
+      stats.inflight++; stats.peak = Math.max(stats.peak, stats.inflight);
+      await new Promise((ok) => setTimeout(ok, 250 + Math.random() * 500));
+      stats.inflight--;
+      const thumb = /\.t\.jpg$/.test(ph[2]), key = ph[1] + ph[2];
+    if (!thumb) stats2.full++;
+      tried[key] = (tried[key] || 0) + 1;
+      if (!thumb && tried[key] === 1 && Math.random() < 0.2) { stats.fails++; return json({ message: "boom" }, 500); }
+      return r.fulfill({ status: 200, contentType: "image/jpeg", body: thumb ? THUMB : FULL });
+    }
+    return json({}, 404);
+  });
+  await pg.route(/^https:\/\/(?!api\.github\.com)/, (r) => r.abort());
+};
+await installRoutes(page);
 await page.goto(BASE);
 await page.waitForTimeout(1500);
 await page.getByText("Plus tard").click({ timeout: 2000 }).catch(() => {});
@@ -271,6 +276,38 @@ await page.waitForTimeout(600);
 await page.keyboard.press("Escape");
 await page.waitForTimeout(400);
 check("Échap referme aussi la fiche", !(await page.evaluate(() => !!document.querySelector(".cn-sheet"))));
+
+// 9. « Tout télécharger » : photos en haute qualité, jamais floues ensuite (contexte neuf : rien n’est encore sur le téléphone)
+const ctx2 = await browser.newContext({ viewport: { width: 390, height: 800 }, serviceWorkers: "block" });
+await ctx2.addInitScript(() => {
+  const R = Date, off = R.UTC(2026, 10, 11, 5, 0) - R.now();
+  globalThis.Date = class extends R { constructor(...a) { a.length ? super(...a) : super(R.now() + off); } static now() { return R.now() + off; } };
+  try { localStorage.setItem("japan-trip-journal-cfg-v1", JSON.stringify({ token: "t", author: "Maxime" })); localStorage.setItem("japan-trip-carnet-help", "1"); } catch (_) { /* about:blank */ }
+});
+const page2 = await ctx2.newPage();
+page2.on("pageerror", (e) => pageErrors.push(e.message));
+await installRoutes(page2);
+await page2.goto(BASE);
+await page2.waitForTimeout(1500);
+await page2.getByText("Plus tard").click({ timeout: 2000 }).catch(() => {});
+await page2.locator('nav button:has-text("Carnet")').last().click();
+await page2.waitForTimeout(6000);
+const hq0 = await page2.evaluate(() => { const h = document.querySelector("#carnet-hq"); return h && !h.hidden ? { text: h.querySelector("span").textContent, btn: h.querySelector("button").textContent } : null; });
+check("le Carnet dit combien de photos sont encore en qualité réduite, avec le poids à prévoir", !!hq0 && /qualité réduite/.test(hq0.text) && /Tout télécharger \(≈ \d+ Mo\)/.test(hq0.btn), JSON.stringify(hq0));
+stats2.full = 0;
+await page2.evaluate(() => document.querySelector("[data-hq=all]").click());
+await page2.waitForTimeout(500);
+const running = await page2.evaluate(() => { const h = document.querySelector("#carnet-hq"); return h && !h.hidden ? { text: h.querySelector("span").textContent, btn: h.querySelector("button").textContent } : null; });
+check("pendant le téléchargement : avancement « Haute qualité : x / 39 » et bouton Pause", !!running && /Haute qualité : \d+ \/ 39/.test(running.text) && running.btn === "Pause", JSON.stringify(running));
+await page2.waitForFunction(() => document.querySelector("#carnet-hq").hidden === true, null, { timeout: 60000 }).catch(() => {});
+const done = await page2.evaluate(() => ({ hidden: document.querySelector("#carnet-hq").hidden, status: document.querySelector("#carnet-status .cn-status-text").textContent }));
+check("une fois fini : le Carnet l’annonce (« en haute qualité »)", done.hidden && /en haute qualité/.test(done.status), JSON.stringify(done));
+check("toutes les grandes photos ont été prises (39), pas une de plus", stats2.full >= 39 && stats2.full <= 39 + 6, `${stats2.full} demandes (dont quelques nouvelles tentatives simulées)`);
+// Défilement complet : plus jamais une photo floue, même un instant
+let blurSeen = 0;
+for (let y = 0; y < 14000; y += 400) { await page2.evaluate((y) => document.querySelector("#view-carnet").scrollTo(0, y), y); await page2.waitForTimeout(60); blurSeen += await page2.evaluate(() => document.querySelectorAll("#carnet-body img.blur").length); }
+check("en haute qualité : aucune photo floue, même un instant, pendant tout le défilement", blurSeen === 0, `${blurSeen} observations de flou`);
+await ctx2.close();
 
 check("aucune erreur JavaScript", pageErrors.length === 0, pageErrors.join(" | "));
 await browser.close();

@@ -94,6 +94,23 @@ export function favorites(days, who){
   return out;
 }
 
+/** Poids moyen d’une photo en haute qualité sur le dépôt (mesuré : ≈ 660 Ko ; une miniature = ≈ 50 Ko). */
+export const FULL_PHOTO_KB = 660;
+
+/**
+ * Ce que le Carnet dit des photos en haute qualité : { show, text, button, action, complete }.
+ * `st` = { total, have, running } ; `action` = « all » (tout télécharger) ou « stop » (pause).
+ * Tant que ce n’est pas fait, les photos se montrent d’abord floues (miniature) au défilement : on le dit, avec le poids à prévoir.
+ */
+export function hqSummary(st, avgKb = FULL_PHOTO_KB){
+  const total = (st && st.total) || 0, have = Math.min(total, (st && st.have) || 0), missing = total - have;
+  if (!total) return { show: false, complete: false };
+  if (st.running) return { show: true, complete: false, text: `Haute qualité : ${have} / ${total}`, button: "Pause", action: "stop" };
+  if (missing <= 0) return { show: false, complete: true };
+  const mb = Math.max(1, Math.round(missing * avgKb / 1024));
+  return { show: true, complete: false, text: `${missing} photo${missing > 1 ? "s" : ""} en qualité réduite (floues un instant au défilement)`, button: `Tout télécharger (≈ ${mb} Mo)`, action: "all" };
+}
+
 /** Deux jours identiques (même contenu) ? Sert à éviter un envoi inutile. */
 export const sameDay = (a, b) => JSON.stringify(sortKeys((a && a.items) || {})) === JSON.stringify(sortKeys((b && b.items) || {}));
 function sortKeys(o){
