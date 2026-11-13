@@ -37,19 +37,21 @@ function dayLikeHtml(iso, likes){
     `<span aria-hidden="true">${mine ? "❤️" : "🤍"}</span> <span>${mine ? "J’ai adoré cette journée" : "J’ai adoré cette journée ?"}</span>${n ? ` <b>${n}</b>` : ""}</button>`;
 }
 
-/** État discret : une ligne ; le détail seulement s’il y a un souci ou un téléchargement en cours. */
+/** Ligne d’état sous le titre : « ✓ À jour · 39 photos » avec, à droite, le bouton « Actualiser » (même place pour tout le monde). */
 export function renderCarnetStatus(){
   const el = document.getElementById("carnet-status");
   if (!el) return;
   const { all, done, total, running } = prefetchStatus;
   const bad = journalReady() && (syncStatus.state === "error" || syncStatus.state === "offline");
+  const busy = syncStatus.state === "syncing";
   el.classList.toggle("err", syncStatus.state === "error");
   const text = bad ? syncLineText(true)
-    : syncStatus.state === "syncing" ? "⟳ Synchronisation…"
+    : busy ? "Actualisation…"
     : running ? `Nouvelles photos ${done} / ${total}`
     : `✓ À jour${all ? ` · ${all} photo${all > 1 ? "s" : ""}` : ""}`;
-  el.innerHTML = `<span>${esc(text)}</span>` + (running && total ? `<span class="cn-offline"><i style="width:${Math.round(100 * done / total)}%"></i></span>` : "");
-  document.getElementById("carnet-refresh")?.classList.toggle("spin", syncStatus.state === "syncing");
+  el.innerHTML = `<span class="cn-status-text">${esc(text)}</span>` +
+    (running && total ? `<span class="cn-offline"><i style="width:${Math.round(100 * done / total)}%"></i></span>` : "") +
+    `<button type="button" class="cn-refresh${busy ? " spin" : ""}" id="carnet-refresh"${busy ? " disabled" : ""}><span aria-hidden="true">↻</span> Actualiser</button>`;
 }
 
 let model = [];
@@ -137,7 +139,7 @@ export function renderCarnet(force){
   const top = scroller ? scroller.scrollTop : 0;
   const slides = {};
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && c.scrollLeft) slides[p.dataset.post] = c.scrollLeft; });
-  box.innerHTML = carnetHtml({ days, hero, favs, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
+  box.innerHTML = carnetHtml({ days, hero, favs, readOnly: journalReadOnly(), today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
     emptyText: journalReadOnly() ? "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt."
       : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml, dayLikeHtml });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });
@@ -180,7 +182,7 @@ export function bindCarnetShare(){
   document.addEventListener(JOURNAL_PREFETCH, renderCarnetStatus);
   document.addEventListener(JOURNAL_SYNC, () => { renderCarnetStatus(); renderCarnet(); });
   const refresh = () => { syncNow().then(prefetchPhotos); };
-  document.getElementById("carnet-refresh")?.addEventListener("click", refresh);
+  document.getElementById("carnet-status")?.addEventListener("click", e => { if (e.target.closest("#carnet-refresh")) refresh(); });   // la ligne est redessinée souvent : on écoute la ligne, pas le bouton
   const view = document.getElementById("view-carnet");
   if (view) {
     let y0 = null;

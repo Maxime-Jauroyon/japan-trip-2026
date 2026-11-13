@@ -8,8 +8,6 @@
 /* En-tête de l’onglet : titre + deux boutons ronds + état discret */
 #view-carnet .view-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 #view-carnet .view-head h2 { margin: 0 auto 0 0; }
-.cn-round { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel-2); color: var(--cream); font-size: 20px; line-height: 1; cursor: pointer; display: grid; place-items: center; }
-.cn-round.spin { animation: cn-spin 1s linear infinite; }
 @keyframes cn-spin { to { transform: rotate(360deg); } }
 .cn-status { display: flex; align-items: center; gap: 8px; min-height: 22px; margin: 0 0 10px; font-size: 12px; color: var(--muted); }
 .cn-status.err { color: #d94f4f; }
@@ -99,7 +97,6 @@
 @keyframes cn-shimmer { to { background-position: -200% 0; } }
 
 /* Grille façon Instagram */
-.cn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
 
 /* Plein écran (bouton de retour en haut) et divers */
 .cn-top { position: fixed; right: 14px; bottom: calc(var(--tabbar-h, 0px) + env(safe-area-inset-bottom) + 14px); z-index: 45; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--glass-strong); color: var(--cream); font-size: 20px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s; }
@@ -132,8 +129,7 @@
 
 /* Plein écran de la photo seulement sur téléphone ; sur grand écran les publications restent des cartes */
 @media (max-width: 700px) {
-  .cn-cover, .vy-post:not(.plain), .cn-grid { margin-left: calc(-1 * var(--bleed)); margin-right: calc(-1 * var(--bleed)); }
-}
+  .cn-cover, .vy-post:not(.plain), }
 @media (min-width: 701px) {
   .cn-cover:not(.empty), .vy-post:not(.plain) { border-radius: 18px; border: 1px solid var(--line); }
 }
@@ -212,3 +208,21 @@ html.sheet-open, html.sheet-open body { overflow: hidden; }
 .cn-sheet-body { padding: 8px 14px 0; }
 .cn-fav { cursor: pointer; }
 .cn-fav-go { margin-left: auto; color: var(--muted); font-size: 22px; }
+
+/* Carnet pour tout le monde : actualisation dans la ligne d’état, deux onglets en toutes lettres, jours en dates, carte d’aide */
+.cn-status { min-height: 44px; font-size: 14px; }
+.cn-status-text { flex: 1; min-width: 0; }
+.cn-refresh { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--cream); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.cn-refresh span { display: inline-block; font-size: 17px; line-height: 1; }
+.cn-refresh.spin span { animation: cn-spin 1s linear infinite; }
+.cn-refresh:disabled { opacity: .7; cursor: default; }
+.cn-toolbar { flex-direction: column; align-items: stretch; gap: 10px; margin: 4px 0 8px; }
+.cn-seg { width: 100%; }
+.cn-seg button { flex: 1; min-height: 44px; font-size: 15px; }
+.cn-days button { min-height: 44px; padding: 0 16px; font-size: 14px; }
+.cn-hint { margin: 8px 0 2px; font-size: 13px; color: var(--muted); }
+.cn-story { width: 70px; } .cn-story b { max-width: 70px; font-size: 12px; }
+.cn-help { margin: 0 0 14px; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(var(--gold-rgb), .4); background: rgba(var(--gold-rgb), .1); }
+.cn-help strong { display: block; margin-bottom: 6px; font-size: 16px; color: var(--cream); }
+.cn-help ul { margin: 0 0 12px; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 14.5px; line-height: 1.35; }
+.cn-help button { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--gold); color: var(--bg); font: inherit; font-size: 14.5px; font-weight: 800; cursor: pointer; }

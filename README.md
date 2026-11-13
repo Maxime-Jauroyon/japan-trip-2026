@@ -57,7 +57,7 @@ tests/                tests unitaires (node:test)
 Statuts « fait / pas fait » des idées, notes et photos (réduites à ~300 Ko sur le téléphone, `journal/photos/`) : saisis dans l’app,
 enregistrés sur le téléphone puis synchronisés avec la branche **`journal`** de ce dépôt (`journal/days/AAAA-MM-JJ.json`)
 via l’API GitHub Contents (`src/pwa/journal-store.js`, fusion pure dans `src/domain/journal.js`).
-Chaque téléphone qui écrit colle un jeton GitHub à portée limitée dans Réglages › Journal partagé ; sans jeton, l’onglet Carnet se lit quand même (lecture publique, seule) — c’est ce que voit la famille avec le simple lien de l’app. Dépôt/branche : `data/trip.json` › `journal`.
+Chaque téléphone qui écrit colle un jeton GitHub à portée limitée dans Réglages › Journal partagé ; sans jeton, l’onglet Carnet se lit quand même (lecture publique, seule) — c’est ce que voit la famille avec le simple lien de l’app. Le Carnet est pensé pour des gens qui ne sont pas sur les réseaux sociaux : deux onglets en toutes lettres (« Journées », « ❤️ Coups de cœur »), jours en dates, bouton « Actualiser » dans la ligne d’état, carte d’aide « Comment ça marche ? » au premier passage. Dépôt/branche : `data/trip.json` › `journal`.
 
 ## Modifier le voyage
 

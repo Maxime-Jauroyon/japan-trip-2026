@@ -97,6 +97,24 @@ await page.getByText("Plus tard").click({ timeout: 2000 }).catch(() => {});
 await page.locator('nav button:has-text("Carnet")').last().click();
 await page.waitForTimeout(2500);
 
+// 0. Carnet lisible par tous : bouton « Actualiser » dans la ligne d’état, deux onglets en mots, jours en dates, carte d’aide
+const top = await page.evaluate(() => {
+  const r = document.querySelector("#carnet-refresh"), st = document.querySelector("#carnet-status");
+  const b = r && r.getBoundingClientRect(), sb = st.getBoundingClientRect();
+  return { text: r && r.textContent.trim(), inStatus: !!r && st.contains(r), onScreen: !!b && b.top >= 0 && b.bottom <= innerHeight && b.left >= 0 && b.right <= innerWidth, nearTitle: !!b && b.top < 200, big: !!b && b.height >= 40, sameRow: !!b && Math.abs((b.top + b.bottom) / 2 - (sb.top + sb.bottom) / 2) < 12 };
+});
+check("« Actualiser » est un bouton avec son libellé, dans la ligne d’état, visible dès l’ouverture", top.inStatus && /Actualiser/.test(top.text) && top.onScreen && top.nearTitle && top.big && top.sameRow, JSON.stringify(top));
+const refreshed = page.waitForRequest((rq) => /contents\/journal\/days/.test(rq.url()), { timeout: 5000 }).then(() => true, () => false);
+await page.evaluate(() => document.querySelector("#carnet-refresh").click());
+check("toucher « Actualiser » relance la synchro", await refreshed);
+const tabs = await page.evaluate(() => ({ tabs: [...document.querySelectorAll(".cn-seg button")].map((b) => b.textContent.trim()), grid: !!document.querySelector('[data-mode="grid"], .cn-grid'), chips: [...document.querySelectorAll(".cn-days button")].map((b) => b.textContent.trim()), round: !!document.querySelector(".cn-round") }));
+check("deux onglets en toutes lettres, plus de « Grille »", JSON.stringify(tabs.tabs) === JSON.stringify(["Journées", "❤️ Coups de cœur"]) && !tabs.grid && !tabs.round, JSON.stringify(tabs.tabs));
+check("jours proposés en dates lisibles (« Mar 10 nov »), pas « J3 »", tabs.chips[0] === "Tous les jours" && tabs.chips.slice(1).every((c) => /^(Lun|Mar|Mer|Jeu|Ven|Sam|Dim) \d{1,2} \p{L}+/u.test(c)) && tabs.chips.length === 4, JSON.stringify(tabs.chips));
+const help = await page.evaluate(() => { const h = document.querySelector(".cn-help"); return h ? { title: h.querySelector("strong").textContent, lines: h.querySelectorAll("li").length, btn: h.querySelector("[data-help-close]").textContent } : null; });
+check("carte d’aide « Comment ça marche ? » au premier passage", !!help && /Comment/.test(help.title) && help.lines === 4 && /compris/.test(help.btn), JSON.stringify(help));
+await page.evaluate(() => document.querySelector("[data-help-close]").click());
+check("« J’ai compris » la ferme et s’en souvient", await page.evaluate(() => !document.querySelector(".cn-help") && localStorage.getItem("japan-trip-carnet-help") === "1"));
+
 // 1. Story en rafale, photos pas encore sur le téléphone : 12 touchers très rapprochés (jusqu’à la dernière photo), puis elle doit aller au bout toute seule
 const openStory = async () => { await page.evaluate(() => document.querySelector('[data-story-day="3"]').click()); await page.waitForTimeout(700); };
 const story = () => page.evaluate(() => ({ cur: [...document.querySelectorAll(".st-bar")].findIndex((x) => x.classList.contains("cur")), paused: document.querySelector(".st-player").classList.contains("paused"), open: !document.querySelector(".st-player").hidden }));
