@@ -53,6 +53,22 @@ export function setLike(day, id, author, liked, now = Date.now()){
   return { items };
 }
 
+/**
+ * ❤️ sur une JOURNÉE : un élément spécial « x:jour » du fichier du jour (genre « jour », sans photo ni statut), qui ne se mélange
+ * ni aux idées ni aux activités ajoutées ; ses cœurs se fusionnent comme ceux des moments (un par auteur, le plus récent gagne).
+ */
+export const DAY_LIKE_ID = "x:jour";
+
+/** Auteurs qui ont aimé la journée. */
+export const dayLikedBy = (day) => likedBy(day && day.items && day.items[DAY_LIKE_ID]);
+
+/** Aime / n’aime plus la journée pour l’auteur `author` (crée l’élément spécial au premier cœur). */
+export function setDayLike(day, author, liked, now = Date.now()){
+  const items = { ...((day && day.items) || {}) };
+  if (!items[DAY_LIKE_ID]) items[DAY_LIKE_ID] = { id: DAY_LIKE_ID, kind: "day", title: "Journée", status: "todo", at: now };
+  return setLike({ items }, DAY_LIKE_ID, author, liked, now);
+}
+
 /** Deux jours identiques (même contenu) ? Sert à éviter un envoi inutile. */
 export const sameDay = (a, b) => JSON.stringify(sortKeys((a && a.items) || {})) === JSON.stringify(sortKeys((b && b.items) || {}));
 function sortKeys(o){

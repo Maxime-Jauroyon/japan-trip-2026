@@ -44,7 +44,7 @@ export function dayCardHtml(ctx, x){
   return `<section class="vy-daygroup" id="cn-day-${day.n}" data-day-label="${esc(`J${day.n} · ${dayLabel(day)}`)}">` +
     `<div class="vy-chapter reveal"><span class="vy-n">Jour ${day.n}</span><h3>${esc(dayLabel(day))}</h3>` +
     `<p>${esc((city ? city.name : day.city) + extra)} · ${plural(items.length, "moment")}${nPhotos ? " · " + plural(nPhotos, "photo") : ""}${esc(span)}</p>` +
-    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + `</div>` +
+    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + (ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || []) : "") + `</div>` +
     `<div class="vy-line">${items.map(it => postHtml(ctx, iso, it)).join("")}</div></section>`;
 }
 

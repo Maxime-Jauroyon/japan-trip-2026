@@ -5,8 +5,8 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { doneItems, heroPhoto, isVideo } from "../../domain/journal.js";
-import { JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleLike } from "../../pwa/journal-store.js";
+import { dayLikedBy, doneItems, heroPhoto, isVideo } from "../../domain/journal.js";
+import { JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
 import { openStory } from "../story-player.js";
@@ -26,6 +26,15 @@ function likeHtml(iso, it){
   if (journalReadOnly()) return it.likes.length ? `<span class="cn-like ro">❤️ <b>${it.likes.length}</b></span>` : "";
   const mine = it.likes.includes(journalConfig().author || "Moi");
   return `<button type="button" class="cn-like" data-like-iso="${esc(iso)}" data-like-id="${esc(it.id)}" aria-pressed="${mine}" aria-label="J’aime">${mine ? "❤️" : "🤍"}${it.likes.length ? ` <b>${it.likes.length}</b>` : ""}</button>`;
+}
+
+/** ❤️ sur une journée entière : bouton avec le jeton, simple compteur en lecture seule ; jamais de prénom. */
+function dayLikeHtml(iso, likes){
+  const n = likes.length;
+  if (journalReadOnly()) return n ? `<span class="cn-daylike ro">❤️ <b>${n}</b> <small>a adoré cette journée</small></span>` : "";
+  const mine = likes.includes(journalConfig().author || "Moi");
+  return `<button type="button" class="cn-daylike" data-daylike-iso="${esc(iso)}" aria-pressed="${mine}" aria-label="J’ai adoré cette journée">` +
+    `<span aria-hidden="true">${mine ? "❤️" : "🤍"}</span> <span>${mine ? "J’ai adoré cette journée" : "J’ai adoré cette journée ?"}</span>${n ? ` <b>${n}</b>` : ""}</button>`;
 }
 
 /** État discret : une ligne ; le détail seulement s’il y a un souci ou un téléchargement en cours. */
@@ -60,7 +69,7 @@ export function renderCarnet(force){
   if (!box) return;
   const scroller = document.getElementById("view-carnet");
   const days = journalDays()
-    .map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd, iso) }))
+    .map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd, iso), likes: dayLikedBy(jd) }))
     .filter(x => x.day && x.items.length);
   renderCarnetStatus();
   if (!days.length && (syncStatus.state === "syncing" || (journalReadOnly() && syncStatus.state !== "public"))) { box.innerHTML = SKELETON; lastSig = null; return; }   // premier chargement
@@ -74,11 +83,12 @@ export function renderCarnet(force){
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && c.scrollLeft) slides[p.dataset.post] = c.scrollLeft; });
   box.innerHTML = carnetHtml({ days, hero, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
     emptyText: journalReadOnly() ? "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt."
-      : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml });
+      : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml, dayLikeHtml });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });
   hydratePhotos(box);
   bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory });
   box.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
+  box.querySelectorAll("[data-daylike-iso]").forEach(b => b.addEventListener("click", () => toggleDayLike(b.dataset.daylikeIso)));
   bindDoubleTap(box);
   if (scroller) scroller.scrollTop = top;
 }
