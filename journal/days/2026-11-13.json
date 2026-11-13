@@ -25,7 +25,20 @@
     "mwevslqjwg0.jpg",
     "mwevsluqe5f.jpg",
     "mwevslzkt2u.jpg"
-   ]
+   ],
+   "likes": {
+    "Maxime": 1794568975274
+   }
+  },
+  "x:jour": {
+   "id": "x:jour",
+   "kind": "day",
+   "title": "Journée",
+   "status": "todo",
+   "at": 1794568976692,
+   "likes": {
+    "Maxime": 1794568976692
+   }
   }
  }
 }
