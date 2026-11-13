@@ -7,9 +7,11 @@ import { esc } from "../core/dom.js";
 import { clockJst } from "../domain/journal.js";
 import { storyButtonHtml } from "./story-player.js";
 
-/** Mode d’affichage et jour filtré (gardés tant que la page est ouverte). */
+/** Onglet (« feed » = Journées, « hearts » = Coups de cœur), jour filtré et personne choisie (gardés tant que la page est ouverte). */
 export const feedState = { mode: "feed", filter: null, who: null };
 
+const shortDate = (d) => d.date.replace(/\s\d{4}$/, "");                 // « 10 nov »
+const shortDay = (d) => `${d.dow.slice(0, 3)} ${shortDate(d)}`;            // « Mar 10 nov »
 const dayLabel = (d) => `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}`;
 const plural = (n, w) => `${n} ${w}${n > 1 ? "s" : ""}`;
 const photosOfDay = (x) => x.items.flatMap(it => it.photos.map(name => ({ iso: x.iso, id: it.id, name, title: it.title, when: it.timed ? clockJst(it.when) : "" })));
@@ -58,10 +60,10 @@ export function dayCardHtml(ctx, x){
 function storiesHtml(model, ctx){
   const days = model.days.filter(x => x.items.some(it => it.photos.length)).slice().reverse();
   if (!days.length) return "";
-  return `<div class="cn-stories" aria-label="Revivre une journée">` + days.map(x => {
+  return `<p class="cn-hint">Revivre une journée en diaporama</p><div class="cn-stories" aria-label="Revivre une journée">` + days.map(x => {
     const first = photosOfDay(x)[0];
     return `<button type="button" class="cn-story" data-story-day="${x.day.n}" aria-label="${esc(`Revivre le jour ${x.day.n}`)}">` +
-      `<span class="cn-ring"><span class="cn-ico">${ctx.photoBtn(x.iso, first, { thumb: true, story: true })}</span></span><b>J${x.day.n}</b></button>`;
+      `<span class="cn-ring"><span class="cn-ico">${ctx.photoBtn(x.iso, first, { thumb: true, story: true })}</span></span><b>${esc(shortDate(x.day))}</b></button>`;
   }).join("") + `</div>`;
 }
 
@@ -83,6 +85,18 @@ function heartsHtml(model, ctx){
   return chips + daysHtml + momentsHtml;
 }
 
+const HELP_KEY = "japan-trip-carnet-help";
+const helpSeen = () => { try { return localStorage.getItem(HELP_KEY) === "1"; } catch (_) { return false; } };
+
+/** Petite carte d’aide pour qui découvre le Carnet (affichée jusqu’à « J’ai compris » ; le ❤️ à poser n’est cité qu’à ceux qui peuvent le faire). */
+function helpHtml(model){
+  if (helpSeen()) return "";
+  const lines = ["👆 Faites défiler pour suivre le voyage, jour après jour.", "🖼 Touchez une photo pour l’agrandir ; glissez pour voir les suivantes.", "▶ « Revivre la journée » : un diaporama avec de la musique."];
+  if (!model.readOnly) lines.push("❤️ Touchez le cœur pour dire que vous avez aimé un moment ou une journée.");
+  return `<aside class="cn-help" role="note"><strong>Comment ça marche ?</strong><ul>${lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` +
+    `<button type="button" data-help-close>J’ai compris</button></aside>`;
+}
+
 /** Page entière du carnet (hors indicateurs de synchro, propres à l’écran). */
 export function carnetHtml(model, ctx){
   const days = feedState.filter ? model.days.filter(x => x.day.n === feedState.filter) : model.days;
@@ -94,20 +108,15 @@ export function carnetHtml(model, ctx){
   const cover = `<section class="cn-cover${latest ? "" : " empty"}">${latest ? ctx.photoBtn(latest.iso, latest, { cover: true }) : ""}` +
     `<div class="cn-cover-text"><p class="vy-kicker">${esc(model.datesLabel || "")}</p><h2>${esc(TRAVELERS.join(" & "))} au Japon</h2>` +
     `<p class="cn-stats">${stats.map(([n, w]) => `<span><b data-count="${n}">${n}</b> ${w}${n > 1 ? "s" : ""}</span>`).join("")}</p></div></section>`;
-  const bar = `<div class="cn-toolbar"><div class="cn-seg" role="tablist" aria-label="Affichage">` +
-    `<button type="button" data-mode="feed" aria-pressed="${feedState.mode === "feed"}">Fil</button>` +
-    `<button type="button" data-mode="grid" aria-pressed="${feedState.mode === "grid"}">Grille</button>` +
-    `<button type="button" data-mode="hearts" aria-pressed="${feedState.mode === "hearts"}" aria-label="Coups de cœur">❤️</button></div>` +
-    (feedState.mode === "hearts" ? "" : `<div class="cn-days"><button type="button" data-fday="" aria-pressed="${!feedState.filter}">Tout</button>` +
-    model.days.slice().reverse().map(x => `<button type="button" data-fday="${x.day.n}" aria-pressed="${feedState.filter === x.day.n}">J${x.day.n}</button>`).join("") + `</div>`) + `</div>`;
+  const tab = (mode, label) => `<button type="button" role="tab" data-mode="${mode}" aria-pressed="${feedState.mode === mode}" aria-selected="${feedState.mode === mode}">${label}</button>`;
+  const bar = `<div class="cn-toolbar"><div class="cn-seg" role="tablist" aria-label="Affichage">${tab("feed", "Journées")}${tab("hearts", "❤️ Coups de cœur")}</div>` +
+    (feedState.mode === "hearts" ? "" : `<div class="cn-days" aria-label="Choisir un jour"><button type="button" data-fday="" aria-pressed="${!feedState.filter}">Tous les jours</button>` +
+    model.days.slice().reverse().map(x => `<button type="button" data-fday="${x.day.n}" aria-pressed="${feedState.filter === x.day.n}" aria-label="${esc(`Jour ${x.day.n}, ${dayLabel(x.day)}`)}">${esc(shortDay(x.day))}</button>`).join("") + `</div>`) + `</div>`;
   let body;
   if (!model.days.length) body = `<p class="vy-empty">${esc(model.emptyText || "Rien pour l’instant.")}</p>`;
   else if (feedState.mode === "hearts") body = heartsHtml(model, ctx);
-  else if (feedState.mode === "grid") {
-    const shots = days.slice().reverse().flatMap(photosOfDay);
-    body = shots.length ? `<div class="cn-grid" data-day-label="">${shots.map(s => ctx.photoBtn(s.iso, s, { thumb: true })).join("")}</div>` : `<p class="vy-empty">Pas encore de photo.</p>`;
-  } else body = days.slice().reverse().map(x => dayCardHtml(ctx, x)).join("");
-  return cover + storiesHtml(model, ctx) + bar + body;
+  else body = days.slice().reverse().map(x => dayCardHtml(ctx, x)).join("");
+  return helpHtml(model) + cover + storiesHtml(model, ctx) + bar + body;
 }
 
 let revealer = null;
@@ -116,6 +125,10 @@ let counted = false;
 /** Branche la barre d’outils, les stories, les points des carrousels et l’apparition en douceur ; `again()` redessine. */
 export function bindCarnet(root, again, ctx){
   root.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { feedState.mode = b.dataset.mode; again(); }));
+  root.querySelectorAll("[data-help-close]").forEach(b => b.addEventListener("click", () => {
+    try { localStorage.setItem(HELP_KEY, "1"); } catch (_) { /* pas de stockage : la carte reviendra */ }
+    const card = b.closest(".cn-help"); if (card) card.remove();
+  }));
   root.querySelectorAll("[data-fav-open]").forEach(b => {
     const open = () => { const [iso, id] = b.dataset.favOpen.split("|"); if (ctx && ctx.openMoment) ctx.openMoment(iso, id); };
     b.addEventListener("click", open);
