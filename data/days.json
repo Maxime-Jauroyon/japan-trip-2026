@@ -330,7 +330,7 @@
         "title": "Kenroku-en",
         "lat": 36.5619,
         "lng": 136.6626,
-        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison.",
+        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison. En novembre : ouvert 8 h–17 h (dernière entrée 16 h 30) ; protections de neige (yukitsuri) sur les pins en cours d’installation.",
         "goshuin": "possible",
         "goshuinNote": "Au sanctuaire Kanazawa-jinja, à côté du jardin."
       },
@@ -353,7 +353,13 @@
       "time": "06:45",
       "why": "Bus 08:10 · check-out vers 07:45 (shinkansen 11:24 à Tokyo)"
     },
-    "ordreFermeture": true
+    "ordreFermeture": true,
+    "reminders": [
+      {
+        "title": "Ce soir : illumination de Kenroku-en (gratuite)",
+        "desc": "Illumination du jardin de Kenroku-en, gratuite : de 18 h à 20 h 45 (le jardin de jour ferme à 17 h, dernière entrée 16 h 30). Les soirs d’illumination de novembre : 14, 15, 21, 22, 28 et 29 (dates à confirmer sur kenrokuen.or.jp)."
+      }
+    ]
   },
   {
     "n": 8,
@@ -368,13 +374,6 @@
         "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du sanctuaire."
-      },
-      {
-        "title": "Marché Ōmichō",
-        "lat": 36.5717,
-        "lng": 136.656,
-        "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles.",
-        "goshuin": "non"
       },
       {
         "title": "Nishi Chaya",
@@ -395,7 +394,13 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFermeture": true
+    "ordreFermeture": true,
+    "reminders": [
+      {
+        "title": "Ce soir : illumination de Kenroku-en (gratuite)",
+        "desc": "Illumination du jardin de Kenroku-en, gratuite : de 18 h à 20 h 45 (le jardin de jour ferme à 17 h, dernière entrée 16 h 30). Les soirs d’illumination de novembre : 14, 15, 21, 22, 28 et 29 (dates à confirmer sur kenrokuen.or.jp)."
+      }
+    ]
   },
   {
     "n": 9,
@@ -407,9 +412,14 @@
         "title": "Myōryū-ji",
         "lat": 36.5551,
         "lng": 136.6486,
-        "desc": "Le « temple des ninjas » — visite guidée à réserver pour portes secrètes et pièges.",
+        "desc": "Le « temple des ninjas » — visite guidée d’environ 40 min (portes secrètes, pièges, escaliers dérobés). Réservation obligatoire par téléphone.",
         "goshuin": "possible",
-        "goshuinNote": "Au temple (« Ninja-dera ») : à demander à l’accueil."
+        "goshuinNote": "Au temple (« Ninja-dera ») : à demander à l’accueil.",
+        "notes": [
+          "Réserver au 076-241-0888 (8 h 30–17 h, l’anglais est compris). Pas de réservation en ligne fiable.",
+          "Visite guidée en japonais ; on prête un livret en anglais pour suivre chaque étape.",
+          "Entrée ¥1 200 en espèces seulement (¥1 300 à partir du 1er décembre). Ouvert ~9 h–16 h 30, ~16 h l’hiver : arriver en avance, les retardataires ne sont pas attendus."
+        ]
       },
       {
         "title": "Nagamachi (quartier samouraï)",
@@ -431,10 +441,25 @@
         "lat": 36.5604,
         "lng": 136.6562,
         "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir.",
+        "goshuin": "non",
+        "notes": [
+          "Réservation obligatoire. Gold Leaf Sakuda : dès ¥1 760, créneaux 9 h, 10 h 30, 13 h, 15 h ; réservation en ligne jusqu’à 2 jours avant (soit dès le 14 nov) ou par téléphone 9 h–17 h.",
+          "Alternative : Hakuichi (formulaire en ligne ou 076-240-8911, 9 h–18 h)."
+        ]
+      },
+      {
+        "title": "Marché Ōmichō",
+        "lat": 36.5717,
+        "lng": 136.656,
+        "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles. Le lundi le marché est plus complet que le dimanche (beaucoup d’étals y ferment les dimanches et mercredis) ; étals ~9 h–17 h.",
         "goshuin": "non"
       }
     ],
     "reminders": [
+      {
+        "title": "À réserver avant lundi : Myōryū-ji et l’atelier feuille d’or",
+        "desc": "Appeler le temple des ninjas au 076-241-0888 (8 h 30–17 h) et réserver l’atelier de feuille d’or (Sakuda en ligne dès le 14 nov, ou téléphone) pour lundi 16 nov. Prendre des espèces pour le temple."
+      },
       {
         "title": "Retirer les billets Takayama → Kyoto (18 nov)",
         "desc": "Machine verte de la gare de Kanazawa (JR West) — carte bancaire physique de Maxime + code à 4 chiffres + n° de réservation. Plus simple ici que le jour du départ."
