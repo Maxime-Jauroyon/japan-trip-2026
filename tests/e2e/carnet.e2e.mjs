@@ -186,6 +186,8 @@ await page.waitForTimeout(3500);
 const viewer = await page.evaluate(() => { const v = document.querySelector(".jr-viewer"), im = v.querySelector("img"); return { pos: v.querySelector(".jv-pos").textContent, nat: im.naturalWidth }; });
 check("visionneuse : position juste et photo nette après 25 balayages", /^26 \/ 39$/.test(viewer.pos) && viewer.nat === 1600, JSON.stringify(viewer));
 
+await page.keyboard.press("Escape");   // referme la visionneuse
+await page.waitForTimeout(300);
 // 6. ❤️ sur une journée entière
 await page.evaluate(() => document.querySelector("#view-carnet").scrollTo(0, 0));
 const dayLike = () => page.evaluate(() => { const b = document.querySelector(".cn-daylike"); return b ? { pressed: b.getAttribute("aria-pressed"), n: (b.querySelector("b") || {}).textContent || "" } : null; });
@@ -226,6 +228,31 @@ check("filtre Maxime : sa journée, pas le moment de Léo", hMax.days === 1 && h
 await page.evaluate(() => document.querySelector(".cn-favday").click());   // toucher une journée adorée ouvre ce jour dans le fil
 await page.waitForTimeout(500);
 check("toucher une journée adorée ouvre ce jour dans le fil", await page.evaluate(() => document.querySelector('[data-mode="feed"]').getAttribute("aria-pressed") === "true" && !!document.querySelector(".vy-daygroup")));
+
+// 8. Depuis les coups de cœur : ouvrir un moment (fil de l’activité) puis revenir à la liste, sans la perdre
+await page.evaluate(() => document.querySelector('[data-mode="hearts"]').click());
+await page.waitForTimeout(500);
+await page.evaluate(() => document.querySelector('[data-who=""]').click());
+await page.waitForTimeout(400);
+await page.evaluate(() => { document.querySelector("#view-carnet").scrollTo(0, 120); });
+await page.waitForTimeout(300);
+const topBefore = await page.evaluate(() => document.querySelector("#view-carnet").scrollTop);
+await page.evaluate(() => document.querySelector(".cn-fav").click());
+await page.waitForTimeout(1200);
+const sheetInfo = await page.evaluate(() => { const s = document.querySelector(".cn-sheet"); return s ? { posts: s.querySelectorAll(".vy-post").length, title: (s.querySelector(".vy-post header strong") || {}).textContent, back: (s.querySelector("[data-sheet-close]") || {}).textContent, photos: s.querySelectorAll(".vy-photo").length, likeBtn: !!s.querySelector(".cn-like"), visible: s.querySelector(".vy-post") ? getComputedStyle(s.querySelector(".vy-post")).opacity === "1" : false } : null; });
+check("toucher un moment aimé ouvre son fil (le moment, ses photos, son ❤️) avec un retour « Coups de cœur »", !!sheetInfo && sheetInfo.posts === 1 && /Zōjō/.test(sheetInfo.title) && /Coups de cœur/.test(sheetInfo.back) && sheetInfo.photos >= 2 && sheetInfo.likeBtn && sheetInfo.visible, JSON.stringify(sheetInfo));
+await page.evaluate(() => document.querySelector(".cn-sheet .cn-like").click());
+await page.waitForTimeout(800);
+check("❤️ posé dans la fiche : mis à jour dans la fiche", await page.evaluate(() => document.querySelector(".cn-sheet .cn-like").getAttribute("aria-pressed") === "true"));
+await page.evaluate(() => document.querySelector("[data-sheet-close]").click());
+await page.waitForTimeout(500);
+const back = await page.evaluate(() => ({ sheet: !!document.querySelector(".cn-sheet"), mode: document.querySelector('[data-mode="hearts"]').getAttribute("aria-pressed"), favs: document.querySelectorAll(".cn-fav").length, chips: document.querySelectorAll(".cn-who button").length, top: document.querySelector("#view-carnet").scrollTop }));
+check("retour : la liste des coups de cœur est intacte (même vue, même défilement)", !back.sheet && back.mode === "true" && back.favs >= 1 && back.chips === 3 && Math.abs(back.top - topBefore) < 5, JSON.stringify({ ...back, topBefore }));
+await page.evaluate(() => document.querySelector(".cn-fav").click());
+await page.waitForTimeout(600);
+await page.keyboard.press("Escape");
+await page.waitForTimeout(400);
+check("Échap referme aussi la fiche", !(await page.evaluate(() => !!document.querySelector(".cn-sheet"))));
 
 check("aucune erreur JavaScript", pageErrors.length === 0, pageErrors.join(" | "));
 await browser.close();

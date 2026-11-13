@@ -33,6 +33,12 @@ function postHtml(ctx, iso, it){
     (it.note ? `<p class="vy-caption">${esc(it.note)}</p>` : "") + `</article>`;
 }
 
+/** Fiche d’un moment (depuis les coups de cœur) : le moment tel qu’il est dans le fil, avec un retour vers la liste. `from` = libellé du retour. */
+export function momentSheetHtml(ctx, iso, it, label, from){
+  return `<div class="cn-sheet-bar"><button type="button" class="cn-back" data-sheet-close>‹ ${esc(from)}</button><span>${esc(label)}</span></div>` +
+    `<div class="vy-line cn-sheet-body" data-day-label="${esc(label)}">${postHtml(ctx, iso, it).replace("vy-post reveal", "vy-post")}</div>`;   // pas d’apparition au défilement ici : tout est visible tout de suite
+}
+
 /** Un chapitre : le jour, son résumé (moments, photos, de telle heure à telle heure), « Revivre », puis ses moments. */
 export function dayCardHtml(ctx, x){
   const { day, iso, items } = x;
@@ -71,9 +77,9 @@ function heartsHtml(model, ctx){
   const daysHtml = f.days.length ? `<h3 class="cn-fav-title">Journées adorées</h3><div class="cn-favdays">` + f.days.map(d =>
     `<button type="button" class="cn-favday" data-goday="${d.n}">❤️ <span><b>Jour ${d.n}</b> ${esc(d.label)}</span>${who(d.who)}</button>`).join("") + `</div>` : "";
   const momentsHtml = f.moments.length ? `<h3 class="cn-fav-title">Moments aimés</h3><div class="cn-favs">` + f.moments.map(m =>
-    `<article class="cn-fav" data-day-label="${esc(m.label)}">` +
-    (m.photos.length ? ctx.photoBtn(m.iso, { id: m.id, name: m.photos[0], title: m.title }, { thumb: true }) : `<span class="cn-fav-ph">❤️</span>`) +
-    `<div><strong>${esc(m.title)}</strong><small>${esc(m.label)}${m.photos.length > 1 ? ` · ${m.photos.length} photos` : ""}</small>${who(m.who)}</div></article>`).join("") + `</div>` : "";
+    `<article class="cn-fav" role="button" tabindex="0" data-fav-open="${esc(m.iso + "|" + m.id)}" aria-label="${esc(`Ouvrir ${m.title}`)}">` +
+    (m.photos.length ? ctx.photoBtn(m.iso, { id: m.id, name: m.photos[0], title: m.title }, { thumb: true, story: true }) : `<span class="cn-fav-ph">❤️</span>`) +
+    `<div><strong>${esc(m.title)}</strong><small>${esc(m.label)}${m.photos.length > 1 ? ` · ${m.photos.length} photos` : ""}</small>${who(m.who)}</div><span class="cn-fav-go" aria-hidden="true">›</span></article>`).join("") + `</div>` : "";
   return chips + daysHtml + momentsHtml;
 }
 
@@ -110,6 +116,11 @@ let counted = false;
 /** Branche la barre d’outils, les stories, les points des carrousels et l’apparition en douceur ; `again()` redessine. */
 export function bindCarnet(root, again, ctx){
   root.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { feedState.mode = b.dataset.mode; again(); }));
+  root.querySelectorAll("[data-fav-open]").forEach(b => {
+    const open = () => { const [iso, id] = b.dataset.favOpen.split("|"); if (ctx && ctx.openMoment) ctx.openMoment(iso, id); };
+    b.addEventListener("click", open);
+    b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
   root.querySelectorAll("[data-who]").forEach(b => b.addEventListener("click", () => { feedState.who = b.dataset.who || null; again(); }));
   root.querySelectorAll("[data-goday]").forEach(b => b.addEventListener("click", () => { feedState.mode = "feed"; feedState.filter = Number(b.dataset.goday); again(); }));
   root.querySelectorAll("[data-fday]").forEach(b => b.addEventListener("click", () => { feedState.filter = b.dataset.fday ? Number(b.dataset.fday) : null; again(); }));

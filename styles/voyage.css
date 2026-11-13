@@ -202,3 +202,13 @@ html.story-open, html.story-open body { overflow: hidden; }
 .cn-fav-ph { flex: 0 0 76px; height: 76px; display: grid; place-items: center; font-size: 28px; border-radius: 10px; background: var(--panel); }
 .cn-fav > div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .cn-fav strong { font-size: 14px; }
+
+/* Fiche d’un moment ouverte depuis les coups de cœur (retour vers la liste) */
+html.sheet-open, html.sheet-open body { overflow: hidden; }
+.cn-sheet { position: fixed; inset: 0; z-index: 60; overflow-y: auto; background: var(--bg); padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+.cn-sheet-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; padding: calc(8px + env(safe-area-inset-top)) 12px 8px; background: var(--glass-strong); border-bottom: 1px solid var(--line); }
+.cn-sheet-bar span { color: var(--muted); font-size: 12.5px; }
+.cn-back { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--cream); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.cn-sheet-body { padding: 8px 14px 0; }
+.cn-fav { cursor: pointer; }
+.cn-fav-go { margin-left: auto; color: var(--muted); font-size: 22px; }

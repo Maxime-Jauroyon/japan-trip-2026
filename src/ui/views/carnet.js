@@ -6,8 +6,8 @@ import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { dayLikedBy, doneItems, favorites, heroPhoto, isVideo, likersOf } from "../../domain/journal.js";
-import { JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
-import { bindCarnet, carnetHtml, feedState, storySlides } from "../carnet-feed.js";
+import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
+import { bindCarnet, carnetHtml, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
 import { openStory } from "../story-player.js";
 
@@ -53,6 +53,47 @@ export function renderCarnetStatus(){
 }
 
 let model = [];
+
+/* —— Fiche d’un moment ouverte depuis les coups de cœur : par-dessus la liste, qui reste telle quelle dessous —— */
+let sheet = null, sheetKey = null;
+
+function closeSheet(){
+  if (sheet) { sheet.remove(); sheet = null; sheetKey = null; document.documentElement.classList.remove("sheet-open"); }
+}
+
+/** (Re)dessine la fiche du moment `sheetKey` d’après le journal actuel (cœurs, photos) en gardant le défilement. */
+function renderSheet(){
+  if (!sheet || !sheetKey) return;
+  const [iso, id] = sheetKey.split("|");
+  const x = model.find(d => d.iso === iso);
+  const it = x && x.items.find(i => i.id === id);
+  if (!it) { closeSheet(); return; }
+  const top = sheet.scrollTop;
+  sheet.innerHTML = momentSheetHtml({ photoBtn, likeHtml }, iso, it, `J${x.day.n} · ${x.day.dow} ${x.day.date.replace(/\s\d{4}$/, "")}`, "Coups de cœur");
+  hydratePhotos(sheet);
+  sheet.querySelector("[data-sheet-close]").addEventListener("click", closeSheet);
+  sheet.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
+  bindDoubleTap(sheet);
+  sheet.scrollTop = top;
+}
+
+function openMoment(iso, id){
+  closeSheet();
+  sheet = document.createElement("div");
+  sheet.className = "cn-sheet";
+  sheet.setAttribute("role", "dialog");
+  sheet.setAttribute("aria-label", "Moment");
+  sheetKey = iso + "|" + id;
+  document.body.appendChild(sheet);
+  document.documentElement.classList.add("sheet-open");
+  renderSheet();
+}
+
+/** Échap ferme la fiche ; un cœur posé dans la fiche la remet à jour. */
+export function bindMomentSheet(){
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && sheet && !document.querySelector(".jr-viewer:not([hidden])")) closeSheet(); });
+  document.addEventListener(JOURNAL_CHANGED, () => { if (sheet) { renderCarnet(); renderSheet(); } });
+}
 
 /** Ouvre le lecteur « story » sur les photos d’un jour, dans l’ordre vécu. */
 function openDayStory(dayN){
@@ -101,7 +142,7 @@ export function renderCarnet(force){
       : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml, dayLikeHtml });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });
   hydratePhotos(box);
-  bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory });
+  bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory, openMoment });
   box.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
   box.querySelectorAll("[data-daylike-iso]").forEach(b => b.addEventListener("click", () => toggleDayLike(b.dataset.daylikeIso)));
   bindDoubleTap(box);
@@ -135,6 +176,7 @@ function bindDoubleTap(box){
 
 /** Bouton « Actualiser », bouton ↑, tirer vers le bas pour actualiser. */
 export function bindCarnetShare(){
+  bindMomentSheet();
   document.addEventListener(JOURNAL_PREFETCH, renderCarnetStatus);
   document.addEventListener(JOURNAL_SYNC, () => { renderCarnetStatus(); renderCarnet(); });
   const refresh = () => { syncNow().then(prefetchPhotos); };
