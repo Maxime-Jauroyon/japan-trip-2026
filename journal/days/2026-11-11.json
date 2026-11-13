@@ -116,7 +116,7 @@
    "status": "done",
    "doneAt": 1794384145134,
    "by": "Maxime",
-   "at": 1794399595096,
+   "at": 1794571010649,
    "photos": [
     "mwc36r8xwcr.jpg",
     "mwc36re5132.jpg",
@@ -133,7 +133,8 @@
    "likes": {
     "Maxime": 1794568601866,
     "Léo": 1794570980776
-   }
+   },
+   "cover": "mwc36sgp83w.jpg"
   },
   "p:maid-cafe-maidreamin-akihabara-head-store": {
    "id": "p:maid-cafe-maidreamin-akihabara-head-store",
