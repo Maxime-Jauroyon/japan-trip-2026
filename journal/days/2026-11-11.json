@@ -96,7 +96,10 @@
     "mwc35d2k38z.jpg",
     "mwc35dav0qt.jpg",
     "mwc35dj3k7j.jpg"
-   ]
+   ],
+   "likes": {
+    "Maxime": 1794568598353
+   }
   },
   "p:teamlab-planets": {
    "id": "p:teamlab-planets",
@@ -118,7 +121,10 @@
     "mwc36sgp83w.jpg",
     "mwc36so3bzd.jpg",
     "mwc36ssww39.jpg"
-   ]
+   ],
+   "likes": {
+    "Maxime": 1794568601866
+   }
   },
   "p:maid-cafe-maidreamin-akihabara-head-store": {
    "id": "p:maid-cafe-maidreamin-akihabara-head-store",
@@ -131,7 +137,10 @@
    "photos": [
     "mwc37l7jvge.jpg",
     "mwc37labxz5.jpg"
-   ]
+   ],
+   "likes": {
+    "Maxime": 1794568603656
+   }
   },
   "p:baseball-batting-center-active-akiba": {
    "id": "p:baseball-batting-center-active-akiba",
@@ -143,7 +152,20 @@
    "at": 1794406220286,
    "photos": [
     "mwc74rfsz08.mp4"
-   ]
+   ],
+   "likes": {
+    "Maxime": 1794568605756
+   }
+  },
+  "x:jour": {
+   "id": "x:jour",
+   "kind": "day",
+   "title": "Journée",
+   "status": "todo",
+   "at": 1794568587937,
+   "likes": {
+    "Maxime": 1794568587937
+   }
   }
  }
 }
