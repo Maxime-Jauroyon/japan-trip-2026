@@ -6,7 +6,7 @@
 import { DAY_PROGRESS_KEY, JOURNAL_CFG_KEY, JOURNAL_KEY } from "../config.js";
 import { DAYS, TRIP } from "../core/data.js";
 import { dayToISO, japanTodayISO } from "../core/dates.js";
-import { dayLikedBy, emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setDayLike, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
+import { dayLikedBy, emptyDay, isVideo, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setDayLike, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
 import { loadPublicJournal, publicPhotoUrl } from "./journal-public.js";
 import { createDedupe, createJobQueue } from "../shared/job-queue.js";
 import { resizeImage, compressVideo } from "./photo-resize.js";
@@ -245,6 +245,7 @@ export async function photoUrl(iso, name, thumb, opts = {}){
     const blob = await downloadPhoto(iso, file);
     if (!blob) return "";
     await cachePut(iso, file, blob);
+    if (!thumb && !isVideo(name)) { fullStatus.have = Math.min(fullStatus.total, fullStatus.have + 1); emit(JOURNAL_PREFETCH); }   // une photo de plus en haute qualité sur le téléphone
     return objectUrl(photoKey(iso, file), blobs.get(photoKey(iso, file)) || blob);
   }, { prio: opts.priority || 0, live: opts.live, fallback: null }));
   let url = await start();
@@ -290,7 +291,61 @@ export async function prefetchPhotos(){
     await Promise.all([worker(), worker(), worker()]);
     prefetchStatus.running = false;
     emit(JOURNAL_PREFETCH);
-  } finally { prefetching = false; }
+  } finally {
+    prefetching = false;
+    // Photos en haute qualité : on recompte ; si Maxime a choisi « Tout télécharger » une fois, les nouvelles arrivent toutes seules
+    refreshFullStatus().then(() => { if (fullStatus.auto && fullStatus.have < fullStatus.total && !fullStatus.running && !saveData()) downloadAllFull(); });
+  }
+}
+
+/* —— Photos en haute qualité : par défaut une photo n’est téléchargée en grand que la première fois qu’on la regarde ; ce bouton
+   les prend toutes d’un coup (le plus récent d’abord, 2 à la fois), et les nouvelles suivent ensuite toutes seules —— */
+
+const HQ_KEY = "japan-trip-journal-hq";
+export const fullStatus = { total: 0, have: 0, running: false, auto: false };
+let fullRun = 0;
+const saveData = () => !!(navigator.connection && navigator.connection.saveData);
+
+const fullImages = () => Object.entries(load().days)
+  .sort(([a], [b]) => b.localeCompare(a))
+  .flatMap(([iso, d]) => Object.values(d.items || {}).flatMap((it) => livePhotos(it).filter((n) => !isVideo(n)).map((name) => ({ iso, name }))));
+
+/** Recompte les photos déjà en haute qualité sur le téléphone. */
+export async function refreshFullStatus(){
+  const all = fullImages();
+  let have = 0;
+  for (const p of all) if (await cacheGet(p.iso, p.name)) have++;
+  Object.assign(fullStatus, { total: all.length, have });
+  emit(JOURNAL_PREFETCH);
+}
+
+export async function downloadAllFull(){
+  if (fullStatus.running || navigator.onLine === false) return;
+  fullStatus.auto = true;
+  try { localStorage.setItem(HQ_KEY, "on"); } catch (_) { /* pas de stockage */ }
+  const run = ++fullRun;
+  fullStatus.running = true;
+  emit(JOURNAL_PREFETCH);
+  const todo = [];
+  for (const p of fullImages()) if (!(await cacheGet(p.iso, p.name))) todo.push(p);
+  const worker = async () => {
+    while (todo.length && run === fullRun) {
+      const p = todo.shift();
+      await photoUrl(p.iso, p.name, false, { priority: 0, live: () => run === fullRun }).catch(() => "");   // le compteur avance dans photoUrl
+    }
+  };
+  await Promise.all([worker(), worker()]);
+  if (run === fullRun) fullStatus.running = false;
+  await refreshFullStatus();
+}
+
+/** Pause : on s’arrête là et les nouvelles photos ne se téléchargent plus toutes seules. */
+export function stopFull(){
+  fullRun++;
+  fullStatus.running = false;
+  fullStatus.auto = false;
+  try { localStorage.setItem(HQ_KEY, "off"); } catch (_) { /* pas de stockage */ }
+  emit(JOURNAL_PREFETCH);
 }
 
 /** Envoie les photos en attente (taille réduite : ~300 Ko chacune). */
@@ -480,6 +535,8 @@ export function initJournalStore(){
   // Demande au navigateur de ne pas vider le stockage de l’app (photos du journal) quand l’espace manque
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { /* refusé : tant pis */ }); } catch (_) { /* ignoré */ }
   load();
+  try { fullStatus.auto = localStorage.getItem(HQ_KEY) === "on"; } catch (_) { /* ignoré */ }
+  refreshFullStatus();
   migrateLegacyProgress();
   document.addEventListener("visibilitychange", () => { if (!document.hidden) syncNow(); });
   window.addEventListener("online", syncNow);

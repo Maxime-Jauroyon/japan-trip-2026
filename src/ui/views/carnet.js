@@ -5,8 +5,8 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { dayLikedBy, doneItems, favorites, heroPhoto, isVideo, likersOf } from "../../domain/journal.js";
-import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
+import { dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf } from "../../domain/journal.js";
+import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
 import { openStory } from "../story-player.js";
@@ -48,10 +48,17 @@ export function renderCarnetStatus(){
   const text = bad ? syncLineText(true)
     : busy ? "Actualisation…"
     : running ? `Nouvelles photos ${done} / ${total}`
-    : `✓ À jour${all ? ` · ${all} photo${all > 1 ? "s" : ""}` : ""}`;
+    : `✓ À jour${all ? ` · ${all} photo${all > 1 ? "s" : ""}${hqSummary(fullStatus).complete ? " en haute qualité" : ""}` : ""}`;
   el.innerHTML = `<span class="cn-status-text">${esc(text)}</span>` +
     (running && total ? `<span class="cn-offline"><i style="width:${Math.round(100 * done / total)}%"></i></span>` : "") +
     `<button type="button" class="cn-refresh${busy ? " spin" : ""}" id="carnet-refresh"${busy ? " disabled" : ""}><span aria-hidden="true">↻</span> Actualiser</button>`;
+  // Photos en haute qualité : dire clairement ce qui est sur le téléphone, et proposer de tout prendre (avec le poids)
+  const hq = document.getElementById("carnet-hq");
+  if (hq) {
+    const h = hqSummary(fullStatus);
+    hq.hidden = !h.show;
+    hq.innerHTML = h.show ? `<span>${esc(h.text)}</span><button type="button" data-hq="${h.action}">${esc(h.button)}</button>` : "";
+  }
 }
 
 let model = [];
@@ -182,6 +189,10 @@ export function bindCarnetShare(){
   document.addEventListener(JOURNAL_PREFETCH, renderCarnetStatus);
   document.addEventListener(JOURNAL_SYNC, () => { renderCarnetStatus(); renderCarnet(); });
   const refresh = () => { syncNow().then(prefetchPhotos); };
+  document.getElementById("carnet-hq")?.addEventListener("click", e => {
+    const b = e.target.closest("[data-hq]");
+    if (b) { if (b.dataset.hq === "stop") stopFull(); else downloadAllFull(); }
+  });
   document.getElementById("carnet-status")?.addEventListener("click", e => { if (e.target.closest("#carnet-refresh")) refresh(); });   // la ligne est redessinée souvent : on écoute la ligne, pas le bouton
   const view = document.getElementById("view-carnet");
   if (view) {

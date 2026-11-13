@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { DAY_LIKE_ID, applyJournal, favorites, likersOf, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { DAY_LIKE_ID, applyJournal, hqSummary, favorites, likersOf, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -181,4 +181,19 @@ test("coups de cœur : par personne ou tous, journées et moments, les plus réc
   assert.deepEqual(favorites([["2026-11-11", supprime]], null).moments, []);
   assert.deepEqual(favorites([], null), { days: [], moments: [] });
   assert.deepEqual(likersOf([]), []);
+});
+
+test("photos en haute qualité : le Carnet dit ce qui manque, avec le poids, puis propose une pause", () => {
+  assert.deepEqual(hqSummary({ total: 0, have: 0, running: false }), { show: false, complete: false });
+  const some = hqSummary({ total: 39, have: 13, running: false });
+  assert.equal(some.show, true);
+  assert.equal(some.action, "all");
+  assert.match(some.text, /26 photos en qualité réduite/);
+  assert.match(some.button, /Tout télécharger \(≈ 17 Mo\)/);   // 26 × 660 Ko ≈ 17 Mo
+  assert.match(hqSummary({ total: 2, have: 1, running: false }).text, /^1 photo en qualité réduite/);
+  assert.equal(hqSummary({ total: 1, have: 0, running: false }).button.includes("1 Mo"), true);   // jamais « 0 Mo »
+  const run = hqSummary({ total: 39, have: 20, running: true });
+  assert.deepEqual([run.text, run.button, run.action], ["Haute qualité : 20 / 39", "Pause", "stop"]);
+  assert.deepEqual(hqSummary({ total: 39, have: 39, running: false }), { show: false, complete: true });
+  assert.equal(hqSummary({ total: 5, have: 9, running: false }).complete, true);   // un compteur en avance n’invente pas de manque
 });
