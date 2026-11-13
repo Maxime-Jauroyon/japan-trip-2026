@@ -189,3 +189,16 @@ html.story-open, html.story-open body { overflow: hidden; }
 .cn-daylike b { font-size: 14px; }
 .cn-daylike.ro { cursor: default; border-color: transparent; padding: 0; }
 .cn-daylike small { font-weight: 500; color: var(--muted); }
+
+/* Coups de cœur par personne */
+.cn-who { margin: 4px 0 10px; }
+.cn-fav-title { margin: 14px 0 8px; font-size: 15px; color: var(--cream); }
+.cn-favdays { display: grid; gap: 6px; }
+.cn-favday { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel-2); color: var(--cream); font: inherit; text-align: left; cursor: pointer; }
+.cn-favday span { flex: 1; } .cn-favday small, .cn-fav small { color: var(--muted); font-size: 12px; }
+.cn-favs { display: grid; gap: 8px; }
+.cn-fav { display: flex; align-items: center; gap: 12px; padding: 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel-2); }
+.cn-fav .vy-photo { flex: 0 0 76px; width: 76px; height: 76px; border-radius: 10px; }
+.cn-fav-ph { flex: 0 0 76px; height: 76px; display: grid; place-items: center; font-size: 28px; border-radius: 10px; background: var(--panel); }
+.cn-fav > div { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.cn-fav strong { font-size: 14px; }

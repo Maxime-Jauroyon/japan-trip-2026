@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { DAY_LIKE_ID, applyJournal, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { DAY_LIKE_ID, applyJournal, favorites, likersOf, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -151,4 +151,34 @@ test("❤️ sur une journée : n’apparaît ni comme moment du carnet, ni comm
   // un jour qui n’a que le cœur n’affiche aucun moment
   assert.deepEqual(doneItems(setDayLike(emptyDay(), "Maxime", true), "2026-11-11"), []);
   assert.deepEqual(collectPhotos([["2026-11-11", day]]), []);
+});
+
+test("coups de cœur : par personne ou tous, journées et moments, les plus récents d’abord", () => {
+  const d1 = setLike(upsertItem(emptyDay(), "p:a", { kind: "planned", title: "Akihabara", status: "todo" }, { status: "done", doneAt: Date.parse("2026-11-08T05:00:00Z"), photos: ["a1.jpg", "a2.jpg"], cover: "a2.jpg" }, 10), "p:a", "Léo", true, 20);
+  let d2 = upsertItem(emptyDay(), "p:b", { kind: "planned", title: "Odaiba", status: "todo" }, { status: "done", doneAt: Date.parse("2026-11-11T05:00:00Z") }, 30);
+  d2 = setLike(d2, "p:b", "Maxime", true, 40);
+  d2 = setLike(d2, "p:b", "Léo", true, 41);
+  d2 = setDayLike(d2, "Maxime", true, 50);
+  const days = [["2026-11-08", d1], ["2026-11-11", d2]];
+  assert.deepEqual(likersOf(days), ["Léo", "Maxime"]);
+
+  const all = favorites(days, null);
+  assert.deepEqual(all.days, [{ iso: "2026-11-11", who: ["Maxime"] }]);
+  assert.deepEqual(all.moments.map((m) => [m.iso, m.title, m.who]), [["2026-11-11", "Odaiba", ["Maxime", "Léo"]], ["2026-11-08", "Akihabara", ["Léo"]]]);
+  assert.deepEqual(all.moments[1].photos, ["a2.jpg", "a1.jpg"]);   // la photo phare d’abord
+
+  const leo = favorites(days, "Léo");
+  assert.deepEqual(leo.days, []);
+  assert.deepEqual(leo.moments.map((m) => m.title), ["Odaiba", "Akihabara"]);
+  const max = favorites(days, "Maxime");
+  assert.deepEqual(max.moments.map((m) => m.title), ["Odaiba"]);
+  assert.equal(max.days.length, 1);
+
+  // un cœur retiré (négatif) ou un moment supprimé ne compte plus
+  const retire = setLike(d2, "p:b", "Maxime", false, 60);
+  assert.deepEqual(favorites([["2026-11-11", retire]], "Maxime").moments, []);
+  const supprime = { items: { ...d2.items, "p:b": { ...d2.items["p:b"], deleted: true } } };
+  assert.deepEqual(favorites([["2026-11-11", supprime]], null).moments, []);
+  assert.deepEqual(favorites([], null), { days: [], moments: [] });
+  assert.deepEqual(likersOf([]), []);
 });

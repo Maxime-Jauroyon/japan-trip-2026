@@ -60,6 +60,7 @@ Object.entries(days).forEach(([iso, off]) => {
     const photos = []; for (let j = 0; j < (i === 2 ? 5 : 4) && k < 13; j++, k++) photos.push("p" + String(off + k).padStart(2, "0") + ".jpg");
     const id = "p:" + title.toLowerCase().replace(/[^a-z]+/g, "-");
     items[id] = { id, kind: "planned", title, status: "done", at: 5 + i, doneAt: Date.parse(`${iso}T0${3 + i * 2}:00:00Z`), by: "Léo", photos };
+    if (iso === "2026-11-09" && i === 1) items[id].likes = { Léo: 1000 };   // un coup de cœur de Léo déjà posé
   });
   files[iso + ".json"] = { sha: "s" + off, content: Buffer.from(JSON.stringify({ items })).toString("base64") };
 });
@@ -200,6 +201,31 @@ check("le cœur de la journée est envoyé au journal partagé", !!saved && Obje
 await page.evaluate(() => document.querySelector(".cn-daylike").click());
 await page.waitForTimeout(800);
 check("un second appui retire le cœur", (await dayLike()).pressed === "false");
+
+// 7. Coups de cœur de chacun (vue ❤️ du Carnet)
+await page.evaluate(() => document.querySelector(".cn-daylike").click());   // Maxime aime aussi une journée
+await page.waitForTimeout(600);
+await page.evaluate(() => document.querySelector('[data-mode="hearts"]').click());
+await page.waitForTimeout(600);
+const hearts = () => page.evaluate(() => ({
+  chips: [...document.querySelectorAll(".cn-who button")].map((b) => b.textContent.trim()),
+  days: document.querySelectorAll(".cn-favday").length,
+  moments: [...document.querySelectorAll(".cn-fav strong")].map((x) => x.textContent)
+}));
+const h1 = await hearts();
+check("vue ❤️ : puces Tous / Léo / Maxime", JSON.stringify(h1.chips) === JSON.stringify(["Tous", "❤️ Léo", "❤️ Maxime"]), JSON.stringify(h1.chips));
+check("vue ❤️ : le moment aimé par Léo et la journée aimée par Maxime sont listés", h1.days === 1 && h1.moments.length === 1, JSON.stringify(h1));
+await page.evaluate(() => document.querySelector('[data-who="Léo"]').click());
+await page.waitForTimeout(400);
+const hLeo = await hearts();
+check("filtre Léo : son moment, pas la journée de Maxime", hLeo.days === 0 && hLeo.moments.length === 1, JSON.stringify(hLeo));
+await page.evaluate(() => document.querySelector('[data-who="Maxime"]').click());
+await page.waitForTimeout(400);
+const hMax = await hearts();
+check("filtre Maxime : sa journée, pas le moment de Léo", hMax.days === 1 && hMax.moments.length === 0, JSON.stringify(hMax));
+await page.evaluate(() => document.querySelector(".cn-favday").click());   // toucher une journée adorée ouvre ce jour dans le fil
+await page.waitForTimeout(500);
+check("toucher une journée adorée ouvre ce jour dans le fil", await page.evaluate(() => document.querySelector('[data-mode="feed"]').getAttribute("aria-pressed") === "true" && !!document.querySelector(".vy-daygroup")));
 
 check("aucune erreur JavaScript", pageErrors.length === 0, pageErrors.join(" | "));
 await browser.close();
