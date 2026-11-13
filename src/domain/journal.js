@@ -241,10 +241,17 @@ export function momentOf(it, iso){
 /**
  * Ce qui s’est vraiment passé un jour, pour le Carnet et la page famille : idées faites + activités ajoutées + tout élément qui a des photos,
  * **dans l’ordre de la journée** (matin → nuit). [{ id, title, kind, time?, note?, by?, photos: [noms], likes, at }]
+ *
+ * L’heure de coche n’est pas toujours l’heure vécue (on coche souvent le soir, ou toutes d’un coup, dans le désordre). `opts.order` = ids du
+ * programme du jour dans l’ordre vécu ; on le suit quand le jour est « à ordre fixe » (`opts.fixed`) ou quand rien n’a d’heure réelle
+ * (ni « fait à telle heure », ni heure saisie) ; sinon on suit les heures. Ce qui n’est pas au programme passe après, par heure.
  */
-export function doneItems(day, iso){
-  return Object.values((day && day.items) || {})
+export function doneItems(day, iso, opts = {}){
+  const pos = new Map((opts.order || []).map((id, k) => [id, k]));
+  const items = Object.values((day && day.items) || {})
     .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
-    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }))
-    .sort((a, b) => a.when - b.when || a.at - b.at);
+    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }));
+  const byProgram = pos.size > 0 && (!!opts.fixed || items.every((x) => !x.timed));
+  const rank = (x) => (pos.has(x.id) ? pos.get(x.id) : 1e6);
+  return items.sort((a, b) => (byProgram ? rank(a) - rank(b) : 0) || a.when - b.when || a.at - b.at);
 }
