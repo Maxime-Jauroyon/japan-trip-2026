@@ -197,3 +197,22 @@ test("photos en haute qualité : le Carnet dit ce qui manque, avec le poids, pui
   assert.deepEqual(hqSummary({ total: 39, have: 39, running: false }), { show: false, complete: true });
   assert.equal(hqSummary({ total: 5, have: 9, running: false }).complete, true);   // un compteur en avance n’invente pas de manque
 });
+
+test("Carnet : l’ordre du programme (ordre vécu) prime sur l’heure de coche quand elle ne dit rien de fiable", () => {
+  const mk = (title, patch, at) => [plannedId(title), { id: plannedId(title), kind: "planned", title, status: "done", at, ...patch }];
+  const order = ["Akihabara", "Asakusa", "Sumida"].map(plannedId);
+  // Jour sans aucune heure réelle (J1) : cochés dans le désordre → l’ordre du programme
+  const untimed = { items: Object.fromEntries([mk("Sumida", {}, 100), mk("Akihabara", {}, 101), mk("Asakusa", {}, 102)]) };
+  assert.deepEqual(doneItems(untimed, "2026-11-08").map((x) => x.title), ["Sumida", "Akihabara", "Asakusa"]);   // sans programme : comme avant
+  assert.deepEqual(doneItems(untimed, "2026-11-08", { order }).map((x) => x.title), ["Akihabara", "Asakusa", "Sumida"]);
+
+  // Jour à ordre fixe : des « fait à » saisis le soir, dans le désordre → l’ordre du programme
+  const soir = { items: Object.fromEntries([mk("Akihabara", { doneAt: 3000 }, 1), mk("Asakusa", { doneAt: 2000 }, 2), mk("Sumida", { doneAt: 1000 }, 3)]) };
+  assert.deepEqual(doneItems(soir, "2026-11-08", { order, fixed: true }).map((x) => x.title), ["Akihabara", "Asakusa", "Sumida"]);
+  // Jour libre avec de vraies heures : les heures décident
+  assert.deepEqual(doneItems(soir, "2026-11-08", { order, fixed: false }).map((x) => x.title), ["Sumida", "Asakusa", "Akihabara"]);
+
+  // Ce qui n’est pas au programme (activité ajoutée) passe après, par heure
+  const extra = { items: { ...untimed.items, "x:kara": { id: "x:kara", kind: "extra", title: "Karaoké", status: "done", at: 1, time: "21:00" } } };
+  assert.deepEqual(doneItems(extra, "2026-11-08", { order, fixed: true }).map((x) => x.title), ["Akihabara", "Asakusa", "Sumida", "Karaoké"]);
+});

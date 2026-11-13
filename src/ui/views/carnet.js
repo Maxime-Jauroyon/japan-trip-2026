@@ -5,7 +5,7 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf } from "../../domain/journal.js";
+import { dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf, plannedId } from "../../domain/journal.js";
 import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
@@ -133,7 +133,12 @@ export function renderCarnet(force){
   if (!box) return;
   const scroller = document.getElementById("view-carnet");
   const days = journalDays()
-    .map(([iso, jd]) => ({ iso, day: DAYS.find(d => dayToISO(d) === iso), items: doneItems(jd, iso), likes: dayLikedBy(jd) }))
+    .map(([iso, jd]) => {
+      const day = DAYS.find(d => dayToISO(d) === iso);
+      // L’ordre du programme du jour (ordre vécu sur les jours « à ordre fixe ») prime sur l’heure de coche, souvent saisie plus tard
+      const items = day ? doneItems(jd, iso, { order: (day.ideas || []).map(a => plannedId(a.title)), fixed: !!day.ordreFixe }) : [];
+      return { iso, day, items, likes: dayLikedBy(jd) };
+    })
     .filter(x => x.day && x.items.length);
   renderCarnetStatus();
   if (!days.length && (syncStatus.state === "syncing" || (journalReadOnly() && syncStatus.state !== "public"))) { box.innerHTML = SKELETON; lastSig = null; return; }   // premier chargement
