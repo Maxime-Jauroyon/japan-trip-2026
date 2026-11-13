@@ -142,7 +142,7 @@
    "status": "done",
    "doneAt": 1794393099017,
    "by": "Maxime",
-   "at": 1794399632009,
+   "at": 1794570987327,
    "photos": [
     "mwc37l7jvge.jpg",
     "mwc37labxz5.jpg"
@@ -150,7 +150,8 @@
    "likes": {
     "Maxime": 1794568603656,
     "Léo": 1794570982826
-   }
+   },
+   "cover": "mwc37labxz5.jpg"
   },
   "p:baseball-batting-center-active-akiba": {
    "id": "p:baseball-batting-center-active-akiba",
