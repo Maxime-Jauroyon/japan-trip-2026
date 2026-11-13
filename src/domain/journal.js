@@ -69,6 +69,31 @@ export function setDayLike(day, author, liked, now = Date.now()){
   return setLike({ items }, DAY_LIKE_ID, author, liked, now);
 }
 
+/** Auteurs (triés) qui ont mis au moins un ❤️ quelque part (moment ou journée) : [["2026-11-08", jour], …]. */
+export function likersOf(days){
+  const set = new Set();
+  (days || []).forEach(([, day]) => Object.values((day && day.items) || {}).forEach((it) => { if (!it.deleted) likedBy(it).forEach((a) => set.add(a)); }));
+  return [...set].sort((a, b) => a.localeCompare(b, "fr"));
+}
+
+/**
+ * Coups de cœur : les journées et les moments aimés (par `who`, ou par n’importe qui si `who` est vide), les plus récents d’abord.
+ * Retourne { days: [{ iso, who }], moments: [{ iso, id, title, photos, who, when }] } ; `who` = auteurs qui ont aimé (filtrés).
+ */
+export function favorites(days, who){
+  const out = { days: [], moments: [] };
+  (days || []).forEach(([iso, day]) => Object.values((day && day.items) || {}).forEach((it) => {
+    if (it.deleted) return;
+    const likers = likedBy(it).filter((a) => !who || a === who);
+    if (!likers.length) return;
+    if (it.id === DAY_LIKE_ID) out.days.push({ iso, who: likers });
+    else out.moments.push({ iso, id: it.id, title: it.title, photos: orderedPhotos(it), who: likers, when: momentOf(it, iso) });
+  }));
+  out.days.sort((a, b) => b.iso.localeCompare(a.iso));
+  out.moments.sort((a, b) => b.iso.localeCompare(a.iso) || a.when - b.when);
+  return out;
+}
+
 /** Deux jours identiques (même contenu) ? Sert à éviter un envoi inutile. */
 export const sameDay = (a, b) => JSON.stringify(sortKeys((a && a.items) || {})) === JSON.stringify(sortKeys((b && b.items) || {}));
 function sortKeys(o){

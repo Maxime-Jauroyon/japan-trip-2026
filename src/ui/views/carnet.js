@@ -5,7 +5,7 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { dayLikedBy, doneItems, heroPhoto, isVideo } from "../../domain/journal.js";
+import { dayLikedBy, doneItems, favorites, heroPhoto, isVideo, likersOf } from "../../domain/journal.js";
 import { JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, journalReady, photoUrl, prefetchPhotos, prefetchStatus, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
@@ -61,6 +61,20 @@ function openDayStory(dayN){
   openStory(storySlides(x), 0, (sl, o) => photoUrl(sl.iso, sl.name, !!o.thumb, { priority: o.priority, live: o.live }));
 }
 
+/** Coups de cœur du carnet (filtrés par personne), avec les libellés de jour ; si la personne choisie n’a plus de cœur, on revient à « Tous ». */
+function favoritesModel(){
+  const all = journalDays();
+  const likers = likersOf(all);
+  if (feedState.who && !likers.includes(feedState.who)) feedState.who = null;
+  const f = favorites(all, feedState.who);
+  const info = (iso) => { const d = DAYS.find(x => dayToISO(x) === iso); return d ? { n: d.n, label: `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}` } : { n: 0, label: iso }; };
+  return {
+    likers,
+    days: f.days.map(x => ({ ...x, ...info(x.iso) })),
+    moments: f.moments.map(m => ({ ...m, label: `J${info(m.iso).n} · ${info(m.iso).label}` }))
+  };
+}
+
 let lastSig = null;
 
 /** Redessine seulement si le contenu a changé (ou si `force`) ; garde le défilement et la position de chaque carrousel. */
@@ -75,13 +89,14 @@ export function renderCarnet(force){
   if (!days.length && (syncStatus.state === "syncing" || (journalReadOnly() && syncStatus.state !== "public"))) { box.innerHTML = SKELETON; lastSig = null; return; }   // premier chargement
   model = days;
   const hero = heroPhoto(journalDays());
-  const sig = JSON.stringify([days, hero, feedState.mode, feedState.filter, journalConfig().author, journalReadOnly(), japanTodayISO()]);
+  const favs = favoritesModel();
+  const sig = JSON.stringify([days, hero, favs, feedState.mode, feedState.filter, feedState.who, journalConfig().author, journalReadOnly(), japanTodayISO()]);
   if (!force && sig === lastSig && box.children.length) return;   // rien de nouveau : ne rien toucher
   lastSig = sig;
   const top = scroller ? scroller.scrollTop : 0;
   const slides = {};
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && c.scrollLeft) slides[p.dataset.post] = c.scrollLeft; });
-  box.innerHTML = carnetHtml({ days, hero, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
+  box.innerHTML = carnetHtml({ days, hero, favs, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
     emptyText: journalReadOnly() ? "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt."
       : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml, dayLikeHtml });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });

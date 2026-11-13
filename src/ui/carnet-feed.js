@@ -8,7 +8,7 @@ import { clockJst } from "../domain/journal.js";
 import { storyButtonHtml } from "./story-player.js";
 
 /** Mode d’affichage et jour filtré (gardés tant que la page est ouverte). */
-export const feedState = { mode: "feed", filter: null };
+export const feedState = { mode: "feed", filter: null, who: null };
 
 const dayLabel = (d) => `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}`;
 const plural = (n, w) => `${n} ${w}${n > 1 ? "s" : ""}`;
@@ -59,6 +59,24 @@ function storiesHtml(model, ctx){
   }).join("") + `</div>`;
 }
 
+/** Coups de cœur : les journées et les moments aimés, par personne (puces) ou par tous. `model.favs` = { days, moments, likers } avec libellés. */
+function heartsHtml(model, ctx){
+  const f = model.favs || { days: [], moments: [], likers: [] };
+  const chips = `<div class="cn-days cn-who"><button type="button" data-who="" aria-pressed="${!feedState.who}">Tous</button>` +
+    f.likers.map(a => `<button type="button" data-who="${esc(a)}" aria-pressed="${feedState.who === a}">❤️ ${esc(a)}</button>`).join("") + `</div>`;
+  if (!f.days.length && !f.moments.length) {
+    return chips + `<p class="vy-empty">${feedState.who ? `${esc(feedState.who)} n’a pas encore de coup de cœur.` : "Pas encore de coup de cœur : touchez le ❤️ d’un moment ou d’une journée."}</p>`;
+  }
+  const who = (list) => (feedState.who ? "" : `<small>${list.map(esc).join(" · ")}</small>`);
+  const daysHtml = f.days.length ? `<h3 class="cn-fav-title">Journées adorées</h3><div class="cn-favdays">` + f.days.map(d =>
+    `<button type="button" class="cn-favday" data-goday="${d.n}">❤️ <span><b>Jour ${d.n}</b> ${esc(d.label)}</span>${who(d.who)}</button>`).join("") + `</div>` : "";
+  const momentsHtml = f.moments.length ? `<h3 class="cn-fav-title">Moments aimés</h3><div class="cn-favs">` + f.moments.map(m =>
+    `<article class="cn-fav" data-day-label="${esc(m.label)}">` +
+    (m.photos.length ? ctx.photoBtn(m.iso, { id: m.id, name: m.photos[0], title: m.title }, { thumb: true }) : `<span class="cn-fav-ph">❤️</span>`) +
+    `<div><strong>${esc(m.title)}</strong><small>${esc(m.label)}${m.photos.length > 1 ? ` · ${m.photos.length} photos` : ""}</small>${who(m.who)}</div></article>`).join("") + `</div>` : "";
+  return chips + daysHtml + momentsHtml;
+}
+
 /** Page entière du carnet (hors indicateurs de synchro, propres à l’écran). */
 export function carnetHtml(model, ctx){
   const days = feedState.filter ? model.days.filter(x => x.day.n === feedState.filter) : model.days;
@@ -72,11 +90,13 @@ export function carnetHtml(model, ctx){
     `<p class="cn-stats">${stats.map(([n, w]) => `<span><b data-count="${n}">${n}</b> ${w}${n > 1 ? "s" : ""}</span>`).join("")}</p></div></section>`;
   const bar = `<div class="cn-toolbar"><div class="cn-seg" role="tablist" aria-label="Affichage">` +
     `<button type="button" data-mode="feed" aria-pressed="${feedState.mode === "feed"}">Fil</button>` +
-    `<button type="button" data-mode="grid" aria-pressed="${feedState.mode === "grid"}">Grille</button></div>` +
-    `<div class="cn-days"><button type="button" data-fday="" aria-pressed="${!feedState.filter}">Tout</button>` +
-    model.days.slice().reverse().map(x => `<button type="button" data-fday="${x.day.n}" aria-pressed="${feedState.filter === x.day.n}">J${x.day.n}</button>`).join("") + `</div></div>`;
+    `<button type="button" data-mode="grid" aria-pressed="${feedState.mode === "grid"}">Grille</button>` +
+    `<button type="button" data-mode="hearts" aria-pressed="${feedState.mode === "hearts"}" aria-label="Coups de cœur">❤️</button></div>` +
+    (feedState.mode === "hearts" ? "" : `<div class="cn-days"><button type="button" data-fday="" aria-pressed="${!feedState.filter}">Tout</button>` +
+    model.days.slice().reverse().map(x => `<button type="button" data-fday="${x.day.n}" aria-pressed="${feedState.filter === x.day.n}">J${x.day.n}</button>`).join("") + `</div>`) + `</div>`;
   let body;
   if (!model.days.length) body = `<p class="vy-empty">${esc(model.emptyText || "Rien pour l’instant.")}</p>`;
+  else if (feedState.mode === "hearts") body = heartsHtml(model, ctx);
   else if (feedState.mode === "grid") {
     const shots = days.slice().reverse().flatMap(photosOfDay);
     body = shots.length ? `<div class="cn-grid" data-day-label="">${shots.map(s => ctx.photoBtn(s.iso, s, { thumb: true })).join("")}</div>` : `<p class="vy-empty">Pas encore de photo.</p>`;
@@ -90,6 +110,8 @@ let counted = false;
 /** Branche la barre d’outils, les stories, les points des carrousels et l’apparition en douceur ; `again()` redessine. */
 export function bindCarnet(root, again, ctx){
   root.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { feedState.mode = b.dataset.mode; again(); }));
+  root.querySelectorAll("[data-who]").forEach(b => b.addEventListener("click", () => { feedState.who = b.dataset.who || null; again(); }));
+  root.querySelectorAll("[data-goday]").forEach(b => b.addEventListener("click", () => { feedState.mode = "feed"; feedState.filter = Number(b.dataset.goday); again(); }));
   root.querySelectorAll("[data-fday]").forEach(b => b.addEventListener("click", () => { feedState.filter = b.dataset.fday ? Number(b.dataset.fday) : null; again(); }));
   root.querySelectorAll("[data-story-day]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); if (ctx && ctx.openStory) ctx.openStory(Number(b.dataset.storyDay)); }));
   root.querySelectorAll(".vy-car").forEach(car => {
