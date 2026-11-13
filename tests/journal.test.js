@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { applyJournal, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { DAY_LIKE_ID, applyJournal, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -127,4 +127,28 @@ test("vidéos : reconnues par l’extension, miniature .t.jpg, acceptées par sa
   assert.deepEqual(day.items["p:x"].photos, ["a.jpg", "b.mp4", "c.webm"]);
   assert.equal(day.items["p:x"].cover, "b.mp4");
   assert.deepEqual(livePhotos({ photos: ["a.jpg", "b.mp4"], gone: ["a.jpg"] }), ["b.mp4"]);
+});
+
+test("❤️ sur une journée : un seul élément spécial, un cœur par auteur, qui se fusionne entre téléphones", () => {
+  let a = setDayLike(emptyDay(), "Maxime", true, 1000);
+  assert.deepEqual(dayLikedBy(a), ["Maxime"]);
+  assert.equal(a.items[DAY_LIKE_ID].kind, "day");
+  // Léo aime depuis son téléphone, Maxime retire le sien : chacun garde le dernier mot sur son propre cœur
+  const b = setDayLike(emptyDay(), "Léo", true, 2000);
+  const retire = setDayLike(a, "Maxime", false, 3000);
+  const merged = mergeDay(retire, b);
+  assert.deepEqual(dayLikedBy(merged), ["Léo"]);
+  assert.deepEqual(dayLikedBy(mergeDay(a, b)).sort(), ["Léo", "Maxime"]);
+  // survit à la validation d’un fichier lu sur le réseau
+  assert.deepEqual(dayLikedBy(sanitizeDay(JSON.parse(JSON.stringify(mergeDay(a, b))))).sort(), ["Léo", "Maxime"]);
+});
+
+test("❤️ sur une journée : n’apparaît ni comme moment du carnet, ni comme activité, ni dans le score du jour", () => {
+  const day = setDayLike(upsertItem(emptyDay(), plannedId("Odaiba"), { kind: "planned", title: "Odaiba", status: "todo" }, { status: "done", doneAt: 5 }, 5), "Maxime", true);
+  assert.deepEqual(doneItems(day, "2026-11-11").map((x) => x.title), ["Odaiba"]);
+  assert.deepEqual(extrasOf(day), []);
+  assert.deepEqual(dayScore(applyJournal([{ title: "Odaiba" }], day)), { done: 1, total: 1 });
+  // un jour qui n’a que le cœur n’affiche aucun moment
+  assert.deepEqual(doneItems(setDayLike(emptyDay(), "Maxime", true), "2026-11-11"), []);
+  assert.deepEqual(collectPhotos([["2026-11-11", day]]), []);
 });

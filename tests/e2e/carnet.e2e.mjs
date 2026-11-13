@@ -71,6 +71,11 @@ await page.route("https://api.github.com/**", async (r) => {
   if (path_.startsWith("/git/ref/heads/journal")) return json({ object: { sha: "x" } });
   if (path_ === "/contents/journal/days") return json(Object.keys(files).map((n) => ({ name: n, sha: files[n].sha })));
   const day = /^\/contents\/journal\/days\/(.+\.json)$/.exec(path_);
+  if (day && r.request().method() === "PUT") {
+    const b = JSON.parse(r.request().postData());
+    files[day[1]] = { sha: "n" + Math.random(), content: b.content };
+    return json({ content: { sha: files[day[1]].sha } });
+  }
   if (day) return files[day[1]] ? json({ sha: files[day[1]].sha, content: files[day[1]].content }) : json({}, 404);
   const ph = /^\/contents\/journal\/photos\/([^/]+)\/(.+)$/.exec(path_);
   if (ph) {
@@ -179,6 +184,22 @@ for (let i = 0; i < 25; i++) { await page.keyboard.press("ArrowRight"); await pa
 await page.waitForTimeout(3500);
 const viewer = await page.evaluate(() => { const v = document.querySelector(".jr-viewer"), im = v.querySelector("img"); return { pos: v.querySelector(".jv-pos").textContent, nat: im.naturalWidth }; });
 check("visionneuse : position juste et photo nette après 25 balayages", /^26 \/ 39$/.test(viewer.pos) && viewer.nat === 1600, JSON.stringify(viewer));
+
+// 6. ❤️ sur une journée entière
+await page.evaluate(() => document.querySelector("#view-carnet").scrollTo(0, 0));
+const dayLike = () => page.evaluate(() => { const b = document.querySelector(".cn-daylike"); return b ? { pressed: b.getAttribute("aria-pressed"), n: (b.querySelector("b") || {}).textContent || "" } : null; });
+const dl0 = await dayLike();
+check("chaque journée du carnet a son bouton ❤️", !!dl0 && dl0.pressed === "false", JSON.stringify(dl0));
+await page.evaluate(() => document.querySelector(".cn-daylike").click());
+await page.waitForTimeout(800);
+const liked = await dayLike();
+check("❤️ sur la journée : le bouton passe à « aimé » avec le compteur", liked && liked.pressed === "true" && liked.n === "1", JSON.stringify(liked));
+await page.waitForTimeout(3500);   // laisse partir la synchro vers le faux dépôt
+const saved = Object.values(files).map((f) => JSON.parse(Buffer.from(f.content, "base64").toString())).find((d) => d.items && d.items["x:jour"]);
+check("le cœur de la journée est envoyé au journal partagé", !!saved && Object.keys(saved.items["x:jour"].likes || {}).includes("Maxime"), saved ? JSON.stringify(saved.items["x:jour"].likes) : "absent");
+await page.evaluate(() => document.querySelector(".cn-daylike").click());
+await page.waitForTimeout(800);
+check("un second appui retire le cœur", (await dayLike()).pressed === "false");
 
 check("aucune erreur JavaScript", pageErrors.length === 0, pageErrors.join(" | "));
 await browser.close();

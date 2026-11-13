@@ -6,7 +6,7 @@
 import { DAY_PROGRESS_KEY, JOURNAL_CFG_KEY, JOURNAL_KEY } from "../config.js";
 import { DAYS, TRIP } from "../core/data.js";
 import { dayToISO, japanTodayISO } from "../core/dates.js";
-import { emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
+import { dayLikedBy, emptyDay, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setDayLike, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
 import { loadPublicJournal, publicPhotoUrl } from "./journal-public.js";
 import { createDedupe, createJobQueue } from "../shared/job-queue.js";
 import { resizeImage, compressVideo } from "./photo-resize.js";
@@ -168,6 +168,13 @@ export function toggleLike(iso, id){
   const it = journalDay(iso).items[id];
   if (!it) return;
   commit(iso, setLike(journalDay(iso), id, who, !likedBy(it).includes(who)));
+}
+
+/** ❤️ sur une journée entière (« j'ai adoré cette journée ») pour l’auteur de ce téléphone. */
+export function toggleDayLike(iso){
+  const who = journalConfig().author || "Moi";
+  const day = journalDay(iso);
+  commit(iso, setDayLike(day, who, !dayLikedBy(day).includes(who)));
 }
 
 /** Photo phare d’une activité : affichée en premier (un second appui sur la même photo l’enlève). */
