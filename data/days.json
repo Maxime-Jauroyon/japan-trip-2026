@@ -335,10 +335,25 @@
         "goshuinNote": "Au sanctuaire Kanazawa-jinja, à côté du jardin."
       },
       {
+        "title": "Sanctuaire Ishiura (le soir)",
+        "lat": 36.56119,
+        "lng": 136.65983,
+        "desc": "Le plus ancien sanctuaire de Kanazawa, tout près de Kenroku-en et du château ; vu le soir. Bureau du sanctuaire ~9 h–17 h.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire (9 h–17 h) : fermé le soir."
+      },
+      {
         "title": "Château de Kanazawa (le soir)",
         "lat": 36.5653,
         "lng": 136.659,
         "desc": "Enceinte et parc illuminés le soir (parc libre). L’intérieur des tours restaurées (Hishi Yagura, Gojikken Nagaya, porte Hashizume-mon) ne se visite que de jour : 9 h–16 h 30 (dernière entrée 16 h), ~320 ¥. Pas de donjon.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Sanctuaire Oyama (le soir)",
+        "lat": 36.566,
+        "lng": 136.6555,
+        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château ; vu le soir, bureau fermé (goshuin repoussé à demain).",
         "goshuin": "non"
       }
     ],
@@ -364,7 +379,7 @@
         "title": "Sanctuaire Oyama",
         "lat": 36.566,
         "lng": 136.6555,
-        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château. À 0,2 km de l’hôtel ; le musée du XXIe siècle est à ~0,6 km.",
+        "desc": "Retour de jour pour le goshuin (bureau du sanctuaire, ouvert la journée). Sanctuaire à la porte mêlant styles japonais et occidental, près du château. À 0,2 km de l’hôtel ; le musée du XXIe siècle est à ~0,6 km.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du sanctuaire."
       },

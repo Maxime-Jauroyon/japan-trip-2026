@@ -5,7 +5,7 @@
      envoie PRECACHE_IMAGES (2 à la fois, seules les manquantes ou modifiées : empreinte IMG_HASH).
    - Tuiles de carte : cache séparé TILE_CACHE, géré par src/map/offline-tiles.js, jamais purgé ici.
    Version : scripts/bump-version.mjs · liste ASSETS : scripts/gen-precache.mjs. */
-const CACHE = "japan-trip-2026-v266";
+const CACHE = "japan-trip-2026-v267";
 const TILE_CACHE = "japan-tiles-v1";
 /** Photos : cache gardé d’une version à l’autre (seules les nouvelles sont téléchargées). */
 const IMG_CACHE = "japan-img-v1";
@@ -79,6 +79,7 @@ const ASSETS = [
   "./img/activities/imperial-2.jpg",
   "./img/activities/imperial-3.jpg",
   "./img/activities/imperial.jpg",
+  "./img/activities/ishiura.jpg",
   "./img/activities/itchiku-2.jpg",
   "./img/activities/itchiku-3.jpg",
   "./img/activities/itchiku.jpg",
@@ -253,6 +254,7 @@ const ASSETS = [
   "./img/activities/thumb/imperial-2.jpg",
   "./img/activities/thumb/imperial-3.jpg",
   "./img/activities/thumb/imperial.jpg",
+  "./img/activities/thumb/ishiura.jpg",
   "./img/activities/thumb/itchiku-2.jpg",
   "./img/activities/thumb/itchiku-3.jpg",
   "./img/activities/thumb/itchiku.jpg",
@@ -636,6 +638,7 @@ const IMG_HASH = {
   "./img/activities/imperial-2.jpg": "30f443a570",
   "./img/activities/imperial-3.jpg": "c1ba3b99c7",
   "./img/activities/imperial.jpg": "11e4c6db04",
+  "./img/activities/ishiura.jpg": "b0f67f29fe",
   "./img/activities/itchiku-2.jpg": "2f3bb89b66",
   "./img/activities/itchiku-3.jpg": "a3c88b0ad6",
   "./img/activities/itchiku.jpg": "22843f149a",
@@ -810,6 +813,7 @@ const IMG_HASH = {
   "./img/activities/thumb/imperial-2.jpg": "c9ac439bbf",
   "./img/activities/thumb/imperial-3.jpg": "db6cde3a91",
   "./img/activities/thumb/imperial.jpg": "4af33d73ac",
+  "./img/activities/thumb/ishiura.jpg": "52a843b82d",
   "./img/activities/thumb/itchiku-2.jpg": "4691367ced",
   "./img/activities/thumb/itchiku-3.jpg": "3d6b7ba712",
   "./img/activities/thumb/itchiku.jpg": "7ed2ce5c26",
