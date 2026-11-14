@@ -7,7 +7,7 @@
    "status": "done",
    "doneAt": 1794538784658,
    "by": "Maxime",
-   "at": 1794568574463,
+   "at": 1794637155482,
    "photos": [
     "mwevsit7dht.jpg",
     "mwevsj33kqn.jpg",
@@ -29,7 +29,8 @@
    "likes": {
     "Maxime": 1794568975274,
     "Léo": 1794571013281
-   }
+   },
+   "cover": "mwevsjcie69.jpg"
   },
   "x:jour": {
    "id": "x:jour",
