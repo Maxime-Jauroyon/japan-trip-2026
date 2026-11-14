@@ -153,6 +153,10 @@
       "slug": "omicho"
     },
     {
+      "match": "ishiura",
+      "slug": "ishiura"
+    },
+    {
       "match": "oyama",
       "slug": "oyama"
     },
@@ -1202,6 +1206,15 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:%E9%9B%AA%E3%81%AE%E5%BF%8D%E9%87%8E%E3%81%A8%E5%AF%8C%E5%A3%AB%E5%B1%B1_(Snow-covered_Oshino_with_Mt.Fuji)_31_Jan,_2015_-_panoramio.jpg"
+      }
+    ],
+    "ishiura": [
+      {
+        "file": "ishiura.jpg",
+        "author": "そらみみ",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Torii_of_Ishiura_Shrine_from_Mayumizaka_Entrance_of_Kenroku_Garden.JPG"
       }
     ],
     "oyama": [
