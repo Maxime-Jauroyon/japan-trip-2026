@@ -398,10 +398,31 @@
         "goshuin": "non"
       },
       {
+        "title": "Musée D. T. Suzuki",
+        "lat": 36.5577,
+        "lng": 136.6614,
+        "desc": "Musée d’architecture épurée consacré au philosophe du zen : cour d’eau, pièce de contemplation. À ~0,5 km du musée du XXIe siècle. Ouvert dimanche 9 h 30–17 h (dernière entrée 16 h 30), ~310 ¥ ; fermé le lundi.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Seisonkaku (villa Maeda)",
+        "lat": 36.561,
+        "lng": 136.6632,
+        "desc": "Villa de 1863 du clan Maeda, au bord de Kenroku-en : salons laqués, jardin, thé possible. À ~0,6 km du musée Suzuki. Ouvert 9 h–17 h (dernière entrée 16 h 30), ~700 ¥ ; fermé le mercredi.",
+        "goshuin": "non"
+      },
+      {
         "title": "Higashi Chaya",
         "lat": 36.5733,
         "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois. À ~1,3 km du musée : à faire en fin d’après-midi (boutiques et maisons de thé ~10 h–18 h), la lumière du soir est particulièrement belle.",
+        "desc": "Quartier historique de maisons de thé en bois, à ~1,5 km de Seisonkaku : à faire en fin d’après-midi (boutiques et maisons de thé ~10 h–18 h). Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
+        "goshuin": "non"
+      },
+      {
+        "title": "Kazuemachi Chaya",
+        "lat": 36.574,
+        "lng": 136.664,
+        "desc": "Ruelles de maisons de thé le long de la rivière Asano, plus calmes que Higashi Chaya, à ~0,4 km. Jolies en fin de journée.",
         "goshuin": "non"
       }
     ],

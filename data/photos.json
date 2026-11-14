@@ -157,6 +157,18 @@
       "slug": "ishiura"
     },
     {
+      "match": "suzuki",
+      "slug": "kanazawa-museum"
+    },
+    {
+      "match": "seisonkaku",
+      "slug": "kenrokuen"
+    },
+    {
+      "match": "kazuemachi",
+      "slug": "higashi-chaya"
+    },
+    {
       "match": "shiinoki",
       "slug": "kanazawa-castle"
     },
