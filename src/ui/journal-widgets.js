@@ -2,8 +2,8 @@
    Utilisées par le panneau d’un jour, la fiche d’une activité et Sur place › Journal. */
 
 import { esc } from "../core/dom.js";
-import { STATUS_LABELS, heroPhoto, isVideo, likedBy, livePhotos, nextStatus } from "../domain/journal.js";
-import { JOURNAL_CHANGED, addPhotos, cachedPhotoUrl, journalConfig, journalDay, journalDays, journalReadOnly, lastMediaNotice, photoUrl, removePhoto, setCoverPhoto, setHeroPhoto, setPlannedStatus, syncStatus, toggleLike } from "../pwa/journal-store.js";
+import { STATUS_LABELS, dislikedBy, heroPhoto, isVideo, likedBy, livePhotos, nextStatus } from "../domain/journal.js";
+import { JOURNAL_CHANGED, addPhotos, cachedPhotoUrl, journalConfig, journalDay, journalDays, journalReadOnly, lastMediaNotice, photoUrl, removePhoto, setCoverPhoto, setHeroPhoto, setPlannedStatus, syncStatus, toggleDislike, toggleLike } from "../pwa/journal-store.js";
 import { pickPhotos } from "../pwa/photo-resize.js";
 import { retryDelay } from "../domain/story.js";
 
@@ -161,7 +161,7 @@ export function openPhotoViewer(list, index){
       `<button type="button" class="jv-close" aria-label="Fermer">×</button><span class="jv-pos"></span>` +
       `<div class="jv-stage"><img alt="" /><video class="jv-video" muted loop playsinline controls hidden></video><span class="jv-heart" aria-hidden="true">❤️</span></div>` +
       `<div class="jv-cap"><strong></strong><small></small></div>` +
-      `<div class="jr-viewer-bar"><button type="button" class="jv-like"></button><button type="button" class="jv-star"></button>` +
+      `<div class="jr-viewer-bar"><button type="button" class="jv-like"></button><button type="button" class="jv-dislike" aria-label="Je n’ai pas aimé"></button><button type="button" class="jv-star"></button>` +
       `<button type="button" class="jv-hero"></button><button type="button" class="jv-del" aria-label="Supprimer la photo">🗑</button></div>`;
     document.body.appendChild(viewer);
     const stage = viewer.querySelector(".jv-stage");
@@ -177,6 +177,7 @@ export function openPhotoViewer(list, index){
     stage.addEventListener("dblclick", () => likeCurrent(true));
     viewer.querySelector(".jv-close").onclick = closeViewer;
     viewer.querySelector(".jv-like").onclick = () => likeCurrent(false);
+    viewer.querySelector(".jv-dislike").onclick = () => { const p = vList[vIdx]; if (p && !journalReadOnly()) toggleDislike(p.iso, p.id); };
     viewer.querySelector(".jv-star").onclick = () => { const p = vList[vIdx]; if (p) setCoverPhoto(p.iso, p.id, p.name); };
     viewer.querySelector(".jv-hero").onclick = () => { const p = vList[vIdx]; if (p) setHeroPhoto(p.iso, p.id, p.name); };
     viewer.querySelector(".jv-del").onclick = () => {
@@ -217,6 +218,10 @@ function paintLike(){
   const who = likedBy(it);
   const btn = viewer.querySelector(".jv-like");
   btn.textContent = `${who.includes(authorName()) ? "❤️" : "🤍"} ${who.length || ""}`.trim();
+  const bad = dislikedBy(it);
+  const dbtn = viewer.querySelector(".jv-dislike");
+  dbtn.textContent = `👎 ${bad.length || ""}`.trim();
+  dbtn.classList.toggle("on", bad.includes(authorName()));
   // Photo phare de l’activité / couverture du carnet : état de la photo affichée
   const star = viewer.querySelector(".jv-star"), hero = viewer.querySelector(".jv-hero");
   const isStar = !!(it && it.cover === p.name);

@@ -6,7 +6,7 @@
 import { DAY_PROGRESS_KEY, JOURNAL_CFG_KEY, JOURNAL_KEY } from "../config.js";
 import { DAYS, TRIP } from "../core/data.js";
 import { dayToISO, japanTodayISO } from "../core/dates.js";
-import { dayLikedBy, emptyDay, isVideo, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setDayLike, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
+import { dayDislikedBy, dayLikedBy, dislikedBy, emptyDay, isVideo, livePhotos, mergeDay, newExtraId, plannedId, sameDay, sanitizeDay, setDayDislike, setDayLike, setDislike, setLike, likedBy, thumbName, upsertItem } from "../domain/journal.js";
 import { loadPublicJournal, publicPhotoUrl } from "./journal-public.js";
 import { createDedupe, createJobQueue } from "../shared/job-queue.js";
 import { resizeImage, compressVideo } from "./photo-resize.js";
@@ -175,6 +175,21 @@ export function toggleDayLike(iso){
   const who = journalConfig().author || "Moi";
   const day = journalDay(iso);
   commit(iso, setDayLike(day, who, !dayLikedBy(day).includes(who)));
+}
+
+/** 👎 sur un item pour l’auteur de ce téléphone (retire son ❤️ s’il y en avait un). */
+export function toggleDislike(iso, id){
+  const who = journalConfig().author || "Moi";
+  const it = journalDay(iso).items[id];
+  if (!it) return;
+  commit(iso, setDislike(journalDay(iso), id, who, !dislikedBy(it).includes(who)));
+}
+
+/** 👎 sur une journée entière. */
+export function toggleDayDislike(iso){
+  const who = journalConfig().author || "Moi";
+  const day = journalDay(iso);
+  commit(iso, setDayDislike(day, who, !dayDislikedBy(day).includes(who)));
 }
 
 /** Photo phare d’une activité : affichée en premier (un second appui sur la même photo l’enlève). */

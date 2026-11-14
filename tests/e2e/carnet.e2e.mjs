@@ -227,6 +227,23 @@ await page.evaluate(() => document.querySelector(".cn-daylike").click());
 await page.waitForTimeout(800);
 check("un second appui retire le cœur", (await dayLike()).pressed === "false");
 
+// 6 bis. 👎 sur une journée : exclusif avec le ❤️
+const dayDislike = () => page.evaluate(() => { const b = document.querySelector(".cn-daydislike"); return b ? { pressed: b.getAttribute("aria-pressed"), n: (b.querySelector("b") || {}).textContent || "" } : null; });
+check("chaque journée a aussi son bouton 👎", (await dayDislike() || {}).pressed === "false");
+await page.evaluate(() => document.querySelector(".cn-daydislike").click());
+await page.waitForTimeout(800);
+const dis1 = await dayDislike();
+check("👎 sur la journée : le bouton passe à « pas aimé » avec le compteur", dis1 && dis1.pressed === "true" && dis1.n === "1", JSON.stringify(dis1));
+await page.evaluate(() => document.querySelector(".cn-daylike").click());   // aimer retire le 👎
+await page.waitForTimeout(800);
+check("aimer la journée retire le 👎", (await dayLike()).pressed === "true" && (await dayDislike()).pressed === "false");
+await page.evaluate(() => document.querySelector(".cn-daydislike").click());   // ne pas aimer retire le ❤️
+await page.waitForTimeout(800);
+check("ne pas aimer retire le ❤️", (await dayLike()).pressed === "false" && (await dayDislike()).pressed === "true");
+await page.evaluate(() => document.querySelector(".cn-daydislike").click());
+await page.waitForTimeout(800);
+check("un second appui retire le 👎", (await dayDislike()).pressed === "false");
+
 // 7. Coups de cœur de chacun (vue ❤️ du Carnet)
 await page.evaluate(() => document.querySelector(".cn-daylike").click());   // Maxime aime aussi une journée
 await page.waitForTimeout(600);

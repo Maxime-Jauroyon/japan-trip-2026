@@ -29,13 +29,13 @@ export function mergeDay(a, b){
     const win = (y.at || 0) > (x.at || 0) ? y : x;
     const photos = [...new Set([...(x.photos || []), ...(y.photos || [])])];
     const gone = [...new Set([...(x.gone || []), ...(y.gone || [])])];   // photos retirées : retirées partout
-    const likes = mergeLikes(x.likes, y.likes);
-    out[id] = { ...win, ...(photos.length ? { photos } : {}), ...(gone.length ? { gone } : {}), ...(Object.keys(likes).length ? { likes } : {}) };
+    const likes = mergeLikes(x.likes, y.likes), dislikes = mergeLikes(x.dislikes, y.dislikes);
+    out[id] = { ...win, ...(photos.length ? { photos } : {}), ...(gone.length ? { gone } : {}), ...(Object.keys(likes).length ? { likes } : {}), ...(Object.keys(dislikes).length ? { dislikes } : {}) };
   });
   return { items: out };
 }
 
-/** ❤️ : { auteur: date } ; date > 0 = aimé, < 0 = retiré. Fusion : pour chaque auteur, l’action la plus récente. */
+/** ❤️ (et 👎 `dislikes`, même forme) : { auteur: date } ; date > 0 = aimé, < 0 = retiré. Fusion : pour chaque auteur, l’action la plus récente. */
 function mergeLikes(a, b){
   const out = { ...(a || {}) };
   Object.entries(b || {}).forEach(([who, t]) => { if (Math.abs(t) > Math.abs(out[who] || 0)) out[who] = t; });
@@ -45,11 +45,27 @@ function mergeLikes(a, b){
 /** Auteurs qui ont aimé un item. */
 export const likedBy = (it) => Object.entries((it && it.likes) || {}).filter(([, t]) => t > 0).map(([who]) => who);
 
-/** Aime / n’aime plus un item (sans toucher à sa date de modification : ne réécrit pas le reste). */
+/** Auteurs qui n’ont pas aimé un item (👎). */
+export const dislikedBy = (it) => Object.entries((it && it.dislikes) || {}).filter(([, t]) => t > 0).map(([who]) => who);
+
+/** Aime / n’aime plus un item (sans toucher à sa date de modification : ne réécrit pas le reste). Aimer retire le 👎 du même auteur. */
 export function setLike(day, id, author, liked, now = Date.now()){
+  return setVote(day, id, author, "likes", "dislikes", liked, now);
+}
+
+/** Marque / retire un 👎 sur un item. Le poser retire le ❤️ du même auteur. */
+export function setDislike(day, id, author, disliked, now = Date.now()){
+  return setVote(day, id, author, "dislikes", "likes", disliked, now);
+}
+
+/** `field` = le vote posé ou retiré ; `other` = le vote opposé, retiré au passage s’il était actif (on ne peut pas aimer et ne pas aimer). */
+function setVote(day, id, author, field, other, on, now){
   const items = { ...((day && day.items) || {}) };
   if (!items[id]) return day || emptyDay();
-  items[id] = { ...items[id], likes: { ...(items[id].likes || {}), [author]: liked ? now : -now } };
+  const it = items[id];
+  const next = { ...it, [field]: { ...(it[field] || {}), [author]: on ? now : -now } };
+  if (on && ((it[other] || {})[author] || 0) > 0) next[other] = { ...it[other], [author]: -now };
+  items[id] = next;
   return { items };
 }
 
@@ -62,29 +78,42 @@ export const DAY_LIKE_ID = "x:jour";
 /** Auteurs qui ont aimé la journée. */
 export const dayLikedBy = (day) => likedBy(day && day.items && day.items[DAY_LIKE_ID]);
 
-/** Aime / n’aime plus la journée pour l’auteur `author` (crée l’élément spécial au premier cœur). */
-export function setDayLike(day, author, liked, now = Date.now()){
+/** Auteurs qui n’ont pas aimé la journée (👎). */
+export const dayDislikedBy = (day) => dislikedBy(day && day.items && day.items[DAY_LIKE_ID]);
+
+function withDayItem(day, now){
   const items = { ...((day && day.items) || {}) };
   if (!items[DAY_LIKE_ID]) items[DAY_LIKE_ID] = { id: DAY_LIKE_ID, kind: "day", title: "Journée", status: "todo", at: now };
-  return setLike({ items }, DAY_LIKE_ID, author, liked, now);
+  return { items };
 }
 
-/** Auteurs (triés) qui ont mis au moins un ❤️ quelque part (moment ou journée) : [["2026-11-08", jour], …]. */
-export function likersOf(days){
-  const set = new Set();
-  (days || []).forEach(([, day]) => Object.values((day && day.items) || {}).forEach((it) => { if (!it.deleted) likedBy(it).forEach((a) => set.add(a)); }));
+/** Aime / n’aime plus la journée pour l’auteur `author` (crée l’élément spécial au premier cœur). */
+export function setDayLike(day, author, liked, now = Date.now()){
+  return setLike(withDayItem(day, now), DAY_LIKE_ID, author, liked, now);
+}
+
+/** 👎 sur la journée entière. */
+export function setDayDislike(day, author, disliked, now = Date.now()){
+  return setDislike(withDayItem(day, now), DAY_LIKE_ID, author, disliked, now);
+}
+
+/** Auteurs (triés) qui ont mis au moins un ❤️ (ou un 👎 si `vote` = "dislikes") quelque part (moment ou journée) : [["2026-11-08", jour], …]. */
+export function likersOf(days, vote = "likes"){
+  const set = new Set(), by = vote === "dislikes" ? dislikedBy : likedBy;
+  (days || []).forEach(([, day]) => Object.values((day && day.items) || {}).forEach((it) => { if (!it.deleted) by(it).forEach((a) => set.add(a)); }));
   return [...set].sort((a, b) => a.localeCompare(b, "fr"));
 }
 
 /**
- * Coups de cœur : les journées et les moments aimés (par `who`, ou par n’importe qui si `who` est vide), les plus récents d’abord.
+ * Coups de cœur : les journées et les moments aimés (par `who`, ou par n’importe qui si `who` est vide), les plus récents d’abord ;
+ * avec `vote` = "dislikes", ceux qui ont reçu un 👎 à la place.
  * Retourne { days: [{ iso, who }], moments: [{ iso, id, title, photos, who, when }] } ; `who` = auteurs qui ont aimé (filtrés).
  */
-export function favorites(days, who){
-  const out = { days: [], moments: [] };
+export function favorites(days, who, vote = "likes"){
+  const out = { days: [], moments: [] }, by = vote === "dislikes" ? dislikedBy : likedBy;
   (days || []).forEach(([iso, day]) => Object.values((day && day.items) || {}).forEach((it) => {
     if (it.deleted) return;
-    const likers = likedBy(it).filter((a) => !who || a === who);
+    const likers = by(it).filter((a) => !who || a === who);
     if (!likers.length) return;
     if (it.id === DAY_LIKE_ID) out.days.push({ iso, who: likers });
     else out.moments.push({ iso, id: it.id, title: it.title, photos: orderedPhotos(it), who: likers, when: momentOf(it, iso) });
@@ -216,8 +245,9 @@ export function sanitizeDay(raw){
   Object.entries(src).forEach(([id, it]) => {
     if (!it || typeof it !== "object" || typeof it.title !== "string" || !/^[px]:/.test(id)) return;
     const clean = (a) => (Array.isArray(a) ? a.filter(isMediaName) : undefined);
-    const likes = it.likes && typeof it.likes === "object" ? Object.fromEntries(Object.entries(it.likes).filter(([, t]) => Number.isFinite(t))) : undefined;
-    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone), likes,
+    const votes = (v) => (v && typeof v === "object" ? Object.fromEntries(Object.entries(v).filter(([, t]) => Number.isFinite(t))) : undefined);
+    const likes = votes(it.likes), dislikes = votes(it.dislikes);
+    items[id] = { ...it, id, status: STATUSES.includes(it.status) ? it.status : "todo", at: Number(it.at) || 0, photos: clean(it.photos), gone: clean(it.gone), likes, dislikes,
       cover: isMediaName(it.cover) ? it.cover : undefined,
       hero: it.hero && typeof it.hero === "object" && isMediaName(it.hero.name) ? { name: it.hero.name, at: Number(it.hero.at) || 0 } : undefined };
     Object.keys(items[id]).forEach((k) => { if (items[id][k] === undefined) delete items[id][k]; });
@@ -250,7 +280,7 @@ export function doneItems(day, iso, opts = {}){
   const pos = new Map((opts.order || []).map((id, k) => [id, k]));
   const items = Object.values((day && day.items) || {})
     .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
-    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }));
+    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), dislikes: dislikedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }));
   const byProgram = pos.size > 0 && (!!opts.fixed || items.every((x) => !x.timed));
   const rank = (x) => (pos.has(x.id) ? pos.get(x.id) : 1e6);
   return items.sort((a, b) => (byProgram ? rank(a) - rank(b) : 0) || a.when - b.when || a.at - b.at);
