@@ -17,6 +17,15 @@
    "doneAt": 1794650929254,
    "by": "Maxime",
    "at": 1794650929255
+  },
+  "p:sanctuaire-ishiura": {
+   "id": "p:sanctuaire-ishiura",
+   "kind": "planned",
+   "title": "Sanctuaire Ishiura (le soir)",
+   "status": "done",
+   "doneAt": 1794652867415,
+   "by": "Maxime",
+   "at": 1794652867415
   }
  }
 }
