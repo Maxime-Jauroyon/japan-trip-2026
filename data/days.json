@@ -402,13 +402,6 @@
     "city": "kanazawa",
     "ideas": [
       {
-        "title": "Marché Ōmichō",
-        "lat": 36.5717,
-        "lng": 136.656,
-        "desc": "La cuisine de Kanazawa : fruits de mer, crabe de saison, stands prêts à manger sous les halles. Le lundi le marché est plus complet que le dimanche (beaucoup d’étals y ferment les dimanches et mercredis) ; étals ~9 h–17 h. Premier de lundi matin : déjeuner de fruits de mer sur place, à 1,3 km de l’atelier de feuille d’or.",
-        "goshuin": "non"
-      },
-      {
         "title": "Atelier feuille d’or",
         "lat": 36.5604,
         "lng": 136.6562,
