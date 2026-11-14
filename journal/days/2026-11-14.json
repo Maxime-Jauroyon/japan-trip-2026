@@ -4,9 +4,19 @@
    "id": "p:chateau-de-kanazawa",
    "kind": "planned",
    "title": "Château de Kanazawa",
-   "status": "todo",
+   "status": "done",
    "by": "Maxime",
-   "at": 1794610982929
+   "at": 1794650930038,
+   "doneAt": 1794650930038
+  },
+  "p:kenroku-en": {
+   "id": "p:kenroku-en",
+   "kind": "planned",
+   "title": "Kenroku-en",
+   "status": "done",
+   "doneAt": 1794650929254,
+   "by": "Maxime",
+   "at": 1794650929255
   }
  }
 }
