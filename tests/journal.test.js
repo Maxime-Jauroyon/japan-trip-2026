@@ -246,3 +246,12 @@ test("👎 : exclusif avec le ❤️ par auteur, fusion par date, favoris « pas
   assert.equal(sanitizeDay(base).items["p:a"].dislikes, undefined);
   assert.deepEqual(doneItems(bad, "2026-11-08")[0].dislikes, ["Maxime"]);
 });
+
+test("« (le soir) » dans le titre ne change pas l’id et le titre du programme prime dans le Carnet", () => {
+  assert.equal(plannedId("Kenroku-en (le soir)"), plannedId("Kenroku-en"));
+  assert.notEqual(plannedId("Nagamachi (quartier samouraï)"), plannedId("Nagamachi"));
+  const day = upsertItem(emptyDay(), plannedId("Kenroku-en"), { kind: "planned", title: "Kenroku-en" }, { status: "done" }, 1);
+  const it = doneItems(day, "2026-11-14", { titles: { [plannedId("Kenroku-en (le soir)")]: "Kenroku-en (le soir)" } });
+  assert.equal(it[0].title, "Kenroku-en (le soir)");
+  assert.equal(doneItems(day, "2026-11-14")[0].title, "Kenroku-en");
+});

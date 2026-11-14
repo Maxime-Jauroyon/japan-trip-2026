@@ -327,18 +327,18 @@
     ],
     "ideas": [
       {
-        "title": "Kenroku-en",
+        "title": "Kenroku-en (le soir)",
         "lat": 36.5619,
         "lng": 136.6626,
-        "desc": "Fait le soir, pendant l’illumination gratuite (18 h–20 h 45). L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre. De jour : ouvert 8 h–17 h en novembre (dernière entrée 16 h 30) ; protections de neige (yukitsuri) sur les pins en cours d’installation.",
+        "desc": "Illumination gratuite le soir (18 h–20 h 45). L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre. De jour : ouvert 8 h–17 h en novembre (dernière entrée 16 h 30) ; protections de neige (yukitsuri) sur les pins en cours d’installation.",
         "goshuin": "possible",
         "goshuinNote": "Au sanctuaire Kanazawa-jinja, à côté du jardin."
       },
       {
-        "title": "Château de Kanazawa",
+        "title": "Château de Kanazawa (le soir)",
         "lat": 36.5653,
         "lng": 136.659,
-        "desc": "Fait le soir, enceinte et parc illuminés (parc libre). L’intérieur des tours restaurées (Hishi Yagura, Gojikken Nagaya, porte Hashizume-mon) ne se visite que de jour : 9 h–16 h 30 (dernière entrée 16 h), ~320 ¥. Pas de donjon.",
+        "desc": "Enceinte et parc illuminés le soir (parc libre). L’intérieur des tours restaurées (Hishi Yagura, Gojikken Nagaya, porte Hashizume-mon) ne se visite que de jour : 9 h–16 h 30 (dernière entrée 16 h), ~320 ¥. Pas de donjon.",
         "goshuin": "non"
       }
     ],

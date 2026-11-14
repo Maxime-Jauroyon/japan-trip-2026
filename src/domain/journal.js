@@ -9,8 +9,11 @@ export const STATUS_LABELS = { todo: "À faire", done: "Fait", skipped: "Pas fai
 
 const slug = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-/** Id stable d’une idée du programme (même clé sur tous les appareils). */
-export const plannedId = (title) => "p:" + slug(title);
+/**
+ * Id stable d’une idée du programme (même clé sur tous les appareils). Un suffixe « (le soir) » ajouté au titre
+ * (pour dire que c’était de soir) ne change pas l’id : ce qui est déjà coché / photographié reste rattaché.
+ */
+export const plannedId = (title) => "p:" + slug(String(title || "").replace(/\s*\(le soir\)\s*$/i, ""));
 
 /** Id d’une activité ajoutée (unique : date + hasard). */
 export function newExtraId(now = Date.now(), rnd = Math.random()){
@@ -278,9 +281,10 @@ export function momentOf(it, iso){
  */
 export function doneItems(day, iso, opts = {}){
   const pos = new Map((opts.order || []).map((id, k) => [id, k]));
+  const titles = opts.titles || {};   // titre actuel du programme (prime sur celui gardé dans le journal à la première coche)
   const items = Object.values((day && day.items) || {})
     .filter((it) => !it.deleted && (it.kind === "extra" || it.status === "done" || livePhotos(it).length))
-    .map((it) => ({ id: it.id, title: it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), dislikes: dislikedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }));
+    .map((it) => ({ id: it.id, title: titles[it.id] || it.title, kind: it.kind, time: it.time, note: it.note, by: it.by, photos: orderedPhotos(it), likes: likedBy(it), dislikes: dislikedBy(it), at: it.at || 0, when: momentOf(it, iso), timed: !!(it.doneAt || it.time) }));
   const byProgram = pos.size > 0 && (!!opts.fixed || items.every((x) => !x.timed));
   const rank = (x) => (pos.has(x.id) ? pos.get(x.id) : 1e6);
   return items.sort((a, b) => (byProgram ? rank(a) - rank(b) : 0) || a.when - b.when || a.at - b.at);

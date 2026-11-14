@@ -117,6 +117,13 @@ function openDayStory(dayN){
   openStory(storySlides(x), 0, (sl, o) => photoUrl(sl.iso, sl.name, !!o.thumb, { priority: o.priority, live: o.live }));
 }
 
+/** Titre actuel d’une idée du programme (ex. « Kenroku-en (le soir) »), pour les moments gardés sous leur ancien titre dans le journal. */
+function programTitle(iso, id){
+  const day = DAYS.find(d => dayToISO(d) === iso);
+  const a = day && (day.ideas || []).find(x => plannedId(x.title) === id);
+  return a ? a.title : "";
+}
+
 /** Coups de cœur du carnet (filtrés par personne), avec les libellés de jour ; si la personne choisie n’a plus de cœur, on revient à « Tous ». */
 function favoritesModel(){
   const all = journalDays();
@@ -129,7 +136,7 @@ function favoritesModel(){
     vote,
     likers,
     days: f.days.map(x => ({ ...x, ...info(x.iso) })),
-    moments: f.moments.map(m => ({ ...m, label: `J${info(m.iso).n} · ${info(m.iso).label}` }))
+    moments: f.moments.map(m => ({ ...m, title: programTitle(m.iso, m.id) || m.title, label: `J${info(m.iso).n} · ${info(m.iso).label}` }))
   };
 }
 
@@ -144,7 +151,8 @@ export function renderCarnet(force){
     .map(([iso, jd]) => {
       const day = DAYS.find(d => dayToISO(d) === iso);
       // L’ordre du programme du jour (ordre vécu sur les jours « à ordre fixe ») prime sur l’heure de coche, souvent saisie plus tard
-      const items = day ? doneItems(jd, iso, { order: (day.ideas || []).map(a => plannedId(a.title)), fixed: !!day.ordreFixe }) : [];
+      const items = day ? doneItems(jd, iso, { order: (day.ideas || []).map(a => plannedId(a.title)), fixed: !!day.ordreFixe,
+        titles: Object.fromEntries((day.ideas || []).map(a => [plannedId(a.title), a.title])) }) : [];
       return { iso, day, items, likes: dayLikedBy(jd), dislikes: dayDislikedBy(jd) };
     })
     .filter(x => x.day && x.items.length);
