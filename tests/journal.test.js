@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { DAY_LIKE_ID, applyJournal, hqSummary, favorites, likersOf, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
+import { DAY_LIKE_ID, applyJournal, hqSummary, favorites, likersOf, dayLikedBy, heroPhoto, orderedPhotos, clockJst, collectPhotos, doneItems, likedBy, setLike, setDislike, setDayDislike, dislikedBy, dayDislikedBy, dayScore, isVideo, livePhotos, thumbName, emptyDay, extrasOf, mergeDay, newExtraId, nextStatus, plannedId, sameDay, sanitizeDay, setDayLike, statusOfPlanned, upsertItem } from "../src/domain/journal.js";
 
 test("id d’une idée : stable, sans accents ni ponctuation", () => {
   assert.equal(plannedId("Asakusa — Sensō-ji"), "p:asakusa-senso-ji");
@@ -215,4 +215,34 @@ test("Carnet : l’ordre du programme (ordre vécu) prime sur l’heure de coche
   // Ce qui n’est pas au programme (activité ajoutée) passe après, par heure
   const extra = { items: { ...untimed.items, "x:kara": { id: "x:kara", kind: "extra", title: "Karaoké", status: "done", at: 1, time: "21:00" } } };
   assert.deepEqual(doneItems(extra, "2026-11-08", { order, fixed: true }).map((x) => x.title), ["Akihabara", "Asakusa", "Sumida", "Karaoké"]);
+});
+
+test("👎 : exclusif avec le ❤️ par auteur, fusion par date, favoris « pas aimés »", () => {
+  const base = upsertItem(emptyDay(), "p:a", { kind: "planned", title: "Akihabara", status: "todo" }, { status: "done", photos: ["a.jpg"] }, 5);
+  const liked = setLike(base, "p:a", "Maxime", true, 10);
+  const bad = setDislike(liked, "p:a", "Maxime", true, 20);
+  assert.deepEqual(likedBy(bad.items["p:a"]), []);
+  assert.deepEqual(dislikedBy(bad.items["p:a"]), ["Maxime"]);
+  const back = setLike(bad, "p:a", "Maxime", true, 30);
+  assert.deepEqual(likedBy(back.items["p:a"]), ["Maxime"]);
+  assert.deepEqual(dislikedBy(back.items["p:a"]), []);
+  // un autre auteur n'est pas touché
+  const two = setDislike(setLike(base, "p:a", "Léo", true, 10), "p:a", "Maxime", true, 11);
+  assert.deepEqual(likedBy(two.items["p:a"]), ["Léo"]);
+  // fusion : le plus récent gagne, par auteur
+  const m = mergeDay(setDislike(base, "p:a", "Maxime", true, 40), setDislike(base, "p:a", "Maxime", false, 50));
+  assert.deepEqual(dislikedBy(m.items["p:a"]), []);
+  // favoris « pas aimés » + journée
+  const day = setDayDislike(bad, "Léo", true, 60);
+  assert.deepEqual(dayDislikedBy(day), ["Léo"]);
+  const days = [["2026-11-08", day]];
+  assert.deepEqual(likersOf(days, "dislikes"), ["Léo", "Maxime"]);
+  assert.equal(favorites(days, null, "dislikes").moments.length, 1);
+  assert.equal(favorites(days, "Léo", "dislikes").moments.length, 0);
+  assert.equal(favorites(days, null, "dislikes").days.length, 1);
+  assert.equal(favorites(days, null).moments.length, 0);
+  // sanitize conserve les 👎 ; un jour sans 👎 reste valide
+  assert.deepEqual(sanitizeDay(day).items["p:a"].dislikes, { Maxime: 20 });
+  assert.equal(sanitizeDay(base).items["p:a"].dislikes, undefined);
+  assert.deepEqual(doneItems(bad, "2026-11-08")[0].dislikes, ["Maxime"]);
 });

@@ -5,8 +5,8 @@
 import { DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf, plannedId } from "../../domain/journal.js";
-import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayLike, toggleLike } from "../../pwa/journal-store.js";
+import { dayDislikedBy, dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf, plannedId } from "../../domain/journal.js";
+import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayDislike, toggleDayLike, toggleDislike, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
 import { openStory } from "../story-player.js";
@@ -23,18 +23,23 @@ function photoBtn(iso, p, opt = {}){
 
 /** Cœur : cliquable avec le jeton, simple compteur en lecture seule ; jamais de prénom. */
 function likeHtml(iso, it){
-  if (journalReadOnly()) return it.likes.length ? `<span class="cn-like ro">❤️ <b>${it.likes.length}</b></span>` : "";
-  const mine = it.likes.includes(journalConfig().author || "Moi");
-  return `<button type="button" class="cn-like" data-like-iso="${esc(iso)}" data-like-id="${esc(it.id)}" aria-pressed="${mine}" aria-label="J’aime">${mine ? "❤️" : "🤍"}${it.likes.length ? ` <b>${it.likes.length}</b>` : ""}</button>`;
+  const bad = it.dislikes || [];
+  if (journalReadOnly()) return (it.likes.length ? `<span class="cn-like ro">❤️ <b>${it.likes.length}</b></span>` : "") + (bad.length ? `<span class="cn-like ro">👎 <b>${bad.length}</b></span>` : "");
+  const me = journalConfig().author || "Moi";
+  const mine = it.likes.includes(me), minebad = bad.includes(me);
+  return `<button type="button" class="cn-like" data-like-iso="${esc(iso)}" data-like-id="${esc(it.id)}" aria-pressed="${mine}" aria-label="J’aime">${mine ? "❤️" : "🤍"}${it.likes.length ? ` <b>${it.likes.length}</b>` : ""}</button>` +
+    `<button type="button" class="cn-like cn-dislike" data-dislike-iso="${esc(iso)}" data-dislike-id="${esc(it.id)}" aria-pressed="${minebad}" aria-label="Je n’ai pas aimé"><span class="cn-thumb">👎</span>${bad.length ? ` <b>${bad.length}</b>` : ""}</button>`;
 }
 
 /** ❤️ sur une journée entière : bouton avec le jeton, simple compteur en lecture seule ; jamais de prénom. */
-function dayLikeHtml(iso, likes){
-  const n = likes.length;
-  if (journalReadOnly()) return n ? `<span class="cn-daylike ro">❤️ <b>${n}</b> <small>a adoré cette journée</small></span>` : "";
-  const mine = likes.includes(journalConfig().author || "Moi");
+function dayLikeHtml(iso, likes, dislikes = []){
+  const n = likes.length, nb = dislikes.length;
+  if (journalReadOnly()) return (n ? `<span class="cn-daylike ro">❤️ <b>${n}</b> <small>a adoré cette journée</small></span>` : "") + (nb ? `<span class="cn-daylike ro">👎 <b>${nb}</b> <small>pas aimé cette journée</small></span>` : "");
+  const me = journalConfig().author || "Moi";
+  const mine = likes.includes(me), minebad = dislikes.includes(me);
   return `<button type="button" class="cn-daylike" data-daylike-iso="${esc(iso)}" aria-pressed="${mine}" aria-label="J’ai adoré cette journée">` +
-    `<span aria-hidden="true">${mine ? "❤️" : "🤍"}</span> <span>${mine ? "J’ai adoré cette journée" : "J’ai adoré cette journée ?"}</span>${n ? ` <b>${n}</b>` : ""}</button>`;
+    `<span aria-hidden="true">${mine ? "❤️" : "🤍"}</span> <span>${mine ? "J’ai adoré cette journée" : "J’ai adoré cette journée ?"}</span>${n ? ` <b>${n}</b>` : ""}</button>` +
+    `<button type="button" class="cn-daylike cn-daydislike" data-daydislike-iso="${esc(iso)}" aria-pressed="${minebad}" aria-label="Je n’ai pas aimé cette journée"><span aria-hidden="true">👎</span> <span>${minebad ? "Pas aimé" : "Pas aimé ?"}</span>${nb ? ` <b>${nb}</b>` : ""}</button>`;
 }
 
 /** Ligne d’état sous le titre : « ✓ À jour · 39 photos » avec, à droite, le bouton « Actualiser » (même place pour tout le monde). */
@@ -82,6 +87,7 @@ function renderSheet(){
   hydratePhotos(sheet);
   sheet.querySelector("[data-sheet-close]").addEventListener("click", closeSheet);
   sheet.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
+  sheet.querySelectorAll("[data-dislike-id]").forEach(b => b.addEventListener("click", () => toggleDislike(b.dataset.dislikeIso, b.dataset.dislikeId)));
   bindDoubleTap(sheet);
   sheet.scrollTop = top;
 }
@@ -114,11 +120,13 @@ function openDayStory(dayN){
 /** Coups de cœur du carnet (filtrés par personne), avec les libellés de jour ; si la personne choisie n’a plus de cœur, on revient à « Tous ». */
 function favoritesModel(){
   const all = journalDays();
-  const likers = likersOf(all);
+  const vote = feedState.vote === "dislikes" ? "dislikes" : "likes";
+  const likers = likersOf(all, vote);
   if (feedState.who && !likers.includes(feedState.who)) feedState.who = null;
-  const f = favorites(all, feedState.who);
+  const f = favorites(all, feedState.who, vote);
   const info = (iso) => { const d = DAYS.find(x => dayToISO(x) === iso); return d ? { n: d.n, label: `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}` } : { n: 0, label: iso }; };
   return {
+    vote,
     likers,
     days: f.days.map(x => ({ ...x, ...info(x.iso) })),
     moments: f.moments.map(m => ({ ...m, label: `J${info(m.iso).n} · ${info(m.iso).label}` }))
@@ -137,7 +145,7 @@ export function renderCarnet(force){
       const day = DAYS.find(d => dayToISO(d) === iso);
       // L’ordre du programme du jour (ordre vécu sur les jours « à ordre fixe ») prime sur l’heure de coche, souvent saisie plus tard
       const items = day ? doneItems(jd, iso, { order: (day.ideas || []).map(a => plannedId(a.title)), fixed: !!day.ordreFixe }) : [];
-      return { iso, day, items, likes: dayLikedBy(jd) };
+      return { iso, day, items, likes: dayLikedBy(jd), dislikes: dayDislikedBy(jd) };
     })
     .filter(x => x.day && x.items.length);
   renderCarnetStatus();
@@ -159,6 +167,8 @@ export function renderCarnet(force){
   bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory, openMoment });
   box.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
   box.querySelectorAll("[data-daylike-iso]").forEach(b => b.addEventListener("click", () => toggleDayLike(b.dataset.daylikeIso)));
+  box.querySelectorAll("[data-dislike-id]").forEach(b => b.addEventListener("click", () => toggleDislike(b.dataset.dislikeIso, b.dataset.dislikeId)));
+  box.querySelectorAll("[data-daydislike-iso]").forEach(b => b.addEventListener("click", () => toggleDayDislike(b.dataset.daydislikeIso)));
   bindDoubleTap(box);
   if (scroller) scroller.scrollTop = top;
 }

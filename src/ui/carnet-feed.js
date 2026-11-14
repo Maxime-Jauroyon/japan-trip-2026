@@ -8,7 +8,7 @@ import { clockJst } from "../domain/journal.js";
 import { storyButtonHtml } from "./story-player.js";
 
 /** Onglet (« feed » = Journées, « hearts » = Coups de cœur), jour filtré et personne choisie (gardés tant que la page est ouverte). */
-export const feedState = { mode: "feed", filter: null, who: null };
+export const feedState = { mode: "feed", filter: null, who: null, vote: "likes" };
 
 const shortDate = (d) => d.date.replace(/\s\d{4}$/, "");                 // « 10 nov »
 const shortDay = (d) => `${d.dow.slice(0, 3)} ${shortDate(d)}`;            // « Mar 10 nov »
@@ -52,7 +52,7 @@ export function dayCardHtml(ctx, x){
   return `<section class="vy-daygroup" id="cn-day-${day.n}" data-day-label="${esc(`J${day.n} · ${dayLabel(day)}`)}">` +
     `<div class="vy-chapter reveal"><span class="vy-n">Jour ${day.n}</span><h3>${esc(dayLabel(day))}</h3>` +
     `<p>${esc((city ? city.name : day.city) + extra)} · ${plural(items.length, "moment")}${nPhotos ? " · " + plural(nPhotos, "photo") : ""}${esc(span)}</p>` +
-    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + (ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || []) : "") + `</div>` +
+    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + (ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || [], x.dislikes || []) : "") + `</div>` +
     `<div class="vy-line">${items.map(it => postHtml(ctx, iso, it)).join("")}</div></section>`;
 }
 
@@ -70,17 +70,21 @@ function storiesHtml(model, ctx){
 /** Coups de cœur : les journées et les moments aimés, par personne (puces) ou par tous. `model.favs` = { days, moments, likers } avec libellés. */
 function heartsHtml(model, ctx){
   const f = model.favs || { days: [], moments: [], likers: [] };
-  const chips = `<div class="cn-days cn-who"><button type="button" data-who="" aria-pressed="${!feedState.who}">Tous</button>` +
-    f.likers.map(a => `<button type="button" data-who="${esc(a)}" aria-pressed="${feedState.who === a}">❤️ ${esc(a)}</button>`).join("") + `</div>`;
+  const bad = model.vote === "dislikes", icon = bad ? "👎" : "❤️";
+  const votes = `<div class="cn-days cn-vote"><button type="button" data-vote="likes" aria-pressed="${!bad}">❤️ Aimés</button><button type="button" data-vote="dislikes" aria-pressed="${bad}">👎 Pas aimés</button></div>`;
+  const chips = votes + `<div class="cn-days cn-who"><button type="button" data-who="" aria-pressed="${!feedState.who}">Tous</button>` +
+    f.likers.map(a => `<button type="button" data-who="${esc(a)}" aria-pressed="${feedState.who === a}">${icon} ${esc(a)}</button>`).join("") + `</div>`;
   if (!f.days.length && !f.moments.length) {
-    return chips + `<p class="vy-empty">${feedState.who ? `${esc(feedState.who)} n’a pas encore de coup de cœur.` : "Pas encore de coup de cœur : touchez le ❤️ d’un moment ou d’une journée."}</p>`;
+    return chips + `<p class="vy-empty">${bad
+      ? (feedState.who ? `${esc(feedState.who)} n’a rien marqué « pas aimé ».` : "Rien de « pas aimé » : touchez le 👎 d’un moment ou d’une journée.")
+      : (feedState.who ? `${esc(feedState.who)} n’a pas encore de coup de cœur.` : "Pas encore de coup de cœur : touchez le ❤️ d’un moment ou d’une journée.")}</p>`;
   }
   const who = (list) => (feedState.who ? "" : `<small>${list.map(esc).join(" · ")}</small>`);
-  const daysHtml = f.days.length ? `<h3 class="cn-fav-title">Journées adorées</h3><div class="cn-favdays">` + f.days.map(d =>
-    `<button type="button" class="cn-favday" data-goday="${d.n}">❤️ <span><b>Jour ${d.n}</b> ${esc(d.label)}</span>${who(d.who)}</button>`).join("") + `</div>` : "";
-  const momentsHtml = f.moments.length ? `<h3 class="cn-fav-title">Moments aimés</h3><div class="cn-favs">` + f.moments.map(m =>
+  const daysHtml = f.days.length ? `<h3 class="cn-fav-title">${bad ? "Journées pas aimées" : "Journées adorées"}</h3><div class="cn-favdays">` + f.days.map(d =>
+    `<button type="button" class="cn-favday" data-goday="${d.n}">${icon} <span><b>Jour ${d.n}</b> ${esc(d.label)}</span>${who(d.who)}</button>`).join("") + `</div>` : "";
+  const momentsHtml = f.moments.length ? `<h3 class="cn-fav-title">${bad ? "Moments pas aimés" : "Moments aimés"}</h3><div class="cn-favs">` + f.moments.map(m =>
     `<article class="cn-fav" role="button" tabindex="0" data-fav-open="${esc(m.iso + "|" + m.id)}" aria-label="${esc(`Ouvrir ${m.title}`)}">` +
-    (m.photos.length ? ctx.photoBtn(m.iso, { id: m.id, name: m.photos[0], title: m.title }, { thumb: true, story: true }) : `<span class="cn-fav-ph">❤️</span>`) +
+    (m.photos.length ? ctx.photoBtn(m.iso, { id: m.id, name: m.photos[0], title: m.title }, { thumb: true, story: true }) : `<span class="cn-fav-ph">${icon}</span>`) +
     `<div><strong>${esc(m.title)}</strong><small>${esc(m.label)}${m.photos.length > 1 ? ` · ${m.photos.length} photos` : ""}</small>${who(m.who)}</div><span class="cn-fav-go" aria-hidden="true">›</span></article>`).join("") + `</div>` : "";
   return chips + daysHtml + momentsHtml;
 }
@@ -92,7 +96,7 @@ const helpSeen = () => { try { return localStorage.getItem(HELP_KEY) === "1"; } 
 function helpHtml(model){
   if (helpSeen()) return "";
   const lines = ["👆 Faites défiler pour suivre le voyage, jour après jour.", "🖼 Touchez une photo pour l’agrandir ; glissez pour voir les suivantes.", "▶ « Revivre la journée » : un diaporama avec de la musique."];
-  if (!model.readOnly) lines.push("❤️ Touchez le cœur pour dire que vous avez aimé un moment ou une journée.");
+  if (!model.readOnly) lines.push("❤️ Touchez le cœur pour dire que vous avez aimé un moment ou une journée, 👎 si vous n’avez pas aimé.");
   return `<aside class="cn-help" role="note"><strong>Comment ça marche ?</strong><ul>${lines.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` +
     `<button type="button" data-help-close>J’ai compris</button></aside>`;
 }
@@ -134,6 +138,7 @@ export function bindCarnet(root, again, ctx){
     b.addEventListener("click", open);
     b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
   });
+  root.querySelectorAll("[data-vote]").forEach(b => b.addEventListener("click", () => { feedState.vote = b.dataset.vote; feedState.who = null; again(); }));
   root.querySelectorAll("[data-who]").forEach(b => b.addEventListener("click", () => { feedState.who = b.dataset.who || null; again(); }));
   root.querySelectorAll("[data-goday]").forEach(b => b.addEventListener("click", () => { feedState.mode = "feed"; feedState.filter = Number(b.dataset.goday); again(); }));
   root.querySelectorAll("[data-fday]").forEach(b => b.addEventListener("click", () => { feedState.filter = b.dataset.fday ? Number(b.dataset.fday) : null; again(); }));
