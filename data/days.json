@@ -327,10 +327,25 @@
     ],
     "ideas": [
       {
+        "title": "Kenroku-en",
+        "lat": 36.5619,
+        "lng": 136.6626,
+        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison. Vu ce soir pendant l’illumination gratuite (18 h–20 h 45). De jour : ouvert 8 h–17 h en novembre (dernière entrée 16 h 30) ; protections de neige (yukitsuri) sur les pins en cours d’installation.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Kanazawa-jinja, à côté du jardin."
+      },
+      {
+        "title": "Château de Kanazawa",
+        "lat": 36.5653,
+        "lng": 136.659,
+        "desc": "Enceinte blanche à côté de Kenroku-en : parc libre, éclairé le soir. L’intérieur des tours restaurées (Hishi Yagura, Gojikken Nagaya, porte Hashizume-mon) ne se visite que de jour : 9 h–16 h 30 (dernière entrée 16 h), ~320 ¥. Pas de donjon.",
+        "goshuin": "non"
+      },
+      {
         "title": "Higashi Chaya",
         "lat": 36.5733,
         "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois. La lumière du soir est particulièrement belle. Seul à faire aujourd’hui si l’envie vient : fin d’après-midi ou début de soirée (rues éclairées, boutiques ~18 h), à ~1,5 km de l’hôtel.",
+        "desc": "Quartier historique de maisons de thé en bois, vu après les illuminations. La lumière du soir est particulièrement belle (rues éclairées ; boutiques ouvertes jusqu’à ~18 h).",
         "goshuin": "non"
       }
     ],
@@ -353,25 +368,10 @@
     "city": "kanazawa",
     "ideas": [
       {
-        "title": "Kenroku-en",
-        "lat": 36.5619,
-        "lng": 136.6626,
-        "desc": "L’un des trois grands jardins du Japon — étangs, pins et lanternes de pierre pour chaque saison. En novembre : ouvert 8 h–17 h (dernière entrée 16 h 30) ; protections de neige (yukitsuri) sur les pins en cours d’installation. Premier de la matinée de dimanche : ouvre à 8 h, plus calme tôt. Enchaîne avec le château, à 0,5 km à pied.",
-        "goshuin": "possible",
-        "goshuinNote": "Au sanctuaire Kanazawa-jinja, à côté du jardin."
-      },
-      {
-        "title": "Château de Kanazawa",
-        "lat": 36.5653,
-        "lng": 136.659,
-        "desc": "Enceinte blanche à côté de Kenroku-en. Portes restaurées et allées de parc. À 0,5 km de Kenroku-en, puis le sanctuaire Oyama est à 0,3 km.",
-        "goshuin": "non"
-      },
-      {
         "title": "Sanctuaire Oyama",
         "lat": 36.566,
         "lng": 136.6555,
-        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château. À 0,3 km du château ; à 0,2 km de l’hôtel.",
+        "desc": "Sanctuaire à la porte mêlant styles japonais et occidental, près du château. À 0,2 km de l’hôtel ; le musée du XXIe siècle est à ~0,6 km.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du sanctuaire."
       },
@@ -387,12 +387,6 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "reminders": [
-      {
-        "title": "Ce soir : illumination de Kenroku-en (gratuite)",
-        "desc": "Illumination du jardin de Kenroku-en, gratuite : de 18 h à 20 h 45 (le jardin de jour ferme à 17 h, dernière entrée 16 h 30). Les soirs d’illumination de novembre : 14, 15, 21, 22, 28 et 29 (dates à confirmer sur kenrokuen.or.jp)."
-      }
-    ],
     "ordreFixe": true
   },
   {
