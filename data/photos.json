@@ -157,6 +157,10 @@
       "slug": "ishiura"
     },
     {
+      "match": "shiinoki",
+      "slug": "kanazawa-castle"
+    },
+    {
       "match": "oyama",
       "slug": "oyama"
     },
