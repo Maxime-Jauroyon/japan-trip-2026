@@ -17,6 +17,15 @@
    "doneAt": 1794710474078,
    "by": "Maxime",
    "at": 1794710474078
+  },
+  "p:musee-du-xxie-siecle": {
+   "id": "p:musee-du-xxie-siecle",
+   "kind": "planned",
+   "title": "Musée du XXIe siècle",
+   "status": "done",
+   "doneAt": 1794712558382,
+   "by": "Maxime",
+   "at": 1794712558382
   }
  }
 }
