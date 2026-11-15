@@ -4,7 +4,11 @@ import { WEATHER_CACHE_KEY } from "../../config.js";
 import { CITIES, CITY_CLIMATE, TRIP } from "../../core/data.js";
 import { dayToISO, daysUntilISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
+import { agoLabel, isFresh } from "../../domain/live-data.js";
 import { daysForCity } from "../../domain/trip.js";
+
+/** Une prévision en cache reste valable 90 min ; au-delà (ou à chaque retour dans l’app) on la redemande si le réseau est là. */
+const WX_MAX_AGE_MS = 90 * 60000;
 
 const WX_LABELS = {
   0:"Ensoleillé", 1:"Plutôt clair", 2:"Nuageux", 3:"Couvert",
@@ -36,9 +40,11 @@ async function getWeatherForDay(day){
   const cacheKey = day.city + "|" + iso;
   const cache = loadWeatherCache();
   const hit = cache[cacheKey];
-  if (hit && hit.date === japanTodayISO()) return hit.data;
+  if (hit && hit.data && isFresh(hit.at, Date.now(), WX_MAX_AGE_MS)) return hit.data;
 
   if (!navigator.onLine) {
+    // Hors ligne : dernière prévision connue (avec son heure), sinon le climat du mois
+    if (hit && hit.data) return { ...hit.data, offline: true };
     if (climate) return { type:"climate", min:climate.lo, max:climate.hi, note:climate.note + " (hors ligne)" };
     return null;
   }
@@ -47,8 +53,9 @@ async function getWeatherForDay(day){
     const url = "https://api.open-meteo.com/v1/forecast?latitude=" + city.lat +
       "&longitude=" + city.lng +
       "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+      (until === 0 ? "&current=temperature_2m,weather_code" : "") +
       "&timezone=Asia%2FTokyo&start_date=" + iso + "&end_date=" + iso;
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("weather");
     const json = await res.json();
     const d = json.daily || {};
@@ -58,29 +65,47 @@ async function getWeatherForDay(day){
       min: Math.round(d.temperature_2m_min[0]),
       max: Math.round(d.temperature_2m_max[0]),
       label: WX_LABELS[code] || "Variable",
-      rain: d.precipitation_probability_max ? d.precipitation_probability_max[0] : null
+      rain: d.precipitation_probability_max ? d.precipitation_probability_max[0] : null,
+      now: json.current && Number.isFinite(json.current.temperature_2m) ? { temp: Math.round(json.current.temperature_2m), label: WX_LABELS[json.current.weather_code] || "" } : null,
+      at: Date.now()
     };
-    cache[cacheKey] = { date: japanTodayISO(), data };
+    cache[cacheKey] = { at: Date.now(), data };
     saveWeatherCache(cache);
     return data;
   } catch (_) {
+    if (hit && hit.data) return { ...hit.data, offline: true };
     if (climate) return { type:"climate", min:climate.lo, max:climate.hi, note:climate.note };
     return null;
   }
 }
 
-export async function renderOnsiteWeather(day){
+let watchedDay = null;
+
+/** Retient le jour affiché et remet la météo à jour quand on revient dans l’app ou que le réseau revient. */
+function watchWeather(day){
+  const first = watchedDay === null;
+  watchedDay = day;
+  if (!first) return;
+  const refresh = () => { if (watchedDay && !document.hidden && document.getElementById("onsite-weather")) renderOnsiteWeather(watchedDay, true); };
+  document.addEventListener("visibilitychange", refresh);
+  window.addEventListener("online", refresh);
+}
+
+export async function renderOnsiteWeather(day, quiet){
+  watchWeather(day);
   const box = document.getElementById("onsite-weather");
   if (!box || !day) { if (box) box.hidden = true; return; }
   box.hidden = false;
-  box.innerHTML = `<span class="wx-note">Météo…</span>`;
+  if (!quiet) box.innerHTML = `<span class="wx-note">Météo…</span>`;
   const wx = await getWeatherForDay(day);
   if (!wx) { box.hidden = true; return; }
   const cityName = CITIES[day.city] ? CITIES[day.city].name : day.city;
   if (wx.type === "forecast") {
+    const nowTxt = wx.now ? `Maintenant ${wx.now.temp}°${wx.now.label ? " · " + esc(wx.now.label) : ""} · ` : "";
     box.innerHTML =
       `<span class="wx-temps">${wx.min}° – ${wx.max}°C</span>` +
-      `<span class="wx-note">${esc(wx.label)}${wx.rain != null ? ` · pluie ${wx.rain}%` : ""} · ${esc(cityName)}</span>`;
+      `<span class="wx-note">${nowTxt}${esc(wx.label)}${wx.rain != null ? ` · pluie ${wx.rain}%` : ""} · ${esc(cityName)}` +
+      `${wx.at ? ` · mise à jour ${agoLabel(wx.at, Date.now())}${wx.offline ? " (hors ligne)" : ""}` : ""}</span>`;
   } else {
     box.innerHTML =
       `<span class="wx-temps">${wx.min}° – ${wx.max}°C</span>` +
@@ -98,18 +123,17 @@ const forecastRuns = {};
  */
 export async function getCityForecast(cityId){
   const city = CITIES[cityId];
-  const today = japanTodayISO();
   const isos = daysForCity(cityId).map(dayToISO).filter(iso => iso && daysUntilISO(iso) >= 0 && daysUntilISO(iso) <= 15).sort();
   if (!city || !isos.length) return {};
   const key = "f|" + cityId;
   const cache = loadWeatherCache();
-  if (cache[key] && cache[key].date === today) return cache[key].data;
+  if (cache[key] && isFresh(cache[key].at, Date.now(), WX_MAX_AGE_MS)) return cache[key].data;
   if (!navigator.onLine) return (cache[key] && cache[key].data) || {};
   if (!forecastRuns[key]) forecastRuns[key] = (async () => {
     const url = "https://api.open-meteo.com/v1/forecast?latitude=" + city.lat + "&longitude=" + city.lng +
       "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
       "&timezone=Asia%2FTokyo&start_date=" + isos[0] + "&end_date=" + isos[isos.length - 1];
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("weather");
     const d = (await res.json()).daily || {};
     const data = {};
@@ -122,7 +146,7 @@ export async function getCityForecast(cityId){
       };
     });
     const c = loadWeatherCache();
-    c[key] = { date: today, data };
+    c[key] = { at: Date.now(), data };
     saveWeatherCache(c);
     return data;
   })().finally(() => { delete forecastRuns[key]; });
