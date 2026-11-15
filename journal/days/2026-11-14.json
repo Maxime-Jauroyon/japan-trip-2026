@@ -31,7 +31,10 @@
    "status": "done",
    "doneAt": 1794652867415,
    "by": "Maxime",
-   "at": 1794652867415
+   "at": 1794652867415,
+   "likes": {
+    "Maxime": 1794717890071
+   }
   },
   "p:sanctuaire-oyama": {
    "id": "p:sanctuaire-oyama",
