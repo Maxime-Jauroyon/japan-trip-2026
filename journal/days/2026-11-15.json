@@ -8,6 +8,15 @@
    "by": "Léo",
    "at": 1794703817657,
    "doneAt": 1794703817657
+  },
+  "p:sanctuaire-oyama": {
+   "id": "p:sanctuaire-oyama",
+   "kind": "planned",
+   "title": "Sanctuaire Oyama",
+   "status": "done",
+   "doneAt": 1794710474078,
+   "by": "Maxime",
+   "at": 1794710474078
   }
  }
 }
