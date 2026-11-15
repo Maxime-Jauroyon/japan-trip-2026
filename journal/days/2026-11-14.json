@@ -6,11 +6,20 @@
    "title": "Château de Kanazawa",
    "status": "done",
    "by": "Maxime",
-   "at": 1794650930038,
+   "at": 1794718206933,
    "doneAt": 1794650930038,
    "likes": {
     "Maxime": 1794717879153
-   }
+   },
+   "photos": [
+    "mwhcvq2nbjs.jpg",
+    "mwhcvq79yox.jpg",
+    "mwhcvqbxvib.jpg",
+    "mwhcvqkssxq.jpg",
+    "mwhcvqp8izk.jpg",
+    "mwhcvqx3tkz.jpg",
+    "mwhcvr5edzn.jpg"
+   ]
   },
   "p:kenroku-en": {
    "id": "p:kenroku-en",
@@ -61,7 +70,11 @@
    "status": "done",
    "doneAt": 1794652873595,
    "by": "Maxime",
-   "at": 1794652873595
+   "at": 1794718227869,
+   "photos": [
+    "mwhcw7572h0.jpg",
+    "mwhcw7abs0g.jpg"
+   ]
   },
   "p:shiinoki-green-space": {
    "id": "p:shiinoki-green-space",
