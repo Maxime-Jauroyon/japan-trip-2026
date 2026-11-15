@@ -253,3 +253,49 @@ html.sheet-open, html.sheet-open body { overflow: hidden; }
 .cn-hq[hidden] { display: none; }
 .cn-hq span { flex: 1; min-width: 0; }
 .cn-hq button { flex: 0 0 auto; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 0; background: var(--gold); color: var(--bg); font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+
+/* « Où en est le voyage » : jour N sur total, ville, météo, étapes, dernier moment, nouveautés */
+.cn-live { margin: 0 0 14px; padding: 14px; border-radius: 18px; border: 1px solid var(--line); background: var(--panel); }
+.cn-live-head { display: flex; align-items: center; gap: 10px; }
+.cn-live-head b { display: block; font-size: 17px; color: var(--cream); }
+.cn-live-head small { display: block; margin-top: 1px; font-size: 13px; color: var(--muted); }
+.cn-pulse { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(111, 206, 174, .6); animation: cn-pulse 2s infinite; }
+@keyframes cn-pulse { 70% { box-shadow: 0 0 0 10px rgba(111, 206, 174, 0); } 100% { box-shadow: 0 0 0 0 rgba(111, 206, 174, 0); } }
+.cn-prog { height: 6px; margin: 12px 0 10px; border-radius: 6px; background: var(--panel-2); overflow: hidden; }
+.cn-prog i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold), var(--gold-2)); transition: width .6s; }
+.cn-route { display: flex; gap: 6px; margin: 0; padding: 0; overflow-x: auto; list-style: none; scrollbar-width: none; }
+.cn-route::-webkit-scrollbar { display: none; }
+.cn-route li { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.cn-route li i { width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--line); }
+.cn-route li.done { color: var(--cream); }
+.cn-route li.done i { background: var(--gold); border-color: var(--gold); }
+.cn-route li.now { border-color: var(--gold); color: var(--gold); background: rgba(var(--gold-rgb), .12); }
+.cn-route li.now i { background: var(--ok); border-color: var(--ok); }
+.cn-live-last { margin: 10px 0 0; font-size: 13.5px; color: var(--muted); }
+.cn-live-last b { color: var(--cream); }
+.cn-news { display: flex; align-items: center; gap: 12px; width: 100%; margin: 0 0 12px; padding: 12px 14px; border: 1px solid var(--gold); border-radius: 14px; background: rgba(var(--gold-rgb), .16); color: var(--cream); font: inherit; text-align: left; cursor: pointer; }
+.cn-news > span:first-child { font-size: 22px; }
+.cn-news > span:nth-child(2) { flex: 1; display: flex; flex-direction: column; font-size: 14px; }
+.cn-news small { font-size: 12px; color: var(--muted); }
+.cn-news em { font-style: normal; font-weight: 700; color: var(--gold); }
+.vy-new { flex: 0 0 auto; padding: 2px 8px; border-radius: 999px; background: var(--gold); color: var(--bg); font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.vy-post.flash { animation: cn-flash 2.4s ease; }
+@keyframes cn-flash { 0%, 60% { box-shadow: 0 0 0 3px var(--gold); } 100% { box-shadow: 0 0 0 3px transparent; } }
+
+/* Chapitre d’un jour : photo du jour en fond, repère « Aujourd’hui » / « Hier » */
+.vy-tag { margin-left: 6px; padding: 2px 10px; border-radius: 999px; border: 1px solid currentColor; font-size: 12px; font-weight: 700; color: var(--gold); }
+.vy-chapter.has-hero { position: relative; overflow: hidden; padding: 0; border: 0; color: #fff; }
+.vy-chapter-ph { position: absolute; inset: 0; }
+.vy-chapter-ph .vy-photo { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; }
+.vy-chapter.has-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, .15), rgba(0, 0, 0, .78)); }
+.vy-chapter.has-hero .vy-chapter-in { position: relative; z-index: 1; padding: 64px 16px 16px; }
+.vy-chapter.has-hero h3, .vy-chapter.has-hero p { color: #fff; }
+.vy-chapter.has-hero .vy-tag { color: #f0d9a8; }
+.vy-chapter.has-hero .cn-daylike { background: rgba(0, 0, 0, .45); border-color: rgba(255, 255, 255, .35); color: #fff; }
+.vy-chapter.has-hero .cn-daylike[aria-pressed="true"]:not(.cn-daydislike) { border-color: #f0d9a8; color: #f0d9a8; }
+.vy-chapter.has-hero .cn-daylike.ro, .vy-chapter.has-hero .cn-daylike small { color: #fff; }
+
+/* Visionneuse : enregistrer / partager la photo */
+.jv-tools { display: flex; justify-content: center; padding: 10px 14px 0; }
+.jv-save { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .3); background: rgba(255, 255, 255, .1); color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.cn-live-wx:not([hidden])::before { content: " · "; white-space: pre; }
