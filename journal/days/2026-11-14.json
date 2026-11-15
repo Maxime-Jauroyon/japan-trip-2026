@@ -7,7 +7,10 @@
    "status": "done",
    "by": "Maxime",
    "at": 1794650930038,
-   "doneAt": 1794650930038
+   "doneAt": 1794650930038,
+   "likes": {
+    "Maxime": 1794717879153
+   }
   },
   "p:kenroku-en": {
    "id": "p:kenroku-en",
