@@ -439,41 +439,23 @@
     "city": "kanazawa",
     "ideas": [
       {
-        "title": "Atelier feuille d’or",
-        "lat": 36.5604,
-        "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Créneaux réservés (10 h 30 ou 13 h) ; à ~0,6 km de Nagamachi.",
-        "goshuin": "non",
-        "notes": [
-          "Réservation obligatoire. Gold Leaf Sakuda : dès ¥1 760, créneaux 9 h, 10 h 30, 13 h, 15 h ; réservation en ligne jusqu’à 2 jours avant (soit dès le 14 nov) ou par téléphone 9 h–17 h.",
-          "Alternative : Hakuichi (formulaire en ligne ou 076-240-8911, 9 h–18 h)."
-        ]
-      },
-      {
-        "title": "Nagamachi (quartier samouraï)",
-        "lat": 36.5628,
-        "lng": 136.65,
-        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable. À 0,9 km de Myōryū-ji, sur le chemin du quartier des temples.",
-        "goshuin": "non"
-      },
-      {
         "title": "Myōryū-ji",
         "lat": 36.5551,
         "lng": 136.6486,
-        "desc": "Le « temple des ninjas » — visite guidée d’environ 40 min (portes secrètes, pièges, escaliers dérobés). Réservation obligatoire par téléphone. Viser ~14 h pour la visite réservée ; Teramachi est à 0,2 km.",
+        "desc": "Le « temple des ninjas » — visite guidée d’environ 40 min (portes secrètes, pièges, escaliers dérobés). Visite réservée lundi à 11 h : être sur place à 10 h 50 (espèces). Teramachi est à 0,2 km.",
         "goshuin": "possible",
         "goshuinNote": "Au temple (« Ninja-dera ») : à demander à l’accueil.",
         "notes": [
-          "Réserver au 076-241-0888 (8 h 30–17 h, l’anglais est compris). Pas de réservation en ligne fiable.",
+          "Visite réservée : lundi 16 nov, 11 h — être sur place à 10 h 50, les retardataires ne sont pas attendus (tél. 076-241-0888).",
           "Visite guidée en japonais ; on prête un livret en anglais pour suivre chaque étape.",
-          "Entrée ¥1 200 en espèces seulement (¥1 300 à partir du 1er décembre). Ouvert ~9 h–16 h 30, ~16 h l’hiver : arriver en avance, les retardataires ne sont pas attendus."
+          "Entrée ¥1 200 en espèces seulement (¥1 300 à partir du 1er décembre)."
         ]
       },
       {
         "title": "Teramachi",
         "lat": 36.5542,
         "lng": 136.6502,
-        "desc": "Quartier des temples au sud du centre : ruelles calmes et nombreux petits temples bouddhistes. À 0,2 km de Myōryū-ji ; Nishi Chaya est à 0,4 km.",
+        "desc": "Quartier des temples au sud du centre : ruelles calmes et nombreux petits temples bouddhistes. À 0,2 km de Myōryū-ji ; bon endroit pour déjeuner. Nishi Chaya est à 0,4 km.",
         "goshuin": "oui",
         "goshuinNote": "Dans plusieurs temples du quartier."
       },
@@ -481,19 +463,37 @@
         "title": "Nishi Chaya",
         "lat": 36.557,
         "lng": 136.6475,
-        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré. Dernière étape du lundi, à 0,4 km de Teramachi (ferme vers 17 h 30).",
+        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré. À 0,4 km de Teramachi (ferme vers 17 h 30) ; Nagamachi est à ~0,7 km.",
         "goshuin": "non"
+      },
+      {
+        "title": "Nagamachi (quartier samouraï)",
+        "lat": 36.5628,
+        "lng": 136.65,
+        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable. À ~0,7 km de Nishi Chaya ; l’atelier de feuille d’or est à ~0,6 km.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Atelier feuille d’or",
+        "lat": 36.5604,
+        "lng": 136.6562,
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Pas encore réservé : créneau de 15 h conseillé (13 h en repli), à ~0,6 km de Nagamachi.",
+        "goshuin": "non",
+        "notes": [
+          "Réservation obligatoire, par téléphone (la réservation en ligne ferme 2 jours avant). Gold Leaf Sakuda : dès ¥1 760, créneaux 9 h, 10 h 30, 13 h, 15 h ; téléphone 9 h–17 h. Viser 15 h.",
+          "Alternative : Hakuichi (formulaire en ligne ou 076-240-8911, 9 h–18 h)."
+        ]
       }
     ],
     "reminders": [
       {
-        "title": "À réserver avant lundi : Myōryū-ji et l’atelier feuille d’or",
-        "desc": "Appeler le temple des ninjas au 076-241-0888 (8 h 30–17 h) et réserver l’atelier de feuille d’or (Sakuda en ligne dès le 14 nov, ou téléphone) pour lundi 16 nov. Prendre des espèces pour le temple."
+        "title": "Lundi : être à Myōryū-ji à 10 h 50 (visite réservée à 11 h)",
+        "desc": "Partir de l’hôtel vers 10 h 15. Prendre des espèces pour le temple. Appeler pour l’atelier de feuille d’or (créneau de 15 h) : Sakuda, téléphone 9 h–17 h."
       }
     ],
     "wake": {
       "time": "08:00",
-      "why": "Journée libre"
+      "why": "Visite des ninja à 11 h"
     },
     "ordreFixe": true
   },

@@ -15,22 +15,9 @@
       "done": false
     },
     {
-      "id": "myoryuji-reservation",
-      "label": "Réserver le temple des ninjas (Myōryū-ji) pour lun. 16 nov",
-      "meta": "Par téléphone uniquement : 076-241-0888 (8 h 30–17 h, anglais compris) · visite guidée ~40 min en japonais avec livret en anglais · ¥1 200 en espèces · arriver en avance",
-      "remindFrom": "2026-11-14",
-      "done": false,
-      "links": [
-        {
-          "label": "Fiche officielle (Visit Kanazawa)",
-          "url": "https://visitkanazawa.jp/en/attractions/detail_50022.html"
-        }
-      ]
-    },
-    {
       "id": "feuille-or-reservation",
-      "label": "Réserver l’atelier de feuille d’or (lun. 16 nov)",
-      "meta": "Gold Leaf Sakuda : dès ¥1 760, créneaux 9 h / 10 h 30 / 13 h / 15 h, en ligne jusqu’à 2 jours avant ou téléphone 9 h–17 h · ou Hakuichi : formulaire ou 076-240-8911 (9 h–18 h)",
+      "label": "Réserver l’atelier de feuille d’or (lun. 16 nov, créneau 15 h)",
+      "meta": "Réservation en ligne fermée (2 jours avant) : téléphoner à Gold Leaf Sakuda (9 h–17 h) pour 15 h (ou 13 h) · ou Hakuichi : 076-240-8911 (9 h–18 h)",
       "remindFrom": "2026-11-14",
       "done": false,
       "links": [
