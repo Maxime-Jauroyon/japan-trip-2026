@@ -217,10 +217,10 @@ function paintLike(){
   const it = p && journalDay(p.iso).items[p.id];
   const who = likedBy(it);
   const btn = viewer.querySelector(".jv-like");
-  btn.textContent = `${who.includes(authorName()) ? "❤️" : "🤍"} ${who.length || ""}`.trim();
+  btn.textContent = `${who.includes(authorName()) ? "❤️" : "🤍"} J’aime ${who.length || ""}`.trim();
   const bad = dislikedBy(it);
   const dbtn = viewer.querySelector(".jv-dislike");
-  dbtn.textContent = `👎 ${bad.length || ""}`.trim();
+  dbtn.textContent = `👎 Pas aimé ${bad.length || ""}`.trim();
   dbtn.classList.toggle("on", bad.includes(authorName()));
   // Photo phare de l’activité / couverture du carnet : état de la photo affichée
   const star = viewer.querySelector(".jv-star"), hero = viewer.querySelector(".jv-hero");

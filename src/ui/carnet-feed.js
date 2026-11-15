@@ -71,13 +71,16 @@ function storiesHtml(model, ctx){
 function heartsHtml(model, ctx){
   const f = model.favs || { days: [], moments: [], likers: [] };
   const bad = feedState.vote === "dislikes", icon = bad ? "👎" : "❤️";
-  const votes = `<div class="cn-days cn-vote"><button type="button" data-vote="likes" aria-pressed="${!bad}">❤️ Aimés</button><button type="button" data-vote="dislikes" aria-pressed="${bad}">👎 Pas aimés</button></div>`;
+  const cnt = f.counts || { likes: 0, dislikes: 0 };
+  const votes = `<div class="cn-seg cn-vote" role="tablist" aria-label="Aimés ou pas aimés">` +
+    `<button type="button" role="tab" data-vote="likes" aria-pressed="${!bad}" aria-selected="${!bad}">❤️ Aimés${cnt.likes ? ` <b>${cnt.likes}</b>` : ""}</button>` +
+    `<button type="button" role="tab" data-vote="dislikes" aria-pressed="${bad}" aria-selected="${bad}">👎 Pas aimés${cnt.dislikes ? ` <b>${cnt.dislikes}</b>` : ""}</button></div>`;
   const chips = votes + `<div class="cn-days cn-who"><button type="button" data-who="" aria-pressed="${!feedState.who}">Tous</button>` +
     f.likers.map(a => `<button type="button" data-who="${esc(a)}" aria-pressed="${feedState.who === a}">${icon} ${esc(a)}</button>`).join("") + `</div>`;
   if (!f.days.length && !f.moments.length) {
-    return chips + `<p class="vy-empty">${bad
-      ? (feedState.who ? `${esc(feedState.who)} n’a rien marqué « pas aimé ».` : "Rien de « pas aimé » : touchez le 👎 d’un moment ou d’une journée.")
-      : (feedState.who ? `${esc(feedState.who)} n’a pas encore de coup de cœur.` : "Pas encore de coup de cœur : touchez le ❤️ d’un moment ou d’une journée.")}</p>`;
+    return chips + `<div class="vy-empty cn-empty"><span class="cn-empty-emo" aria-hidden="true">${icon}</span><p>${bad
+      ? (feedState.who ? `${esc(feedState.who)} n’a rien marqué « pas aimé ».` : "Rien de « pas aimé » pour l’instant. Touchez le 👎 sous un moment ou une journée pour le noter.")
+      : (feedState.who ? `${esc(feedState.who)} n’a pas encore de coup de cœur.` : "Pas encore de coup de cœur. Touchez le ❤️ sous un moment ou une journée pour le retrouver ici.")}</p></div>`;
   }
   const who = (list) => (feedState.who ? "" : `<small>${list.map(esc).join(" · ")}</small>`);
   const daysHtml = f.days.length ? `<h3 class="cn-fav-title">${bad ? "Journées pas aimées" : "Journées adorées"}</h3><div class="cn-favdays">` + f.days.map(d =>

@@ -83,8 +83,15 @@
 .cn-like { display: inline-flex; align-items: center; gap: 5px; min-width: 44px; min-height: 44px; padding: 0 8px; border: 0; background: none; color: var(--cream); font: inherit; font-size: 22px; cursor: pointer; }
 .cn-like b { font-size: 14px; }
 .cn-like.ro { cursor: default; font-size: 18px; }
-.cn-dislike .cn-thumb { filter: grayscale(1); opacity: .55; }
-.cn-dislike[aria-pressed="true"] .cn-thumb { filter: none; opacity: 1; }
+/* Avis sous un moment : deux grands boutons avec libellé (J’aime / Pas aimé), lisibles sans connaître les réseaux sociaux */
+.cn-react { display: flex; gap: 8px; width: 100%; }
+.cn-react .cn-react-btn { flex: 1; justify-content: center; gap: 7px; min-height: 46px; padding: 0 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel-2); font-size: 15px; font-weight: 600; transition: transform .12s, background .15s, border-color .15s; }
+.cn-react-btn:active, .cn-daylike:active { transform: scale(.96); }
+.cn-react-btn .cn-emo { font-size: 20px; }
+.cn-react-btn b, .cn-daylike b { min-width: 20px; padding: 1px 6px; border-radius: 999px; background: rgba(var(--fg-rgb), .1); font-size: 12.5px; text-align: center; }
+.cn-react-btn[aria-pressed="true"] { border-color: var(--gold); background: rgba(var(--gold-rgb), .16); color: var(--gold); }
+.cn-react .cn-dislike[aria-pressed="true"] { border-color: var(--accent); background: rgba(196, 92, 38, .16); color: var(--accent); }
+.cn-dislike:not([aria-pressed="true"]) .cn-thumb { filter: grayscale(1); opacity: .6; }
 .cn-likers { color: var(--muted); font-size: 12px; }
 
 /* Photos : flou → net, chargement, absente */
@@ -183,16 +190,25 @@ html.story-open, html.story-open body { overflow: hidden; }
 .st-music-next[hidden] { display: none; }
 
 /* ❤️ sur une journée entière */
+.cn-dayreact { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.cn-dayreact .cn-daylike { flex: 1 1 140px; justify-content: center; margin-top: 0; }
+.cn-daylike .cn-emo { font-size: 18px; }
 .cn-daylike { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 10px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: none; color: var(--cream); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
 .cn-daylike[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
 .cn-daylike b { font-size: 14px; }
-.cn-daydislike { margin-left: 8px; }
+.cn-daylike.cn-daydislike[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: rgba(196, 92, 38, .12); }
+.cn-daylike[aria-pressed="true"]:not(.cn-daydislike) { background: rgba(var(--gold-rgb), .14); }
 .cn-daylike.ro { cursor: default; border-color: transparent; padding: 0; }
 .cn-daylike small { font-weight: 500; color: var(--muted); }
 
 /* Coups de cœur par personne */
 .cn-who { margin: 4px 0 10px; }
-.cn-vote { margin: 4px 0 6px; }
+.cn-vote { width: 100%; margin: 4px 0 8px; }
+.cn-vote button { flex: 1; }
+.cn-vote b { margin-left: 4px; padding: 1px 7px; border-radius: 999px; background: rgba(var(--fg-rgb), .14); font-size: 12px; }
+.cn-empty { display: grid; justify-items: center; gap: 6px; padding: 28px 16px; text-align: center; color: var(--muted); }
+.cn-empty-emo { font-size: 44px; }
+.cn-empty p { margin: 0; max-width: 28ch; line-height: 1.4; }
 .cn-fav-title { margin: 14px 0 8px; font-size: 15px; color: var(--cream); }
 .cn-favdays { display: grid; gap: 6px; }
 .cn-favday { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel-2); color: var(--cream); font: inherit; text-align: left; cursor: pointer; }
