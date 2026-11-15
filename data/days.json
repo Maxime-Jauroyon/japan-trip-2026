@@ -405,29 +405,23 @@
         "goshuin": "non"
       },
       {
-        "title": "Seisonkaku (villa Maeda)",
-        "lat": 36.561,
-        "lng": 136.6632,
-        "desc": "Villa de 1863 du clan Maeda, au bord de Kenroku-en : salons laqués, jardin, thé possible. À ~0,6 km du musée Suzuki. Ouvert 9 h–17 h (dernière entrée 16 h 30), ~700 ¥ ; fermé le mercredi. À finir avant ~14 h pour être à Higashi Chaya à 14 h 30.",
-        "goshuin": "non"
+        "title": "Atelier feuille d’or",
+        "lat": 36.5613,
+        "lng": 136.5981,
+        "desc": "Atelier Hakuichi Hakukokan (2-1-1 Morito), à l’ouest de la ville : ~20 min en taxi depuis le centre (~2 500–3 000 ¥). Atelier de ~1 h, dès 2 000 ¥, départs jusqu’à 16 h : viser 14 h ou 15 h. Téléphoner avant au 076-240-8911 (9 h–18 h) pour réserver ou vérifier qu’il reste de la place.",
+        "goshuin": "non",
+        "notes": [
+          "Seul atelier avec des places sans réservation « s’il en reste » (Sakuda et Katani complets). Départs 9 h, 10 h, 11 h, 13 h, 14 h, 15 h, 16 h ; boutique 9 h–17 h. Accès : ~20 min en taxi depuis la gare de Kanazawa (~2 500–3 000 ¥) ; ~30 min à pied de la gare de Nonoichi.",
+          "Option plus proche, à Higashi Chaya : Hakuichi « Kanazawa Bikazari Asano » (1-8-3 Higashiyama, 2e étage, sans ascenseur) : sur réservation uniquement, via la boutique principale (076-240-8911) ; départs 10 h–15 h, fermé le mardi.",
+          "Confirmation par l’atelier dans tous les cas."
+        ]
       },
       {
         "title": "Higashi Chaya",
         "lat": 36.5733,
         "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois, à ~1,5 km de Seisonkaku : arriver vers 14 h 30 pour l’atelier de feuille d’or de 15 h, puis flâner (boutiques et maisons de thé ~10 h–18 h). Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
+        "desc": "Quartier historique de maisons de thé en bois : à voir en fin d’après-midi (boutiques et maisons de thé ~10 h–18 h). Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
         "goshuin": "non"
-      },
-      {
-        "title": "Atelier feuille d’or",
-        "lat": 36.5738,
-        "lng": 136.6672,
-        "desc": "Chez Hakuichi, à Higashi Chaya : y aller en personne sans réservation (départs 13 h, 14 h, 15 h, 16 h, s’il reste de la place). Téléphoner d’abord au 076-240-8911 (9 h–18 h) pour savoir s’il y a de la place. Repli : lundi.",
-        "goshuin": "non",
-        "notes": [
-          "Hakuichi Hakukokan (Higashiyama) : dès ¥2 000, départs 9 h, 10 h, 11 h, 13 h, 14 h, 15 h, 16 h ; accepte sans réservation s’il reste de la place ; tél. 076-240-8911 (9 h–18 h). Son site est parfois en panne : passer en personne.",
-          "Complets : Kanazawa Katani (aujourd’hui et demain) et Gold Leaf Sakuda. Confirmation par l’atelier dans tous les cas."
-        ]
       },
       {
         "title": "Kazuemachi Chaya",
@@ -488,10 +482,10 @@
         "title": "Atelier feuille d’or",
         "lat": 36.5604,
         "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Repli si celui de dimanche n’a pas eu lieu : Hakuichi, sans réservation s’il reste de la place (départs jusqu’à 16 h),.",
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Repli si celui de dimanche n’a pas eu lieu : Hakuichi (Hakukokan à Morito, en taxi, ou Bikazari Asano à Higashi Chaya sur réservation).",
         "goshuin": "non",
         "notes": [
-          "Hakuichi (Higashiyama, Higashi Chaya) : dès ¥2 000, départs 9 h–16 h, sans réservation s’il reste de la place ; 076-240-8911 (9 h–18 h). Sakuda est complet."
+          "Hakuichi : Hakukokan (2-1-1 Morito, ~20 min en taxi, départs jusqu’à 16 h, sans réservation s’il reste de la place) ou Bikazari Asano (Higashi Chaya, sur réservation, 10 h–15 h, fermé le mardi) ; 076-240-8911 (9 h–18 h). Sakuda est complet."
         ]
       }
     ],
