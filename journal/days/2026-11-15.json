@@ -114,6 +114,15 @@
    "likes": {
     "Maxime": 1794736757908
    }
+  },
+  "p:illuminations-de-korinbo-et-katamachi": {
+   "id": "p:illuminations-de-korinbo-et-katamachi",
+   "kind": "planned",
+   "title": "Illuminations de Korinbo et Katamachi (le soir)",
+   "status": "done",
+   "doneAt": 1794746439236,
+   "by": "Maxime",
+   "at": 1794746439236
   }
  }
 }
