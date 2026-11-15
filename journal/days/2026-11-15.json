@@ -26,6 +26,24 @@
    "doneAt": 1794712558382,
    "by": "Maxime",
    "at": 1794712558382
+  },
+  "p:maison-du-samourai-kurando-terashima": {
+   "id": "p:maison-du-samourai-kurando-terashima",
+   "kind": "planned",
+   "title": "Maison du samouraï Kurando Terashima",
+   "status": "done",
+   "doneAt": 1794717783388,
+   "by": "Maxime",
+   "at": 1794717783388
+  },
+  "p:higashi-chaya": {
+   "id": "p:higashi-chaya",
+   "kind": "planned",
+   "title": "Higashi Chaya",
+   "status": "done",
+   "doneAt": 1794717784892,
+   "by": "Maxime",
+   "at": 1794717784892
   }
  }
 }
