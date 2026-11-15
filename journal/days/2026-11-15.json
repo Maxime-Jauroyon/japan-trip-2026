@@ -34,7 +34,10 @@
    "status": "done",
    "doneAt": 1794717783388,
    "by": "Maxime",
-   "at": 1794717783388
+   "at": 1794717783388,
+   "likes": {
+    "Maxime": 1794717913824
+   }
   },
   "p:higashi-chaya": {
    "id": "p:higashi-chaya",
