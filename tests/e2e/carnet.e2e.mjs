@@ -257,6 +257,14 @@ const hearts = () => page.evaluate(() => ({
 const h1 = await hearts();
 check("vue ❤️ : puces Tous / Léo / Maxime", JSON.stringify(h1.chips) === JSON.stringify(["Tous", "❤️ Léo", "❤️ Maxime"]), JSON.stringify(h1.chips));
 check("vue ❤️ : le moment aimé par Léo et la journée aimée par Maxime sont listés", h1.days === 1 && h1.moments.length === 1, JSON.stringify(h1));
+// 👎 : l'onglet « Pas aimés » s'affiche avec le bon emoji et le bon libellé (aucun 👎 posé : liste vide)
+await page.evaluate(() => document.querySelector('[data-vote="dislikes"]').click());
+await page.waitForTimeout(400);
+const bad = await page.evaluate(() => ({ pressed: document.querySelector('[data-vote="dislikes"]').getAttribute("aria-pressed"), liked: document.querySelector('[data-vote="likes"]').getAttribute("aria-pressed"), empty: (document.querySelector(".vy-empty") || {}).textContent || "" }));
+check("vue 👎 : « Pas aimés » est sélectionné et le message parle de « pas aimé »", bad.pressed === "true" && bad.liked === "false" && /pas aim/i.test(bad.empty), JSON.stringify(bad));
+await page.evaluate(() => document.querySelector('[data-vote="likes"]').click());
+await page.waitForTimeout(400);
+check("retour sur « Aimés » : les puces ❤️ reviennent", await page.evaluate(() => document.querySelector('[data-vote="likes"]').getAttribute("aria-pressed") === "true" && [...document.querySelectorAll(".cn-who button")].some((b) => b.textContent.includes("❤️"))));
 await page.evaluate(() => document.querySelector('[data-who="Léo"]').click());
 await page.waitForTimeout(400);
 const hLeo = await hearts();

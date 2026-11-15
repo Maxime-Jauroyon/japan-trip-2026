@@ -70,7 +70,7 @@ function storiesHtml(model, ctx){
 /** Coups de cœur : les journées et les moments aimés, par personne (puces) ou par tous. `model.favs` = { days, moments, likers } avec libellés. */
 function heartsHtml(model, ctx){
   const f = model.favs || { days: [], moments: [], likers: [] };
-  const bad = model.vote === "dislikes", icon = bad ? "👎" : "❤️";
+  const bad = feedState.vote === "dislikes", icon = bad ? "👎" : "❤️";
   const votes = `<div class="cn-days cn-vote"><button type="button" data-vote="likes" aria-pressed="${!bad}">❤️ Aimés</button><button type="button" data-vote="dislikes" aria-pressed="${bad}">👎 Pas aimés</button></div>`;
   const chips = votes + `<div class="cn-days cn-who"><button type="button" data-who="" aria-pressed="${!feedState.who}">Tous</button>` +
     f.likers.map(a => `<button type="button" data-who="${esc(a)}" aria-pressed="${feedState.who === a}">${icon} ${esc(a)}</button>`).join("") + `</div>`;
