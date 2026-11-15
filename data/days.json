@@ -394,39 +394,40 @@
         "title": "Musée du XXIe siècle",
         "lat": 36.5611,
         "lng": 136.6584,
-        "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes. À ~0,6 km d’Oyama. Dimanche : la zone d’exposition est fermée le lundi.",
+        "desc": "Musée d’art contemporain circulaire, installations en extérieur et expositions tournantes. À ~0,6 km d’Oyama ; ensuite le quartier nord (Hashiba, Higashi Chaya) en bus ou taxi. Dimanche : la zone d’exposition est fermée le lundi.",
         "goshuin": "non"
       },
       {
-        "title": "Musée D. T. Suzuki",
-        "lat": 36.5577,
-        "lng": 136.6614,
-        "desc": "Musée d’architecture épurée consacré au philosophe du zen : cour d’eau, pièce de contemplation. À ~0,5 km du musée du XXIe siècle ; ensuite Higashi Chaya (~1,5 km, taxi ou bus). Ouvert dimanche 9 h 30–17 h (dernière entrée 16 h 30), ~310 ¥ ; fermé le lundi.",
+        "title": "Maison du samouraï Kurando Terashima",
+        "lat": 36.5708,
+        "lng": 136.66,
+        "desc": "Résidence de samouraï (jardin, salon de thé, pâtisseries de l’époque d’Edo), dans le quartier Hashiba, au nord-est. Ouverte 9 h 30–17 h (dernière entrée 16 h 30), ~310 ¥ ; fermée le mardi. À ~0,5 km de Higashi Chaya.",
         "goshuin": "non"
       },
       {
         "title": "Higashi Chaya",
         "lat": 36.5733,
         "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois, à voir en début d’après-midi (boutiques et maisons de thé ~10 h–18 h) : prévoir de repartir à 15 h pour l’atelier de 16 h. Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
+        "desc": "Quartier historique de maisons de thé en bois, à voir en début d’après-midi (boutiques et maisons de thé ~10 h–18 h). Repartir à 14 h 30 au plus tard en bus (ou 15 h 15 en taxi) pour l’atelier de 16 h. Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
         "goshuin": "non"
       },
       {
         "title": "Kazuemachi Chaya",
         "lat": 36.574,
         "lng": 136.664,
-        "desc": "Ruelles de maisons de thé le long de la rivière Asano, plus calmes que Higashi Chaya, à ~0,4 km : à faire juste après Higashi Chaya, avant de partir en taxi vers l’atelier de 16 h.",
+        "desc": "Ruelles de maisons de thé le long de la rivière Asano, plus calmes que Higashi Chaya, à ~0,4 km : à faire avant de repartir vers l’atelier de 16 h.",
         "goshuin": "non"
       },
       {
         "title": "Atelier feuille d’or",
         "lat": 36.5613,
         "lng": 136.5981,
-        "desc": "Atelier réservé à 16 h au magasin principal de Hakuichi (Hakukokan, 2-1-1 Morito), à l’ouest : ~20–30 min en taxi (~2 500–3 000 ¥) depuis Higashi Chaya. Partir à 15 h 15 pour arriver vers 15 h 45. Atelier de ~1 h.",
+        "desc": "Atelier réservé à 16 h (dernière entrée) au magasin principal de Hakuichi (Hakukokan, 2-1-1 Morito), à l’ouest. Bus : partir du quartier nord (arrêt Hashiba-chō) à 14 h 30 au plus tard ; descendre à « Shin-Kanazawa Post Office », puis ~10 min à pied (itinéraire exact à vérifier dans Google Maps, ~60–75 min). Taxi : partir à 15 h 15 (~20–30 min, 2 500–3 000 ¥).",
         "goshuin": "non",
         "notes": [
-          "Réservé aujourd’hui, 16 h, au main shop (Hakukokan). Si besoin : 076-240-8911 (9 h–18 h).",
-          "Accès : ~20 min en taxi depuis la gare de Kanazawa (~2 500–3 000 ¥) ; ~30 min à pied de la gare de Nonoichi. Boutique 9 h–17 h."
+          "Réservé aujourd’hui à 16 h, qui est aussi la dernière entrée. Si besoin : 076-240-8911 (9 h–18 h).",
+          "Bus : l’arrêt indiqué par la fiche officielle est « Shin-Kanazawa Post Office », ~10 min à pied ; aucune ligne ni durée publiée, à vérifier dans Google Maps (arriver à 15 h 45).",
+          "Taxi : ~20 min depuis la gare de Kanazawa (~2 500–3 000 ¥) ; ~30 min à pied de la gare de Nonoichi."
         ]
       }
     ],
@@ -437,8 +438,8 @@
     "ordreFixe": true,
     "reminders": [
       {
-        "title": "Atelier de feuille d’or à 16 h (Hakuichi, Hakukokan à Morito)",
-        "desc": "Partir de Higashi Chaya à 15 h 15 en taxi (~20–30 min, 2 500–3 000 ¥) pour arriver vers 15 h 45. Retour en taxi ensuite."
+        "title": "Atelier de feuille d’or à 16 h (dernière entrée)",
+        "desc": "Hakuichi, Hakukokan (Morito). Partir du quartier nord à 14 h 30 au plus tard en bus (arrêt Shin-Kanazawa Post Office, puis ~10 min à pied), ou à 15 h 15 en taxi (~2 500–3 000 ¥)."
       }
     ]
   },
