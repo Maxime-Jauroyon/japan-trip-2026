@@ -16,7 +16,10 @@
    "status": "done",
    "doneAt": 1794650929254,
    "by": "Maxime",
-   "at": 1794650929255
+   "at": 1794650929255,
+   "likes": {
+    "Maxime": 1794717876420
+   }
   },
   "p:sanctuaire-ishiura": {
    "id": "p:sanctuaire-ishiura",
