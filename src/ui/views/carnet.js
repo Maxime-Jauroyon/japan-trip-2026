@@ -27,8 +27,9 @@ function likeHtml(iso, it){
   if (journalReadOnly()) return (it.likes.length ? `<span class="cn-like ro">❤️ <b>${it.likes.length}</b></span>` : "") + (bad.length ? `<span class="cn-like ro">👎 <b>${bad.length}</b></span>` : "");
   const me = journalConfig().author || "Moi";
   const mine = it.likes.includes(me), minebad = bad.includes(me);
-  return `<button type="button" class="cn-like" data-like-iso="${esc(iso)}" data-like-id="${esc(it.id)}" aria-pressed="${mine}" aria-label="J’aime">${mine ? "❤️" : "🤍"}${it.likes.length ? ` <b>${it.likes.length}</b>` : ""}</button>` +
-    `<button type="button" class="cn-like cn-dislike" data-dislike-iso="${esc(iso)}" data-dislike-id="${esc(it.id)}" aria-pressed="${minebad}" aria-label="Je n’ai pas aimé"><span class="cn-thumb">👎</span>${bad.length ? ` <b>${bad.length}</b>` : ""}</button>`;
+  return `<div class="cn-react" role="group" aria-label="Votre avis">` +
+    `<button type="button" class="cn-like cn-react-btn" data-like-iso="${esc(iso)}" data-like-id="${esc(it.id)}" aria-pressed="${mine}" aria-label="J’aime"><span class="cn-emo" aria-hidden="true">${mine ? "❤️" : "🤍"}</span><span class="cn-lab">J’aime</span>${it.likes.length ? `<b>${it.likes.length}</b>` : ""}</button>` +
+    `<button type="button" class="cn-like cn-dislike cn-react-btn" data-dislike-iso="${esc(iso)}" data-dislike-id="${esc(it.id)}" aria-pressed="${minebad}" aria-label="Je n’ai pas aimé"><span class="cn-emo cn-thumb" aria-hidden="true">👎</span><span class="cn-lab">Pas aimé</span>${bad.length ? `<b>${bad.length}</b>` : ""}</button></div>`;
 }
 
 /** ❤️ sur une journée entière : bouton avec le jeton, simple compteur en lecture seule ; jamais de prénom. */
@@ -37,9 +38,10 @@ function dayLikeHtml(iso, likes, dislikes = []){
   if (journalReadOnly()) return (n ? `<span class="cn-daylike ro">❤️ <b>${n}</b> <small>a adoré cette journée</small></span>` : "") + (nb ? `<span class="cn-daylike ro">👎 <b>${nb}</b> <small>pas aimé cette journée</small></span>` : "");
   const me = journalConfig().author || "Moi";
   const mine = likes.includes(me), minebad = dislikes.includes(me);
-  return `<button type="button" class="cn-daylike" data-daylike-iso="${esc(iso)}" aria-pressed="${mine}" aria-label="J’ai adoré cette journée">` +
-    `<span aria-hidden="true">${mine ? "❤️" : "🤍"}</span> <span>${mine ? "J’ai adoré cette journée" : "J’ai adoré cette journée ?"}</span>${n ? ` <b>${n}</b>` : ""}</button>` +
-    `<button type="button" class="cn-daylike cn-daydislike" data-daydislike-iso="${esc(iso)}" aria-pressed="${minebad}" aria-label="Je n’ai pas aimé cette journée"><span aria-hidden="true">👎</span> <span>${minebad ? "Pas aimé" : "Pas aimé ?"}</span>${nb ? ` <b>${nb}</b>` : ""}</button>`;
+  return `<div class="cn-dayreact" role="group" aria-label="Votre avis sur la journée">` +
+    `<button type="button" class="cn-daylike" data-daylike-iso="${esc(iso)}" aria-pressed="${mine}" aria-label="J’ai adoré cette journée">` +
+    `<span class="cn-emo" aria-hidden="true">${mine ? "❤️" : "🤍"}</span><span class="cn-lab">J’ai adoré</span>${n ? `<b>${n}</b>` : ""}</button>` +
+    `<button type="button" class="cn-daylike cn-daydislike" data-daydislike-iso="${esc(iso)}" aria-pressed="${minebad}" aria-label="Je n’ai pas aimé cette journée"><span class="cn-emo" aria-hidden="true">👎</span><span class="cn-lab">Pas aimé</span>${nb ? `<b>${nb}</b>` : ""}</button></div>`;
 }
 
 /** Ligne d’état sous le titre : « ✓ À jour · 39 photos » avec, à droite, le bouton « Actualiser » (même place pour tout le monde). */
@@ -131,9 +133,12 @@ function favoritesModel(){
   const likers = likersOf(all, vote);
   if (feedState.who && !likers.includes(feedState.who)) feedState.who = null;
   const f = favorites(all, feedState.who, vote);
+  const total = (v) => { const t = favorites(all, null, v); return t.days.length + t.moments.length; };
+  const counts = { likes: total("likes"), dislikes: total("dislikes") };
   const info = (iso) => { const d = DAYS.find(x => dayToISO(x) === iso); return d ? { n: d.n, label: `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}` } : { n: 0, label: iso }; };
   return {
     vote,
+    counts,
     likers,
     days: f.days.map(x => ({ ...x, ...info(x.iso) })),
     moments: f.moments.map(m => ({ ...m, title: programTitle(m.iso, m.id) || m.title, label: `J${info(m.iso).n} · ${info(m.iso).label}` }))
