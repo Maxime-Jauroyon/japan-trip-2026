@@ -475,24 +475,14 @@
         "title": "Nagamachi (quartier samouraï)",
         "lat": 36.5628,
         "lng": 136.65,
-        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable. À ~0,7 km de Nishi Chaya ; l’atelier de feuille d’or est à ~0,6 km.",
+        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable. À ~0,7 km de Nishi Chaya ; dernière étape du lundi.",
         "goshuin": "non"
-      },
-      {
-        "title": "Atelier feuille d’or",
-        "lat": 36.5604,
-        "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Repli si celui de dimanche n’a pas eu lieu : Hakuichi (Hakukokan à Morito, en taxi, ou Bikazari Asano à Higashi Chaya sur réservation).",
-        "goshuin": "non",
-        "notes": [
-          "Hakuichi : Hakukokan (2-1-1 Morito, ~20 min en taxi, départs jusqu’à 16 h, sans réservation s’il reste de la place) ou Bikazari Asano (Higashi Chaya, sur réservation, 10 h–15 h, fermé le mardi) ; 076-240-8911 (9 h–18 h). Sakuda est complet."
-        ]
       }
     ],
     "reminders": [
       {
         "title": "Lundi : être à Myōryū-ji à 10 h 50 (visite réservée à 11 h)",
-        "desc": "Partir de l’hôtel vers 10 h 15. Prendre des espèces pour le temple. Appeler pour l’atelier de feuille d’or (créneau de 15 h) : Sakuda, téléphone 9 h–17 h."
+        "desc": "Partir de l’hôtel vers 10 h 15. Prendre des espèces pour le temple."
       }
     ],
     "wake": {
