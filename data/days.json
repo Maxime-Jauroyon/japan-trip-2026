@@ -429,6 +429,13 @@
           "Bus : l’arrêt indiqué par la fiche officielle est « Shin-Kanazawa Post Office », ~10 min à pied ; aucune ligne ni durée publiée, à vérifier dans Google Maps (arriver à 15 h 45).",
           "Taxi : ~20 min depuis la gare de Kanazawa (~2 500–3 000 ¥) ; ~30 min à pied de la gare de Nonoichi."
         ]
+      },
+      {
+        "title": "Illuminations de Korinbo et Katamachi (le soir)",
+        "lat": 36.5598,
+        "lng": 136.652,
+        "desc": "Illuminations de rue gratuites, à pied de l’hôtel : Korinbo Tree Fantasy (zelkovas ornés de ~80 000 lampes, ~17 h–minuit), arbre de Noël et yukitsuri de Katamachi, et Kinpaku Kirara (arbres couverts de feuille d’or). Horaires de cette année à confirmer sur place. Aucune fête ni DJ annoncée ce soir : jeter un œil à Shiinoki (Hirosaka) en passant. Retour de l’atelier, puis dîner à Katamachi (restaurants ouverts tard).",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -439,7 +446,7 @@
     "reminders": [
       {
         "title": "Atelier de feuille d’or à 16 h (dernière entrée)",
-        "desc": "Hakuichi, Hakukokan (Morito). Partir du quartier nord à 14 h 30 au plus tard en bus (arrêt Shin-Kanazawa Post Office, puis ~10 min à pied), ou à 15 h 15 en taxi (~2 500–3 000 ¥)."
+        "desc": "Hakuichi, Hakukokan (Morito). Partir du quartier nord à 14 h 30 au plus tard en bus (arrêt Shin-Kanazawa Post Office, puis ~10 min à pied), ou à 15 h 15 en taxi (~2 500–3 000 ¥). Retour : dîner à Katamachi, puis illuminations de Korinbo et Katamachi."
       }
     ]
   },
