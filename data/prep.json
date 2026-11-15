@@ -17,13 +17,25 @@
     {
       "id": "feuille-or-reservation",
       "label": "Réserver l’atelier de feuille d’or (dim. 15 nov, 15 h, Higashi Chaya) — repli lun. 15 h",
-      "meta": "En ligne 24 h/24 ou par téléphone le jour même avant 16 h (Visit Kanazawa 076-231-1566 · Hakuichi 076-240-8911, 9 h–18 h) · confirmation par l’atelier",
+      "meta": "Sakuda : téléphone 076-251-6777 (9 h–17 h, en ligne fermé) · Hakuichi : 076-240-8911 (9 h–18 h) ou en ligne · Visit Kanazawa : en ligne 24 h/24, téléphone 076-231-1566 (le jour même avant 16 h) · confirmation par l’atelier",
       "remindFrom": "2026-11-14",
       "done": false,
       "links": [
         {
-          "label": "Ateliers de feuille d’or (Visit Kanazawa)",
+          "label": "Gold Leaf Sakuda — réserver (Higashiyama)",
+          "url": "https://goldleaf-sakuda.jp/trial/"
+        },
+        {
+          "label": "Hakuichi — atelier de feuille d’or",
+          "url": "https://enkanazawa.hakuichi.co.jp/experience"
+        },
+        {
+          "label": "Atelier dès 1 000 ¥, en ligne 24 h/24 (Visit Kanazawa)",
           "url": "https://visitkanazawa.jp/en/activities/detail_187.html"
+        },
+        {
+          "label": "Tous les ateliers de feuille d’or (Visit Kanazawa)",
+          "url": "https://visitkanazawa.jp/en/activities/detail_1692.html"
         }
       ]
     }
