@@ -169,6 +169,10 @@
       "slug": "higashi-chaya"
     },
     {
+      "match": "korinbo|katamachi",
+      "slug": "kenrokuen"
+    },
+    {
       "match": "shiinoki",
       "slug": "kanazawa-castle"
     },
