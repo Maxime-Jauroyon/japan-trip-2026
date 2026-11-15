@@ -422,12 +422,11 @@
         "title": "Atelier feuille d’or",
         "lat": 36.5738,
         "lng": 136.6672,
-        "desc": "Dans Higashi Chaya : entrer chez Hakuichi sans réservation (départs jusqu’à 16 h, s’il y a de la place) ou téléphoner à Sakuda (076-251-6777) pour 13 h ou 15 h. Arriver vers 14 h 30–15 h. Repli : lundi 15 h.",
+        "desc": "Chez Hakuichi, à Higashi Chaya : y aller en personne sans réservation (départs 13 h, 14 h, 15 h, 16 h, s’il reste de la place). Téléphoner d’abord au 076-240-8911 (9 h–18 h) pour savoir s’il y a de la place. Repli : lundi.",
         "goshuin": "non",
         "notes": [
           "Hakuichi Hakukokan (Higashiyama) : dès ¥2 000, départs 9 h, 10 h, 11 h, 13 h, 14 h, 15 h, 16 h ; accepte sans réservation s’il reste de la place ; tél. 076-240-8911 (9 h–18 h). Son site est parfois en panne : passer en personne.",
-          "Gold Leaf Sakuda (boutique principale, Higashiyama) : dès ¥1 760, ~1 h, créneaux 9 h, 10 h 30, 13 h, 15 h, ouvert toute l’année ; le jour même par téléphone 076-251-6777 (9 h–17 h) ; page de réservation en anglais.",
-          "Kanazawa Katani était complet aujourd’hui et demain. Confirmation par l’atelier dans tous les cas."
+          "Complets : Kanazawa Katani (aujourd’hui et demain) et Gold Leaf Sakuda. Confirmation par l’atelier dans tous les cas."
         ]
       },
       {
@@ -489,11 +488,10 @@
         "title": "Atelier feuille d’or",
         "lat": 36.5604,
         "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Repli si l’atelier de dimanche (Higashi Chaya) est complet : créneau de 15 h, à ~0,6 km de Nagamachi.",
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Repli si celui de dimanche n’a pas eu lieu : Hakuichi, sans réservation s’il reste de la place (départs jusqu’à 16 h),.",
         "goshuin": "non",
         "notes": [
-          "Repli : Gold Leaf Sakuda (boutique principale, Higashiyama), dès ¥1 760, créneaux 9 h, 10 h 30, 13 h, 15 h ; en ligne jusqu’à 16 h la veille (page en anglais), sinon téléphone 076-251-6777 (9 h–17 h). Viser 15 h.",
-          "Alternative : Hakuichi (sans réservation s’il reste de la place, jusqu’au départ de 16 h ; 076-240-8911, 9 h–18 h)."
+          "Hakuichi (Higashiyama, Higashi Chaya) : dès ¥2 000, départs 9 h–16 h, sans réservation s’il reste de la place ; 076-240-8911 (9 h–18 h). Sakuda est complet."
         ]
       }
     ],

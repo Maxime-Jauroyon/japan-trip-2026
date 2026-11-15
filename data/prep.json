@@ -17,18 +17,10 @@
     {
       "id": "feuille-or-reservation",
       "label": "Réserver l’atelier de feuille d’or (dim. 15 nov, Higashi Chaya)",
-      "meta": "Katani complet · Sakuda : téléphone 076-251-6777 (9 h–17 h) le jour même · Hakuichi : sans réservation s’il reste de la place, départs jusqu’à 16 h (076-240-8911)",
+      "meta": "Sakuda et Katani complets · Hakuichi : sans réservation s’il reste de la place, départs jusqu’à 16 h · téléphoner d’abord : 076-240-8911 (9 h–18 h)",
       "remindFrom": "2026-11-14",
       "done": false,
       "links": [
-        {
-          "label": "Gold Leaf Sakuda — réserver (en anglais)",
-          "url": "https://goldleaf-sakuda.jp/en/trial/"
-        },
-        {
-          "label": "Fiche Visit Kanazawa : Sakuda (réservation le jour même)",
-          "url": "https://visitkanazawa.jp/en/activities/detail_617.html"
-        },
         {
           "label": "Fiche Visit Kanazawa : Hakuichi (accepte sans réservation)",
           "url": "https://visitkanazawa.jp/en/activities/detail_1689.html"
