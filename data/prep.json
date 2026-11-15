@@ -16,8 +16,8 @@
     },
     {
       "id": "feuille-or-reservation",
-      "label": "Réserver l’atelier de feuille d’or (lun. 16 nov, créneau 15 h)",
-      "meta": "Réservation en ligne fermée (2 jours avant) : téléphoner à Gold Leaf Sakuda (9 h–17 h) pour 15 h (ou 13 h) · ou Hakuichi : 076-240-8911 (9 h–18 h)",
+      "label": "Réserver l’atelier de feuille d’or (dim. 15 nov, 15 h, Higashi Chaya) — repli lun. 15 h",
+      "meta": "En ligne 24 h/24 ou par téléphone le jour même avant 16 h (Visit Kanazawa 076-231-1566 · Hakuichi 076-240-8911, 9 h–18 h) · confirmation par l’atelier",
       "remindFrom": "2026-11-14",
       "done": false,
       "links": [

@@ -408,15 +408,26 @@
         "title": "Seisonkaku (villa Maeda)",
         "lat": 36.561,
         "lng": 136.6632,
-        "desc": "Villa de 1863 du clan Maeda, au bord de Kenroku-en : salons laqués, jardin, thé possible. À ~0,6 km du musée Suzuki. Ouvert 9 h–17 h (dernière entrée 16 h 30), ~700 ¥ ; fermé le mercredi.",
+        "desc": "Villa de 1863 du clan Maeda, au bord de Kenroku-en : salons laqués, jardin, thé possible. À ~0,6 km du musée Suzuki. Ouvert 9 h–17 h (dernière entrée 16 h 30), ~700 ¥ ; fermé le mercredi. À finir avant ~14 h pour être à Higashi Chaya à 14 h 30.",
         "goshuin": "non"
       },
       {
         "title": "Higashi Chaya",
         "lat": 36.5733,
         "lng": 136.6667,
-        "desc": "Quartier historique de maisons de thé en bois, à ~1,5 km de Seisonkaku : à faire en fin d’après-midi (boutiques et maisons de thé ~10 h–18 h). Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
+        "desc": "Quartier historique de maisons de thé en bois, à ~1,5 km de Seisonkaku : arriver vers 14 h 30 pour l’atelier de feuille d’or de 15 h, puis flâner (boutiques et maisons de thé ~10 h–18 h). Dans le quartier : Kaikaro (maison de thé, ~10 h–17 h, visite ~750 ¥), musée de la feuille d’or Yasue (9 h 30–17 h, ~310 ¥) et la glace à la feuille d’or de Hakuichi (~890 ¥).",
         "goshuin": "non"
+      },
+      {
+        "title": "Atelier feuille d’or",
+        "lat": 36.5738,
+        "lng": 136.6672,
+        "desc": "Créneau de 15 h (arriver 14 h 45), ~1 h, dès ~1 000–2 000 ¥. À réserver ce matin en ligne (le jour même par téléphone jusqu’à 16 h). Alternative sur place : Hakuza « Entsuke » (dès 1 980 ¥, 10 h–15 h). Repli : lundi 15 h.",
+        "goshuin": "non",
+        "notes": [
+          "Réservation requise : en ligne 24 h/24, ou par téléphone le jour même avant 16 h (Visit Kanazawa : 076-231-1566 ; Hakuichi : 076-240-8911, 9 h–18 h). Confirmation par l’atelier.",
+          "Si c’est complet : même atelier lundi à 15 h (J9)."
+        ]
       },
       {
         "title": "Kazuemachi Chaya",
@@ -477,7 +488,7 @@
         "title": "Atelier feuille d’or",
         "lat": 36.5604,
         "lng": 136.6562,
-        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Pas encore réservé : créneau de 15 h conseillé (13 h en repli), à ~0,6 km de Nagamachi.",
+        "desc": "Kanazawa produit l’essentiel de la feuille d’or du Japon. Court atelier pour en appliquer sur un souvenir. Repli si l’atelier de dimanche (Higashi Chaya) est complet : créneau de 15 h, à ~0,6 km de Nagamachi.",
         "goshuin": "non",
         "notes": [
           "Réservation obligatoire, par téléphone (la réservation en ligne ferme 2 jours avant). Gold Leaf Sakuda : dès ¥1 760, créneaux 9 h, 10 h 30, 13 h, 15 h ; téléphone 9 h–17 h. Viser 15 h.",
