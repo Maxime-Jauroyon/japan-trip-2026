@@ -1,13 +1,15 @@
 /* Configuration de l’app (pas de contenu de voyage) : version, clés de stockage local, cache des tuiles. */
 
 /** Version affichée — garder en sync avec sw.js (scripts/bump-version.mjs). */
-export const APP_VERSION = "v282";
+export const APP_VERSION = "v283";
 
 /* Clés localStorage (préfixe japan-trip-, suffixe -vN pour migrer un format). */
 export const CHECK_KEY = "japan-trip-check-v1";
 export const FX_KEY = "japan-trip-fx-rate-v1";
 /** Dernier taux du jour récupéré en ligne { rate, at, date } et indicateur « taux saisi à la main ». */
 export const FX_LIVE_KEY = "japan-trip-fx-live-v1";
+/** Carnet (famille) : instant du dernier moment déjà vu, pour signaler les nouveautés à la visite suivante. */
+export const CARNET_SEEN_KEY = "japan-trip-carnet-seen-v1";
 export const FX_MANUAL_KEY = "japan-trip-fx-manual-v1";
 export const THEME_KEY = "japan-trip-theme-v1";
 export const MAP_RELIEF_KEY = "japan-trip-map-relief-v1";

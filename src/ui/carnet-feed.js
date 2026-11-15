@@ -27,6 +27,7 @@ function postHtml(ctx, iso, it){
   const n = it.photos.length;
   return `<article class="vy-post reveal${n ? "" : " plain"}" data-post="${esc(iso + "|" + it.id)}">` +
     `<header><span class="vy-when">${it.timed ? esc(clockJst(it.when)) : "✓"}</span><strong>${esc(it.title)}</strong>` +
+    (it.isNew ? `<span class="vy-new">Nouveau</span>` : "") +
     (n > 1 ? `<small>${n} photos</small>` : "") + `</header>` +
     (n ? `<div class="vy-media"><div class="vy-car" data-n="${n}">${it.photos.map(name => `<div class="vy-slide">${ctx.photoBtn(iso, { name, title: it.title, id: it.id })}</div>`).join("")}</div>` +
       `<span class="vy-heart" aria-hidden="true">❤️</span></div>` +
@@ -49,11 +50,29 @@ export function dayCardHtml(ctx, x){
   const nPhotos = items.reduce((s, it) => s + it.photos.length, 0);
   const timed = items.filter(it => it.timed);
   const span = timed.length > 1 ? ` · ${clockJst(timed[0].when)} → ${clockJst(timed[timed.length - 1].when)}` : "";
+  const hero = x.hero ? `<span class="vy-chapter-ph" aria-hidden="true">${ctx.photoBtn(iso, x.hero, { thumb: true, story: true })}</span>` : "";
   return `<section class="vy-daygroup" id="cn-day-${day.n}" data-day-label="${esc(`J${day.n} · ${dayLabel(day)}`)}">` +
-    `<div class="vy-chapter reveal"><span class="vy-n">Jour ${day.n}</span><h3>${esc(dayLabel(day))}</h3>` +
+    `<div class="vy-chapter reveal${hero ? " has-hero" : ""}">${hero}<div class="vy-chapter-in"><span class="vy-n">Jour ${day.n}</span>${x.tag ? `<span class="vy-tag">${esc(x.tag)}</span>` : ""}<h3>${esc(dayLabel(day))}</h3>` +
     `<p>${esc((city ? city.name : day.city) + extra)} · ${plural(items.length, "moment")}${nPhotos ? " · " + plural(nPhotos, "photo") : ""}${esc(span)}</p>` +
-    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + (ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || [], x.dislikes || []) : "") + `</div>` +
+    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + (ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || [], x.dislikes || []) : "") + `</div></div>` +
     `<div class="vy-line">${items.map(it => postHtml(ctx, iso, it)).join("")}</div></section>`;
+}
+
+/** « Où en est le voyage » : jour N sur total, ville, météo du jour, étapes, dernier moment, nouveautés depuis la dernière visite. */
+function liveHtml(model){
+  const lv = model.live;
+  if (!lv || !lv.total) return "";
+  const p = lv.progress;
+  const title = p.status === "before" ? `Départ dans ${plural(p.until, "jour")}` : p.status === "after" ? `Voyage terminé · ${plural(p.total, "jour")}` : `Jour ${p.n} sur ${p.total}`;
+  const where = p.status === "before" ? "" : esc(lv.cityName || "");
+  const wx = p.status === "during" ? `<span class="cn-live-wx" data-wx="${esc(lv.todayISO)}" hidden></span>` : "";
+  const route = lv.route.length > 1 ? `<ol class="cn-route" aria-label="Étapes du voyage">${lv.route.map(s => `<li class="${s.state}"><i aria-hidden="true"></i>${esc(s.name)}</li>`).join("")}</ol>` : "";
+  const last = lv.last ? `<p class="cn-live-last">Dernier moment : <b>${esc(lv.last.title)}</b> · ${esc(lv.last.ago)}</p>` : "";
+  const news = lv.news && lv.news.moments ? `<button type="button" class="cn-news" data-news="${esc(lv.news.first)}"><span aria-hidden="true">✨</span><span><b>${lv.news.moments} ${lv.news.moments > 1 ? "nouveaux moments" : "nouveau moment"}</b>${lv.news.photos ? ` · ${plural(lv.news.photos, "photo")}` : ""}<small>depuis votre dernière visite</small></span><em>Voir ›</em></button>` : "";
+  return `<section class="cn-live" aria-label="Où en est le voyage">${news}` +
+    `<div class="cn-live-head">${p.status === "during" ? `<span class="cn-pulse" aria-hidden="true"></span>` : ""}<div><b>${esc(title)}</b>${where || wx ? `<small>${where}${wx}</small>` : ""}</div></div>` +
+    (p.status === "during" || p.status === "after" ? `<div class="cn-prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p.pct}"><i style="width:${p.pct}%"></i></div>` : "") +
+    route + last + `</section>`;
 }
 
 /** Stories : un rond par jour (vignette de la première photo), le plus récent d’abord ; toucher = revivre la journée. */
@@ -123,7 +142,7 @@ export function carnetHtml(model, ctx){
   if (!model.days.length) body = `<p class="vy-empty">${esc(model.emptyText || "Rien pour l’instant.")}</p>`;
   else if (feedState.mode === "hearts") body = heartsHtml(model, ctx);
   else body = days.slice().reverse().map(x => dayCardHtml(ctx, x)).join("");
-  return helpHtml(model) + cover + storiesHtml(model, ctx) + bar + body;
+  return helpHtml(model) + cover + liveHtml(model) + storiesHtml(model, ctx) + bar + body;
 }
 
 let revealer = null;
@@ -141,6 +160,12 @@ export function bindCarnet(root, again, ctx){
     b.addEventListener("click", open);
     b.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
   });
+  root.querySelectorAll("[data-news]").forEach(b => b.addEventListener("click", () => {
+    const key = b.dataset.news;
+    feedState.mode = "feed"; feedState.filter = null; again();
+    const post = [...root.querySelectorAll(".vy-post[data-post]")].find(p => p.dataset.post === key);
+    if (post) { post.classList.add("in"); post.scrollIntoView({ block: "start", behavior: "smooth" }); post.classList.add("flash"); setTimeout(() => post.classList.remove("flash"), 2400); }
+  }));
   root.querySelectorAll("[data-vote]").forEach(b => b.addEventListener("click", () => { feedState.vote = b.dataset.vote; feedState.who = null; again(); }));
   root.querySelectorAll("[data-who]").forEach(b => b.addEventListener("click", () => { feedState.who = b.dataset.who || null; again(); }));
   root.querySelectorAll("[data-goday]").forEach(b => b.addEventListener("click", () => { feedState.mode = "feed"; feedState.filter = Number(b.dataset.goday); again(); }));

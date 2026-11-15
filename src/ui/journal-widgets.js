@@ -161,6 +161,7 @@ export function openPhotoViewer(list, index){
       `<button type="button" class="jv-close" aria-label="Fermer">×</button><span class="jv-pos"></span>` +
       `<div class="jv-stage"><img alt="" /><video class="jv-video" muted loop playsinline controls hidden></video><span class="jv-heart" aria-hidden="true">❤️</span></div>` +
       `<div class="jv-cap"><strong></strong><small></small></div>` +
+      `<div class="jv-tools"><button type="button" class="jv-save">⬇ Enregistrer la photo</button></div>` +
       `<div class="jr-viewer-bar"><button type="button" class="jv-like"></button><button type="button" class="jv-dislike" aria-label="Je n’ai pas aimé"></button><button type="button" class="jv-star"></button>` +
       `<button type="button" class="jv-hero"></button><button type="button" class="jv-del" aria-label="Supprimer la photo">🗑</button></div>`;
     document.body.appendChild(viewer);
@@ -176,6 +177,7 @@ export function openPhotoViewer(list, index){
     });
     stage.addEventListener("dblclick", () => likeCurrent(true));
     viewer.querySelector(".jv-close").onclick = closeViewer;
+    viewer.querySelector(".jv-save").onclick = saveCurrent;
     viewer.querySelector(".jv-like").onclick = () => likeCurrent(false);
     viewer.querySelector(".jv-dislike").onclick = () => { const p = vList[vIdx]; if (p && !journalReadOnly()) toggleDislike(p.iso, p.id); };
     viewer.querySelector(".jv-star").onclick = () => { const p = vList[vIdx]; if (p) setCoverPhoto(p.iso, p.id, p.name); };
@@ -200,6 +202,25 @@ function closeViewer(){
   const vid = viewer.querySelector("video");
   vid.pause(); vid.removeAttribute("src");
   viewer.hidden = true;
+}
+
+/** Enregistre la photo (ou vidéo) affichée : feuille de partage de l’iPhone (« Enregistrer l’image »), sinon téléchargement. */
+async function saveCurrent(){
+  const p = vList[vIdx];
+  const btn = viewer && viewer.querySelector(".jv-save");
+  if (!p || !btn || btn.disabled) return;
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = "Préparation…";
+  try {
+    const url = await photoUrl(p.iso, p.name, false, { priority: 12 });
+    if (!url) throw new Error("photo absente");
+    const blob = await (await fetch(url)).blob();
+    const file = new File([blob], p.name, { type: blob.type || (isVideo(p.name) ? "video/mp4" : "image/jpeg") });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file] });
+    else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = p.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }
+  } catch (e) {
+    if (!e || e.name !== "AbortError") { btn.textContent = "Impossible pour l’instant"; await new Promise(r => setTimeout(r, 1800)); }
+  } finally { btn.disabled = false; btn.textContent = label; }
 }
 
 function likeCurrent(onlyAdd){

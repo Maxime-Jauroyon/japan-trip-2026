@@ -2,13 +2,17 @@
    (journal de ce téléphone, déjà synchronisé : fonctionne hors ligne). Chargement : squelettes, photos chargées à la
    demande (floues → nettes), préchargement pour le hors-ligne. Le fil n’est redessiné que si les données changent. */
 
-import { DAYS, TRIP } from "../../core/data.js";
+import { CARNET_SEEN_KEY } from "../../config.js";
+import { CITIES, DAYS, TRIP } from "../../core/data.js";
 import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
+import { agoLabel } from "../../domain/live-data.js";
+import { dayTag, lastMoment, newSince, routeSteps, tripProgress } from "../../domain/carnet-live.js";
 import { dayDislikedBy, dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf, plannedId } from "../../domain/journal.js";
 import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayDislike, toggleDayLike, toggleDislike, toggleLike } from "../../pwa/journal-store.js";
 import { bindCarnet, carnetHtml, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
+import { fillCityForecast } from "./weather.js";
 import { openStory } from "../story-player.js";
 
 const SKELETON = `<div class="cn-skel"><div class="sk sk-cover"></div><div class="sk-row"><i class="sk sk-dot"></i><i class="sk sk-dot"></i><i class="sk sk-dot"></i><i class="sk sk-dot"></i></div>` +
@@ -145,6 +149,41 @@ function favoritesModel(){
   };
 }
 
+/* Nouveautés pour la famille : « vu » = instant du dernier moment connu à la visite précédente. La référence est figée pour la session
+   (les badges ne disparaissent pas pendant la lecture) ; elle est mise à jour 6 s après l’affichage du Carnet. */
+let seenBaseline = null, seenTimer = null;
+function loadSeen(){
+  if (seenBaseline === null) { try { seenBaseline = Number(localStorage.getItem(CARNET_SEEN_KEY)) || 0; } catch (_) { seenBaseline = 0; } }
+  return seenBaseline;
+}
+function commitSeen(days){
+  if (seenTimer || !days.length) return;
+  seenTimer = setTimeout(() => {
+    const view = document.getElementById("view-carnet");
+    if (!view || !view.classList.contains("active")) { seenTimer = null; return; }   // pas encore regardé : on réessaie au prochain affichage
+    const latest = Math.max(0, ...days.flatMap(x => x.items.map(it => it.at || 0)));
+    try { if (latest) localStorage.setItem(CARNET_SEEN_KEY, String(latest)); } catch (_) { /* pas de stockage */ }
+  }, 6000);
+}
+
+/** Où en est le voyage + dernier moment + nouveautés (famille, lecture seule) pour la carte du haut. */
+function liveModel(days){
+  const todayISO = japanTodayISO();
+  const trip = DAYS.map(d => ({ n: d.n, iso: dayToISO(d), city: d.city }));
+  const progress = tripProgress(trip, todayISO);
+  const last = lastMoment(days);
+  const seen = loadSeen();
+  const news = journalReadOnly() && seen ? newSince(days, seen) : { moments: 0, photos: 0, first: null, keys: new Set() };
+  const now = Date.now();
+  const sameDay = last && last.iso === todayISO;
+  return {
+    total: progress.total, progress, todayISO, news,
+    cityName: progress.cityId && CITIES[progress.cityId] ? CITIES[progress.cityId].name : "",
+    route: routeSteps(trip, progress.status === "before" ? 0 : progress.n).map(s => ({ ...s, name: CITIES[s.cityId] ? CITIES[s.cityId].name : s.cityId })),
+    last: last ? { title: last.title, ago: sameDay || now - last.when < 36 * 3600000 ? agoLabel(last.when, now) : (DAYS.find(d => dayToISO(d) === last.iso) || {}).date || "" } : null
+  };
+}
+
 let lastSig = null;
 
 /** Redessine seulement si le contenu a changé (ou si `force`) ; garde le défilement et la position de chaque carrousel. */
@@ -158,7 +197,9 @@ export function renderCarnet(force){
       // L’ordre du programme du jour (ordre vécu sur les jours « à ordre fixe ») prime sur l’heure de coche, souvent saisie plus tard
       const items = day ? doneItems(jd, iso, { order: (day.ideas || []).map(a => plannedId(a.title)), fixed: !!day.ordreFixe,
         titles: Object.fromEntries((day.ideas || []).map(a => [plannedId(a.title), a.title])) }) : [];
-      return { iso, day, items, likes: dayLikedBy(jd), dislikes: dayDislikedBy(jd) };
+      const first = items.find(it => it.photos.length);
+      return { iso, day, items, likes: dayLikedBy(jd), dislikes: dayDislikedBy(jd), tag: dayTag(iso, japanTodayISO()),
+        hero: first ? { id: first.id, name: first.photos[0], title: first.title } : null };
     })
     .filter(x => x.day && x.items.length);
   renderCarnetStatus();
@@ -166,17 +207,21 @@ export function renderCarnet(force){
   model = days;
   const hero = heroPhoto(journalDays());
   const favs = favoritesModel();
-  const sig = JSON.stringify([days, hero, favs, feedState.mode, feedState.filter, feedState.who, journalConfig().author, journalReadOnly(), japanTodayISO()]);
+  const live = liveModel(days);
+  days.forEach(x => x.items.forEach(it => { it.isNew = live.news.keys.has(x.iso + "|" + it.id); }));
+  const sig = JSON.stringify([days, hero, favs, { ...live, news: { ...live.news, keys: [...live.news.keys] } }, feedState.mode, feedState.filter, feedState.who, journalConfig().author, journalReadOnly(), japanTodayISO()]);
   if (!force && sig === lastSig && box.children.length) return;   // rien de nouveau : ne rien toucher
   lastSig = sig;
   const top = scroller ? scroller.scrollTop : 0;
   const slides = {};
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && c.scrollLeft) slides[p.dataset.post] = c.scrollLeft; });
-  box.innerHTML = carnetHtml({ days, hero, favs, readOnly: journalReadOnly(), today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
+  box.innerHTML = carnetHtml({ days, hero, favs, live, readOnly: journalReadOnly(), today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
     emptyText: journalReadOnly() ? "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt."
       : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml, dayLikeHtml });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });
   hydratePhotos(box);
+  if (live.progress.status === "during" && live.progress.cityId) fillCityForecast(box, live.progress.cityId);
+  commitSeen(days);
   bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory, openMoment });
   box.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
   box.querySelectorAll("[data-daylike-iso]").forEach(b => b.addEventListener("click", () => toggleDayLike(b.dataset.daylikeIso)));

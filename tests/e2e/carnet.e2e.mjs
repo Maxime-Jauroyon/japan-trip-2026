@@ -114,6 +114,8 @@ await page.evaluate(() => document.querySelector("#carnet-refresh").click());
 check("toucher « Actualiser » relance la synchro", await refreshed);
 const tabs = await page.evaluate(() => ({ tabs: [...document.querySelectorAll(".cn-seg button")].map((b) => b.textContent.trim()), grid: !!document.querySelector('[data-mode="grid"], .cn-grid'), chips: [...document.querySelectorAll(".cn-days button")].map((b) => b.textContent.trim()), round: !!document.querySelector(".cn-round") }));
 check("deux onglets en toutes lettres, plus de « Grille »", JSON.stringify(tabs.tabs) === JSON.stringify(["Journées", "❤️ Coups de cœur"]) && !tabs.grid && !tabs.round, JSON.stringify(tabs.tabs));
+check("carte « où en est le voyage » : jour N sur 22 et les étapes", await page.evaluate(() => { const c = document.querySelector(".cn-live"); return !!c && /Jour \d+ sur 22/.test(c.textContent) && c.querySelectorAll(".cn-route li").length >= 2; }));
+check("chaque jour a sa photo en fond et son repère « Hier » / « Aujourd’hui » quand c’est le cas", await page.evaluate(() => document.querySelectorAll(".vy-chapter.has-hero .vy-photo").length >= 1));
 check("jours proposés en dates lisibles (« Mar 10 nov »), pas « J3 »", tabs.chips[0] === "Tous les jours" && tabs.chips.slice(1).every((c) => /^(Lun|Mar|Mer|Jeu|Ven|Sam|Dim) \d{1,2} \p{L}+/u.test(c)) && tabs.chips.length === 4, JSON.stringify(tabs.chips));
 const help = await page.evaluate(() => { const h = document.querySelector(".cn-help"); return h ? { title: h.querySelector("strong").textContent, lines: h.querySelectorAll("li").length, btn: h.querySelector("[data-help-close]").textContent } : null; });
 check("carte d’aide « Comment ça marche ? » au premier passage", !!help && /Comment/.test(help.title) && help.lines === 4 && /compris/.test(help.btn), JSON.stringify(help));
@@ -207,6 +209,7 @@ await page.waitForTimeout(600);
 for (let i = 0; i < 25; i++) { await page.keyboard.press("ArrowRight"); await page.waitForTimeout(30); }
 await page.waitForTimeout(3500);
 const viewer = await page.evaluate(() => { const v = document.querySelector(".jr-viewer"), im = v.querySelector("img"); return { pos: v.querySelector(".jv-pos").textContent, nat: im.naturalWidth }; });
+check("la visionneuse propose « Enregistrer la photo »", await page.evaluate(() => /Enregistrer/.test(document.querySelector(".jr-viewer .jv-save").textContent)));
 check("visionneuse : position juste et photo nette après 25 balayages", /^26 \/ 39$/.test(viewer.pos) && viewer.nat === 1600, JSON.stringify(viewer));
 
 await page.keyboard.press("Escape");   // referme la visionneuse
@@ -319,6 +322,7 @@ await page2.locator('nav button:has-text("Carnet")').last().click();
 await page2.waitForTimeout(6000);
 const hq0 = await page2.evaluate(() => { const h = document.querySelector("#carnet-hq"); return h && !h.hidden ? { text: h.querySelector("span").textContent, btn: h.querySelector("button").textContent } : null; });
 check("le Carnet dit combien de photos sont encore en qualité réduite, avec le poids à prévoir", !!hq0 && /qualité réduite/.test(hq0.text) && /Tout télécharger \(≈ \d+ Mo\)/.test(hq0.btn), JSON.stringify(hq0));
+const fullBefore = stats2.full;   // photos déjà prises en grand avant le clic (celles du haut du fil) : elles ne sont pas redemandées
 stats2.full = 0;
 await page2.evaluate(() => document.querySelector("[data-hq=all]").click());
 await page2.waitForTimeout(500);
@@ -327,7 +331,7 @@ check("pendant le téléchargement : avancement « Haute qualité : x / 39 » et
 await page2.waitForFunction(() => document.querySelector("#carnet-hq").hidden === true, null, { timeout: 60000 }).catch(() => {});
 const done = await page2.evaluate(() => ({ hidden: document.querySelector("#carnet-hq").hidden, status: document.querySelector("#carnet-status .cn-status-text").textContent }));
 check("une fois fini : le Carnet l’annonce (« en haute qualité »)", done.hidden && /en haute qualité/.test(done.status), JSON.stringify(done));
-check("toutes les grandes photos ont été prises (39), pas une de plus", stats2.full >= 39 && stats2.full <= 39 + 6, `${stats2.full} demandes (dont quelques nouvelles tentatives simulées)`);
+check("toutes les grandes photos ont été prises (39), pas une de plus", fullBefore + stats2.full >= 39 && stats2.full <= 39 + 6, `${fullBefore} avant + ${stats2.full} demandes (dont quelques nouvelles tentatives simulées)`);
 // Défilement complet : plus jamais une photo floue, même un instant
 let blurSeen = 0;
 for (let y = 0; y < 14000; y += 400) { await page2.evaluate((y) => document.querySelector("#view-carnet").scrollTo(0, y), y); await page2.waitForTimeout(60); blurSeen += await page2.evaluate(() => document.querySelectorAll("#carnet-body img.blur").length); }
