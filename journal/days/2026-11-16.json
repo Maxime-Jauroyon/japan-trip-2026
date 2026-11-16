@@ -17,6 +17,24 @@
    "doneAt": 1794798189754,
    "by": "Maxime",
    "at": 1794798189754
+  },
+  "p:nishi-chaya": {
+   "id": "p:nishi-chaya",
+   "kind": "planned",
+   "title": "Nishi Chaya",
+   "status": "done",
+   "doneAt": 1794803195172,
+   "by": "Maxime",
+   "at": 1794803195172
+  },
+  "p:musee-de-nishi-chaya": {
+   "id": "p:musee-de-nishi-chaya",
+   "kind": "planned",
+   "title": "Musée de Nishi Chaya",
+   "status": "done",
+   "doneAt": 1794803196753,
+   "by": "Maxime",
+   "at": 1794803196753
   }
  }
 }
