@@ -490,14 +490,16 @@
         "lat": 36.55671,
         "lng": 136.64743,
         "desc": "Ancienne maison de geishas dans le district de Nishi Chaya (2-25-18 Nomachi) : salon laqué vermillon à l’étage avec shamisen, tambours et paravents dorés, salon de thé de l’ère Taishō et expositions sur l’écrivain Seijirō Shimada. Entrée libre, tous les jours 9 h 30–17 h (pas de carte bancaire) ; parfois visite gratuite avec un bénévole (Maido-san). À quelques mètres de la rue de Nishi Chaya.",
-        "goshuin": "non"
+        "goshuin": "non",
+        "mapsQuery": "金沢市西茶屋資料館 金沢市野町2-25-18"
       },
       {
         "title": "Musée des armes ninja",
         "lat": 36.5568,
         "lng": 136.648,
         "desc": "Dans le district de Nishi Chaya (2-26-1 Nomachi) : ~160 pièces, une cinquantaine de types d’armes ninja (shuriken, armes à chaîne, armures) et boutique au rez-de-chaussée ; lancer de shuriken en supplément (300 ¥ les 5). Ouvert ~10 h–17 h, ~800 ¥ (à confirmer ; fermé le mercredi selon une source). À 0,1 km de Nishi Chaya.",
-        "goshuin": "non"
+        "goshuin": "non",
+        "mapsQuery": "Ninja Weapons Museum 金沢市野町2-26-1"
       },
       {
         "title": "Nagamachi (quartier samouraï)",
@@ -512,7 +514,8 @@
         "lng": 136.6598,
         "desc": "Le plus ancien sanctuaire de Kanazawa, face au musée du XXIe siècle : goshuin aux motifs colorés de saison. Vu hier soir de nuit, bureau fermé : à faire maintenant. À ~0,9 km de Nagamachi. Bureau ~9 h–17 h (les bureaux de goshuin ferment tôt en hiver : y aller en premier).",
         "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire (≈ 9 h–17 h) ; dessins de saison, souvent colorés."
+        "goshuinNote": "Au bureau du sanctuaire (≈ 9 h–17 h) ; dessins de saison, souvent colorés.",
+        "mapsQuery": "石浦神社 金沢市本多町3-1-30"
       },
       {
         "title": "Chasse aux goshuin : Sanctuaire Kanazawa-jinja",
@@ -520,7 +523,8 @@
         "lng": 136.6641,
         "desc": "Petit sanctuaire dans un coin de Kenroku-en, à côté de la villa Seisonkaku : goshuin classique très détaillé avec une touche de feuille d’or. À ~0,5 km d’Ishiura, à ~1 km de l’hôtel. Horaires du bureau à vérifier sur place (en général jusqu’à ~16 h 30–17 h).",
         "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire ; carnet à motif de phénix en vente sur place si vous n’en avez pas."
+        "goshuinNote": "Au bureau du sanctuaire ; carnet à motif de phénix en vente sur place si vous n’en avez pas.",
+        "mapsQuery": "金澤神社 金沢市兼六町"
       },
       {
         "title": "Chasse aux goshuin : Temple Tentoku-in",
@@ -528,7 +532,8 @@
         "lng": 136.67689,
         "desc": "Temple de la princesse Tamahime (quartier Kodatsuno), connu pour son goshuin à la feuille d’or, rare même au Japon. À ~1,5 km à l’est de Kenroku-en : taxi ou bus. Ouvert 9 h 30–16 h 30 de mars à novembre (jusqu’à 16 h de décembre à février) : y arriver en dernier créneau, c’est le plus loin.",
         "goshuin": "oui",
-        "goshuinNote": "Au temple : goshuin spécial à la feuille d’or."
+        "goshuinNote": "Au temple : goshuin spécial à la feuille d’or.",
+        "mapsQuery": "天徳院 金沢市小立野3丁目"
       },
       {
         "title": "Chasse aux goshuin : Sanctuaire Kuboichi Ototsurugi",
@@ -536,7 +541,8 @@
         "lng": 136.66298,
         "desc": "Petit sanctuaire au sommet de la Kuragarizaka (la « pente sombre »), lié à l’écrivain Kyōka Izumi, côté Higashi Chaya. Horaires du bureau non trouvés : à vérifier sur place.",
         "goshuin": "possible",
-        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé)."
+        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé).",
+        "mapsQuery": "久保市乙剣宮 金沢市尾張町1丁目"
       },
       {
         "title": "Chasse aux goshuin : Sanctuaire Utatsu",
@@ -544,14 +550,16 @@
         "lng": 136.66814,
         "desc": "Sanctuaire au pied de la colline Utatsuyama, dans le quartier de Higashi Chaya (à deux pas des maisons de thé). Horaires du bureau et goshuin non confirmés : à vérifier sur place.",
         "goshuin": "possible",
-        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé)."
+        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé).",
+        "mapsQuery": "宇多須神社 金沢市観音町2丁目"
       },
       {
         "title": "Arcade et bowling à Kanazawa Corona World",
         "lat": 36.6011,
         "lng": 136.614,
         "desc": "Grand complexe de loisirs (Apita Town Kanazawa Bay, 4-121-1 Muryōji), à ~5,5 km au nord-ouest : taxi 15–20 min depuis Korinbo. Salle d’arcade Game Kanazawa Metropolis ouverte jusqu’à 23 h 50, bowling Corona Cat Bowl jusqu’à minuit le lundi (jusqu’à 2 h le vendredi et le samedi). Ouvert toute l’année ; horaires et tarifs à confirmer, et prévoir le taxi du retour.",
-        "goshuin": "non"
+        "goshuin": "non",
+        "mapsQuery": "金沢コロナワールド 金沢市無量寺4-121-1"
       }
     ],
     "reminders": [
