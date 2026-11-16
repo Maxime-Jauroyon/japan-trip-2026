@@ -509,13 +509,22 @@
         "goshuin": "non"
       },
       {
-        "title": "Chasse aux goshuin : Sanctuaire Ishiura",
-        "lat": 36.5613,
-        "lng": 136.6598,
-        "desc": "Le plus ancien sanctuaire de Kanazawa, face au musée du XXIe siècle : goshuin aux motifs colorés de saison. Vu hier soir de nuit, bureau fermé : à faire maintenant. À ~0,9 km de Nagamachi. Bureau ~9 h–17 h (les bureaux de goshuin ferment tôt en hiver : y aller en premier).",
+        "title": "Chasse aux goshuin : Temple Tentoku-in",
+        "lat": 36.55149,
+        "lng": 136.67689,
+        "desc": "Temple de la princesse Tamahime (quartier Kodatsuno), connu pour son goshuin à la feuille d’or, rare même au Japon. À ~1,5 km à l’est de Kenroku-en : taxi ou bus tout de suite. Ouvert 9 h 30–16 h 30 de mars à novembre (jusqu’à 16 h de décembre à février) : c’est le plus loin et le premier à fermer, donc à faire en premier.",
         "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire (≈ 9 h–17 h) ; dessins de saison, souvent colorés.",
-        "mapsQuery": "石浦神社 金沢市本多町3-1-30"
+        "goshuinNote": "Au temple : goshuin spécial à la feuille d’or.",
+        "mapsQuery": "天徳院 金沢市小立野3丁目"
+      },
+      {
+        "title": "Chasse aux goshuin : Sanctuaire Ueno Hachiman",
+        "lat": 36.54886,
+        "lng": 136.67895,
+        "desc": "Sanctuaire du quartier de Kodatsuno, à ~250 m de Tentoku-in : à enchaîner à pied juste après. Je n’ai pas trouvé son goshuin ni les horaires de son bureau : à vérifier sur place.",
+        "goshuin": "possible",
+        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé).",
+        "mapsQuery": "上野八幡神社 金沢市小立野3丁目"
       },
       {
         "title": "Chasse aux goshuin : Sanctuaire Kanazawa-jinja",
@@ -527,31 +536,22 @@
         "mapsQuery": "金澤神社 金沢市兼六町"
       },
       {
-        "title": "Chasse aux goshuin : Temple Tentoku-in",
-        "lat": 36.55149,
-        "lng": 136.67689,
-        "desc": "Temple de la princesse Tamahime (quartier Kodatsuno), connu pour son goshuin à la feuille d’or, rare même au Japon. À ~1,5 km à l’est de Kenroku-en : taxi ou bus. Ouvert 9 h 30–16 h 30 de mars à novembre (jusqu’à 16 h de décembre à février) : y arriver en dernier créneau, c’est le plus loin.",
+        "title": "Chasse aux goshuin : Sanctuaire Ishiura",
+        "lat": 36.5613,
+        "lng": 136.6598,
+        "desc": "Le plus ancien sanctuaire de Kanazawa, face au musée du XXIe siècle : goshuin aux motifs colorés de saison. Vu hier soir de nuit, bureau fermé : à faire maintenant. À ~0,9 km de Nagamachi. Bureau ~9 h–17 h (les bureaux de goshuin ferment tôt en hiver : y aller en premier).",
         "goshuin": "oui",
-        "goshuinNote": "Au temple : goshuin spécial à la feuille d’or.",
-        "mapsQuery": "天徳院 金沢市小立野3丁目"
+        "goshuinNote": "Au bureau du sanctuaire (≈ 9 h–17 h) ; dessins de saison, souvent colorés.",
+        "mapsQuery": "石浦神社 金沢市本多町3-1-30"
       },
       {
-        "title": "Chasse aux goshuin : Sanctuaire Kuboichi Ototsurugi",
-        "lat": 36.57187,
-        "lng": 136.66298,
-        "desc": "Petit sanctuaire au sommet de la Kuragarizaka (la « pente sombre »), lié à l’écrivain Kyōka Izumi, côté Higashi Chaya. Horaires du bureau non trouvés : à vérifier sur place.",
+        "title": "Chasse aux goshuin : Temple Hōen-ji",
+        "lat": 36.5535,
+        "lng": 136.668,
+        "desc": "Grand temple zen de la famille Maeda (Kodatsuno, 6-14 Takaramachi) ; Maeda Toshiie y a ses reliques. Ouvert ~9 h–16 h 30, ~300 ¥ pour entrer dans les bâtiments, la cour est libre. Je n’ai pas confirmé qu’il donne un goshuin (celui à la feuille d’or est à Tentoku-in) : à demander à l’accueil. Position approximative.",
         "goshuin": "possible",
-        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé).",
-        "mapsQuery": "久保市乙剣宮 金沢市尾張町1丁目"
-      },
-      {
-        "title": "Chasse aux goshuin : Sanctuaire Utatsu",
-        "lat": 36.57305,
-        "lng": 136.66814,
-        "desc": "Sanctuaire au pied de la colline Utatsuyama, dans le quartier de Higashi Chaya (à deux pas des maisons de thé). Horaires du bureau et goshuin non confirmés : à vérifier sur place.",
-        "goshuin": "possible",
-        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé).",
-        "mapsQuery": "宇多須神社 金沢市観音町2丁目"
+        "goshuinNote": "À demander à l’accueil du temple (non confirmé).",
+        "mapsQuery": "宝円寺 金沢市宝町6-14"
       },
       {
         "title": "Arcade et bowling à Kanazawa Corona World",

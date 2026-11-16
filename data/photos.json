@@ -49,6 +49,14 @@
       "slug": "akihabara"
     },
     {
+      "match": "ueno hachiman",
+      "slug": "oyama"
+    },
+    {
+      "match": "hōen|hoen",
+      "slug": "myoryuji"
+    },
+    {
       "match": "tentoku",
       "slug": "myoryuji"
     },
