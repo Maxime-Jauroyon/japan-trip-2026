@@ -44,6 +44,15 @@
    "doneAt": 1794803198269,
    "by": "Maxime",
    "at": 1794803198269
+  },
+  "p:nagamachi-quartier-samourai": {
+   "id": "p:nagamachi-quartier-samourai",
+   "kind": "planned",
+   "title": "Nagamachi (quartier samouraï)",
+   "status": "done",
+   "doneAt": 1794808487974,
+   "by": "Maxime",
+   "at": 1794808487975
   }
  }
 }
