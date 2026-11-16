@@ -1,7 +1,7 @@
 /* Configuration de l’app (pas de contenu de voyage) : version, clés de stockage local, cache des tuiles. */
 
 /** Version affichée — garder en sync avec sw.js (scripts/bump-version.mjs). */
-export const APP_VERSION = "v297";
+export const APP_VERSION = "v298";
 
 /* Clés localStorage (préfixe japan-trip-, suffixe -vN pour migrer un format). */
 export const CHECK_KEY = "japan-trip-check-v1";
