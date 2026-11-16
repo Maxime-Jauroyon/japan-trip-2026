@@ -53,6 +53,15 @@
    "doneAt": 1794808487974,
    "by": "Maxime",
    "at": 1794808487975
+  },
+  "p:chasse-aux-goshuin-sanctuaire-ishiura": {
+   "id": "p:chasse-aux-goshuin-sanctuaire-ishiura",
+   "kind": "planned",
+   "title": "Chasse aux goshuin : Sanctuaire Ishiura",
+   "status": "done",
+   "doneAt": 1794810222459,
+   "by": "Maxime",
+   "at": 1794810222459
   }
  }
 }
