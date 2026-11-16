@@ -482,7 +482,14 @@
         "title": "Nishi Chaya",
         "lat": 36.557,
         "lng": 136.6475,
-        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré. À 0,4 km de Teramachi (ferme vers 17 h 30) ; Nagamachi est à ~0,7 km.",
+        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré. À 0,4 km de Teramachi (ferme vers 17 h 30) ; le musée des armes ninja est tout près, et Nagamachi à ~0,7 km.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Musée des armes ninja",
+        "lat": 36.5568,
+        "lng": 136.648,
+        "desc": "Dans le district de Nishi Chaya (2-26-1 Nomachi) : ~160 pièces, une cinquantaine de types d’armes ninja (shuriken, armes à chaîne, armures) et boutique au rez-de-chaussée ; lancer de shuriken en supplément (300 ¥ les 5). Ouvert ~10 h–17 h, ~800 ¥ (à confirmer ; fermé le mercredi selon une source). À 0,1 km de Nishi Chaya.",
         "goshuin": "non"
       },
       {
