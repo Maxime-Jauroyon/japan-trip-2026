@@ -62,6 +62,15 @@
    "doneAt": 1794810222459,
    "by": "Maxime",
    "at": 1794810222459
+  },
+  "p:chasse-aux-goshuin-sanctuaire-kanazawa-jinja": {
+   "id": "p:chasse-aux-goshuin-sanctuaire-kanazawa-jinja",
+   "kind": "planned",
+   "title": "Chasse aux goshuin : Sanctuaire Kanazawa-jinja",
+   "status": "done",
+   "doneAt": 1794811378340,
+   "by": "Maxime",
+   "at": 1794811378340
   }
  }
 }
