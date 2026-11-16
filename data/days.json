@@ -521,6 +521,30 @@
         "desc": "Petit sanctuaire dans un coin de Kenroku-en, à côté de la villa Seisonkaku : goshuin classique très détaillé avec une touche de feuille d’or. À ~0,5 km d’Ishiura, à ~1 km de l’hôtel. Horaires du bureau à vérifier sur place (en général jusqu’à ~16 h 30–17 h).",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du sanctuaire ; carnet à motif de phénix en vente sur place si vous n’en avez pas."
+      },
+      {
+        "title": "Chasse aux goshuin : Temple Tentoku-in",
+        "lat": 36.55149,
+        "lng": 136.67689,
+        "desc": "Temple de la princesse Tamahime (quartier Kodatsuno), connu pour son goshuin à la feuille d’or, rare même au Japon. À ~1,5 km à l’est de Kenroku-en : taxi ou bus. Ouvert 9 h 30–16 h 30 de mars à novembre (jusqu’à 16 h de décembre à février) : y arriver en dernier créneau, c’est le plus loin.",
+        "goshuin": "oui",
+        "goshuinNote": "Au temple : goshuin spécial à la feuille d’or."
+      },
+      {
+        "title": "Chasse aux goshuin : Sanctuaire Kuboichi Ototsurugi",
+        "lat": 36.57187,
+        "lng": 136.66298,
+        "desc": "Petit sanctuaire au sommet de la Kuragarizaka (la « pente sombre »), lié à l’écrivain Kyōka Izumi, côté Higashi Chaya. Horaires du bureau non trouvés : à vérifier sur place.",
+        "goshuin": "possible",
+        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé)."
+      },
+      {
+        "title": "Chasse aux goshuin : Sanctuaire Utatsu",
+        "lat": 36.57305,
+        "lng": 136.66814,
+        "desc": "Sanctuaire au pied de la colline Utatsuyama, dans le quartier de Higashi Chaya (à deux pas des maisons de thé). Horaires du bureau et goshuin non confirmés : à vérifier sur place.",
+        "goshuin": "possible",
+        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé)."
       }
     ],
     "reminders": [
