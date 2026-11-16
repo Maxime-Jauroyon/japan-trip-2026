@@ -45,6 +45,10 @@
       "slug": "kawaguchi"
     },
     {
+      "match": "darts|corona",
+      "slug": "akihabara"
+    },
+    {
       "match": "tentoku",
       "slug": "myoryuji"
     },

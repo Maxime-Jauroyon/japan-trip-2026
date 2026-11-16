@@ -545,6 +545,20 @@
         "desc": "Sanctuaire au pied de la colline Utatsuyama, dans le quartier de Higashi Chaya (à deux pas des maisons de thé). Horaires du bureau et goshuin non confirmés : à vérifier sur place.",
         "goshuin": "possible",
         "goshuinNote": "À demander au bureau du sanctuaire (non confirmé)."
+      },
+      {
+        "title": "Fléchettes au Darts Bar BULL (Katamachi)",
+        "lat": 36.5588,
+        "lng": 136.65,
+        "desc": "L’un des plus grands bars à fléchettes du nord du Hokuriku, au 3e étage du Kanazawa Shakai Kaikan, à Katamachi : 8 machines (certaines en ligne), 70 places, formules avec boissons et karaoké. Tout près de l’hôtel : idéal pour finir la soirée. Horaires et prix non confirmés : à vérifier sur place.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Arcade et bowling à Kanazawa Corona World",
+        "lat": 36.6011,
+        "lng": 136.614,
+        "desc": "Grand complexe de loisirs (Apita Town Kanazawa Bay, 4-121-1 Muryōji), à ~5,5 km au nord-ouest : taxi 15–20 min depuis Korinbo. Salle d’arcade Game Kanazawa Metropolis ouverte jusqu’à 23 h 50, bowling Corona Cat Bowl jusqu’à minuit le lundi (jusqu’à 2 h le vendredi et le samedi). Ouvert toute l’année ; horaires et tarifs à confirmer, et prévoir le taxi du retour.",
+        "goshuin": "non"
       }
     ],
     "reminders": [
