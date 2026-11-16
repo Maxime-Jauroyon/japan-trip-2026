@@ -98,6 +98,15 @@
    "doneAt": 1794828124927,
    "by": "Maxime",
    "at": 1794828124927
+  },
+  "p:kanazawa-music-bar-tatemachi": {
+   "id": "p:kanazawa-music-bar-tatemachi",
+   "kind": "planned",
+   "title": "Kanazawa Music Bar (Tatemachi)",
+   "status": "done",
+   "doneAt": 1794835065169,
+   "by": "Maxime",
+   "at": 1794835065169
   }
  }
 }
