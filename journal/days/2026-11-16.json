@@ -71,6 +71,15 @@
    "doneAt": 1794811378340,
    "by": "Maxime",
    "at": 1794811378340
+  },
+  "p:chasse-aux-goshuin-temple-tentoku-in": {
+   "id": "p:chasse-aux-goshuin-temple-tentoku-in",
+   "kind": "planned",
+   "title": "Chasse aux goshuin : Temple Tentoku-in",
+   "status": "done",
+   "doneAt": 1794813275946,
+   "by": "Maxime",
+   "at": 1794813275946
   }
  }
 }
