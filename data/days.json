@@ -623,7 +623,12 @@
       "time": "08:00",
       "why": "Check-out vers 10:15 · bus Kanazawa → Shirakawa-go 11:10"
     },
-    "ordreFermeture": true
+    "ordreFermeture": true,
+    "luggageLocker": {
+      "title": "Consigne bagages au terminal de bus de Shirakawa-go",
+      "when": "À l’arrivée (12 h 25) · à reprendre avant le bus de 16 h 35",
+      "desc": "Casiers à pièces derrière le bâtiment du terminal, 8 h–17 h : 500 ¥ (petit / moyen) ou 1 000 ¥ (grand), par usage. Ils se remplissent vite, surtout les grands : si tout est pris, un service de dépôt de bagages gardé se trouve juste à côté du terminal (aussi jusqu’à 17 h). Tout récupérer avant le bus de 16 h 35."
+    }
   },
   {
     "n": 11,
