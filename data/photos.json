@@ -45,6 +45,14 @@
       "slug": "kawaguchi"
     },
     {
+      "match": "tentoku",
+      "slug": "myoryuji"
+    },
+    {
+      "match": "kuboichi|utatsu",
+      "slug": "higashi-chaya"
+    },
+    {
       "match": "kanazawa-jinja",
       "slug": "kenrokuen"
     },
