@@ -35,6 +35,15 @@
    "doneAt": 1794803196753,
    "by": "Maxime",
    "at": 1794803196753
+  },
+  "p:musee-des-armes-ninja": {
+   "id": "p:musee-des-armes-ninja",
+   "kind": "planned",
+   "title": "Musée des armes ninja",
+   "status": "done",
+   "doneAt": 1794803198269,
+   "by": "Maxime",
+   "at": 1794803198269
   }
  }
 }
