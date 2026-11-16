@@ -136,6 +136,7 @@ days.forEach((d, i) => {
   ["ideas", "ideasAfter"].forEach((key) => (d[key] || []).forEach((a, k) => {
     const wa = `${w} ${key}[${k}] « ${a.title} »`;
     if (!isStr(a.title)) err(wa, "titre manquant");
+    if (a.mapsQuery != null && !isStr(a.mapsQuery)) err(wa, "mapsQuery : texte non vide attendu (nom + adresse du lieu)");
     if (a.phrases) phraseRefs.push([wa, a.phrases]);
     if ((a.lat != null || a.lng != null) && checkCoord(a, wa)) {
       // Un pin mal géocodé tombe souvent dans une autre région : il doit être dans l’emprise d’une ville

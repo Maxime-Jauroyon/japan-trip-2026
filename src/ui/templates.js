@@ -5,6 +5,7 @@ import { parseHotelTimeSort } from "../core/dates.js";
 import { esc } from "../core/dom.js";
 import { bookingOpenStatus } from "../domain/bookings.js";
 import { journeyById, legEndPoint, legVehicleKind, stopLabel } from "../domain/legs.js";
+import { mapsDirectionsUrl } from "../domain/maps-link.js";
 import { hotelPhotos, thumbOf } from "../domain/photos.js";
 import { TICKET_KINDS, validTicket } from "../domain/tickets.js";
 import { phraseCardHtml } from "./phrase-show.js";
@@ -58,12 +59,7 @@ export function renderHotelCard(stay){
   </button>`;
 }
 
-export function mapsDirectionsUrl(act, mode = "walking"){
-  if (!act || act.lat == null || act.lng == null) return null;
-  const dest = `${act.lat},${act.lng}`;
-  // origin omis → Google Maps utilise la position actuelle sur le téléphone
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=${mode}`;
-}
+export { mapsDirectionsUrl };   // construit dans domain/maps-link.js (testé)
 
 export function mapsLinkHtml(act, kind){
   const url = mapsDirectionsUrl(act);
