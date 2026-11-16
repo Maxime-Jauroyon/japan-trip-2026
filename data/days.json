@@ -482,7 +482,14 @@
         "title": "Nishi Chaya",
         "lat": 36.557,
         "lng": 136.6475,
-        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré. À 0,4 km de Teramachi (ferme vers 17 h 30) ; le musée des armes ninja est tout près, et Nagamachi à ~0,7 km.",
+        "desc": "Quartier de thé plus calme que Higashi — moins de monde, même charme de bois ajouré. À 0,4 km de Teramachi (ferme vers 17 h 30) ; le musée de Nishi Chaya et le musée des armes ninja sont tout près, et Nagamachi à ~0,7 km.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Musée de Nishi Chaya",
+        "lat": 36.55671,
+        "lng": 136.64743,
+        "desc": "Ancienne maison de geishas dans le district de Nishi Chaya (2-25-18 Nomachi) : salon laqué vermillon à l’étage avec shamisen, tambours et paravents dorés, salon de thé de l’ère Taishō et expositions sur l’écrivain Seijirō Shimada. Entrée libre, tous les jours 9 h 30–17 h (pas de carte bancaire) ; parfois visite gratuite avec un bénévole (Maido-san). À quelques mètres de la rue de Nishi Chaya.",
         "goshuin": "non"
       },
       {
