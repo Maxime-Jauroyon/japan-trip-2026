@@ -65,6 +65,10 @@
       "slug": "kiyomizu"
     },
     {
+      "match": "higashiyama|gion",
+      "slug": "kiyomizu"
+    },
+    {
       "match": "arashiyama|bambou",
       "slug": "arashiyama"
     },
