@@ -503,8 +503,32 @@
         "title": "Nagamachi (quartier samouraï)",
         "lat": 36.5628,
         "lng": 136.65,
-        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable. À ~0,7 km de Nishi Chaya ; dernière étape du lundi.",
+        "desc": "Murs de terre et anciennes résidences samouraï le long de canaux. Quartier très marchable. À ~0,7 km de Nishi Chaya ; maison samouraï Nomura-ke sur place (~550 ¥, dernière entrée ~16 h en hiver). Ensuite : chasse aux goshuin, en commençant par Ishiura (~0,9 km).",
         "goshuin": "non"
+      },
+      {
+        "title": "Chasse aux goshuin : Sanctuaire Ishiura",
+        "lat": 36.5613,
+        "lng": 136.6598,
+        "desc": "Le plus ancien sanctuaire de Kanazawa, face au musée du XXIe siècle : goshuin aux motifs colorés de saison. Vu hier soir de nuit, bureau fermé : à faire maintenant. À ~0,9 km de Nagamachi. Bureau ~9 h–17 h (les bureaux de goshuin ferment tôt en hiver : y aller en premier).",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire (≈ 9 h–17 h) ; dessins de saison, souvent colorés."
+      },
+      {
+        "title": "Chasse aux goshuin : Sanctuaire Kanazawa-jinja",
+        "lat": 36.5611,
+        "lng": 136.6641,
+        "desc": "Petit sanctuaire dans un coin de Kenroku-en, à côté de la villa Seisonkaku : goshuin classique très détaillé avec une touche de feuille d’or. À ~0,5 km d’Ishiura. Horaires du bureau à vérifier sur place (en général jusqu’à ~16 h 30–17 h).",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire ; carnet à motif de phénix en vente sur place si vous n’en avez pas."
+      },
+      {
+        "title": "Chasse aux goshuin : Sanctuaire Oyama",
+        "lat": 36.566,
+        "lng": 136.6555,
+        "desc": "Le grand sanctuaire de la ville : plusieurs goshuin (certains en autocollant à coller soi-même). À ~1,2 km de Kanazawa-jinja, à 0,2 km de l’hôtel : dernière étape sur le chemin du retour, si le goshuin n’a pas été fait dimanche matin.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire."
       }
     ],
     "reminders": [
