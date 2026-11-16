@@ -80,6 +80,15 @@
    "doneAt": 1794813275946,
    "by": "Maxime",
    "at": 1794813275946
+  },
+  "p:chasse-aux-goshuin-sanctuaire-ueno-hachiman": {
+   "id": "p:chasse-aux-goshuin-sanctuaire-ueno-hachiman",
+   "kind": "planned",
+   "title": "Chasse aux goshuin : Sanctuaire Ueno Hachiman",
+   "status": "done",
+   "doneAt": 1794814723468,
+   "by": "Maxime",
+   "at": 1794814723468
   }
  }
 }
