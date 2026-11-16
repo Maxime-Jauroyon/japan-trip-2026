@@ -45,6 +45,10 @@
       "slug": "kawaguchi"
     },
     {
+      "match": "kanazawa-jinja",
+      "slug": "kenrokuen"
+    },
+    {
       "match": "kenroku",
       "slug": "kenrokuen"
     },
