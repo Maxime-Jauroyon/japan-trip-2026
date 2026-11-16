@@ -2,8 +2,8 @@
   "checks": [
     {
       "id": "rickshaw-reservation",
-      "label": "Réserver les pousse-pousse de Kyoto (Higashiyama jeu. 19 nov, Arashiyama ven. 20 nov)",
-      "meta": "Ebisuya : deux sites séparés (le billet de l’un n’est pas valable à l’autre) · ~30 min · annulation gratuite plus de 24 h avant · 100 % de frais à moins de 24 h · départ Higashiyama devant Kōdai-ji (Ichinenzaka)",
+      "label": "Pousse-pousse de Kyoto : réserver (conseillé en automne) ou monter sur place (Higashiyama jeu. 19 nov, Arashiyama ven. 20 nov)",
+      "meta": "Ebisuya : on peut aussi monter sans réservation au stand (9 h 30 – coucher du soleil), mais les places partent vite en saison d’automne · deux sites séparés (Higashiyama : coin Ichinenzaka / Nene no Michi ; Arashiyama : bout nord du pont Togetsukyo) · annulation gratuite plus de 24 h avant",
       "remindFrom": "2026-11-16",
       "done": false,
       "links": [
