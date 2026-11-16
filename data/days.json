@@ -551,6 +551,14 @@
         "desc": "Grand complexe de loisirs (Apita Town Kanazawa Bay, 4-121-1 Muryōji), à ~5,5 km au nord-ouest : taxi 15–20 min depuis Korinbo. Salle d’arcade Game Kanazawa Metropolis ouverte jusqu’à 23 h 50, bowling Corona Cat Bowl jusqu’à minuit le lundi (jusqu’à 2 h le vendredi et le samedi). Ouvert toute l’année ; horaires et tarifs à confirmer, et prévoir le taxi du retour.",
         "goshuin": "non",
         "mapsQuery": "金沢コロナワールド 金沢市無量寺4-121-1"
+      },
+      {
+        "title": "Kanazawa Music Bar (Tatemachi)",
+        "lat": 36.55969,
+        "lng": 136.65446,
+        "desc": "Bar à musique de la rue Tatemachi (rez-de-chaussée du Kaname Inn, 41 Tatemachi) : vinyles et sélection musicale soignée (folk, R&B, a cappella…), pas une salle de concert. Fin de soirée tout près de l’hôtel. Ouvert lun.–sam. ~16 h–24 h (dernière commande 23 h 30) selon une liste, d’autres donnent d’autres horaires : tél. 076-208-3540.",
+        "goshuin": "non",
+        "mapsQuery": "Kanazawa Music Bar 金沢市竪町41"
       }
     ],
     "reminders": [
