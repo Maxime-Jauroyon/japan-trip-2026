@@ -13,7 +13,7 @@ test("journée classique : hôtel → activités dans l’ordre → hôtel", () 
   const it = dayItinerary("kyoto", day(12));
   assert.equal(it[0].kind, "hotel");
   assert.equal(it.at(-1).kind, "hotel");
-  assert.deepEqual(it.filter((s) => s.kind === "activity").map((s) => s.step), [1, 2, 3]);
+  assert.deepEqual(it.filter((s) => s.kind === "activity").map((s) => s.step), day(12).ideas.map((_, k) => k + 1));
 });
 
 test("jour d’arrivée : départ de la gare ; jour de départ : fin à la gare", () => {
@@ -35,7 +35,7 @@ test("estimations : à pied si proche, transports sinon", () => {
   assert.equal(segmentEstimate(a, { lat: 35.005, lng: 135.75 }).mode, "walk");
   assert.equal(segmentEstimate(a, { lat: 35.05, lng: 135.75 }).mode, "transit");
   const s = itinerarySummary(dayItinerary("kyoto", day(12)));
-  assert.equal(s.activities, 3);
+  assert.equal(s.activities, day(12).ideas.length);
   assert.ok(s.km > 0 && s.minutes >= 5);
 });
 
