@@ -136,3 +136,15 @@ test("alarme du lendemain : celle du jour suivant, rien le dernier jour", () => 
   assert.equal(wakeForNextDay(DAYS, DAYS.length), null);
   DAYS.forEach((d) => assert.match(d.wake.time, /^\d\d:\d\d$/));
 });
+
+test("lien Itinéraire Google Maps : coordonnées par défaut, nom du lieu prioritaire", async () => {
+  const { mapsDirectionsUrl } = await import("../src/domain/maps-link.js");
+  assert.equal(mapsDirectionsUrl({ lat: 35.01, lng: 135.77 }), "https://www.google.com/maps/dir/?api=1&destination=35.01%2C135.77&travelmode=walking");
+  assert.ok(mapsDirectionsUrl({ lat: 1, lng: 2, mapsQuery: "妙立寺 金沢市野町1-2-12" }, "transit").includes(encodeURIComponent("妙立寺 金沢市野町1-2-12") + "&travelmode=transit"));
+  assert.ok(mapsDirectionsUrl({ lat: 1, lng: 2, ref: { mapsQuery: "Kōdai-ji" } }).includes("destination=K%C5%8Ddai-ji"));   // étape d’itinéraire : lu sur l’idée d’origine
+  assert.equal(mapsDirectionsUrl({ title: "sans coordonnées" }), null);
+  assert.equal(mapsDirectionsUrl(null), null);
+  assert.ok(mapsDirectionsUrl({ lat: 1, lng: 2, mapsQuery: "  " }).includes("destination=1%2C2"));   // texte vide ignoré
+  const my = DAYS.find((d) => d.n === 9).ideas.find((a) => a.title === "Myōryū-ji");
+  assert.ok(Math.abs(my.lat - 36.55538) < 1e-4 && Math.abs(my.lng - 136.64903) < 1e-4 && my.mapsQuery.includes("妙立寺"));
+});

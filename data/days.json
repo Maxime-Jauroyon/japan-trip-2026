@@ -458,8 +458,8 @@
     "ideas": [
       {
         "title": "Myōryū-ji",
-        "lat": 36.5551,
-        "lng": 136.6486,
+        "lat": 36.55538,
+        "lng": 136.64903,
         "desc": "Le « temple des ninjas » — visite guidée d’environ 40 min (portes secrètes, pièges, escaliers dérobés). Visite réservée lundi à 11 h : être sur place à 10 h 50 (espèces). Teramachi est à 0,2 km.",
         "goshuin": "possible",
         "goshuinNote": "Au temple (« Ninja-dera ») : à demander à l’accueil.",
@@ -467,7 +467,8 @@
           "Visite réservée : lundi 16 nov, 11 h — être sur place à 10 h 50, les retardataires ne sont pas attendus (tél. 076-241-0888).",
           "Visite guidée en japonais ; on prête un livret en anglais pour suivre chaque étape.",
           "Entrée ¥1 200 en espèces seulement (¥1 300 à partir du 1er décembre)."
-        ]
+        ],
+        "mapsQuery": "妙立寺 金沢市野町1-2-12"
       },
       {
         "title": "Teramachi",
