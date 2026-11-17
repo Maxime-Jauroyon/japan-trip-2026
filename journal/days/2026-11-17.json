@@ -41,6 +41,15 @@
    "doneAt": 1794927519878,
    "by": "Maxime",
    "at": 1794927519878
+  },
+  "p:balade-du-soir-sur-le-pont-nakabashi-et-la-riviere": {
+   "id": "p:balade-du-soir-sur-le-pont-nakabashi-et-la-riviere",
+   "kind": "planned",
+   "title": "Balade du soir sur le pont Nakabashi et la rivière",
+   "status": "done",
+   "doneAt": 1794927525590,
+   "by": "Maxime",
+   "at": 1794927525590
   }
  }
 }
