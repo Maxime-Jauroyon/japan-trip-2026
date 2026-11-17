@@ -605,6 +605,14 @@
         "goshuinNote": "Au sanctuaire Hachiman du village : à demander."
       },
       {
+        "title": "Musée en plein air de Shirakawa-go (Gasshō-zukuri Minkaen)",
+        "lat": 36.2547,
+        "lng": 136.9013,
+        "desc": "Village-musée de maisons gassho-zukuri déplacées et préservées, sur la colline en face d’Ogimachi : visite des intérieurs (foyer irori, étages de sériciculture), artisanat et jolis points de vue sur le village. Ouvert tous les jours 8 h 40–17 h de mars à novembre (dernière entrée 20 min avant), 9 h–16 h de décembre à février ; entrée ~600–800 ¥ selon la source (à confirmer, tél. 05769-6-1231). Compter ~1 h ; à faire avant le bus de 16 h 35 et la nuit (~16 h 40).",
+        "goshuin": "non",
+        "mapsQuery": "合掌造り民家園 白川村荻町"
+      },
+      {
         "title": "Sanmachi Suji",
         "phrases": "shop",
         "lat": 36.1415,
