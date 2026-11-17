@@ -338,5 +338,10 @@
     "hours": "Illumination ~17h–22h",
     "duration": "45 min–1 h",
     "closes": "21:30"
+  },
+  "sakurayama": {
+    "hours": "Sanctuaire en journée · salle des chars ~9h–16h30",
+    "duration": "1–1,5 h",
+    "closes": "16:30"
   }
 }

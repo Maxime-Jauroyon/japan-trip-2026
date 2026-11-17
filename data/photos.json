@@ -85,6 +85,10 @@
       "slug": "takayama-soir"
     },
     {
+      "match": "sakurayama",
+      "slug": "sakurayama"
+    },
+    {
       "match": "sanmachi",
       "slug": "sanmachi"
     },
@@ -1998,6 +2002,22 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
+      }
+    ],
+    "sakurayama": [
+      {
+        "file": "sanmachi.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:One_of_the_three_main_streets_in_Sanmachi-Suji_(6156038234).jpg"
+      },
+      {
+        "file": "sanmachi-2.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shops_in_one_of_the_three_main_streets_in_Sanmachi-Suji_(6156040666).jpg"
       }
     ]
   }
