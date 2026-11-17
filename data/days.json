@@ -621,14 +621,6 @@
         "goshuin": "non"
       },
       {
-        "title": "Dîner hida beef à Ajidokoro Tadani (Takayama)",
-        "lat": 36.1391,
-        "lng": 137.2522,
-        "desc": "Restaurant japonais rétro servant du bœuf de Hida, à ~150 m de la gare de Takayama : ouvert le mardi de 18 h à 22 h, réservation possible. Alternatives ouvertes le mardi : Dining BULL (steak de bœuf de Hida au charbon, 18 h–21 h, dernière commande 20 h 30, ~650 m de la gare) et Steakhouse Kitchen Hida (fermé le mercredi, ~4 500 ¥). À éviter ce soir, fermés le mardi : Kyoya, Hidagyu Tabedokoro Tengu, Hida Takayama Meat, Hida Beef Curry House et Gyu-Suke. Horaires et position à confirmer sur place.",
-        "goshuin": "non",
-        "mapsQuery": "Ajidokoro Tadani Takayama"
-      },
-      {
         "title": "Balade du soir sur le pont Nakabashi et la rivière",
         "lat": 36.14,
         "lng": 137.2592,
@@ -687,11 +679,27 @@
     ],
     "ideasAfter": [
       {
+        "title": "Shinkyōgoku (galeries couvertes et game centers)",
+        "lat": 35.005,
+        "lng": 135.769,
+        "desc": "Grandes galeries commerçantes couvertes, à ~5 min de l’hôtel : idéales sous la pluie. Boutiques ouvertes jusqu’à ~20 h–21 h, game centers et salles de jeux ouverts plus tard. À ne pas confondre avec la Teramachi de Kanazawa. À faire en arrivant, avant de repartir vers Higashiyama.",
+        "goshuin": "non",
+        "mapsQuery": "新京極商店街 京都市中京区"
+      },
+      {
+        "title": "Illumination de Kōdai-ji (Higashiyama)",
+        "lat": 35.0007,
+        "lng": 135.7812,
+        "desc": "Temple de Higashiyama illuminé en automne (jardin zen, bambous, reflets dans l’étang), ouvert le soir jusqu’à ~22 h, dernière entrée ~21 h 30, ~600 ¥ (chiffres de l’an dernier ; dates 2026 à confirmer : au moins jusqu’au 13 décembre). Taxi ~15 min depuis l’hôtel. Vous y repassez jeudi de jour pour Kiyomizu-dera et le pousse-pousse. Ensuite : Pontōchō à pied par Gion.",
+        "goshuin": "non",
+        "mapsQuery": "高台寺 京都市東山区高台寺下河原町526"
+      },
+      {
         "title": "Ruelle Pontochō au crépuscule",
         "phrases": "restaurant",
         "lat": 35.0039,
         "lng": 135.7714,
-        "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto.",
+        "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto. Dernière commande souvent entre 22 h et 23 h ; certaines adresses ferment le mercredi : vérifier avant de s’y rendre.",
         "goshuin": "non"
       }
     ],

@@ -81,10 +81,6 @@
       "slug": "shirakawa"
     },
     {
-      "match": "tadani",
-      "slug": "takayama-diner"
-    },
-    {
       "match": "nakabashi",
       "slug": "takayama-soir"
     },
@@ -143,6 +139,14 @@
     {
       "match": "teamlab",
       "slug": "teamlab"
+    },
+    {
+      "match": "kōdai|kodai",
+      "slug": "kodaiji-soir"
+    },
+    {
+      "match": "shinky",
+      "slug": "shinkyogoku"
     },
     {
       "match": "nishiki",
@@ -1964,13 +1968,36 @@
         "source": "https://commons.wikimedia.org/wiki/File:Shops_in_one_of_the_three_main_streets_in_Sanmachi-Suji_(6156040666).jpg"
       }
     ],
-    "takayama-diner": [
+    "shinkyogoku": [
       {
-        "file": "sanmachi.jpg",
-        "author": "Maarten Heerlien",
+        "file": "nishiki.jpg",
+        "author": "collinox",
         "license": "CC BY 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:One_of_the_three_main_streets_in_Sanmachi-Suji_(6156038234).jpg"
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      }
+    ],
+    "kodaiji-soir": [
+      {
+        "file": "kiyomizu.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
+      },
+      {
+        "file": "kiyomizu-2.jpg",
+        "author": "Jordy Meow",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
       }
     ]
   }
