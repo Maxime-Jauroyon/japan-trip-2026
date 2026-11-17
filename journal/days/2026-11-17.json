@@ -32,6 +32,15 @@
    "doneAt": 1794897895995,
    "by": "Maxime",
    "at": 1794897895995
+  },
+  "p:sanmachi-suji": {
+   "id": "p:sanmachi-suji",
+   "kind": "planned",
+   "title": "Sanmachi Suji",
+   "status": "done",
+   "doneAt": 1794927519878,
+   "by": "Maxime",
+   "at": 1794927519878
   }
  }
 }
