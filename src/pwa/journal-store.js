@@ -219,6 +219,11 @@ function objectUrl(k, blob){
 }
 
 /** URL d’une photo si elle est déjà sur le téléphone (aucun appel réseau), sinon "". */
+/** Adresse d’une photo DÉJÀ en mémoire (réponse immédiate, sans attente) : sert à redessiner le Carnet sans image vide. */
+export function knownPhotoUrl(iso, name, thumb){
+  return urls.get(photoKey(iso, thumb ? thumbName(name) : name)) || "";
+}
+
 export async function cachedPhotoUrl(iso, name, thumb){
   const file = thumb ? thumbName(name) : name;
   const k = photoKey(iso, file);
@@ -414,7 +419,7 @@ async function gh(path, init = {}){
 function setStatus(state, error = ""){
   syncStatus.state = state;
   syncStatus.error = error;
-  if (state === "ok") syncStatus.at = Date.now();
+  if (state === "ok" || state === "public") syncStatus.at = Date.now();
   emit(JOURNAL_SYNC);
 }
 
@@ -478,25 +483,35 @@ async function syncDay(iso, remoteSha){
 
 /** Synchronise tout ce qui a changé (un seul appel réseau s’il n’y a rien de nouveau). */
 /** Sans jeton (famille) : lecture publique du journal, fusionnée dans le journal local. Au plus toutes les 3 minutes. */
-let lastPublic = 0;
-async function pullPublic(){
-  if (!repoCfg().repo || navigator.onLine === false || Date.now() - lastPublic < 180000) return;
+let lastPublic = 0, publicRunning = false;
+/** `force` : demandé à la main (« Actualiser ») → pas de limite de 3 minutes (seulement 4 s contre les doubles appuis). */
+async function pullPublic(force){
+  if (!repoCfg().repo || publicRunning) return;
+  if (navigator.onLine === false) { setStatus("offline"); return; }
+  if (Date.now() - lastPublic < (force ? 4000 : 180000)) return;
   lastPublic = Date.now();
-  const today = japanTodayISO();
-  const days = await loadPublicJournal(repoCfg(), DAYS.map(dayToISO).filter(iso => iso && iso <= today));
-  const m = load();
-  let changed = false;
-  days.forEach(([iso, remote]) => {
-    const merged = mergeDay(journalDay(iso), remote);
-    if (!sameDay(merged, journalDay(iso))) { m.days[iso] = merged; changed = true; }
-  });
-  if (changed) { save(); emit(JOURNAL_CHANGED); }
-  setStatus("public");
-  prefetchPhotos();
+  publicRunning = true;
+  setStatus("syncing");
+  try {
+    const today = japanTodayISO();
+    const { days, ok } = await loadPublicJournal(repoCfg(), DAYS.map(dayToISO).filter(iso => iso && iso <= today));
+    if (!ok) { lastPublic = 0; setStatus("offline"); return; }   // rien n’a pu être lu : on pourra réessayer tout de suite
+    const m = load();
+    let changed = false;
+    days.forEach(([iso, remote]) => {
+      const merged = mergeDay(journalDay(iso), remote);
+      if (!sameDay(merged, journalDay(iso))) { m.days[iso] = merged; changed = true; }
+    });
+    if (changed) { save(); emit(JOURNAL_CHANGED); }
+    setStatus("public");
+    prefetchPhotos();
+  } catch (_) { lastPublic = 0; setStatus("offline"); }
+  finally { publicRunning = false; }
 }
 
-export async function syncNow(){
-  if (!journalReady()) { setStatus("nocfg"); pullPublic().catch(() => {}); return; }
+/** `force === true` : actualisation demandée à la main (les écouteurs passent un événement : ce n’est pas une demande forcée). */
+export async function syncNow(force){
+  if (!journalReady()) { if (syncStatus.state === "idle") setStatus("nocfg"); pullPublic(force === true).catch(() => {}); return; }
   if (navigator.onLine === false) { setStatus("offline"); return; }
   if (running) { again = true; return; }
   running = true;

@@ -247,6 +247,26 @@ await page.evaluate(() => document.querySelector(".cn-daydislike").click());
 await page.waitForTimeout(800);
 check("un second appui retire le 👎", (await dayDislike()).pressed === "false");
 
+// 6 ter. Un ❤️ sur un moment met l’avis à jour sur place : le fil n’est pas redessiné (même nœud, même photo, carrousel en place)
+await page.evaluate(() => {
+  const post = document.querySelector(".vy-post[data-post]");
+  post.__kept = true; post.querySelector(".vy-car").scrollLeft = post.querySelector(".vy-car").clientWidth;
+  post.scrollIntoView({ block: "center" });
+});
+await page.waitForTimeout(500);
+const countPill = await page.evaluate(() => document.querySelector(".vy-post[data-post] .vy-count").textContent);
+check("carrousel : la pastille suit la photo affichée (« 2 / 4 »)", /^2 \/ \d+$/.test(countPill), countPill);
+await page.evaluate(() => document.querySelector(".vy-post[data-post] [data-like-id]").click());
+await page.waitForTimeout(700);
+const kept = await page.evaluate(() => { const post = document.querySelector(".vy-post[data-post]"); return { same: post.__kept === true, pressed: post.querySelector("[data-like-id]").getAttribute("aria-pressed"), slide: post.querySelector(".vy-car").scrollLeft > 0, img: !!post.querySelector("img").getAttribute("src"), shown: getComputedStyle(post).opacity }; });
+check("❤️ sur un moment : avis mis à jour sur place, sans redessiner le fil", kept.same && kept.pressed === "true" && kept.slide && kept.img && kept.shown === "1", JSON.stringify(kept));
+await page.evaluate(() => document.querySelector(".vy-post[data-post] [data-dislike-id]").click());
+await page.waitForTimeout(700);
+const swapped = await page.evaluate(() => { const post = document.querySelector(".vy-post[data-post]"); return { same: post.__kept === true, like: post.querySelector("[data-like-id]").getAttribute("aria-pressed"), bad: post.querySelector("[data-dislike-id]").getAttribute("aria-pressed") }; });
+check("👎 sur le même moment : le ❤️ se retire, toujours sans redessin", swapped.same && swapped.like === "false" && swapped.bad === "true", JSON.stringify(swapped));
+await page.evaluate(() => document.querySelector(".vy-post[data-post] [data-dislike-id]").click());
+await page.waitForTimeout(600);
+
 // 7. Coups de cœur de chacun (vue ❤️ du Carnet)
 await page.evaluate(() => document.querySelector(".cn-daylike").click());   // Maxime aime aussi une journée
 await page.waitForTimeout(600);
@@ -305,6 +325,39 @@ await page.keyboard.press("Escape");
 await page.waitForTimeout(400);
 check("Échap referme aussi la fiche", !(await page.evaluate(() => !!document.querySelector(".cn-sheet"))));
 
+// 8 bis. Couverture touchée depuis « Coups de cœur » : la visionneuse s’ouvre sur cette photo (pas vide, pas une autre)
+await page.keyboard.press("Escape");
+await page.waitForTimeout(300);
+await page.evaluate(() => { document.querySelector("#view-carnet").scrollTo(0, 0); });
+const coverName = await page.evaluate(() => {
+  const v = document.querySelector(".jr-viewer");   // on efface ce que la visionneuse montrait avant : le test doit voir la NOUVELLE photo arriver
+  if (v) { v.querySelector("img").removeAttribute("src"); v.querySelector(".jv-cap strong").textContent = ""; }
+  const c = document.querySelector(".cn-cover .vy-photo"); const n = c.dataset.jpName; c.click(); return n;
+});
+await page.waitForTimeout(1500);
+const coverView = await page.evaluate(() => { const v = document.querySelector(".jr-viewer"); return v && !v.hidden ? { pos: v.querySelector(".jv-pos").textContent, src: !!v.querySelector("img").getAttribute("src"), title: v.querySelector(".jv-cap strong").textContent, save: v.querySelector(".jv-save").textContent } : null; });
+check("couverture touchée depuis les coups de cœur : la visionneuse s’ouvre sur la photo", !!coverView && coverView.src && !!coverView.title && /Enregistrer la photo/.test(coverView.save), JSON.stringify(coverView) + " " + coverName);
+await page.keyboard.press("Escape");
+await page.waitForTimeout(300);
+// 8 ter. Fiche ouverte depuis « Pas aimés » : le retour porte le bon nom
+await page.evaluate(() => document.querySelector('[data-mode="feed"]').click());
+await page.waitForTimeout(400);
+await page.evaluate(() => document.querySelector(".vy-post[data-post] [data-dislike-id]").click());
+await page.waitForTimeout(600);
+await page.evaluate(() => document.querySelector('[data-mode="hearts"]').click());
+await page.waitForTimeout(400);
+await page.evaluate(() => document.querySelector('[data-vote="dislikes"]').click());
+await page.waitForTimeout(400);
+await page.evaluate(() => document.querySelector(".cn-fav").click());
+await page.waitForTimeout(800);
+check("fiche ouverte depuis « Pas aimés » : retour « ‹ Pas aimés »", await page.evaluate(() => /Pas aimés/.test((document.querySelector("[data-sheet-close]") || {}).textContent || "")));
+await page.evaluate(() => document.querySelector(".cn-sheet [data-dislike-id]").click());   // on retire le 👎 depuis la fiche
+await page.waitForTimeout(700);
+check("👎 retiré depuis la fiche : le moment sort de la liste et la fiche se referme proprement", await page.evaluate(() => !document.querySelector(".cn-fav") && /pas aim/i.test((document.querySelector(".cn-empty") || {}).textContent || "")));
+await page.keyboard.press("Escape");
+await page.evaluate(() => { document.querySelector('[data-vote="likes"]')?.click(); });
+await page.waitForTimeout(300);
+
 // 9. « Tout télécharger » : photos en haute qualité, jamais floues ensuite (contexte neuf : rien n’est encore sur le téléphone)
 const ctx2 = await browser.newContext({ viewport: { width: 390, height: 800 }, serviceWorkers: "block" });
 await ctx2.addInitScript(() => {
@@ -336,6 +389,59 @@ check("toutes les grandes photos ont été prises (39), pas une de plus", fullBe
 let blurSeen = 0;
 for (let y = 0; y < 14000; y += 400) { await page2.evaluate((y) => document.querySelector("#view-carnet").scrollTo(0, y), y); await page2.waitForTimeout(60); blurSeen += await page2.evaluate(() => document.querySelectorAll("#carnet-body img.blur").length); }
 check("en haute qualité : aucune photo floue, même un instant, pendant tout le défilement", blurSeen === 0, `${blurSeen} observations de flou`);
+
+// 10. Famille (sans jeton) : lecture publique, « Actualiser » relance vraiment la lecture, hors ligne dit clairement « Hors ligne »
+const ctx3 = await browser.newContext({ viewport: { width: 390, height: 800 }, serviceWorkers: "block" });
+await ctx3.addInitScript(() => {
+  const R = Date, off = R.UTC(2026, 10, 11, 5, 0) - R.now();
+  globalThis.Date = class extends R { constructor(...a) { a.length ? super(...a) : super(R.now() + off); } static now() { return R.now() + off; } };
+  try { localStorage.setItem("japan-trip-carnet-help", "1"); } catch (_) { /* about:blank */ }
+});
+const page3 = await ctx3.newPage();
+page3.on("pageerror", (e) => pageErrors.push(e.message));
+const raw = { days: 0, down: false };
+await page3.route(/^https:\/\//, (r) => {
+  const u = new URL(r.request().url());
+  if (u.hostname !== "raw.githubusercontent.com" || raw.down) return r.abort();
+  const day = /\/journal\/days\/(.+\.json)$/.exec(u.pathname);
+  if (day) { raw.days++; return files[day[1]] ? r.fulfill({ status: 200, contentType: "application/json", body: Buffer.from(files[day[1]].content, "base64").toString() }) : r.fulfill({ status: 404, body: "" }); }
+  if (/\/journal\/photos\//.test(u.pathname)) return r.fulfill({ status: 200, contentType: "image/jpeg", body: /\.t\.jpg$/.test(u.pathname) ? THUMB : FULL });
+  return r.abort();
+});
+await page3.goto(BASE);
+await page3.waitForTimeout(1500);
+await page3.getByText("Plus tard").click({ timeout: 2000 }).catch(() => {});
+await page3.locator('nav button:has-text("Carnet")').last().click();
+await page3.waitForTimeout(3500);
+const fam = await page3.evaluate(() => ({ posts: document.querySelectorAll(".vy-post").length, status: document.querySelector("#carnet-status .cn-status-text").textContent, buttons: document.querySelectorAll("#carnet-body [data-like-id], #carnet-body [data-daylike-iso]").length, hqAfter: document.querySelector("#carnet-body").nextElementSibling === document.querySelector("#carnet-hq") }));
+check("famille : le carnet s’affiche en lecture seule (pas de bouton d’avis), ligne « ✓ À jour à HH:MM »", fam.posts >= 9 && fam.buttons === 0 && /À jour à \d\d:\d\d/.test(fam.status), JSON.stringify(fam));
+check("famille : la ligne « qualité des photos » est sous le carnet", fam.hqAfter);
+const rawBefore = raw.days;
+await page3.waitForTimeout(4200);   // garde de 4 s contre les doubles appuis
+await page3.evaluate(() => document.querySelector("#carnet-refresh").click());
+await page3.waitForTimeout(1500);
+check("famille : « Actualiser » relit vraiment le journal, même juste après un chargement", raw.days > rawBefore, `${rawBefore} → ${raw.days} lectures`);
+raw.down = true;
+await page3.waitForTimeout(4200);
+await page3.evaluate(() => document.querySelector("#carnet-refresh").click());
+await page3.waitForTimeout(1500);
+const famOff = await page3.evaluate(() => ({ status: document.querySelector("#carnet-status .cn-status-text").textContent, posts: document.querySelectorAll(".vy-post").length }));
+check("famille : réseau coupé → « Hors ligne », et le carnet déjà reçu reste affiché", /Hors ligne/.test(famOff.status) && famOff.posts >= 9, JSON.stringify(famOff));
+await ctx3.close();
+// 11. Famille, tout premier lancement sans réseau : un message, pas un squelette sans fin
+const ctx4 = await browser.newContext({ viewport: { width: 390, height: 800 }, serviceWorkers: "block" });
+await ctx4.addInitScript(() => { try { localStorage.setItem("japan-trip-carnet-help", "1"); } catch (_) { /* about:blank */ } });
+const page4 = await ctx4.newPage();
+page4.on("pageerror", (e) => pageErrors.push(e.message));
+await page4.route(/^https:\/\//, (r) => r.abort());
+await page4.goto(BASE);
+await page4.waitForTimeout(1500);
+await page4.getByText("Plus tard").click({ timeout: 2000 }).catch(() => {});
+await page4.locator('nav button:has-text("Carnet")').last().click();
+await page4.waitForTimeout(2500);
+const cold = await page4.evaluate(() => ({ skel: !!document.querySelector("#carnet-body .cn-skel"), text: (document.querySelector("#carnet-body .vy-empty") || {}).textContent || "", status: document.querySelector("#carnet-status .cn-status-text").textContent }));
+check("famille sans réseau au premier lancement : message clair, pas de squelette sans fin", !cold.skel && /Pas de connexion/.test(cold.text) && /Hors ligne/.test(cold.status), JSON.stringify(cold));
+await ctx4.close();
 await ctx2.close();
 
 check("aucune erreur JavaScript", pageErrors.length === 0, pageErrors.join(" | "));

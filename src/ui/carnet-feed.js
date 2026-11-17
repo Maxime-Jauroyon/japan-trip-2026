@@ -1,6 +1,8 @@
-/* Le Carnet : couverture, stories par jour, barre d’outils (Fil / Grille, jours) et fil de la journée
+/* Le Carnet : couverture, « où en est le voyage », stories par jour, onglets (Journées / Coups de cœur) et fil de la journée
    (chapitre par jour, moments dans l’ordre vécu avec leur heure). `ctx` fournit ce qui dépend de l’écran :
-   photoBtn(iso, photo, opt) → bouton-photo ; likeHtml(iso, item) → cœur ; openStory(jour) → lecteur plein écran. */
+   photoBtn(iso, photo, opt) → bouton-photo ; likeHtml(iso, item) → avis ; openStory(jour) → lecteur plein écran.
+   Les avis (❤️ / 👎) vivent dans des emplacements stables ([data-react], [data-dayreact]) : l’écran les met à jour sur place,
+   sans redessiner le fil (pas de clignotement). */
 
 import { CITIES, TRAVELERS } from "../core/data.js";
 import { esc } from "../core/dom.js";
@@ -30,9 +32,10 @@ function postHtml(ctx, iso, it){
     (it.isNew ? `<span class="vy-new">Nouveau</span>` : "") +
     (n > 1 ? `<small>${n} photos</small>` : "") + `</header>` +
     (n ? `<div class="vy-media"><div class="vy-car" data-n="${n}">${it.photos.map(name => `<div class="vy-slide">${ctx.photoBtn(iso, { name, title: it.title, id: it.id })}</div>`).join("")}</div>` +
+      (n > 1 ? `<span class="vy-count" aria-hidden="true">1 / ${n}</span>` : "") +
       `<span class="vy-heart" aria-hidden="true">❤️</span></div>` +
       (n > 1 ? `<div class="vy-dots" aria-hidden="true">${it.photos.map((_, k) => `<i${k ? "" : ' class="on"'}></i>`).join("")}</div>` : "") : "") +
-    (likes ? `<div class="vy-actions">${likes}</div>` : "") +
+    `<div class="vy-actions" data-react="${esc(iso + "|" + it.id)}">${likes}</div>` +
     (it.note ? `<p class="vy-caption">${esc(it.note)}</p>` : "") + `</article>`;
 }
 
@@ -54,7 +57,7 @@ export function dayCardHtml(ctx, x){
   return `<section class="vy-daygroup" id="cn-day-${day.n}" data-day-label="${esc(`J${day.n} · ${dayLabel(day)}`)}">` +
     `<div class="vy-chapter reveal${hero ? " has-hero" : ""}">${hero}<div class="vy-chapter-in"><span class="vy-n">Jour ${day.n}</span>${x.tag ? `<span class="vy-tag">${esc(x.tag)}</span>` : ""}<h3>${esc(dayLabel(day))}</h3>` +
     `<p>${esc((city ? city.name : day.city) + extra)} · ${plural(items.length, "moment")}${nPhotos ? " · " + plural(nPhotos, "photo") : ""}${esc(span)}</p>` +
-    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + (ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || [], x.dislikes || []) : "") + `</div></div>` +
+    (nPhotos ? storyButtonHtml(day.n, nPhotos) : "") + `<div class="cn-dayreact-slot" data-dayreact="${esc(iso)}">${ctx.dayLikeHtml ? ctx.dayLikeHtml(iso, x.likes || [], x.dislikes || []) : ""}</div></div></div>` +
     `<div class="vy-line">${items.map(it => postHtml(ctx, iso, it)).join("")}</div></section>`;
 }
 
@@ -67,7 +70,7 @@ function liveHtml(model){
   const where = p.status === "before" ? "" : esc(lv.cityName || "");
   const wx = p.status === "during" ? `<span class="cn-live-wx" data-wx="${esc(lv.todayISO)}" hidden></span>` : "";
   const route = lv.route.length > 1 ? `<ol class="cn-route" aria-label="Étapes du voyage">${lv.route.map(s => `<li class="${s.state}"><i aria-hidden="true"></i>${esc(s.name)}</li>`).join("")}</ol>` : "";
-  const last = lv.last ? `<p class="cn-live-last">Dernier moment : <b>${esc(lv.last.title)}</b> · ${esc(lv.last.ago)}</p>` : "";
+  const last = lv.last ? `<p class="cn-live-last">Dernier moment : <b>${esc(lv.last.title)}</b> · <span data-live-ago>${esc(lv.last.ago)}</span></p>` : "";
   const news = lv.news && lv.news.moments ? `<button type="button" class="cn-news" data-news="${esc(lv.news.first)}"><span aria-hidden="true">✨</span><span><b>${lv.news.moments} ${lv.news.moments > 1 ? "nouveaux moments" : "nouveau moment"}</b>${lv.news.photos ? ` · ${plural(lv.news.photos, "photo")}` : ""}<small>depuis votre dernière visite</small></span><em>Voir ›</em></button>` : "";
   return `<section class="cn-live" aria-label="Où en est le voyage">${news}` +
     `<div class="cn-live-head">${p.status === "during" ? `<span class="cn-pulse" aria-hidden="true"></span>` : ""}<div><b>${esc(title)}</b>${where || wx ? `<small>${where}${wx}</small>` : ""}</div></div>` +
@@ -133,16 +136,30 @@ export function carnetHtml(model, ctx){
   const stats = [[model.days.length, "jour"], [nMoments, "moment"], [photos.length, "photo"], [nCities, "ville"]];
   const cover = `<section class="cn-cover${latest ? "" : " empty"}">${latest ? ctx.photoBtn(latest.iso, latest, { cover: true }) : ""}` +
     `<div class="cn-cover-text"><p class="vy-kicker">${esc(model.datesLabel || "")}</p><h2>${esc(TRAVELERS.join(" & "))} au Japon</h2>` +
-    `<p class="cn-stats">${stats.map(([n, w]) => `<span><b data-count="${n}">${n}</b> ${w}${n > 1 ? "s" : ""}</span>`).join("")}</p></div></section>`;
+    (model.days.length ? `<p class="cn-stats">${stats.map(([n, w]) => `<span><b data-count="${n}">${n}</b> ${w}${n > 1 ? "s" : ""}</span>`).join("")}</p>` : "") + `</div></section>`;
   const tab = (mode, label) => `<button type="button" role="tab" data-mode="${mode}" aria-pressed="${feedState.mode === mode}" aria-selected="${feedState.mode === mode}">${label}</button>`;
   const bar = `<div class="cn-toolbar"><div class="cn-seg" role="tablist" aria-label="Affichage">${tab("feed", "Journées")}${tab("hearts", "❤️ Coups de cœur")}</div>` +
     (feedState.mode === "hearts" ? "" : `<div class="cn-days" aria-label="Choisir un jour"><button type="button" data-fday="" aria-pressed="${!feedState.filter}">Tous les jours</button>` +
     model.days.slice().reverse().map(x => `<button type="button" data-fday="${x.day.n}" aria-pressed="${feedState.filter === x.day.n}" aria-label="${esc(`Jour ${x.day.n}, ${dayLabel(x.day)}`)}">${esc(shortDay(x.day))}</button>`).join("") + `</div>`) + `</div>`;
   let body;
-  if (!model.days.length) body = `<p class="vy-empty">${esc(model.emptyText || "Rien pour l’instant.")}</p>`;
-  else if (feedState.mode === "hearts") body = heartsHtml(model, ctx);
+  // Rien à montrer encore : la couverture, où en est le voyage et un message — pas d’onglets ni de compteurs à zéro
+  if (!model.days.length) return helpHtml(model) + cover + liveHtml(model) + `<p class="vy-empty">${esc(model.emptyText || "Rien pour l’instant.")}</p>`;
+  if (feedState.mode === "hearts") body = heartsHtml(model, ctx);
   else body = days.slice().reverse().map(x => dayCardHtml(ctx, x)).join("");
   return helpHtml(model) + cover + liveHtml(model) + storiesHtml(model, ctx) + bar + body;
+}
+
+/**
+ * Étapes du voyage : la ville du moment est amenée au milieu de la bande (elle peut être hors écran en fin de voyage).
+ * Sans effet tant que l’onglet est caché (largeur nulle) : l’écran rappelle cette fonction quand il s’affiche.
+ */
+export function centerRoute(root){
+  root.querySelectorAll(".cn-route").forEach(r => {
+    if (r.dataset.centered || !r.clientWidth) return;
+    const now = r.querySelector("li.now") || [...r.querySelectorAll("li.done")].pop();
+    if (now) r.scrollLeft = now.offsetLeft - (r.clientWidth - now.offsetWidth) / 2;
+    r.dataset.centered = "1";
+  });
 }
 
 let revealer = null;
@@ -166,18 +183,24 @@ export function bindCarnet(root, again, ctx){
     const post = [...root.querySelectorAll(".vy-post[data-post]")].find(p => p.dataset.post === key);
     if (post) { post.classList.add("in"); post.scrollIntoView({ block: "start", behavior: "smooth" }); post.classList.add("flash"); setTimeout(() => post.classList.remove("flash"), 2400); }
   }));
+  centerRoute(root);
   root.querySelectorAll("[data-vote]").forEach(b => b.addEventListener("click", () => { feedState.vote = b.dataset.vote; feedState.who = null; again(); }));
   root.querySelectorAll("[data-who]").forEach(b => b.addEventListener("click", () => { feedState.who = b.dataset.who || null; again(); }));
   root.querySelectorAll("[data-goday]").forEach(b => b.addEventListener("click", () => { feedState.mode = "feed"; feedState.filter = Number(b.dataset.goday); again(); }));
   root.querySelectorAll("[data-fday]").forEach(b => b.addEventListener("click", () => { feedState.filter = b.dataset.fday ? Number(b.dataset.fday) : null; again(); }));
   root.querySelectorAll("[data-story-day]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); if (ctx && ctx.openStory) ctx.openStory(Number(b.dataset.storyDay)); }));
   root.querySelectorAll(".vy-car").forEach(car => {
-    const dots = car.closest(".vy-post").querySelectorAll(".vy-dots i");
+    const post = car.closest(".vy-post");
+    const dots = post.querySelectorAll(".vy-dots i");
     if (dots.length < 2) return;
-    car.addEventListener("scroll", () => {
+    const count = post.querySelector(".vy-count");
+    const sync = () => {
       const i = Math.min(dots.length - 1, Math.round(car.scrollLeft / Math.max(1, car.clientWidth)));
       dots.forEach((d, k) => d.classList.toggle("on", k === i));
-    }, { passive: true });
+      if (count) count.textContent = `${i + 1} / ${dots.length}`;
+    };
+    car.addEventListener("scroll", sync, { passive: true });
+    if (car.scrollLeft) sync();   // position restaurée après un redessin : points et compteur suivent
   });
   // Compteurs de la couverture qui montent (une fois, sauf si les animations sont réduites)
   const calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -192,7 +215,8 @@ export function bindCarnet(root, again, ctx){
   }
   // Apparition en douceur au défilement (rien si le navigateur ne sait pas observer : tout reste visible)
   const items = root.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window)) { items.forEach(n => n.classList.add("in")); return; }
+  // Redessin d’un carnet déjà affiché (`ctx.instant`) : tout reste visible, sans refaire l’apparition en fondu
+  if ((ctx && ctx.instant) || !("IntersectionObserver" in window)) { items.forEach(n => n.classList.add("in")); return; }
   if (!revealer) revealer = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); revealer.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   items.forEach(n => revealer.observe(n));
 }

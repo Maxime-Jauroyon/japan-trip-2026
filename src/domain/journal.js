@@ -109,13 +109,14 @@ export function likersOf(days, vote = "likes"){
 
 /**
  * Coups de cœur : les journées et les moments aimés (par `who`, ou par n’importe qui si `who` est vide), les plus récents d’abord ;
- * avec `vote` = "dislikes", ceux qui ont reçu un 👎 à la place.
+ * avec `vote` = "dislikes", ceux qui ont reçu un 👎 à la place. `only` (ensemble de « iso|id ») limite aux moments affichés dans le Carnet.
  * Retourne { days: [{ iso, who }], moments: [{ iso, id, title, photos, who, when }] } ; `who` = auteurs qui ont aimé (filtrés).
  */
-export function favorites(days, who, vote = "likes"){
+export function favorites(days, who, vote = "likes", only = null){
   const out = { days: [], moments: [] }, by = vote === "dislikes" ? dislikedBy : likedBy;
   (days || []).forEach(([iso, day]) => Object.values((day && day.items) || {}).forEach((it) => {
     if (it.deleted) return;
+    if (only && it.id !== DAY_LIKE_ID && !only.has(iso + "|" + it.id)) return;   // moment qui n’est plus affiché dans le Carnet
     const likers = by(it).filter((a) => !who || a === who);
     if (!likers.length) return;
     if (it.id === DAY_LIKE_ID) out.days.push({ iso, who: likers });

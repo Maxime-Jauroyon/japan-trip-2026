@@ -4,19 +4,20 @@ import { sanitizeDay } from "../domain/journal.js";
 
 const RAW = "https://raw.githubusercontent.com";
 
-/** Journal d’un jour (null s’il n’existe pas encore). */
+/** Journal d’un jour : le jour, `null` s’il n’existe pas encore (404), `undefined` si la lecture a échoué (réseau, serveur). */
 async function fetchDay(cfg, iso){
   try {
     const res = await fetch(`${RAW}/${cfg.repo}/${cfg.branch}/journal/days/${iso}.json`, { cache: "no-cache" });
-    if (!res.ok) return null;
+    if (res.status === 404) return null;
+    if (!res.ok) return undefined;
     return sanitizeDay(await res.json());
-  } catch (_) { return null; }
+  } catch (_) { return undefined; }
 }
 
-/** Les jours `isos` qui ont un journal : [[iso, jour]]. */
+/** Les jours `isos` qui ont un journal : { days: [[iso, jour]], ok } — `ok` faux si aucune lecture n’a abouti (pas de réseau). */
 export async function loadPublicJournal(cfg, isos){
-  const days = await Promise.all(isos.map(async (iso) => [iso, await fetchDay(cfg, iso)]));
-  return days.filter(([, d]) => d && Object.keys(d.items).length);
+  const all = await Promise.all(isos.map(async (iso) => [iso, await fetchDay(cfg, iso)]));
+  return { days: all.filter(([, d]) => d && Object.keys(d.items).length), ok: !isos.length || all.some(([, d]) => d !== undefined) };
 }
 
 /** Adresse d’une photo du dépôt (miniature ou taille réduite). */

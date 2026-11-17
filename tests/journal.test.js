@@ -255,3 +255,16 @@ test("« (le soir) » dans le titre ne change pas l’id et le titre du programm
   assert.equal(it[0].title, "Kenroku-en (le soir)");
   assert.equal(doneItems(day, "2026-11-14")[0].title, "Kenroku-en");
 });
+
+test("favoris : limités aux moments affichés dans le Carnet quand `only` est donné", () => {
+  let day = upsertItem(emptyDay(), "p:a", { kind: "planned", title: "A", status: "todo" }, { status: "done" }, 1);
+  day = upsertItem(day, "p:b", { kind: "planned", title: "B", status: "todo" }, { status: "skipped" }, 2);   // aimé puis « pas fait » : plus dans le Carnet
+  day = setLike(setLike(day, "p:a", "Léo", true, 3), "p:b", "Léo", true, 4);
+  day = setDayLike(day, "Léo", true, 5);
+  const days = [["2026-11-08", day]];
+  assert.equal(favorites(days, null).moments.length, 2);
+  const only = new Set(["2026-11-08|p:a"]);
+  assert.deepEqual(favorites(days, null, "likes", only).moments.map((m) => m.id), ["p:a"]);
+  assert.equal(favorites(days, null, "likes", only).days.length, 1);   // le ❤️ de la journée n’est jamais filtré
+  assert.equal(favorites(days, null, "likes", new Set()).moments.length, 0);
+});
