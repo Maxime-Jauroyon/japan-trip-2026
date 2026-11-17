@@ -121,7 +121,11 @@ export function hydratePhotos(root){
     const all = [...root.querySelectorAll("[data-jp-name]:not([data-jp-cover]):not([data-jp-story])")];   // la couverture double une photo du fil
     const same = (el) => el.dataset.jpIso === b.dataset.jpIso && el.dataset.jpId === b.dataset.jpId && el.dataset.jpName === b.dataset.jpName;
     const label = (el) => (el.closest("[data-day-label]") || {}).dataset?.dayLabel || "";
-    openPhotoViewer(all.map(el => ({ iso: el.dataset.jpIso, id: el.dataset.jpId, name: el.dataset.jpName, title: el.getAttribute("aria-label") || "", label: label(el) })), all.findIndex(same));
+    const list = all.map(el => ({ iso: el.dataset.jpIso, id: el.dataset.jpId, name: el.dataset.jpName, title: el.getAttribute("aria-label") || "", label: label(el) }));
+    let at = all.findIndex(same);
+    // Photo touchée absente de la liste (la couverture quand son moment n’est pas affiché : coups de cœur, jour filtré) : on l’ouvre quand même
+    if (at < 0) { list.unshift({ iso: b.dataset.jpIso, id: b.dataset.jpId, name: b.dataset.jpName, title: b.getAttribute("aria-label") || "", label: "" }); at = 0; }
+    openPhotoViewer(list, at);
   }); });
 }
 
@@ -145,6 +149,32 @@ export function bindCameraButtons(root){
 
 let viewer = null;
 let vList = [], vIdx = 0;
+let shareReady = null;   // { p, file } : fichier de la photo affichée, prêt à être partagé dès l’appui (iPhone exige un geste direct)
+
+const saveLabel = (p) => (p && isVideo(p.name) ? "⬇ Enregistrer la vidéo" : "⬇ Enregistrer la photo");
+
+/** Prépare le fichier à enregistrer pour `p` (lu depuis le téléphone si la photo y est déjà). */
+async function prepareShare(p){
+  if (shareReady && shareReady.p === p) return shareReady.file;
+  const url = await photoUrl(p.iso, p.name, false, { priority: 12 });
+  if (!url) return null;
+  const blob = await (await fetch(url)).blob();
+  const file = new File([blob], p.name, { type: blob.type || (isVideo(p.name) ? "video/mp4" : "image/jpeg") });
+  if (vList[vIdx] === p) shareReady = { p, file };
+  return file;
+}
+
+/** Feuille de partage de l’iPhone (« Enregistrer l’image »), sinon téléchargement du fichier. */
+async function shareFile(file){
+  if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file] }); return; }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(file);
+  a.download = file.name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
 
 const authorName = () => journalConfig().author || "Moi";
 
@@ -166,11 +196,12 @@ export function openPhotoViewer(list, index){
       `<button type="button" class="jv-hero"></button><button type="button" class="jv-del" aria-label="Supprimer la photo">🗑</button></div>`;
     document.body.appendChild(viewer);
     const stage = viewer.querySelector(".jv-stage");
-    let x0 = null, lastTap = 0;
-    stage.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    let x0 = null, y0 = 0, lastTap = 0;
+    stage.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
     stage.addEventListener("touchend", e => {
       if (x0 == null) return;
-      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+      if (dy > 110 && dy > Math.abs(dx) * 1.5) { closeViewer(); return; }   // glisser vers le bas : fermer
       if (Math.abs(dx) > 50) { showViewer(vIdx + (dx < 0 ? 1 : -1)); return; }
       const now = Date.now();
       if (now - lastTap < 320) { likeCurrent(true); lastTap = 0; } else lastTap = now;
@@ -204,23 +235,32 @@ function closeViewer(){
   viewer.hidden = true;
 }
 
-/** Enregistre la photo (ou vidéo) affichée : feuille de partage de l’iPhone (« Enregistrer l’image »), sinon téléchargement. */
+/**
+ * Enregistre la photo (ou vidéo) affichée. Le fichier est préparé à l’avance : le partage part donc directement dans le geste
+ * (sinon l’iPhone le refuse). S’il n’était pas prêt, on le prépare et on demande un second appui.
+ */
 async function saveCurrent(){
   const p = vList[vIdx];
   const btn = viewer && viewer.querySelector(".jv-save");
   if (!p || !btn || btn.disabled) return;
-  const label = btn.textContent;
-  btn.disabled = true; btn.textContent = "Préparation…";
+  const restore = () => { if (vList[vIdx] === p) btn.textContent = saveLabel(p); };
   try {
-    const url = await photoUrl(p.iso, p.name, false, { priority: 12 });
-    if (!url) throw new Error("photo absente");
-    const blob = await (await fetch(url)).blob();
-    const file = new File([blob], p.name, { type: blob.type || (isVideo(p.name) ? "video/mp4" : "image/jpeg") });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file] });
-    else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = p.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }
+    if (shareReady && shareReady.p === p) { await shareFile(shareReady.file); restore(); return; }
+    btn.disabled = true; btn.textContent = "Préparation…";
+    const file = await prepareShare(p);
+    btn.disabled = false;
+    if (!file) throw new Error("photo absente");
+    try { await shareFile(file); restore(); }
+    catch (e) {
+      if (e && e.name === "NotAllowedError") { if (vList[vIdx] === p) btn.textContent = "Prêt : touchez encore pour enregistrer"; return; }
+      throw e;
+    }
   } catch (e) {
-    if (!e || e.name !== "AbortError") { btn.textContent = "Impossible pour l’instant"; await new Promise(r => setTimeout(r, 1800)); }
-  } finally { btn.disabled = false; btn.textContent = label; }
+    btn.disabled = false;
+    if (e && e.name === "AbortError") { restore(); return; }   // feuille de partage refermée : rien à signaler
+    btn.textContent = "Impossible pour l’instant";
+    setTimeout(restore, 1800);
+  }
 }
 
 function likeCurrent(onlyAdd){
@@ -263,6 +303,9 @@ async function showViewer(i){
   viewer.querySelector(".jv-cap strong").textContent = p.title || "";
   viewer.querySelector(".jv-cap small").textContent = p.label || "";
   viewer.querySelector(".jr-viewer-bar").hidden = journalReadOnly();   // lecture seule : ni cœur ni suppression
+  shareReady = null;
+  const save = viewer.querySelector(".jv-save");
+  save.disabled = false; save.textContent = saveLabel(p);
   paintLike();
   const img = viewer.querySelector("img"), vid = viewer.querySelector("video");
   vid.pause(); vid.removeAttribute("src"); vid.hidden = true;
@@ -284,6 +327,7 @@ async function showViewer(i){
     vid.src = url; vid.hidden = false; img.hidden = true;
     vid.play().catch(() => { /* lecture au toucher */ });
   } else { img.hidden = false; img.src = url; }
+  prepareShare(p).catch(() => { /* sera préparé à l’appui */ });   // fichier prêt pour « Enregistrer »
   // Les voisines se préparent en douce pour que le balayage soit instantané
   [vIdx + 1, vIdx - 1].forEach((k) => { const n = vList[(k + vList.length) % vList.length]; if (n && n !== p && !isVideo(n.name)) photoUrl(n.iso, n.name, false, { priority: 2 }); });
 }

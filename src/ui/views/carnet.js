@@ -8,9 +8,9 @@ import { dayToISO, japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
 import { agoLabel } from "../../domain/live-data.js";
 import { dayTag, lastMoment, newSince, routeSteps, tripProgress } from "../../domain/carnet-live.js";
-import { dayDislikedBy, dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, likersOf, plannedId } from "../../domain/journal.js";
-import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayDislike, toggleDayLike, toggleDislike, toggleLike } from "../../pwa/journal-store.js";
-import { bindCarnet, carnetHtml, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
+import { dayDislikedBy, dayLikedBy, doneItems, favorites, heroPhoto, hqSummary, isVideo, plannedId } from "../../domain/journal.js";
+import { JOURNAL_CHANGED, JOURNAL_PREFETCH, JOURNAL_SYNC, journalConfig, journalDays, journalReadOnly, downloadAllFull, fullStatus, journalReady, knownPhotoUrl, photoUrl, prefetchPhotos, prefetchStatus, stopFull, syncNow, syncStatus, toggleDayDislike, toggleDayLike, toggleDislike, toggleLike } from "../../pwa/journal-store.js";
+import { bindCarnet, carnetHtml, centerRoute, feedState, momentSheetHtml, storySlides } from "../carnet-feed.js";
 import { hydratePhotos, syncLineText } from "../journal-widgets.js";
 import { fillCityForecast } from "./weather.js";
 import { openStory } from "../story-player.js";
@@ -53,18 +53,27 @@ export function renderCarnetStatus(){
   const el = document.getElementById("carnet-status");
   if (!el) return;
   const { all, done, total, running } = prefetchStatus;
-  const bad = journalReady() && (syncStatus.state === "error" || syncStatus.state === "offline");
+  const ro = journalReadOnly();
+  const off = syncStatus.state === "error" || syncStatus.state === "offline";
   const busy = syncStatus.state === "syncing";
   el.classList.toggle("err", syncStatus.state === "error");
-  const text = bad ? syncLineText(true)
+  // Famille (lecture seule) : on dit l’heure de la dernière lecture réussie, et clairement quand il n’y a pas de réseau
+  const at = ro && syncStatus.state === "public" && syncStatus.at ? " à " + new Date(syncStatus.at).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }) : "";
+  const text = !ro && off ? syncLineText(true)
     : busy ? "Actualisation…"
+    : ro && off ? (all ? "Hors ligne · dernières photos reçues" : "Hors ligne")
     : running ? `Nouvelles photos ${done} / ${total}`
-    : `✓ À jour${all ? ` · ${all} photo${all > 1 ? "s" : ""}${hqSummary(fullStatus).complete ? " en haute qualité" : ""}` : ""}`;
+    : `✓ À jour${at}${all ? ` · ${all} photo${all > 1 ? "s" : ""}${hqSummary(fullStatus).complete ? " en haute qualité" : ""}` : ""}`;
   el.innerHTML = `<span class="cn-status-text">${esc(text)}</span>` +
     (running && total ? `<span class="cn-offline"><i style="width:${Math.round(100 * done / total)}%"></i></span>` : "") +
     `<button type="button" class="cn-refresh${busy ? " spin" : ""}" id="carnet-refresh"${busy ? " disabled" : ""}><span aria-hidden="true">↻</span> Actualiser</button>`;
   // Photos en haute qualité : dire clairement ce qui est sur le téléphone, et proposer de tout prendre (avec le poids)
   const hq = document.getElementById("carnet-hq");
+  const body = document.getElementById("carnet-body");
+  if (hq && body) {   // en haut pour ceux qui écrivent le carnet, en bas pour la famille (haut de page plus net)
+    if (ro) { if (body.nextElementSibling !== hq) body.after(hq); }
+    else if (body.previousElementSibling !== hq) body.before(hq);
+  }
   if (hq) {
     const h = hqSummary(fullStatus);
     hq.hidden = !h.show;
@@ -75,25 +84,30 @@ export function renderCarnetStatus(){
 let model = [];
 
 /* —— Fiche d’un moment ouverte depuis les coups de cœur : par-dessus la liste, qui reste telle quelle dessous —— */
-let sheet = null, sheetKey = null;
+let sheet = null, sheetKey = null, sheetSig = null;
 
 function closeSheet(){
-  if (sheet) { sheet.remove(); sheet = null; sheetKey = null; document.documentElement.classList.remove("sheet-open"); }
+  if (sheet) { sheet.remove(); sheet = null; sheetKey = null; sheetSig = null; document.documentElement.classList.remove("sheet-open"); }
 }
 
-/** (Re)dessine la fiche du moment `sheetKey` d’après le journal actuel (cœurs, photos) en gardant le défilement. */
+/** Un moment sans ses avis : ce qui oblige à redessiner (titre, photos, heure…), par opposition aux ❤️ / 👎 mis à jour sur place. */
+const withoutVotes = ({ likes: _l, dislikes: _d, ...rest }) => rest;
+
+/** (Re)dessine la fiche du moment `sheetKey` d’après le journal actuel ; si seuls les avis ont changé, ils sont mis à jour sur place. */
 function renderSheet(){
   if (!sheet || !sheetKey) return;
   const [iso, id] = sheetKey.split("|");
   const x = model.find(d => d.iso === iso);
   const it = x && x.items.find(i => i.id === id);
   if (!it) { closeSheet(); return; }
+  const sig = JSON.stringify([withoutVotes(it), journalConfig().author, journalReadOnly()]);
+  if (sig === sheetSig) { patchReactions(sheet, [x]); return; }
+  sheetSig = sig;
   const top = sheet.scrollTop;
-  sheet.innerHTML = momentSheetHtml({ photoBtn, likeHtml }, iso, it, `J${x.day.n} · ${x.day.dow} ${x.day.date.replace(/\s\d{4}$/, "")}`, "Coups de cœur");
+  sheet.innerHTML = momentSheetHtml({ photoBtn, likeHtml }, iso, it, `J${x.day.n} · ${x.day.dow} ${x.day.date.replace(/\s\d{4}$/, "")}`, feedState.vote === "dislikes" ? "Pas aimés" : "Coups de cœur");
+  prefillPhotos(sheet);
   hydratePhotos(sheet);
   sheet.querySelector("[data-sheet-close]").addEventListener("click", closeSheet);
-  sheet.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
-  sheet.querySelectorAll("[data-dislike-id]").forEach(b => b.addEventListener("click", () => toggleDislike(b.dataset.dislikeIso, b.dataset.dislikeId)));
   bindDoubleTap(sheet);
   sheet.scrollTop = top;
 }
@@ -104,10 +118,65 @@ function openMoment(iso, id){
   sheet.className = "cn-sheet";
   sheet.setAttribute("role", "dialog");
   sheet.setAttribute("aria-label", "Moment");
+  sheet.addEventListener("click", onReactClick);
   sheetKey = iso + "|" + id;
   document.body.appendChild(sheet);
   document.documentElement.classList.add("sheet-open");
   renderSheet();
+}
+
+/* —— Avis ❤️ / 👎 : un seul écouteur (délégation) et mise à jour sur place —— */
+let bump = null;   // bouton qu’on vient de toucher : son emoji « rebondit » une fois l’avis enregistré
+
+function onReactClick(e){
+  const b = e.target.closest("[data-like-id], [data-dislike-id], [data-daylike-iso], [data-daydislike-iso]");
+  if (!b || journalReadOnly()) return;
+  const d = b.dataset;
+  if (d.likeId) { bump = ["like", d.likeIso, d.likeId]; toggleLike(d.likeIso, d.likeId); }
+  else if (d.dislikeId) { bump = ["dislike", d.dislikeIso, d.dislikeId]; toggleDislike(d.dislikeIso, d.dislikeId); }
+  else if (d.daylikeIso) { bump = ["daylike", d.daylikeIso]; toggleDayLike(d.daylikeIso); }
+  else { bump = ["daydislike", d.daydislikeIso]; toggleDayDislike(d.daydislikeIso); }
+}
+
+/** Remet à jour les seuls emplacements d’avis de `root` d’après `days` (aucun autre nœud n’est touché). */
+function patchReactions(root, days){
+  const byIso = new Map(days.map(x => [x.iso, x]));
+  const set = (el, html) => { if (el.dataset.html !== html) { el.innerHTML = html; el.dataset.html = html; } };
+  root.querySelectorAll("[data-react]").forEach(el => {
+    const [iso, id] = el.dataset.react.split("|");
+    const x = byIso.get(iso), it = x && x.items.find(i => i.id === id);
+    if (it) set(el, likeHtml(iso, it));
+  });
+  root.querySelectorAll("[data-dayreact]").forEach(el => {
+    const x = byIso.get(el.dataset.dayreact);
+    if (x) set(el, dayLikeHtml(x.iso, x.likes, x.dislikes));
+  });
+  playBump(root);
+}
+
+function playBump(root){
+  if (!bump) return;
+  const [kind, iso, id] = bump;
+  const hit = [...root.querySelectorAll(kind === "like" ? "[data-like-id]" : kind === "dislike" ? "[data-dislike-id]" : kind === "daylike" ? "[data-daylike-iso]" : "[data-daydislike-iso]")].find(b => {
+    const d = b.dataset;
+    return kind === "like" ? d.likeIso === iso && d.likeId === id : kind === "dislike" ? d.dislikeIso === iso && d.dislikeId === id : (d.daylikeIso || d.daydislikeIso) === iso;
+  });
+  const emo = hit && hit.querySelector(".cn-emo");
+  if (emo) { bump = null; emo.classList.add("bump"); }
+}
+
+/** Après un redessin : les images déjà en mémoire reprennent leur place tout de suite (pas d’image vide le temps de les relire). */
+function prefillPhotos(root){
+  root.querySelectorAll("[data-jp-name]").forEach(b => {
+    const img = b.querySelector("img[data-jphoto]");
+    if (!img) return;
+    const [iso, name] = [b.dataset.jpIso, b.dataset.jpName];
+    const feed = !!b.dataset.jpFeed && !isVideo(name);
+    const full = knownPhotoUrl(iso, name, !feed);
+    if (full) { img.src = full; return; }
+    const small = feed ? knownPhotoUrl(iso, name, true) : "";
+    if (small) { img.src = small; img.classList.add("blur"); }
+  });
 }
 
 /** Échap ferme la fiche ; un cœur posé dans la fiche la remet à jour. */
@@ -131,13 +200,16 @@ function programTitle(iso, id){
 }
 
 /** Coups de cœur du carnet (filtrés par personne), avec les libellés de jour ; si la personne choisie n’a plus de cœur, on revient à « Tous ». */
-function favoritesModel(){
+function favoritesModel(days){
   const all = journalDays();
   const vote = feedState.vote === "dislikes" ? "dislikes" : "likes";
-  const likers = likersOf(all, vote);
+  // Seulement ce qui est affiché dans le Carnet : un moment aimé puis repassé « pas fait » n’est plus listé (on ne pourrait pas l’ouvrir)
+  const only = new Set(days.flatMap(x => x.items.map(it => x.iso + "|" + it.id)));
+  const everyone = favorites(all, null, vote, only);
+  const likers = [...new Set([...everyone.days, ...everyone.moments].flatMap(x => x.who))].sort((a, b) => a.localeCompare(b, "fr"));
   if (feedState.who && !likers.includes(feedState.who)) feedState.who = null;
-  const f = favorites(all, feedState.who, vote);
-  const total = (v) => { const t = favorites(all, null, v); return t.days.length + t.moments.length; };
+  const f = feedState.who ? favorites(all, feedState.who, vote, only) : everyone;
+  const total = (v) => { const t = favorites(all, null, v, only); return t.days.length + t.moments.length; };
   const counts = { likes: total("likes"), dislikes: total("dislikes") };
   const info = (iso) => { const d = DAYS.find(x => dayToISO(x) === iso); return d ? { n: d.n, label: `${d.dow} ${d.date.replace(/\s\d{4}$/, "")}` } : { n: 0, label: iso }; };
   return {
@@ -156,12 +228,13 @@ function loadSeen(){
   if (seenBaseline === null) { try { seenBaseline = Number(localStorage.getItem(CARNET_SEEN_KEY)) || 0; } catch (_) { seenBaseline = 0; } }
   return seenBaseline;
 }
-function commitSeen(days){
-  if (seenTimer || !days.length) return;
+function commitSeen(){
+  if (seenTimer || !model.length) return;
   seenTimer = setTimeout(() => {
+    seenTimer = null;   // ré-armé au prochain affichage : ce qui arrive pendant la visite sera « vu » aussi
     const view = document.getElementById("view-carnet");
-    if (!view || !view.classList.contains("active")) { seenTimer = null; return; }   // pas encore regardé : on réessaie au prochain affichage
-    const latest = Math.max(0, ...days.flatMap(x => x.items.map(it => it.at || 0)));
+    if (!view || !view.classList.contains("active")) return;   // pas encore regardé : on réessaie au prochain affichage
+    const latest = Math.max(0, ...model.flatMap(x => x.items.map(it => it.at || 0)));   // la liste du moment, pas celle du premier affichage
     try { if (latest) localStorage.setItem(CARNET_SEEN_KEY, String(latest)); } catch (_) { /* pas de stockage */ }
   }, 6000);
 }
@@ -184,9 +257,12 @@ function liveModel(days){
   };
 }
 
-let lastSig = null;
+let lastSig = null, lastStruct = null;
 
-/** Redessine seulement si le contenu a changé (ou si `force`) ; garde le défilement et la position de chaque carrousel. */
+/**
+ * Redessine seulement si le contenu a changé (ou si `force`) ; garde le défilement et la position de chaque carrousel.
+ * Si seuls des avis (❤️ / 👎) ont changé dans le fil, ils sont mis à jour sur place : rien d’autre ne bouge.
+ */
 export function renderCarnet(force){
   const box = document.getElementById("carnet-body");
   if (!box) return;
@@ -203,31 +279,48 @@ export function renderCarnet(force){
     })
     .filter(x => x.day && x.items.length);
   renderCarnetStatus();
-  if (!days.length && (syncStatus.state === "syncing" || (journalReadOnly() && syncStatus.state !== "public"))) { box.innerHTML = SKELETON; lastSig = null; return; }   // premier chargement
+  const ro = journalReadOnly();
+  // Premier chargement : squelettes tant que la lecture est en cours (jamais indéfiniment : hors ligne, on le dit)
+  if (!days.length && (syncStatus.state === "syncing" || (ro && (syncStatus.state === "idle" || syncStatus.state === "nocfg")))) { box.innerHTML = SKELETON; lastSig = lastStruct = null; return; }
   model = days;
+  if (feedState.filter && !days.some(x => x.day.n === feedState.filter)) feedState.filter = null;   // le jour filtré n’a plus rien : on revient à tous les jours
   const hero = heroPhoto(journalDays());
-  const favs = favoritesModel();
+  const favs = favoritesModel(days);
   const live = liveModel(days);
   days.forEach(x => x.items.forEach(it => { it.isNew = live.news.keys.has(x.iso + "|" + it.id); }));
-  const sig = JSON.stringify([days, hero, favs, { ...live, news: { ...live.news, keys: [...live.news.keys] } }, feedState.mode, feedState.filter, feedState.who, journalConfig().author, journalReadOnly(), japanTodayISO()]);
-  if (!force && sig === lastSig && box.children.length) return;   // rien de nouveau : ne rien toucher
-  lastSig = sig;
+  const offline = syncStatus.state === "offline" || syncStatus.state === "error";
+  const struct = JSON.stringify([days.map(x => ({ ...x, likes: 0, dislikes: 0, items: x.items.map(withoutVotes) })), hero,
+    { ...live, last: live.last && live.last.title, news: { ...live.news, keys: [...live.news.keys] } }, feedState.mode === "hearts" ? favs : 0, feedState.mode, feedState.filter, feedState.who, feedState.vote,
+    journalConfig().author, ro, ro && !days.length && offline, japanTodayISO()]);
+  // « il y a 12 min » change tout seul : comme les avis, ce texte est mis à jour sur place (il ne force pas un redessin)
+  const sig = struct + JSON.stringify([live.last && live.last.ago, days.map(x => [x.likes, x.dislikes, x.items.map(it => [it.likes, it.dislikes])])]);
+  const drawn = !!box.querySelector(".cn-cover");   // un carnet est déjà affiché (pas les squelettes)
+  if (drawn) centerRoute(box);   // le carnet a pu être dessiné onglet caché : la bande des étapes se cale à l’affichage
+  if (!force && drawn && sig === lastSig) return;   // rien de nouveau : ne rien toucher
+  if (!force && drawn && struct === lastStruct) {   // seuls des avis (ou l’ancienneté du dernier moment) ont changé
+    lastSig = sig;
+    patchReactions(box, days);
+    const ago = box.querySelector("[data-live-ago]");
+    if (ago && live.last) ago.textContent = live.last.ago;
+    return;
+  }
+  lastSig = sig; lastStruct = struct;
   const top = scroller ? scroller.scrollTop : 0;
   const slides = {};
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && c.scrollLeft) slides[p.dataset.post] = c.scrollLeft; });
-  box.innerHTML = carnetHtml({ days, hero, favs, live, readOnly: journalReadOnly(), today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
-    emptyText: journalReadOnly() ? "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt."
-      : "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici." }, { photoBtn, likeHtml, dayLikeHtml });
+  box.innerHTML = carnetHtml({ days, hero, favs, live, readOnly: ro, today: japanTodayISO(), datesLabel: TRIP.datesLabelLong,
+    emptyText: !ro ? "Rien pour l’instant. Coche ce que vous faites dans Sur place › Journal et ajoutez des photos : tout apparaît ici."
+      : offline ? "Pas de connexion pour l’instant : le carnet s’affichera dès que le réseau revient. Touchez « Actualiser » pour réessayer."
+      : "Le carnet se remplit au fil du voyage : les premières photos arrivent bientôt." }, { photoBtn, likeHtml, dayLikeHtml });
+  box.querySelectorAll("[data-react], [data-dayreact]").forEach(el => { el.dataset.html = el.innerHTML; });
   box.querySelectorAll(".vy-post[data-post]").forEach(p => { const c = p.querySelector(".vy-car"); if (c && slides[p.dataset.post]) c.scrollLeft = slides[p.dataset.post]; });
+  if (drawn) prefillPhotos(box);
   hydratePhotos(box);
   if (live.progress.status === "during" && live.progress.cityId) fillCityForecast(box, live.progress.cityId);
-  commitSeen(days);
-  bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory, openMoment });
-  box.querySelectorAll("[data-like-id]").forEach(b => b.addEventListener("click", () => toggleLike(b.dataset.likeIso, b.dataset.likeId)));
-  box.querySelectorAll("[data-daylike-iso]").forEach(b => b.addEventListener("click", () => toggleDayLike(b.dataset.daylikeIso)));
-  box.querySelectorAll("[data-dislike-id]").forEach(b => b.addEventListener("click", () => toggleDislike(b.dataset.dislikeIso, b.dataset.dislikeId)));
-  box.querySelectorAll("[data-daydislike-iso]").forEach(b => b.addEventListener("click", () => toggleDayDislike(b.dataset.daydislikeIso)));
+  commitSeen();
+  bindCarnet(box, () => renderCarnet(true), { openStory: openDayStory, openMoment, instant: drawn });
   bindDoubleTap(box);
+  playBump(box);
   if (scroller) scroller.scrollTop = top;
 }
 
@@ -251,17 +344,18 @@ function bindDoubleTap(box){
         return;
       }
       last = now;
-      timer = setTimeout(() => { m.dataset.pass = "1"; if (btn) btn.click(); }, 300);
+      timer = setTimeout(() => { if (btn && btn.isConnected) { m.dataset.pass = "1"; btn.click(); } }, 300);
     }, true);
   });
 }
 
-/** Bouton « Actualiser », bouton ↑, tirer vers le bas pour actualiser. */
+/** Bouton « Actualiser », avis ❤️ / 👎 (délégation), bouton ↑, tirer vers le bas pour actualiser. */
 export function bindCarnetShare(){
   bindMomentSheet();
   document.addEventListener(JOURNAL_PREFETCH, renderCarnetStatus);
   document.addEventListener(JOURNAL_SYNC, () => { renderCarnetStatus(); renderCarnet(); });
-  const refresh = () => { syncNow().then(prefetchPhotos); };
+  const refresh = () => { syncNow(true).then(prefetchPhotos); };   // demandé à la main : pas de limite de fréquence
+  document.getElementById("carnet-body")?.addEventListener("click", onReactClick);
   document.getElementById("carnet-hq")?.addEventListener("click", e => {
     const b = e.target.closest("[data-hq]");
     if (b) { if (b.dataset.hq === "stop") stopFull(); else downloadAllFull(); }

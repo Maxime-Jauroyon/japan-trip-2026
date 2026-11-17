@@ -90,7 +90,7 @@
 .cn-react-btn .cn-emo { font-size: 20px; }
 .cn-react-btn b, .cn-daylike b { min-width: 20px; padding: 1px 6px; border-radius: 999px; background: rgba(var(--fg-rgb), .1); font-size: 12.5px; text-align: center; }
 .cn-react-btn[aria-pressed="true"] { border-color: var(--gold); background: rgba(var(--gold-rgb), .16); color: var(--gold); }
-.cn-react .cn-dislike[aria-pressed="true"] { border-color: var(--accent); background: rgba(196, 92, 38, .16); color: var(--accent); }
+.cn-react .cn-dislike[aria-pressed="true"] { border-color: var(--accent); background: rgba(var(--accent-rgb), .16); color: var(--accent); }
 .cn-dislike:not([aria-pressed="true"]) .cn-thumb { filter: grayscale(1); opacity: .6; }
 .cn-likers { color: var(--muted); font-size: 12px; }
 
@@ -196,7 +196,7 @@ html.story-open, html.story-open body { overflow: hidden; }
 .cn-daylike { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 10px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: none; color: var(--cream); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
 .cn-daylike[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
 .cn-daylike b { font-size: 14px; }
-.cn-daylike.cn-daydislike[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: rgba(196, 92, 38, .12); }
+.cn-daylike.cn-daydislike[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb), .12); }
 .cn-daylike[aria-pressed="true"]:not(.cn-daydislike) { background: rgba(var(--gold-rgb), .14); }
 .cn-daylike.ro { cursor: default; border-color: transparent; padding: 0; }
 .cn-daylike small { font-weight: 500; color: var(--muted); }
@@ -259,11 +259,11 @@ html.sheet-open, html.sheet-open body { overflow: hidden; }
 .cn-live-head { display: flex; align-items: center; gap: 10px; }
 .cn-live-head b { display: block; font-size: 17px; color: var(--cream); }
 .cn-live-head small { display: block; margin-top: 1px; font-size: 13px; color: var(--muted); }
-.cn-pulse { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(111, 206, 174, .6); animation: cn-pulse 2s infinite; }
-@keyframes cn-pulse { 70% { box-shadow: 0 0 0 10px rgba(111, 206, 174, 0); } 100% { box-shadow: 0 0 0 0 rgba(111, 206, 174, 0); } }
+.cn-pulse { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(var(--ok-rgb), .6); animation: cn-pulse 2s infinite; }
+@keyframes cn-pulse { 70% { box-shadow: 0 0 0 10px rgba(var(--ok-rgb), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--ok-rgb), 0); } }
 .cn-prog { height: 6px; margin: 12px 0 10px; border-radius: 6px; background: var(--panel-2); overflow: hidden; }
 .cn-prog i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold), var(--gold-2)); transition: width .6s; }
-.cn-route { display: flex; gap: 6px; margin: 0; padding: 0; overflow-x: auto; list-style: none; scrollbar-width: none; }
+.cn-route { position: relative; display: flex; gap: 6px; margin: 0; padding: 0; overflow-x: auto; list-style: none; scrollbar-width: none; }
 .cn-route::-webkit-scrollbar { display: none; }
 .cn-route li { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 12.5px; font-weight: 600; color: var(--muted); }
 .cn-route li i { width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--line); }
@@ -299,3 +299,15 @@ html.sheet-open, html.sheet-open body { overflow: hidden; }
 .jv-tools { display: flex; justify-content: center; padding: 10px 14px 0; }
 .jv-save { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .3); background: rgba(255, 255, 255, .1); color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
 .cn-live-wx:not([hidden])::before { content: " · "; white-space: pre; }
+
+/* Avis mis à jour sur place : emplacement vide masqué, emoji qui « rebondit » quand on vient de voter */
+.vy-actions:empty, .cn-dayreact-slot:empty { display: none; }
+.cn-dayreact-slot { display: flex; flex-wrap: wrap; gap: 8px; }
+.cn-dayreact-slot .cn-dayreact { flex: 1 1 100%; }
+.cn-emo.bump { display: inline-block; animation: cn-bump .45s ease; }
+@keyframes cn-bump { 0% { transform: scale(1); } 40% { transform: scale(1.45); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .cn-emo.bump { animation: none; } }
+/* Carrousel : « 2 / 4 » sur la photo */
+.vy-count { position: absolute; top: 10px; right: 10px; z-index: 1; padding: 3px 9px; border-radius: 999px; background: rgba(0, 0, 0, .55); color: #fff; font-size: 12px; font-weight: 700; pointer-events: none; }
+/* Ligne « qualité des photos » placée sous le carnet (famille) */
+#carnet-body + .cn-hq { margin-top: 18px; }
