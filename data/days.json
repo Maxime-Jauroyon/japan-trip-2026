@@ -621,12 +621,12 @@
         "goshuin": "non"
       },
       {
-        "title": "Dîner hida beef chez Tsubakiya (Takayama)",
-        "lat": 36.1405,
-        "lng": 137.253,
-        "desc": "Restaurant de Hanasato-cho (quartier de la gare), ouvert le soir de 18 h à 23 h : pierre chaude de bœuf de Hida (~2 000 ¥). Position approximative, non réservé. Alternatives : Hida Kisetsu Ryōri Sakana (9 min à pied de la gare) ou Kyoya (17 h–20 h, 15 min à pied). Les restaurants de la vieille ville ferment tôt : pour dîner après 18 h, marcher vers la gare.",
+        "title": "Dîner hida beef à Ajidokoro Tadani (Takayama)",
+        "lat": 36.1391,
+        "lng": 137.2522,
+        "desc": "Restaurant japonais rétro servant du bœuf de Hida, à ~150 m de la gare de Takayama : ouvert le mardi de 18 h à 22 h, réservation possible. Alternatives ouvertes le mardi : Dining BULL (steak de bœuf de Hida au charbon, 18 h–21 h, dernière commande 20 h 30, ~650 m de la gare) et Steakhouse Kitchen Hida (fermé le mercredi, ~4 500 ¥). À éviter ce soir, fermés le mardi : Kyoya, Hidagyu Tabedokoro Tengu, Hida Takayama Meat, Hida Beef Curry House et Gyu-Suke. Horaires et position à confirmer sur place.",
         "goshuin": "non",
-        "mapsQuery": "和菜蔵 椿屋 高山市花里町4丁目"
+        "mapsQuery": "Ajidokoro Tadani Takayama"
       },
       {
         "title": "Balade du soir sur le pont Nakabashi et la rivière",
