@@ -617,7 +617,22 @@
         "phrases": "shop",
         "lat": 36.1415,
         "lng": 137.2595,
-        "desc": "Vieilles rues marchandes de Takayama : boutiques en bois sombre, saké, lanternes le soir.",
+        "desc": "Vieilles rues marchandes de Takayama. Après le bus de 17 h 25 : boutiques et brasseries fermées (elles ferment vers 17 h), mais rues calmes sans la foule et lanternes allumées : c’est la plus belle heure. Boutiques et dégustations de saké plutôt demain matin.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Dîner hida beef chez Tsubakiya (Takayama)",
+        "lat": 36.1405,
+        "lng": 137.253,
+        "desc": "Restaurant de Hanasato-cho (quartier de la gare), ouvert le soir de 18 h à 23 h : pierre chaude de bœuf de Hida (~2 000 ¥). Position approximative, non réservé. Alternatives : Hida Kisetsu Ryōri Sakana (9 min à pied de la gare) ou Kyoya (17 h–20 h, 15 min à pied). Les restaurants de la vieille ville ferment tôt : pour dîner après 18 h, marcher vers la gare.",
+        "goshuin": "non",
+        "mapsQuery": "和菜蔵 椿屋 高山市花里町4丁目"
+      },
+      {
+        "title": "Balade du soir sur le pont Nakabashi et la rivière",
+        "lat": 36.14,
+        "lng": 137.2592,
+        "desc": "Promenade gratuite le long de la rivière Miyagawa et du pont rouge Nakabashi, à deux pas de Sanmachi Suji : calme et lumières du soir. À faire après la vieille ville, avant le dîner.",
         "goshuin": "non"
       }
     ],
