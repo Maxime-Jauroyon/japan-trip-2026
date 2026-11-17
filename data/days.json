@@ -666,6 +666,22 @@
         "lng": 137.2577,
         "desc": "Ancien bureau d’administration d’époque Edo, salles tatami et complexe administratif rare.",
         "goshuin": "non"
+      },
+      {
+        "title": "Sakurayama Hachimangū et Takayama Matsuri Yatai Kaikan",
+        "lat": 36.1482,
+        "lng": 137.2605,
+        "desc": "Grand sanctuaire de Takayama et, dans son enceinte, la salle des chars du festival (yatai, ~1 000 ¥ avec le sanctuaire ; chars exposés renouvelés mi-novembre). Fermeture vers 16 h 30 l’hiver : horaires à confirmer. À ~10 min à pied de la Jinya.",
+        "goshuin": "oui",
+        "goshuinNote": "Sanctuaire Sakurayama Hachimangū (bureau des goshuin dans l’enceinte, horaires à confirmer).",
+        "mapsQuery": "桜山八幡宮 高山市城山"
+      },
+      {
+        "title": "Sanmachi Suji : boutiques et dégustation de saké (matin)",
+        "lat": 36.1428,
+        "lng": 137.2594,
+        "desc": "Vieilles rues de marchands : brasseries de saké (dégustations payantes, souvent quelques centaines de yens), pâtisseries, boutiques d’artisanat. Boutiques ~9 h–17 h : à faire avant le train, achats de souvenirs à prévoir avant 15 h pour récupérer les valises à la gare à temps.",
+        "goshuin": "non"
       }
     ],
     "moves": [
