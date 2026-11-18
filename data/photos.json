@@ -1,10 +1,6 @@
 {
   "rules": [
     {
-      "match": "shōren-in|shoren-in",
-      "slug": "shorenin-soir"
-    },
-    {
       "match": "bsc gallery",
       "slug": "bsc-gallery"
     },
@@ -187,10 +183,6 @@
     {
       "match": "teamlab",
       "slug": "teamlab"
-    },
-    {
-      "match": "kōdai|kodai",
-      "slug": "kodaiji-soir"
     },
     {
       "match": "shinky",
@@ -2032,22 +2024,6 @@
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
       }
     ],
-    "kodaiji-soir": [
-      {
-        "file": "kiyomizu.jpg",
-        "author": "Martin Falbisoner",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
-      },
-      {
-        "file": "kiyomizu-2.jpg",
-        "author": "Jordy Meow",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
-      }
-    ],
     "sakurayama": [
       {
         "file": "sanmachi.jpg",
@@ -2190,22 +2166,6 @@
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
-      }
-    ],
-    "shorenin-soir": [
-      {
-        "file": "kiyomizu.jpg",
-        "author": "Martin Falbisoner",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
-      },
-      {
-        "file": "kiyomizu-2.jpg",
-        "author": "Jordy Meow",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
       }
     ]
   }

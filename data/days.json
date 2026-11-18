@@ -753,20 +753,12 @@
     ],
     "ideasAfter": [
       {
-        "title": "Illumination de Kōdai-ji (Higashiyama)",
-        "lat": 35.0007,
-        "lng": 135.7812,
-        "desc": "Temple de Higashiyama illuminé en automne (jardin zen, bambous, reflets dans l’étang). Illumination jusqu’au 13 déc. : lumières dès 17 h, dernière entrée 21 h 30, fermeture 22 h, ~800 ¥. Taxi ~15 min depuis l’hôtel : partir tout de suite pour arriver avant 21 h 30. Horaires à confirmer.",
+        "title": "Balade au bord de la Kamo (pont Shijō)",
+        "lat": 35.0039,
+        "lng": 135.7716,
+        "desc": "Berges de la rivière Kamo et pont Shijō-Ōhashi, avec les lumières de Gion en face : promenade tranquille de ~15 min à pied de l’hôtel pour finir la soirée.",
         "goshuin": "non",
-        "mapsQuery": "高台寺 京都市東山区高台寺下河原町526"
-      },
-      {
-        "title": "Illumination de Shōren-in (Higashiyama)",
-        "lat": 35.003,
-        "lng": 135.7843,
-        "desc": "Plan B si Kōdai-ji est trop tard ou complet : illumination du temple Shōren-in, à ~10 min à pied de Kōdai-ji (avec ses camphriers géants). 18 h–22 h, dernière entrée 21 h 30 ; tarif contradictoire selon les sources (1 000 ou 1 500 ¥) et dates à confirmer sur place.",
-        "goshuin": "non",
-        "mapsQuery": "青蓮院門跡 京都市東山区粟田口三条坊町69-1"
+        "mapsQuery": "四条大橋 京都市"
       }
     ],
     "reminders": [
