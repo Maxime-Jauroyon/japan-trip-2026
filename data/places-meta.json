@@ -383,12 +383,9 @@
     "duration": "30–45 min",
     "closes": "21:00"
   },
-  "hinoki-soir": {
-    "hours": "Tous les jours 17h30–3h (dernière commande 2h)",
-    "duration": "1–1,5 h"
-  },
-  "showa-shokudo": {
-    "hours": "Tous les jours 17h–1h (dernière commande plats 23h30)",
-    "duration": "1–1,5 h"
+  "shorenin-soir": {
+    "hours": "Illumination 18h–22h (dernière entrée 21h30)",
+    "duration": "45 min",
+    "closes": "21:30"
   }
 }
