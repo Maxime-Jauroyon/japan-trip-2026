@@ -759,6 +759,14 @@
         "desc": "Berges de la rivière Kamo et pont Shijō-Ōhashi, avec les lumières de Gion en face : promenade tranquille de ~15 min à pied de l’hôtel pour finir la soirée.",
         "goshuin": "non",
         "mapsQuery": "四条大橋 京都市"
+      },
+      {
+        "title": "Sanctuaire Yasaka de nuit (Gion)",
+        "lat": 35.0036,
+        "lng": 135.7786,
+        "desc": "Le grand sanctuaire de Gion, éclairé de nuit par ses lanternes : à ~15 min à pied du pont Shijō-Ōhashi en remontant Shijō-dōri. L’enceinte est généralement accessible librement et gratuitement de nuit (à confirmer sur place). Le goshuin se prend plutôt jeudi en journée (voir le jour 12).",
+        "goshuin": "non",
+        "mapsQuery": "八坂神社 京都市東山区祇園町北側625"
       }
     ],
     "reminders": [
