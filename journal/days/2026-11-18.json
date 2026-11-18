@@ -89,6 +89,15 @@
    "doneAt": 1795008915909,
    "by": "Maxime",
    "at": 1795008915909
+  },
+  "p:sanctuaire-yasaka-de-nuit-gion": {
+   "id": "p:sanctuaire-yasaka-de-nuit-gion",
+   "kind": "planned",
+   "title": "Sanctuaire Yasaka de nuit (Gion)",
+   "status": "done",
+   "doneAt": 1795009522741,
+   "by": "Maxime",
+   "at": 1795009522741
   }
  }
 }
