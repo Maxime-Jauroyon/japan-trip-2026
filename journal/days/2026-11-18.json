@@ -80,6 +80,15 @@
    "doneAt": 1794980374639,
    "by": "Maxime",
    "at": 1794980374639
+  },
+  "p:balade-au-bord-de-la-kamo-pont-shijo": {
+   "id": "p:balade-au-bord-de-la-kamo-pont-shijo",
+   "kind": "planned",
+   "title": "Balade au bord de la Kamo (pont Shijō)",
+   "status": "done",
+   "doneAt": 1795008915909,
+   "by": "Maxime",
+   "at": 1795008915909
   }
  }
 }
