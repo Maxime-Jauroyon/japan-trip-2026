@@ -676,6 +676,33 @@
         "goshuin": "non"
       },
       {
+        "title": "Hida Kokubun-ji",
+        "lat": 36.1435,
+        "lng": 137.2538,
+        "desc": "Plus ancien temple de Takayama : pagode à trois étages et ginkgo millénaire. Goshuin ~300 ¥ au bureau du temple ; ouvert ~9 h–16 h (dernière entrée ~15 h 30), à confirmer par téléphone au 0577-32-1395.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du temple (~300 ¥), avant 16 h.",
+        "mapsQuery": "飛騨国分寺 高山市総和町1-83"
+      },
+      {
+        "title": "Hie Jinja (Hida Sannōgū)",
+        "lat": 36.1328,
+        "lng": 137.2611,
+        "desc": "Grand sanctuaire de Takayama au sud de la vieille ville, avec une approche d’arbres. Goshuin au bureau d’amulettes : horaires non confirmés, à demander sur place.",
+        "goshuin": "oui",
+        "goshuinNote": "Bureau d’amulettes du sanctuaire (horaires à confirmer).",
+        "mapsQuery": "日枝神社 高山市城山156"
+      },
+      {
+        "title": "Takayama Betsuin Shōren-ji",
+        "lat": 36.1442,
+        "lng": 137.2619,
+        "desc": "Grand temple bouddhique de Takayama, dont l’histoire est liée à Shirakawa-go (vous y étiez hier). Goshuin possible : à demander à l’accueil du temple.",
+        "goshuin": "possible",
+        "goshuinNote": "À demander à l’accueil du temple (non confirmé).",
+        "mapsQuery": "高山別院照蓮寺 高山市馬場町2丁目"
+      },
+      {
         "title": "Takayama Jinya",
         "lat": 36.1397,
         "lng": 137.2577,
@@ -683,12 +710,12 @@
         "goshuin": "non"
       },
       {
-        "title": "Sakurayama Hachimangū et Takayama Matsuri Yatai Kaikan",
+        "title": "Sakurayama Hachimangū",
         "lat": 36.1482,
         "lng": 137.2605,
-        "desc": "Grand sanctuaire de Takayama et, dans son enceinte, la salle des chars du festival (yatai, ~1 000 ¥ avec le sanctuaire ; chars exposés renouvelés mi-novembre). Fermeture vers 16 h 30 l’hiver : horaires à confirmer. À ~10 min à pied de la Jinya.",
+        "desc": "Grand sanctuaire de Takayama, siège du festival d’automne, dans un bois au nord de la vieille ville. Goshuin au bureau du sanctuaire (horaires à confirmer).",
         "goshuin": "oui",
-        "goshuinNote": "Sanctuaire Sakurayama Hachimangū (bureau des goshuin dans l’enceinte, horaires à confirmer).",
+        "goshuinNote": "Au bureau du sanctuaire (horaires à confirmer).",
         "mapsQuery": "桜山八幡宮 高山市城山"
       },
       {
@@ -697,6 +724,14 @@
         "lng": 137.2594,
         "desc": "Vieilles rues de marchands : brasseries de saké (dégustations payantes, souvent quelques centaines de yens), pâtisseries, boutiques d’artisanat. Boutiques ~9 h–17 h : à faire avant le train, achats de souvenirs à prévoir avant 15 h pour récupérer les valises à la gare à temps.",
         "goshuin": "non"
+      },
+      {
+        "title": "Takayama Matsuri Yatai Kaikan",
+        "lat": 36.1484,
+        "lng": 137.2601,
+        "desc": "Salle des chars du festival de Takayama, dans l’enceinte du sanctuaire Sakurayama (~1 000 ¥ ; chars exposés renouvelés mi-novembre). Ouverte ~9 h–17 h en novembre : horaires à confirmer.",
+        "goshuin": "non",
+        "mapsQuery": "高山屋台会館 高山市桜町178"
       }
     ],
     "moves": [

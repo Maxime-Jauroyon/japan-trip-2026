@@ -347,5 +347,25 @@
   "onsen-takayama": {
     "hours": "Bain privé, sur réservation",
     "duration": "~1 h"
+  },
+  "yatai-kaikan": {
+    "hours": "Salle des chars ~9h–17h",
+    "duration": "45 min",
+    "closes": "17:00"
+  },
+  "kokubunji": {
+    "hours": "~9h–16h (dernière entrée 15h30)",
+    "duration": "45 min",
+    "closes": "16:00"
+  },
+  "hie-jinja": {
+    "hours": "Sanctuaire en journée · goshuin à confirmer",
+    "duration": "30–45 min",
+    "closes": "16:00"
+  },
+  "shorenji": {
+    "hours": "Temple en journée · goshuin à confirmer",
+    "duration": "30 min",
+    "closes": "16:00"
   }
 }
