@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { addItem, detaxeByStore, level, parseAmount, remaining, removeItem, setCarrier, toBoth, totalsByPerson } from "../src/domain/souvenirs.js";
+import { addItem, detaxeByStore, level, parseAmount, remaining, removeItem, setCarrier, setNoTax, toBoth, totalsByPerson } from "../src/domain/souvenirs.js";
 
 const P = ["Maxime", "Léo"];
 const it = (id, who, carrier, eur, yen, store = "", day = "2026-11-20") => ({ id, who, carrier, eur, yen, store, day, label: id });
@@ -55,4 +55,24 @@ test("détaxe Japon : achats regroupés par magasin et par jour, seuil en ¥", (
   assert.equal(dq.yen, 5400);
   assert.equal(dq.ok, true);
   assert.equal(g.find((x) => x.day === "2026-11-21").missing, 4100);
+});
+
+test("détaxe retirée : plus d’indicateur, total réduit, rétablissable, franchise inchangée", () => {
+  let items = [it("1", "Maxime", "Maxime", 40, 7000, "Uniqlo"), it("2", "Maxime", "Léo", 10, 1800, "Uniqlo")];
+  let g = detaxeByStore(items, 5000)[0];
+  assert.equal(g.ok, true);
+  assert.deepEqual(g.ids, ["1", "2"]);
+  items = setNoTax(items, ["1"], true);
+  g = detaxeByStore(items, 5000)[0];
+  assert.equal(g.ok, false);
+  assert.equal(g.removed, false);
+  assert.equal(g.yen, 1800);
+  items = setNoTax(items, g.ids, true);
+  g = detaxeByStore(items, 5000)[0];
+  assert.equal(g.removed, true);
+  assert.equal(g.ok, false);
+  assert.equal(totalsByPerson(items, P).Maxime.eur, 40);
+  items = setNoTax(items, g.ids, false);
+  assert.equal(detaxeByStore(items, 5000)[0].ok, true);
+  assert.equal("noTax" in items[0], false);
 });

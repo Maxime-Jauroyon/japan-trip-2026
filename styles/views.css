@@ -437,3 +437,8 @@
 .sv-detaxe li.ok span:last-child { color: var(--ok); font-weight: 700; }
 .sv-empty, .sv-note { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
 @media (max-width: 380px) { .sv-cards { grid-template-columns: 1fr; } }
+.sv-detaxe li { align-items: center; }
+.sv-detaxe li > span:first-child { flex: 1 1 140px; }
+.sv-notax { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--gold); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.sv-detaxe li.off { opacity: .6; }
+.sv-detaxe li.off span:last-child { color: var(--muted); font-weight: 400; }
