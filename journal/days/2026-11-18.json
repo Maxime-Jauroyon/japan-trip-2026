@@ -35,6 +35,15 @@
    "doneAt": 1794972916055,
    "by": "Maxime",
    "at": 1794972916055
+  },
+  "p:takayama-jinya": {
+   "id": "p:takayama-jinya",
+   "kind": "planned",
+   "title": "Takayama Jinya",
+   "status": "done",
+   "doneAt": 1794975316850,
+   "by": "Maxime",
+   "at": 1794975316850
   }
  }
 }
