@@ -1,5 +1,5 @@
 /* Onglet Sur place : boîte à outils du jour — carte « Aujourd’hui » (hôtel, programme, adresse),
-   convertisseur ¥/€, phrases utiles, numéros d’urgence, rangés en sous-onglets (Aujourd’hui · Argent · Phrases · Urgences). Le programme détaillé est dans la carte. */
+   convertisseur ¥/€, phrases utiles, numéros d’urgence, rangés en sous-onglets (Aujourd’hui · Argent · Souvenirs · Phrases · Urgences). Le programme détaillé est dans la carte. */
 
 import { ONSITE_PANE_KEY } from "../../config.js";
 import { CITIES, DAILY_PHRASES, DAYS, ONSITE_PHRASES, TRIP } from "../../core/data.js";
@@ -16,6 +16,7 @@ import { initFxConverter } from "./fx-converter.js";
 import { renderNextStop } from "./next-stop.js";
 import { renderTickets } from "./tickets.js";
 import { renderJournalView } from "./journal.js";
+import { renderSouvenirs } from "./souvenirs.js";
 import { renderOnsiteWeather } from "./weather.js";
 import { fmtClock, sunTimes } from "../../domain/sun.js";
 
@@ -122,7 +123,7 @@ function renderPhrases(){
   }
 }
 
-const PANES = ["today", "journal", "money", "phrases", "sos"];
+const PANES = ["today", "journal", "money", "souvenirs", "phrases", "sos"];
 let pane = null;
 
 function showPane(name, save){
@@ -154,6 +155,7 @@ export function renderOnsite(){
   renderNextStop();
   renderTickets();
   renderJournalView();
+  renderSouvenirs();
   document.getElementById("onsite-open-day")?.addEventListener("click", () => openMapForDay(day));
   const sos = document.getElementById("onsite-sos");
   if (sos) sos.innerHTML = sosHtml();

@@ -393,3 +393,47 @@
 .jr-viewer-bar button { padding: 0 14px; font-size: 14px; }
 .jr-viewer-bar .on { background: var(--gold); border-color: var(--gold); color: var(--bg); }
 .jr-viewer-bar[hidden] { display: none; }
+
+/* Souvenirs : franchise par porteur, détaxe par magasin */
+.sv-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.sv-card { padding: 12px 14px; border-radius: 16px; border: 1px solid var(--line); background: rgba(var(--fg-rgb), .02); }
+.sv-name { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--gold-2); }
+.sv-badge { font-size: 10.5px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: 999px; background: rgba(var(--ok-rgb), .18); color: var(--ok); }
+.sv-total { margin: 4px 0 8px; font-size: 26px; font-weight: 800; color: var(--cream); }
+.sv-bar { height: 10px; border-radius: 999px; overflow: hidden; background: var(--panel-2); }
+.sv-bar i { display: block; height: 100%; border-radius: 999px; background: var(--ok); transition: width .3s ease; }
+.sv-left { margin-top: 8px; font-size: 13px; color: var(--cream); }
+.sv-sub { margin-top: 4px; font-size: 11.5px; color: var(--muted); }
+.sv-warn .sv-bar i { background: var(--mid); }
+.sv-warn .sv-badge { background: rgba(224, 164, 90, .2); color: var(--mid); }
+.sv-over { border-color: var(--accent); }
+.sv-over .sv-bar i { background: var(--accent); }
+.sv-over .sv-badge { background: rgba(var(--accent-rgb), .2); color: var(--accent); }
+.sv-room { margin: 0 0 14px; font-size: 12.5px; color: var(--muted); }
+.sv-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-2); }
+.sv-field input {
+  width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--panel-2); color: var(--cream); font: inherit; font-size: 16px; font-weight: 600; text-transform: none; letter-spacing: 0;
+}
+.sv-field input.bad { border-color: var(--accent); }
+.sv-amount { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+.sv-amount .sv-field { margin-bottom: 0; }
+.sv-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.sv-seg button { min-height: 44px; min-width: 48px; padding: 0 14px; border: 0; background: var(--panel-2); color: var(--cream); font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.sv-seg button.on { background: var(--gold); color: var(--bg); }
+.sv-who { display: flex; }
+.sv-who button { flex: 1; }
+.sv-hint { margin: 6px 0 10px; min-height: 18px; font-size: 12.5px; color: var(--muted); }
+.sv-add { width: 100%; }
+.sv-day { margin: 12px 0 4px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-2); }
+.sv-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-top: 1px solid var(--line); }
+.sv-row-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--cream); }
+.sv-row-main span { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.sv-carry { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--gold); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.sv-del { width: 34px; height: 34px; border: 0; border-radius: 50%; background: none; color: var(--muted); font-size: 15px; cursor: pointer; }
+.sv-detaxe { margin: 0; padding: 0; list-style: none; }
+.sv-detaxe li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--cream); }
+.sv-detaxe li span:last-child { color: var(--muted); }
+.sv-detaxe li.ok span:last-child { color: var(--ok); font-weight: 700; }
+.sv-empty, .sv-note { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+@media (max-width: 380px) { .sv-cards { grid-template-columns: 1fr; } }

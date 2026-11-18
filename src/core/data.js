@@ -13,6 +13,8 @@ export let LEGS = [];
 export let JOURNEYS = {};
 export let TRAVELERS = [];
 export let FX_DEFAULT = 0;
+/** Souvenirs : franchise douanière (€), personnes, minimum de détaxe (¥). */
+export let SOUVENIRS = { franchiseEur: 0, personnes: [], detaxeMinYen: 0 };
 export let PREP_CHECKS = [];
 export let PREP_BUDGET = [];
 export let PREP_BUDGET_TOTAL = null;
@@ -61,6 +63,7 @@ export function hydrate(raw) {
   TRIP = raw.trip;
   TRAVELERS = raw.trip.travelers;
   FX_DEFAULT = raw.trip.fxDefault;
+  SOUVENIRS = raw.trip.souvenirs || SOUVENIRS;
   PREP_CHECKS = raw.prep.checks;
   PREP_BUDGET = raw.prep.budget;
   PREP_BUDGET_TOTAL = raw.prep.budgetTotal;

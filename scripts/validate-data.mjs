@@ -196,6 +196,10 @@ const trip = load("trip");
 if (!ISO.test(trip.startDate || "") || !ISO.test(trip.endDate || "") || trip.startDate > trip.endDate) err("trip", "startDate / endDate (AAAA-MM-JJ) invalides");
 if (!Array.isArray(trip.travelers) || !trip.travelers.length) err("trip", "travelers vide");
 if (!isNum(trip.fxDefault) || trip.fxDefault <= 0) err("trip", "fxDefault invalide");
+const sv = trip.souvenirs || {};
+if (!isNum(sv.franchiseEur) || sv.franchiseEur <= 0) err("trip.souvenirs", "franchiseEur invalide");
+if (!isNum(sv.detaxeMinYen) || sv.detaxeMinYen <= 0) err("trip.souvenirs", "detaxeMinYen invalide");
+if (!Array.isArray(sv.personnes) || sv.personnes.length !== 2 || !sv.personnes.every(isStr)) err("trip.souvenirs", "personnes : 2 noms attendus");
 load("practical").forEach((p, i) => { if (!isStr(p.title) || !Array.isArray(p.items)) err(`practical[${i}]`, "title / items"); });
 (trip.holidays || []).forEach((h, i) => { if (!ISO.test(h)) err(`trip.holidays[${i}]`, "date AAAA-MM-JJ attendue"); });
 Object.entries(load("places-meta")).forEach(([slug, m]) => {

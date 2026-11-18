@@ -43,5 +43,13 @@
   "journal": {
     "repo": "Maxime-Jauroyon/japan-trip-2026",
     "branch": "journal"
+  },
+  "souvenirs": {
+    "franchiseEur": 430,
+    "personnes": [
+      "Maxime",
+      "Léo"
+    ],
+    "detaxeMinYen": 5000
   }
 }
