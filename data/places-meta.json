@@ -372,5 +372,10 @@
     "hours": "~9h–16h30",
     "duration": "30 min",
     "closes": "16:30"
+  },
+  "marumyo": {
+    "hours": "Déjeuner 11h–15h (dernière commande 14h30)",
+    "duration": "1 h",
+    "closes": "15:00"
   }
 }
