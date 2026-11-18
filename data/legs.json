@@ -453,7 +453,7 @@
     "depart": "15:34",
     "arrive": "19:17",
     "duration": "3 h 43",
-    "operator": "Hida (Wide View) → Nagoya + shinkansen → Kyoto",
+    "operator": "Limited Express Hida n° 36 (direct pour Osaka, sans changement)",
     "seat": "—",
     "ref": "—",
     "status": "paid",
@@ -471,20 +471,24 @@
     },
     "via": [
       {
-        "lat": 35.85,
-        "lng": 137
+        "lat": 35.8,
+        "lng": 137.24
       },
       {
-        "lat": 35.42,
+        "lat": 35.41,
         "lng": 136.76
       },
       {
-        "lat": 35.17,
-        "lng": 136.88
+        "lat": 35.36,
+        "lng": 136.61
       },
       {
-        "lat": 35.08,
-        "lng": 136.2
+        "lat": 35.31,
+        "lng": 136.29
+      },
+      {
+        "lat": 35.02,
+        "lng": 135.96
       }
     ],
     "fromStop": {
@@ -502,9 +506,10 @@
       "lng": 135.7588
     },
     "details": [
-      "Classique : Limited Express Hida Takayama → Nagoya, puis Tokaido Shinkansen Nagoya → Kyoto."
+      "Direct, sans correspondance ni Shinkansen : Hida n° 36 (大阪行). Takayama 15:34 → Gero 16:18 → Gifu ~17:45 → Ogaki 17:53 → Maibara 18:22 → Kusatsu 19:01 → Kyoto 19:17 (le train continue vers Osaka).",
+      "Attention : entre Takayama et Gifu, le Hida n° 36 (Osaka) est accouplé au Hida n° 16 (Nagoya). Le train se sépare à Gifu : montez dans la voiture indiquée sur votre billet, côté « Osaka (ひだ36号) », pas côté « Nagoya (ひだ16号) », sinon vous finissez à Nagoya."
     ],
-    "tips": "Réservé : Takayama 15:34 → Kyoto 19:17 (détail des trains et correspondance sur la confirmation JR West). Billets à retirer à une machine verte JR West / JR Central (gare de Kanazawa du 14 au 17 nov, ou gare de Takayama le 18 avant le départ — pas à Tokyo) avec la carte bancaire physique de Maxime + son code à 4 chiffres + le n° de réservation (5 chiffres, commence par 4).",
+    "tips": "Réservé : Hida n° 36, Takayama 15:34 → Kyoto 19:17, direct. Vérifiez le numéro de voiture et de place sur le billet de supplément (特急券) et le panneau du quai (ひだ36号 大阪). Pas de portillon de correspondance : gardez les billets jusqu’à la sortie de Kyoto. En cas de doute, demandez au contrôleur « Kyoto ni ikimasu ka ? ». Billets à retirer à une machine verte JR West / JR Central (gare de Kanazawa du 14 au 17 nov, ou gare de Takayama le 18 avant le départ — pas à Tokyo) avec la carte bancaire physique de Maxime + son code à 4 chiffres + le n° de réservation (5 chiffres, commence par 4).",
     "bookings": {
       "links": [
         {
@@ -524,6 +529,7 @@
       "steps": [
         "Avant le départ de 15:34 : machine verte d’une gare JR West — Kanazawa (14–17 nov, le plus simple) ou Takayama le 18",
         "Prendre la carte bancaire physique de Maxime + son code à 4 chiffres + le n° de réservation (5 chiffres, commence par 4)",
+        "Sur le quai : le train porte deux numéros (Hida 16 pour Nagoya, Hida 36 pour Osaka) ; monter dans la voiture de votre billet, côté Osaka (Kyoto)",
         "Passer les portiques avec les billets papier"
       ]
     }
