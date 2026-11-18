@@ -753,52 +753,20 @@
     ],
     "ideasAfter": [
       {
-        "title": "Dîner okonomiyaki chez Hinoki (Shijō-Karasuma)",
-        "lat": 35.0036,
-        "lng": 135.7585,
-        "desc": "Teppanyaki et okonomiyaki à 3 min à pied de la station Karasuma, ~8 min de l’hôtel. Ouvert tous les jours, mercredi compris, de 17 h 30 à 3 h (dernière commande 2 h) : idéal pour manger en arrivant. Horaires des listings, à confirmer ; repère approximatif, le lien Maps cherche le nom.",
+        "title": "Illumination de Kōdai-ji (Higashiyama)",
+        "lat": 35.0007,
+        "lng": 135.7812,
+        "desc": "Temple de Higashiyama illuminé en automne (jardin zen, bambous, reflets dans l’étang). Illumination jusqu’au 13 déc. : lumières dès 17 h, dernière entrée 21 h 30, fermeture 22 h, ~800 ¥. Taxi ~15 min depuis l’hôtel : partir tout de suite pour arriver avant 21 h 30. Horaires à confirmer.",
         "goshuin": "non",
-        "mapsQuery": "鉄板焼 お好み焼 ひのき 四条烏丸店"
+        "mapsQuery": "高台寺 京都市東山区高台寺下河原町526"
       },
       {
-        "title": "Dîner grillades chez Shōwa Shokudō (Shijō-Karasuma)",
-        "lat": 35.0036,
-        "lng": 135.7585,
-        "desc": "Grillades au charbon dans une ambiance de cantine Shōwa. Ouvert tous les jours de 17 h à 1 h (dernière commande des plats 23 h 30, boissons minuit) : alternative si Hinoki est plein. Horaires des listings, à confirmer ; repère approximatif.",
+        "title": "Illumination de Shōren-in (Higashiyama)",
+        "lat": 35.003,
+        "lng": 135.7843,
+        "desc": "Plan B si Kōdai-ji est trop tard ou complet : illumination du temple Shōren-in, à ~10 min à pied de Kōdai-ji (avec ses camphriers géants). 18 h–22 h, dernière entrée 21 h 30 ; tarif contradictoire selon les sources (1 000 ou 1 500 ¥) et dates à confirmer sur place.",
         "goshuin": "non",
-        "mapsQuery": "昭和食堂 炭焼浪漫家 四条烏丸店"
-      },
-      {
-        "title": "Shinkyōgoku (galeries couvertes et game centers)",
-        "lat": 35.005,
-        "lng": 135.769,
-        "desc": "Grandes galeries commerçantes couvertes, à ~10 min à pied de l’hôtel : idéales sous la pluie. Boutiques ouvertes jusqu’à ~20 h–21 h, game centers et salles de jeux ouverts plus tard. À ne pas confondre avec la Teramachi de Kanazawa.",
-        "goshuin": "non",
-        "mapsQuery": "新京極商店街 京都市中京区"
-      },
-      {
-        "title": "Kiyamachi-dōri : bars et izakaya au bord du canal",
-        "lat": 35.0036,
-        "lng": 135.7706,
-        "desc": "Petite rue le long du canal Takase, parallèle à Pontōchō : izakaya, bars à cocktails, restos ouverts tard. À ~15 min à pied de l’hôtel, sans transport.",
-        "goshuin": "non",
-        "mapsQuery": "木屋町通 京都市中京区"
-      },
-      {
-        "title": "Ruelle Pontochō au crépuscule",
-        "phrases": "restaurant",
-        "lat": 35.0039,
-        "lng": 135.7714,
-        "desc": "Étroite ruelle aux lanternes le long de la Kamo — maisons de thé, petits bars, ambiance Kyoto. Dernière commande souvent entre 22 h et 23 h ; certaines adresses ferment le mercredi : vérifier avant de s’y rendre.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Balade au bord de la Kamo (pont Shijō)",
-        "lat": 35.0039,
-        "lng": 135.7716,
-        "desc": "Berges de la rivière Kamo et pont Shijō-Ōhashi, avec les lumières de Gion en face : promenade tranquille de ~15 min à pied de l’hôtel pour finir la soirée.",
-        "goshuin": "non",
-        "mapsQuery": "四条大橋 京都市"
+        "mapsQuery": "青蓮院門跡 京都市東山区粟田口三条坊町69-1"
       }
     ],
     "reminders": [

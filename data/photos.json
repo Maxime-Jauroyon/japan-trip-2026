@@ -1,12 +1,8 @@
 {
   "rules": [
     {
-      "match": "hinoki",
-      "slug": "hinoki-soir"
-    },
-    {
-      "match": "shokudō|shokudo",
-      "slug": "showa-shokudo"
+      "match": "shōren-in|shoren-in",
+      "slug": "shorenin-soir"
     },
     {
       "match": "bsc gallery",
@@ -2196,50 +2192,20 @@
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
       }
     ],
-    "hinoki-soir": [
+    "shorenin-soir": [
       {
-        "file": "nishiki.jpg",
-        "author": "collinox",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+        "file": "kiyomizu.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
       },
       {
-        "file": "nishiki-2.jpg",
-        "author": "pokpok313",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
-      },
-      {
-        "file": "nishiki-3.jpg",
-        "author": "ignis",
+        "file": "kiyomizu-2.jpg",
+        "author": "Jordy Meow",
         "license": "CC BY-SA 3.0",
-        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
-        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
-      }
-    ],
-    "showa-shokudo": [
-      {
-        "file": "nishiki.jpg",
-        "author": "collinox",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
-      },
-      {
-        "file": "nishiki-2.jpg",
-        "author": "pokpok313",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
-      },
-      {
-        "file": "nishiki-3.jpg",
-        "author": "ignis",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
-        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
       }
     ]
   }
