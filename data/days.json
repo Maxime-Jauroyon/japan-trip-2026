@@ -276,6 +276,13 @@
         ],
         "fixed": true,
         "goshuin": "non"
+      },
+      {
+        "title": "Onsen de l’hôtel (le soir)",
+        "lat": 35.5042,
+        "lng": 138.7636,
+        "desc": "Bain chaud à l’hôtel du lac Kawaguchi pour finir la dernière soirée au pied du Fuji.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -287,7 +294,8 @@
         "title": "Fuji-Q · maison de l’horreur (ticket à part)",
         "desc": "戦慄迷宮 non incluse dans le pass · ticket horodaté à payer sur place le jour J (bornes près de l’attraction) ou dans l’app Q-chan. Liens officiels dans la fiche Fuji-Q Highland."
       }
-    ]
+    ],
+    "ordreFixe": true
   },
   {
     "n": 7,
@@ -625,6 +633,13 @@
         "lat": 36.14,
         "lng": 137.2592,
         "desc": "Promenade gratuite le long de la rivière Miyagawa et du pont rouge Nakabashi, à deux pas de Sanmachi Suji : calme et lumières du soir. À faire après la vieille ville, avant le dîner.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Onsen privé (le soir)",
+        "lat": 36.1393,
+        "lng": 137.2521,
+        "desc": "Bain privé réservé à l’hôtel (Mercure Hida Takayama) en fin de soirée, après la balade sous la pluie.",
         "goshuin": "non"
       }
     ],
