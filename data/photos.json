@@ -1,6 +1,14 @@
 {
   "rules": [
     {
+      "match": "onsen privé",
+      "slug": "onsen-takayama"
+    },
+    {
+      "match": "onsen de l",
+      "slug": "kawaguchi"
+    },
+    {
       "match": "akihabara",
       "slug": "akihabara"
     },
@@ -2005,6 +2013,22 @@
       }
     ],
     "sakurayama": [
+      {
+        "file": "sanmachi.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:One_of_the_three_main_streets_in_Sanmachi-Suji_(6156038234).jpg"
+      },
+      {
+        "file": "sanmachi-2.jpg",
+        "author": "Maarten Heerlien",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shops_in_one_of_the_three_main_streets_in_Sanmachi-Suji_(6156040666).jpg"
+      }
+    ],
+    "onsen-takayama": [
       {
         "file": "sanmachi.jpg",
         "author": "Maarten Heerlien",

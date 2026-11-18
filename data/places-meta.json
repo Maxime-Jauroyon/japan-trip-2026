@@ -343,5 +343,9 @@
     "hours": "Sanctuaire en journée · salle des chars ~9h–16h30",
     "duration": "1–1,5 h",
     "closes": "16:30"
+  },
+  "onsen-takayama": {
+    "hours": "Bain privé, sur réservation",
+    "duration": "~1 h"
   }
 }
