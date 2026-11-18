@@ -753,6 +753,22 @@
     ],
     "ideasAfter": [
       {
+        "title": "Dîner okonomiyaki chez Hinoki (Shijō-Karasuma)",
+        "lat": 35.0036,
+        "lng": 135.7585,
+        "desc": "Teppanyaki et okonomiyaki à 3 min à pied de la station Karasuma, ~8 min de l’hôtel. Ouvert tous les jours, mercredi compris, de 17 h 30 à 3 h (dernière commande 2 h) : idéal pour manger en arrivant. Horaires des listings, à confirmer ; repère approximatif, le lien Maps cherche le nom.",
+        "goshuin": "non",
+        "mapsQuery": "鉄板焼 お好み焼 ひのき 四条烏丸店"
+      },
+      {
+        "title": "Dîner grillades chez Shōwa Shokudō (Shijō-Karasuma)",
+        "lat": 35.0036,
+        "lng": 135.7585,
+        "desc": "Grillades au charbon dans une ambiance de cantine Shōwa. Ouvert tous les jours de 17 h à 1 h (dernière commande des plats 23 h 30, boissons minuit) : alternative si Hinoki est plein. Horaires des listings, à confirmer ; repère approximatif.",
+        "goshuin": "non",
+        "mapsQuery": "昭和食堂 炭焼浪漫家 四条烏丸店"
+      },
+      {
         "title": "Shinkyōgoku (galeries couvertes et game centers)",
         "lat": 35.005,
         "lng": 135.769,
