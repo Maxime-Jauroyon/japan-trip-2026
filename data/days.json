@@ -804,14 +804,6 @@
     "city": "kyoto",
     "ideas": [
       {
-        "title": "Chemin des Philosophes",
-        "lat": 35.0265,
-        "lng": 135.7956,
-        "desc": "Promenade le long du canal entre Ginkaku-ji et Nanzen-ji — pic des momiji attendu vers le 11 déc cette année : couleurs partielles le 21 nov.",
-        "goshuin": "oui",
-        "goshuinNote": "Dans les temples du chemin (Ginkaku-ji, Nanzen-ji…)."
-      },
-      {
         "title": "Kiyomizu-dera",
         "lat": 34.9949,
         "lng": 135.785,
