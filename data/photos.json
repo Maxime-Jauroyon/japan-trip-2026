@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "kiyamachi|kamo",
+      "slug": "pontocho"
+    },
+    {
       "match": "onsen privé",
       "slug": "onsen-takayama"
     },
