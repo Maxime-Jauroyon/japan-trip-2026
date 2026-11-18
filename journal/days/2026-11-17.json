@@ -67,6 +67,15 @@
    "doneAt": 1794927525590,
    "by": "Maxime",
    "at": 1794927525590
+  },
+  "p:onsen-prive": {
+   "id": "p:onsen-prive",
+   "kind": "planned",
+   "title": "Onsen privé (le soir)",
+   "status": "done",
+   "doneAt": 1795012783217,
+   "by": "Maxime",
+   "at": 1795012783217
   }
  }
 }
