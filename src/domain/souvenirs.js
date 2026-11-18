@@ -52,19 +52,30 @@ export function level(total, franchise){
   return total >= franchise * 0.8 ? "warn" : "ok";
 }
 
-/** Achats regroupés par magasin et par jour (sans magasin : pas de regroupement) avec le total en ¥ et l’écart au minimum de détaxe. */
+/** Retire (on = true) ou rétablit la détaxe des achats `ids` (magasin qui n’a pas fait la démarche) ; la franchise n’est pas touchée. */
+export function setNoTax(items, ids, on){
+  const set = new Set(ids);
+  return items.map((it) => {
+    if (!set.has(it.id)) return it;
+    const { noTax, ...rest } = it;
+    return on ? { ...rest, noTax: true } : rest;
+  });
+}
+
+/** Achats regroupés par magasin et par jour (sans magasin : pas de regroupement) : total en ¥ des achats détaxables, écart au minimum, `removed` si la détaxe est retirée pour tout le groupe. */
 export function detaxeByStore(items, minYen){
   const groups = new Map();
   items.forEach((it) => {
     const store = (it.store || "").trim();
     if (!store) return;
     const key = `${it.day}|${store.toLowerCase()}`;
-    const g = groups.get(key) || { store, day: it.day, yen: 0, count: 0 };
-    g.yen += it.yen;
+    const g = groups.get(key) || { store, day: it.day, yen: 0, count: 0, ids: [], active: 0 };
+    if (!it.noTax) { g.yen += it.yen; g.active += 1; }
     g.count += 1;
+    g.ids.push(it.id);
     groups.set(key, g);
   });
   return [...groups.values()]
-    .map((g) => ({ ...g, ok: g.yen >= minYen, missing: Math.max(0, minYen - g.yen) }))
+    .map((g) => ({ ...g, removed: g.active === 0, ok: g.active > 0 && g.yen >= minYen, missing: Math.max(0, minYen - g.yen) }))
     .sort((a, b) => (a.day < b.day ? 1 : a.day > b.day ? -1 : a.store.localeCompare(b.store, "fr")));
 }

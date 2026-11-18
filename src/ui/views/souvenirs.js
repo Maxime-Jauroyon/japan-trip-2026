@@ -3,7 +3,7 @@
 import { SOUVENIRS } from "../../core/data.js";
 import { japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { addItem, detaxeByStore, level, parseAmount, remaining, removeItem, setCarrier, toBoth, totalsByPerson } from "../../domain/souvenirs.js";
+import { addItem, detaxeByStore, level, parseAmount, remaining, removeItem, setCarrier, setNoTax, toBoth, totalsByPerson } from "../../domain/souvenirs.js";
 import { loadSouvenirs, saveSouvenirs } from "../../pwa/souvenirs-store.js";
 import { loadFxRate } from "./fx-converter.js";
 
@@ -63,8 +63,8 @@ function summaryHtml(items, personnes){
 function detaxeHtml(items){
   const g = detaxeByStore(items, SOUVENIRS.detaxeMinYen);
   if (!g.length) return `<p class="sv-empty">Indique le magasin d’un achat pour voir s’il atteint le minimum de détaxe (${fmtYen(SOUVENIRS.detaxeMinYen)} par magasin et par jour).</p>`;
-  return `<ul class="sv-detaxe">${g.map((x) => `<li class="${x.ok ? "ok" : ""}"><span><strong>${esc(x.store)}</strong> · ${esc(dayLabel(x.day))}</span><span>${fmtYen(x.yen)} · ${x.ok ? "détaxable ✓" : `il manque ${fmtYen(x.missing)}`}</span></li>`).join("")}</ul>
-    <p class="sv-note">Indicatif (montant hors taxe, règles à confirmer en magasin). Détaxe à faire à la douane de Haneda avant l’embarquement, achats non utilisés + reçus + passeports.</p>`;
+  return `<ul class="sv-detaxe">${g.map((x) => `<li class="${x.removed ? "off" : x.ok ? "ok" : ""}"><span><strong>${esc(x.store)}</strong> · ${esc(dayLabel(x.day))}</span><span>${x.removed ? "détaxe non faite" : `${fmtYen(x.yen)} · ${x.ok ? "détaxable ✓" : `il manque ${fmtYen(x.missing)}`}`}</span><button type="button" class="sv-notax" data-ids="${esc(x.ids.join(","))}" data-on="${x.removed ? "0" : "1"}">${x.removed ? "Rétablir" : "Retirer"}</button></li>`).join("")}</ul>
+    <p class="sv-note">Indicatif (montant hors taxe, règles à confirmer en magasin). « Retirer » si le magasin n’a pas fait la démarche : les achats restent comptés dans la franchise. Détaxe à faire à la douane de Haneda avant l’embarquement, achats non utilisés + reçus + passeports.</p>`;
 }
 
 function listHtml(items, personnes){
@@ -113,7 +113,11 @@ function bind(root){
       saveSouvenirs({ who: who.dataset.who });
       root.querySelectorAll("[data-who]").forEach((b) => b.classList.toggle("on", b === who));
     } else if (e.target.closest("#sv-add")) add(root);
-    else {
+    else if (e.target.closest(".sv-notax")) {
+      const b = e.target.closest(".sv-notax");
+      saveSouvenirs({ items: setNoTax(loadSouvenirs().items, b.dataset.ids.split(","), b.dataset.on === "1") });
+      refresh(root);
+    } else {
       const row = e.target.closest(".sv-row");
       if (!row) return;
       const st = loadSouvenirs();
