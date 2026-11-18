@@ -713,7 +713,7 @@
         "title": "Sakurayama Hachimangū",
         "lat": 36.1482,
         "lng": 137.2605,
-        "desc": "Grand sanctuaire de Takayama, siège du festival d’automne, dans un bois au nord de la vieille ville. Goshuin au bureau du sanctuaire (horaires à confirmer).",
+        "desc": "Grand sanctuaire de Takayama, siège du festival d’automne, dans un bois au nord de la vieille ville : entrée libre, torii et allée d’arbres. Goshuin au bureau du sanctuaire (horaires à confirmer).",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du sanctuaire (horaires à confirmer).",
         "mapsQuery": "桜山八幡宮 高山市城山"
@@ -726,10 +726,10 @@
         "goshuin": "non"
       },
       {
-        "title": "Takayama Matsuri Yatai Kaikan",
+        "title": "Musée des chars du festival (Yatai Kaikan)",
         "lat": 36.1484,
         "lng": 137.2601,
-        "desc": "Salle des chars du festival de Takayama, dans l’enceinte du sanctuaire Sakurayama (~1 000 ¥ ; chars exposés renouvelés mi-novembre). Ouverte ~9 h–17 h en novembre : horaires à confirmer.",
+        "desc": "Musée des chars (yatai) du festival de Takayama : quelques chars monumentaux laqués et dorés exposés à tour de rôle (renouvelés mi-novembre), avec marionnettes mécaniques. Billet ~1 000 ¥ à l’entrée, ouvert ~9 h–17 h en novembre (à confirmer), compter ~45 min. C’est une visite à part du sanctuaire voisin.",
         "goshuin": "non",
         "mapsQuery": "高山屋台会館 高山市桜町178"
       }
