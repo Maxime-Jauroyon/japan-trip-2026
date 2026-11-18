@@ -367,5 +367,10 @@
     "hours": "Temple en journée · goshuin à confirmer",
     "duration": "30 min",
     "closes": "16:00"
+  },
+  "nikkokan": {
+    "hours": "~9h–16h30",
+    "duration": "30 min",
+    "closes": "16:30"
   }
 }
