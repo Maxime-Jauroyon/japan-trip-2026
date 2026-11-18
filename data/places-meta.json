@@ -374,13 +374,13 @@
     "closes": "16:30"
   },
   "bsc-gallery": {
-    "hours": "Horaires à confirmer (BSC : 075-212-3717)",
+    "hours": "Tous les jours 11h–20h30 (Facebook : 21h)",
     "duration": "45 min–1 h",
-    "closes": "20:00"
+    "closes": "20:30"
   },
   "sukajan-tow": {
-    "hours": "Horaires à confirmer (BSC : 075-212-3717)",
-    "duration": "45 min–1 h",
-    "closes": "20:00"
+    "hours": "Tous les jours dès 13h–21h (parfois 21h30)",
+    "duration": "30–45 min",
+    "closes": "21:00"
   }
 }
