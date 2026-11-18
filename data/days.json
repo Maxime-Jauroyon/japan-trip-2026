@@ -719,6 +719,14 @@
         "mapsQuery": "桜山八幡宮 高山市城山"
       },
       {
+        "title": "Sakurayama Nikkōkan (maquette du Tōshō-gū de Nikkō)",
+        "lat": 36.1479,
+        "lng": 137.2602,
+        "desc": "Musée voisin de la salle des chars, compris dans le même billet (pas de deuxième ticket) : maquette au 1/10 du sanctuaire Tōshō-gū de Nikkō. Compter ~30 min ; ouvert ~9 h–16 h 30 (à confirmer, tél. 0577-32-5100).",
+        "goshuin": "non",
+        "mapsQuery": "桜山日光館 高山市桜町178"
+      },
+      {
         "title": "Sanmachi Suji : boutiques et dégustation de saké (matin)",
         "lat": 36.1428,
         "lng": 137.2594,
@@ -729,7 +737,7 @@
         "title": "Musée des chars du festival (Yatai Kaikan)",
         "lat": 36.1484,
         "lng": 137.2601,
-        "desc": "Musée des chars (yatai) du festival de Takayama : quelques chars monumentaux laqués et dorés exposés à tour de rôle (renouvelés mi-novembre), avec marionnettes mécaniques. Billet ~1 000 ¥ à l’entrée, ouvert ~9 h–17 h en novembre (à confirmer), compter ~45 min. C’est une visite à part du sanctuaire voisin.",
+        "desc": "Musée des chars (yatai) du festival de Takayama : quelques chars monumentaux laqués et dorés exposés à tour de rôle (renouvelés mi-novembre), avec marionnettes mécaniques. Billet ~820–1 000 ¥ selon la source, valable aussi pour le musée voisin (Nikkōkan) ; ouvert ~9 h–17 h en novembre (à confirmer), compter ~45 min. Visite à part du sanctuaire voisin.",
         "goshuin": "non",
         "mapsQuery": "高山屋台会館 高山市桜町178"
       }
