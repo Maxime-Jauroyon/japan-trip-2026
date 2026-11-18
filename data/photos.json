@@ -1,6 +1,14 @@
 {
   "rules": [
     {
+      "match": "bsc gallery",
+      "slug": "bsc-gallery"
+    },
+    {
+      "match": "sukajan dept tow",
+      "slug": "sukajan-tow"
+    },
+    {
       "match": "kiyamachi|kamo",
       "slug": "pontocho"
     },
@@ -2146,6 +2154,38 @@
         "license": "CC BY 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Shops_in_one_of_the_three_main_streets_in_Sanmachi-Suji_(6156040666).jpg"
+      }
+    ],
+    "bsc-gallery": [
+      {
+        "file": "nishiki.jpg",
+        "author": "collinox",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      }
+    ],
+    "sukajan-tow": [
+      {
+        "file": "nishiki.jpg",
+        "author": "collinox",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
       }
     ]
   }

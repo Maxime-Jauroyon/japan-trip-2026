@@ -946,6 +946,22 @@
         "lng": 135.7649,
         "desc": "Rue couverte gastronomique — « la cuisine de Kyoto » : pickles, fruits de mer, dégustations.",
         "goshuin": "non"
+      },
+      {
+        "title": "BSC Gallery Kyoto (sukajan)",
+        "lat": 35.0063,
+        "lng": 135.7667,
+        "desc": "Grande boutique spécialisée de sukajan (blousons brodés), ~1 000 modèles, au coin de la rue Rokkaku dans la galerie Teramachi, à ~10 min à pied de l’hôtel. À faire après Nishiki, tout près. Bon sukajan dès ~13 000 ¥ ; essayez, vérifiez la broderie, demandez la détaxe (hors taxe, passeports). Horaires et détaxe à confirmer au 075-212-3717. L’achat compte dans la franchise de 430 € du porteur (Sur place › Souvenirs).",
+        "goshuin": "non",
+        "mapsQuery": "B.S.C.Gallery 京都 寺町通六角"
+      },
+      {
+        "title": "Kyoto Sukajan Dept Tow (sukajan)",
+        "lat": 35.0042,
+        "lng": 135.77,
+        "desc": "Boutique 100 % sukajan près de Shijō-Kawaramachi, 300+ articles, détaxe annoncée pour visiteurs éligibles : bonne seconde adresse pour comparer avec BSC Gallery. Repère approximatif, le lien Maps cherche le nom ; horaires à confirmer sur place. L’achat compte dans la franchise de 430 € du porteur.",
+        "goshuin": "non",
+        "mapsQuery": "Kyoto Sukajan Dept Tow 京都市中京区"
       }
     ],
     "moves": [
