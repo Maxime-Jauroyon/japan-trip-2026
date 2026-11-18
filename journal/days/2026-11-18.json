@@ -26,6 +26,15 @@
    "doneAt": 1794970979789,
    "by": "Léo",
    "at": 1794970979789
+  },
+  "p:takayama-betsuin-shoren-ji": {
+   "id": "p:takayama-betsuin-shoren-ji",
+   "kind": "planned",
+   "title": "Takayama Betsuin Shōren-ji",
+   "status": "done",
+   "doneAt": 1794972916055,
+   "by": "Maxime",
+   "at": 1794972916055
   }
  }
 }
