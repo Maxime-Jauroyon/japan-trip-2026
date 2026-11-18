@@ -8,6 +8,15 @@
    "doneAt": 1794968391473,
    "by": "Maxime",
    "at": 1794968391473
+  },
+  "p:musee-des-chars-du-festival-yatai-kaikan": {
+   "id": "p:musee-des-chars-du-festival-yatai-kaikan",
+   "kind": "planned",
+   "title": "Musée des chars du festival (Yatai Kaikan)",
+   "status": "done",
+   "doneAt": 1794970966723,
+   "by": "Léo",
+   "at": 1794970966723
   }
  }
 }
