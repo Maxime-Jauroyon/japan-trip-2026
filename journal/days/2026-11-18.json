@@ -53,6 +53,15 @@
    "doneAt": 1794975319846,
    "by": "Maxime",
    "at": 1794975319846
+  },
+  "p:sanmachi-suji-boutiques-et-degustation-de-sake-matin": {
+   "id": "p:sanmachi-suji-boutiques-et-degustation-de-sake-matin",
+   "kind": "planned",
+   "title": "Sanmachi Suji : boutiques et dégustation de saké (matin)",
+   "status": "done",
+   "doneAt": 1794975331102,
+   "by": "Maxime",
+   "at": 1794975331102
   }
  }
 }
