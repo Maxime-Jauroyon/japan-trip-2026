@@ -62,6 +62,15 @@
    "doneAt": 1794975331102,
    "by": "Maxime",
    "at": 1794975331102
+  },
+  "p:hie-jinja-hida-sannogu": {
+   "id": "p:hie-jinja-hida-sannogu",
+   "kind": "planned",
+   "title": "Hie Jinja (Hida Sannōgū)",
+   "status": "done",
+   "doneAt": 1794977411564,
+   "by": "Maxime",
+   "at": 1794977411564
   }
  }
 }
