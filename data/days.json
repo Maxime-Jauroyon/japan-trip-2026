@@ -789,6 +789,15 @@
         "goshuinNote": "Au bureau du temple."
       },
       {
+        "title": "Ryōzen Kannon (Higashiyama)",
+        "lat": 34.9998,
+        "lng": 135.7818,
+        "desc": "Statue de Kannon blanche de 24 m sur la colline entre Kiyomizu-dera et Yasaka, à ~700 m de l’un et ~600 m de l’autre. Ouvert 8 h 40–16 h 20, dernière entrée 16 h (horaires à confirmer), ~300 ¥ en espèces, visite de 10–15 min, encens remis avec le billet. Goshuin : à demander sur place (non confirmé).",
+        "goshuin": "possible",
+        "goshuinNote": "À demander à l’accueil (non confirmé).",
+        "mapsQuery": "霊山観音 京都市東山区下河原町526-2"
+      },
+      {
         "title": "Sanctuaire Yasaka",
         "lat": 35.0036,
         "lng": 135.7786,

@@ -378,5 +378,10 @@
     "hours": "Dernière réception 15h30, rendu avant 17h30",
     "duration": "Toute la journée",
     "closes": "17:30"
+  },
+  "ryozen-kannon": {
+    "hours": "8h40–16h20 (dernière entrée 16h)",
+    "duration": "15 min",
+    "closes": "16:20"
   }
 }
