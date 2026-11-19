@@ -847,6 +847,14 @@
         "goshuinNote": "Au sanctuaire Nonomiya, tout près."
       },
       {
+        "title": "Location de kimono (Rikawafuku Arashiyama)",
+        "lat": 35.0165,
+        "lng": 135.6775,
+        "desc": "Louer un kimono le matin à Arashiyama, à 2–4 min à pied de la gare / du pont Togetsukyo (repère approximatif, le lien Maps cherche l’adresse). Réservation uniquement en ligne (même jour possible, annulation gratuite plus de 24 h avant), dès ~3 000 ¥ (coiffure sur certaines formules). Dernière réception 15 h 30, rendu avant 17 h–17 h 30, soleil couché vers 16 h 45 : à faire tôt. Idéal en kimono pour le pousse-pousse.",
+        "goshuin": "non",
+        "mapsQuery": "Rikawafuku Arashiyama 京都市右京区嵯峨天龍寺造路町11-4"
+      },
+      {
         "title": "Pousse-pousse à Arashiyama (Ebisuya)",
         "lat": 35.014,
         "lng": 135.6758,
@@ -857,7 +865,7 @@
         "title": "Kinkaku-ji",
         "lat": 35.0394,
         "lng": 135.7292,
-        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto.",
+        "desc": "Le Pavillon d’or miroir dans son étang — le temple le plus photographié de Kyoto. À faire en dernier, après avoir rendu le kimono, si le temps le permet (ferme 17 h) ; sinon à retirer, la journée est dense.",
         "goshuin": "oui",
         "goshuinNote": "À l’accueil du temple."
       }
@@ -866,7 +874,7 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFermeture": true
+    "ordreFixe": true
   },
   {
     "n": 14,
