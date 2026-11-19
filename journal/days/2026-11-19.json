@@ -80,6 +80,15 @@
    "doneAt": 1795077353855,
    "by": "Maxime",
    "at": 1795077353855
+  },
+  "p:kyoto-tower-nidec-kyoto-tower": {
+   "id": "p:kyoto-tower-nidec-kyoto-tower",
+   "kind": "planned",
+   "title": "Kyoto Tower (Nidec Kyoto Tower)",
+   "status": "done",
+   "doneAt": 1795083469366,
+   "by": "Maxime",
+   "at": 1795083469366
   }
  }
 }
