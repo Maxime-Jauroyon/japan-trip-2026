@@ -383,5 +383,15 @@
     "hours": "8h40–16h20 (dernière entrée 16h)",
     "duration": "15 min",
     "closes": "16:20"
+  },
+  "kodaiji": {
+    "hours": "9h–17h30 (entrées jusqu’à ~17h)",
+    "duration": "1 h",
+    "closes": "17:00"
+  },
+  "kodaiji-bambou": {
+    "hours": "Dans le temple, entrées jusqu’à ~17h",
+    "duration": "15–20 min",
+    "closes": "17:00"
   }
 }
