@@ -960,9 +960,15 @@
     ],
     "wake": {
       "time": "08:00",
-      "why": "Journée libre · kimono réservé à 11 h 15"
+      "why": "Départ de l’hôtel à 9 h 30 : kimono à 11 h 15 à Arashiyama (45 min de marge)"
     },
-    "ordreFixe": true
+    "ordreFixe": true,
+    "reminders": [
+      {
+        "title": "Départ à 9 h 30 pour le kimono de 11 h 15",
+        "desc": "Trajet : métro Karasuma jusqu’à Shijō, puis train Hankyu direction Katsura, puis ligne Hankyu Arashiyama jusqu’au terminus (25–45 min), boutique à ~3 min à pied. Arriver vers 10 h 30. Dans le sac : t-shirt HEATTECH, chaussettes fines, espèces pour le train. Vérifier l’horaire exact des trains dans Google Maps."
+      }
+    ]
   },
   {
     "n": 14,
