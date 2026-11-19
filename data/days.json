@@ -963,19 +963,35 @@
         "goshuinNote": "Au bureau du sanctuaire, en bas."
       },
       {
-        "title": "Daigo-ji",
-        "lat": 34.9516,
-        "lng": 135.821,
-        "desc": "Grand complexe de temples aux érables d’automne et pagode à cinq étages au sud-est de Kyoto. Momiji en retard cette année : couleurs partielles vers le 21 nov.",
-        "goshuin": "oui",
-        "goshuinNote": "Au bureau du temple."
+        "title": "Tō-ji et marché Kōbō-ichi (21 du mois)",
+        "lat": 34.9806,
+        "lng": 135.7477,
+        "desc": "Temple à la pagode à cinq étages, la plus haute du Japon. Samedi 21 nov est le jour du marché Kōbō-ichi (« Kōbō-san ») : ~1 000 stands d’antiquités, de vêtements d’occasion, de nourriture et d’artisanat dans l’enceinte, ouverts tôt (de ~5 h–7 h à ~15 h 30–16 h selon les sources). Le temple ferme vers 17 h ; goshuin à demander (non confirmé). À 10 min à pied de la gare de Kyoto.",
+        "goshuin": "possible",
+        "goshuinNote": "À demander au bureau du temple (non confirmé).",
+        "mapsQuery": "東寺 京都市南区九条町1"
+      },
+      {
+        "title": "Château Nijō",
+        "lat": 35.0142,
+        "lng": 135.7482,
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. Ouvert dès 8 h 45, dernière entrée vers 16 h (à confirmer) : y être entre 13 h et 14 h 30, après Tō-ji.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Kyoto Tower (Nidec Kyoto Tower)",
+        "lat": 34.9876,
+        "lng": 135.7593,
+        "desc": "Plateforme d’observation de la tour de Kyoto, en face de la gare : ouverte 10 h–21 h, dernière entrée 20 h 30. Adulte 900 ¥, probablement 1 000 ¥ depuis le 1er oct. 2026 d’après une source (à confirmer). À faire en fin d’après-midi pour le coucher du soleil (~16 h 45) et la ville de nuit.",
+        "goshuin": "non",
+        "mapsQuery": "京都タワー 京都市下京区烏丸通七条下る東塩小路町721-1"
       }
     ],
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFermeture": true
+    "ordreFixe": true
   },
   {
     "n": 15,
@@ -985,17 +1001,10 @@
     "extraCity": "nara",
     "ideas": [
       {
-        "title": "Château Nijō",
-        "lat": 35.0142,
-        "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier (dès 8 h 45), puis Maikoya, puis Nishiki : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
-        "goshuin": "non"
-      },
-      {
         "title": "Atelier wagashi + cérémonie du thé (Maikoya)",
         "lat": 35.0046,
         "lng": 135.7587,
-        "desc": "Fabrication de pâtisseries japonaises (wagashi) puis cérémonie du thé, ~90 min, en anglais, chez Maikoya (329 Ebiyachō, Nakagyō-ku, sur Nishiki-kōji, tout près du marché Nishiki). Réservation obligatoire en ligne : à faire ce soir pour le dimanche 22 nov, créneau de ~11 h pour finir avant 14 h (train 14:55, gare vers 14 h 35). Repère approximatif, le lien Maps cherche l’adresse.",
+        "desc": "Fabrication de pâtisseries japonaises (wagashi) puis cérémonie du thé, ~90 min, en anglais, chez Maikoya (329 Ebiyachō, Nakagyō-ku, sur Nishiki-kōji, tout près du marché Nishiki). Réservation obligatoire en ligne, pour le dimanche 22 nov : un créneau en matinée (~10 h 30–11 h) laisse du temps, puis Nishiki, et finir avant 14 h (train 14:55, gare vers 14 h 35). Repère approximatif, le lien Maps cherche l’adresse.",
         "goshuin": "non",
         "mapsQuery": "MAIKOYA 京都市中京区海老屋町329"
       },
