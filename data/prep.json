@@ -26,44 +26,6 @@
       ]
     },
     {
-      "id": "samurai-ninja-reservation",
-      "label": "Réserver le Samurai Ninja Museum (dim. 22 nov, après l’atelier wagashi)",
-      "meta": "Visite guidée ~1 h en anglais sur Teramachi, à ~200 m de BSC Gallery · ~3 000 ¥ (sources de 2 400 à 3 500 ¥) · horaires 11 h–18 h à confirmer · réservation en ligne fortement conseillée · finir avant 14 h (train 14:55)",
-      "remindFrom": "2026-11-19",
-      "done": false,
-      "links": [
-        {
-          "label": "Samurai Ninja Museum Kyoto — site officiel",
-          "url": "https://samuraininjamuseum.com/samurai-ninja-museum-kyoto"
-        },
-        {
-          "label": "Maikoya — Samurai & Ninja Museum Kyoto",
-          "url": "https://mai-ko.com/travel/japanese-history/samurai/samurai-costumes/samurai-ninja-museum-kyoto-samurai-costumes-in-kyoto/"
-        },
-        {
-          "label": "KKday — billets",
-          "url": "https://www.kkday.com/en-hk/product/34080"
-        }
-      ]
-    },
-    {
-      "id": "godzilla-namba-reservation",
-      "label": "Réserver Godzilla -0.0 en 4D (mer. 25 nov, 18 h, TOHO Cinemas Namba)",
-      "meta": "4D (MX4D d’après le cinéma, pas 4DX), film en japonais sans sous-titres anglais trouvés · autres séances le 25 nov : 4D 15 h / 21 h, IMAX 14 h 30–17 h · horaires publiés jusqu’au 25 nov, à reconfirmer · pour du vrai 4DX : 109 Cinemas Osaka Expo City (4DX dès le 13 nov, écran et horaires à confirmer)",
-      "remindFrom": "2026-11-19",
-      "done": false,
-      "links": [
-        {
-          "label": "Séances TOHO Cinemas Namba (eiga.com)",
-          "url": "https://eiga.com/movie-theater/102826/27/270103/5024/"
-        },
-        {
-          "label": "109 Cinemas — Godzilla -0.0, 4DX",
-          "url": "https://109cinemas.net/movies/5752.html"
-        }
-      ]
-    },
-    {
       "id": "kimono-arashiyama",
       "label": "Kimono d’homme / hakama réservé demain à 11 h 15 (Arashiyama)",
       "meta": "Rikawafuku Arashiyama : vérifier le nom du magasin, l’adresse et le plan dans l’e-mail de confirmation · dernière réception 15 h 30 · annulation gratuite plus de 24 h avant (à confirmer)",
