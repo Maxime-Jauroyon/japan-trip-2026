@@ -1013,23 +1013,16 @@
         "title": "Château Nijō",
         "lat": 35.0142,
         "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier dimanche (dès 8 h 45), puis Maikoya, puis Nishiki : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier dimanche (dès 8 h 45) puis Maikoya : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
         "goshuin": "non"
       },
       {
         "title": "Atelier wagashi + cérémonie du thé (Maikoya)",
         "lat": 35.0046,
         "lng": 135.7587,
-        "desc": "Fabrication de pâtisseries japonaises (wagashi) puis cérémonie du thé, ~90 min, en anglais, chez Maikoya (329 Ebiyachō, Nakagyō-ku, sur Nishiki-kōji, tout près du marché Nishiki). Réservation obligatoire en ligne, pour le dimanche 22 nov : un créneau en matinée (~10 h 30–11 h) laisse du temps, puis Nishiki, et finir avant 14 h (train 14:55, gare vers 14 h 35). Repère approximatif, le lien Maps cherche l’adresse.",
+        "desc": "Fabrication de pâtisseries japonaises (wagashi) puis cérémonie du thé, ~90 min, en anglais, chez Maikoya (329 Ebiyachō, Nakagyō-ku, sur Nishiki-kōji, tout près du marché Nishiki). Réservation obligatoire en ligne, pour le dimanche 22 nov : un créneau en matinée (~10 h 30–11 h) laisse du temps, et finir avant 14 h (train 14:55, gare vers 14 h 35). Repère approximatif, le lien Maps cherche l’adresse.",
         "goshuin": "non",
         "mapsQuery": "MAIKOYA 京都市中京区海老屋町329"
-      },
-      {
-        "title": "Marché Nishiki",
-        "lat": 35.005,
-        "lng": 135.7649,
-        "desc": "Rue couverte gastronomique — « la cuisine de Kyoto » : pickles, fruits de mer, dégustations.",
-        "goshuin": "non"
       }
     ],
     "moves": [
