@@ -65,5 +65,20 @@
       "Feuillages (prévision Japan Meteorological Corporation, révisée le 1er oct) : rouge vers le 28 nov à Tokyo, le 30 nov à Kanazawa, le 11 déc à Kyoto (ginkgo vers le 27 nov) — Kyoto est en retard sur la moyenne. Les momiji du lac Kawaguchi sont de saison début-mi novembre.",
       "Dans l’app, la météo réelle (Open-Meteo) remplace ces moyennes pour chaque jour à moins de 15 jours."
     ]
+  },
+  {
+    "id": "douane-retour",
+    "title": "Douane au retour en France : quoi déclarer, quoi payer",
+    "items": [
+      "Seuil : 430 € par personne (15 ans et plus, arrivée en avion). C’est la valeur totale de ce que vous rapportez (achats neufs, cadeaux, souvenirs). Le seuil est individuel, on ne peut pas le cumuler entre voyageurs. (Bercy, sources officielles à confirmer.)",
+      "Sous 430 € au total : rien à payer. Alcool, tabac et produits spécifiques ont leurs propres limites et ne comptent pas dans les 430 €.",
+      "Au-dessus de 430 € : on paie des droits de douane + la TVA. D’après les sources trouvées (pas toutes officielles), la taxation porte sur la totalité de la valeur, pas seulement sur l’excédent. Exemple : 441 € de vêtements ≈ 100 € à payer avec le droit forfaitaire.",
+      "Calcul : droit forfaitaire de 2,5 % si la valeur hors taxes ne dépasse pas 700 € (vous pouvez le refuser et choisir le tarif normal, souvent plus cher pour les vêtements), puis TVA de 20 % sur (valeur + droits).",
+      "Ce que vous ne payez pas : vos vêtements et affaires personnelles portés ou utilisés pendant le voyage (non neufs). Ce qui compte, ce sont les achats et cadeaux rapportés. À confirmer avec la douane en cas de doute.",
+      "Comment déclarer : à CDG, après les bagages, passer par le couloir rouge « marchandises à déclarer ». Montrer passeport, reçus et achats ; payer sur place (carte). Gardez tous les reçus. La déclaration en ligne PABLO existe sans doute, mais je n’ai pas pu la confirmer.",
+      "Si vous ne déclarez pas et que vous êtes contrôlé : paiement des droits et de la TVA, confiscation possible des marchandises et sanctions pénales (amendes, voire prison). Les montants exacts ne sont pas confirmés ici.",
+      "À ne pas confondre avec la détaxe du Japon : la détaxe de Haneda (comptoir de la douane japonaise, avant le contrôle de sécurité) rembourse la taxe de consommation japonaise ; elle est indépendante de la douane française.",
+      "Astuce : chacun déclare ce qu’il porte réellement. Dans Sur place › Souvenirs, changez le porteur d’un achat pour suivre le seuil de 430 € de chacun. Cherchez le simulateur officiel de la douane (douane.gouv.fr) avant le départ pour estimer le montant exact."
+    ]
   }
 ]
