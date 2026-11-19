@@ -994,14 +994,6 @@
         "desc": "Pokémon Center de Kyoto au 2e étage de SUINA Muromachi (78 Kankobokochō), à moins d’1 km de l’hôtel : produits exclusifs de Kyoto. Ouvert 10 h–20 h tous les jours (à confirmer) : y être avant 19 h 30. Repère approximatif, le lien Maps cherche l’adresse.",
         "goshuin": "non",
         "mapsQuery": "ポケモンセンターキョウト SUINA室町 京都市下京区"
-      },
-      {
-        "title": "Game centers de Shinkyōgoku (soirée)",
-        "lat": 35.005,
-        "lng": 135.769,
-        "desc": "Les galeries couvertes de Shinkyōgoku et leurs game centers (pinces, rythme, arcade, purikura), ouverts tard, à ~10 min à pied de l’hôtel : idéal pour finir la soirée après le Pokémon Center. Gardez des pièces de 100 ¥ (voir le changeur de monnaie des game centers).",
-        "goshuin": "non",
-        "mapsQuery": "新京極商店街 京都市中京区"
       }
     ],
     "wake": {
