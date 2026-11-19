@@ -801,7 +801,7 @@
         "title": "Kōdai-ji (Higashiyama)",
         "lat": 35.0007,
         "lng": 135.7812,
-        "desc": "Temple zen de Higashiyama, à ~100 m de Ryōzen Kannon : jardins, étang et pavillons. Visite de jour 9 h–17 h 30, fin des entrées vers 17 h, ~600 ¥ (billet combiné avec Entoku-in ~900 ¥) ; prix et horaires à confirmer sur le site officiel. Illumination du soir jusqu’au 13 déc. : lumières dès 17 h, dernière entrée 21 h 30, ~800 ¥. Goshuin : à demander à l’accueil.",
+        "desc": "Temple zen de Higashiyama, à ~100 m de Ryōzen Kannon : jardins, étang et pavillons. Visite de jour 9 h–17 h 30, fin des entrées vers 17 h, ~600 ¥ ; prenez plutôt le billet combiné ~900 ¥ qui inclut aussi Entoku-in et le musée du temple ; prix et horaires à confirmer sur le site officiel. Illumination du soir jusqu’au 13 déc. : lumières dès 17 h, dernière entrée 21 h 30, ~800 ¥. Goshuin : à demander à l’accueil.",
         "goshuin": "possible",
         "goshuinNote": "À demander à l’accueil (non confirmé).",
         "mapsQuery": "高台寺 京都市東山区高台寺下河原町526"
@@ -813,6 +813,15 @@
         "desc": "Allée de bambous dans l’enceinte du temple Kōdai-ji, incluse dans le billet d’entrée : à voir juste après le jardin, avant la fin des entrées (~17 h). Compter 15–20 min. Repère approximatif.",
         "goshuin": "non",
         "mapsQuery": "高台寺 竹林 京都市東山区"
+      },
+      {
+        "title": "Entoku-in (Higashiyama)",
+        "lat": 35.0009,
+        "lng": 135.7797,
+        "desc": "Temple voisin de Kōdai-ji, juste à l’ouest de son entrée : ancienne résidence de Nene, avec un beau jardin nord de l’époque Momoyama (site de beauté nationale). Visite ~30 min, ouvert 10 h–17 h (une page indique 9 h–17 h, portes fermées 17 h 30 : à confirmer). 500 ¥ seul, mais le billet combiné Kōdai-ji + Entoku-in + musée (~900 ¥) revient moins cher que deux billets séparés (1 100 ¥). Goshuin : à demander (non confirmé), tél. 075-561-9966.",
+        "goshuin": "possible",
+        "goshuinNote": "À demander à l’accueil (non confirmé).",
+        "mapsQuery": "圓徳院 京都市東山区下河原町530"
       },
       {
         "title": "Sanctuaire Yasaka",
