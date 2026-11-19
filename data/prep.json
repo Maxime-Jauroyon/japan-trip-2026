@@ -1,23 +1,6 @@
 {
   "checks": [
     {
-      "id": "rickshaw-reservation",
-      "label": "Pousse-pousse de Kyoto : monter sur place, sans réservation (Higashiyama jeu. 19 nov, Arashiyama ven. 20 nov)",
-      "meta": "Ebisuya : le stand prend sans réservation de 9 h 30 au coucher du soleil, mais les places partent vite en automne : y aller tôt · deux sites séparés (Higashiyama : coin Ichinenzaka / Nene no Michi ; Arashiyama : bout nord du pont Togetsukyo)",
-      "remindFrom": "2026-11-16",
-      "done": false,
-      "links": [
-        {
-          "label": "Ebisuya — Kyoto Higashiyama",
-          "url": "https://www.ebisuya.com/en/branch/higashiyama"
-        },
-        {
-          "label": "Ebisuya — Kyoto Arashiyama",
-          "url": "https://www.ebisuya.com/en/branch/arashiyama"
-        }
-      ]
-    },
-    {
       "id": "tea-wagashi-reservation",
       "label": "Réserver ce soir : atelier wagashi + cérémonie du thé (Maikoya, dim. 22 nov, ~11 h)",
       "meta": "Tout est complet aujourd’hui à Gion : reporté au dimanche 22 nov, centre-ville, près de Nijō et Nishiki · ~90 min, en anglais · réservation en ligne obligatoire · finir avant 14 h (train 14:55) · vérifier la disponibilité avant de payer",
@@ -44,14 +27,22 @@
     },
     {
       "id": "kimono-arashiyama",
-      "label": "Réserver le kimono d’Arashiyama (ven. 20 nov)",
-      "meta": "Rikawafuku Arashiyama : réservation en ligne uniquement, même jour possible, annulation gratuite plus de 24 h avant · dès ~3 000 ¥ · dernière réception 15 h 30, rendu avant 17 h–17 h 30 · prévoir un créneau tôt le matin avant le pousse-pousse",
+      "label": "Réserver le kimono d’homme / hakama d’Arashiyama (ven. 20 nov), avant demain matin",
+      "meta": "Rikawafuku Arashiyama : pas de location le jour même en novembre, réservation en ligne obligatoire · annulation gratuite plus de 24 h avant (à confirmer) · dernière réception 15 h 30, rendu avant 17 h–17 h 30 · plan homme et hakama, prix à confirmer sur la page",
       "remindFrom": "2026-11-19",
       "done": false,
       "links": [
         {
           "label": "Rikawafuku — Arashiyama",
           "url": "https://ewha-yifu.com/en/shops/kyoto-area/arashiyama"
+        },
+        {
+          "label": "Rikawafuku — plan kimono homme (30 min d’habillage)",
+          "url": "https://ewha-yifu.com/en/blog/kyoto-info/2971/"
+        },
+        {
+          "label": "Rikawafuku — hakama pour deux amis",
+          "url": "https://ewha-yifu.com/en/blog/kyoto-kimono-coordination/3036/"
         }
       ]
     },
