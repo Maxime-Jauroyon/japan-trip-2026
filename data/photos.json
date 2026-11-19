@@ -141,6 +141,10 @@
       "slug": "kiyomizu"
     },
     {
+      "match": "ryozen|ryōzen",
+      "slug": "ryozen-kannon"
+    },
+    {
       "match": "higashiyama|gion",
       "slug": "kiyomizu"
     },
@@ -2177,6 +2181,29 @@
         "license": "CC BY 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove_(215912603).jpeg"
+      }
+    ],
+    "ryozen-kannon": [
+      {
+        "file": "kiyomizu.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
+      },
+      {
+        "file": "kiyomizu-2.jpg",
+        "author": "Jordy Meow",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
+      },
+      {
+        "file": "kiyomizu-3.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg"
       }
     ]
   }
