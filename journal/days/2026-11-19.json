@@ -53,6 +53,15 @@
    "doneAt": 1795064757835,
    "by": "Maxime",
    "at": 1795064757835
+  },
+  "p:uniqlo-kyoto-sous-vetement-thermique-col-v": {
+   "id": "p:uniqlo-kyoto-sous-vetement-thermique-col-v",
+   "kind": "planned",
+   "title": "UNIQLO Kyoto (sous-vêtement thermique col V)",
+   "status": "done",
+   "doneAt": 1795071700107,
+   "by": "Maxime",
+   "at": 1795071700107
   }
  }
 }
