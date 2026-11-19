@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "round1|round one",
+      "slug": "round1-kyoto"
+    },
+    {
       "match": "godzilla",
       "slug": "godzilla-namba"
     },
@@ -2629,6 +2633,22 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
+      }
+    ],
+    "round1-kyoto": [
+      {
+        "file": "nishiki.jpg",
+        "author": "collinox",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
       }
     ]
   }
