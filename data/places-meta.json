@@ -403,5 +403,32 @@
     "hours": "11h–21h",
     "duration": "30 min",
     "closes": "21:00"
+  },
+  "tenryuji": {
+    "hours": "8h30–17h (dernière entrée ~16h50)",
+    "duration": "1–1,5 h",
+    "closes": "17:00"
+  },
+  "okochi-sanso": {
+    "hours": "9h–17h (dernière entrée 16h30)",
+    "duration": "1 h",
+    "closes": "17:00"
+  },
+  "jojakkoji": {
+    "hours": "~9h–17h (à confirmer)",
+    "duration": "30 min",
+    "closes": "17:00"
+  },
+  "nonomiya": {
+    "hours": "Accès libre en journée",
+    "duration": "15 min"
+  },
+  "togetsukyo": {
+    "hours": "Accès libre 24 h",
+    "duration": "15 min"
+  },
+  "kimono-forest": {
+    "hours": "Accès libre, éclairée le soir",
+    "duration": "15 min"
   }
 }
