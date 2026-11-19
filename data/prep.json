@@ -27,10 +27,10 @@
     },
     {
       "id": "kimono-arashiyama",
-      "label": "Réserver le kimono d’homme / hakama d’Arashiyama (ven. 20 nov), avant demain matin",
-      "meta": "Rikawafuku Arashiyama : pas de location le jour même en novembre, réservation en ligne obligatoire · annulation gratuite plus de 24 h avant (à confirmer) · dernière réception 15 h 30, rendu avant 17 h–17 h 30 · plan homme et hakama, prix à confirmer sur la page",
+      "label": "Kimono d’homme / hakama réservé demain à 11 h 15 (Arashiyama)",
+      "meta": "Rikawafuku Arashiyama : vérifier le nom du magasin, l’adresse et le plan dans l’e-mail de confirmation · dernière réception 15 h 30 · annulation gratuite plus de 24 h avant (à confirmer)",
       "remindFrom": "2026-11-19",
-      "done": false,
+      "done": true,
       "links": [
         {
           "label": "Rikawafuku — Arashiyama",
