@@ -854,6 +854,14 @@
         "desc": "Acheter un HEATTECH col en V, manches longues (homme) à mettre sous le kimono demain. Nouveau magasin amiral UNIQLO Kyoto (B1–3F mina Kyoto, 58 Daikokuchō), sur Kawaramachi-dōri, à ~600 m au nord de Dept Tow et BSC ; ouvert 11 h–21 h. Détaxe possible (minimum 5 500 ¥ + passeport). Prix et stock non confirmés. L’achat compte dans la franchise de 430 € du porteur. Repère approximatif, le lien Maps cherche l’adresse.",
         "goshuin": "non",
         "mapsQuery": "ユニクロ 京都 mina京都 京都市中京区大黒町58"
+      },
+      {
+        "title": "Kyoto Tower (Nidec Kyoto Tower)",
+        "lat": 34.9876,
+        "lng": 135.7593,
+        "desc": "Plateforme d’observation de la tour de Kyoto, en face de la gare de Kyoto : ouverte 10 h–21 h, **dernière entrée 20 h 30**. Adulte 900 ¥, probablement 1 000 ¥ depuis le 1er oct. 2026 d’après une source (à confirmer). Ce soir, en dernier, après UNIQLO : prendre le métro (ligne Karasuma) depuis Karasuma ou Kawaramachi, ~10–15 min jusqu’à la gare, et être à la tour avant 20 h 30 ; vue de nuit sur la ville, retour à l’hôtel en métro (~5 min).",
+        "goshuin": "non",
+        "mapsQuery": "京都タワー 京都市下京区烏丸通七条下る東塩小路町721-1"
       }
     ],
     "reminders": [
@@ -978,14 +986,6 @@
         "desc": "Parc à thème et studio de films de samouraïs à Uzumasa, à l’ouest de Kyoto : décors d’époque Edo, spectacles de ninjas et de samouraïs, costumes à louer. ~2 800 ¥ ; ouvert en gros 9 h–17 h, dernière entrée environ 1 h avant la fermeture (horaires de novembre 2026 non confirmés : vérifier le site officiel avant d’y aller). Compter 2 à 3 h ; depuis Tō-ji ou la gare de Kyoto, ~30 min en JR puis à pied. Si le parc ferme trop tôt, passer directement à Kyoto Tower.",
         "goshuin": "non",
         "mapsQuery": "東映太秦映画村 京都市右京区太秦東蜂岡町10"
-      },
-      {
-        "title": "Kyoto Tower (Nidec Kyoto Tower)",
-        "lat": 34.9876,
-        "lng": 135.7593,
-        "desc": "Plateforme d’observation de la tour de Kyoto, en face de la gare : ouverte 10 h–21 h, dernière entrée 20 h 30. Adulte 900 ¥, probablement 1 000 ¥ depuis le 1er oct. 2026 d’après une source (à confirmer). À faire en fin d’après-midi pour le coucher du soleil (~16 h 45) et la ville de nuit.",
-        "goshuin": "non",
-        "mapsQuery": "京都タワー 京都市下京区烏丸通七条下る東塩小路町721-1"
       },
       {
         "title": "Pokémon Center Kyoto (SUINA Muromachi)",
