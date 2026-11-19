@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { addItem, detaxeByStore, level, parseAmount, remaining, removeItem, setCarrier, setNoTax, toBoth, totalsByPerson } from "../src/domain/souvenirs.js";
+import { addItem, allocateRefunds, detaxeByStore, groupKey, level, parseAmount, remaining, removeItem, setCarrier, setNoTax, toBoth, totalsByPerson } from "../src/domain/souvenirs.js";
 
 const P = ["Maxime", "Léo"];
 const it = (id, who, carrier, eur, yen, store = "", day = "2026-11-20") => ({ id, who, carrier, eur, yen, store, day, label: id });
@@ -75,4 +75,30 @@ test("détaxe retirée : plus d’indicateur, total réduit, rétablissable, fra
   items = setNoTax(items, g.ids, false);
   assert.equal(detaxeByStore(items, 5000)[0].ok, true);
   assert.equal("noTax" in items[0], false);
+});
+
+test("détaxe reçue : répartie au prorata, plafonnée, déduite de la valeur à déclarer du porteur", () => {
+  const items = [
+    { id: "a", who: "Maxime", carrier: "Maxime", eur: 40, yen: 7000, store: "Uniqlo", day: "2026-11-20" },
+    { id: "b", who: "Maxime", carrier: "Léo", eur: 10, yen: 1750, store: "Uniqlo", day: "2026-11-20" },
+    { id: "c", who: "Maxime", carrier: "Maxime", eur: 20, yen: 3500, store: "", day: "2026-11-20" },
+  ];
+  const key = "2026-11-20|uniqlo";
+  assert.equal(groupKey(items[0]), key);
+  assert.equal(groupKey(items[2]), null);
+  const al = allocateRefunds(items, { [key]: 875 });
+  assert.equal(Math.round(al.a), 700);
+  assert.equal(Math.round(al.b), 175);
+  assert.equal(al.c, undefined);
+  const t = totalsByPerson(items, P, { [key]: 875 });
+  assert.equal(t.Maxime.gross, 60);
+  assert.equal(t.Maxime.eur, 56);
+  assert.equal(t.Maxime.refund, 4);
+  assert.equal(t.Léo.eur, 9);
+  // plafond : jamais plus que le total du groupe ; sans remboursement, rien ne change
+  assert.equal(Math.round(allocateRefunds(items, { [key]: 99999 }).a), 7000);
+  assert.equal(totalsByPerson(items, P).Maxime.eur, 60);
+  // un achat sans détaxe (noTax) ne reçoit rien
+  const noTax = items.map((it) => (it.id === "b" ? { ...it, noTax: true } : it));
+  assert.equal(allocateRefunds(noTax, { [key]: 700 }).b, undefined);
 });
