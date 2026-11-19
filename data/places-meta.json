@@ -455,5 +455,10 @@
     "hours": "~11h–18h (dernier départ ~17h), à confirmer",
     "duration": "1 h",
     "closes": "18:00"
+  },
+  "godzilla-namba": {
+    "hours": "Séance 4D à 18h (à confirmer)",
+    "duration": "~2 h 30",
+    "closes": "21:00"
   }
 }
