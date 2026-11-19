@@ -62,6 +62,15 @@
    "doneAt": 1795071700107,
    "by": "Maxime",
    "at": 1795071700107
+  },
+  "p:kyoto-sukajan-dept-tow-sukajan": {
+   "id": "p:kyoto-sukajan-dept-tow-sukajan",
+   "kind": "planned",
+   "title": "Kyoto Sukajan Dept Tow (sukajan)",
+   "status": "done",
+   "doneAt": 1795071712314,
+   "by": "Maxime",
+   "at": 1795071712314
   }
  }
 }
