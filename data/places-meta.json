@@ -430,5 +430,15 @@
   "kimono-forest": {
     "hours": "Accès libre, éclairée le soir",
     "duration": "15 min"
+  },
+  "toji": {
+    "hours": "~8h30–17h · marché Kōbō-ichi tôt le matin jusqu’à ~16h",
+    "duration": "1,5–2 h",
+    "closes": "17:00"
+  },
+  "kyoto-tower": {
+    "hours": "10h–21h (dernière entrée 20h30)",
+    "duration": "1 h",
+    "closes": "21:00"
   }
 }
