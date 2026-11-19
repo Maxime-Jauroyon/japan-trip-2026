@@ -875,20 +875,71 @@
     "city": "kyoto",
     "ideas": [
       {
-        "title": "Forêt de bambous d’Arashiyama",
-        "lat": 35.0173,
-        "lng": 135.6722,
-        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde. À faire avant 11 h, avant le kimono.",
-        "goshuin": "possible",
-        "goshuinNote": "Au sanctuaire Nonomiya, tout près."
-      },
-      {
         "title": "Location de kimono d’homme / hakama (réservé à 11 h 15)",
         "lat": 35.0165,
         "lng": 135.6775,
         "desc": "Réservé pour vendredi 20 nov à 11 h 15 chez Rikawafuku Arashiyama (vérifier le nom du magasin et le plan dans l’e-mail de confirmation) ; arriver vers 11 h. Tenue masculine traditionnelle : kimono d’homme et hakama (haori à confirmer). À ~3 min à pied de la gare Hankyu Arashiyama (repère approximatif, le lien Maps cherche l’adresse). Dernière réception 15 h 30 ; rendu du kimono à 17 h 30 au plus tard (confirmé par Maxime). Mettez une couche thermique col V dessous (il fait ~6 °C le matin). L’après-midi, restez à Arashiyama en kimono (pont Togetsukyo, temples du coin) jusqu’au rendu.",
         "goshuin": "non",
         "mapsQuery": "Rikawafuku Arashiyama 京都市右京区嵯峨天龍寺造路町11-4"
+      },
+      {
+        "title": "Pont Togetsukyo",
+        "lat": 35.0129,
+        "lng": 135.6778,
+        "desc": "Le célèbre pont de bois sur la rivière Katsura, à quelques minutes de la boutique de kimono : accès libre, gratuit. À faire juste après avoir mis le kimono pour les photos.",
+        "goshuin": "non",
+        "mapsQuery": "渡月橋 京都市右京区"
+      },
+      {
+        "title": "Kimono Forest (Randen Arashiyama)",
+        "lat": 35.0153,
+        "lng": 135.6785,
+        "desc": "Allée de 600 poteaux de tissu kimono à la station Randen Arashiyama : accès libre, gratuit, très photogénique en kimono (illuminée le soir).",
+        "goshuin": "non",
+        "mapsQuery": "キモノフォレスト 嵐山 京都市右京区"
+      },
+      {
+        "title": "Tenryū-ji (jardin et temple)",
+        "lat": 35.0162,
+        "lng": 135.6729,
+        "desc": "Grand temple zen classé à l’UNESCO, avec son jardin d’étang et de collines : 8 h 30–17 h (jardin dès 7 h 30 du 14 au 30 nov., à confirmer), ~500 ¥ le jardin (halls en plus, ~300 ¥), dernière entrée ~16 h 50. Entrée par le sud, sortie par la porte nord directement dans la forêt de bambous.",
+        "goshuin": "oui",
+        "mapsQuery": "天龍寺 京都市右京区嵯峨天龍寺芒ノ馬場町68",
+        "goshuinNote": "Au bureau du temple, avant la fermeture."
+      },
+      {
+        "title": "Forêt de bambous d’Arashiyama",
+        "lat": 35.0173,
+        "lng": 135.6722,
+        "desc": "Couloir de bambous iconique, juste à la sortie nord de Tenryū-ji (accès libre 24 h, gratuit). Plus calme tôt le matin, mais très beau en kimono en milieu d’après-midi, avant que la lumière baisse (soleil couché vers 16 h 45).",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Nonomiya, tout près."
+      },
+      {
+        "title": "Nonomiya-jinja",
+        "lat": 35.0178,
+        "lng": 135.6742,
+        "desc": "Petit sanctuaire dans la forêt de bambous, lié à l’histoire du Dit du Genji : accès libre, juste après les bambous. Goshuin possible, non confirmé.",
+        "goshuin": "possible",
+        "mapsQuery": "野宮神社 京都市右京区嵯峨野宮町1",
+        "goshuinNote": "À demander au bureau du sanctuaire (non confirmé)."
+      },
+      {
+        "title": "Ōkōchi Sansō (villa et jardin)",
+        "lat": 35.0166,
+        "lng": 135.6696,
+        "desc": "Villa-jardin sur la colline derrière les bambous, avec vue sur Kyoto : 9 h–17 h, dernière entrée 16 h 30, ~1 000 ¥ avec matcha et pâtisserie inclus (à confirmer). Quelques escaliers : pause thé de l’après-midi.",
+        "goshuin": "non",
+        "mapsQuery": "大河内山荘庭園 京都市右京区嵯峨小倉山田淵山町8"
+      },
+      {
+        "title": "Jōjakkō-ji (temple des érables)",
+        "lat": 35.0197,
+        "lng": 135.6686,
+        "desc": "Temple sur la pente de l’Ogura, célèbre pour ses érables : environ 9 h–17 h (non confirmé), un peu de montée. Optionnel : à retirer si le temps manque, retour au magasin de kimono avant 17 h 30. Goshuin possible, non confirmé.",
+        "goshuin": "possible",
+        "mapsQuery": "常寂光寺 京都市右京区嵯峨小倉山小倉町3",
+        "goshuinNote": "À demander à l’accueil (non confirmé)."
       }
     ],
     "wake": {
