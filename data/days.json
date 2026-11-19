@@ -789,13 +789,6 @@
         "goshuinNote": "Au bureau du temple."
       },
       {
-        "title": "Cérémonie du thé",
-        "lat": 35,
-        "lng": 135.7805,
-        "desc": "Expérience matcha calme vers Higashiyama — gestes et pâtisseries de saison.",
-        "goshuin": "non"
-      },
-      {
         "title": "Pousse-pousse à Higashiyama et Gion (Ebisuya)",
         "lat": 34.9987,
         "lng": 135.781,
@@ -915,15 +908,16 @@
         "title": "Château Nijō",
         "lat": 35.0142,
         "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À finir avant 14 h : train Kintetsu à 14:55, être à la gare ~14 h 35.",
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier (dès 8 h 45), puis Maikoya, puis Nishiki : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
         "goshuin": "non"
       },
       {
-        "title": "Atelier wagashi",
-        "lat": 35.018,
-        "lng": 135.755,
-        "desc": "Façonner des pâtisseries japonaises à la main, puis matcha pour le vrai rituel de salon de thé. Réservation requise ; à placer entre Nijō et Nishiki, fini avant 14 h (train 14:55).",
-        "goshuin": "non"
+        "title": "Atelier wagashi + cérémonie du thé (Maikoya)",
+        "lat": 35.0046,
+        "lng": 135.7587,
+        "desc": "Fabrication de pâtisseries japonaises (wagashi) puis cérémonie du thé, ~90 min, en anglais, chez Maikoya (329 Ebiyachō, Nakagyō-ku, sur Nishiki-kōji, tout près du marché Nishiki). Réservation obligatoire en ligne : à faire ce soir pour le dimanche 22 nov, créneau de ~11 h pour finir avant 14 h (train 14:55, gare vers 14 h 35). Repère approximatif, le lien Maps cherche l’adresse.",
+        "goshuin": "non",
+        "mapsQuery": "MAIKOYA 京都市中京区海老屋町329"
       },
       {
         "title": "Marché Nishiki",

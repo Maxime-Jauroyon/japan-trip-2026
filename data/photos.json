@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "maikoya",
+      "slug": "wagashi"
+    },
+    {
       "match": "bsc gallery",
       "slug": "bsc-gallery"
     },

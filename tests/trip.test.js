@@ -118,7 +118,7 @@ test("phrases utiles adaptées à chaque lieu", async () => {
   const idea = (title) => DAYS.flatMap(ideasOf).find((a) => a.title === title);
   assert.equal(phraseContextForAct(idea("Universal Studios Japan")), "park");
   assert.equal(phraseContextForAct(idea("Marché Nishiki")), "market");
-  assert.equal(phraseContextForAct(idea("Cérémonie du thé")), "culture");
+  assert.equal(phraseContextForAct(idea("Atelier wagashi + cérémonie du thé (Maikoya)")), "culture");
   assert.equal(phraseContextForAct(idea("Fushimi Inari")), "temple");
   // Chaque lieu du voyage tombe sur un contexte qui existe
   DAYS.flatMap(ideasOf).forEach((a) => assert.ok(CONTEXT_PHRASES[phraseContextForAct(a)], a.title));
