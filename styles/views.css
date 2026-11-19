@@ -442,3 +442,6 @@
 .sv-notax { padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--gold); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
 .sv-detaxe li.off { opacity: .6; }
 .sv-detaxe li.off span:last-child { color: var(--muted); font-weight: 400; }
+.sv-total small { font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 6px; }
+.sv-refund { flex: 1 0 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); }
+.sv-refund input { width: 110px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); color: var(--cream); font: inherit; font-size: 15px; font-weight: 600; text-align: right; }

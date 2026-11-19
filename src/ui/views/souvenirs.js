@@ -36,9 +36,9 @@ function formHtml(personnes, st){
   </div>`;
 }
 
-function summaryHtml(items, personnes){
+function summaryHtml(items, personnes, refunds){
   const { franchiseEur: max } = SOUVENIRS;
-  const t = totalsByPerson(items, personnes);
+  const t = totalsByPerson(items, personnes, refunds);
   const cards = personnes.map((p) => {
     const eur = t[p].eur;
     const lv = level(eur, max);
@@ -50,20 +50,21 @@ function summaryHtml(items, personnes){
       : `<strong>${fmtEur(-left)}</strong> de trop : passe-les dans la valise de ${esc(other)}`;
     return `<div class="sv-card sv-${lv}">
       <div class="sv-name">${esc(p)} <span class="sv-badge">${LEVEL_TEXT[lv]}</span></div>
-      <div class="sv-total">${fmtEur(eur)}</div>
+      <div class="sv-total">${fmtEur(eur)}<small> à déclarer</small></div>
       <div class="sv-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${Math.round(eur)}" aria-label="Franchise de ${esc(p)}"><i style="width:${pct}%"></i></div>
       <div class="sv-left">${msg}</div>
+      ${t[p].refund > 0 ? `<div class="sv-sub">Achats ${fmtEur(t[p].gross)} · détaxe reçue −${fmtEur(t[p].refund)}</div>` : ""}
       <div class="sv-sub">${t[p].count} achat${t[p].count > 1 ? "s" : ""} porté${t[p].count > 1 ? "s" : ""}${t[p].away ? ` · ${t[p].away} dans la valise de ${esc(other)}` : ""}</div>
     </div>`;
   }).join("");
   const room = personnes.map((p) => `${esc(p)} peut encore porter <strong>${fmtEur(Math.max(0, remaining(t[p].eur, max)))}</strong>`).join(" · ");
-  return `<div class="sv-cards">${cards}</div><p class="sv-room">${room}</p>`;
+  return `<div class="sv-cards">${cards}</div><p class="sv-room">${room}</p><p class="sv-note">Valeur à déclarer = prix payé moins la détaxe reçue (à confirmer avec le simulateur de la douane ; gardez les factures).</p>`;
 }
 
-function detaxeHtml(items){
+function detaxeHtml(items, refunds){
   const g = detaxeByStore(items, SOUVENIRS.detaxeMinYen);
   if (!g.length) return `<p class="sv-empty">Indique le magasin d’un achat pour voir s’il atteint le minimum de détaxe (${fmtYen(SOUVENIRS.detaxeMinYen)} par magasin et par jour).</p>`;
-  return `<ul class="sv-detaxe">${g.map((x) => `<li class="${x.removed ? "off" : x.ok ? "ok" : ""}"><span><strong>${esc(x.store)}</strong> · ${esc(dayLabel(x.day))}</span><span>${x.removed ? "détaxe non faite" : `${fmtYen(x.yen)} · ${x.ok ? "détaxable ✓" : `il manque ${fmtYen(x.missing)}`}`}</span><button type="button" class="sv-notax" data-ids="${esc(x.ids.join(","))}" data-on="${x.removed ? "0" : "1"}">${x.removed ? "Rétablir" : "Retirer"}</button></li>`).join("")}</ul>
+  return `<ul class="sv-detaxe">${g.map((x) => `<li class="${x.removed ? "off" : x.ok ? "ok" : ""}"><span><strong>${esc(x.store)}</strong> · ${esc(dayLabel(x.day))}</span><span>${x.removed ? "détaxe non faite" : `${fmtYen(x.yen)} · ${x.ok ? "détaxable ✓" : `il manque ${fmtYen(x.missing)}`}`}</span><button type="button" class="sv-notax" data-ids="${esc(x.ids.join(","))}" data-on="${x.removed ? "0" : "1"}">${x.removed ? "Rétablir" : "Retirer"}</button>${x.removed ? "" : `<label class="sv-refund"><span>Remboursement reçu (¥)</span><input type="text" inputmode="numeric" data-refund="${esc(x.key)}" data-max="${Math.round(x.yen)}" value="${refunds[x.key] ? Math.min(refunds[x.key], Math.round(x.yen)) : ""}" placeholder="0" autocomplete="off" /></label>`}</li>`).join("")}</ul>
     <p class="sv-note">Indicatif (montant hors taxe, règles à confirmer en magasin). « Retirer » si le magasin n’a pas fait la démarche : les achats restent comptés dans la franchise. Détaxe à faire à la douane de Haneda avant l’embarquement, achats non utilisés + reçus + passeports.</p>`;
 }
 
@@ -88,8 +89,8 @@ function listHtml(items, personnes){
 function refresh(root){
   const st = loadSouvenirs();
   const { personnes } = SOUVENIRS;
-  root.querySelector("#sv-summary").innerHTML = summaryHtml(st.items, personnes);
-  root.querySelector("#sv-detaxe").innerHTML = detaxeHtml(st.items);
+  root.querySelector("#sv-summary").innerHTML = summaryHtml(st.items, personnes, st.refunds);
+  root.querySelector("#sv-detaxe").innerHTML = detaxeHtml(st.items, st.refunds);
   root.querySelector("#sv-list").innerHTML = listHtml(st.items, personnes);
 }
 
@@ -129,6 +130,17 @@ function bind(root){
     }
   });
   root.querySelector("#sv-value").addEventListener("input", () => updateHint(root));
+  root.addEventListener("change", (e) => {
+    const inp = e.target.closest("[data-refund]");
+    if (!inp) return;
+    const n = parseAmount(inp.value);
+    const max = Number(inp.dataset.max) || 0;
+    const refunds = { ...loadSouvenirs().refunds };
+    if (n == null || n <= 0) delete refunds[inp.dataset.refund];
+    else refunds[inp.dataset.refund] = Math.min(Math.round(n), max);
+    saveSouvenirs({ refunds });
+    refresh(root);
+  });
   root.querySelector(".sv-form").addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.tagName === "INPUT") add(root); });
 }
 
