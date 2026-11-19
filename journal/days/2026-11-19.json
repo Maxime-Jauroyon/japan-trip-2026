@@ -71,6 +71,15 @@
    "doneAt": 1795071712314,
    "by": "Maxime",
    "at": 1795071712314
+  },
+  "p:bsc-gallery-kyoto-sukajan": {
+   "id": "p:bsc-gallery-kyoto-sukajan",
+   "kind": "planned",
+   "title": "BSC Gallery Kyoto (sukajan)",
+   "status": "done",
+   "doneAt": 1795077353855,
+   "by": "Maxime",
+   "at": 1795077353855
   }
  }
 }
