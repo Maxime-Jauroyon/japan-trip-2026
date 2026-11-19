@@ -846,6 +846,14 @@
         "desc": "Grande boutique spécialisée de sukajan (blousons brodés), ~1 000 modèles, au 430-2 Sakuranochō, coin de la rue Rokkaku dans la galerie Teramachi, à ~10 min à pied de l’hôtel. Ouverte tous les jours, sans jour de fermeture : 11 h–21 h d’après sa page Facebook officielle, 11 h–20 h 30 d’après Tripadvisor (retenez 20 h 30). À faire en fin de journée (jusqu’à 20 h 30), dernier arrêt avant l’hôtel, après Dept Tow ; Nishiki et Teramachi sont collés. Bon sukajan dès ~13 000 ¥ ; essayez, vérifiez la broderie, demandez la détaxe (hors taxe, passeports). Téléphone 075-212-3717 pour confirmer. L’achat compte dans la franchise de 430 € du porteur (Sur place › Souvenirs).",
         "goshuin": "non",
         "mapsQuery": "B.S.C.Gallery 京都 京都市中京区桜之町430-2"
+      },
+      {
+        "title": "UNIQLO Kyoto (sous-vêtement thermique col V)",
+        "lat": 35.0098,
+        "lng": 135.7703,
+        "desc": "Acheter un HEATTECH col en V, manches longues (homme) à mettre sous le kimono demain. Nouveau magasin amiral UNIQLO Kyoto (B1–3F mina Kyoto, 58 Daikokuchō), sur Kawaramachi-dōri, à ~600 m au nord de Dept Tow et BSC ; ouvert 11 h–21 h. Détaxe possible (minimum 5 500 ¥ + passeport). Prix et stock non confirmés. L’achat compte dans la franchise de 430 € du porteur. Repère approximatif, le lien Maps cherche l’adresse.",
+        "goshuin": "non",
+        "mapsQuery": "ユニクロ 京都 mina京都 京都市中京区大黒町58"
       }
     ],
     "reminders": [
@@ -870,15 +878,15 @@
         "title": "Forêt de bambous d’Arashiyama",
         "lat": 35.0173,
         "lng": 135.6722,
-        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde.",
+        "desc": "Couloir de bambous iconique à l’ouest. Y aller tôt pour la lumière et moins de monde. À faire avant 11 h, avant le kimono.",
         "goshuin": "possible",
         "goshuinNote": "Au sanctuaire Nonomiya, tout près."
       },
       {
-        "title": "Location de kimono d’homme / hakama (Rikawafuku Arashiyama)",
+        "title": "Location de kimono d’homme / hakama (réservé à 11 h 15)",
         "lat": 35.0165,
         "lng": 135.6775,
-        "desc": "Tenue masculine traditionnelle : kimono d’homme et hakama (haori à confirmer), à ~3 min à pied de la gare Hankyu Arashiyama (repère approximatif, le lien Maps cherche l’adresse). Réservation en ligne obligatoire à l’avance : en novembre, la boutique ne loue pas le jour même en période d’affluence. Dernière réception 15 h 30, rendu avant 17 h–17 h 30, soleil couché vers 16 h 45 : à faire tôt. Prix à confirmer sur la page (sources de ~1 980 à 3 500 ¥ et plus).",
+        "desc": "Réservé pour vendredi 20 nov à 11 h 15 chez Rikawafuku Arashiyama (vérifier le nom du magasin et le plan dans l’e-mail de confirmation) ; arriver vers 11 h. Tenue masculine traditionnelle : kimono d’homme et hakama (haori à confirmer). À ~3 min à pied de la gare Hankyu Arashiyama (repère approximatif, le lien Maps cherche l’adresse). Dernière réception 15 h 30 ; heure de rendu à confirmer. Mettez une couche thermique col V dessous (il fait ~6 °C le matin).",
         "goshuin": "non",
         "mapsQuery": "Rikawafuku Arashiyama 京都市右京区嵯峨天龍寺造路町11-4"
       },
@@ -893,7 +901,7 @@
     ],
     "wake": {
       "time": "08:00",
-      "why": "Journée libre"
+      "why": "Journée libre · kimono réservé à 11 h 15"
     },
     "ordreFixe": true
   },

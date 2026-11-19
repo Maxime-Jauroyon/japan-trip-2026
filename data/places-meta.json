@@ -398,5 +398,10 @@
     "hours": "10h–17h",
     "duration": "30 min",
     "closes": "17:00"
+  },
+  "uniqlo-kyoto": {
+    "hours": "11h–21h",
+    "duration": "30 min",
+    "closes": "21:00"
   }
 }
