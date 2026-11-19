@@ -1,31 +1,6 @@
 {
   "checks": [
     {
-      "id": "tea-wagashi-reservation",
-      "label": "Réserver ce soir : atelier wagashi + cérémonie du thé (Maikoya, dim. 22 nov, ~11 h)",
-      "meta": "Tout est complet aujourd’hui à Gion : reporté au dimanche 22 nov, centre-ville, près de Nijō et Nishiki · ~90 min, en anglais · réservation en ligne obligatoire · finir avant 14 h (train 14:55) · vérifier la disponibilité avant de payer",
-      "remindFrom": "2026-11-19",
-      "done": false,
-      "links": [
-        {
-          "label": "Maikoya — wagashi + cérémonie du thé (Nishiki)",
-          "url": "https://mai-ko.com/tour/japanese-sweets-making-and-tea-ceremony-in-kyoto/"
-        },
-        {
-          "label": "Maikoya — cérémonie du thé (Nishiki, toutes les heures 9 h–19 h)",
-          "url": "https://mai-ko.com/what-to-do-in-japan/kyoto/tea-ceremony-kyoto/"
-        },
-        {
-          "label": "Maikoya — cérémonie du thé (Karasuma-Shijō, près de l’hôtel)",
-          "url": "https://mai-ko.com/what-to-do-in-japan/kyoto/tea-ceremony-kyoto-shijo/"
-        },
-        {
-          "label": "GetYourGuide — wagashi + cérémonie du thé (près de Kiyomizu-dera, 45 min)",
-          "url": "https://www.getyourguide.com/kyoto-l96826/wagashi-making-class-and-tea-ceremony-in-kyoto-t1210255/"
-        }
-      ]
-    },
-    {
       "id": "kintetsu-eticket",
       "label": "Kintetsu : retrouver les mails des 2 e-tickets et tester l’affichage",
       "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
