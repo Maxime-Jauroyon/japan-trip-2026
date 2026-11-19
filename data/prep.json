@@ -2,8 +2,8 @@
   "checks": [
     {
       "id": "rickshaw-reservation",
-      "label": "Pousse-pousse de Kyoto : réserver (conseillé en automne) ou monter sur place (Higashiyama jeu. 19 nov, Arashiyama ven. 20 nov)",
-      "meta": "Ebisuya : on peut aussi monter sans réservation au stand (9 h 30 – coucher du soleil), mais les places partent vite en saison d’automne · deux sites séparés (Higashiyama : coin Ichinenzaka / Nene no Michi ; Arashiyama : bout nord du pont Togetsukyo) · annulation gratuite plus de 24 h avant",
+      "label": "Pousse-pousse de Kyoto : monter sur place, sans réservation (Higashiyama jeu. 19 nov, Arashiyama ven. 20 nov)",
+      "meta": "Ebisuya : le stand prend sans réservation de 9 h 30 au coucher du soleil, mais les places partent vite en automne : y aller tôt · deux sites séparés (Higashiyama : coin Ichinenzaka / Nene no Michi ; Arashiyama : bout nord du pont Togetsukyo)",
       "remindFrom": "2026-11-16",
       "done": false,
       "links": [
@@ -14,6 +14,31 @@
         {
           "label": "Ebisuya — Kyoto Arashiyama",
           "url": "https://www.ebisuya.com/en/branch/arashiyama"
+        }
+      ]
+    },
+    {
+      "id": "tea-wagashi-reservation",
+      "label": "Réserver ce soir : atelier wagashi + cérémonie du thé (Maikoya, dim. 22 nov, ~11 h)",
+      "meta": "Tout est complet aujourd’hui à Gion : reporté au dimanche 22 nov, centre-ville, près de Nijō et Nishiki · ~90 min, en anglais · réservation en ligne obligatoire · finir avant 14 h (train 14:55) · vérifier la disponibilité avant de payer",
+      "remindFrom": "2026-11-19",
+      "done": false,
+      "links": [
+        {
+          "label": "Maikoya — wagashi + cérémonie du thé (Nishiki)",
+          "url": "https://mai-ko.com/tour/japanese-sweets-making-and-tea-ceremony-in-kyoto/"
+        },
+        {
+          "label": "Maikoya — cérémonie du thé (Nishiki, toutes les heures 9 h–19 h)",
+          "url": "https://mai-ko.com/what-to-do-in-japan/kyoto/tea-ceremony-kyoto/"
+        },
+        {
+          "label": "Maikoya — cérémonie du thé (Karasuma-Shijō, près de l’hôtel)",
+          "url": "https://mai-ko.com/what-to-do-in-japan/kyoto/tea-ceremony-kyoto-shijo/"
+        },
+        {
+          "label": "GetYourGuide — wagashi + cérémonie du thé (près de Kiyomizu-dera, 45 min)",
+          "url": "https://www.getyourguide.com/kyoto-l96826/wagashi-making-class-and-tea-ceremony-in-kyoto-t1210255/"
         }
       ]
     },
