@@ -972,11 +972,12 @@
         "mapsQuery": "東寺 京都市南区九条町1"
       },
       {
-        "title": "Château Nijō",
-        "lat": 35.0142,
-        "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. Ouvert dès 8 h 45, dernière entrée vers 16 h (à confirmer) : y être entre 13 h et 14 h 30, après Tō-ji.",
-        "goshuin": "non"
+        "title": "Toei Kyoto Studio Park",
+        "lat": 35.0165,
+        "lng": 135.7082,
+        "desc": "Parc à thème et studio de films de samouraïs à Uzumasa, à l’ouest de Kyoto : décors d’époque Edo, spectacles de ninjas et de samouraïs, costumes à louer. ~2 800 ¥ ; ouvert en gros 9 h–17 h, dernière entrée environ 1 h avant la fermeture (horaires de novembre 2026 non confirmés : vérifier le site officiel avant d’y aller). Compter 2 à 3 h ; depuis Tō-ji ou la gare de Kyoto, ~30 min en JR puis à pied. Si le parc ferme trop tôt, passer directement à Kyoto Tower.",
+        "goshuin": "non",
+        "mapsQuery": "東映太秦映画村 京都市右京区太秦東蜂岡町10"
       },
       {
         "title": "Kyoto Tower (Nidec Kyoto Tower)",
@@ -985,6 +986,22 @@
         "desc": "Plateforme d’observation de la tour de Kyoto, en face de la gare : ouverte 10 h–21 h, dernière entrée 20 h 30. Adulte 900 ¥, probablement 1 000 ¥ depuis le 1er oct. 2026 d’après une source (à confirmer). À faire en fin d’après-midi pour le coucher du soleil (~16 h 45) et la ville de nuit.",
         "goshuin": "non",
         "mapsQuery": "京都タワー 京都市下京区烏丸通七条下る東塩小路町721-1"
+      },
+      {
+        "title": "Pokémon Center Kyoto (SUINA Muromachi)",
+        "lat": 35.004,
+        "lng": 135.7572,
+        "desc": "Pokémon Center de Kyoto au 2e étage de SUINA Muromachi (78 Kankobokochō), à moins d’1 km de l’hôtel : produits exclusifs de Kyoto. Ouvert 10 h–20 h tous les jours (à confirmer) : y être avant 19 h 30. Repère approximatif, le lien Maps cherche l’adresse.",
+        "goshuin": "non",
+        "mapsQuery": "ポケモンセンターキョウト SUINA室町 京都市下京区"
+      },
+      {
+        "title": "Game centers de Shinkyōgoku (soirée)",
+        "lat": 35.005,
+        "lng": 135.769,
+        "desc": "Les galeries couvertes de Shinkyōgoku et leurs game centers (pinces, rythme, arcade, purikura), ouverts tard, à ~10 min à pied de l’hôtel : idéal pour finir la soirée après le Pokémon Center. Gardez des pièces de 100 ¥ (voir le changeur de monnaie des game centers).",
+        "goshuin": "non",
+        "mapsQuery": "新京極商店街 京都市中京区"
       }
     ],
     "wake": {
@@ -1000,6 +1017,13 @@
     "city": "kyoto",
     "extraCity": "nara",
     "ideas": [
+      {
+        "title": "Château Nijō",
+        "lat": 35.0142,
+        "lng": 135.7482,
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier dimanche (dès 8 h 45), puis Maikoya, puis Nishiki : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
+        "goshuin": "non"
+      },
       {
         "title": "Atelier wagashi + cérémonie du thé (Maikoya)",
         "lat": 35.0046,

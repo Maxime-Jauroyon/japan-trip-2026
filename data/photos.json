@@ -1,6 +1,14 @@
 {
   "rules": [
     {
+      "match": "toei|studio park",
+      "slug": "toei-studio"
+    },
+    {
+      "match": "pokémon center kyoto|pokemon center kyoto",
+      "slug": "pokemon-kyoto"
+    },
+    {
       "match": "kyoto tower|nidec",
       "slug": "kyoto-tower"
     },
@@ -2521,6 +2529,52 @@
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg"
+      }
+    ],
+    "toei-studio": [
+      {
+        "file": "nijo.jpg",
+        "author": "Wikimedia Commons",
+        "license": "Public domain",
+        "licenseUrl": "",
+        "source": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
+      },
+      {
+        "file": "nijo-2.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ninomaru_Palace,_November_2016.jpg"
+      },
+      {
+        "file": "nijo-3.jpg",
+        "author": "Reggaeman",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nijo_Castle_Ninomaru_03.JPG"
+      }
+    ],
+    "pokemon-kyoto": [
+      {
+        "file": "shibuya.jpg",
+        "author": "Yoshikazu TAKADA",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shibuya_Scramble_Crossing_(31000739560).jpg"
+      },
+      {
+        "file": "shibuya-2.jpg",
+        "author": "Benh LIEU SONG (Flickr)",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg"
+      },
+      {
+        "file": "shibuya-3.jpg",
+        "author": "Real Estate Japan",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shibuya_scramble_square_sky_view_of_crossing_(48995414042).jpg"
       }
     ]
   }

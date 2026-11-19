@@ -440,5 +440,15 @@
     "hours": "10h–21h (dernière entrée 20h30)",
     "duration": "1 h",
     "closes": "21:00"
+  },
+  "toei-studio": {
+    "hours": "~9h–17h (à confirmer), dernière entrée ~1 h avant",
+    "duration": "2–3 h",
+    "closes": "17:00"
+  },
+  "pokemon-kyoto": {
+    "hours": "Tous les jours 10h–20h",
+    "duration": "45 min",
+    "closes": "20:00"
   }
 }
