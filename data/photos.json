@@ -145,6 +145,14 @@
       "slug": "ryozen-kannon"
     },
     {
+      "match": "bambouseraie",
+      "slug": "kodaiji-bambou"
+    },
+    {
+      "match": "kōdai|kodai",
+      "slug": "kodaiji"
+    },
+    {
       "match": "higashiyama|gion",
       "slug": "kiyomizu"
     },
@@ -2204,6 +2212,52 @@
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg"
+      }
+    ],
+    "kodaiji": [
+      {
+        "file": "kiyomizu.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
+      },
+      {
+        "file": "kiyomizu-2.jpg",
+        "author": "Jordy Meow",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
+      },
+      {
+        "file": "kiyomizu-3.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg"
+      }
+    ],
+    "kodaiji-bambou": [
+      {
+        "file": "arashiyama.jpg",
+        "author": "Naokijp",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2021_Sagano_Bamboo_forest_in_Arashiyama,_Kyoto,_Japan.jpg"
+      },
+      {
+        "file": "arashiyama-2.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Arashiyama,_Part_II_-_Arashiyama7534.jpg"
+      },
+      {
+        "file": "arashiyama-3.jpg",
+        "author": "Strangeeye 294",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove_(215912603).jpeg"
       }
     ]
   }
