@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "kimono",
+      "slug": "kimono-arashiyama"
+    },
+    {
       "match": "maikoya",
       "slug": "wagashi"
     },
@@ -2150,6 +2154,29 @@
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      }
+    ],
+    "kimono-arashiyama": [
+      {
+        "file": "arashiyama.jpg",
+        "author": "Naokijp",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2021_Sagano_Bamboo_forest_in_Arashiyama,_Kyoto,_Japan.jpg"
+      },
+      {
+        "file": "arashiyama-2.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Arashiyama,_Part_II_-_Arashiyama7534.jpg"
+      },
+      {
+        "file": "arashiyama-3.jpg",
+        "author": "Strangeeye 294",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove_(215912603).jpeg"
       }
     ]
   }

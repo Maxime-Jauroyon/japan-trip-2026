@@ -43,6 +43,19 @@
       ]
     },
     {
+      "id": "kimono-arashiyama",
+      "label": "Réserver le kimono d’Arashiyama (ven. 20 nov)",
+      "meta": "Rikawafuku Arashiyama : réservation en ligne uniquement, même jour possible, annulation gratuite plus de 24 h avant · dès ~3 000 ¥ · dernière réception 15 h 30, rendu avant 17 h–17 h 30 · prévoir un créneau tôt le matin avant le pousse-pousse",
+      "remindFrom": "2026-11-19",
+      "done": false,
+      "links": [
+        {
+          "label": "Rikawafuku — Arashiyama",
+          "url": "https://ewha-yifu.com/en/shops/kyoto-area/arashiyama"
+        }
+      ]
+    },
+    {
       "id": "kintetsu-eticket",
       "label": "Kintetsu : retrouver les mails des 2 e-tickets et tester l’affichage",
       "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
