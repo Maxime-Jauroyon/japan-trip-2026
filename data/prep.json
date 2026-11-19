@@ -59,6 +59,23 @@
       "meta": "Jour 22 · dim. 29 nov · vol HND 09:05 · passeports + achats non utilisés + reçus, au comptoir de la douane avant le contrôle de sécurité",
       "remindFrom": "2026-11-28",
       "done": false
+    },
+    {
+      "id": "douane-retour-france",
+      "label": "Douane au retour en France : garder les reçus et déclarer ce qui dépasse 430 € par personne",
+      "meta": "Franchise de 430 € par voyageur de plus de 15 ans arrivant par avion (hors alcool et tabac) · au-dessus du seuil : droits de douane + TVA, d’après les sources sur la totalité de la valeur (forfait de 2,5 % possible jusqu’à 700 € HT, à confirmer avec le simulateur de la douane) · couloir rouge à CDG · le seuil est individuel : seul compte ce que chacun rapporte (suivi dans Sur place › Souvenirs) · garder tous les reçus",
+      "remindFrom": "2026-11-28",
+      "done": false,
+      "links": [
+        {
+          "label": "Bercy — achats à l’étranger, limites et taxes",
+          "url": "https://www.economie.gouv.fr/particuliers/voyager-et-se-deplacer/achats-letranger-quelles-limitations-et-quelles-taxes-douanieres"
+        },
+        {
+          "label": "Douane — achats rapportés de l’étranger, que déclarer",
+          "url": "https://www.douane.gouv.fr/actualites/achats-et-cadeaux-rapportes-de-letranger-que-faut-il-declarer"
+        }
+      ]
     }
   ],
   "budget": [
