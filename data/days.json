@@ -1036,7 +1036,7 @@
         "title": "Samurai Ninja Museum Kyoto (expérience samouraï)",
         "lat": 35.0048,
         "lng": 135.7668,
-        "desc": "Musée interactif sur Teramachi, à ~200 m de BSC Gallery : visite guidée d’environ 1 h en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï). Dernières annonces : 11 h–18 h, dernier départ ~17 h, ~3 000 ¥ adulte (sources de 2 400 à 3 500 ¥) ; réservation en ligne fortement conseillée. Repère issu d’OpenStreetMap, adresse à confirmer (les listings divergent). À prendre dimanche après l’atelier Maikoya, et finir avant 14 h (train 14:55, gare vers 14 h 35).",
+        "desc": "Musée interactif sur Teramachi, à ~200 m de BSC Gallery : visite guidée d’environ 1 h en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï). Dernières annonces : 11 h–18 h, dernier départ ~17 h, ~3 000 ¥ adulte (sources de 2 400 à 3 500 ¥) ; billets pris sur place (la réservation en ligne est possible mais pas nécessaire d’après Maxime). Repère issu d’OpenStreetMap, adresse à confirmer (les listings divergent). À prendre dimanche après l’atelier Maikoya, et finir avant 14 h (train 14:55, gare vers 14 h 35).",
         "goshuin": "non",
         "mapsQuery": "京都サムライ忍者体験ミュージアム 京都市中京区寺町通"
       }
@@ -1198,7 +1198,7 @@
         "title": "Godzilla -0.0 en 4D (TOHO Cinemas Namba)",
         "lat": 34.6657,
         "lng": 135.5009,
-        "desc": "Séance de 18 h en 4D (MX4D d’après le cinéma, ce n’est pas du 4DX) au TOHO Cinemas Namba, en plein centre de Namba. Film en japonais : je n’ai trouvé aucune séance sous-titrée en anglais. Durée à confirmer. Réservez vos places en ligne sur le site de TOHO Cinemas. Autres séances le 25 nov : 4D à 15 h ou 21 h, IMAX 11 h 30 et 14 h 30–17 h. Horaires publiés jusqu’au 25 nov seulement, à reconfirmer.",
+        "desc": "Séance de 18 h en 4D (MX4D d’après le cinéma, ce n’est pas du 4DX) au TOHO Cinemas Namba, en plein centre de Namba. Film en japonais : je n’ai trouvé aucune séance sous-titrée en anglais. Durée à confirmer. Places à prendre sur place au guichet ou à une borne ; pour être sûr d’avoir la séance de 18 h, arrivez en avance (réserver les sièges en ligne sur le site de TOHO est facultatif). Autres séances le 25 nov : 4D à 15 h ou 21 h, IMAX 11 h 30 et 14 h 30–17 h. Horaires publiés jusqu’au 25 nov seulement, à reconfirmer.",
         "goshuin": "non",
         "mapsQuery": "TOHOシネマズなんば"
       },
