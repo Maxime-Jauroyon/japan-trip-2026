@@ -393,5 +393,10 @@
     "hours": "Dans le temple, entrées jusqu’à ~17h",
     "duration": "15–20 min",
     "closes": "17:00"
+  },
+  "entokuin": {
+    "hours": "10h–17h",
+    "duration": "30 min",
+    "closes": "17:00"
   }
 }
