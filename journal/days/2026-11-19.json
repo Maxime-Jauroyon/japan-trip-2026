@@ -44,6 +44,15 @@
    "doneAt": 1795063358546,
    "by": "Maxime",
    "at": 1795063358546
+  },
+  "p:sanctuaire-yasaka": {
+   "id": "p:sanctuaire-yasaka",
+   "kind": "planned",
+   "title": "Sanctuaire Yasaka",
+   "status": "done",
+   "doneAt": 1795064757835,
+   "by": "Maxime",
+   "at": 1795064757835
   }
  }
 }
