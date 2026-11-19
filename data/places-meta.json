@@ -450,5 +450,10 @@
     "hours": "Tous les jours 10h–20h",
     "duration": "45 min",
     "closes": "20:00"
+  },
+  "samurai-ninja": {
+    "hours": "~11h–18h (dernier départ ~17h), à confirmer",
+    "duration": "1 h",
+    "closes": "18:00"
   }
 }
