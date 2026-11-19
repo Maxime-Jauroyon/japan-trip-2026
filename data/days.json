@@ -1187,6 +1187,14 @@
         "goshuin": "non"
       },
       {
+        "title": "Godzilla -0.0 en 4D (TOHO Cinemas Namba)",
+        "lat": 34.6657,
+        "lng": 135.5009,
+        "desc": "Séance de 18 h en 4D (MX4D d’après le cinéma, ce n’est pas du 4DX) au TOHO Cinemas Namba, en plein centre de Namba. Film en japonais : je n’ai trouvé aucune séance sous-titrée en anglais. Durée à confirmer. Réservez vos places en ligne sur le site de TOHO Cinemas. Autres séances le 25 nov : 4D à 15 h ou 21 h, IMAX 11 h 30 et 14 h 30–17 h. Horaires publiés jusqu’au 25 nov seulement, à reconfirmer.",
+        "goshuin": "non",
+        "mapsQuery": "TOHOシネマズなんば"
+      },
+      {
         "title": "Dotonbori",
         "phrases": "restaurant",
         "lat": 34.6687,
@@ -1199,7 +1207,7 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFermeture": true
+    "ordreFixe": true
   },
   {
     "n": 19,
