@@ -8,6 +8,24 @@
    "doneAt": 1795055555102,
    "by": "Maxime",
    "at": 1795055555102
+  },
+  "p:ryozen-kannon-higashiyama": {
+   "id": "p:ryozen-kannon-higashiyama",
+   "kind": "planned",
+   "title": "Ryōzen Kannon (Higashiyama)",
+   "status": "done",
+   "doneAt": 1795061534873,
+   "by": "Maxime",
+   "at": 1795061534873
+  },
+  "p:kodai-ji-higashiyama": {
+   "id": "p:kodai-ji-higashiyama",
+   "kind": "planned",
+   "title": "Kōdai-ji (Higashiyama)",
+   "status": "done",
+   "doneAt": 1795061536223,
+   "by": "Maxime",
+   "at": 1795061536223
   }
  }
 }
