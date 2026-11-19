@@ -781,35 +781,12 @@
     "city": "kyoto",
     "ideas": [
       {
-        "title": "BSC Gallery Kyoto (sukajan)",
-        "lat": 35.0063,
-        "lng": 135.7667,
-        "desc": "Grande boutique spécialisée de sukajan (blousons brodés), ~1 000 modèles, au 430-2 Sakuranochō, coin de la rue Rokkaku dans la galerie Teramachi, à ~10 min à pied de l’hôtel. Ouverte tous les jours, sans jour de fermeture : 11 h–21 h d’après sa page Facebook officielle, 11 h–20 h 30 d’après Tripadvisor (retenez 20 h 30). À faire dès l’ouverture à 11 h, en premier depuis l’hôtel ; puis déjeuner dans le quartier (Nishiki et Teramachi sont collés) avant Dept Tow. Bon sukajan dès ~13 000 ¥ ; essayez, vérifiez la broderie, demandez la détaxe (hors taxe, passeports). Téléphone 075-212-3717 pour confirmer. L’achat compte dans la franchise de 430 € du porteur (Sur place › Souvenirs).",
-        "goshuin": "non",
-        "mapsQuery": "B.S.C.Gallery 京都 京都市中京区桜之町430-2"
-      },
-      {
-        "title": "Kyoto Sukajan Dept Tow (sukajan)",
-        "lat": 35.0042,
-        "lng": 135.77,
-        "desc": "Boutique 100 % sukajan au 2e étage du Taniguchi Bldg (171-1 Kashiwaya-chō, Shijō, près du pont Shijō et de Kawaramachi), 300+ articles, détaxe annoncée pour visiteurs éligibles : seconde adresse pour comparer avec BSC Gallery. Ouverte tous les jours, mais **pas avant 13 h** (jusqu’à 21 h ou 21 h 30 selon les listings) : à faire après BSC Gallery et un déjeuner, vers 13 h. Repère approximatif, le lien Maps cherche le nom et l’adresse ; horaires à confirmer sur Instagram @tow_kyoto. L’achat compte dans la franchise de 430 € du porteur.",
-        "goshuin": "non",
-        "mapsQuery": "Kyoto Sukajan Dept Tow 京都市中京区柏屋町171-1 谷口ビル2F"
-      },
-      {
-        "title": "Sanctuaire Yasaka",
-        "lat": 35.0036,
-        "lng": 135.7786,
-        "desc": "Sanctuaire vermillon au bord de Gion, vivant au crépuscule quand les lanternes s’allument. Depuis Dept Tow, ~15 min à pied vers l’est ; ensuite pousse-pousse à Ichinenzaka.",
+        "title": "Kiyomizu-dera",
+        "lat": 34.9949,
+        "lng": 135.785,
+        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville. À faire tôt le matin, avant la foule (ouvert dès ~6 h, fermeture vers 18 h).",
         "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire."
-      },
-      {
-        "title": "Pousse-pousse à Higashiyama et Gion (Ebisuya)",
-        "lat": 34.9987,
-        "lng": 135.781,
-        "desc": "Balade de 30 min en pousse-pousse entre Ninenzaka, Sannenzaka et Gion, avec un coureur qui raconte le quartier. Stand au coin d’Ichinenzaka et de Nene no Michi, près du parc de Kōdai-ji, ouvert de 9 h 30 au coucher du soleil. On peut monter sans réservation, mais en saison des feuillages d’automne la réservation est conseillée (ebisuya.com). Prix indicatif ~65–130 $ la course selon la formule ; supplément de 1 000 ¥ pour partir ailleurs que du stand ou pour un guide en anglais.",
-        "goshuin": "non"
+        "goshuinNote": "Au bureau du temple."
       },
       {
         "title": "Cérémonie du thé",
@@ -819,23 +796,46 @@
         "goshuin": "non"
       },
       {
-        "title": "Kiyomizu-dera",
-        "lat": 34.9949,
-        "lng": 135.785,
-        "desc": "Temple en falaise avec scène en bois surplombant les érables et la ville. À faire en fin d’après-midi (fermeture vers 18 h).",
+        "title": "Pousse-pousse à Higashiyama et Gion (Ebisuya)",
+        "lat": 34.9987,
+        "lng": 135.781,
+        "desc": "Balade de 30 min en pousse-pousse entre Ninenzaka, Sannenzaka et Gion, avec un coureur qui raconte le quartier. Stand au coin d’Ichinenzaka et de Nene no Michi, près du parc de Kōdai-ji, ouvert de 9 h 30 au coucher du soleil. On peut monter sans réservation, mais en saison des feuillages d’automne la réservation est conseillée (ebisuya.com). Prix indicatif ~65–130 $ la course selon la formule ; supplément de 1 000 ¥ pour partir ailleurs que du stand ou pour un guide en anglais.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Sanctuaire Yasaka",
+        "lat": 35.0036,
+        "lng": 135.7786,
+        "desc": "Sanctuaire vermillon au bord de Gion, vivant au crépuscule quand les lanternes s’allument. Ensuite Dept Tow puis BSC Gallery, à pied vers l’ouest (~15 min).",
         "goshuin": "oui",
-        "goshuinNote": "Au bureau du temple."
+        "goshuinNote": "Au bureau du sanctuaire."
+      },
+      {
+        "title": "Kyoto Sukajan Dept Tow (sukajan)",
+        "lat": 35.0042,
+        "lng": 135.77,
+        "desc": "Boutique 100 % sukajan au 2e étage du Taniguchi Bldg (171-1 Kashiwaya-chō, Shijō, près du pont Shijō et de Kawaramachi), 300+ articles, détaxe annoncée pour visiteurs éligibles : seconde adresse pour comparer avec BSC Gallery. Ouverte tous les jours, mais **pas avant 13 h** (jusqu’à 21 h ou 21 h 30 selon les listings) : à faire en venant de Yasaka (ouvre à 13 h), avant BSC Gallery. Repère approximatif, le lien Maps cherche le nom et l’adresse ; horaires à confirmer sur Instagram @tow_kyoto. L’achat compte dans la franchise de 430 € du porteur.",
+        "goshuin": "non",
+        "mapsQuery": "Kyoto Sukajan Dept Tow 京都市中京区柏屋町171-1 谷口ビル2F"
+      },
+      {
+        "title": "BSC Gallery Kyoto (sukajan)",
+        "lat": 35.0063,
+        "lng": 135.7667,
+        "desc": "Grande boutique spécialisée de sukajan (blousons brodés), ~1 000 modèles, au 430-2 Sakuranochō, coin de la rue Rokkaku dans la galerie Teramachi, à ~10 min à pied de l’hôtel. Ouverte tous les jours, sans jour de fermeture : 11 h–21 h d’après sa page Facebook officielle, 11 h–20 h 30 d’après Tripadvisor (retenez 20 h 30). À faire en fin de journée (jusqu’à 20 h 30), dernier arrêt avant l’hôtel, après Dept Tow ; Nishiki et Teramachi sont collés. Bon sukajan dès ~13 000 ¥ ; essayez, vérifiez la broderie, demandez la détaxe (hors taxe, passeports). Téléphone 075-212-3717 pour confirmer. L’achat compte dans la franchise de 430 € du porteur (Sur place › Souvenirs).",
+        "goshuin": "non",
+        "mapsQuery": "B.S.C.Gallery 京都 京都市中京区桜之町430-2"
       }
     ],
     "reminders": [
       {
-        "title": "Sukajan : BSC Gallery à 11 h, puis Dept Tow à 13 h",
-        "desc": "Dans l’ordre depuis l’hôtel : BSC Gallery d’abord (ouvre à 11 h, 075-212-3717), déjeuner vers Teramachi / Nishiki, puis Dept Tow (n’ouvre qu’à 13 h), puis Higashiyama. L’achat compte dans la franchise de 430 € du porteur (Sur place › Souvenirs)."
+        "title": "Sukajan en fin de journée : Dept Tow puis BSC Gallery",
+        "desc": "Sur le chemin du retour vers l’hôtel : Dept Tow (ouvre à 13 h, jusqu’à 21 h) puis BSC Gallery (jusqu’à 20 h 30, 075-212-3717). L’achat compte dans la franchise de 430 € du porteur (Sur place › Souvenirs)."
       }
     ],
     "wake": {
       "time": "08:00",
-      "why": "Journée libre · BSC Gallery ouvre à 11 h"
+      "why": "Journée libre · Kiyomizu-dera tôt, sukajan en fin de journée"
     },
     "ordreFixe": true
   },
