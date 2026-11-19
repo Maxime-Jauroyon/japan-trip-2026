@@ -789,13 +789,6 @@
         "goshuinNote": "Au bureau du temple."
       },
       {
-        "title": "Pousse-pousse à Higashiyama et Gion (Ebisuya)",
-        "lat": 34.9987,
-        "lng": 135.781,
-        "desc": "Balade de 30 min en pousse-pousse entre Ninenzaka, Sannenzaka et Gion, avec un coureur qui raconte le quartier. Stand au coin d’Ichinenzaka et de Nene no Michi, près du parc de Kōdai-ji, ouvert de 9 h 30 au coucher du soleil. On peut monter sans réservation, mais en saison des feuillages d’automne la réservation est conseillée (ebisuya.com). Prix indicatif ~65–130 $ la course selon la formule ; supplément de 1 000 ¥ pour partir ailleurs que du stand ou pour un guide en anglais.",
-        "goshuin": "non"
-      },
-      {
         "title": "Sanctuaire Yasaka",
         "lat": 35.0036,
         "lng": 135.7786,
@@ -847,19 +840,12 @@
         "goshuinNote": "Au sanctuaire Nonomiya, tout près."
       },
       {
-        "title": "Location de kimono (Rikawafuku Arashiyama)",
+        "title": "Location de kimono d’homme / hakama (Rikawafuku Arashiyama)",
         "lat": 35.0165,
         "lng": 135.6775,
-        "desc": "Louer un kimono le matin à Arashiyama, à 2–4 min à pied de la gare / du pont Togetsukyo (repère approximatif, le lien Maps cherche l’adresse). Réservation uniquement en ligne (même jour possible, annulation gratuite plus de 24 h avant), dès ~3 000 ¥ (coiffure sur certaines formules). Dernière réception 15 h 30, rendu avant 17 h–17 h 30, soleil couché vers 16 h 45 : à faire tôt. Idéal en kimono pour le pousse-pousse.",
+        "desc": "Tenue masculine traditionnelle : kimono d’homme et hakama (haori à confirmer), à ~3 min à pied de la gare Hankyu Arashiyama (repère approximatif, le lien Maps cherche l’adresse). Réservation en ligne obligatoire à l’avance : en novembre, la boutique ne loue pas le jour même en période d’affluence. Dernière réception 15 h 30, rendu avant 17 h–17 h 30, soleil couché vers 16 h 45 : à faire tôt. Prix à confirmer sur la page (sources de ~1 980 à 3 500 ¥ et plus).",
         "goshuin": "non",
         "mapsQuery": "Rikawafuku Arashiyama 京都市右京区嵯峨天龍寺造路町11-4"
-      },
-      {
-        "title": "Pousse-pousse à Arashiyama (Ebisuya)",
-        "lat": 35.014,
-        "lng": 135.6758,
-        "desc": "Balade en pousse-pousse autour du pont Togetsukyo, des ruelles de Sagano et des abords de la forêt de bambous (une partie du chemin de bambous ne se fait pas en pousse-pousse). Stand au bout nord du pont Togetsukyo, ouvert de 9 h 30 au coucher du soleil. On peut monter sans réservation, mais en automne mieux vaut réserver (ebisuya.com) ; réservation séparée de Higashiyama. Supplément de 1 000 ¥ sur le parcours d’Arashiyama ou pour partir ailleurs que du stand.",
-        "goshuin": "non"
       },
       {
         "title": "Kinkaku-ji",
