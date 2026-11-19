@@ -1027,22 +1027,14 @@
         "title": "Château Nijō",
         "lat": 35.0142,
         "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier dimanche (dès 8 h 45) puis Maikoya : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
+        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier dimanche (dès 8 h 45), puis le Samurai Ninja Museum : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
         "goshuin": "non"
-      },
-      {
-        "title": "Atelier wagashi + cérémonie du thé (Maikoya)",
-        "lat": 35.0046,
-        "lng": 135.7587,
-        "desc": "Fabrication de pâtisseries japonaises (wagashi) puis cérémonie du thé, ~90 min, en anglais, chez Maikoya (329 Ebiyachō, Nakagyō-ku, sur Nishiki-kōji, tout près du marché Nishiki). Réservation obligatoire en ligne, pour le dimanche 22 nov : un créneau en matinée (~10 h 30–11 h) laisse du temps, et finir avant 14 h (train 14:55, gare vers 14 h 35). Repère approximatif, le lien Maps cherche l’adresse.",
-        "goshuin": "non",
-        "mapsQuery": "MAIKOYA 京都市中京区海老屋町329"
       },
       {
         "title": "Samurai Ninja Museum Kyoto (expérience samouraï)",
         "lat": 35.0048,
         "lng": 135.7668,
-        "desc": "Musée interactif sur Teramachi, à ~200 m de BSC Gallery : visite guidée d’environ 1 h en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï). Dernières annonces : 11 h–18 h, dernier départ ~17 h, ~3 000 ¥ adulte (sources de 2 400 à 3 500 ¥) ; billets pris sur place (la réservation en ligne est possible mais pas nécessaire d’après Maxime). Repère issu d’OpenStreetMap, adresse à confirmer (les listings divergent). À prendre dimanche après l’atelier Maikoya, et finir avant 14 h (train 14:55, gare vers 14 h 35).",
+        "desc": "Musée interactif sur Teramachi, à ~200 m de BSC Gallery : visite guidée d’environ 1 h en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï). Dernières annonces : 11 h–18 h, dernier départ ~17 h, ~3 000 ¥ adulte (sources de 2 400 à 3 500 ¥) ; billets pris sur place (la réservation en ligne est possible mais pas nécessaire d’après Maxime). Repère issu d’OpenStreetMap, adresse à confirmer (les listings divergent). À prendre dimanche après Nijō (le musée ouvre vers 11 h), et finir avant 14 h (train 14:55, gare vers 14 h 35).",
         "goshuin": "non",
         "mapsQuery": "京都サムライ忍者体験ミュージアム 京都市中京区寺町通"
       }
