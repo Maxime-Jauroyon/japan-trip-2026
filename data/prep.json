@@ -26,27 +26,6 @@
       ]
     },
     {
-      "id": "kimono-arashiyama",
-      "label": "Kimono d’homme / hakama réservé demain à 11 h 15 (Arashiyama)",
-      "meta": "Rikawafuku Arashiyama : vérifier le nom du magasin, l’adresse et le plan dans l’e-mail de confirmation · dernière réception 15 h 30 · annulation gratuite plus de 24 h avant (à confirmer)",
-      "remindFrom": "2026-11-19",
-      "done": true,
-      "links": [
-        {
-          "label": "Rikawafuku — Arashiyama",
-          "url": "https://ewha-yifu.com/en/shops/kyoto-area/arashiyama"
-        },
-        {
-          "label": "Rikawafuku — plan kimono homme (30 min d’habillage)",
-          "url": "https://ewha-yifu.com/en/blog/kyoto-info/2971/"
-        },
-        {
-          "label": "Rikawafuku — hakama pour deux amis",
-          "url": "https://ewha-yifu.com/en/blog/kyoto-kimono-coordination/3036/"
-        }
-      ]
-    },
-    {
       "id": "kintetsu-eticket",
       "label": "Kintetsu : retrouver les mails des 2 e-tickets et tester l’affichage",
       "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
