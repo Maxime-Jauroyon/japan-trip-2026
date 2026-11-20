@@ -58,9 +58,10 @@
    "id": "p:pont-togetsukyo",
    "kind": "planned",
    "title": "Pont Togetsukyo",
-   "status": "skipped",
+   "status": "done",
    "by": "Léo",
-   "at": 1795149161934
+   "at": 1795157392051,
+   "doneAt": 1795157392051
   },
   "p:jojakko-ji-temple-des-erables": {
    "id": "p:jojakko-ji-temple-des-erables",
