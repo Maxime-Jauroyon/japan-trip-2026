@@ -8,6 +8,15 @@
    "doneAt": 1795143792284,
    "by": "Maxime",
    "at": 1795143792285
+  },
+  "p:kimono-forest-randen-arashiyama": {
+   "id": "p:kimono-forest-randen-arashiyama",
+   "kind": "planned",
+   "title": "Kimono Forest (Randen Arashiyama)",
+   "status": "done",
+   "doneAt": 1795148774196,
+   "by": "Maxime",
+   "at": 1795148774196
   }
  }
 }
