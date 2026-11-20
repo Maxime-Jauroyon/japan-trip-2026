@@ -53,6 +53,14 @@
    "doneAt": 1795148815104,
    "by": "Maxime",
    "at": 1795148815104
+  },
+  "p:pont-togetsukyo": {
+   "id": "p:pont-togetsukyo",
+   "kind": "planned",
+   "title": "Pont Togetsukyo",
+   "status": "skipped",
+   "by": "Léo",
+   "at": 1795149161934
   }
  }
 }
