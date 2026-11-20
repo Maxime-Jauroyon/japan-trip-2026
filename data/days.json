@@ -993,29 +993,12 @@
         "goshuinNote": "Au bureau du sanctuaire, en bas."
       },
       {
-        "title": "Tō-ji et marché Kōbō-ichi (21 du mois)",
-        "lat": 34.9806,
-        "lng": 135.7477,
-        "desc": "Temple à la pagode à cinq étages, la plus haute du Japon. Samedi 21 nov est le jour du marché Kōbō-ichi (« Kōbō-san ») : ~1 000 stands d’antiquités, de vêtements d’occasion, de nourriture et d’artisanat dans l’enceinte, ouverts tôt (de ~5 h–7 h à ~15 h 30–16 h selon les sources). Le temple ferme vers 17 h ; goshuin à demander (non confirmé). À 10 min à pied de la gare de Kyoto.",
-        "goshuin": "possible",
-        "goshuinNote": "À demander au bureau du temple (non confirmé).",
-        "mapsQuery": "東寺 京都市南区九条町1"
-      },
-      {
         "title": "Toei Kyoto Studio Park",
         "lat": 35.0165,
         "lng": 135.7082,
         "desc": "Parc à thème et studio de films de samouraïs à Uzumasa, à l’ouest de Kyoto : décors d’époque Edo, spectacles de ninjas et de samouraïs, costumes à louer. ~2 800 ¥ ; ouvert en gros 9 h–17 h, dernière entrée environ 1 h avant la fermeture (horaires de novembre 2026 non confirmés : vérifier le site officiel avant d’y aller). Compter 2 à 3 h ; depuis Tō-ji ou la gare de Kyoto, ~30 min en JR puis à pied. Si le parc ferme trop tôt, passer directement à Kyoto Tower.",
         "goshuin": "non",
         "mapsQuery": "東映太秦映画村 京都市右京区太秦東蜂岡町10"
-      },
-      {
-        "title": "Pokémon Center Kyoto (SUINA Muromachi)",
-        "lat": 35.004,
-        "lng": 135.7572,
-        "desc": "Pokémon Center de Kyoto au 2e étage de SUINA Muromachi (78 Kankobokochō), à moins d’1 km de l’hôtel : produits exclusifs de Kyoto. Ouvert 10 h–20 h tous les jours (à confirmer) : y être avant 19 h 30. Repère approximatif, le lien Maps cherche l’adresse.",
-        "goshuin": "non",
-        "mapsQuery": "ポケモンセンターキョウト SUINA室町 京都市下京区"
       }
     ],
     "wake": {
@@ -1238,6 +1221,14 @@
         "goshuinNote": "Au sanctuaire Hōkoku, dans le parc du château."
       },
       {
+        "title": "Déjeuner sushi au comptoir (Ginza Kyubey, Imperial Hotel Osaka)",
+        "lat": 34.7008,
+        "lng": 135.5196,
+        "desc": "Sushi au comptoir préparé devant vous par le chef, au 24e étage de l’Imperial Hotel Osaka (1-8-50 Tenmabashi, Kita-ku), ~2,5 km du château d’Osaka. Déjeuner 11 h 30–14 h 30 (dernière commande 14 h 30), à partir d’environ 8 250 ¥ (autres sources : de 6 000 à ~18 000 ¥ ; boissons en plus ; cartes acceptées). Réservation conseillée au moins une semaine avant, via le site de l’hôtel ou AutoReserve. Enfants non admis, pas de menu végétarien. Prix et disponibilités à confirmer.",
+        "goshuin": "non",
+        "mapsQuery": "銀座久兵衛 帝国ホテル大阪 大阪市北区天満橋1-8-50"
+      },
+      {
         "title": "Shinsaibashi",
         "phrases": "shop",
         "lat": 34.6751,
@@ -1259,7 +1250,7 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFermeture": true
+    "ordreFixe": true
   },
   {
     "n": 20,
