@@ -71,6 +71,15 @@
    "doneAt": 1795156080524,
    "by": "Maxime",
    "at": 1795156080525
+  },
+  "p:round1-kyoto-kawaramachi-retour-bowling-flechettes-arcade": {
+   "id": "p:round1-kyoto-kawaramachi-retour-bowling-flechettes-arcade",
+   "kind": "planned",
+   "title": "Round1 Kyoto Kawaramachi (retour : bowling, fléchettes, arcade)",
+   "status": "done",
+   "doneAt": 1795183230003,
+   "by": "Maxime",
+   "at": 1795183230003
   }
  }
 }
