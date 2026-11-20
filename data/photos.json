@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "kyubey",
+      "slug": "kyubey"
+    },
+    {
       "match": "round1|round one",
       "slug": "round1-kyoto"
     },
@@ -17,16 +21,8 @@
       "slug": "toei-studio"
     },
     {
-      "match": "pokémon center kyoto|pokemon center kyoto",
-      "slug": "pokemon-kyoto"
-    },
-    {
       "match": "kyoto tower|nidec",
       "slug": "kyoto-tower"
-    },
-    {
-      "match": "tō-ji|toji",
-      "slug": "toji"
     },
     {
       "match": "kimono forest",
@@ -2520,29 +2516,6 @@
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
       }
     ],
-    "toji": [
-      {
-        "file": "kiyomizu.jpg",
-        "author": "Martin Falbisoner",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg"
-      },
-      {
-        "file": "kiyomizu-2.jpg",
-        "author": "Jordy Meow",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
-      },
-      {
-        "file": "kiyomizu-3.jpg",
-        "author": "Martin Falbisoner",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg"
-      }
-    ],
     "toei-studio": [
       {
         "file": "nijo.jpg",
@@ -2564,29 +2537,6 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nijo_Castle_Ninomaru_03.JPG"
-      }
-    ],
-    "pokemon-kyoto": [
-      {
-        "file": "shibuya.jpg",
-        "author": "Yoshikazu TAKADA",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Shibuya_Scramble_Crossing_(31000739560).jpg"
-      },
-      {
-        "file": "shibuya-2.jpg",
-        "author": "Benh LIEU SONG (Flickr)",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg"
-      },
-      {
-        "file": "shibuya-3.jpg",
-        "author": "Real Estate Japan",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Shibuya_scramble_square_sky_view_of_crossing_(48995414042).jpg"
       }
     ],
     "samurai-ninja": [
@@ -2649,6 +2599,29 @@
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      }
+    ],
+    "kyubey": [
+      {
+        "file": "dotonbori.jpg",
+        "author": "Type specimen",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Osaka_Dotonbori_Ebisu_Bridge.jpg"
+      },
+      {
+        "file": "dotonbori-2.jpg",
+        "author": "gérard",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Canal_D%C5%8Dtonbori_%E9%81%93%E9%A0%93%E5%A0%80_-_Flickr_-_uphillblok.jpg"
+      },
+      {
+        "file": "dotonbori-3.jpg",
+        "author": "Type specimen",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
       }
     ]
   }

@@ -1,6 +1,23 @@
 {
   "checks": [
     {
+      "id": "kyubey-osaka-reservation",
+      "label": "Réserver le déjeuner sushi Ginza Kyubey, Osaka (jeu. 26 nov)",
+      "meta": "24e étage de l’Imperial Hotel Osaka · déjeuner 11 h 30–14 h 30 (dernière commande), menus dès ~8 250 ¥ (prix variables selon les sources) · réserver au moins une semaine avant, via le site de l’hôtel ou AutoReserve · enfants non admis, pas de menu végétarien",
+      "remindFrom": "2026-11-19",
+      "done": false,
+      "links": [
+        {
+          "label": "Ginza Kyubey — réservation sur AutoReserve",
+          "url": "https://autoreserve.com/en/restaurants/5ypNvvRxphCHcagy2c7m"
+        },
+        {
+          "label": "Imperial Hotel Osaka — Sushi Kyubey",
+          "url": "https://www.j-hotel.or.jp/en/restaurant/44524/"
+        }
+      ]
+    },
+    {
       "id": "kintetsu-eticket",
       "label": "Kintetsu : retrouver les mails des 2 e-tickets et tester l’affichage",
       "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
