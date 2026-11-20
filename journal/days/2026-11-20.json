@@ -61,6 +61,15 @@
    "status": "skipped",
    "by": "Léo",
    "at": 1795149161934
+  },
+  "p:jojakko-ji-temple-des-erables": {
+   "id": "p:jojakko-ji-temple-des-erables",
+   "kind": "planned",
+   "title": "Jōjakkō-ji (temple des érables)",
+   "status": "done",
+   "doneAt": 1795156080524,
+   "by": "Maxime",
+   "at": 1795156080525
   }
  }
 }
