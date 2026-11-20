@@ -26,6 +26,15 @@
    "doneAt": 1795148785302,
    "by": "Maxime",
    "at": 1795148785302
+  },
+  "p:foret-de-bambous-d-arashiyama": {
+   "id": "p:foret-de-bambous-d-arashiyama",
+   "kind": "planned",
+   "title": "Forêt de bambous d’Arashiyama",
+   "status": "done",
+   "doneAt": 1795148786440,
+   "by": "Maxime",
+   "at": 1795148786440
   }
  }
 }
