@@ -956,6 +956,14 @@
         "goshuin": "possible",
         "mapsQuery": "常寂光寺 京都市右京区嵯峨小倉山小倉町3",
         "goshuinNote": "À demander à l’accueil (non confirmé)."
+      },
+      {
+        "title": "Sky Garden et Skyway de la gare de Kyoto (soir)",
+        "lat": 34.9858,
+        "lng": 135.7588,
+        "desc": "Le toit de la gare de Kyoto (Sky Garden) et sa passerelle en hauteur (Skyway), gratuits, avec vue sur la ville et sur la Kyoto Tower. Sky Garden ouvert 6 h–23 h d’après le site officiel de la gare, jusqu’à 22 h selon un autre site ; Skyway 10 h–22 h avec un petit spectacle de LED toutes les 30 min de 17 h à 22 h (à confirmer). Dîner possible chez Isetan (11e étage, Eat Paradise ~11 h–22 h ; restaurants des étages 7 à 10 jusqu’à ~23 h, non vérifiés). Après le rendu du kimono (avant 17 h 30), le JR depuis Saga-Arashiyama rejoint la gare de Kyoto en ~15 min ; retour à l’hôtel en métro (ligne Karasuma, ~10 min).",
+        "goshuin": "non",
+        "mapsQuery": "京都駅ビル 大空広場 京都市下京区烏丸通塩小路下る"
       }
     ],
     "wake": {
