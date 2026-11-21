@@ -455,13 +455,19 @@
     "duration": "1–1,5 h",
     "closes": "14:30"
   },
-  "katana": {
-    "hours": "Selon l’offre, à réserver sur Klook",
-    "duration": "1–2 h"
+  "gekkeikan": {
+    "hours": "9h30–16h30 (dernière entrée 16h)",
+    "duration": "1–1,5 h",
+    "closes": "16:00"
   },
-  "samurai-ninja": {
-    "hours": "~10h30–17h30 (dernier départ ~17h), à confirmer",
-    "duration": "1–2 h",
-    "closes": "17:30"
+  "kyoto-railway": {
+    "hours": "10h–17h (dernière entrée 16h30), fermé le mercredi",
+    "duration": "2 h",
+    "closes": "16:30"
+  },
+  "nishijin": {
+    "hours": "~10h–16h, fermé le lundi (à confirmer)",
+    "duration": "1 h",
+    "closes": "16:00"
   }
 }

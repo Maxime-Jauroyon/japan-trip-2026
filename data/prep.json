@@ -1,23 +1,23 @@
 {
   "checks": [
     {
-      "id": "katana-kyoto-reservation",
-      "label": "Réserver le musée samouraï ninja et la coupe Tozando (dim. 22 nov)",
-      "meta": "Musée (Teramachi) : réservation conseillée, le billet Basic ne comprend pas de coupe · coupe de tatami Tozando Gion Yasaka : dès 59 $, ~30 min, après 11 h · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et disponibilités à confirmer",
+      "id": "dimanche-matin-kyoto",
+      "label": "Dimanche matin avant le train : choisir une activité à Kyoto",
+      "meta": "Musée du saké Gekkeikan (Fushimi, 600 ¥ avec dégustation) · musée du chemin de fer (Umekoji, 1 500 ¥, 3 min en train) · Nishijin Textile Center (ateliers de tissage sur réservation) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
         {
-          "label": "Klook — musée samouraï ninja avec expérience",
-          "url": "https://www.klook.com/en-US/activity/134092-samurai-and-ninja-experience-with-guided-museum-tour-in-kyoto/"
+          "label": "Gekkeikan Okura Sake Museum",
+          "url": "https://gekkeikan.com/museum"
         },
         {
-          "label": "Maikoya — réserver le musée samouraï ninja",
-          "url": "https://mai-ko.com/tour/samurai-experience-kyoto-samurai-museum-tour-and-armor-trial/"
+          "label": "Musée du chemin de fer de Kyoto",
+          "url": "https://kyotorailwaymuseum.jp/en/guide"
         },
         {
-          "label": "Viator — coupe de tatami Tozando Gion Yasaka",
-          "url": "https://www.viator.com/tours/Kyoto/Kyoto-Samurai-Discovery-Samurai-Sword-Test-Cutting-Training/d332-441933P1"
+          "label": "Nishijin Textile Center (fiche JNTO)",
+          "url": "https://www.japan.travel/en/spot/1164/"
         }
       ]
     },

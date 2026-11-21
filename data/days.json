@@ -1022,20 +1022,28 @@
     "extraCity": "nara",
     "ideas": [
       {
-        "title": "Samurai Ninja Museum Kyoto (expérience samouraï)",
-        "lat": 35.0048,
-        "lng": 135.7668,
-        "desc": "Musée interactif sur Teramachi (109 Horinouechō, Nakagyo-ku), à ~200 m de BSC Gallery : visite guidée en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï). Le billet « Basic » comprend la visite, le lancer de shuriken et l’essayage d’un costume de samouraï, environ 1 h, ~3 000 ¥ : il n’y a pas de coupe dedans (la coupe est une formule à part, « Target Cutting », environ 2 h, avec un iaito sur une cible en carton, prix non indiqué). Horaires les plus courants : 10 h 30–17 h 30, dernier départ ~17 h (d’autres sources donnent 9 h 30–19 h 30 ou 11 h–18 h). Réservation conseillée : le site de Maikoya dit que les visiteurs sans réservation ne sont en général pas acceptés (à confirmer), disponibilité de dimanche non vérifiée. Dimanche : prendre un créneau du matin pour finir vers 13 h 30, puis rejoindre la gare pour le train de 14 h 55 (valises en consigne, gare vers 14 h 35). Réservation : https://mai-ko.com/tour/samurai-experience-kyoto-samurai-museum-tour-and-armor-trial/ ou Klook : https://www.klook.com/en-US/activity/134092-samurai-and-ninja-experience-with-guided-museum-tour-in-kyoto/ . Repère issu d’OpenStreetMap, adresse à confirmer.",
+        "title": "Musée du saké Gekkeikan Okura (Fushimi)",
+        "lat": 34.93,
+        "lng": 135.76,
+        "desc": "Musée de la brasserie Gekkeikan à Fushimi, quartier du saké : histoire, outils anciens et dégustations. Ouvert 9 h 30–16 h 30 (dernière entrée 16 h), 600 ¥ adulte d’après la plupart des sources (3 dégustations de saké et un petit cadeau compris ; d’autres sources donnent des prix différents). Accès : ligne Kintetsu Kyoto jusqu’à Momoyamagoryo-mae (environ 10 min à pied) ou Keihan jusqu’à Chushojima (environ 5 min à pied) ; temps de trajet depuis la gare non confirmé. Infos : https://gekkeikan.com/museum . Position sur la carte approximative. Dimanche : finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer.",
         "goshuin": "non",
-        "mapsQuery": "京都サムライ忍者体験ミュージアム 京都市中京区寺町通"
+        "mapsQuery": "月桂冠大倉記念館 京都市伏見区"
       },
       {
-        "title": "Katana : coupe de tatami au vrai sabre (Tozando Gion Yasaka)",
-        "lat": 35.0037,
-        "lng": 135.7766,
-        "desc": "Initiation puis coupe de nattes de tatami roulées avec un vrai katana, à la boutique Tozando Gion Yasaka : 542 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074 (Gion-Shijo/Keihan à environ 5 min à pied, arrêt de bus Gion juste devant, Kawaramachi/Hankyu à environ 8 min). Boutique ouverte 11 h–21 h, donc créneau après 11 h. Environ 30 min, dès 59 $ par personne (environ 9 000 ¥, à confirmer), 5 personnes maximum, annulation gratuite jusqu’à 24 h avant. Horaires et âge minimum non indiqués, disponibilité non vérifiée (une source la dit indisponible). Réservation : https://www.viator.com/tours/Kyoto/Kyoto-Samurai-Discovery-Samurai-Sword-Test-Cutting-Training/d332-441933P1 . Pas près de la gare (environ 2,5 à 3 km) ; finir avant 14 h 15 (gare vers 14 h 35). Position sur la carte approximative.",
+        "title": "Musée du chemin de fer de Kyoto (Umekoji)",
+        "lat": 34.988,
+        "lng": 135.744,
+        "desc": "Grand musée des trains japonais, locomotives à vapeur et Shinkansen, près de la gare. Ouvert 10 h–17 h (pas d’entrée après 16 h 30), fermé le mercredi donc ouvert dimanche ; 1 500 ¥ adulte d’après la fiche officielle de 2023 (à confirmer). Accès : 3 min en train depuis la gare de Kyoto jusqu’à Umekoji-Kyotonishi (150 ¥), ou environ 20 min à pied. Infos : https://kyotorailwaymuseum.jp/en/guide . Position sur la carte approximative. Dimanche : finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer.",
         "goshuin": "non",
-        "mapsQuery": "東山堂 祇園八坂店 京都市東山区祇園町南側542"
+        "mapsQuery": "京都鉄道博物館"
+      },
+      {
+        "title": "Nishijin Textile Center (kimono et tissage)",
+        "lat": 35.031,
+        "lng": 135.75,
+        "desc": "Centre du tissage Nishijin : défilé de kimonos gratuit environ toutes les heures, démonstration de métiers à tisser et ateliers de tissage payants (sur réservation, environ 1 800 à 5 000 ¥ selon les sources). Adresse : Imadegawa-minami, Horikawa-dori, Kamigyō-ku, 602-8216 ; environ 10 min à pied de la station Imadegawa (métro Karasuma). Ouvert environ 10 h–16 h, fermé le lundi d’après les sources (les horaires divergent). Fiche : https://www.japan.travel/en/spot/1164/ . Position sur la carte approximative. Dimanche : finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer.",
+        "goshuin": "non",
+        "mapsQuery": "西陣織会館 京都市上京区堀川通今出川南入"
       }
     ],
     "moves": [
