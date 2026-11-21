@@ -3,10 +3,18 @@
     {
       "id": "dimanche-matin-kyoto",
       "label": "Dimanche matin avant le train : choisir une activité à Kyoto",
-      "meta": "Musée du saké Gekkeikan (Fushimi, 600 ¥ avec dégustation) · musée du chemin de fer (Umekoji, 1 500 ¥, 3 min en train) · Nishijin Textile Center (ateliers de tissage sur réservation) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
+      "meta": "teamLab Biovortex Kyoto (10 min à pied de la gare, billet horodaté à réserver, ~9 500–12 000 ¥) · musée du saké Gekkeikan (Fushimi, 600 ¥ avec dégustation) · musée du chemin de fer (Umekoji, 1 500 ¥, 3 min en train) · Nishijin Textile Center (ateliers de tissage sur réservation) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
+        {
+          "label": "teamLab Biovortex Kyoto — billets",
+          "url": "https://www.teamlab.art/e/kyoto/"
+        },
+        {
+          "label": "Klook — teamLab Biovortex Kyoto",
+          "url": "https://www.klook.com/activity/167098-teamlab-kyoto/"
+        },
         {
           "label": "Gekkeikan Okura Sake Museum",
           "url": "https://gekkeikan.com/museum"
