@@ -7,7 +7,10 @@
    "status": "done",
    "doneAt": 1795143792284,
    "by": "Maxime",
-   "at": 1795143792285
+   "at": 1795143792285,
+   "likes": {
+    "Maxime": 1795247544547
+   }
   },
   "p:kimono-forest-randen-arashiyama": {
    "id": "p:kimono-forest-randen-arashiyama",
