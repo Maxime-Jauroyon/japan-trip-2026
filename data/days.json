@@ -1004,7 +1004,7 @@
         "title": "Château Nijō, illumination du soir (NAKED)",
         "lat": 35.0142,
         "lng": 135.7482,
-        "desc": "Illumination « NAKED meets Nijo-jo Castle 2026 » : tous les soirs jusqu’au 5 décembre, 18 h–22 h (dernière entrée 21 h), parcours différent de celui de jour. Billet séparé, environ 2 400 ¥ le samedi (2 000 ¥ en semaine ; prix d’octobre, à confirmer). Réserver à l’avance, lien dans les alertes.",
+        "desc": "Illumination « NAKED meets Nijo-jo Castle 2026 » : tous les soirs jusqu’au 5 décembre, 18 h–22 h (dernière entrée 21 h), parcours différent de celui de jour. Billet séparé, environ 2 400 ¥ le samedi (2 000 ¥ en semaine ; prix d’octobre, à confirmer). Billet à prendre en ligne à l’avance ou sur place (à confirmer).",
         "goshuin": "non"
       }
     ],
@@ -1022,14 +1022,6 @@
     "extraCity": "nara",
     "ideas": [
       {
-        "title": "Katana : expérience samouraï et kenbu (Samurai Kembu Theater, Higashiyama)",
-        "lat": 35.006,
-        "lng": 135.775,
-        "desc": "Cours de sabre de 75 min puis mini-spectacle de kenbu, au Samurai Kembu Theater (dojo de Kyoto) : B1F Gozan Building, 35-7 Sanchome (Higashi-iru, Sanjo-hanamikoji), Higashiyama-ku, 605-0005 (adresse relevée sur des sites tiers, la fiche Klook ne donne pas le lieu). 15 625 ¥ par personne ; formule mini-kenbu d’environ 1 h 30, départs 10 h, 11 h 45, 14 h 30 et 17 h (la formule kenbu de 2 h part à 14 h 45 ou 16 h 15, trop tard dimanche). Réservation : https://www.klook.com/en-US/activity/91053-2-hour-join-kyoto-samurai-experience-kenbu-show/ . Position sur la carte approximative. Dimanche : choisir un créneau du matin pour finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer sur Klook.",
-        "goshuin": "non",
-        "mapsQuery": "Samurai Kembu Theater Gozan Building 35-7 Sanchome Higashiyama-ku Kyoto 605-0005"
-      },
-      {
         "title": "Katana : coupe samouraï supervisée par un champion (dojo Tachikiri)",
         "lat": 35.0045,
         "lng": 135.766,
@@ -1038,12 +1030,12 @@
         "mapsQuery": "Tachikiri samurai cutting experience Kyoto"
       },
       {
-        "title": "Katana : combat au sabre au temple Myōkaku-ji (Kamigyō)",
-        "lat": 35.03,
-        "lng": 135.756,
-        "desc": "Initiation au sabre avec des acteurs de cinéma de sabre, sur le terrain du temple Myōkaku-ji, 135 Shimoseizōguchi-chō, Kamigyō-ku, Kyoto 602-0007 ; rendez-vous au « Myokaku-ji Dojo », à gauche après la porte principale. Une fiche donne « 602 » au lieu de « 135 » : vérifier le mail de confirmation, et plusieurs temples portent ce nom, donc contrôler l’adresse avant de prendre un taxi. Environ 1 h 10, 24 750 ¥, horaires non indiqués. Réservation : https://www.klook.com/en-US/activity/137238-samurai-sword-experience-at-myokaku-ji-temple/ . Position sur la carte approximative. Dimanche : choisir un créneau du matin pour finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer sur Klook.",
+        "title": "Katana : entraînement samouraï avec le « Musashi moderne » (Yushinkan, Kawaramachi)",
+        "lat": 35.0089,
+        "lng": 135.7685,
+        "desc": "Entraînement au katana de 90 min (katana et équipement fournis, dès 12 ans, 9 personnes maximum), 20 000 ¥ par personne en réservation directe. Lieu : Super Grand Bld. B1F, 452-4 Matsugaecho, Nakagyo-ku, Kyoto 604-8034 ; 2 min à pied de l’arrêt de bus Kawaramachi Sanjo, 7 min de la gare Hankyu Kawaramachi, 8 min du métro Kyoto Shiyakusho-mae. Ce n’est pas près de la gare de Kyoto : compter environ 2,5 à 3 km (estimation à vue de carte). Départs le dimanche : 9 h, 11 h, 13 h, 15 h 30 ; prendre 9 h ou 11 h pour finir avant 14 h 15 (valises en consigne, gare vers 14 h 35 pour le train de 14 h 55). Aucune modification possible dans les 24 h avant. Réservation : https://yushinkankyoto.com/book/ . Position sur la carte approximative, prix et horaires à confirmer.",
         "goshuin": "non",
-        "mapsQuery": "妙覚寺 京都市上京区下清蔵口町135"
+        "mapsQuery": "Yushinkan Kyoto Super Grand Building 452-4 Matsugaecho Nakagyo-ku Kyoto"
       }
     ],
     "moves": [
