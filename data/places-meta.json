@@ -147,9 +147,9 @@
     "duration": "1–1,5 h"
   },
   "nijo": {
-    "hours": "~8h45–16h (dernière entrée)",
-    "duration": "1,5 h",
-    "closes": "16:00"
+    "hours": "Illumination ~18h–22h (dernière entrée 21h), à confirmer",
+    "duration": "1–1,5 h",
+    "closes": "21:00"
   },
   "nishiki": {
     "hours": "~9h–17h/18h (variable)",
@@ -459,5 +459,9 @@
     "hours": "Déjeuner 11h30–14h30 (dernière commande)",
     "duration": "1–1,5 h",
     "closes": "14:30"
+  },
+  "katana": {
+    "hours": "Selon l’offre, à réserver",
+    "duration": "1,5–2 h"
   }
 }

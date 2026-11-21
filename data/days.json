@@ -999,6 +999,37 @@
         "desc": "Parc à thème et studio de films de samouraïs à Uzumasa, à l’ouest de Kyoto : décors d’époque Edo, spectacles de ninjas et de samouraïs, costumes à louer. ~2 800 ¥ ; ouvert en gros 9 h–17 h, dernière entrée environ 1 h avant la fermeture (horaires de novembre 2026 non confirmés : vérifier le site officiel avant d’y aller). Compter 2 à 3 h ; depuis Tō-ji ou la gare de Kyoto, ~30 min en JR puis à pied. Si le parc ferme trop tôt, passer directement à Kyoto Tower.",
         "goshuin": "non",
         "mapsQuery": "東映太秦映画村 京都市右京区太秦東蜂岡町10"
+      },
+      {
+        "title": "Katana : cours de katana et kendo (~2 h)",
+        "lat": 35.0045,
+        "lng": 135.766,
+        "desc": "Initiation débutant au maniement du katana et à la coupe, environ 2 h, vers 15 600 ¥ par personne (annonce Klook, à confirmer). Le lieu exact dépend de l’offre choisie, en centre-ville (position indiquée approximative). Réserver à l’avance sur Klook, créneau à choisir avant 17 h pour garder le soir libre.",
+        "goshuin": "non",
+        "mapsQuery": "Kyoto katana experience kendo class"
+      },
+      {
+        "title": "Katana : découpe tameshigiri en hakama (75–90 min)",
+        "lat": 35.0045,
+        "lng": 135.766,
+        "desc": "Séance de coupe (tameshigiri) de 75 à 90 min avec photos en hakama, vers 16 900 ¥ par personne (annonce Klook, à confirmer). Centre-ville de Kyoto, position approximative. Réserver à l’avance.",
+        "goshuin": "non",
+        "mapsQuery": "Kyoto tameshigiri samurai sword experience"
+      },
+      {
+        "title": "Katana : kendo et sabre dans une machiya",
+        "lat": 35.0045,
+        "lng": 135.766,
+        "desc": "Cours d’environ 2 h dans une maison traditionnelle (machiya), avec équipement d’entraînement, vers 16 000 ¥ par personne (annonce Klook, à confirmer). Centre-ville de Kyoto, position approximative. Réserver à l’avance.",
+        "goshuin": "non",
+        "mapsQuery": "Kyoto machiya kendo samurai experience"
+      },
+      {
+        "title": "Château Nijō, illumination du soir (NAKED)",
+        "lat": 35.0142,
+        "lng": 135.7482,
+        "desc": "Illumination « NAKED meets Nijo-jo Castle 2026 » : tous les soirs jusqu’au 5 décembre, 18 h–22 h (dernière entrée 21 h), parcours différent de celui de jour. Billet séparé, environ 2 400 ¥ le samedi (2 000 ¥ en semaine ; prix d’octobre, à confirmer). Réserver à l’avance, lien dans les alertes.",
+        "goshuin": "non"
       }
     ],
     "wake": {
@@ -1014,13 +1045,6 @@
     "city": "kyoto",
     "extraCity": "nara",
     "ideas": [
-      {
-        "title": "Château Nijō",
-        "lat": 35.0142,
-        "lng": 135.7482,
-        "desc": "Forteresse Tokugawa aux planchers « rossignol » et portes peintes du palais Ninomaru. À faire en premier dimanche (dès 8 h 45), puis le Samurai Ninja Museum : tout finir avant 14 h (train Kintetsu 14:55, gare vers 14 h 35).",
-        "goshuin": "non"
-      },
       {
         "title": "Samurai Ninja Museum Kyoto (expérience samouraï)",
         "lat": 35.0048,

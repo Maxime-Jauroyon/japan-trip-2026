@@ -1,6 +1,36 @@
 {
   "checks": [
     {
+      "id": "nijo-illumination-ticket",
+      "label": "Billet illumination du château Nijō (sam. 21 nov, ce soir)",
+      "meta": "« NAKED meets Nijo-jo Castle 2026 » · 18 h–22 h, dernière entrée 21 h · ~2 400 ¥ le samedi (à confirmer) · billet séparé de la visite de jour · lien Klook en recherche, lien direct vérifié chez GetYourGuide",
+      "remindFrom": "2026-11-21",
+      "done": false,
+      "links": [
+        {
+          "label": "Klook — rechercher « Nijo Castle light-up »",
+          "url": "https://www.klook.com/en-US/search/result/?query=Nijo%20Castle%20light-up"
+        },
+        {
+          "label": "GetYourGuide — Nijō Castle light-up (billet d’entrée)",
+          "url": "https://www.getyourguide.com/kyoto-l96826/kyoto-nijo-castle-limited-season-light-up-entry-t1516707/"
+        }
+      ]
+    },
+    {
+      "id": "katana-kyoto-reservation",
+      "label": "Réserver une session de katana à Kyoto",
+      "meta": "3 options dans le jeu de samedi (cours katana ~2 h, tameshigiri 75–90 min, kendo en machiya) · ~15 600–16 900 ¥ par personne (à confirmer) · lien Klook en recherche (fiches non vérifiées)",
+      "remindFrom": "2026-11-21",
+      "done": false,
+      "links": [
+        {
+          "label": "Klook — rechercher « Kyoto katana experience »",
+          "url": "https://www.klook.com/en-US/search/result/?query=Kyoto%20katana%20experience"
+        }
+      ]
+    },
+    {
       "id": "kyubey-osaka-reservation",
       "label": "Réserver le déjeuner sushi Ginza Kyubey, Osaka (jeu. 26 nov)",
       "meta": "24e étage de l’Imperial Hotel Osaka · déjeuner 11 h 30–14 h 30 (dernière commande), menus dès ~8 250 ¥ (prix variables selon les sources) · réserver au moins une semaine avant, via le site de l’hôtel ou AutoReserve · enfants non admis, pas de menu végétarien",
