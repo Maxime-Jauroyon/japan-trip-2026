@@ -16,8 +16,16 @@
           "url": "https://www.klook.com/activity/167098-teamlab-kyoto/"
         },
         {
-          "label": "VS PARK Kyoto — billets en ligne",
+          "label": "VS PARK Kyoto — billets en ligne (officiel)",
           "url": "https://bandainamco-am.co.jp/en/others/vspark/webticket.html"
+        },
+        {
+          "label": "VS PARK Kyoto — prix du pass selon le jour",
+          "url": "https://bandainamco-am.co.jp/en/others/vspark/kyoto/ticket.html"
+        },
+        {
+          "label": "VS PARK Kyoto — FAQ",
+          "url": "https://bandainamco-am.co.jp/en/others/vspark/kyoto/faq.html"
         }
       ]
     },
