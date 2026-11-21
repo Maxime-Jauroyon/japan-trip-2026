@@ -7,6 +7,15 @@
    "status": "skipped",
    "by": "Léo",
    "at": 1795171196690
+  },
+  "p:fushimi-inari": {
+   "id": "p:fushimi-inari",
+   "kind": "planned",
+   "title": "Fushimi Inari",
+   "status": "done",
+   "doneAt": 1795228887883,
+   "by": "Maxime",
+   "at": 1795228887883
   }
  }
 }
