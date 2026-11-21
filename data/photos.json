@@ -5,14 +5,6 @@
       "slug": "nishijin"
     },
     {
-      "match": "chemin de fer de kyoto|railway museum",
-      "slug": "kyoto-railway"
-    },
-    {
-      "match": "gekkeikan",
-      "slug": "gekkeikan"
-    },
-    {
       "match": "kyubey",
       "slug": "kyubey"
     },
@@ -2607,52 +2599,6 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
-      }
-    ],
-    "gekkeikan": [
-      {
-        "file": "fushimi.jpg",
-        "author": "Luka Peternel",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Fushimi-Inari-Shrine-Senbon-Torii-2018-Luka-Peternel.jpg"
-      },
-      {
-        "file": "fushimi-2.jpg",
-        "author": "DuckMaestro",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:2026-06-29_kyoto-fushimi-inari_torii-romon_night.jpg"
-      },
-      {
-        "file": "fushimi-3.jpg",
-        "author": "Basile Morin",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg"
-      }
-    ],
-    "kyoto-railway": [
-      {
-        "file": "nishiki.jpg",
-        "author": "collinox",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
-      },
-      {
-        "file": "nishiki-2.jpg",
-        "author": "pokpok313",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
-      },
-      {
-        "file": "nishiki-3.jpg",
-        "author": "ignis",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
-        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
       }
     ],
     "nishijin": [

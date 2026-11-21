@@ -1025,25 +1025,9 @@
         "title": "teamLab Biovortex Kyoto (art numérique immersif)",
         "lat": 34.977,
         "lng": 135.756,
-        "desc": "Grand parcours d’art numérique immersif à pied nu, à environ 10 min à pied à l’ouest de la sortie sud (Hachijo) de la gare de Kyoto : 21-5 Higashikujo Higashi-Iwamotocho, Minami-ku, 601-8006. Ouvert environ 9 h–21 h (dernière entrée vers 19 h, horaires à vérifier), prévoir environ 1 h 30 à 2 h. Billet horodaté à prendre en ligne à l’avance : environ 9 500 à 12 000 ¥ chez les revendeurs, prix variable sur le site officiel. Réservation : https://www.teamlab.art/e/kyoto/ ou Klook : https://www.klook.com/activity/167098-teamlab-kyoto/ . Si les valises sont en consigne à la gare, c’est l’activité la plus proche. Dimanche : choisir un créneau tôt pour finir avant 14 h 15 (gare vers 14 h 35 pour le train de 14 h 55). Position sur la carte approximative, prix et horaires à confirmer.",
+        "desc": "Grand musée d’art numérique immersif (plus de 50 œuvres) ; même famille que teamLab Planets (Tokyo), mais plus récent et plus conceptuel : l’immersion vient surtout des images, du son et des parfums, sans le passage dans l’eau de Planets, et quelques salles se retrouvent d’un site à l’autre ; pas de café sur place. Parcours à pied nu, à environ 10 min à pied à l’ouest de la sortie sud (Hachijo) de la gare de Kyoto : 21-5 Higashikujo Higashi-Iwamotocho, Minami-ku, 601-8006. Ouvert environ 9 h–21 h (dernière entrée vers 19 h, horaires à vérifier), prévoir environ 2 à 3 h (un visiteur compte environ 3 h : prendre un créneau dès l’ouverture). Billet horodaté à prendre en ligne à l’avance : environ 9 500 à 12 000 ¥ chez les revendeurs, prix variable sur le site officiel. Réservation : https://www.teamlab.art/e/kyoto/ ou Klook : https://www.klook.com/activity/167098-teamlab-kyoto/ . Si les valises sont en consigne à la gare, c’est l’activité la plus proche. Dimanche : choisir un créneau tôt pour finir avant 14 h 15 (gare vers 14 h 35 pour le train de 14 h 55). Position sur la carte approximative, prix et horaires à confirmer.",
         "goshuin": "non",
         "mapsQuery": "teamLab Biovortex Kyoto 京都市南区東九条東岩本町21-5"
-      },
-      {
-        "title": "Musée du saké Gekkeikan Okura (Fushimi)",
-        "lat": 34.93,
-        "lng": 135.76,
-        "desc": "Musée de la brasserie Gekkeikan à Fushimi, quartier du saké : histoire, outils anciens et dégustations. Ouvert 9 h 30–16 h 30 (dernière entrée 16 h), 600 ¥ adulte d’après la plupart des sources (3 dégustations de saké et un petit cadeau compris ; d’autres sources donnent des prix différents). Accès : ligne Kintetsu Kyoto jusqu’à Momoyamagoryo-mae (environ 10 min à pied) ou Keihan jusqu’à Chushojima (environ 5 min à pied) ; temps de trajet depuis la gare non confirmé. Infos : https://gekkeikan.com/museum . Position sur la carte approximative. Dimanche : finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer.",
-        "goshuin": "non",
-        "mapsQuery": "月桂冠大倉記念館 京都市伏見区"
-      },
-      {
-        "title": "Musée du chemin de fer de Kyoto (Umekoji)",
-        "lat": 34.988,
-        "lng": 135.744,
-        "desc": "Grand musée des trains japonais, locomotives à vapeur et Shinkansen, près de la gare. Ouvert 10 h–17 h (pas d’entrée après 16 h 30), fermé le mercredi donc ouvert dimanche ; 1 500 ¥ adulte d’après la fiche officielle de 2023 (à confirmer). Accès : 3 min en train depuis la gare de Kyoto jusqu’à Umekoji-Kyotonishi (150 ¥), ou environ 20 min à pied. Infos : https://kyotorailwaymuseum.jp/en/guide . Position sur la carte approximative. Dimanche : finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer.",
-        "goshuin": "non",
-        "mapsQuery": "京都鉄道博物館"
       },
       {
         "title": "Nishijin Textile Center (kimono et tissage)",
