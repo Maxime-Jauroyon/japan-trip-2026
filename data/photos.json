@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "katana",
+      "slug": "katana"
+    },
+    {
       "match": "kyubey",
       "slug": "kyubey"
     },
@@ -2622,6 +2626,29 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
+      }
+    ],
+    "katana": [
+      {
+        "file": "nijo.jpg",
+        "author": "Wikimedia Commons",
+        "license": "Public domain",
+        "licenseUrl": "",
+        "source": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
+      },
+      {
+        "file": "nijo-2.jpg",
+        "author": "Martin Falbisoner",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Ninomaru_Palace,_November_2016.jpg"
+      },
+      {
+        "file": "nijo-3.jpg",
+        "author": "Reggaeman",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nijo_Castle_Ninomaru_03.JPG"
       }
     ]
   }
