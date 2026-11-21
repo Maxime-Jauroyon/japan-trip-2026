@@ -2,8 +2,8 @@
   "checks": [
     {
       "id": "dimanche-matin-kyoto",
-      "label": "Dimanche matin avant le train : teamLab ou VS PARK",
-      "meta": "teamLab Biovortex Kyoto (10 min à pied de la gare, billet horodaté à réserver, ~9 500–12 000 ¥, compter 2 à 3 h) · VS PARK AEON MALL Kyoto (5 min à pied de la gare, pass de 2 h dès 2 800 ¥, ouvert dès 10 h) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
+      "label": "Dimanche matin avant le train : teamLab ou VS PARK (réservation conseillée, pas obligatoire)",
+      "meta": "teamLab Biovortex Kyoto (10 min à pied de la gare, ~9 500–12 000 ¥, 2 à 3 h) : billet horodaté, achat le jour même possible s’il reste des places, sur place à un autre prix · VS PARK AEON MALL Kyoto (5 min à pied de la gare, pass de 2 h dès 2 800 ¥) : guichet sur place, entrée non garantie les jours d’affluence · arriver à l’ouverture · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
@@ -26,6 +26,10 @@
         {
           "label": "VS PARK Kyoto — FAQ",
           "url": "https://bandainamco-am.co.jp/en/others/vspark/kyoto/faq.html"
+        },
+        {
+          "label": "teamLab Biovortex Kyoto — FAQ billets",
+          "url": "https://www.teamlab.art/faq/kyoto/"
         }
       ]
     },
