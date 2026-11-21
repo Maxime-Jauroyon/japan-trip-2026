@@ -2,8 +2,8 @@
   "checks": [
     {
       "id": "dimanche-matin-kyoto",
-      "label": "Dimanche matin avant le train : choisir une activité à Kyoto",
-      "meta": "teamLab Biovortex Kyoto (10 min à pied de la gare, billet horodaté à réserver, ~9 500–12 000 ¥, compter 2 à 3 h) · Nishijin Textile Center (ateliers de tissage sur réservation) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
+      "label": "Dimanche matin avant le train : teamLab ou VS PARK",
+      "meta": "teamLab Biovortex Kyoto (10 min à pied de la gare, billet horodaté à réserver, ~9 500–12 000 ¥, compter 2 à 3 h) · VS PARK AEON MALL Kyoto (5 min à pied de la gare, pass de 2 h dès 2 800 ¥, ouvert dès 10 h) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
@@ -16,8 +16,8 @@
           "url": "https://www.klook.com/activity/167098-teamlab-kyoto/"
         },
         {
-          "label": "Nishijin Textile Center (fiche JNTO)",
-          "url": "https://www.japan.travel/en/spot/1164/"
+          "label": "VS PARK Kyoto — billets en ligne",
+          "url": "https://bandainamco-am.co.jp/en/others/vspark/webticket.html"
         }
       ]
     },
