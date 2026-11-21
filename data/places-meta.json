@@ -441,11 +441,6 @@
     "duration": "2–3 h",
     "closes": "17:00"
   },
-  "samurai-ninja": {
-    "hours": "~10h30–17h30 (dernier départ ~17h), à confirmer",
-    "duration": "1–2 h",
-    "closes": "17:30"
-  },
   "godzilla-namba": {
     "hours": "Séance 4D à 18h (à confirmer)",
     "duration": "~2 h 30",
@@ -461,7 +456,7 @@
     "closes": "14:30"
   },
   "katana": {
-    "hours": "Selon l’offre, à réserver",
-    "duration": "1,5–2 h"
+    "hours": "Selon l’offre, à réserver sur Klook",
+    "duration": "1–2 h"
   }
 }

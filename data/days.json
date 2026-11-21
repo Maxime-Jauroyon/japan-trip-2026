@@ -1001,30 +1001,6 @@
         "mapsQuery": "東映太秦映画村 京都市右京区太秦東蜂岡町10"
       },
       {
-        "title": "Katana : cours de katana et kendo (~2 h)",
-        "lat": 35.0045,
-        "lng": 135.766,
-        "desc": "Initiation débutant au maniement du katana et à la coupe, environ 2 h, vers 15 600 ¥ par personne (annonce Klook, à confirmer). Le lieu exact dépend de l’offre choisie, en centre-ville (position indiquée approximative). Réserver à l’avance sur Klook, créneau à choisir avant 17 h pour garder le soir libre.",
-        "goshuin": "non",
-        "mapsQuery": "Kyoto katana experience kendo class"
-      },
-      {
-        "title": "Katana : découpe tameshigiri en hakama (75–90 min)",
-        "lat": 35.0045,
-        "lng": 135.766,
-        "desc": "Séance de coupe (tameshigiri) de 75 à 90 min avec photos en hakama, vers 16 900 ¥ par personne (annonce Klook, à confirmer). Centre-ville de Kyoto, position approximative. Réserver à l’avance.",
-        "goshuin": "non",
-        "mapsQuery": "Kyoto tameshigiri samurai sword experience"
-      },
-      {
-        "title": "Katana : kendo et sabre dans une machiya",
-        "lat": 35.0045,
-        "lng": 135.766,
-        "desc": "Cours d’environ 2 h dans une maison traditionnelle (machiya), avec équipement d’entraînement, vers 16 000 ¥ par personne (annonce Klook, à confirmer). Centre-ville de Kyoto, position approximative. Réserver à l’avance.",
-        "goshuin": "non",
-        "mapsQuery": "Kyoto machiya kendo samurai experience"
-      },
-      {
         "title": "Château Nijō, illumination du soir (NAKED)",
         "lat": 35.0142,
         "lng": 135.7482,
@@ -1046,12 +1022,28 @@
     "extraCity": "nara",
     "ideas": [
       {
-        "title": "Samurai Ninja Museum Kyoto (expérience samouraï)",
-        "lat": 35.0048,
-        "lng": 135.7668,
-        "desc": "Musée interactif sur Teramachi, à ~200 m de BSC Gallery : visite guidée d’environ 1 h en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï) ; l’expérience peut durer jusqu’à ~2 h. Horaires les plus courants : 10 h 30–17 h 30, dernier départ ~17 h (d’autres sources donnent 9 h 30–19 h 30 ou 11 h–18 h : à confirmer sur le site officiel ou chez Maikoya). ~3 000 ¥ adulte (sources de 2 400 à 3 500 ¥). Dimanche : commencer avant 11 h 30 pour finir vers 13 h 30, puis rejoindre la gare pour le train de 14 h 55 (gare vers 14 h 35). Billets pris sur place : arrivez dès l’ouverture, les créneaux du week-end se remplissent. Repère issu d’OpenStreetMap, adresse à confirmer (les listings divergent).",
+        "title": "Katana : expérience samouraï et kenbu (Samurai Kembu Theater, Higashiyama)",
+        "lat": 35.006,
+        "lng": 135.775,
+        "desc": "Cours de sabre de 75 min puis mini-spectacle de kenbu, au Samurai Kembu Theater (dojo de Kyoto) : B1F Gozan Building, 35-7 Sanchome (Higashi-iru, Sanjo-hanamikoji), Higashiyama-ku, 605-0005 (adresse relevée sur des sites tiers, la fiche Klook ne donne pas le lieu). 15 625 ¥ par personne ; formule mini-kenbu d’environ 1 h 30, départs 10 h, 11 h 45, 14 h 30 et 17 h (la formule kenbu de 2 h part à 14 h 45 ou 16 h 15, trop tard dimanche). Réservation : https://www.klook.com/en-US/activity/91053-2-hour-join-kyoto-samurai-experience-kenbu-show/ . Position sur la carte approximative. Dimanche : choisir un créneau du matin pour finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer sur Klook.",
         "goshuin": "non",
-        "mapsQuery": "京都サムライ忍者体験ミュージアム 京都市中京区寺町通"
+        "mapsQuery": "Samurai Kembu Theater Gozan Building 35-7 Sanchome Higashiyama-ku Kyoto 605-0005"
+      },
+      {
+        "title": "Katana : coupe samouraï supervisée par un champion (dojo Tachikiri)",
+        "lat": 35.0045,
+        "lng": 135.766,
+        "desc": "Initiation à la coupe avec un iaito en hakama, puis démonstration au sabre véritable, dans un dojo dirigé par un champion national de battodo, 75 à 90 min, 15 188 ¥. Adresse du dojo non indiquée sur la fiche et introuvable ailleurs : la demander à la réservation (la position sur la carte est approximative, centre-ville) ; horaires non indiqués. Réservation : https://www.klook.com/en-US/activity/241033-samurai-cutting-experience-in-kyoto-champion-supervised/ . Dimanche : choisir un créneau du matin pour finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer sur Klook.",
+        "goshuin": "non",
+        "mapsQuery": "Tachikiri samurai cutting experience Kyoto"
+      },
+      {
+        "title": "Katana : combat au sabre au temple Myōkaku-ji (Kamigyō)",
+        "lat": 35.03,
+        "lng": 135.756,
+        "desc": "Initiation au sabre avec des acteurs de cinéma de sabre, sur le terrain du temple Myōkaku-ji, 135 Shimoseizōguchi-chō, Kamigyō-ku, Kyoto 602-0007 ; rendez-vous au « Myokaku-ji Dojo », à gauche après la porte principale. Une fiche donne « 602 » au lieu de « 135 » : vérifier le mail de confirmation, et plusieurs temples portent ce nom, donc contrôler l’adresse avant de prendre un taxi. Environ 1 h 10, 24 750 ¥, horaires non indiqués. Réservation : https://www.klook.com/en-US/activity/137238-samurai-sword-experience-at-myokaku-ji-temple/ . Position sur la carte approximative. Dimanche : choisir un créneau du matin pour finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer sur Klook.",
+        "goshuin": "non",
+        "mapsQuery": "妙覚寺 京都市上京区下清蔵口町135"
       }
     ],
     "moves": [
