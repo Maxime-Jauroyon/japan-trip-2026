@@ -1,40 +1,19 @@
 {
   "checks": [
     {
-      "id": "nijo-illumination-ticket",
-      "label": "Billet illumination du château Nijō (sam. 21 nov, ce soir)",
-      "meta": "« NAKED meets Nijo-jo Castle 2026 » · 18 h–22 h, dernière entrée 21 h · ~2 400 ¥ le samedi (à confirmer) · billet séparé de la visite de jour · lien Klook en recherche, lien direct vérifié chez GetYourGuide",
-      "remindFrom": "2026-11-21",
-      "done": false,
-      "links": [
-        {
-          "label": "Klook — rechercher « Nijo Castle light-up »",
-          "url": "https://www.klook.com/en-US/search/result/?query=Nijo%20Castle%20light-up"
-        },
-        {
-          "label": "GetYourGuide — Nijō Castle light-up (billet d’entrée)",
-          "url": "https://www.getyourguide.com/kyoto-l96826/kyoto-nijo-castle-limited-season-light-up-entry-t1516707/"
-        }
-      ]
-    },
-    {
       "id": "katana-kyoto-reservation",
       "label": "Réserver une session de katana (dim. 22 nov, avant le train de 14 h 55)",
-      "meta": "3 sessions Klook dans le jeu de dimanche : Samurai Kembu Theater (Higashiyama, 15 625 ¥, départs 10 h et 11 h 45), coupe supervisée Tachikiri (15 188 ¥, adresse à demander), Myōkaku-ji (24 750 ¥) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
+      "meta": "2 sessions dans le jeu de dimanche : Yushinkan (Kawaramachi Sanjo, 20 000 ¥, 90 min, départs le dimanche 9 h et 11 h) et coupe supervisée Tachikiri (15 188 ¥, 75–90 min, adresse à demander) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · aucune des deux n’est près de la gare · prix et horaires à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
         {
-          "label": "Klook — Samurai Kembu Theater : expérience samouraï et kenbu",
-          "url": "https://www.klook.com/en-US/activity/91053-2-hour-join-kyoto-samurai-experience-kenbu-show/"
+          "label": "Yushinkan — réserver (Samurai Training, 90 min)",
+          "url": "https://yushinkankyoto.com/book/"
         },
         {
           "label": "Klook — coupe samouraï supervisée par un champion (Tachikiri)",
           "url": "https://www.klook.com/en-US/activity/241033-samurai-cutting-experience-in-kyoto-champion-supervised/"
-        },
-        {
-          "label": "Klook — combat au sabre au temple Myōkaku-ji",
-          "url": "https://www.klook.com/en-US/activity/137238-samurai-sword-experience-at-myokaku-ji-temple/"
         }
       ]
     },
