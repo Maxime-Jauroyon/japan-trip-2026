@@ -83,6 +83,16 @@
    "doneAt": 1795183230003,
    "by": "Maxime",
    "at": 1795183230003
+  },
+  "x:jour": {
+   "id": "x:jour",
+   "kind": "day",
+   "title": "Journée",
+   "status": "todo",
+   "at": 1795247563139,
+   "likes": {
+    "Maxime": 1795247563139
+   }
   }
  }
 }
