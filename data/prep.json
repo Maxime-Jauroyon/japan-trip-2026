@@ -19,14 +19,22 @@
     },
     {
       "id": "katana-kyoto-reservation",
-      "label": "Réserver une session de katana à Kyoto",
-      "meta": "3 options dans le jeu de samedi (cours katana ~2 h, tameshigiri 75–90 min, kendo en machiya) · ~15 600–16 900 ¥ par personne (à confirmer) · lien Klook en recherche (fiches non vérifiées)",
+      "label": "Réserver une session de katana (dim. 22 nov, avant le train de 14 h 55)",
+      "meta": "3 sessions Klook dans le jeu de dimanche : Samurai Kembu Theater (Higashiyama, 15 625 ¥, départs 10 h et 11 h 45), coupe supervisée Tachikiri (15 188 ¥, adresse à demander), Myōkaku-ji (24 750 ¥) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
         {
-          "label": "Klook — rechercher « Kyoto katana experience »",
-          "url": "https://www.klook.com/en-US/search/result/?query=Kyoto%20katana%20experience"
+          "label": "Klook — Samurai Kembu Theater : expérience samouraï et kenbu",
+          "url": "https://www.klook.com/en-US/activity/91053-2-hour-join-kyoto-samurai-experience-kenbu-show/"
+        },
+        {
+          "label": "Klook — coupe samouraï supervisée par un champion (Tachikiri)",
+          "url": "https://www.klook.com/en-US/activity/241033-samurai-cutting-experience-in-kyoto-champion-supervised/"
+        },
+        {
+          "label": "Klook — combat au sabre au temple Myōkaku-ji",
+          "url": "https://www.klook.com/en-US/activity/137238-samurai-sword-experience-at-myokaku-ji-temple/"
         }
       ]
     },
