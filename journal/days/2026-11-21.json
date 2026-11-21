@@ -38,6 +38,15 @@
    "likes": {
     "Maxime": 1795247539827
    }
+  },
+  "p:chateau-nijo-illumination-du-soir-naked": {
+   "id": "p:chateau-nijo-illumination-du-soir-naked",
+   "kind": "planned",
+   "title": "Château Nijō, illumination du soir (NAKED)",
+   "status": "done",
+   "doneAt": 1795259949666,
+   "by": "Maxime",
+   "at": 1795259949666
   }
  }
 }
