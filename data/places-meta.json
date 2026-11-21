@@ -455,9 +455,9 @@
     "duration": "1–1,5 h",
     "closes": "14:30"
   },
-  "nishijin": {
-    "hours": "~10h–16h, fermé le lundi (à confirmer)",
-    "duration": "1 h",
-    "closes": "16:00"
+  "vs-park": {
+    "hours": "10h–21h (dernière entrée 20h)",
+    "duration": "2 h",
+    "closes": "20:00"
   }
 }
