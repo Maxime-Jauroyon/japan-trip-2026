@@ -1,12 +1,16 @@
 {
   "rules": [
     {
-      "match": "katana",
-      "slug": "katana"
+      "match": "nishijin",
+      "slug": "nishijin"
     },
     {
-      "match": "samurai ninja|samouraï",
-      "slug": "samurai-ninja"
+      "match": "chemin de fer de kyoto|railway museum",
+      "slug": "kyoto-railway"
+    },
+    {
+      "match": "gekkeikan",
+      "slug": "gekkeikan"
     },
     {
       "match": "kyubey",
@@ -2605,50 +2609,73 @@
         "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
       }
     ],
-    "katana": [
+    "gekkeikan": [
       {
-        "file": "nijo.jpg",
-        "author": "Wikimedia Commons",
-        "license": "Public domain",
-        "licenseUrl": "",
-        "source": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
-      },
-      {
-        "file": "nijo-2.jpg",
-        "author": "Martin Falbisoner",
+        "file": "fushimi.jpg",
+        "author": "Luka Peternel",
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ninomaru_Palace,_November_2016.jpg"
+        "source": "https://commons.wikimedia.org/wiki/File:Fushimi-Inari-Shrine-Senbon-Torii-2018-Luka-Peternel.jpg"
       },
       {
-        "file": "nijo-3.jpg",
-        "author": "Reggaeman",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nijo_Castle_Ninomaru_03.JPG"
+        "file": "fushimi-2.jpg",
+        "author": "DuckMaestro",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2026-06-29_kyoto-fushimi-inari_torii-romon_night.jpg"
+      },
+      {
+        "file": "fushimi-3.jpg",
+        "author": "Basile Morin",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg"
       }
     ],
-    "samurai-ninja": [
+    "kyoto-railway": [
       {
-        "file": "nijo.jpg",
-        "author": "Wikimedia Commons",
-        "license": "Public domain",
-        "licenseUrl": "",
-        "source": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
+        "file": "nishiki.jpg",
+        "author": "collinox",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
       },
       {
-        "file": "nijo-2.jpg",
-        "author": "Martin Falbisoner",
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-3.jpg",
+        "author": "ignis",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
+      }
+    ],
+    "nishijin": [
+      {
+        "file": "arashiyama.jpg",
+        "author": "Naokijp",
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Ninomaru_Palace,_November_2016.jpg"
+        "source": "https://commons.wikimedia.org/wiki/File:2021_Sagano_Bamboo_forest_in_Arashiyama,_Kyoto,_Japan.jpg"
       },
       {
-        "file": "nijo-3.jpg",
-        "author": "Reggaeman",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nijo_Castle_Ninomaru_03.JPG"
+        "file": "arashiyama-2.jpg",
+        "author": "lumoplank",
+        "license": "CC0",
+        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "source": "https://commons.wikimedia.org/wiki/File:Arashiyama,_Part_II_-_Arashiyama7534.jpg"
+      },
+      {
+        "file": "arashiyama-3.jpg",
+        "author": "Strangeeye 294",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove_(215912603).jpeg"
       }
     ]
   }
