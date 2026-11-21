@@ -1022,20 +1022,20 @@
     "extraCity": "nara",
     "ideas": [
       {
-        "title": "Katana : coupe samouraï supervisée par un champion (dojo Tachikiri)",
-        "lat": 35.0045,
-        "lng": 135.766,
-        "desc": "Initiation à la coupe avec un iaito en hakama, puis démonstration au sabre véritable, dans un dojo dirigé par un champion national de battodo, 75 à 90 min, 15 188 ¥. Adresse du dojo non indiquée sur la fiche et introuvable ailleurs : la demander à la réservation (la position sur la carte est approximative, centre-ville) ; horaires non indiqués. Réservation : https://www.klook.com/en-US/activity/241033-samurai-cutting-experience-in-kyoto-champion-supervised/ . Dimanche : choisir un créneau du matin pour finir avant 14 h 15 (valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55). Prix et horaires à confirmer sur Klook.",
+        "title": "Samurai Ninja Museum Kyoto (expérience samouraï)",
+        "lat": 35.0048,
+        "lng": 135.7668,
+        "desc": "Musée interactif sur Teramachi (109 Horinouechō, Nakagyo-ku), à ~200 m de BSC Gallery : visite guidée en anglais, armures, katanas, démonstrations et initiation (ninja, samouraï). Le billet « Basic » comprend la visite, le lancer de shuriken et l’essayage d’un costume de samouraï, environ 1 h, ~3 000 ¥ : il n’y a pas de coupe dedans (la coupe est une formule à part, « Target Cutting », environ 2 h, avec un iaito sur une cible en carton, prix non indiqué). Horaires les plus courants : 10 h 30–17 h 30, dernier départ ~17 h (d’autres sources donnent 9 h 30–19 h 30 ou 11 h–18 h). Réservation conseillée : le site de Maikoya dit que les visiteurs sans réservation ne sont en général pas acceptés (à confirmer), disponibilité de dimanche non vérifiée. Dimanche : prendre un créneau du matin pour finir vers 13 h 30, puis rejoindre la gare pour le train de 14 h 55 (valises en consigne, gare vers 14 h 35). Réservation : https://mai-ko.com/tour/samurai-experience-kyoto-samurai-museum-tour-and-armor-trial/ ou Klook : https://www.klook.com/en-US/activity/134092-samurai-and-ninja-experience-with-guided-museum-tour-in-kyoto/ . Repère issu d’OpenStreetMap, adresse à confirmer.",
         "goshuin": "non",
-        "mapsQuery": "Tachikiri samurai cutting experience Kyoto"
+        "mapsQuery": "京都サムライ忍者体験ミュージアム 京都市中京区寺町通"
       },
       {
-        "title": "Katana : entraînement samouraï avec le « Musashi moderne » (Yushinkan, Kawaramachi)",
-        "lat": 35.0089,
-        "lng": 135.7685,
-        "desc": "Entraînement au katana de 90 min (katana et équipement fournis, dès 12 ans, 9 personnes maximum), 20 000 ¥ par personne en réservation directe. Lieu : Super Grand Bld. B1F, 452-4 Matsugaecho, Nakagyo-ku, Kyoto 604-8034 ; 2 min à pied de l’arrêt de bus Kawaramachi Sanjo, 7 min de la gare Hankyu Kawaramachi, 8 min du métro Kyoto Shiyakusho-mae. Ce n’est pas près de la gare de Kyoto : compter environ 2,5 à 3 km (estimation à vue de carte). Départs le dimanche : 9 h, 11 h, 13 h, 15 h 30 ; prendre 9 h ou 11 h pour finir avant 14 h 15 (valises en consigne, gare vers 14 h 35 pour le train de 14 h 55). Aucune modification possible dans les 24 h avant. Réservation : https://yushinkankyoto.com/book/ . Position sur la carte approximative, prix et horaires à confirmer.",
+        "title": "Katana : coupe de tatami au vrai sabre (Tozando Gion Yasaka)",
+        "lat": 35.0037,
+        "lng": 135.7766,
+        "desc": "Initiation puis coupe de nattes de tatami roulées avec un vrai katana, à la boutique Tozando Gion Yasaka : 542 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074 (Gion-Shijo/Keihan à environ 5 min à pied, arrêt de bus Gion juste devant, Kawaramachi/Hankyu à environ 8 min). Boutique ouverte 11 h–21 h, donc créneau après 11 h. Environ 30 min, dès 59 $ par personne (environ 9 000 ¥, à confirmer), 5 personnes maximum, annulation gratuite jusqu’à 24 h avant. Horaires et âge minimum non indiqués, disponibilité non vérifiée (une source la dit indisponible). Réservation : https://www.viator.com/tours/Kyoto/Kyoto-Samurai-Discovery-Samurai-Sword-Test-Cutting-Training/d332-441933P1 . Pas près de la gare (environ 2,5 à 3 km) ; finir avant 14 h 15 (gare vers 14 h 35). Position sur la carte approximative.",
         "goshuin": "non",
-        "mapsQuery": "Yushinkan Kyoto Super Grand Building 452-4 Matsugaecho Nakagyo-ku Kyoto"
+        "mapsQuery": "東山堂 祇園八坂店 京都市東山区祇園町南側542"
       }
     ],
     "moves": [

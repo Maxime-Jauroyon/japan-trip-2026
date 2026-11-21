@@ -2,18 +2,22 @@
   "checks": [
     {
       "id": "katana-kyoto-reservation",
-      "label": "Réserver une session de katana (dim. 22 nov, avant le train de 14 h 55)",
-      "meta": "2 sessions dans le jeu de dimanche : Yushinkan (Kawaramachi Sanjo, 20 000 ¥, 90 min, départs le dimanche 9 h et 11 h) et coupe supervisée Tachikiri (15 188 ¥, 75–90 min, adresse à demander) · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · aucune des deux n’est près de la gare · prix et horaires à confirmer",
+      "label": "Réserver le musée samouraï ninja et la coupe Tozando (dim. 22 nov)",
+      "meta": "Musée (Teramachi) : réservation conseillée, le billet Basic ne comprend pas de coupe · coupe de tatami Tozando Gion Yasaka : dès 59 $, ~30 min, après 11 h · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et disponibilités à confirmer",
       "remindFrom": "2026-11-21",
       "done": false,
       "links": [
         {
-          "label": "Yushinkan — réserver (Samurai Training, 90 min)",
-          "url": "https://yushinkankyoto.com/book/"
+          "label": "Klook — musée samouraï ninja avec expérience",
+          "url": "https://www.klook.com/en-US/activity/134092-samurai-and-ninja-experience-with-guided-museum-tour-in-kyoto/"
         },
         {
-          "label": "Klook — coupe samouraï supervisée par un champion (Tachikiri)",
-          "url": "https://www.klook.com/en-US/activity/241033-samurai-cutting-experience-in-kyoto-champion-supervised/"
+          "label": "Maikoya — réserver le musée samouraï ninja",
+          "url": "https://mai-ko.com/tour/samurai-experience-kyoto-samurai-museum-tour-and-armor-trial/"
+        },
+        {
+          "label": "Viator — coupe de tatami Tozando Gion Yasaka",
+          "url": "https://www.viator.com/tours/Kyoto/Kyoto-Samurai-Discovery-Samurai-Sword-Test-Cutting-Training/d332-441933P1"
         }
       ]
     },
