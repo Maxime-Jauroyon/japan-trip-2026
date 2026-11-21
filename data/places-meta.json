@@ -458,5 +458,10 @@
   "katana": {
     "hours": "Selon l’offre, à réserver sur Klook",
     "duration": "1–2 h"
+  },
+  "samurai-ninja": {
+    "hours": "~10h30–17h30 (dernier départ ~17h), à confirmer",
+    "duration": "1–2 h",
+    "closes": "17:30"
   }
 }
