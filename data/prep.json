@@ -53,7 +53,7 @@
     {
       "id": "kintetsu-eticket",
       "label": "Kintetsu : retrouver les mails des 2 e-tickets et tester l’affichage",
-      "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J",
+      "meta": "22 nov Kyoto 14:55 → Kintetsu-Nara 15:28 · 23 nov Kintetsu-Nara 16:08 → Osaka-Namba 16:43 · pas de capture d’écran : e-mail de confirmation → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket sur le téléphone · tester avec internet avant le jour J · l’e-ticket ne couvre que les suppléments : prévoir la Suica pour le tarif de base (environ 760 ¥ par personne, à confirmer)",
       "remindFrom": "2026-11-20",
       "done": false
     },

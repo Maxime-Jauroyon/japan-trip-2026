@@ -545,10 +545,10 @@
     "arrive": "15:28",
     "duration": "33 min",
     "operator": "Kintetsu (direct)",
-    "seat": "—",
+    "seat": "Voiture 4 · 6C, 6D (Deluxe, Twin)",
     "ref": "—",
     "status": "paid",
-    "payment": "Réservé · e-ticket Kintetsu (Limited Express) à afficher depuis le téléphone",
+    "payment": "Réservé · e-ticket Kintetsu (suppléments Limited Express et Deluxe, 1 460 ¥ pour 2) + Suica pour le tarif de base",
     "price": "—",
     "from": {
       "id": "kyoto",
@@ -586,10 +586,11 @@
     },
     "details": [
       "Limited Express direct Kyoto → Kintetsu-Nara : 14:55 → 15:28.",
+      "Gare Kintetsu (pas JR) : suivre les panneaux Kintetsu dans le bâtiment de la gare de Kyoto, train Limited Express Aoniyoshi. L’e-ticket ne couvre que les suppléments (Limited Express et voiture Deluxe) : le tarif de base se paie avec la Suica, à taper au portique d’entrée à Kyoto et au portique de sortie à Kintetsu-Nara (environ 760 ¥ par personne d’après une source tierce, à confirmer), donc vérifier le solde. L’e-ticket sert à prouver la place (voiture 4, sièges 6C et 6D, Deluxe) : à montrer si le contrôleur le demande.",
       "E-ticket Kintetsu : une capture d’écran de la confirmation n’est PAS acceptée par le personnel. Il faut retrouver l’e-mail de confirmation Kintetsu, ouvrir le lien, aller à l’écran d’accueil et choisir « Review/refund/change of purchased ticket(s) », saisir les infos demandées (n° de réservation, etc.), puis afficher l’e-ticket sur le téléphone. Connexion internet nécessaire (eSIM) : tester la veille.",
       "Kintetsu-Nara est plus près du parc / Todai-ji que JR Nara."
     ],
-    "tips": "Réservé : Kyoto 14:55 → Kintetsu-Nara 15:28 · il reste environ 1 h 15 de jour à Nara (coucher du soleil vers 16:50) : parc et Tōdai-ji d’abord. E-ticket Kintetsu : une capture d’écran de la confirmation n’est PAS acceptée par le personnel. Il faut retrouver l’e-mail de confirmation Kintetsu, ouvrir le lien, aller à l’écran d’accueil et choisir « Review/refund/change of purchased ticket(s) », saisir les infos demandées (n° de réservation, etc.), puis afficher l’e-ticket sur le téléphone. Connexion internet nécessaire (eSIM) : tester la veille.",
+    "tips": "Gare Kintetsu (pas JR) : suivre les panneaux Kintetsu dans le bâtiment de la gare de Kyoto, train Limited Express Aoniyoshi. L’e-ticket ne couvre que les suppléments (Limited Express et voiture Deluxe) : le tarif de base se paie avec la Suica, à taper au portique d’entrée à Kyoto et au portique de sortie à Kintetsu-Nara (environ 760 ¥ par personne d’après une source tierce, à confirmer), donc vérifier le solde. L’e-ticket sert à prouver la place (voiture 4, sièges 6C et 6D, Deluxe) : à montrer si le contrôleur le demande. Réservé : Kyoto 14:55 → Kintetsu-Nara 15:28 · il reste environ 1 h 15 de jour à Nara (coucher du soleil vers 16:50) : parc et Tōdai-ji d’abord. E-ticket Kintetsu : une capture d’écran de la confirmation n’est PAS acceptée par le personnel. Il faut retrouver l’e-mail de confirmation Kintetsu, ouvrir le lien, aller à l’écran d’accueil et choisir « Review/refund/change of purchased ticket(s) », saisir les infos demandées (n° de réservation, etc.), puis afficher l’e-ticket sur le téléphone. Connexion internet nécessaire (eSIM) : tester la veille.",
     "bookings": {
       "note": "Siège réservé en Limited Express (+~¥520) ; sinon trains express sans réservation (Suica/ICOCA).",
       "links": [
@@ -664,7 +665,8 @@
     "details": [
       "Limited Express direct Kintetsu-Nara (A28) → Osaka-Namba (A01) : 16:08 → 16:43.",
       "Même système que Kyoto → Nara : l’e-ticket s’affiche depuis le téléphone, pas de capture d’écran — e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket (internet nécessaire).",
-      "Arrivée directe dans le quartier Namba / Dotonbori (hôtel)."
+      "Arrivée directe dans le quartier Namba / Dotonbori (hôtel).",
+      "Probablement le même principe qu’à l’aller : Suica pour le tarif de base, e-ticket pour la place (non vérifié, à contrôler sur le mail de confirmation)."
     ],
     "tips": "Réservé : Kintetsu-Nara (A28) 16:08 → Osaka-Namba (A01) 16:43 · arrivée directe à Namba / Dotonbori pour la soirée street food. Même système que Kyoto → Nara : l’e-ticket s’affiche depuis le téléphone, pas de capture d’écran — e-mail de confirmation Kintetsu → « Review/refund/change of purchased ticket(s) » → saisir les infos → afficher l’e-ticket (internet nécessaire).",
     "bookings": {
