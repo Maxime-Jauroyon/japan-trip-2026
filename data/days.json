@@ -1028,6 +1028,22 @@
         "desc": "Grand parc d’activités en intérieur au 4e étage d’AEON MALL Kyoto (Kaede Building, Nishikujo Toriiguchicho, Minami-ku, 601-8417), à 5 min à pied de la sortie sud (Hachijo) de la gare de Kyoto : plus de 24 jeux physiques par équipes ou en solo, dont des versions ninja (tir à l’arc, course shinobi, parcours d’évasion, slackline, jump, billard). Ouvert 10 h–21 h (dernière entrée 20 h). Pass de 2 h : de 2 800 à 3 600 ¥ par adulte selon le tarif du jour (le tarif de dimanche n’est pas lu), prolongation 900 ¥ par 30 min. Enfants d’âge pré-élémentaire non admis. Réservation conseillée mais pas obligatoire : il y a un guichet sur place, mais les jours d’affluence des tickets d’entrée horodatés peuvent être distribués et aucune source ne garantit l’entrée sans billet ; arriver à l’ouverture (10 h). Les billets en ligne ne sont ni annulables ni remboursables. Pas de fiche Klook pour ce site. Billet en ligne officiel : https://bandainamco-am.co.jp/en/others/vspark/webticket.html (les billets du mois suivant sortent vers le 25 ; pas de réservation par téléphone hors groupes). Prix par jour : https://bandainamco-am.co.jp/en/others/vspark/kyoto/ticket.html . FAQ : https://bandainamco-am.co.jp/en/others/vspark/kyoto/faq.html . Si vous achetez chez un revendeur, vérifier que le billet est bien pour le site de Kyoto. Dimanche : ouverture à 10 h, donc un pass de 2 h finit vers 12 h ; valises en consigne à la gare, gare vers 14 h 35 pour le train de 14 h 55. Position sur la carte approximative, prix et horaires à confirmer.",
         "goshuin": "non",
         "mapsQuery": "VS PARK AEON MALL Kyoto 京都市南区西九条鳥居口町1 イオンモールKYOTO"
+      },
+      {
+        "title": "Nigatsu-dō au crépuscule (Tōdai-ji)",
+        "lat": 34.6893,
+        "lng": 135.8414,
+        "desc": "Le pavillon sur pilotis de Tōdai-ji, avec sa terrasse qui domine Nara. Ouvert pour le culte 24 h/24 d’après un guide, éclairé à la tombée de la nuit ; coucher du soleil vers 16 h 50. Les lanternes ne sont pas confirmées par les pages que j’ai lues : à vérifier sur place. Extérieur libre, rester discret le soir. À pied depuis le parc de Nara. Ensuite, retour vers le centre pour dîner. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "二月堂 東大寺 奈良市雑司町406-1"
+      },
+      {
+        "title": "7-Eleven près de la préfecture de Nara (courses)",
+        "lat": 34.6851,
+        "lng": 135.8335,
+        "desc": "Le 7-Eleven « 7FS奈良県庁 », près de la préfecture de Nara, listé à environ 600 m de la gare Kintetsu-Nara. Horaires non confirmés (il n’est pas marqué ouvert 24 h sur la liste que j’ai lue) : vérifier avant d’y aller. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "セブンイレブン 7FS奈良県庁 奈良市"
       }
     ],
     "moves": [
@@ -1059,12 +1075,30 @@
     "extraCity": "osaka",
     "ideas": [
       {
-        "title": "Tōdai-ji",
+        "title": "Tōdai-ji : Daibutsuden (Grand Bouddha)",
         "lat": 34.689,
         "lng": 135.8398,
-        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde.",
+        "desc": "Le Grand Bouddha dans l’un des plus grands bâtiments en bois du monde. Daibutsuden ouvert de 8 h à 17 h de novembre à mars (dernière entrée 30 min avant), 800 ¥ par adulte d’après le site officiel de Tōdai-ji (à confirmer). Train Kintetsu à 16 h 08 : être à la gare vers 15 h 50.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du temple."
+      },
+      {
+        "title": "Wakamiya Jinja (domaine de Kasuga Taisha)",
+        "lat": 34.6819,
+        "lng": 135.8503,
+        "desc": "Petit sanctuaire dans le domaine de Kasuga Taisha, à l’est du sanctuaire principal, dédié au kami de l’eau et de la purification (fondé en 1135). Horaires divergents : 7 h–17 h de novembre à février selon le tourisme de Nara, 9 h–16 h 30 (dernière entrée 16 h) selon le sanctuaire ; tarif non vu. Accès : bus Kasuga Taisha Honden depuis la gare, environ 15 min. Position sur la carte approximative.",
+        "goshuin": "possible",
+        "goshuinNote": "À Kasuga Taisha : se renseigner à l’accueil du domaine.",
+        "mapsQuery": "若宮神社 春日大社 奈良市春日野町160"
+      },
+      {
+        "title": "Gangō-ji (Naramachi)",
+        "lat": 34.6786,
+        "lng": 135.8301,
+        "desc": "Le plus ancien grand temple bouddhique du Japon, classé à l’UNESCO, dans le quartier de Naramachi. Ouvert 9 h–17 h (dernière entrée 16 h 30). Entrée 500 ¥ ou 700 ¥ selon les sources (à confirmer sur gangoji-tera.or.jp). Position sur la carte approximative.",
+        "goshuin": "possible",
+        "goshuinNote": "Au temple : se renseigner à l’accueil.",
+        "mapsQuery": "元興寺 奈良市中院町11"
       },
       {
         "title": "Kasuga Taisha",
