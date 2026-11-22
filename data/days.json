@@ -1038,12 +1038,12 @@
         "mapsQuery": "二月堂 東大寺 奈良市雑司町406-1"
       },
       {
-        "title": "Mochiidono Center Gai (rue commerçante couverte, Nara)",
-        "lat": 34.6821,
-        "lng": 135.8315,
-        "desc": "La plus ancienne galerie marchande couverte de Nara, qui mène vers le quartier de Naramachi : boutiques, souvenirs et nombreux restaurants pour dîner. Les horaires varient selon les boutiques (un guide non officiel donne environ 10 h–21 h pour Sanjo-dori) et certains restaurants ferment tôt : vérifier avant d’y aller. Si besoin, la Higashimuki Shopping Street est juste devant la gare Kintetsu-Nara. Position sur la carte approximative.",
+        "title": "Higashimuki Shopping Street (rue commerçante, Nara)",
+        "lat": 34.684,
+        "lng": 135.8312,
+        "desc": "Rue commerçante piétonne juste devant la sortie est de la gare Kintetsu-Nara, avec boutiques, souvenirs et restaurants pour dîner. Les horaires varient selon les boutiques et certains restaurants ferment tôt (un avis les dit surtout animés de jour) : vérifier avant d’y aller. Le Mochiidono Center Gai, plus au sud vers Naramachi, est une autre galerie couverte avec beaucoup de restaurants. Position sur la carte approximative.",
         "goshuin": "non",
-        "mapsQuery": "もちいどのセンター街 奈良市"
+        "mapsQuery": "東向商店街 奈良市"
       }
     ],
     "moves": [

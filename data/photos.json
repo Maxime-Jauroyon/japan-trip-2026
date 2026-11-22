@@ -1,8 +1,8 @@
 {
   "rules": [
     {
-      "match": "mochiidono",
-      "slug": "mochiidono"
+      "match": "higashimuki",
+      "slug": "higashimuki"
     },
     {
       "match": "gang[oō]-ji|gangoji",
@@ -2702,7 +2702,7 @@
         "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Five-Storied_Pagoda_03.jpg"
       }
     ],
-    "mochiidono": [
+    "higashimuki": [
       {
         "file": "nishiki.jpg",
         "author": "collinox",
