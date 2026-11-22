@@ -1038,12 +1038,12 @@
         "mapsQuery": "二月堂 東大寺 奈良市雑司町406-1"
       },
       {
-        "title": "7-Eleven près de la préfecture de Nara (courses)",
-        "lat": 34.6851,
-        "lng": 135.8335,
-        "desc": "Le 7-Eleven « 7FS奈良県庁 », près de la préfecture de Nara, listé à environ 600 m de la gare Kintetsu-Nara. Horaires non confirmés (il n’est pas marqué ouvert 24 h sur la liste que j’ai lue) : vérifier avant d’y aller. Position sur la carte approximative.",
+        "title": "Mochiidono Center Gai (rue commerçante couverte, Nara)",
+        "lat": 34.6821,
+        "lng": 135.8315,
+        "desc": "La plus ancienne galerie marchande couverte de Nara, qui mène vers le quartier de Naramachi : boutiques, souvenirs et nombreux restaurants pour dîner. Les horaires varient selon les boutiques (un guide non officiel donne environ 10 h–21 h pour Sanjo-dori) et certains restaurants ferment tôt : vérifier avant d’y aller. Si besoin, la Higashimuki Shopping Street est juste devant la gare Kintetsu-Nara. Position sur la carte approximative.",
         "goshuin": "non",
-        "mapsQuery": "セブンイレブン 7FS奈良県庁 奈良市"
+        "mapsQuery": "もちいどのセンター街 奈良市"
       }
     ],
     "moves": [
