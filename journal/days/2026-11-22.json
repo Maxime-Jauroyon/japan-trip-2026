@@ -8,6 +8,24 @@
    "doneAt": 1795321386646,
    "by": "Maxime",
    "at": 1795321386646
+  },
+  "p:nigatsu-do-au-crepuscule-todai-ji": {
+   "id": "p:nigatsu-do-au-crepuscule-todai-ji",
+   "kind": "planned",
+   "title": "Nigatsu-dō au crépuscule (Tōdai-ji)",
+   "status": "done",
+   "doneAt": 1795345450558,
+   "by": "Maxime",
+   "at": 1795345450558
+  },
+  "p:higashimuki-shopping-street-rue-commercante-nara": {
+   "id": "p:higashimuki-shopping-street-rue-commercante-nara",
+   "kind": "planned",
+   "title": "Higashimuki Shopping Street (rue commerçante, Nara)",
+   "status": "done",
+   "doneAt": 1795345451387,
+   "by": "Maxime",
+   "at": 1795345451387
   }
  }
 }
