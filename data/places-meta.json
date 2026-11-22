@@ -464,10 +464,6 @@
     "hours": "Libre, éclairé à la tombée de la nuit",
     "duration": "30 min–1 h"
   },
-  "seven-eleven-nara": {
-    "hours": "À confirmer",
-    "duration": "15 min"
-  },
   "wakamiya": {
     "hours": "~7h–17h ou 9h–16h30 (à confirmer)",
     "duration": "30 min",
@@ -477,5 +473,9 @@
     "hours": "9h–17h (dernière entrée 16h30)",
     "duration": "45 min",
     "closes": "16:30"
+  },
+  "mochiidono": {
+    "hours": "Variables selon les boutiques",
+    "duration": "1 h"
   }
 }

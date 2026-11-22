@@ -1,16 +1,16 @@
 {
   "rules": [
     {
+      "match": "mochiidono",
+      "slug": "mochiidono"
+    },
+    {
       "match": "gang[oō]-ji|gangoji",
       "slug": "gangoji"
     },
     {
       "match": "wakamiya",
       "slug": "wakamiya"
-    },
-    {
-      "match": "7-eleven|7 eleven",
-      "slug": "seven-eleven-nara"
     },
     {
       "match": "nigatsu",
@@ -2656,29 +2656,6 @@
         "source": "https://commons.wikimedia.org/wiki/File:T%C5%8Ddai-ji_Daibutsuden,_June_2019.jpg"
       }
     ],
-    "seven-eleven-nara": [
-      {
-        "file": "nara-park.jpg",
-        "author": "Marek Ślusarczyk (Tupungato)",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:005_Autumn_in_Nara_Park,_Japan_-_Nara_deer_CC-BY_Creative_Commons_Attribution.jpg"
-      },
-      {
-        "file": "nara-park-2.jpg",
-        "author": "Feri88",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Nara_Park_-_panoramio_(2).jpg"
-      },
-      {
-        "file": "nara-park-3.jpg",
-        "author": "merec0",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:2008-10-11_deer_near_a_stand_selling_deer_cookies_in_Nara.jpg"
-      }
-    ],
     "wakamiya": [
       {
         "file": "kasuga.jpg",
@@ -2723,6 +2700,29 @@
         "license": "CC BY 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Five-Storied_Pagoda_03.jpg"
+      }
+    ],
+    "mochiidono": [
+      {
+        "file": "nishiki.jpg",
+        "author": "collinox",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-2.jpg",
+        "author": "pokpok313",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      },
+      {
+        "file": "nishiki-3.jpg",
+        "author": "ignis",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
       }
     ]
   }
