@@ -1,39 +1,6 @@
 {
   "checks": [
     {
-      "id": "dimanche-matin-kyoto",
-      "label": "Dimanche matin avant le train : teamLab ou VS PARK (réservation conseillée, pas obligatoire)",
-      "meta": "teamLab Biovortex Kyoto (10 min à pied de la gare, ~9 500–12 000 ¥, 2 à 3 h) : billet horodaté, achat le jour même possible s’il reste des places, sur place à un autre prix · VS PARK AEON MALL Kyoto (5 min à pied de la gare, pass de 2 h dès 2 800 ¥) : guichet sur place, entrée non garantie les jours d’affluence · arriver à l’ouverture · finir avant 14 h 15 : valises en consigne à la gare, gare vers 14 h 35 · prix et horaires à confirmer",
-      "remindFrom": "2026-11-21",
-      "done": false,
-      "links": [
-        {
-          "label": "teamLab Biovortex Kyoto — billets",
-          "url": "https://www.teamlab.art/e/kyoto/"
-        },
-        {
-          "label": "Klook — teamLab Biovortex Kyoto",
-          "url": "https://www.klook.com/activity/167098-teamlab-kyoto/"
-        },
-        {
-          "label": "VS PARK Kyoto — billets en ligne (officiel)",
-          "url": "https://bandainamco-am.co.jp/en/others/vspark/webticket.html"
-        },
-        {
-          "label": "VS PARK Kyoto — prix du pass selon le jour",
-          "url": "https://bandainamco-am.co.jp/en/others/vspark/kyoto/ticket.html"
-        },
-        {
-          "label": "VS PARK Kyoto — FAQ",
-          "url": "https://bandainamco-am.co.jp/en/others/vspark/kyoto/faq.html"
-        },
-        {
-          "label": "teamLab Biovortex Kyoto — FAQ billets",
-          "url": "https://www.teamlab.art/faq/kyoto/"
-        }
-      ]
-    },
-    {
       "id": "kyubey-osaka-reservation",
       "label": "Réserver le déjeuner sushi Ginza Kyubey, Osaka (jeu. 26 nov)",
       "meta": "24e étage de l’Imperial Hotel Osaka · déjeuner 11 h 30–14 h 30 (dernière commande), menus dès ~8 250 ¥ (prix variables selon les sources) · réserver au moins une semaine avant, via le site de l’hôtel ou AutoReserve · enfants non admis, pas de menu végétarien",
