@@ -1,6 +1,22 @@
 {
   "rules": [
     {
+      "match": "gang[oō]-ji|gangoji",
+      "slug": "gangoji"
+    },
+    {
+      "match": "wakamiya",
+      "slug": "wakamiya"
+    },
+    {
+      "match": "7-eleven|7 eleven",
+      "slug": "seven-eleven-nara"
+    },
+    {
+      "match": "nigatsu",
+      "slug": "nigatsudo"
+    },
+    {
       "match": "vs park",
       "slug": "vs-park"
     },
@@ -2615,6 +2631,98 @@
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
+      }
+    ],
+    "nigatsudo": [
+      {
+        "file": "todaiji.jpg",
+        "author": "Wiiii",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:T%C5%8Ddai-ji_Kon-d%C5%8D.jpg"
+      },
+      {
+        "file": "todaiji-2.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Todai-ji_Daibutsuden_Interior_Daibutsu_07.jpg"
+      },
+      {
+        "file": "todaiji-3.jpg",
+        "author": "Cun Cun",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:T%C5%8Ddai-ji_Daibutsuden,_June_2019.jpg"
+      }
+    ],
+    "seven-eleven-nara": [
+      {
+        "file": "nara-park.jpg",
+        "author": "Marek Ślusarczyk (Tupungato)",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:005_Autumn_in_Nara_Park,_Japan_-_Nara_deer_CC-BY_Creative_Commons_Attribution.jpg"
+      },
+      {
+        "file": "nara-park-2.jpg",
+        "author": "Feri88",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Park_-_panoramio_(2).jpg"
+      },
+      {
+        "file": "nara-park-3.jpg",
+        "author": "merec0",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:2008-10-11_deer_near_a_stand_selling_deer_cookies_in_Nara.jpg"
+      }
+    ],
+    "wakamiya": [
+      {
+        "file": "kasuga.jpg",
+        "author": "663highland",
+        "license": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+        "source": "https://commons.wikimedia.org/wiki/File:Kasuga-taisha11bs3200.jpg"
+      },
+      {
+        "file": "kasuga-2.jpg",
+        "author": "Gzzz",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Lanterns_Kasuga-taisha_Nara.jpg"
+      },
+      {
+        "file": "kasuga-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Kasuga-taisha_Lanterns_%26_Deer_02.jpg"
+      }
+    ],
+    "gangoji": [
+      {
+        "file": "kofukuji.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Eastern_Golden_Hall_%26_Five-Storied_Pagoda_1.jpg"
+      },
+      {
+        "file": "kofukuji-2.jpg",
+        "author": "663highland",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Kofukuji12st5s3200.jpg"
+      },
+      {
+        "file": "kofukuji-3.jpg",
+        "author": "Zairon",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Five-Storied_Pagoda_03.jpg"
       }
     ]
   }
