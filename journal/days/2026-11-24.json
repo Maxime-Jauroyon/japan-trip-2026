@@ -4,9 +4,10 @@
    "id": "p:universal-studios-japan",
    "kind": "planned",
    "title": "Universal Studios Japan",
-   "status": "todo",
+   "status": "done",
    "by": "Maxime",
-   "at": 1795446236243
+   "at": 1795476291120,
+   "doneAt": 1795476291120
   }
  }
 }
