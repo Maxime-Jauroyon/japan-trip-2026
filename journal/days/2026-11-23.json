@@ -26,6 +26,24 @@
    "doneAt": 1795424151229,
    "by": "Maxime",
    "at": 1795424151229
+  },
+  "p:wakamiya-jinja-domaine-de-kasuga-taisha": {
+   "id": "p:wakamiya-jinja-domaine-de-kasuga-taisha",
+   "kind": "planned",
+   "title": "Wakamiya Jinja (domaine de Kasuga Taisha)",
+   "status": "done",
+   "doneAt": 1795424155877,
+   "by": "Maxime",
+   "at": 1795424155877
+  },
+  "p:todai-ji-daibutsuden-grand-bouddha": {
+   "id": "p:todai-ji-daibutsuden-grand-bouddha",
+   "kind": "planned",
+   "title": "Tōdai-ji : Daibutsuden (Grand Bouddha)",
+   "status": "done",
+   "doneAt": 1795424157428,
+   "by": "Maxime",
+   "at": 1795424157428
   }
  }
 }
