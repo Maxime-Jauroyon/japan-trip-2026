@@ -71,6 +71,14 @@
    "doneAt": 1795444376852,
    "by": "Maxime",
    "at": 1795444376852
+  },
+  "p:gango-ji-naramachi": {
+   "id": "p:gango-ji-naramachi",
+   "kind": "planned",
+   "title": "Gangō-ji (Naramachi)",
+   "status": "skipped",
+   "by": "Maxime",
+   "at": 1795446226719
   }
  }
 }
