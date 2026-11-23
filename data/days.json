@@ -1184,9 +1184,13 @@
         "lng": 135.4323,
         "desc": "Journée parc — Harry Potter, Super Nintendo World, attractions. Arriver tôt et planifier le parcours.",
         "notes": [
-          "Billets achetés (291 € pour 2) — ils sont dans l’app officielle USJ.",
-          "Avoir l’app officielle Universal Studios Japan (files, Express Pass, carte du parc).",
-          "Super Nintendo World : Express Pass recommandé, sinon timed-entry / file le jour J."
+          "Billets pris sur Klook : un 1-Day Studio Pass et un Express Pass avec Super Nintendo World, horaires d’entrée déjà attribués.",
+          "Ce soir : mettre à jour l’app officielle USJ, créer le compte, puis enregistrer (lier) le Studio Pass en scannant son QR code Klook dans l’app. Le QR peut n’être scannable que le lendemain de l’achat ; si le scan échoue, mettre à jour ou réinstaller l’app. Ne pas désinstaller l’app ensuite.",
+          "Demain : arriver avant l’ouverture, téléphone chargé et connecté. À l’entrée du parc, présenter le QR du Studio Pass depuis l’app ; garder le mail Klook ouvert au cas où.",
+          "Express Pass : c’est un voucher séparé du Studio Pass. D’après la page Klook, son QR est présenté à l’entrée Express de chaque attraction. Il n’est pas confirmé qu’on puisse le charger dans l’app.",
+          "Super Nintendo World : montrer l’horaire d’entrée déjà attribué avec l’Express Pass ; ne pas en reprendre un autre dans l’app.",
+          "En cas d’échec d’un scan : guichets et bornes dans le parc pour récupérer les tickets. Le voucher Klook (section « how to use ») fait foi : la lire ce soir.",
+          "Je n’ai pas pu lire les pages officielles d’USJ (chargées en JavaScript) : ces étapes viennent de pages Klook et de guides tiers, à confirmer."
         ],
         "links": [
           {
