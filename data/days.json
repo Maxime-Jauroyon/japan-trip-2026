@@ -1213,7 +1213,17 @@
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
-    }
+    },
+    "ideasAfter": [
+      {
+        "title": "魔法使いの夜 en IMAX (TOHO Cinemas Namba, 20 h 30)",
+        "desc": "Le film d’animation 魔法使いの夜 en IMAX au TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai), séance de 20 h 30 le 24 nov, optionnelle après la journée à USJ ; même film que celui proposé le 26 nov, à ne voir qu’une fois. Film japonais en japonais, sous-titres anglais non confirmés. Séances de l’agrégateur tiers Jorudan, à confirmer sur place ou sur le site de TOHO ; supplément IMAX d’environ 600 ¥ (à confirmer). Position sur la carte approximative.",
+        "lat": 34.6659,
+        "lng": 135.5016,
+        "goshuin": "non",
+        "mapsQuery": "TOHOシネマズなんば"
+      }
+    ]
   },
   {
     "n": 18,
@@ -1246,10 +1256,10 @@
         "goshuin": "non"
       },
       {
-        "title": "Godzilla -0.0 en 4D (TOHO Cinemas Namba)",
-        "lat": 34.6657,
-        "lng": 135.5009,
-        "desc": "Séance de 18 h en 4D (MX4D d’après le cinéma, ce n’est pas du 4DX) au TOHO Cinemas Namba, en plein centre de Namba. Film en japonais : je n’ai trouvé aucune séance sous-titrée en anglais. Durée à confirmer. Places à prendre sur place au guichet ou à une borne ; pour être sûr d’avoir la séance de 18 h, arrivez en avance (réserver les sièges en ligne sur le site de TOHO est facultatif). Autres séances le 25 nov : 4D à 15 h ou 21 h, IMAX 11 h 30 et 14 h 30–17 h. Horaires publiés jusqu’au 25 nov seulement, à reconfirmer.",
+        "title": "Cliff Booth en IMAX (TOHO Cinemas Namba, 17 h 30)",
+        "desc": "The Father Misadventure of Cliff Booth en IMAX, séance de 17 h 30 le 25 nov au TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai). Film étranger marqué 字幕版 : voix originale (a priori anglaise) avec sous-titres japonais, à confirmer. Durée non lue : prévoir de finir avant Dotonbori. Vous avez déjà vu Godzilla en MX4D, la séance Godzilla de 18 h est donc retirée. Séances de l’agrégateur tiers Jorudan, à confirmer sur place ou sur le site de TOHO ; supplément IMAX d’environ 600 ¥ (à confirmer). Position sur la carte approximative.",
+        "lat": 34.6659,
+        "lng": 135.5016,
         "goshuin": "non",
         "mapsQuery": "TOHOシネマズなんば"
       },
@@ -1312,7 +1322,17 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFixe": true
+    "ordreFixe": true,
+    "ideasAfter": [
+      {
+        "title": "魔法使いの夜 en IMAX (TOHO Cinemas Namba, 17 h 30 ou 20 h 30)",
+        "desc": "Le film d’animation 魔法使いの夜 en IMAX au TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai), séances de 17 h 30 et 20 h 30 le 26 nov ; même film que celui proposé le 24 nov (à ne voir qu’une fois). Film japonais en japonais, sous-titres anglais non confirmés. Séances de l’agrégateur tiers Jorudan, à confirmer sur place ou sur le site de TOHO ; supplément IMAX d’environ 600 ¥ (à confirmer). Position sur la carte approximative.",
+        "lat": 34.6659,
+        "lng": 135.5016,
+        "goshuin": "non",
+        "mapsQuery": "TOHOシネマズなんば"
+      }
+    ]
   },
   {
     "n": 20,
