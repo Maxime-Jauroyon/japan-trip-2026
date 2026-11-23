@@ -1,0 +1,31 @@
+{
+ "items": {
+  "p:parc-de-nara": {
+   "id": "p:parc-de-nara",
+   "kind": "planned",
+   "title": "Parc de Nara",
+   "status": "done",
+   "doneAt": 1795424150294,
+   "by": "Maxime",
+   "at": 1795424150294
+  },
+  "p:kofuku-ji": {
+   "id": "p:kofuku-ji",
+   "kind": "planned",
+   "title": "Kōfuku-ji",
+   "status": "done",
+   "doneAt": 1795424150728,
+   "by": "Maxime",
+   "at": 1795424150728
+  },
+  "p:kasuga-taisha": {
+   "id": "p:kasuga-taisha",
+   "kind": "planned",
+   "title": "Kasuga Taisha",
+   "status": "done",
+   "doneAt": 1795424151229,
+   "by": "Maxime",
+   "at": 1795424151229
+  }
+ }
+}
