@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "midōsuji|midosuji",
+      "slug": "midosuji"
+    },
+    {
       "match": "higashimuki",
       "slug": "higashimuki"
     },
@@ -2723,6 +2727,29 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_ichiba_Kyoto_JPN.jpg"
+      }
+    ],
+    "midosuji": [
+      {
+        "file": "shinsaibashi.jpg",
+        "author": "そらみみ",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:View_of_Shinsaibashi-suji_Shopping_Street_from_Ebisubashi_Bridge.jpg"
+      },
+      {
+        "file": "shinsaibashi-2.jpg",
+        "author": "Francisco Restivo",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinsaibashi-suji_(4793145349).jpg"
+      },
+      {
+        "file": "shinsaibashi-3.jpg",
+        "author": "WPPilot",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "source": "https://commons.wikimedia.org/wiki/File:Shinsaibashi_Suji_Shopping_Street_Osaka_Japan_by_Don_Ramey_Logan.jpg"
       }
     ]
   }
