@@ -481,5 +481,9 @@
   "midosuji": {
     "hours": "Piétons ~17h–19h (à confirmer), illuminations jusque tard",
     "duration": "1 h"
+  },
+  "cine-namba": {
+    "hours": "Séances de ~8h30 à 22h (à confirmer)",
+    "duration": "2–2,5 h"
   }
 }
