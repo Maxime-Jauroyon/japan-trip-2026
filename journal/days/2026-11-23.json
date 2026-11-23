@@ -44,6 +44,24 @@
    "doneAt": 1795424157428,
    "by": "Maxime",
    "at": 1795424157428
+  },
+  "p:midosuji-rue-pietonne-et-illuminations-soiree-du-23-nov": {
+   "id": "p:midosuji-rue-pietonne-et-illuminations-soiree-du-23-nov",
+   "kind": "planned",
+   "title": "Midōsuji : rue piétonne et illuminations (soirée du 23 nov)",
+   "status": "done",
+   "doneAt": 1795431722364,
+   "by": "Maxime",
+   "at": 1795431722364
+  },
+  "p:dotonbori": {
+   "id": "p:dotonbori",
+   "kind": "planned",
+   "title": "Dotonbori",
+   "status": "done",
+   "doneAt": 1795431723042,
+   "by": "Maxime",
+   "at": 1795431723042
   }
  }
 }
