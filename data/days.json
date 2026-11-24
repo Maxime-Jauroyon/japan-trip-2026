@@ -1218,14 +1218,6 @@
     },
     "ideasAfter": [
       {
-        "title": "魔法使いの夜 en IMAX (TOHO Cinemas Namba, 20 h 30)",
-        "desc": "Le film d’animation 魔法使いの夜 en IMAX au TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai), séance de 20 h 30 le 24 nov, optionnelle après la journée à USJ ; même film que celui proposé le 26 nov, à ne voir qu’une fois. Film japonais en japonais, sous-titres anglais non confirmés. Séances de l’agrégateur tiers Jorudan, à confirmer sur place ou sur le site de TOHO ; supplément IMAX d’environ 600 ¥ (à confirmer). Position sur la carte approximative.",
-        "lat": 34.6659,
-        "lng": 135.5016,
-        "goshuin": "non",
-        "mapsQuery": "TOHOシネマズなんば"
-      },
-      {
         "title": "The Toxic Avenger en VO (Osaka Station City Cinema, 21 h 35)",
         "lat": 34.705,
         "lng": 135.496,
@@ -1333,17 +1325,7 @@
       "time": "08:00",
       "why": "Journée libre"
     },
-    "ordreFixe": true,
-    "ideasAfter": [
-      {
-        "title": "魔法使いの夜 en IMAX (TOHO Cinemas Namba, 17 h 30 ou 20 h 30)",
-        "desc": "Le film d’animation 魔法使いの夜 en IMAX au TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai), séances de 17 h 30 et 20 h 30 le 26 nov ; même film que celui proposé le 24 nov (à ne voir qu’une fois). Film japonais en japonais, sous-titres anglais non confirmés. Séances de l’agrégateur tiers Jorudan, à confirmer sur place ou sur le site de TOHO ; supplément IMAX d’environ 600 ¥ (à confirmer). Position sur la carte approximative.",
-        "lat": 34.6659,
-        "lng": 135.5016,
-        "goshuin": "non",
-        "mapsQuery": "TOHOシネマズなんば"
-      }
-    ]
+    "ordreFixe": true
   },
   {
     "n": 20,
