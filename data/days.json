@@ -1184,10 +1184,26 @@
     },
     "ideasAfter": [
       {
+        "title": "Ebenezer: A Christmas Carol en VO (TOHO Cinemas Namba, 17 h 10)",
+        "lat": 34.6659,
+        "lng": 135.5016,
+        "desc": "Ebenezer: A Christmas Carol (クリスマス・キャロル/3人のゴーストたち, 116 min, avec Johnny Depp et Ian McKellen) au TOHO Cinemas Namba, 8e étage du bâtiment TOHO Nangai : séance de 17 h 10, voix originale anglaise avec sous-titres japonais (字幕版, pas de version doublée listée), fin vers 19 h 10. Pour enchaîner avec The Toxic Avenger, la séance de 19 h 10 à Namba est trop juste ; viser celle de 21 h 35 à Umeda. Bande-annonce : https://www.youtube.com/watch?v=A8d2QrXr9AA . Séances de l’agrégateur tiers Jorudan, mis à jour le 24 nov, à confirmer sur place. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "TOHOシネマズなんば"
+      },
+      {
         "title": "The Toxic Avenger en VO (Osaka Station City Cinema, 21 h 35)",
         "lat": 34.705,
         "lng": 135.496,
-        "desc": "Séance de 21 h 35 de The Toxic Avenger (トキシック・アベンジャー, 102 min) à l’Osaka Station City Cinema, dans le complexe de la gare d’Osaka, à Umeda : voix originale anglaise avec sous-titres japonais (字幕版, pas de version doublée listée). Fin vers 23 h 20, bandes-annonces non comprises. C’est la séance la plus tardive ; l’autre est à 19 h 10 au TOHO Cinemas Namba. Depuis l’hôtel (Honmachi), ligne Midōsuji vers Umeda, quelques stations : le temps de trajet et l’heure du dernier métro sont à vérifier, la marge est courte après 23 h 20. Bande-annonce : https://www.youtube.com/watch?v=IdyIMSIm4Kk . Séances de l’agrégateur tiers Jorudan, mis à jour le 24 nov, à confirmer. Position sur la carte approximative.",
+        "desc": "Séance de 21 h 35 de The Toxic Avenger (トキシック・アベンジャー, 102 min) à l’Osaka Station City Cinema, dans le complexe de la gare d’Osaka, à Umeda : voix originale anglaise avec sous-titres japonais (字幕版, pas de version doublée listée). Fin vers 23 h 20, bandes-annonces non comprises. C’est la séance la plus tardive ; l’autre est à 19 h 10 au TOHO Cinemas Namba (fin vers 21 h). Depuis l’hôtel (Honmachi), ligne Midōsuji vers Umeda, quelques stations : le temps de trajet et l’heure du dernier métro sont à vérifier, la marge est courte après 23 h 20. Bande-annonce : https://www.youtube.com/watch?v=IdyIMSIm4Kk . Séances de l’agrégateur tiers Jorudan, mis à jour le 24 nov, à confirmer. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "大阪ステーションシティシネマ"
+      },
+      {
+        "title": "Ebenezer: A Christmas Carol en VO (Osaka Station City Cinema, 21 h 10)",
+        "lat": 34.705,
+        "lng": 135.496,
+        "desc": "Ebenezer: A Christmas Carol (クリスマス・キャロル/3人のゴーストたち, 116 min) à l’Osaka Station City Cinema, à Umeda : séance de 21 h 10, voix originale anglaise avec sous-titres japonais (字幕版), fin vers 23 h 10. Elle chevauche la séance de The Toxic Avenger de 21 h 35 : choisir l’un ou l’autre. Le trajet depuis l’hôtel et le dernier métro de la ligne Midōsuji sont à vérifier. Bande-annonce : https://www.youtube.com/watch?v=A8d2QrXr9AA . Séances de l’agrégateur tiers Jorudan, mis à jour le 24 nov, à confirmer sur place. Position sur la carte approximative.",
         "goshuin": "non",
         "mapsQuery": "大阪ステーションシティシネマ"
       }
