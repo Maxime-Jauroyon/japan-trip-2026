@@ -485,5 +485,9 @@
   "cine-namba": {
     "hours": "Séances de ~8h30 à 22h (à confirmer)",
     "duration": "2–2,5 h"
+  },
+  "cine-osaka-station": {
+    "hours": "Séances jusqu’à ~21h35 pour ce film (à confirmer)",
+    "duration": "2 h"
   }
 }
