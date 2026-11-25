@@ -17,6 +17,15 @@
    "doneAt": 1795591793095,
    "by": "Maxime",
    "at": 1795591793095
+  },
+  "p:dotonbori": {
+   "id": "p:dotonbori",
+   "kind": "planned",
+   "title": "Dotonbori",
+   "status": "done",
+   "doneAt": 1795597329017,
+   "by": "Maxime",
+   "at": 1795597329017
   }
  }
 }
