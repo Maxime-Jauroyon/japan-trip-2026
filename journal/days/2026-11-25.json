@@ -16,7 +16,10 @@
    "status": "done",
    "doneAt": 1795591793095,
    "by": "Maxime",
-   "at": 1795591793095
+   "at": 1795591793095,
+   "likes": {
+    "Maxime": 1795603413362
+   }
   },
   "p:dotonbori": {
    "id": "p:dotonbori",
@@ -43,7 +46,10 @@
    "status": "done",
    "doneAt": 1795602721555,
    "by": "Maxime",
-   "at": 1795602721555
+   "at": 1795602721555,
+   "likes": {
+    "Maxime": 1795603414913
+   }
   },
   "p:tour-tsutenkaku-observatoire-toboggan-et-dive-walk-shinsekai": {
    "id": "p:tour-tsutenkaku-observatoire-toboggan-et-dive-walk-shinsekai",
