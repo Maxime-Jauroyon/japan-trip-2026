@@ -35,6 +35,15 @@
    "doneAt": 1795601864494,
    "by": "Maxime",
    "at": 1795601864494
+  },
+  "p:shinsekai": {
+   "id": "p:shinsekai",
+   "kind": "planned",
+   "title": "Shinsekai",
+   "status": "done",
+   "doneAt": 1795602721555,
+   "by": "Maxime",
+   "at": 1795602721555
   }
  }
 }
