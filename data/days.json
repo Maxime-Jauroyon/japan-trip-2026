@@ -1267,6 +1267,22 @@
         "mapsQuery": "TOHOシネマズなんば"
       },
       {
+        "title": "Clayface en VO (TOHO Cinemas Umeda, 19 h)",
+        "lat": 34.705,
+        "lng": 135.501,
+        "desc": "Clayface (クレイフェイス, 108 min) au TOHO Cinemas Umeda : séance de 19 h, voix originale anglaise avec sous-titres japonais (字幕版, pas de version doublée listée), fin vers 20 h 50. C’est la séance la plus proche de l’hôtel : de Honmachi, ligne Midōsuji vers Umeda (trajet à vérifier). Cliff Booth à 17 h 30 à Namba (durée non lue) laisse peu de marge avant 19 h : choisir l’un ou l’autre. Autres séances ce soir : Abeno Apollo Cinema à 20 h 50 et 109 Cinemas Osaka Expocity à 21 h 35 (Suita, loin). Séances de l’agrégateur tiers Jorudan (film mis à jour le 25 nov), à confirmer sur place. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "TOHOシネマズ梅田"
+      },
+      {
+        "title": "Clayface en VO (Abeno Apollo Cinema, 20 h 50)",
+        "lat": 34.6455,
+        "lng": 135.5135,
+        "desc": "Clayface (クレイフェイス, 108 min) à l’Abeno Apollo Cinema, à Tennōji : séance de 20 h 50, voix originale anglaise avec sous-titres japonais (字幕版), fin vers 22 h 40. Elle se combine mieux avec Cliff Booth de 17 h 30 à Namba que la séance de 19 h à Umeda. Le trajet depuis Namba et le dernier métro après 22 h 40 sont à vérifier. Séances de l’agrégateur tiers Jorudan (film mis à jour le 25 nov), à confirmer sur place. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "あべのアポロシネマ"
+      },
+      {
         "title": "Dotonbori",
         "phrases": "restaurant",
         "lat": 34.6687,
