@@ -139,10 +139,14 @@ export function bindCameraButtons(root){
     const label = b.innerHTML;
     const hasVideo = files.some(f => f.type && f.type.startsWith("video/"));
     if (hasVideo) b.textContent = "Préparation de la vidéo…";
-    await addPhotos(b.dataset.iso, { title: b.dataset.title }, files, hasVideo ? (p) => { b.textContent = `Vidéo ${Math.round(p * 100)} %`; } : undefined);
+    let added = 0, crash = "";
+    try {
+      added = await addPhotos(b.dataset.iso, { title: b.dataset.title }, files, hasVideo ? (p) => { b.textContent = `Vidéo ${Math.round(p * 100)} %`; } : undefined);
+    } catch (err) { crash = err && err.message ? err.message : "erreur inconnue"; }
     b.innerHTML = label;
     b.classList.remove("busy");
-    const note = lastMediaNotice();
+    // Jamais de silence : si une vidéo n’a rien ajouté, on le dit (avec la raison quand on la connaît)
+    const note = lastMediaNotice() || (crash ? `Ajout impossible : ${crash}` : (hasVideo && !added ? "Vidéo non ajoutée (raison inconnue) : réessayez avec une vidéo plus courte" : ""));
     if (note) alert(note);
   }));
 }

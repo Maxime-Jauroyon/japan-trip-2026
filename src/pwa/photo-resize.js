@@ -36,9 +36,14 @@ export function videoRecordingType(){
   return VIDEO_TYPES.find(t => MediaRecorder.isTypeSupported(t)) || "";
 }
 
-const waitFor = (target, ok, bad) => new Promise((resolve, reject) => {
-  target.addEventListener(ok, resolve, { once: true });
-  target.addEventListener(bad, () => reject(new Error("vidéo illisible")), { once: true });
+/** Attend un des événements `ok` (liste) ; échoue sur `error` ou après `ms` (sur iPhone, une grosse vidéo peut ne jamais se charger : on ne doit pas rester bloqué). */
+const waitFor = (target, ok, ms, why) => new Promise((resolve, reject) => {
+  const done = (fn, arg) => { clearTimeout(timer); [].concat(ok).forEach(n => target.removeEventListener(n, onOk)); target.removeEventListener("error", onBad); fn(arg); };
+  const onOk = () => done(resolve);
+  const onBad = () => done(reject, new Error("vidéo illisible"));
+  const timer = setTimeout(() => done(reject, new Error(why || "délai dépassé")), ms);
+  [].concat(ok).forEach(n => target.addEventListener(n, onOk, { once: true }));
+  target.addEventListener("error", onBad, { once: true });
 });
 
 /**
@@ -52,8 +57,19 @@ export async function compressVideo(file, onProgress){
   const v = document.createElement("video");
   Object.assign(v, { muted: true, playsInline: true, preload: "auto", src: url });
   v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+  // Rattachée à la page (invisible) : sur iPhone, une vidéo hors du document se charge mal quand elle est longue
+  Object.assign(v.style, { position: "fixed", left: "0", top: "0", width: "2px", height: "2px", opacity: "0", pointerEvents: "none" });
+  document.body.appendChild(v);
   try {
-    if (v.readyState < 2) await waitFor(v, "loadeddata", "error");
+    v.load();
+    if (v.readyState < 2) {
+      // Sur iPhone, `loadeddata` n’arrive pas toujours avant la lecture : on lance la lecture muette pour forcer le chargement
+      const loaded = waitFor(v, ["loadeddata", "canplay"], 20000, "vidéo trop lourde ou trop longue à ouvrir : réessayez avec une vidéo plus courte");
+      v.play().catch(() => {});
+      await loaded;
+      v.pause(); v.currentTime = 0;
+    }
+    if (!v.videoWidth || !v.videoHeight) throw new Error("vidéo illisible (dimensions inconnues)");
     const k = Math.min(1, VIDEO_PX / Math.max(v.videoWidth, v.videoHeight));
     const canvas = document.createElement("canvas");
     canvas.width = Math.max(2, Math.round(v.videoWidth * k / 2) * 2);
@@ -71,11 +87,14 @@ export async function compressVideo(file, onProgress){
     rec.start(500);
     await v.play();
     await new Promise((resolve) => {
+      let last = v.currentTime, lastAt = Date.now();
       const tick = () => {
         draw();
         if (!poster && v.currentTime > 0.15) poster = resizeCanvasToBlob(canvas, 400, 0.7);
         if (onProgress) onProgress(Math.min(1, v.currentTime / total));
-        if (v.ended || v.currentTime >= total || v.paused) { resolve(); return; }
+        if (v.currentTime !== last) { last = v.currentTime; lastAt = Date.now(); }
+        // Lecture figée plus de 6 s (iPhone qui coupe la lecture) : on garde ce qui a été enregistré
+        if (v.ended || v.currentTime >= total || v.paused || Date.now() - lastAt > 6000) { resolve(); return; }
         if ("requestVideoFrameCallback" in v) v.requestVideoFrameCallback(tick); else requestAnimationFrame(tick);
       };
       tick();
@@ -90,7 +109,7 @@ export async function compressVideo(file, onProgress){
     return { blob, ext: mime.startsWith("video/mp4") ? "mp4" : "webm", poster: await poster, seconds: Math.round(total) };
   } finally {
     URL.revokeObjectURL(url);
-    v.removeAttribute("src"); v.load();
+    v.pause(); v.removeAttribute("src"); v.load(); v.remove();
   }
 }
 
