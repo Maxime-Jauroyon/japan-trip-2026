@@ -1215,10 +1215,18 @@
         "goshuinNote": "Au sanctuaire Hōkoku, dans le parc du château."
       },
       {
-        "title": "Tour Tsūtenkaku, observatoire (Shinsekai)",
+        "title": "Shinsekai",
+        "phrases": "restaurant",
         "lat": 34.6525,
         "lng": 135.5063,
-        "desc": "La tour Tsūtenkaku, symbole de Shinsekai, illuminée le soir ; observatoire à 87,5 m et 94,5 m. Elle ne ferme pas trop tôt : l’observatoire est ouvert de 9 h à 22 h, ventes de billets jusqu’à 21 h 30, d’après un agrégateur tiers (hausse des horaires entrée en vigueur le 1er mars 2026) ; d’autres revendeurs donnent 9 h–21 h 45 (dernière entrée 21 h 15), et des fiches anciennes 10 h–20 h (dernière entrée 19 h 30) : à confirmer sur tsutenkaku.co.jp ou sur place. Le toboggan de la tour ferme plus tôt (20 h) et Dive & Walk à 19 h. Billet en ligne : https://www.klook.com/en-US/activity/76766-osaka-tsutenkaku-admission-ticket/ (prix non lu). À faire de préférence après la séance de Cliff Booth de 17 h 30 si l’heure le permet, sinon avant. Position sur la carte approximative.",
+        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Tour Tsūtenkaku : observatoire, toboggan et Dive & Walk (Shinsekai)",
+        "lat": 34.6525,
+        "lng": 135.5063,
+        "desc": "La tour Tsūtenkaku, symbole de Shinsekai : observatoire à 87,5 m et 94,5 m, toboggan de la tour (« tower slider ») et Dive & Walk, faits ce matin après le château d’Osaka. Horaires relevés avant la visite, d’après des sites tiers : observatoire de 9 h à 22 h environ (ventes de billets jusqu’à 21 h 30), toboggan jusqu’à 20 h, Dive & Walk jusqu’à 19 h. Billets sur Klook : https://www.klook.com/en-US/activity/76766-osaka-tsutenkaku-admission-ticket/ . Position sur la carte approximative.",
         "goshuin": "non",
         "mapsQuery": "通天閣 大阪市浪速区恵美須東1-18-6"
       },
@@ -1291,14 +1299,6 @@
         "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour.",
         "goshuin": "oui",
         "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
-      },
-      {
-        "title": "Shinsekai",
-        "phrases": "restaurant",
-        "lat": 34.6525,
-        "lng": 135.5063,
-        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school.",
-        "goshuin": "non"
       },
       {
         "title": "Shinsaibashi",
