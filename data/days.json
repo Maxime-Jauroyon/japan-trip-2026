@@ -1219,6 +1219,14 @@
     "city": "osaka",
     "ideas": [
       {
+        "title": "Château d’Osaka",
+        "lat": 34.6873,
+        "lng": 135.5262,
+        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte.",
+        "goshuin": "possible",
+        "goshuinNote": "Au sanctuaire Hōkoku, dans le parc du château."
+      },
+      {
         "title": "Den Den Town",
         "phrases": "shop",
         "lat": 34.66,
@@ -1280,18 +1288,10 @@
     "city": "osaka",
     "ideas": [
       {
-        "title": "Château d’Osaka",
-        "lat": 34.6873,
-        "lng": 135.5262,
-        "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte.",
-        "goshuin": "possible",
-        "goshuinNote": "Au sanctuaire Hōkoku, dans le parc du château."
-      },
-      {
         "title": "Déjeuner sushi au comptoir (Ginza Kyubey, Imperial Hotel Osaka)",
         "lat": 34.7008,
         "lng": 135.5196,
-        "desc": "Sushi au comptoir préparé devant vous par le chef, au 24e étage de l’Imperial Hotel Osaka (1-8-50 Tenmabashi, Kita-ku), ~2,5 km du château d’Osaka. Déjeuner 11 h 30–14 h 30 (dernière commande 14 h 30), à partir d’environ 8 250 ¥ (autres sources : de 6 000 à ~18 000 ¥ ; boissons en plus ; cartes acceptées). Réservation conseillée au moins une semaine avant, via le site de l’hôtel ou AutoReserve. Enfants non admis, pas de menu végétarien. Prix et disponibilités à confirmer.",
+        "desc": "Sushi au comptoir préparé devant vous par le chef, au 24e étage de l’Imperial Hotel Osaka (1-8-50 Tenmabashi, Kita-ku). Déjeuner 11 h 30–14 h 30 (dernière commande 14 h 30), à partir d’environ 8 250 ¥ (autres sources : de 6 000 à ~18 000 ¥ ; boissons en plus ; cartes acceptées). Réservation conseillée au moins une semaine avant, via le site de l’hôtel ou AutoReserve. Enfants non admis, pas de menu végétarien. Prix et disponibilités à confirmer.",
         "goshuin": "non",
         "mapsQuery": "銀座久兵衛 帝国ホテル大阪 大阪市北区天満橋1-8-50"
       },
