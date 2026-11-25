@@ -73,7 +73,10 @@
    "status": "done",
    "doneAt": 1795444376852,
    "by": "Maxime",
-   "at": 1795444376852
+   "at": 1795444376852,
+   "likes": {
+    "Maxime": 1795603441974
+   }
   },
   "p:gango-ji-naramachi": {
    "id": "p:gango-ji-naramachi",
