@@ -78,6 +78,15 @@
    "likes": {
     "Maxime": 1795603409228
    }
+  },
+  "p:clayface-en-vo-abeno-apollo-cinema-20-h-50": {
+   "id": "p:clayface-en-vo-abeno-apollo-cinema-20-h-50",
+   "kind": "planned",
+   "title": "Clayface en VO (Abeno Apollo Cinema, 20 h 50)",
+   "status": "done",
+   "doneAt": 1795606938516,
+   "by": "Maxime",
+   "at": 1795606938516
   }
  }
 }
