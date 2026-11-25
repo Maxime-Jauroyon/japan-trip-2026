@@ -143,6 +143,13 @@ days.forEach((d, i) => {
       if (!cities.some((c) => c.map && c.map.bounds && inside(c.map.bounds, a))) err(wa, "coordonnées hors de toute ville du voyage");
     }
   }));
+  // Deux idées consécutives au même point : l’itinéraire n’en garde qu’une et l’autre passerait en « Autres idées »
+  const seq = [].concat(d.ideas || [], d.ideasAfter || []).filter((a) => a.lat != null && a.lng != null);
+  for (let k = 1; k < seq.length; k++) {
+    if (Math.abs(seq[k].lat - seq[k - 1].lat) <= 1e-5 && Math.abs(seq[k].lng - seq[k - 1].lng) <= 1e-5) {
+      err(`${w} « ${seq[k].title} »`, `mêmes coordonnées que « ${seq[k - 1].title} » juste avant : décaler un peu l’une des deux (sinon elle passe en « Autres idées »)`);
+    }
+  }
 });
 journeys.forEach((j) => {
   const w = `journey ${j.id}`;
