@@ -26,6 +26,15 @@
    "doneAt": 1795597329017,
    "by": "Maxime",
    "at": 1795597329017
+  },
+  "p:diner-sushi-sur-tapis-daiki-suisan-dotonbori": {
+   "id": "p:diner-sushi-sur-tapis-daiki-suisan-dotonbori",
+   "kind": "planned",
+   "title": "Dîner sushi sur tapis (Daiki Suisan, Dotonbori)",
+   "status": "done",
+   "doneAt": 1795601864494,
+   "by": "Maxime",
+   "at": 1795601864494
   }
  }
 }
