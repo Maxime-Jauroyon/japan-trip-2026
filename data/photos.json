@@ -41,10 +41,6 @@
       "slug": "vs-park"
     },
     {
-      "match": "kyubey",
-      "slug": "kyubey"
-    },
-    {
       "match": "round1|round one",
       "slug": "round1-kyoto"
     },
@@ -2585,29 +2581,6 @@
         "license": "CC BY-SA 2.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_pokpok313_in_Kyoto.jpg"
-      }
-    ],
-    "kyubey": [
-      {
-        "file": "dotonbori.jpg",
-        "author": "Type specimen",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Osaka_Dotonbori_Ebisu_Bridge.jpg"
-      },
-      {
-        "file": "dotonbori-2.jpg",
-        "author": "gérard",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Canal_D%C5%8Dtonbori_%E9%81%93%E9%A0%93%E5%A0%80_-_Flickr_-_uphillblok.jpg"
-      },
-      {
-        "file": "dotonbori-3.jpg",
-        "author": "Type specimen",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka.jpg"
       }
     ],
     "vs-park": [

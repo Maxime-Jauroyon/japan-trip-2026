@@ -1293,14 +1293,6 @@
         "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
       },
       {
-        "title": "Déjeuner sushi au comptoir (Ginza Kyubey, Imperial Hotel Osaka)",
-        "lat": 34.7008,
-        "lng": 135.5196,
-        "desc": "Sushi au comptoir préparé devant vous par le chef, au 24e étage de l’Imperial Hotel Osaka (1-8-50 Tenmabashi, Kita-ku). Déjeuner 11 h 30–14 h 30 (dernière commande 14 h 30), à partir d’environ 8 250 ¥ (autres sources : de 6 000 à ~18 000 ¥ ; boissons en plus ; cartes acceptées). Réservation conseillée au moins une semaine avant, via le site de l’hôtel ou AutoReserve. Enfants non admis, pas de menu végétarien. Prix et disponibilités à confirmer.",
-        "goshuin": "non",
-        "mapsQuery": "銀座久兵衛 帝国ホテル大阪 大阪市北区天満橋1-8-50"
-      },
-      {
         "title": "Shinsekai",
         "phrases": "restaurant",
         "lat": 34.6525,
