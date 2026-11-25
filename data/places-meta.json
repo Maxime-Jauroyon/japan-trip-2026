@@ -488,5 +488,9 @@
   "cine-abeno": {
     "hours": "Séance du soir de ce film (à confirmer)",
     "duration": "2 h"
+  },
+  "daiki-suisan": {
+    "hours": "11h–23h (à confirmer)",
+    "duration": "1 h"
   }
 }
