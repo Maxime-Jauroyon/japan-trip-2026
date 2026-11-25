@@ -7,7 +7,10 @@
    "status": "done",
    "doneAt": 1795424150294,
    "by": "Maxime",
-   "at": 1795424150294
+   "at": 1795424150294,
+   "likes": {
+    "Maxime": 1795603435324
+   }
   },
   "p:kofuku-ji": {
    "id": "p:kofuku-ji",
