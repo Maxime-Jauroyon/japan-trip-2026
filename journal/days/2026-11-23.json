@@ -85,6 +85,16 @@
    "status": "skipped",
    "by": "Maxime",
    "at": 1795446226719
+  },
+  "x:jour": {
+   "id": "x:jour",
+   "kind": "day",
+   "title": "Journée",
+   "status": "todo",
+   "at": 1795603448297,
+   "likes": {
+    "Maxime": 1795603448297
+   }
   }
  }
 }
