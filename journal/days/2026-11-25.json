@@ -28,7 +28,10 @@
    "status": "done",
    "doneAt": 1795597329017,
    "by": "Maxime",
-   "at": 1795597329017
+   "at": 1795597329017,
+   "likes": {
+    "Maxime": 1795603418744
+   }
   },
   "p:diner-sushi-sur-tapis-daiki-suisan-dotonbori": {
    "id": "p:diner-sushi-sur-tapis-daiki-suisan-dotonbori",
@@ -58,7 +61,10 @@
    "status": "done",
    "doneAt": 1795602727381,
    "by": "Maxime",
-   "at": 1795602727381
+   "at": 1795602727381,
+   "likes": {
+    "Maxime": 1795603415398
+   }
   },
   "x:jour": {
    "id": "x:jour",
