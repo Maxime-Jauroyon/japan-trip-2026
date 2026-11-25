@@ -1283,6 +1283,15 @@
         "mapsQuery": "あべのアポロシネマ"
       },
       {
+        "title": "Dîner sushi sur tapis (Daiki Suisan, Dotonbori)",
+        "phrases": "restaurant",
+        "lat": 34.6687,
+        "lng": 135.5013,
+        "desc": "Daiki Suisan Sushi Train Station, succursale de Dotonbori : sushi sur tapis avec plus de 100 sortes, et un séminaire de sushi quotidien sur réservation. Horaires listés 11 h–23 h d’après une fiche d’environ deux ans : à confirmer. Prix et adresse exacte non lus : le lien Maps cherche par nom. Fiche : https://www.tripadvisor.com/Restaurant_Review-g14135010-d6990148-Reviews-Daiki_Suisan_Sushi_Train_Station_Dotonbori_Branch-Dotombori_Chuo_Osaka_Osaka_Pr.html . Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "大起水産 回転寿司 道頓堀店"
+      },
+      {
         "title": "Dotonbori",
         "phrases": "restaurant",
         "lat": 34.6687,
