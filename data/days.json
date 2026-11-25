@@ -1122,6 +1122,14 @@
         "lng": 135.843,
         "desc": "Parc ouvert où les cerfs libres croisent temples et visiteurs.",
         "goshuin": "non"
+      },
+      {
+        "title": "Godzilla -0.0 en MX4D ce soir (TOHO Cinemas Namba, 18 h ou 21 h)",
+        "lat": 34.6659,
+        "lng": 135.5016,
+        "desc": "Le TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai) n’a pas de 4DX mais du MX4D : même principe de sièges mobiles avec des effets de vent, d’eau et de fumée (le 4DX est chez 109 Cinemas Expocity). Séances de Godzilla -0.0 en MX4D ce soir à 18 h et à 21 h (agrégateur tiers, à confirmer sur place ou sur le site de TOHO) ; le film dure environ 2 h 15, donc il finit vers 20 h 15 ou 23 h 15. Supplément MX4D d’environ 1 300 ¥ (à confirmer). Film en japonais, sous-titres anglais non confirmés. Billets à prendre au cinéma ou en ligne (à confirmer). La séance de 18 h du 25 nov au même cinéma est identique : si vous la voyez ce soir, celle du 25 devient redondante. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "TOHOシネマズなんば"
       }
     ],
     "moves": [
@@ -1143,17 +1151,7 @@
       "time": "08:00",
       "why": "Journée libre à Nara · train Kintetsu 16:08"
     },
-    "ordreFermeture": true,
-    "ideasAfter": [
-      {
-        "title": "Godzilla -0.0 en MX4D ce soir (TOHO Cinemas Namba, 18 h ou 21 h)",
-        "lat": 34.6659,
-        "lng": 135.5016,
-        "desc": "Le TOHO Cinemas Namba (8e étage du bâtiment TOHO Nangai) n’a pas de 4DX mais du MX4D : même principe de sièges mobiles avec des effets de vent, d’eau et de fumée (le 4DX est chez 109 Cinemas Expocity). Séances de Godzilla -0.0 en MX4D ce soir à 18 h et à 21 h (agrégateur tiers, à confirmer sur place ou sur le site de TOHO) ; le film dure environ 2 h 15, donc il finit vers 20 h 15 ou 23 h 15. Supplément MX4D d’environ 1 300 ¥ (à confirmer). Film en japonais, sous-titres anglais non confirmés. Billets à prendre au cinéma ou en ligne (à confirmer). La séance de 18 h du 25 nov au même cinéma est identique : si vous la voyez ce soir, celle du 25 devient redondante. Position sur la carte approximative.",
-        "goshuin": "non",
-        "mapsQuery": "TOHOシネマズなんば"
-      }
-    ]
+    "ordreFermeture": true
   },
   {
     "n": 17,
@@ -1186,13 +1184,7 @@
         ],
         "fixed": true,
         "goshuin": "non"
-      }
-    ],
-    "wake": {
-      "time": "08:00",
-      "why": "Journée libre"
-    },
-    "ideasAfter": [
+      },
       {
         "title": "The Toxic Avenger en VO (Osaka Station City Cinema, 21 h 35)",
         "lat": 34.705,
@@ -1200,16 +1192,12 @@
         "desc": "Séance de 21 h 35 de The Toxic Avenger (トキシック・アベンジャー, 102 min) à l’Osaka Station City Cinema, dans le complexe de la gare d’Osaka, à Umeda : voix originale anglaise avec sous-titres japonais (字幕版, pas de version doublée listée). Fin vers 23 h 20, bandes-annonces non comprises. C’est la séance la plus tardive ; l’autre est à 19 h 10 au TOHO Cinemas Namba (fin vers 21 h). Depuis l’hôtel (Honmachi), ligne Midōsuji vers Umeda, quelques stations : le temps de trajet et l’heure du dernier métro sont à vérifier, la marge est courte après 23 h 20. Bande-annonce : https://www.youtube.com/watch?v=IdyIMSIm4Kk . Séances de l’agrégateur tiers Jorudan, mis à jour le 24 nov, à confirmer. Position sur la carte approximative.",
         "goshuin": "non",
         "mapsQuery": "大阪ステーションシティシネマ"
-      },
-      {
-        "title": "Ebenezer: A Christmas Carol en VO (Osaka Station City Cinema, 21 h 10)",
-        "lat": 34.705,
-        "lng": 135.496,
-        "desc": "Ebenezer: A Christmas Carol (クリスマス・キャロル/3人のゴーストたち, 116 min) à l’Osaka Station City Cinema, à Umeda : séance de 21 h 10, voix originale anglaise avec sous-titres japonais (字幕版), fin vers 23 h 10. Elle chevauche la séance de The Toxic Avenger de 21 h 35, au même cinéma : choisir l’un ou l’autre au moment de partir. Le trajet depuis l’hôtel et le dernier métro de la ligne Midōsuji sont à vérifier. Bande-annonce : https://www.youtube.com/watch?v=A8d2QrXr9AA . Séances de l’agrégateur tiers Jorudan, mis à jour le 24 nov, à confirmer sur place. Position sur la carte approximative.",
-        "goshuin": "non",
-        "mapsQuery": "大阪ステーションシティシネマ"
       }
     ],
+    "wake": {
+      "time": "08:00",
+      "why": "Journée libre"
+    },
     "ordreFixe": true
   },
   {
@@ -1225,30 +1213,6 @@
         "desc": "Donjon reconstruit dans un grand parc aux douves. Monter pour la vue si la file est courte.",
         "goshuin": "possible",
         "goshuinNote": "Au sanctuaire Hōkoku, dans le parc du château."
-      },
-      {
-        "title": "Den Den Town",
-        "phrases": "shop",
-        "lat": 34.66,
-        "lng": 135.5058,
-        "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Namba Yasaka",
-        "lat": 34.6606,
-        "lng": 135.4966,
-        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour.",
-        "goshuin": "oui",
-        "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
-      },
-      {
-        "title": "Shinsekai",
-        "phrases": "restaurant",
-        "lat": 34.6525,
-        "lng": 135.5063,
-        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school.",
-        "goshuin": "non"
       },
       {
         "title": "Tour Tsūtenkaku, observatoire (Shinsekai)",
@@ -1313,12 +1277,36 @@
     "city": "osaka",
     "ideas": [
       {
+        "title": "Den Den Town",
+        "phrases": "shop",
+        "lat": 34.66,
+        "lng": 135.5058,
+        "desc": "Quartier électronique et anime d’Osaka — arcades, figurines, culture otaku au sud de Namba.",
+        "goshuin": "non"
+      },
+      {
+        "title": "Namba Yasaka",
+        "lat": 34.6606,
+        "lng": 135.4966,
+        "desc": "Sanctuaire unique avec une tête de lion géante qui semble avaler la cour.",
+        "goshuin": "oui",
+        "goshuinNote": "Au bureau du sanctuaire (sanctuaire au lion)."
+      },
+      {
         "title": "Déjeuner sushi au comptoir (Ginza Kyubey, Imperial Hotel Osaka)",
         "lat": 34.7008,
         "lng": 135.5196,
         "desc": "Sushi au comptoir préparé devant vous par le chef, au 24e étage de l’Imperial Hotel Osaka (1-8-50 Tenmabashi, Kita-ku). Déjeuner 11 h 30–14 h 30 (dernière commande 14 h 30), à partir d’environ 8 250 ¥ (autres sources : de 6 000 à ~18 000 ¥ ; boissons en plus ; cartes acceptées). Réservation conseillée au moins une semaine avant, via le site de l’hôtel ou AutoReserve. Enfants non admis, pas de menu végétarien. Prix et disponibilités à confirmer.",
         "goshuin": "non",
         "mapsQuery": "銀座久兵衛 帝国ホテル大阪 大阪市北区天満橋1-8-50"
+      },
+      {
+        "title": "Shinsekai",
+        "phrases": "restaurant",
+        "lat": 34.6525,
+        "lng": 135.5063,
+        "desc": "Quartier rétro sous la tour Tsūtenkaku : kushikatsu et néons old-school.",
+        "goshuin": "non"
       },
       {
         "title": "Shinsaibashi",
