@@ -8,6 +8,15 @@
    "doneAt": 1795591790885,
    "by": "Maxime",
    "at": 1795591790885
+  },
+  "p:chateau-d-osaka": {
+   "id": "p:chateau-d-osaka",
+   "kind": "planned",
+   "title": "Château d’Osaka",
+   "status": "done",
+   "doneAt": 1795591793095,
+   "by": "Maxime",
+   "at": 1795591793095
   }
  }
 }
