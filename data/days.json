@@ -1319,13 +1319,6 @@
     "extraCity": "osaka",
     "ideas": [
       {
-        "title": "Marché Kuromon",
-        "lat": 34.6651,
-        "lng": 135.5066,
-        "desc": "Marché animé pour fruits, fruits de mer et grillades avant le shinkansen vers le nord.",
-        "goshuin": "non"
-      },
-      {
         "title": "Sanctuaire Nezu + Yanaka",
         "lat": 35.7203,
         "lng": 139.7608,

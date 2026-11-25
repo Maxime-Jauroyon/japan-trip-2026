@@ -289,10 +289,6 @@
       "slug": "nishiki"
     },
     {
-      "match": "kuromon",
-      "slug": "kuromon"
-    },
-    {
       "match": "character street|tokyo character",
       "slug": "character-street"
     },
@@ -1062,29 +1058,6 @@
         "license": "CC BY 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Nara_Kofuku-ji_Five-Storied_Pagoda_03.jpg"
-      }
-    ],
-    "kuromon": [
-      {
-        "file": "kuromon.jpg",
-        "author": "DVMG",
-        "license": "CC BY 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kuromon_Market_-_panoramio.jpg"
-      },
-      {
-        "file": "kuromon-2.jpg",
-        "author": "Mr.ちゅらさん",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kuromon_Ichiba_Market_at_Lalaport_Kadoma1.jpg"
-      },
-      {
-        "file": "kuromon-3.jpg",
-        "author": "Mr.ちゅらさん",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Kuromon_Ichiba_Market_at_Lalaport_Kadoma2.jpg"
       }
     ],
     "meiji": [
