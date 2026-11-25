@@ -449,10 +449,6 @@
       "slug": "ginza"
     },
     {
-      "match": "animate",
-      "slug": "animate"
-    },
-    {
       "match": "téléphérique|telepherique|ropeway|panoramique",
       "slug": "ropeway"
     },
@@ -515,15 +511,6 @@
         "license": "CC BY-SA 4.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
         "source": "https://commons.wikimedia.org/wiki/File:Akihabara_Electric_Town_12.jpg"
-      }
-    ],
-    "animate": [
-      {
-        "file": "animate.jpg",
-        "author": "othree",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Animate_Annex_and_Lashinbang_Ikebukuro_Main_Store_(52857684578).jpg"
       }
     ],
     "arashiyama": [
