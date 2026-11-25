@@ -7,7 +7,10 @@
    "status": "done",
    "doneAt": 1795321386646,
    "by": "Maxime",
-   "at": 1795321386646
+   "at": 1795321386646,
+   "likes": {
+    "Maxime": 1795603453644
+   }
   },
   "p:nigatsu-do-au-crepuscule-todai-ji": {
    "id": "p:nigatsu-do-au-crepuscule-todai-ji",
