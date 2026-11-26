@@ -437,10 +437,6 @@
       "slug": "shinsaibashi"
     },
     {
-      "match": "hozenji",
-      "slug": "hozenji"
-    },
-    {
       "match": "palais impérial|jardins est",
       "slug": "imperial"
     },
@@ -773,29 +769,6 @@
         "license": "CC BY-SA 3.0",
         "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
         "source": "https://commons.wikimedia.org/wiki/File:Higashi_Chaya_District_of_Kanazawa_-_panoramio.jpg"
-      }
-    ],
-    "hozenji": [
-      {
-        "file": "hozenji.jpg",
-        "author": "lumoplank",
-        "license": "CC0",
-        "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-        "source": "https://commons.wikimedia.org/wiki/File:Osaka_-_Osaka194.jpg"
-      },
-      {
-        "file": "hozenji-2.jpg",
-        "author": "Choi2451",
-        "license": "CC BY-SA 3.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Hozenji_Yokocho_at_night.jpg"
-      },
-      {
-        "file": "hozenji-3.jpg",
-        "author": "frakorea's photos",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Osakanightview-3.jpg"
       }
     ],
     "imperial": [
