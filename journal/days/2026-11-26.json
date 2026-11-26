@@ -8,6 +8,15 @@
    "doneAt": 1795656378700,
    "by": "Maxime",
    "at": 1795656378700
+  },
+  "p:namba-yasaka": {
+   "id": "p:namba-yasaka",
+   "kind": "planned",
+   "title": "Namba Yasaka",
+   "status": "done",
+   "doneAt": 1795661216045,
+   "by": "Maxime",
+   "at": 1795661216045
   }
  }
 }
