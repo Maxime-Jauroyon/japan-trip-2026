@@ -1359,7 +1359,16 @@
     "date": "28 nov 2026",
     "dow": "Samedi",
     "city": "tokyo",
-    "ideas": [],
+    "ideas": [
+      {
+        "title": "Shopping à Akihabara",
+        "phrases": "shop",
+        "lat": 35.6984,
+        "lng": 139.7731,
+        "desc": "Journée shopping dans le quartier électrique : gros magasins d’électronique et de jeux (Yodobashi Akiba, Super Potato pour le rétro), figurines et cartes (Mandarake, boutiques de gashapon), Don Quijote. Boutiques ouvertes environ 10 h–20 h (à vérifier). Pensez au passeport pour la détaxe (achats de plus de 5 000 ¥ par magasin et par jour, à confirmer) et gardez vos achats pour le contrôle de départ : tout se déclare à la douane au retour (voir « Souvenirs » dans l’app).",
+        "goshuin": "non"
+      }
+    ],
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
