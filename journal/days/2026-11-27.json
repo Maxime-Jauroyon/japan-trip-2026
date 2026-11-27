@@ -8,6 +8,15 @@
    "doneAt": 1795779164696,
    "by": "Maxime",
    "at": 1795779164696
+  },
+  "p:ginza-itoya": {
+   "id": "p:ginza-itoya",
+   "kind": "planned",
+   "title": "Ginza / Itoya",
+   "status": "done",
+   "doneAt": 1795781684065,
+   "by": "Maxime",
+   "at": 1795781684065
   }
  }
 }
