@@ -1337,6 +1337,13 @@
         "lng": 139.7048,
         "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes.",
         "goshuin": "non"
+      },
+      {
+        "title": "Balade de Ginza à Shinagawa",
+        "lat": 35.6285,
+        "lng": 139.7387,
+        "desc": "Balade à pied de Ginza jusqu’à Shinagawa, faite par Maxime et Léo. Repère placé à la gare de Shinagawa ; le trajet exact n’est pas enregistré.",
+        "goshuin": "non"
       }
     ],
     "moves": [
