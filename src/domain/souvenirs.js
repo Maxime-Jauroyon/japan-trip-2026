@@ -1,4 +1,4 @@
-/* Souvenirs : franchise douanière (par porteur) et seuil de détaxe Japon (par magasin et par jour). Pur : pas de DOM, pas de stockage. */
+/* Souvenirs : franchise douanière (par voyageur) et seuil de détaxe Japon (par magasin et par jour). Pur : pas de DOM, pas de stockage. */
 
 /** Nombre saisi (virgule ou point décimal) → nombre ≥ 0, ou null si invalide / vide. */
 export function parseAmount(text){
@@ -13,18 +13,13 @@ export function toBoth(value, currency, rate){
   return { eur: Math.round(value * 100) / 100, yen: Math.round(value * rate) };
 }
 
-/** Ajoute un achat (liste immuable). `item` : { id, label, store, day, who, carrier, eur, yen, entered }. */
+/** Ajoute un achat (liste immuable). `item` : { id, label, store, day, who, eur, yen, entered }. */
 export function addItem(items, item){
   return [item, ...items];
 }
 
 export function removeItem(items, id){
   return items.filter((it) => it.id !== id);
-}
-
-/** Change qui rapporte l’achat en France (seul le porteur compte pour sa franchise). */
-export function setCarrier(items, id, person){
-  return items.map((it) => (it.id === id ? { ...it, carrier: person } : it));
 }
 
 /** Clé magasin + jour d’un achat (sans magasin : null), la même que pour la détaxe. */
@@ -61,15 +56,13 @@ export function netItems(items, refundsYen){
   });
 }
 
-/** Totaux par porteur : `eur` = valeur à déclarer (après détaxe reçue), `gross` = prix payé, `refund` = détaxe reçue (€), plus le nombre d’achats « dans la valise de l’autre ». */
+/** Totaux par voyageur (celui qui a acheté) : `eur` = valeur à déclarer (après détaxe reçue), `gross` = prix payé, `refund` = détaxe reçue (€), `count` = nombre d’achats. */
 export function totalsByPerson(items, personnes, refundsYen = {}){
   const out = {};
-  personnes.forEach((p) => { out[p] = { eur: 0, gross: 0, refund: 0, count: 0, away: 0 }; });
+  personnes.forEach((p) => { out[p] = { eur: 0, gross: 0, refund: 0, count: 0 }; });
   netItems(items, refundsYen).forEach((it) => {
-    const c = out[it.carrier];
+    const c = out[it.who];
     if (c) { c.eur += it.netEur; c.gross += it.eur; c.refund += it.refundEur; c.count += 1; }
-    const b = out[it.who];
-    if (b && it.carrier !== it.who) b.away += 1;
   });
   const r2 = (n) => Math.round(n * 100) / 100;
   personnes.forEach((p) => { out[p].eur = r2(out[p].eur); out[p].gross = r2(out[p].gross); out[p].refund = r2(out[p].refund); });

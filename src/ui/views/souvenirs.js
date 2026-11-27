@@ -1,9 +1,9 @@
-/* Sur place › Souvenirs : suivi des achats par porteur (franchise douanière) et par magasin (détaxe Japon). Données locales à l’appareil. */
+/* Sur place › Souvenirs : suivi des achats par voyageur (franchise douanière) et par magasin (détaxe Japon), plus une vue douane sobre. Données locales à l’appareil. */
 
 import { SOUVENIRS } from "../../core/data.js";
 import { japanTodayISO } from "../../core/dates.js";
 import { esc } from "../../core/dom.js";
-import { addItem, detaxeByStore, level, parseAmount, remaining, removeItem, setCarrier, setNoTax, toBoth, totalsByPerson } from "../../domain/souvenirs.js";
+import { addItem, detaxeByStore, level, netItems, parseAmount, remaining, removeItem, setNoTax, toBoth, totalsByPerson } from "../../domain/souvenirs.js";
 import { loadSouvenirs, saveSouvenirs } from "../../pwa/souvenirs-store.js";
 import { loadFxRate } from "./fx-converter.js";
 
@@ -27,7 +27,7 @@ function formHtml(personnes, st){
     </div>
     <p class="sv-hint" id="sv-hint" aria-live="polite"></p>
     <label class="sv-field"><span>Magasin (facultatif, pour la détaxe)</span><input type="text" id="sv-store" maxlength="40" placeholder="Ex. Don Quijote Shibuya" autocomplete="off" /></label>
-    <div class="sv-field"><span>Acheté et porté par</span>
+    <div class="sv-field"><span>Acheté par</span>
       <div class="sv-seg sv-who" role="group" aria-label="Qui l’achète">
         ${personnes.map((p) => `<button type="button" data-who="${esc(p)}" class="${p === who ? "on" : ""}">${esc(p)}</button>`).join("")}
       </div>
@@ -44,21 +44,38 @@ function summaryHtml(items, personnes, refunds){
     const lv = level(eur, max);
     const left = remaining(eur, max);
     const pct = Math.min(100, Math.round(eur / max * 100));
-    const other = personnes.find((q) => q !== p);
     const msg = left >= 0
       ? `Il reste <strong>${fmtEur(left)}</strong> avant ${fmtEur(max)}`
-      : `<strong>${fmtEur(-left)}</strong> de trop : passe-les dans la valise de ${esc(other)}`;
+      : `Franchise dépassée de <strong>${fmtEur(-left)}</strong> : à déclarer à la douane (droits et TVA)`;
     return `<div class="sv-card sv-${lv}">
       <div class="sv-name">${esc(p)} <span class="sv-badge">${LEVEL_TEXT[lv]}</span></div>
       <div class="sv-total">${fmtEur(eur)}<small> à déclarer</small></div>
       <div class="sv-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${Math.round(eur)}" aria-label="Franchise de ${esc(p)}"><i style="width:${pct}%"></i></div>
       <div class="sv-left">${msg}</div>
       ${t[p].refund > 0 ? `<div class="sv-sub">Achats ${fmtEur(t[p].gross)} · détaxe reçue −${fmtEur(t[p].refund)}</div>` : ""}
-      <div class="sv-sub">${t[p].count} achat${t[p].count > 1 ? "s" : ""} porté${t[p].count > 1 ? "s" : ""}${t[p].away ? ` · ${t[p].away} dans la valise de ${esc(other)}` : ""}</div>
+      <div class="sv-sub">${t[p].count} achat${t[p].count > 1 ? "s" : ""}</div>
     </div>`;
   }).join("");
-  const room = personnes.map((p) => `${esc(p)} peut encore porter <strong>${fmtEur(Math.max(0, remaining(t[p].eur, max)))}</strong>`).join(" · ");
-  return `<div class="sv-cards">${cards}</div><p class="sv-room">${room}</p><p class="sv-note">Valeur à déclarer = prix payé moins la détaxe reçue (à confirmer avec le simulateur de la douane ; gardez les factures).</p>`;
+  return `<div class="sv-cards">${cards}</div><p class="sv-note">Valeur à déclarer = prix payé moins la détaxe reçue (à confirmer avec le simulateur de la douane ; gardez les factures).</p>`;
+}
+
+/** Vue douane : récapitulatif sobre, lecture seule, des achats de chaque voyageur (montants identiques à ceux de la saisie). */
+function customsHtml(items, personnes, refunds){
+  const { franchiseEur: max } = SOUVENIRS;
+  const t = totalsByPerson(items, personnes, refunds);
+  const net = netItems(items, refunds);
+  const rate = loadFxRate().toString().replace(".", ",");
+  const blocks = personnes.map((p) => {
+    const mine = net.filter((it) => it.who === p).sort((a, b) => (a.day < b.day ? -1 : a.day > b.day ? 1 : 0));
+    const over = t[p].eur > max;
+    const rows = mine.length
+      ? `<table class="sv-cust-table"><thead><tr><th>Date</th><th>Achat</th><th>Magasin</th><th>¥</th><th>€</th></tr></thead><tbody>${mine.map((it) => `<tr><td>${esc(dayLabel(it.day))}</td><td>${esc(it.label || "Achat")}</td><td>${esc(it.store || "—")}</td><td>${fmtYen(it.yen)}</td><td>${fmtEur(it.eur)}</td></tr>`).join("")}</tbody></table>`
+      : `<p class="sv-empty">Aucun achat.</p>`;
+    return `<section class="sv-cust-person"><h4>${esc(p)}</h4>${rows}
+      <dl class="sv-cust-total"><div><dt>Prix payé</dt><dd>${fmtEur(t[p].gross)}</dd></div>${t[p].refund > 0 ? `<div><dt>Détaxe reçue au Japon</dt><dd>−${fmtEur(t[p].refund)}</dd></div>` : ""}<div><dt>Valeur à déclarer</dt><dd><strong>${fmtEur(t[p].eur)}</strong></dd></div></dl>
+      <p class="sv-cust-line">${over ? `Franchise de ${fmtEur(max)} dépassée : marchandises à déclarer (droits et TVA).` : `Sous la franchise de ${fmtEur(max)} par voyageur.`}</p></section>`;
+  }).join("");
+  return `<div class="sv-cust"><h3>Achats rapportés du Japon</h3>${blocks}<p class="sv-note">Montants convertis au taux de ${rate} ¥ pour 1 €. Valeur à déclarer = prix payé moins la détaxe reçue.</p></div>`;
 }
 
 function detaxeHtml(items, refunds){
@@ -68,19 +85,16 @@ function detaxeHtml(items, refunds){
     <p class="sv-note">Indicatif (montant hors taxe, règles à confirmer en magasin). « Retirer » si le magasin n’a pas fait la démarche : les achats restent comptés dans la franchise. Détaxe à faire à la douane de Haneda avant l’embarquement, achats non utilisés + reçus + passeports.</p>`;
 }
 
-function listHtml(items, personnes){
+function listHtml(items){
   if (!items.length) return `<p class="sv-empty">Aucun achat pour l’instant.</p>`;
   let day = "";
   return items.map((it) => {
     const head = it.day !== day ? `<h4 class="sv-day">${esc(dayLabel(it.day))}</h4>` : "";
     day = it.day;
-    const other = personnes.find((q) => q !== it.carrier);
     const main = it.entered === "eur" ? fmtEur(it.eur) : fmtYen(it.yen);
     const alt = it.entered === "eur" ? fmtYen(it.yen) : fmtEur(it.eur);
-    const away = it.carrier !== it.who ? ` · acheté par ${esc(it.who)}` : "";
     return `${head}<div class="sv-row" data-id="${esc(it.id)}">
-      <div class="sv-row-main"><strong>${esc(it.label || "Achat")}</strong><span>${main} <small>≈ ${alt}</small>${it.store ? ` · ${esc(it.store)}` : ""}${away}</span></div>
-      <button type="button" class="sv-carry" data-carrier="${esc(other)}" title="Changer qui le porte">Porté par ${esc(it.carrier)} ⇄</button>
+      <div class="sv-row-main"><strong>${esc(it.label || "Achat")}</strong><span>${main} <small>≈ ${alt}</small>${it.store ? ` · ${esc(it.store)}` : ""} · ${esc(it.who)}</span></div>
       <button type="button" class="sv-del" aria-label="Supprimer cet achat">✕</button>
     </div>`;
   }).join("");
@@ -91,7 +105,8 @@ function refresh(root){
   const { personnes } = SOUVENIRS;
   root.querySelector("#sv-summary").innerHTML = summaryHtml(st.items, personnes, st.refunds);
   root.querySelector("#sv-detaxe").innerHTML = detaxeHtml(st.items, st.refunds);
-  root.querySelector("#sv-list").innerHTML = listHtml(st.items, personnes);
+  root.querySelector("#sv-list").innerHTML = listHtml(st.items);
+  root.querySelector("#sv-customs").innerHTML = customsHtml(st.items, personnes, st.refunds);
 }
 
 function updateHint(root){
@@ -113,6 +128,13 @@ function bind(root){
     } else if (who) {
       saveSouvenirs({ who: who.dataset.who });
       root.querySelectorAll("[data-who]").forEach((b) => b.classList.toggle("on", b === who));
+    } else if (e.target.closest("[data-customs]")) {
+      const on = e.target.closest("[data-customs]").dataset.customs === "1";
+      root.querySelector("#sv-edit").hidden = on;
+      root.querySelector("#sv-customs").hidden = !on;
+      root.querySelector("#sv-customs-bar").hidden = !on;
+      if (on) refresh(root);
+      window.scrollTo({ top: 0 });
     } else if (e.target.closest("#sv-add")) add(root);
     else if (e.target.closest(".sv-notax")) {
       const b = e.target.closest(".sv-notax");
@@ -122,9 +144,7 @@ function bind(root){
       const row = e.target.closest(".sv-row");
       if (!row) return;
       const st = loadSouvenirs();
-      const carry = e.target.closest(".sv-carry");
-      if (carry) saveSouvenirs({ items: setCarrier(st.items, row.dataset.id, carry.dataset.carrier) });
-      else if (e.target.closest(".sv-del") && confirm("Supprimer cet achat ?")) saveSouvenirs({ items: removeItem(st.items, row.dataset.id) });
+      if (e.target.closest(".sv-del") && confirm("Supprimer cet achat ?")) saveSouvenirs({ items: removeItem(st.items, row.dataset.id) });
       else return;
       refresh(root);
     }
@@ -157,7 +177,7 @@ function add(root){
     label: root.querySelector("#sv-label").value.trim(),
     store: root.querySelector("#sv-store").value.trim(),
     day: japanTodayISO(),
-    who, carrier: who, entered: st.currency, eur: both.eur, yen: both.yen,
+    who, entered: st.currency, eur: both.eur, yen: both.yen,
   };
   saveSouvenirs({ items: addItem(st.items, item), who });
   ["#sv-label", "#sv-value", "#sv-store"].forEach((s) => { root.querySelector(s).value = ""; });
@@ -171,11 +191,16 @@ export function renderSouvenirs(){
   if (!root.dataset.bound) {
     root.dataset.bound = "1";
     const st = loadSouvenirs();
-    root.innerHTML = `<div id="sv-summary"></div>
+    root.innerHTML = `<div id="sv-edit">
+      <div id="sv-summary"></div>
+      <button type="button" class="btn-secondary sv-customs-btn" data-customs="1">Vue douane (récapitulatif à montrer)</button>
       ${formHtml(SOUVENIRS.personnes, st)}
       <div class="tool-card"><div class="tool-head"><h3>Détaxe Japon</h3></div><div id="sv-detaxe"></div></div>
       <div class="tool-card"><div class="tool-head"><h3>Achats</h3></div><div id="sv-list"></div></div>
-      <p class="sv-note">Franchise douanière UE : ${fmtEur(SOUVENIRS.franchiseEur)} par voyageur en avion ; seuls comptent les achats que chacun porte. Suivi gardé sur cet appareil.</p>`;
+      <p class="sv-note">Franchise douanière UE : ${fmtEur(SOUVENIRS.franchiseEur)} par voyageur en avion. Valeur à déclarer = prix payé moins la détaxe reçue. Gardez les factures. Suivi gardé sur cet appareil.</p>
+    </div>
+    <div id="sv-customs-bar" hidden><button type="button" class="btn-secondary sv-customs-btn" data-customs="0">← Retour à la saisie</button></div>
+    <div id="sv-customs" hidden></div>`;
     bind(root);
     updateHint(root);
   }

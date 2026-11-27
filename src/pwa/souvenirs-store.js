@@ -7,7 +7,7 @@ let state = null;
 const fresh = () => ({ items: [], currency: "yen", who: "", refunds: {} });
 
 function sane(it){
-  return it && typeof it.id === "string" && Number.isFinite(it.eur) && Number.isFinite(it.yen) && typeof it.carrier === "string";
+  return it && typeof it.id === "string" && Number.isFinite(it.eur) && Number.isFinite(it.yen) && typeof it.who === "string";
 }
 
 /** Remboursements de détaxe reçus : { clé magasin|jour: ¥ } ; les valeurs invalides sont ignorées. */
@@ -23,7 +23,8 @@ export function loadSouvenirs(){
   try {
     const raw = JSON.parse(localStorage.getItem(SOUVENIRS_KEY) || "null");
     if (raw && Array.isArray(raw.items)) {
-      state = { items: raw.items.filter(sane), currency: raw.currency === "eur" ? "eur" : "yen", who: typeof raw.who === "string" ? raw.who : "", refunds: cleanRefunds(raw.refunds) };
+      state = { items: raw.items.filter(sane).map(({ carrier, ...rest }) => rest),   // l’ancien champ « porteur » est ignoré : chaque achat compte pour son acheteur
+        currency: raw.currency === "eur" ? "eur" : "yen", who: typeof raw.who === "string" ? raw.who : "", refunds: cleanRefunds(raw.refunds) };
     }
   } catch (_) { /* stockage illisible : on repart de zéro */ }
   return state;
