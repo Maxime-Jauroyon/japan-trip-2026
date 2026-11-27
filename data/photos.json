@@ -301,10 +301,6 @@
       "slug": "sumida"
     },
     {
-      "match": "nezu|yanaka",
-      "slug": "yanaka"
-    },
-    {
       "match": "oshino",
       "slug": "oshino"
     },
@@ -1803,29 +1799,6 @@
         "license": "Public domain",
         "licenseUrl": "",
         "source": "https://commons.wikimedia.org/wiki/File:Kurikinton,_a_Japanese_sweet.jpg"
-      }
-    ],
-    "yanaka": [
-      {
-        "file": "yanaka.jpg",
-        "author": "Dick Thomas Johnson",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Yanaka_Ginza_(53149155977).jpg"
-      },
-      {
-        "file": "yanaka-2.jpg",
-        "author": "Dick Thomas Johnson",
-        "license": "CC BY 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Yanaka_Ginza_(52492088947).jpg"
-      },
-      {
-        "file": "yanaka-3.jpg",
-        "author": "Christophe95",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-        "source": "https://commons.wikimedia.org/wiki/File:Yanaka_Ginza_2.jpg"
       }
     ],
     "yasaka": [

@@ -1323,19 +1323,28 @@
     "extraCity": "osaka",
     "ideas": [
       {
-        "title": "Sanctuaire Nezu + Yanaka",
-        "lat": 35.7203,
-        "lng": 139.7608,
-        "desc": "Tunnels de torii au calme et ruelles du vieux Tokyo à Yanaka, boutiques et maisons basses.",
-        "goshuin": "oui",
-        "goshuinNote": "Au sanctuaire Nezu."
+        "title": "Ginza / Itoya",
+        "phrases": "shop",
+        "lat": 35.6729,
+        "lng": 139.7672,
+        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs.",
+        "goshuin": "non"
       },
       {
-        "title": "Shinjuku — skyline",
-        "lat": 35.6938,
-        "lng": 139.7036,
-        "desc": "Soirée libre après le retour d’Osaka : gratte-ciel et néons, vue de nuit depuis l’observatoire gratuit de la mairie ou un rooftop (horaires à vérifier ; à faire seulement s’il fait beau).",
+        "title": "Harajuku / Omotesandō",
+        "phrases": "shop",
+        "lat": 35.6714,
+        "lng": 139.7048,
+        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes.",
         "goshuin": "non"
+      },
+      {
+        "title": "Shibuya Sky (toit de Shibuya Scramble Square)",
+        "lat": 35.6585,
+        "lng": 139.7022,
+        "desc": "Observatoire en plein air sur le toit de Shibuya Scramble Square, relié à la gare de Shibuya : Shibuya Scramble Square, 2-24-12 Shibuya, Shibuya-ku (étages 14, 45, 46 et toit). Ouvert 10 h–22 h 30, dernière entrée 21 h 20 (horaires variables selon la saison). Billets datés et horodatés : en ligne 2 700 ¥ pour un adulte jusqu’à 14 h 59 et 3 400 ¥ à partir de 15 h ; un peu plus cher au guichet. Réserver à l’avance, le créneau du coucher du soleil se remplit en premier. Le toit peut fermer par vent, pluie ou neige. Infos de sites tiers, à confirmer sur le site officiel shibuya-scramble-square.com. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "SHIBUYA SKY 渋谷スクランブルスクエア 渋谷区渋谷2-24-12"
       }
     ],
     "moves": [
@@ -1358,24 +1367,7 @@
     "date": "28 nov 2026",
     "dow": "Samedi",
     "city": "tokyo",
-    "ideas": [
-      {
-        "title": "Ginza / Itoya",
-        "phrases": "shop",
-        "lat": 35.6729,
-        "lng": 139.7672,
-        "desc": "Vitrines de Ginza, puis les étages de papeterie design d’Itoya pour des cadeaux voyageurs.",
-        "goshuin": "non"
-      },
-      {
-        "title": "Harajuku / Omotesandō",
-        "phrases": "shop",
-        "lat": 35.6714,
-        "lng": 139.7048,
-        "desc": "Mode street sur Takeshita-dori et boutiques sous les arbres d’Omotesandō — deux ambiances à deux minutes.",
-        "goshuin": "non"
-      }
-    ],
+    "ideas": [],
     "wake": {
       "time": "08:00",
       "why": "Journée libre"
