@@ -9,8 +9,8 @@
     },
     {
       "id": "detaxe-depart",
-      "label": "Détaxe : passer à la douane à Haneda avant l’embarquement",
-      "meta": "Jour 22 · dim. 29 nov · vol HND 09:05 · passeports + achats non utilisés + reçus, au comptoir de la douane avant le contrôle de sécurité",
+      "label": "Détaxe : confirmer l’export aux bornes de Haneda T3 (prévu le 28 nov)",
+      "meta": "Nouveau système depuis nov. 2026 : la taxe est payée en magasin (passeport montré à la caisse), puis l’export se confirme à une borne du hall des départs (ou avec Visit Japan Web), avant d’enregistrer les bagages et dans les 90 jours après l’achat · prendre les passeports, les achats non utilisés et les reçus · à vérifier sur place : si la borne accepte la confirmation la veille du vol",
       "remindFrom": "2026-11-28",
       "done": false
     },
