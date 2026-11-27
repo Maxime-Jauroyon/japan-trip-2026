@@ -17,6 +17,15 @@
    "doneAt": 1795781684065,
    "by": "Maxime",
    "at": 1795781684065
+  },
+  "p:balade-de-ginza-a-shinagawa": {
+   "id": "p:balade-de-ginza-a-shinagawa",
+   "kind": "planned",
+   "title": "Balade de Ginza à Shinagawa",
+   "status": "done",
+   "doneAt": 1795787998069,
+   "by": "Maxime",
+   "at": 1795787998069
   }
  }
 }
