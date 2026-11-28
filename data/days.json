@@ -1368,6 +1368,15 @@
     "city": "tokyo",
     "ideas": [
       {
+        "title": "Kanda Myōjin (sanctuaire près d’Akihabara)",
+        "lat": 35.7019,
+        "lng": 139.7678,
+        "desc": "Très ancien sanctuaire shinto, protecteur du quartier de Kanda, à environ 5 min à pied d’Akihabara (Sotokanda 2-16-2, Chiyoda). Grand portail rouge, cour calme et amulettes pour ordinateurs et appareils électroniques, très appréciées à Akihabara. À faire avant les magasins, le bureau des amulettes ferme en fin d’après-midi. Infos de sites tiers, horaires à vérifier. Position sur la carte approximative.",
+        "goshuin": "oui",
+        "goshuinNote": "Bureau des amulettes et des goshuin au sanctuaire ; horaires et prix à confirmer sur place.",
+        "mapsQuery": "Kanda Myojin 神田明神 外神田2-16-2"
+      },
+      {
         "title": "Shopping à Akihabara",
         "phrases": "shop",
         "lat": 35.6984,
