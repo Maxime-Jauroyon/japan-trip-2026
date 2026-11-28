@@ -1383,6 +1383,22 @@
         "lng": 139.7731,
         "desc": "Journée shopping dans le quartier électrique : gros magasins d’électronique et de jeux (Yodobashi Akiba, Super Potato pour le rétro), figurines et cartes (Mandarake, boutiques de gashapon), Don Quijote. Boutiques ouvertes environ 10 h–20 h (à vérifier). Pensez au passeport pour la détaxe (achats de plus de 5 000 ¥ par magasin et par jour, à confirmer) et gardez vos achats pour le contrôle de départ : tout se déclare à la douane au retour (voir « Souvenirs » dans l’app).",
         "goshuin": "non"
+      },
+      {
+        "title": "Pokémon Center Skytree Town (Solamachi)",
+        "lat": 35.7098,
+        "lng": 139.8113,
+        "desc": "Boutique officielle Pokémon dans Tokyo Skytree Town, le centre commercial Solamachi au pied de la tour (Oshiage, Sumida). Peluches, cartes et articles exclusifs ; si besoin, voir le rayon jeux et Pokémon des étages voisins. Horaires et affluence non confirmés, à vérifier sur place. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "Pokémon Center Skytree Town ポケモンセンタースカイツリータウン"
+      },
+      {
+        "title": "Tokyo Skytree",
+        "lat": 35.7101,
+        "lng": 139.8107,
+        "desc": "La tour de 634 m, la plus haute du Japon, et son centre commercial Solamachi (restaurants, boutiques, souvenirs). Vue d’en bas ou balade autour, sans billet de pont d’observation prévu : les billets se prennent sur place ou à l’avance si besoin. Infos de sites tiers, horaires à vérifier. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "Tokyo Skytree 東京スカイツリー"
       }
     ],
     "wake": {

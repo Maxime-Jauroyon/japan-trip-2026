@@ -1,6 +1,14 @@
 {
   "rules": [
     {
+      "match": "pok[eé]mon center skytree",
+      "slug": "character-street"
+    },
+    {
+      "match": "tokyo skytree",
+      "slug": "sumida"
+    },
+    {
       "match": "daiki",
       "slug": "daiki-suisan"
     },
