@@ -1,6 +1,10 @@
 {
   "rules": [
     {
+      "match": "world beer museum",
+      "slug": "sumida"
+    },
+    {
       "match": "pok[eé]mon center skytree",
       "slug": "character-street"
     },

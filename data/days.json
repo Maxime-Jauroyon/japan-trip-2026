@@ -1393,6 +1393,14 @@
         "mapsQuery": "Pokémon Center Skytree Town ポケモンセンタースカイツリータウン"
       },
       {
+        "title": "World Beer Museum (Skytree Town, Solamachi)",
+        "lat": 35.7097,
+        "lng": 139.8112,
+        "desc": "Bar-musée de la bière dans le même bâtiment que le Pokémon Center, à Tokyo Skytree Town (Solamachi) : bières du monde et japonaises à la carte. Horaires, étage exact et prix non confirmés (sources tierces), à vérifier sur place. Position sur la carte approximative.",
+        "goshuin": "non",
+        "mapsQuery": "World Beer Museum Skytree Town ワールドビアミュージアム"
+      },
+      {
         "title": "Tokyo Skytree",
         "lat": 35.7101,
         "lng": 139.8107,
