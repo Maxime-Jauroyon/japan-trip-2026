@@ -17,6 +17,33 @@
    "doneAt": 1795854192777,
    "by": "Maxime",
    "at": 1795854192777
+  },
+  "p:pokemon-center-skytree-town-solamachi": {
+   "id": "p:pokemon-center-skytree-town-solamachi",
+   "kind": "planned",
+   "title": "Pokémon Center Skytree Town (Solamachi)",
+   "status": "done",
+   "doneAt": 1795854195038,
+   "by": "Maxime",
+   "at": 1795854195038
+  },
+  "p:world-beer-museum-skytree-town-solamachi": {
+   "id": "p:world-beer-museum-skytree-town-solamachi",
+   "kind": "planned",
+   "title": "World Beer Museum (Skytree Town, Solamachi)",
+   "status": "done",
+   "doneAt": 1795854195470,
+   "by": "Maxime",
+   "at": 1795854195470
+  },
+  "p:tokyo-skytree": {
+   "id": "p:tokyo-skytree",
+   "kind": "planned",
+   "title": "Tokyo Skytree",
+   "status": "done",
+   "doneAt": 1795854196517,
+   "by": "Maxime",
+   "at": 1795854196517
   }
  }
 }
