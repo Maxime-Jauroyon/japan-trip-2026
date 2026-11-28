@@ -1,0 +1,22 @@
+{
+ "items": {
+  "p:kanda-myojin-sanctuaire-pres-d-akihabara": {
+   "id": "p:kanda-myojin-sanctuaire-pres-d-akihabara",
+   "kind": "planned",
+   "title": "Kanda Myōjin (sanctuaire près d’Akihabara)",
+   "status": "done",
+   "doneAt": 1795854192311,
+   "by": "Maxime",
+   "at": 1795854192311
+  },
+  "p:shopping-a-akihabara": {
+   "id": "p:shopping-a-akihabara",
+   "kind": "planned",
+   "title": "Shopping à Akihabara",
+   "status": "done",
+   "doneAt": 1795854192777,
+   "by": "Maxime",
+   "at": 1795854192777
+  }
+ }
+}
