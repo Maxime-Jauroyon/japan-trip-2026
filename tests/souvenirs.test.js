@@ -100,3 +100,11 @@ test("détaxe reçue : répartie au prorata, plafonnée, déduite de la valeur �
   const noTax = items.map((x) => (x.id === "b" ? { ...x, noTax: true } : x));
   assert.equal(allocateRefunds(noTax, { [key]: 700 }).b, undefined);
 });
+
+test("un achat sans magasin marqué non détaxable ne change ni la franchise ni les groupes", () => {
+  let items = addItem([], { id: "t", label: "3 t-shirts", store: "", day: "2026-11-27", who: "Maxime", eur: 56.25, yen: 9000, entered: "yen" });
+  items = setNoTax(items, ["t"], true);
+  assert.equal(items[0].noTax, true);
+  assert.deepEqual(detaxeByStore(items, 5000), []);
+  assert.equal(totalsByPerson(items, ["Maxime"], {}).Maxime.eur, 56.25);
+});

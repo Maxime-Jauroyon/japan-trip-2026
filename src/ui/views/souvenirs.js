@@ -81,8 +81,8 @@ function customsHtml(items, personnes, refunds){
 function detaxeHtml(items, refunds){
   const g = detaxeByStore(items, SOUVENIRS.detaxeMinYen);
   if (!g.length) return `<p class="sv-empty">Indique le magasin d’un achat pour voir s’il atteint le minimum de détaxe (${fmtYen(SOUVENIRS.detaxeMinYen)} par magasin et par jour).</p>`;
-  return `<ul class="sv-detaxe">${g.map((x) => `<li class="${x.removed ? "off" : x.ok ? "ok" : ""}"><span><strong>${esc(x.store)}</strong> · ${esc(dayLabel(x.day))}</span><span>${x.removed ? "détaxe non faite" : `${fmtYen(x.yen)} · ${x.ok ? "détaxable ✓" : `il manque ${fmtYen(x.missing)}`}`}</span><button type="button" class="sv-notax" data-ids="${esc(x.ids.join(","))}" data-on="${x.removed ? "0" : "1"}">${x.removed ? "Rétablir" : "Retirer"}</button>${x.removed ? "" : `<label class="sv-refund"><span>Remboursement reçu (¥)</span><input type="text" inputmode="numeric" data-refund="${esc(x.key)}" data-max="${Math.round(x.yen)}" value="${refunds[x.key] ? Math.min(refunds[x.key], Math.round(x.yen)) : ""}" placeholder="0" autocomplete="off" /></label>`}</li>`).join("")}</ul>
-    <p class="sv-note">Indicatif (montant hors taxe, règles à confirmer en magasin). « Retirer » si le magasin n’a pas fait la démarche : les achats restent comptés dans la franchise. Détaxe à faire à la douane de Haneda avant l’embarquement, achats non utilisés + reçus + passeports.</p>`;
+  return `<ul class="sv-detaxe">${g.map((x) => `<li class="${x.removed ? "off" : x.ok ? "ok" : ""}"><span><strong>${esc(x.store)}</strong> · ${esc(dayLabel(x.day))}</span><span>${x.removed ? "détaxe non faite" : `${fmtYen(x.yen)} · ${x.ok ? "détaxable ✓" : `il manque ${fmtYen(x.missing)}`}`}</span><button type="button" class="sv-notax" data-ids="${esc(x.ids.join(","))}" data-on="${x.removed ? "0" : "1"}">${x.removed ? "Rétablir" : "Non détaxable"}</button>${x.removed ? "" : `<label class="sv-refund"><span>Remboursement reçu (¥)</span><input type="text" inputmode="numeric" data-refund="${esc(x.key)}" data-max="${Math.round(x.yen)}" value="${refunds[x.key] ? Math.min(refunds[x.key], Math.round(x.yen)) : ""}" placeholder="0" autocomplete="off" /></label>`}</li>`).join("")}</ul>
+    <p class="sv-note">Indicatif (montant hors taxe, règles à confirmer en magasin). « Non détaxable » si le magasin n’a pas fait la démarche (ou pour un seul achat, depuis la liste ci-dessous) : les achats restent comptés dans la franchise. Détaxe à confirmer aux bornes de Haneda T3 avant d’enregistrer les bagages, achats non utilisés + reçus + passeports.</p>`;
 }
 
 function listHtml(items){
@@ -94,7 +94,8 @@ function listHtml(items){
     const main = it.entered === "eur" ? fmtEur(it.eur) : fmtYen(it.yen);
     const alt = it.entered === "eur" ? fmtYen(it.yen) : fmtEur(it.eur);
     return `${head}<div class="sv-row" data-id="${esc(it.id)}">
-      <div class="sv-row-main"><strong>${esc(it.label || "Achat")}</strong><span>${main} <small>≈ ${alt}</small>${it.store ? ` · ${esc(it.store)}` : ""} · ${esc(it.who)}</span></div>
+      <div class="sv-row-main"><strong>${esc(it.label || "Achat")}</strong><span>${main} <small>≈ ${alt}</small>${it.store ? ` · ${esc(it.store)}` : ""} · ${esc(it.who)}${it.noTax ? ` · <em class="sv-nt">non détaxable</em>` : ""}</span></div>
+      <button type="button" class="sv-row-notax${it.noTax ? " on" : ""}" aria-pressed="${it.noTax ? "true" : "false"}">Non détaxable</button>
       <button type="button" class="sv-del" aria-label="Supprimer cet achat">✕</button>
     </div>`;
   }).join("");
@@ -136,7 +137,13 @@ function bind(root){
       if (on) refresh(root);
       window.scrollTo({ top: 0 });
     } else if (e.target.closest("#sv-add")) add(root);
-    else if (e.target.closest(".sv-notax")) {
+    else if (e.target.closest(".sv-row-notax")) {
+      const row = e.target.closest(".sv-row");
+      const it = loadSouvenirs().items.find((x) => x.id === row.dataset.id);
+      if (!it) return;
+      saveSouvenirs({ items: setNoTax(loadSouvenirs().items, [it.id], !it.noTax) });
+      refresh(root);
+    } else if (e.target.closest(".sv-notax")) {
       const b = e.target.closest(".sv-notax");
       saveSouvenirs({ items: setNoTax(loadSouvenirs().items, b.dataset.ids.split(","), b.dataset.on === "1") });
       refresh(root);
